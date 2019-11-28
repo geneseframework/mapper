@@ -1,8 +1,12 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es2015",
         "declaration": true,
+        "lib": [
+            "es2018",
+            "dom"
+        ],
         "outDir": "./dist"
     },
     "include": [
