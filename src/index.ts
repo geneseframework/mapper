@@ -1,1 +1,1 @@
-export * from './mapper/genese-mapper.factory';
+export * from './mapper/genese.mapper';

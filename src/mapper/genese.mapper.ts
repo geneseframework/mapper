@@ -3,7 +3,7 @@ import { TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
 import { ExtractService } from '../services/extract.service';
 
-export class GeneseMapperFactory<T> {
+export class GeneseMapper<T> {
 
     // --------------------------------------------------
     //                     PROPERTIES
@@ -34,27 +34,15 @@ export class GeneseMapperFactory<T> {
      * If not, it returns a mapped U object
      * uConstructor is useful for extraction of given fields of a T class object
      */
-    public geneseMapper<U = T>(data: any, uConstructor?: TConstructor<U>): U {
+    public map(data: any): T {
+        const target = new this.tConstructor();
         if (!data) {
-            const target = uConstructor ? new uConstructor() : new this.tConstructor();
-            return target as U;
+            return target;
         }
-        const tObject = new this.tConstructor();
-        if (uConstructor) {
-            let uObject = new uConstructor();
-            if (uConstructor.hasOwnProperty('gnRename')) {
-                data = this._rename(uConstructor, data);
-            }
-            uObject = Object.assign(uObject, ExtractService.extractFieldsFromData(tObject, uObject));
-            uObject = Object.assign(uObject, this._diveMap<U>(uObject, data));
-            return uObject;
-        } else {
-            if (this.tConstructor.hasOwnProperty('gnRename')) {
-                data = this._rename(this.tConstructor, data);
-            }
-            const target = new this.tConstructor();
-            return Object.assign(target, this._diveMap<T>(target, data));
+        if (this.tConstructor.hasOwnProperty('gnRename')) {
+            data = this._rename(this.tConstructor, data);
         }
+        return Object.assign(target, this._diveMap<T>(target, data));
     }
 
     /**
@@ -70,7 +58,7 @@ export class GeneseMapperFactory<T> {
             });
         } else {
             data.forEach(e => {
-                results.push(this.geneseMapper<U>(e, uConstructor));
+                results.push(this.map(e));
                 // results.push(uConstructor ? this.mapToObject<U>(e, uConstructor) : this.mapToObject<T>(e));
             });
         }
