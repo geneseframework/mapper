@@ -9,19 +9,15 @@ import { PRIMITIVES } from '../models/primitive.model';
  * uConstructor is useful for extraction of given fields of a T class object
  */
 export function geneseMapper<T>(data: any, tConstructor: TConstructor<T>): T {
-    console.log('%c data', 'font-weight: bold; color: blue;', data);
-    console.log('%c tConstructor', 'font-weight: bold; color: blue;', tConstructor);
     checkTConstructor(tConstructor);
     let tObject = new tConstructor();
     if (!data) {
         return tObject;
     }
-    console.log('%c tObject', 'font-weight: bold; color: blue;', tObject);
     if (tConstructor.hasOwnProperty('gnRename')) {
         data = _rename(tConstructor, data);
     }
     tObject = Object.assign(tObject, _diveMap<T>(tObject, data));
-    console.log('%c tObject', 'font-weight: bold; color: blue;', tObject);
     return tObject;
 }
 
