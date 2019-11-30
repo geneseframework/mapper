@@ -1,1 +1,1 @@
-export { mapToObject } from './mapper/genese-mapper.factory';
+export { geneseMapper } from './mapper/genese-mapper.factory';

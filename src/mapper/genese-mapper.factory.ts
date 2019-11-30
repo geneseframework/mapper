@@ -1,7 +1,6 @@
 import { Tools } from '../services/tools.service';
 import { TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
-import { ExtractService } from '../services/extract.service';
 
 /**
  * The core of the generic mapper
@@ -9,27 +8,21 @@ import { ExtractService } from '../services/extract.service';
  * If not, it returns a mapped U object
  * uConstructor is useful for extraction of given fields of a T class object
  */
-export function mapToObject<T>(data: any, tConstructor: TConstructor<T>): T {
+export function geneseMapper<T>(data: any, tConstructor: TConstructor<T>): T {
+    console.log('%c data', 'font-weight: bold; color: blue;', data);
+    console.log('%c tConstructor', 'font-weight: bold; color: blue;', tConstructor);
     checkTConstructor(tConstructor);
+    let tObject = new tConstructor();
     if (!data) {
-        return new tConstructor();
+        return tObject;
     }
-    const tObject = new tConstructor();
-    if (tConstructor) {
-        let uObject = new tConstructor();
-        if (tConstructor.hasOwnProperty('gnRename')) {
-            data = _rename(tConstructor, data);
-        }
-        uObject = Object.assign(uObject, ExtractService.extractFieldsFromData(tObject, uObject));
-        uObject = Object.assign(uObject, _diveMap<T>(uObject, data));
-        return uObject;
-    } else {
-        if (tConstructor.hasOwnProperty('gnRename')) {
-            data = _rename(tConstructor, data);
-        }
-        const target = new tConstructor();
-        return Object.assign(target, _diveMap<T>(target, data));
+    console.log('%c tObject', 'font-weight: bold; color: blue;', tObject);
+    if (tConstructor.hasOwnProperty('gnRename')) {
+        data = _rename(tConstructor, data);
     }
+    tObject = Object.assign(tObject, _diveMap<T>(tObject, data));
+    console.log('%c tObject', 'font-weight: bold; color: blue;', tObject);
+    return tObject;
 }
 
 /**
@@ -45,7 +38,7 @@ export function mapGetAllResults<T>(data: any[], tConstructor: TConstructor<T>):
         });
     } else {
         data.forEach(e => {
-            results.push(mapToObject<T>(e, tConstructor));
+            results.push(geneseMapper<T>(e, tConstructor));
         });
     }
     return results;

@@ -2,9 +2,10 @@ import { Tools } from '../services/tools.service';
 import {
     _areStringOrNumber,
     _castStringAndNumbers,
-    _diveMap, _mapArrayOfObjects, _mapIndexableType,
-    _mapNotPrimitive,
-    mapToObject
+    _diveMap,
+    _mapArrayOfObjects,
+    _mapIndexableType,
+    _mapNotPrimitive
 } from './genese-mapper.factory';
 
 describe('GENESE MAPPER FACTORY', () => {
