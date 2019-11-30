@@ -35,7 +35,6 @@ export class GeneseMapperFactory<T> {
      * uConstructor is useful for extraction of given fields of a T class object
      */
     public geneseMapper<U = T>(data: any, uConstructor?: TConstructor<U>): U {
-        console.log('%c geneseMapper data', 'font-weight: bold; color: blue;', data);
         if (!data) {
             const target = uConstructor ? new uConstructor() : new this.tConstructor();
             return target as U;
