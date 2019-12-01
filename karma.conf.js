@@ -7,7 +7,21 @@ module.exports = function(config) {
         preprocessors: {
             "**/*.ts": "karma-typescript" // *.tsx for React Jsx
         },
-        reporters: ["progress", "karma-typescript"],
+        coverageIstanbulReporter: {
+            dir: require('path').join(__dirname, '../coverage/genese-mapper'),
+            reports: ['html', 'lcovonly', 'text-summary', 'clover'],
+            fixWebpackSourcePaths: true,
+            thresholds: {
+                statements: 60,
+                lines: 60,
+                branches: 50,
+                functions: 50
+            }
+        },
+        reporters: ["mocha", "notify"],
+        colors: true,
+        logLevel: config.DEBUG,
+        autoWatch: true,
         browsers: ['ChromeHeadlessCustom'],
         customLaunchers: {
             ChromeHeadlessCustom: {
@@ -15,5 +29,6 @@ module.exports = function(config) {
                 flags: ['--headless', '--remote-debugging-port=9222', '--no-sandbox']
             }
         },
+        singleRun: true,
     });
 };

@@ -5,6 +5,9 @@
         "name": "Gilles Fabre",
         "url": "http://gillesfabre.com/"
     },
+    "scripts": {
+        "test": "karma start karma.conf.js"
+    },
     "dependencies": {},
     "devDependencies": {
         "@types/jasmine": "~2.8.8",
