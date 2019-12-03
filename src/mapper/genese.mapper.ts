@@ -1,7 +1,6 @@
-import { Tools } from '../services/tools.service';
 import { TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
-import { ExtractService } from '../services/extract.service';
+import { clone, isPrimitive } from '../services/tools.service';
 
 export class GeneseMapper<T> {
 
@@ -35,54 +34,87 @@ export class GeneseMapper<T> {
      * uConstructor is useful for extraction of given fields of a T class object
      */
     public map(data: any): T {
+        console.log('%c JSON.stringify(data)', JSON.stringify(data));
         const target = new this.tConstructor();
+        console.log('%c JSON.stringify(target)', JSON.stringify(target));
         if (!data) {
             return target;
         }
         if (this.tConstructor.hasOwnProperty('gnRename')) {
             data = this._rename(this.tConstructor, data);
         }
+        console.log('%c map this._diveMap(target, data)', this._diveMap<T>(target, data));
         return Object.assign(target, this._diveMap<T>(target, data));
     }
+
 
     /**
      * Returns array of mapped results
      */
-    mapGetAllResults<U = T>(data: any[], uConstructor?: TConstructor<U>): U[] {
-        const gConstructor = uConstructor ? uConstructor : this.tConstructor;
+    arrayMap(data: any[]): T[] {
+        if (!Array.isArray(data)) {
+            return [];
+        }
         const results: any[] = [];
-        if (PRIMITIVES.includes(gConstructor.name)) {
+        if (PRIMITIVES.includes(this.tConstructor.name)) {
             data.forEach(e => {
-                const newElement = typeof e === gConstructor.name.toLowerCase() ? e : undefined;
-                results.push(newElement);
+                if (typeof e === this.tConstructor.name.toLowerCase()) {
+                    results.push(e);
+                } else if (this.tConstructor.name === 'String' && typeof e === 'number') {
+                    results.push(e.toString());
+                } else if (this.tConstructor.name === 'Number' && typeof e === 'string' && !isNaN(Number(e))) {
+                    results.push(+e);
+                } else if (e === null) {
+                    results.push(null);
+                }
             });
         } else {
             data.forEach(e => {
                 results.push(this.map(e));
-                // results.push(uConstructor ? this.mapToObject<U>(e, uConstructor) : this.mapToObject<T>(e));
             });
         }
         return results;
     }
 
 
+    // --------------------------------------------------
+    //                 INTERNAL METHODS
+    // --------------------------------------------------
+
+
     /**
-     * If a property of the U class have the decorator @GnRename, this methodName replaces the key of the gnRename http param
-     * This methodName is useful when the backend renamed some DTO properties :
-     * with @GnRename decorator, you can get values from backend without changing the property name of your T objects in every file
+     * Check if two objects are both string or number.
+     * In this case, returns true.
      */
-    _rename<U>(uConstructor: TConstructor<U>, data: any): any {
-        const constr: any = uConstructor;
-        Object.keys(constr.gnRename).map(oldKey => {
-            const newKey = constr.gnRename[oldKey];
-            if (data[newKey]) {
-                data[oldKey] = data[newKey];
-                delete data[newKey];
-            }
-        });
-        return data;
+    _areStringOrNumber(target: any, source: any): boolean {
+        return ((typeof target === 'string' || typeof target === 'number') && (typeof source === 'number' || typeof source === 'string'));
     }
 
+
+    /**
+     * If source and target are both string or number, we cast source into the target's type and returns it.
+     * This methodName adds a tolerance for http requests which returns numbers instead of strings and inversely
+     * Caution : params target and source should not be falsy values
+     */
+    _castStringAndNumbers(target: any, source: any): any {
+        if ((typeof target !== 'string' && typeof target !== 'number') || source === undefined) {
+            console.warn('Genese _castStringAndNumbers : source or target undefined');
+            return undefined;
+        } else if (source === null) {
+            return null;
+        } else if (typeof target === 'string' && (typeof source === 'number' || typeof source === 'string')) {
+            return  source.toString();
+        } else if (typeof target === 'number' && typeof source === 'number') {
+            return source;
+        } else if (typeof target === 'number' && typeof source === 'string') {
+            console.log('%c source', 'font-weight: bold; color: blue;', source);
+            console.log('%c +source', 'font-weight: bold; color: blue;', +source);
+            return isNaN(Number(source)) ? target : +source;
+        } else {
+            console.warn('Genese _castStringAndNumbers : impossible to cast this elements');
+            return undefined;
+        }
+    }
 
     /**
      * For a given object with U type (the target model), returns the source object mapped with the U model
@@ -95,8 +127,8 @@ export class GeneseMapper<T> {
         } else if (source === null) {
             return source;
         } else {
-            if (Tools.isPrimitive(target)) {
-                if (Tools.isPrimitive(source)) {
+            if (isPrimitive(target)) {
+                if (isPrimitive(source)) {
                     if (this._areStringOrNumber(target, source)) {
                         return this._castStringAndNumbers(target, source);
                     } else {
@@ -146,6 +178,8 @@ export class GeneseMapper<T> {
                             }
                         }
                     }
+                } else {
+                    return source;
                 }
             }
             return cloneTarget;
@@ -193,16 +227,6 @@ export class GeneseMapper<T> {
     }
 
 
-
-    private _mapIndexableTypeObject(target: any, source: any): any {
-        const mappedObject = {};
-        for (const key of Object.keys(source)) {
-            Object.assign(mappedObject, { [key]: this._diveMap(target, source[key])});
-        }
-        return mappedObject;
-    }
-
-
     private _mapIndexableTypeArray(target: any[], source: any): any {
         const mappedObject: any = {};
         for (const key of Object.keys(source)) {
@@ -214,36 +238,13 @@ export class GeneseMapper<T> {
     }
 
 
-    /**
-     * Check if two objects are both string or number.
-     * In this case, returns true.
-     */
-    _areStringOrNumber(target: any, source: any): boolean {
-        return ((typeof target === 'string' || typeof target === 'number') && (typeof source === 'number' || typeof source === 'string'));
-    }
 
-
-    /**
-     * If source and target are both string or number, we cast source into the target's type and returns it.
-     * This methodName adds a tolerance for http requests which returns numbers instead of strings and inversely
-     * Caution : params target and source should not be falsy values
-     */
-    _castStringAndNumbers(target: any, source: any): any {
-        if ((typeof target !== 'string' && typeof target !== 'number') || source === undefined) {
-            console.warn('Genese _castStringAndNumbers : source or target undefined');
-            return undefined;
-        } else if (source === null) {
-            return null;
-        } else if (typeof target === 'string' && (typeof source === 'number' || typeof source === 'string')) {
-            return  source.toString();
-        } else if (typeof target === 'number' && (typeof source === 'number' || typeof source === 'string')) {
-            return +source;
-            // } else if (Tools.isSameObject(target, source)) {
-            //     return source;
-        } else {
-            console.warn('Genese _castStringAndNumbers : impossible to cast this elements');
-            return undefined;
+    private _mapIndexableTypeObject(target: any, source: any): any {
+        const mappedObject = {};
+        for (const key of Object.keys(source)) {
+            Object.assign(mappedObject, { [key]: this._diveMap(target, source[key])});
         }
+        return mappedObject;
     }
 
 
@@ -256,12 +257,31 @@ export class GeneseMapper<T> {
             return undefined;
         }
         const arrayOfObjects: any[] = [];
-        const model = Tools.clone(target[0]);
+        const model = clone(target[0]);
         for (const element of source) {
             arrayOfObjects.push(this._diveMap(model, element));
         }
         return arrayOfObjects;
     }
+
+
+    /**
+     * If a property of the U class have the decorator @GnRename, this methodName replaces the key of the gnRename http param
+     * This methodName is useful when the backend renamed some DTO properties :
+     * with @GnRename decorator, you can get values from backend without changing the property name of your T objects in every file
+     */
+    _rename<U>(uConstructor: TConstructor<U>, data: any): any {
+        const constr: any = uConstructor;
+        Object.keys(constr.gnRename).map(oldKey => {
+            const newKey = constr.gnRename[oldKey];
+            if (data[newKey]) {
+                data[oldKey] = data[newKey];
+                delete data[newKey];
+            }
+        });
+        return data;
+    }
+
 
 
     /**
@@ -289,15 +309,15 @@ export class GeneseMapper<T> {
             console.error('No data or no language : impossible to translate element');
             return undefined;
         } else {
-            const result = Tools.clone(data);
+            const result = clone(data);
             Object.keys(result).map(key => {
                 if (key === 'gnTranslate') {
                     Object.assign(result, result.gnTranslate[language]);
                     delete result.gnTranslate;
                 } else {
                     if (typeof result[key] === 'object') {
-                        const clone = Tools.clone(result[key]);
-                        result[key] = this.translate(clone, language);
+                        const copy = clone(result[key]);
+                        result[key] = this.translate(copy, language);
                     }
                 }
             });

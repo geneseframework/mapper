@@ -29,6 +29,7 @@ module.exports = function(config) {
                 flags: ['--headless', '--remote-debugging-port=9222', '--no-sandbox']
             }
         },
-        singleRun: true,
+        singleRun: false,
+        restartOnFileChange: true,
     });
 };
