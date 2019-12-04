@@ -2,7 +2,7 @@ import { GeneseMapper } from '..';
 import { isSameObject } from '../services/tools.service';
 
 
-fdescribe('GENESE MAPPER geneseMapper', () => {
+describe('GENESE MAPPER geneseMapper', () => {
 
 
     // **************************************************************************
@@ -146,9 +146,9 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
     // **************************************************************************
 
 
-    describe('ARRAYS', () => {
+    describe('OBJECTS WITH ARRAYS', () => {
 
-        describe('array of numbers', () => {
+        describe('object with array of numbers', () => {
 
             class TestArrayNumbers {
                 a?: number[] = [5];
@@ -202,7 +202,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
         // **************************************************************************
 
 
-        describe('array of strings', () => {
+        describe('object with array of strings', () => {
 
             class TestArrayStrings {
                 a?: string[] = [''];
@@ -246,7 +246,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
         // **************************************************************************
 
 
-        describe('array of booleans', () => {
+        describe('object with array of booleans', () => {
 
             class TestArrayBooleans {
                 a?: boolean[] = [false];
@@ -295,9 +295,9 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
 
 
 
-    describe('OBJECTS', () => {
+    describe('OBJECTS WITH NESTED OBJECTS', () => {
 
-        describe('simple object', () => {
+        describe('simple nested object', () => {
 
             class TestObject {
                 a?: { b: string } = {b: ''};
@@ -328,6 +328,10 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
 
         describe('object with undefined', () => {
 
+            // A nested property must be initialized: if not, the model above is equivalent to
+            // {
+            //      a?: undefined
+            // }
             class TestObjectWithUndefined {
                 a?: { b: string } = {b: undefined};
             }
@@ -338,12 +342,10 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.map({a: {b: 2}}), {a: {b: 2}})).toBeTruthy();
             });
             it('{a: 3} => {a: {b: undefined}}', () => {
-                const zzz = new TestObjectWithUndefined();
-                console.log('%c zzz', 'font-weight: bold; color: blue;', zzz);
-                expect(isSameObject(geneseMapper.map({a: 3}), {a: {b: undefined}})).toBeTruthy();
+                expect(isSameObject(geneseMapper.map({a: 3}), {a: 3})).toBeTruthy();
             });
             it('{a: {c: 3}} => {a: {b: undefined}}', () => {
-                expect(isSameObject(geneseMapper.map({a: {c: 3}}), {a: {b: undefined}})).toBeTruthy();
+                expect(isSameObject(geneseMapper.map({a: {c: 3}}), {a: {c: 3}})).toBeTruthy();
             });
             it('{a: {b: null}} => {a: {b: null}}', () => {
                 expect(isSameObject(geneseMapper.map({a: {b: null}}), {a: {b: null}})).toBeTruthy();
@@ -360,7 +362,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
         // **************************************************************************
 
 
-        describe('object with array', () => {
+        describe('nested object with array', () => {
 
             class TestObjectWithArray {
                 a?: { b: string[] } = {b: ['']};
@@ -401,7 +403,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
         // **************************************************************************
 
 
-        describe('array of objects', () => {
+        describe('nested array of objects', () => {
 
             class TestArrayOfObjects {
                 a?: { b: string }[] = [{b: ''}];
@@ -433,7 +435,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.map({a: null}), {a: null})).toBeTruthy();
             });
             it('{a: [null]}} => {a: [{b: ""}]}', () => {
-                expect(isSameObject(geneseMapper.map({a: [null]}), {a: {b: ['']}})).toBeTruthy();
+                expect(isSameObject(geneseMapper.map({a: [null]}), {a: [null]})).toBeTruthy();
             });
             it('{a: [{b: 4}]} => {a: [{b: 4}]}', () => {
                 expect(isSameObject(geneseMapper.map({a: [{b: 4}]}), {a: [{b: 4}]})).toBeTruthy();
@@ -458,7 +460,7 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
 
     describe('ARRAYS', () => {
 
-        describe('array of strings', () => {
+        describe('array of numbers', () => {
 
             const geneseMapper = new GeneseMapper(Number);
 
@@ -473,6 +475,75 @@ fdescribe('GENESE MAPPER geneseMapper', () => {
             });
             it('[true, false] => []', () => {
                 expect(isSameObject(geneseMapper.arrayMap([true, false]), [])).toBeTruthy();
+            });
+            it('[{a: 2}] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([{a: 2}]), [])).toBeTruthy();
+            });
+            it('[null] => [null]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([null]), [null])).toBeTruthy();
+            });
+            it('null => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap(null), [])).toBeTruthy();
+            });
+            it('undefined => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap(undefined), [])).toBeTruthy();
+            });
+            it('[undefined] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([undefined]), [])).toBeTruthy();
+            });
+        });
+
+        describe('array of strings', () => {
+
+            const geneseMapper = new GeneseMapper(String);
+
+            it('[1, 2] => [1, 2]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([1, 2]), ['1', '2'])).toBeTruthy();
+            });
+            it('[1, "2"] => [1, 2]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([1, '2']), ['1', '2'])).toBeTruthy();
+            });
+            it('[] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([]), [])).toBeTruthy();
+            });
+            it('[true, false] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([true, false]), [])).toBeTruthy();
+            });
+            it('[{a: 2}] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([{a: 2}]), [])).toBeTruthy();
+            });
+            it('[null] => [null]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([null]), [null])).toBeTruthy();
+            });
+            it('null => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap(null), [])).toBeTruthy();
+            });
+            it('undefined => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap(undefined), [])).toBeTruthy();
+            });
+            it('[undefined] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([undefined]), [])).toBeTruthy();
+            });
+        });
+
+        describe('array of booleans', () => {
+
+            const geneseMapper = new GeneseMapper(Boolean);
+
+            it('[1, 2] => [1, 2]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([1, 2]), [])).toBeTruthy();
+            });
+            it('[1, "2"] => [1, 2]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([1, '2']), [])).toBeTruthy();
+            });
+            it('[0] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([0]), [])).toBeTruthy();
+            });
+            it('[] => []', () => {
+                expect(isSameObject(geneseMapper.arrayMap([]), [])).toBeTruthy();
+            });
+            it('[true, false] => [true, false]', () => {
+                expect(isSameObject(geneseMapper.arrayMap([true, false]), [true, false])).toBeTruthy();
             });
             it('[{a: 2}] => []', () => {
                 expect(isSameObject(geneseMapper.arrayMap([{a: 2}]), [])).toBeTruthy();

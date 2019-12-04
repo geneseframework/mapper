@@ -34,16 +34,13 @@ export class GeneseMapper<T> {
      * uConstructor is useful for extraction of given fields of a T class object
      */
     public map(data: any): T {
-        console.log('%c JSON.stringify(data)', JSON.stringify(data));
         const target = new this.tConstructor();
-        console.log('%c JSON.stringify(target)', JSON.stringify(target));
         if (!data) {
             return target;
         }
         if (this.tConstructor.hasOwnProperty('gnRename')) {
             data = this._rename(this.tConstructor, data);
         }
-        console.log('%c map this._diveMap(target, data)', this._diveMap<T>(target, data));
         return Object.assign(target, this._diveMap<T>(target, data));
     }
 
@@ -107,8 +104,6 @@ export class GeneseMapper<T> {
         } else if (typeof target === 'number' && typeof source === 'number') {
             return source;
         } else if (typeof target === 'number' && typeof source === 'string') {
-            console.log('%c source', 'font-weight: bold; color: blue;', source);
-            console.log('%c +source', 'font-weight: bold; color: blue;', +source);
             return isNaN(Number(source)) ? target : +source;
         } else {
             console.warn('Genese _castStringAndNumbers : impossible to cast this elements');
@@ -132,7 +127,7 @@ export class GeneseMapper<T> {
                     if (this._areStringOrNumber(target, source)) {
                         return this._castStringAndNumbers(target, source);
                     } else {
-                        return source === false ? false : target;
+                        return (typeof source === 'boolean' && typeof target === 'boolean') ? source : target;
                     }
                 } else {
                     return target;

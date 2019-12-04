@@ -35,13 +35,9 @@ export function isPrimitive(target: any): boolean {
  * Check if two objects have the same values for every key
  */
 export function isSameObject(obj1: any, obj2: any): boolean {
-
-    console.log('isSameObject obj1', JSON.stringify(obj1));
-    console.log('isSameObject obj2', JSON.stringify(obj2));
     if (obj1 === obj2) {
         return true;
     }
-    console.log('isSameObject obj2 2', JSON.stringify(obj2));
     if (typeof obj1 === 'number' && obj1.toString() === obj2.toString()) {
         return true;
     }
@@ -50,6 +46,7 @@ export function isSameObject(obj1: any, obj2: any): boolean {
         || (Array.isArray(obj1) && !Array.isArray(obj2))
         || (!Array.isArray(obj1) && Array.isArray(obj2))
         || (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length !== obj2.length)
+        || obj1 === !obj2
     ) {
         return false;
     }
@@ -64,7 +61,6 @@ export function isSameObject(obj1: any, obj2: any): boolean {
         return true;
     } else {
         for (const key of Object.keys(obj1)) {
-            console.log('isSameObject key', JSON.stringify(key));
             if (!obj2.hasOwnProperty(key) || (!obj2[key] && !!obj1[key]) || (!!obj2[key] && !obj1[key])) {
                 return false;
             }
@@ -84,8 +80,6 @@ export function isSameObject(obj1: any, obj2: any): boolean {
                 }
             }
         }
-
     }
-    console.log('this is the end...');
     return true;
 }
