@@ -48,7 +48,7 @@ export class GeneseMapper<T> {
     /**
      * Returns array of mapped results
      */
-    arrayMap(data: any[]): T[] {
+    public arrayMap(data: any[]): T[] {
         if (!Array.isArray(data)) {
             return [];
         }
@@ -222,7 +222,7 @@ export class GeneseMapper<T> {
     }
 
 
-    private _mapIndexableTypeArray(target: any[], source: any): any {
+    _mapIndexableTypeArray(target: any[], source: any): any {
         const mappedObject: any = {};
         for (const key of Object.keys(source)) {
             const deepMapped = this._diveMap({[key]: [target]}, source);
@@ -234,7 +234,7 @@ export class GeneseMapper<T> {
 
 
 
-    private _mapIndexableTypeObject(target: any, source: any): any {
+    _mapIndexableTypeObject(target: any, source: any): any {
         const mappedObject = {};
         for (const key of Object.keys(source)) {
             Object.assign(mappedObject, { [key]: this._diveMap(target, source[key])});
