@@ -1,5 +1,5 @@
 # genese-mapper
-Generic mapper of javascript objects in Typescript typed objects.
+Generic mapper of javascript objects.
 
 ## Table of Contents
 * [Why use genese-mapper ?](#why-use-genese)
@@ -9,7 +9,7 @@ Generic mapper of javascript objects in Typescript typed objects.
 * [Other tools](#other-tools)
 
 
-## Why use genese
+## Why use genese-mapper
 
 genese-mapper is the core module of the ***Genese*** framework. With genese-mapper, you can transform untyped javascript objects into typed objects. The most common use of genese-mapper is to transform `json` http responses into typed objects (with your own models). 
 
