@@ -1,9 +1,9 @@
 {
     "name": "genese-mapper",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": {
         "name": "Gilles Fabre",
-        "url": "http://gillesfabre.com/"
+        "url": "https://github.com/gillesfabre34"
     },
     "scripts": {
         "test": "karma start karma.conf.js"
