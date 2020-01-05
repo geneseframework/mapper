@@ -1,6 +1,6 @@
 import { TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
-import { clone, isPrimitive } from '../services/tools.service';
+import { clone, isPrimitive } from '..';
 
 export class GeneseMapper<T> {
 
@@ -153,28 +153,29 @@ export class GeneseMapper<T> {
             let cloneTarget = Object.assign({}, target);
             for (const key of Object.keys(target)) {
                 if (key === 'gnIndexableType') {
-                    cloneTarget = this._mapIndexableType(target[key] as unknown as IndexableType, source);
-                }
-                if (target[key] !== undefined) {
-                    if (source[key] === null) {
-                        cloneTarget[key] = null;
-                    } else if (source[key] === undefined) {
-                        cloneTarget[key] = target[key];
-                    } else {
-                        if (Array.isArray(target[key])) {
-                            cloneTarget[key] = Array.isArray(source[key])
-                                ? this._mapArrayOfObjects(target[key], source[key])
-                                : cloneTarget[key];
+                    cloneTarget = this._mapIndexableType(target as unknown as IndexableType, source);
+                } else {
+                    if (target[key] !== undefined) {
+                        if (source[key] === null) {
+                            cloneTarget[key] = null;
+                        } else if (source[key] === undefined) {
+                            cloneTarget[key] = this._purge(target[key]);
                         } else {
-                            if (this._areStringOrNumber(target[key], source[key])) {
-                                cloneTarget[key] = this._castStringAndNumbers(target[key], source[key]);
+                            if (Array.isArray(target[key])) {
+                                cloneTarget[key] = Array.isArray(source[key])
+                                    ? this._mapArrayOfObjects(target[key], source[key])
+                                    : cloneTarget[key];
                             } else {
-                                cloneTarget[key] = this._diveMap(target[key], source[key]);
+                                if (this._areStringOrNumber(target[key], source[key])) {
+                                    cloneTarget[key] = this._castStringAndNumbers(target[key], source[key]);
+                                } else {
+                                    cloneTarget[key] = this._diveMap(target[key], source[key]);
+                                }
                             }
                         }
+                    } else {
+                        return source;
                     }
-                } else {
-                    return source;
                 }
             }
             return cloneTarget;
@@ -194,7 +195,14 @@ export class GeneseMapper<T> {
      *      }
      *  };
      * For each key of gnIndexableType field, this method returns the corresponding mapped object with the target model
-     * For example, this method can return something like :
+     * For example, this method will receive an object like this :
+     *
+     * gnIndexableType: {
+     *      country: ''
+     * }
+     *
+     * and will return something like this :
+     *
      * {
      *     fr: {
      *         country: 'France'
@@ -206,7 +214,7 @@ export class GeneseMapper<T> {
      * Caution: param target should be defined
      */
     _mapIndexableType(target: any, source: any): any {
-        if (!target) {
+        if (target === undefined || target.gnIndexableType === undefined) {
             console.warn('Impossible to map indexable types with undefined target.');
             return undefined;
         }
@@ -216,9 +224,9 @@ export class GeneseMapper<T> {
         if (source === null) {
             return null;
         }
-        return Array.isArray(target) && target.length > 0
-            ? this._mapIndexableTypeArray(target[0], source)
-            : this._mapIndexableTypeObject(target, source);
+        return Array.isArray(target.gnIndexableType) && target.gnIndexableType.length > 0
+            ? this._mapIndexableTypeArray(target.gnIndexableType[0], source)
+            : Object.assign({}, this._mapIndexableTypeObject(target.gnIndexableType, source));
     }
 
 
@@ -228,23 +236,22 @@ export class GeneseMapper<T> {
             const deepMapped = this._diveMap({[key]: [target]}, source);
             Object.assign(mappedObject, {[key]: deepMapped[key]});
         }
-        delete mappedObject.gnIndexableType;
         return mappedObject;
     }
 
 
 
     _mapIndexableTypeObject(target: any, source: any): any {
-        const mappedObject = {};
+        const mappedObject: any = {};
         for (const key of Object.keys(source)) {
-            Object.assign(mappedObject, { [key]: this._diveMap(target, source[key])});
+            Object.assign(mappedObject, {[key]: this._diveMap(target, source[key])});
         }
         return mappedObject;
     }
 
 
     /**
-     * Mapper to array of objects by calling _diveMap for each object of the array
+     * Remove specific genese properties
      */
     _mapArrayOfObjects(target: {[key: string]: any}[], source: {[key: string]: any}[]): {[key: string]: any}[] {
         if (!Array.isArray(target) || target.length === 0 || !Array.isArray(source)) {
@@ -257,6 +264,18 @@ export class GeneseMapper<T> {
             arrayOfObjects.push(this._diveMap(model, element));
         }
         return arrayOfObjects;
+    }
+
+
+    /**
+     * Remove specific genese properties
+     */
+    _purge(obj: any): any {
+        if (!obj) {
+            return obj;
+        }
+        delete obj.gnIndexableType;
+        return obj;
     }
 
 

@@ -34,9 +34,11 @@ describe('TOOLS', () => {
         it('{a: "z"}, {a: "z"} => true', () => {
             expect(isSameObject({a: 'z'}, {a: 'z'}) === true).toBeTruthy();
         });
-
         it('{a: ""}, {a: "z"} => true', () => {
             expect(isSameObject({a: ''}, {a: 'z'}) === false).toBeTruthy();
+        });
+        it('{a: {}}, {a: {}} => true', () => {
+            expect(isSameObject({a: {}}, {a: {}}) === true).toBeTruthy();
         });
     });
 });

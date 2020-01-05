@@ -9,6 +9,11 @@ describe('GENESE MAPPER _mapIndexableType', () => {
     // _mapIndexableType
     // **************************************************************************
 
+    const target = {
+        gnIndexableType: {
+            country: ''
+        }
+    };
     const countriesSource = {
         fr: {
             country: 'Allemagne'
@@ -21,17 +26,8 @@ describe('GENESE MAPPER _mapIndexableType', () => {
     it('undefined, {a: 1} => undefined', () => {
         expect(gmp._mapIndexableType(undefined, {a: 1}) === undefined).toBeTruthy();
     });
-
-    it('{gnIndexableType: {a: 1}}, undefined => {a: 1}', () => {
-        expect(isSameObject(gmp._mapIndexableType({a: 1}, undefined), {a: 1})).toBeTruthy();
-    });
-
-    it('{a: 1}, null => null', () => {
-        expect(gmp._mapIndexableType({a: 1}, null) === null).toBeTruthy();
-    });
-
-    it('{country: ""}, countriesSource => {fr: {country: "Allemagne"}}', () => {
-        expect(isSameObject(gmp._mapIndexableType({country: ''}, countriesSource), countriesSource))
+    it('{gnIndexableType: {country: ""}}, countriesSource => {fr: {country: "Allemagne"}}', () => {
+        expect(isSameObject(gmp._mapIndexableType(target, countriesSource), countriesSource))
             .toBeTruthy();
     });
 
