@@ -1,6 +1,6 @@
 import { GeneseMapper } from '..';
 
-describe('GENESE MAPPER _areStringOrNumber', () => {
+describe('GENESE MAPPER arrayMap', () => {
     const gmp = new GeneseMapper(Object);
 
 

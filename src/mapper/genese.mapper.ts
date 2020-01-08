@@ -46,20 +46,23 @@ export class GeneseMapper<T> {
 
 
     /**
-     * Returns array of mapped results
+     * Receives an array of elements to map (with type T) and returns the array of mapped results (with T type)
      */
-    public arrayMap(data: any[]): T[] {
+    public arrayMap(data: any[], tConstructor: TConstructor<any> = this.tConstructor): T[] {
+        if (data === null) {
+            return null;
+        }
         if (!Array.isArray(data)) {
             return [];
         }
         const results: any[] = [];
-        if (PRIMITIVES.includes(this.tConstructor.name)) {
+        if (PRIMITIVES.includes(tConstructor.name)) {
             data.forEach(e => {
-                if (typeof e === this.tConstructor.name.toLowerCase()) {
+                if (typeof e === tConstructor.name.toLowerCase()) {
                     results.push(e);
-                } else if (this.tConstructor.name === 'String' && typeof e === 'number') {
+                } else if (tConstructor.name === 'String' && typeof e === 'number') {
                     results.push(e.toString());
-                } else if (this.tConstructor.name === 'Number' && typeof e === 'string' && !isNaN(Number(e))) {
+                } else if (tConstructor.name === 'Number' && typeof e === 'string' && !isNaN(Number(e))) {
                     results.push(+e);
                 } else if (e === null) {
                     results.push(null);
@@ -163,7 +166,7 @@ export class GeneseMapper<T> {
                         } else {
                             if (Array.isArray(target[key])) {
                                 cloneTarget[key] = Array.isArray(source[key])
-                                    ? this._mapArrayOfObjects(target[key], source[key])
+                                    ? this._mapArray(target[key], source[key])
                                     : cloneTarget[key];
                             } else {
                                 if (this._areStringOrNumber(target[key], source[key])) {
@@ -251,17 +254,31 @@ export class GeneseMapper<T> {
 
 
     /**
-     * Remove specific genese properties
+     * Map array of objects
      */
-    _mapArrayOfObjects(target: {[key: string]: any}[], source: {[key: string]: any}[]): {[key: string]: any}[] {
-        if (!Array.isArray(target) || target.length === 0 || !Array.isArray(source)) {
+    _mapArray(target: any[], source: any[]): any[] {
+        if (source === null) {
+            return null;
+        }
+        if (source === undefined || !Array.isArray(source) || (Array.isArray(target) && !Array.isArray(source))) {
+            return target;
+        }
+        if (!Array.isArray(target) || target.length === 0) {
             console.warn('Impossible to map array of objects with undefined or empty array');
             return undefined;
         }
         const arrayOfObjects: any[] = [];
         const model = clone(target[0]);
         for (const element of source) {
-            arrayOfObjects.push(this._diveMap(model, element));
+            let mappedElement: any;
+            if (Array.isArray(model) && Array.isArray(element)) {
+                mappedElement = this._mapArray(model, element);
+            } else if (Array.isArray(model) && !Array.isArray(element) && !!element) {
+                return target;
+            } else {
+                mappedElement = this._diveMap(model, element);
+            }
+            arrayOfObjects.push(mappedElement);
         }
         return arrayOfObjects;
     }

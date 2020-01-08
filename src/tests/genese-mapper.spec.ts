@@ -475,7 +475,7 @@ describe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.map({a: {fr: {b: '2'}}}), {a: {fr: {b: '2'}}})).toBeTruthy();
             });
             it('{a: {fr: {b: "2"}, en: {b: "2"}}} => {a: {fr: {b: "2"}, en: {b: "2"}}}', () => {
-                expect(isSameObject(geneseMapper.map({a: {fr: {b: '2'}}, en: {b: '2'}}),{a: {fr: {b: '2'}}, en: {b: '2'}})).toBeTruthy();
+                expect(isSameObject(geneseMapper.map({a: {fr: {b: '2'}}, en: {b: '2'}}), {a: {fr: {b: '2'}}, en: {b: '2'}})).toBeTruthy();
             });
             it('{{a: {c: "2"}}} => {a: {}}', () => {
                 expect(isSameObject(geneseMapper.map({a:  {c: '2'}}), {a: {c: {b: ''}}})).toBeTruthy();
@@ -555,7 +555,7 @@ describe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.arrayMap([null]), [null])).toBeTruthy();
             });
             it('null => []', () => {
-                expect(isSameObject(geneseMapper.arrayMap(null), [])).toBeTruthy();
+                expect(isSameObject(geneseMapper.arrayMap(null), null)).toBeTruthy();
             });
             it('undefined => []', () => {
                 expect(isSameObject(geneseMapper.arrayMap(undefined), [])).toBeTruthy();
@@ -588,7 +588,7 @@ describe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.arrayMap([null]), [null])).toBeTruthy();
             });
             it('null => []', () => {
-                expect(isSameObject(geneseMapper.arrayMap(null), [])).toBeTruthy();
+                expect(isSameObject(geneseMapper.arrayMap(null), null)).toBeTruthy();
             });
             it('undefined => []', () => {
                 expect(isSameObject(geneseMapper.arrayMap(undefined), [])).toBeTruthy();
@@ -624,7 +624,7 @@ describe('GENESE MAPPER geneseMapper', () => {
                 expect(isSameObject(geneseMapper.arrayMap([null]), [null])).toBeTruthy();
             });
             it('null => []', () => {
-                expect(isSameObject(geneseMapper.arrayMap(null), [])).toBeTruthy();
+                expect(isSameObject(geneseMapper.arrayMap(null), null)).toBeTruthy();
             });
             it('undefined => []', () => {
                 expect(isSameObject(geneseMapper.arrayMap(undefined), [])).toBeTruthy();
