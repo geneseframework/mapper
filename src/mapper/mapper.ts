@@ -1,4 +1,4 @@
-import { TConstructor } from '../models/t-constructor.model';
+import { ClassConstructor, TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
 import { clone, isPrimitive } from '..';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
@@ -16,8 +16,8 @@ export class Mapper<T> {
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    constructor(classOrClassName: TConstructor<T> | string, options?: MapperOptions) {
-        this.className = typeof classOrClassName === 'string' ? classOrClassName : this.tConstructor?.name;
+    constructor(classOrClassName: ClassConstructor<T> | string, options?: MapperOptions) {
+        this.className = typeof classOrClassName === 'string' ? classOrClassName : classOrClassName.name;
     }
 
 
@@ -27,7 +27,7 @@ export class Mapper<T> {
      * If not, it returns a mapped U object
      * uConstructor is useful for extraction of given fields of a T class object
      */
-    public async create(data: any): Promise<T> {
+    async create(data: any): Promise<T> {
         InitService.start();
         const constructorFilePath: string = await AstService.createConstructorFile(this.className);
         const constructorFile: ConstructorFile<T> = require(constructorFilePath);
