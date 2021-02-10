@@ -2,6 +2,10 @@ import { TConstructor } from '../models/t-constructor.model';
 import { PRIMITIVES } from '../models/primitive.model';
 import { clone, isPrimitive } from '..';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
+import { AstService } from '../services/ast.service';
+import { ConstructorFile } from '../interfaces/constructor-file.interface';
+import { Project } from 'ts-morph';
+import { InitService } from '../services/init.service';
 
 export class Mapper<T> {
 
@@ -17,9 +21,20 @@ export class Mapper<T> {
     }
 
 
-    // --------------------------------------------------
-    //                     METHODS
-    // --------------------------------------------------
+    /**
+     * The core of the generic mapper
+     * If uConstructor is undefined, U equals T and this methodName returns a mapped T object
+     * If not, it returns a mapped U object
+     * uConstructor is useful for extraction of given fields of a T class object
+     */
+    public async create(data: any): Promise<T> {
+        InitService.start();
+        const constructorFilePath: string = await AstService.createConstructorFile(this.className);
+        const constructorFile: ConstructorFile<T> = require(constructorFilePath);
+        const tObject: T = constructorFile.newInstance(data);
+        return tObject;
+    }
+
 
     /**
      * The core of the generic mapper
@@ -64,7 +79,7 @@ export class Mapper<T> {
             });
         } else {
             data.forEach(e => {
-                results.push(this.map(e));
+                results.push(this.create(e));
             });
         }
         return results;
