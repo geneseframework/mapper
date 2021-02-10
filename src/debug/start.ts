@@ -7,7 +7,8 @@ async function start() {
     console.log(chalk.yellowBright('Starts Debug process...'));
     const catMapper = new Mapper(Cat);
     console.log(chalk.cyanBright('catMapperrrrr'), catMapper);
-    await catMapper.create(CAT);
+    const cat: Cat = await catMapper.create(CAT);
+    console.log(chalk.blueBright('cattttttt'), cat);
 }
 
 start()

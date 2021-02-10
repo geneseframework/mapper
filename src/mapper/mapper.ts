@@ -6,6 +6,7 @@ import { AstService } from '../services/ast.service';
 import { ConstructorFile } from '../interfaces/constructor-file.interface';
 import { Project } from 'ts-morph';
 import { InitService } from '../services/init.service';
+import * as chalk from 'chalk';
 
 export class Mapper<T> {
 
@@ -30,9 +31,9 @@ export class Mapper<T> {
     async create(data: any): Promise<T> {
         InitService.start();
         const constructorFilePath: string = await AstService.createConstructorFile(this.className);
+        console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), constructorFilePath);
         const constructorFile: ConstructorFile<T> = require(constructorFilePath);
-        const tObject: T = constructorFile.newInstance(data);
-        return tObject;
+        return constructorFile?.newInstance ? constructorFile.newInstance(data) : undefined;
     }
 
 
