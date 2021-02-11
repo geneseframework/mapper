@@ -1,6 +1,6 @@
 {
-    "name": "genese-mapper",
-    "version": "1.0.7",
+    "name": "@genese/mapper",
+    "version": "0.0.1",
     "author": {
         "name": "Gilles Fabre",
         "url": "https://github.com/gillesfabre34"
@@ -9,8 +9,7 @@
         "debug": "ts-node src/debug/start.ts",
         "test": "karma start karma.conf.js"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/jasmine": "~2.8.8",
         "@types/jasminewd2": "~2.0.3",
@@ -33,10 +32,10 @@
         "typescript": "^4.1.4"
     },
     "keywords": [
-        "genese-mapper",
+        "genese",
+        "mapper",
         "generic mapper",
-        "genese-angular",
-        "javascript mapper",
+        "javascript",
         "typescript"
     ],
     "license": "MIT",

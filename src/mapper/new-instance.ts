@@ -6,14 +6,20 @@ import { Cat } from '../debug/project/src/models/cat.model';
 import { GLOBAL } from '../const/global.const';
 import { isOutOfProject } from '../utils/ast.util';
 import { isInFolder } from '../utils/file-system.util';
+import { Person } from '../debug/project/src/models/person.model';
+import { Address } from '../debug/project/src/models/address.model';
 
 export class InstanceService<T> {
 
 
     static createInstance(className: string): any {
         switch (className) {
+            case 'Address':
+                return new Address(undefined, undefined, undefined);
             case 'Cat':
                 return new Cat(undefined, undefined, undefined);
+            case 'Person':
+                return new Person(undefined, undefined, undefined, undefined, undefined, undefined);
             default:
                 return undefined;
         }
@@ -51,33 +57,43 @@ export class InstanceService<T> {
         if (!property) {
             return;
         }
-        const propertyStructure: PropertyDeclarationStructure = property.getStructure();
-        const propertyType: string = propertyStructure.type as string;
+        const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
-        console.log(chalk.blueBright('propertyyyysssss'), propertyStructure);
-        if (isPrimitiveType(propertyType) || isPrimitiveType(apparentType)) {
+        const propertyType = propertyStructureType ?? apparentType;
+        // if (propertyType ===)
+        // console.log(chalk.yellowBright('propertyyyy structure'), property.getStructure());
+        console.log(chalk.greenBright('propertyyyy '), property.getName(), propertyType, property.getType().isArray());
+        if (isPrimitiveType(propertyType)) {
             if (hasPrimitiveType(dataValue)) {
                 target[key] = dataValue;
             }
             return;
         }
-        console.log(chalk.magentaBright('APPPPT TYPE'), apparentType);
+        // console.log(chalk.magentaBright('APPPPT TYPE'), apparentType);
         const apparentTypeImportDeclarationPath: string = this.getApparentTypeImportDeclarationPath(apparentType);
         let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(apparentTypeImportDeclarationPath);
         if (isOutOfProject(importSourceFile)) {
             console.log(chalk.redBright('Is out of project'), key, dataValue, propertyType);
-            console.log(chalk.redBright('Is in folder ??? apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
-            console.log(chalk.redBright('Is in folder ???'), isInFolder(apparentTypeImportDeclarationPath, GLOBAL.projectPath));
-            importSourceFile = GLOBAL.project.addSourceFileAtPath(apparentTypeImportDeclarationPath);
             importSourceFile = GLOBAL.project.addSourceFileAtPath(apparentTypeImportDeclarationPath);
         }
-        console.log(chalk.blueBright('SRCF CODEEEEE'), importSourceFile);
-        console.log(chalk.blueBright('SRCF CODEEEEE'), importSourceFile.getFullText());
+        console.log(chalk.blueBright('IMPORT NAMEEEEE'), importSourceFile.getBaseName());
         const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === propertyType);
         if (importClassDeclaration) {
-            for (const propertyKey of importClassDeclaration.getProperties().map(p => p.getName())) {
-                console.log(chalk.cyanBright('PROP KEYYYYY'), propertyKey);
-                // this.deepMap(target[key], importClassDeclaration, propertyKey, dataValue[key]);
+            target[key] = this.createInstance(propertyType);
+            console.log(chalk.cyanBright('DATA VALLLL'), dataValue);
+            console.log(chalk.cyanBright('PROP KEYYYYY'), key, target[key], dataValue);
+            this.map(dataValue, target[key], importClassDeclaration);
+        }
+        if (property.getType().isArray() && Array.isArray(dataValue)) {
+            const typeName: string = propertyType.slice(0, -2);
+            console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), propertyType.slice(0, -2));
+            const importClassArrayDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
+            // console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), property.get[Type().getSymbol().getEscapedName());
+            target[key] = [] as any[];
+            for (const element of dataValue) {
+                const instance = this.createInstance(typeName);
+                const mapped = this.map(element, instance, importClassArrayDeclaration);
+                target[key].push(mapped);
             }
         }
     }
