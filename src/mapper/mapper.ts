@@ -1,98 +1,59 @@
 import { ClassConstructor, TConstructor } from '../models/t-constructor.model';
-import { PRIMITIVES } from '../models/primitive.model';
-import { clone, isPrimitive } from '..';
+import { clone } from '..';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { AstService } from '../services/ast.service';
-import { ConstructorFile } from '../interfaces/constructor-file.interface';
-import { ClassDeclaration, Project } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
-import * as chalk from 'chalk';
-import { InstanceService } from './new-instance';
-import { GLOBAL } from '../const/global.const';
-import { Global } from '../models/global.model';
+import {
+    ArrayOfPrimitiveElements,
+    isPrimitiveTypeOrArrayOfPrimitiveTypes,
+    PrimitiveElement, PrimitiveType, PrimitiveTypes
+} from '../utils/primitives.util';
+import { MapInstanceService } from '../services/map-instance.service';
+import { MapPrimitiveService } from '../services/map-primitive.service';
 
 export class Mapper<T> {
 
-    readonly className: string = undefined;
-    readonly tConstructor: TConstructor<T> = undefined;
+    tConstructor: TConstructor<T> = undefined;
+    typeName: string = undefined;
 
     /**
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
     constructor(classConstructor: ClassConstructor<T> | string, options?: MapperOptions) {
+        this.init(classConstructor);
+    }
+
+
+    init(classConstructor: ClassConstructor<T> | string): void {
         if (typeof classConstructor === 'string') {
-            this.className = classConstructor;
+            this.typeName = classConstructor;
         } else {
             this.tConstructor = classConstructor;
-            this.className = classConstructor.name;
+            this.typeName = classConstructor.name;
         }
-    }
-
-
-    /**
-     * The core of the generic mapper
-     * If uConstructor is undefined, U equals T and this methodName returns a mapped T object
-     * If not, it returns a mapped U object
-     * uConstructor is useful for extraction of given fields of a T class object
-     */
-    async create(data: any[]): Promise<T[]>
-    async create(data: any): Promise<T>
-    async create(data: any): Promise<T | T[]> {
         InitService.start();
-        const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.className);
-        if (Array.isArray(data)) {
-            return InstanceService.newInstances(data, this.className, classDeclaration);
+    }
+
+
+    async create(data: boolean): Promise<boolean>
+    async create(data: number): Promise<number>
+    async create(data: string): Promise<string>
+    async create(data: any[]): Promise<T[]>
+    async create(data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(this.typeName)) {
+            return MapPrimitiveService.create(data, this.typeName as PrimitiveType | PrimitiveTypes);
         } else {
-            return InstanceService.newInstance(data, this.className, classDeclaration);
+            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.typeName);
+            if (Array.isArray(data)) {
+                return MapInstanceService.createInstances(data, this.typeName, classDeclaration);
+            } else {
+                return MapInstanceService.createInstance(data, this.typeName, classDeclaration);
+            }
         }
     }
 
-
-    /**
-     * Receives an array of elements to map (with type T) and returns the array of mapped results (with T type)
-     */
-    public arrayMap(data: any[], tConstructor: TConstructor<any> = this.tConstructor): T[] {
-        if (data === null) {
-            return null;
-        }
-        if (!Array.isArray(data)) {
-            return [];
-        }
-        const results: any[] = [];
-        if (PRIMITIVES.includes(tConstructor.name)) {
-            data.forEach(e => {
-                if (typeof e === tConstructor.name.toLowerCase()) {
-                    results.push(e);
-                } else if (tConstructor.name === 'String' && typeof e === 'number') {
-                    results.push(e.toString());
-                } else if (tConstructor.name === 'Number' && typeof e === 'string' && !isNaN(Number(e))) {
-                    results.push(+e);
-                } else if (e === null) {
-                    results.push(null);
-                }
-            });
-        } else {
-            data.forEach(e => {
-                results.push(this.create(e));
-            });
-        }
-        return results;
-    }
-
-
-    // --------------------------------------------------
-    //                 INTERNAL METHODS
-    // --------------------------------------------------
-
-
-    /**
-     * Check if two objects are both string or number.
-     * In this case, returns true.
-     */
-    _areStringOrNumber(target: any, source: any): boolean {
-        return ((typeof target === 'string' || typeof target === 'number') && (typeof source === 'number' || typeof source === 'string'));
-    }
 
 
     /**
@@ -118,76 +79,7 @@ export class Mapper<T> {
         }
     }
 
-    /**
-     * For a given object with U type (the target model), returns the source object mapped with the U model
-     * If source === null, it returns null
-     * CAUTION: param "target" can't be undefined
-     */
-    _diveMap<U>(target: U, source: any): any {
-        if (source === undefined) {
-            return target;
-        } else if (source === null) {
-            return source;
-        } else {
-            if (isPrimitive(target)) {
-                if (isPrimitive(source)) {
-                    if (this._areStringOrNumber(target, source)) {
-                        return this._castStringAndNumbers(target, source);
-                    } else {
-                        return (typeof source === 'boolean' && typeof target === 'boolean') ? source : target;
-                    }
-                } else {
-                    return target;
-                }
-            } else {
-                return this._mapNotPrimitive(target, source);
-            }
-        }
-    }
 
-
-    /**
-     * For non-primitive objects, returns source object mapped with the type of the target (U)
-     * If source === null, it returns null
-     * CAUTION: param "target" can't be undefined
-     */
-    _mapNotPrimitive<U>(target: U, source: any): any {
-        if (source === undefined) {
-            return target;
-        } else if (source === null) {
-            return null;
-        } else {
-            let cloneTarget = Object.assign({}, target);
-            for (const key of Object.keys(target)) {
-                if (key === 'gnIndexableType') {
-                    cloneTarget = this._mapIndexableType(target as unknown as IndexableType, source);
-                } else {
-                    if (target[key] !== undefined) {
-                        if (source[key] === null) {
-                            cloneTarget[key] = null;
-                        } else if (source[key] === undefined) {
-                            cloneTarget[key] = this._purge(target[key]);
-                        } else {
-                            if (Array.isArray(target[key])) {
-                                cloneTarget[key] = Array.isArray(source[key])
-                                    ? this._mapArray(target[key], source[key])
-                                    : cloneTarget[key];
-                            } else {
-                                if (this._areStringOrNumber(target[key], source[key])) {
-                                    cloneTarget[key] = this._castStringAndNumbers(target[key], source[key]);
-                                } else {
-                                    cloneTarget[key] = this._diveMap(target[key], source[key]);
-                                }
-                            }
-                        }
-                    } else {
-                        return source;
-                    }
-                }
-            }
-            return cloneTarget;
-        }
-    }
 
 
     /**
@@ -238,22 +130,22 @@ export class Mapper<T> {
 
 
     _mapIndexableTypeArray(target: any[], source: any): any {
-        const mappedObject: any = {};
-        for (const key of Object.keys(source)) {
-            const deepMapped = this._diveMap({[key]: [target]}, source);
-            Object.assign(mappedObject, {[key]: deepMapped[key]});
-        }
-        return mappedObject;
+        // const mappedObject: any = {};
+        // for (const key of Object.keys(source)) {
+        //     const deepMapped = this._diveMap({[key]: [target]}, source);
+        //     Object.assign(mappedObject, {[key]: deepMapped[key]});
+        // }
+        // return mappedObject;
     }
 
 
 
     _mapIndexableTypeObject(target: any, source: any): any {
-        const mappedObject: any = {};
-        for (const key of Object.keys(source)) {
-            Object.assign(mappedObject, {[key]: this._diveMap(target, source[key])});
-        }
-        return mappedObject;
+        // const mappedObject: any = {};
+        // for (const key of Object.keys(source)) {
+        //     Object.assign(mappedObject, {[key]: this._diveMap(target, source[key])});
+        // }
+        // return mappedObject;
     }
 
 
@@ -280,85 +172,13 @@ export class Mapper<T> {
             } else if (Array.isArray(model) && !Array.isArray(element) && !!element) {
                 return target;
             } else {
-                mappedElement = this._diveMap(model, element);
+                // mappedElement = this._diveMap(model, element);
             }
             arrayOfObjects.push(mappedElement);
         }
         return arrayOfObjects;
     }
 
-
-    /**
-     * Remove specific genese properties
-     */
-    _purge(obj: any): any {
-        if (!obj) {
-            return obj;
-        }
-        delete obj.gnIndexableType;
-        return obj;
-    }
-
-
-    /**
-     * If a property of the U class have the decorator @GnRename, this methodName replaces the key of the gnRename http param
-     * This methodName is useful when the backend renamed some DTO properties :
-     * with @GnRename decorator, you can get values from backend without changing the property name of your T objects in every file
-     */
-    _rename<U>(uConstructor: TConstructor<U>, data: any): any {
-        const constr: any = uConstructor;
-        Object.keys(constr.gnRename).map(oldKey => {
-            const newKey = constr.gnRename[oldKey];
-            if (data[newKey]) {
-                data[oldKey] = data[newKey];
-                delete data[newKey];
-            }
-        });
-        return data;
-    }
-
-
-
-    /**
-     * If data object with type U have keys 'gnTranslate', this methodName returns the same object removing gnTranslate key
-     * and preserving only the gnTranslate[language] objects
-     * Example :
-     * if data is like
-     * {
-     *     gnTranslate: {
-     *         fr: {
-     *             country: 'Allemagne'
-     *         },
-     *         en: {
-     *             country: 'Germany'
-     *         }
-     *     }
-     * }
-     * and if language is 'fr', his methodName will return
-     * {
-     *     country: 'Allemagne'
-     * }
-     */
-    public translate(data: any, language: string): any {
-        if (!data || !language) {
-            console.error('No data or no language : impossible to translate element');
-            return undefined;
-        } else {
-            const result = clone(data);
-            Object.keys(result).map(key => {
-                if (key === 'gnTranslate') {
-                    Object.assign(result, result.gnTranslate[language]);
-                    delete result.gnTranslate;
-                } else {
-                    if (typeof result[key] === 'object') {
-                        const copy = clone(result[key]);
-                        result[key] = this.translate(copy, language);
-                    }
-                }
-            });
-            return result;
-        }
-    }
 }
 
 export interface IndexableType {
