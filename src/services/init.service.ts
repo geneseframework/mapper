@@ -8,6 +8,7 @@ export class InitService {
         // GLOBAL.projectPath = projectPath;
         GLOBAL.configFilePath = `${GLOBAL.projectPath}/tsconfig.json`;
         this.createProject();
+        this.createFlaggedProject();
     }
 
 
@@ -15,5 +16,10 @@ export class InitService {
         GLOBAL.project = new Project({
             tsConfigFilePath: GLOBAL.configFilePath,
         });
+    }
+
+
+    private static createFlaggedProject(): void {
+        GLOBAL.flaggedProject = new Project();
     }
 }

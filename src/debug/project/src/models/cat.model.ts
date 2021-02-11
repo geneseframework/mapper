@@ -1,10 +1,12 @@
 import { Meaow } from './meaow.enum';
 import { Mood } from './mood.enum';
 import { IAnimal } from './iAnimal.interface';
+import { Person } from './person.model';
 
 export class Cat implements IAnimal {
 
     age: number = undefined;
+    friend: Person = undefined;
     hungry = false;
     isHealthy: boolean = true;
     mood: Mood = undefined;

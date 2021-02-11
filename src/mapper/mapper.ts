@@ -4,9 +4,10 @@ import { clone, isPrimitive } from '..';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { AstService } from '../services/ast.service';
 import { ConstructorFile } from '../interfaces/constructor-file.interface';
-import { Project } from 'ts-morph';
+import { ClassDeclaration, Project } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import * as chalk from 'chalk';
+import { InstanceService } from './new-instance';
 
 export class Mapper<T> {
 
@@ -17,8 +18,13 @@ export class Mapper<T> {
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    constructor(classOrClassName: ClassConstructor<T> | string, options?: MapperOptions) {
-        this.className = typeof classOrClassName === 'string' ? classOrClassName : classOrClassName.name;
+    constructor(classConstructor: ClassConstructor<T> | string, options?: MapperOptions) {
+        if (typeof classConstructor === 'string') {
+            this.className = classConstructor;
+        } else {
+            this.tConstructor = classConstructor;
+            this.className = classConstructor.name;
+        }
     }
 
 
@@ -30,10 +36,14 @@ export class Mapper<T> {
      */
     async create(data: any): Promise<T> {
         InitService.start();
-        const constructorFilePath: string = await AstService.createConstructorFile(this.className);
-        console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), constructorFilePath);
-        const constructorFile: ConstructorFile<T> = require(constructorFilePath);
-        return constructorFile?.newInstance ? constructorFile.newInstance(data) : undefined;
+        const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.className);
+        console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), classDeclaration?.getName());
+        return InstanceService.newInstance(data, this.className, classDeclaration);
+        // return InstanceService.newInstance(data, this.tConstructor, classDeclaration);
+        // const constructorFilePath: string = await AstService.createConstructorFile(this.className);
+        // console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), constructorFilePath);
+        // const constructorFile: ConstructorFile<T> = require(constructorFilePath);
+        // return constructorFile?.newInstance ? constructorFile.newInstance(data) : undefined;
     }
 
 
