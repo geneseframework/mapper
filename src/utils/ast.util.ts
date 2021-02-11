@@ -18,11 +18,6 @@ export function getImportDeclaration(apparentType: string, typeName: string): Cl
     }
     const importEnumDeclaration: EnumDeclaration = importSourceFile.getEnums().find(c => c.getName() === typeName);
     if (importEnumDeclaration) {
-        if (typeName === 'Mood') {
-            console.log(chalk.redBright('GET IMPRT DECLLLLLL'), apparentTypeImportDeclarationPath);
-            console.log(chalk.redBright('GET IMPRT DECLLLLLL STRUCT'), importEnumDeclaration.getText());
-            console.log(chalk.redBright('GET IMPRT DECLLLLLL STRUCT'), importEnumDeclaration.getStructure());
-        }
         return importEnumDeclaration;
     }
     return undefined;
@@ -46,7 +41,7 @@ function getImportSourceFile(path: string): SourceFile {
         console.log(chalk.redBright('Is out of project'), path);
         importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
     }
-    console.log(chalk.blueBright('IMPORT NAMEEEEE'), importSourceFile.getBaseName());
+    console.log(chalk.greenBright('GET IMPORT SRCFFFF'), importSourceFile.getBaseName());
     return importSourceFile;
 }
 

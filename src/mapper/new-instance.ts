@@ -1,9 +1,8 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, SourceFile } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import * as chalk from 'chalk';
-import { hasPrimitiveType, isPrimitiveType, PrimitiveType } from '../utils/primitives.util';
+import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
 import { Cat } from '../debug/project/src/models/cat.model';
-import { GLOBAL } from '../const/global.const';
-import { getImportDeclaration, isEnumValue, isOutOfProject } from '../utils/ast.util';
+import { getImportDeclaration, isEnumValue } from '../utils/ast.util';
 import { Person } from '../debug/project/src/models/person.model';
 import { Address } from '../debug/project/src/models/address.model';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
@@ -63,19 +62,11 @@ export class InstanceService<T> {
             return;
         }
         if (declaration instanceof ClassDeclaration) {
-            target[key] = this.createInstance(propertyType);
-            // console.log(chalk.cyanBright('CLASSSSS DATA VALLLL'), dataValue);
-            // console.log(chalk.blueBright('CLASSS PROP KEYYYYY'), key, target[key]);
-            this.map(dataValue, target[key], declaration);
+            this.setClassType(target, key, dataValue, propertyType, declaration);
             return;
         }
         if (declaration instanceof EnumDeclaration) {
-            console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), dataValue);
-            console.log(chalk.green('ENUMMMM PROP KEYYYYY'), key, target[key]);
-            console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), isEnumValue(declaration, dataValue));
-            if (isEnumValue(declaration, dataValue)) {
-                target[key] = dataValue;
-            }
+            this.setEnumType(target, key, dataValue, declaration);
             return;
         }
     }
@@ -88,13 +79,31 @@ export class InstanceService<T> {
     }
 
 
+    private static setEnumType(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
+        console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), key, target[key], dataValue);
+        console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), isEnumValue(declaration, dataValue));
+        if (isEnumValue(declaration, dataValue)) {
+            target[key] = dataValue;
+        }
+    }
+
+
+    private static setClassType(target: any, key: string, dataValue: any, propertyType: string, declaration: ClassDeclaration): void {
+        target[key] = this.createInstance(propertyType);
+        this.map(dataValue, target[key], declaration);
+    }
+
+
     private static isArrayType(property: PropertyDeclaration): boolean {
+        // if (property.getName() === 'colors') {
+        //     console.log(chalk.cyanBright('IS ARRAY ????'), property.getType().isArray());
+        // }
         return property.getType().isArray();
     }
 
 
     private static setArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
-        // console.log(chalk.redBright('TYPE ISARAAAY'), propertyType, dataValue);
+        // console.log(chalk.redBright('TYPE ISARAAAY'), propertyType, dataValue, apparentType);
         if (!Array.isArray(dataValue)) {
             return;
         }
@@ -102,10 +111,14 @@ export class InstanceService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
+            // console.log(chalk.redBright('TYPE ISARAAAY elt typenameeeee'), element, typeName);
             const instance = this.createInstance(typeName);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const mapped = this.map(element, instance, importArrayDeclaration);
                 target[key].push(mapped);
+            }
+            if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(element)) {
+                target[key].push(element);
             }
         }
     }
