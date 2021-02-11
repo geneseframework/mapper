@@ -113,7 +113,6 @@ export class InstanceService<T> {
 
 
     private static setArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
-        // console.log(chalk.redBright('TYPE ISARAAAY'), propertyType, dataValue, apparentType);
         if (!Array.isArray(dataValue)) {
             return;
         }
@@ -121,7 +120,6 @@ export class InstanceService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
-            // console.log(chalk.redBright('TYPE ISARAAAY elt typenameeeee'), element, typeName);
             const instance = this.createInstance(typeName);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const mapped = this.map(element, instance, importArrayDeclaration);
@@ -140,36 +138,36 @@ export class InstanceService<T> {
 
 
 
-    private static setTupleType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string, tupleType: TupleTypeNode): void {
+    private static setTupleType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string, tupleTypeNode: TupleTypeNode): void {
         console.log(chalk.redBright('SET TYPE TUPLLLLLL'), propertyType, dataValue, apparentType);
-        console.log(chalk.red('TYPE TUPLLLLLL'), tupleType?.getElements().length, dataValue?.length);
-        const tupleElements: (TypeNode | NamedTupleMember)[] = tupleType?.getElements();
+        console.log(chalk.red('TYPE TUPLLLLLL'), tupleTypeNode?.getElements().length, dataValue?.length);
+        const tupleElements: (TypeNode | NamedTupleMember)[] = tupleTypeNode?.getElements();
+        const tupleType: string[] = this.toArray(propertyType);
         const apparentTupleType: string[] = this.toArray(apparentType);
         if (!Array.isArray(dataValue) || tupleElements.length !== dataValue?.length) {
             return;
         }
-        // const typeName: string = propertyType.slice(0, -2);
-        // const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         const value: any[] = [];
-        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < dataValue.length; i++) {
             if (isPrimitiveType(apparentTupleType[i])) {
                 if (typeof dataValue[i] === apparentTupleType[i]) {
-                    console.log(chalk.cyanBright('PRIMITIVE TIPLE ELTTTTTT'), apparentTupleType[i]);
+                    console.log(chalk.cyanBright('PRIMITIVE TIPLE ELTTTTTT'), apparentTupleType[i], dataValue[i]);
                     value.push(dataValue[i]);
                 } else {
                     return;
                 }
+            } else {
+                const instance = this.createInstance(tupleType[i]);
+                const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentTupleType[i], tupleType[i]);
+                if (importArrayDeclaration instanceof ClassDeclaration) {
+                    const mapped = this.map(dataValue[i], instance, importArrayDeclaration);
+                    value.push(mapped);
+                }
+                if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(dataValue[i])) {
+                    value.push(dataValue[i]);
+                }
+
             }
-            console.log(chalk.yellowBright('TYPE TUPLLLL elt typenameeeee'), dataValue[i]);
-        //     const instance = this.createInstance(typeName);
-        //     if (importArrayDeclaration instanceof ClassDeclaration) {
-        //         const mapped = this.map(element, instance, importArrayDeclaration);
-        //         target[key].push(mapped);
-        //     }
-        //     if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(element)) {
-        //         target[key].push(element);
-        //     }
         }
         target[key] = value;
         console.log(chalk.cyanBright('TUPLE ELTTTTTT'), value);
