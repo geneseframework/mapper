@@ -3,7 +3,7 @@ import * as chalk from 'chalk';
 import { hasPrimitiveType, isPrimitiveType, PrimitiveType } from '../utils/primitives.util';
 import { Cat } from '../debug/project/src/models/cat.model';
 import { GLOBAL } from '../const/global.const';
-import { getImportDeclaration, isOutOfProject } from '../utils/ast.util';
+import { getImportDeclaration, isEnumValue, isOutOfProject } from '../utils/ast.util';
 import { Person } from '../debug/project/src/models/person.model';
 import { Address } from '../debug/project/src/models/address.model';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
@@ -72,13 +72,10 @@ export class InstanceService<T> {
         if (declaration instanceof EnumDeclaration) {
             console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), dataValue);
             console.log(chalk.green('ENUMMMM PROP KEYYYYY'), key, target[key]);
-            console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), this.isEnumValue(declaration, dataValue));
-            if (this.isEnumValue(declaration, dataValue)) {
+            console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), isEnumValue(declaration, dataValue));
+            if (isEnumValue(declaration, dataValue)) {
                 target[key] = dataValue;
             }
-            // const enumValue: any = declaration.getStructure().members.find(m => m.initializer === dataValue);
-            // console.log(chalk.greenBright('ENUMMMM members'), members);
-            // this.map(dataValue, target[key], importDeclaration);
             return;
         }
     }
@@ -111,14 +108,6 @@ export class InstanceService<T> {
                 target[key].push(mapped);
             }
         }
-    }
-
-
-    private static isEnumValue(declaration: EnumDeclaration, value: any): boolean {
-        // const zzz = declaration.getMembers().map(m => m.getKindName() + m.getInitializer().getKindName() + m.getText());
-        const zzz = declaration.getStructure().members.map(m => m.initializer);
-        console.log(chalk.blueBright('IS ENUMMMMM ?'), value, zzz);
-        return !!declaration.getStructure().members.find(m => m.initializer === value);
     }
 
 

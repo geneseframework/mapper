@@ -1,7 +1,5 @@
 import { Cat } from './cat.model';
 import { Address } from './address.model';
-import { Meaow } from './meaow.enum';
-import { Mood } from './mood.enum';
 
 export class Person {
 
@@ -22,31 +20,6 @@ export class Person {
     }
 
 
-    addCat(cat: Cat): void {
-        this.cats.push(cat);
-    }
-
-
-    adopt(cat: Cat): Person {
-        if (cat) {
-            this.addCat(cat);
-            this.isHappy = true;
-            // cat.mood = Mood.HAPPY;
-        } else {
-            this.isHappy = false;
-        }
-        return this;
-    }
-
-
-    async giveFood(food: 'croquettes' | 'swill'): Promise<Meaow[]> {
-        const meaows: Meaow[] = [];
-        for (const cat of this.cats) {
-            const meaow = await cat.eatFood(food);
-            meaows.push(meaow);
-        }
-        return meaows;
-    }
 
 }
 
