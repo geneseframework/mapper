@@ -8,6 +8,8 @@ import { ClassDeclaration, Project } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import * as chalk from 'chalk';
 import { InstanceService } from './new-instance';
+import { GLOBAL } from '../const/global.const';
+import { Global } from '../models/global.model';
 
 export class Mapper<T> {
 
@@ -34,34 +36,17 @@ export class Mapper<T> {
      * If not, it returns a mapped U object
      * uConstructor is useful for extraction of given fields of a T class object
      */
-    async create(data: any): Promise<T> {
+    async create(data: any[]): Promise<T[]>
+    async create(data: any): Promise<T>
+    async create(data: any): Promise<T | T[]> {
         InitService.start();
         const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.className);
         console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), classDeclaration?.getName());
-        return InstanceService.newInstance(data, this.className, classDeclaration);
-        // return InstanceService.newInstance(data, this.tConstructor, classDeclaration);
-        // const constructorFilePath: string = await AstService.createConstructorFile(this.className);
-        // console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), constructorFilePath);
-        // const constructorFile: ConstructorFile<T> = require(constructorFilePath);
-        // return constructorFile?.newInstance ? constructorFile.newInstance(data) : undefined;
-    }
-
-
-    /**
-     * The core of the generic mapper
-     * If uConstructor is undefined, U equals T and this methodName returns a mapped T object
-     * If not, it returns a mapped U object
-     * uConstructor is useful for extraction of given fields of a T class object
-     */
-    public map(data: any): T {
-        const target = new this.tConstructor();
-        if (!data) {
-            return target;
+        if (Array.isArray(data)) {
+            return InstanceService.newInstances(data, this.className, classDeclaration);
+        } else {
+            return InstanceService.newInstance(data, this.className, classDeclaration);
         }
-        if (this.tConstructor.hasOwnProperty('gnRename')) {
-            data = this._rename(this.tConstructor, data);
-        }
-        return Object.assign(target, this._diveMap<T>(target, data));
     }
 
 

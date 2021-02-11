@@ -6,6 +6,7 @@ export class Global {
 
     configFilePath: string = undefined;
     flaggedProject: Project = undefined;
+    isAlreadyInitialized: boolean = false;
     project: Project = undefined;
     projectPath: string = undefined;
 

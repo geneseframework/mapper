@@ -31,6 +31,17 @@ export class InstanceService<T> {
     }
 
 
+    static newInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] {
+        const instancesArray: T[] = [];
+        for (const element of data) {
+            const instance: T = this.newInstance(element, className, classDeclaration);
+            this.map(data, instance, classDeclaration);
+            instancesArray.push(instance);
+        }
+        return instancesArray;
+    }
+
+
     static newInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instance: T = this.createInstance(className);
         return this.map(data, instance, classDeclaration);
