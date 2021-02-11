@@ -8,10 +8,8 @@ export class Cat implements IAnimal {
     age: number = undefined;
     friend: Person = undefined;
     hungry = false;
-    isHealthy: boolean = true;
     mood: Mood = undefined;
     name: string = undefined;
-    weight: number = undefined;
 
     constructor(age: number, name: string, mood: Mood = Mood.SAD) {
         this.age = age;
@@ -22,11 +20,6 @@ export class Cat implements IAnimal {
 
     get numberOfLegs(): number {
         return 4;
-    }
-
-
-    getWeight(): number {
-        return this.weight;
     }
 
 

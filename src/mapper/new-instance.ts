@@ -1,13 +1,12 @@
-import { ClassConstructor } from '../models/t-constructor.model';
-import { ClassDeclaration, PropertyDeclaration, PropertyDeclarationStructure, SourceFile } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, SourceFile } from 'ts-morph';
 import * as chalk from 'chalk';
 import { hasPrimitiveType, isPrimitiveType, PrimitiveType } from '../utils/primitives.util';
 import { Cat } from '../debug/project/src/models/cat.model';
 import { GLOBAL } from '../const/global.const';
-import { isOutOfProject } from '../utils/ast.util';
-import { isInFolder } from '../utils/file-system.util';
+import { getImportDeclaration, isOutOfProject } from '../utils/ast.util';
 import { Person } from '../debug/project/src/models/person.model';
 import { Address } from '../debug/project/src/models/address.model';
+import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 
 export class InstanceService<T> {
 
@@ -32,17 +31,6 @@ export class InstanceService<T> {
     }
 
 
-    // static newInstance<T>(data: any, tConstructor: ClassConstructor<T>, classDeclaration: ClassDeclaration): T {
-    //     const argts = [];
-    //     const numberOfConstructorParameters: number = classDeclaration?.getTypeParameters()?.length ?? 0;
-    //     for (let i = 0; i < numberOfConstructorParameters; i++) {
-    //         argts.push(undefined);
-    //     }
-    //     const instance: T = new tConstructor(argts);
-    //     return this.map(data, instance, classDeclaration);
-    // }
-
-
     private static map<T>(data: any, instance: T, classDeclaration: ClassDeclaration): T {
         for (const key of Object.keys(data)) {
             this.deepMap(instance, classDeclaration, key, data[key]);
@@ -60,59 +48,53 @@ export class InstanceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
         const propertyType = propertyStructureType ?? apparentType;
-        // if (propertyType ===)
-        // console.log(chalk.yellowBright('propertyyyy structure'), property.getStructure());
         console.log(chalk.greenBright('propertyyyy '), property.getName(), propertyType, property.getType().isArray());
         if (isPrimitiveType(propertyType)) {
-            if (hasPrimitiveType(dataValue)) {
-                target[key] = dataValue;
-            }
+            this.setPrimitiveType(target, key, dataValue);
             return;
         }
-        // console.log(chalk.magentaBright('APPPPT TYPE'), apparentType);
-        const apparentTypeImportDeclarationPath: string = this.getApparentTypeImportDeclarationPath(apparentType);
-        let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(apparentTypeImportDeclarationPath);
-        if (isOutOfProject(importSourceFile)) {
-            console.log(chalk.redBright('Is out of project'), key, dataValue, propertyType);
-            importSourceFile = GLOBAL.project.addSourceFileAtPath(apparentTypeImportDeclarationPath);
+        const importDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
+        if (!importDeclaration) {
+            return;
         }
-        console.log(chalk.blueBright('IMPORT NAMEEEEE'), importSourceFile.getBaseName());
-        const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === propertyType);
-        if (importClassDeclaration) {
+        if (importDeclaration instanceof ClassDeclaration) {
             target[key] = this.createInstance(propertyType);
-            console.log(chalk.cyanBright('DATA VALLLL'), dataValue);
-            console.log(chalk.cyanBright('PROP KEYYYYY'), key, target[key], dataValue);
-            this.map(dataValue, target[key], importClassDeclaration);
+            console.log(chalk.cyanBright('CLASSSSS DATA VALLLL'), dataValue);
+            console.log(chalk.blueBright('CLASSS PROP KEYYYYY'), key, target[key], dataValue);
+            this.map(dataValue, target[key], importDeclaration);
+            return;
+        }
+        if (importDeclaration instanceof EnumDeclaration) {
+            target[key] = this.createInstance(propertyType);
+            console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), dataValue);
+            console.log(chalk.green('ENUMMMM PROP KEYYYYY'), key, target[key], dataValue);
+            // this.map(dataValue, target[key], importDeclaration);
+            return;
         }
         if (property.getType().isArray() && Array.isArray(dataValue)) {
             const typeName: string = propertyType.slice(0, -2);
             console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), propertyType.slice(0, -2));
-            const importClassArrayDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
+            const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
+            // const importClassArrayDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
             // console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), property.get[Type().getSymbol().getEscapedName());
             target[key] = [] as any[];
             for (const element of dataValue) {
                 const instance = this.createInstance(typeName);
-                const mapped = this.map(element, instance, importClassArrayDeclaration);
-                target[key].push(mapped);
+                if (importArrayDeclaration instanceof ClassDeclaration) {
+                    const mapped = this.map(element, instance, importArrayDeclaration);
+                    target[key].push(mapped);
+                }
             }
         }
     }
 
 
-    /**
-     * Returns the path of the import of a property with its apparent type
-     * @param apparentType
-     * @private
-     */
-    private static getApparentTypeImportDeclarationPath(apparentType: string): string {
-        const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
-        return `${pathWithoutExtension}.ts`;
+    private static setPrimitiveType(target: any, key: string, dataValue: any): void {
+        if (hasPrimitiveType(dataValue)) {
+            target[key] = dataValue;
+        }
     }
 
-
-    private static mapPrimitive(target: any, primitiveType: PrimitiveType, key: string, value: any): void {
-
-    }
 
     /**
      * For a given object with U type (the target model), returns the source object mapped with the U model
