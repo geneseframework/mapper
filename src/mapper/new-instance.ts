@@ -1,8 +1,11 @@
 import { ClassConstructor } from '../models/t-constructor.model';
-import { ClassDeclaration, PropertyDeclaration, PropertyDeclarationStructure } from 'ts-morph';
+import { ClassDeclaration, PropertyDeclaration, PropertyDeclarationStructure, SourceFile } from 'ts-morph';
 import * as chalk from 'chalk';
 import { hasPrimitiveType, isPrimitiveType, PrimitiveType } from '../utils/primitives.util';
 import { Cat } from '../debug/project/src/models/cat.model';
+import { GLOBAL } from '../const/global.const';
+import { isOutOfProject } from '../utils/ast.util';
+import { isInFolder } from '../utils/file-system.util';
 
 export class InstanceService<T> {
 
@@ -48,16 +51,46 @@ export class InstanceService<T> {
         if (!property) {
             return;
         }
-        const propertyType: string = property.getStructure().type as string;
-        console.log(chalk.blueBright('propertyyyysssss'), property.getStructure());
-        if (isPrimitiveType(propertyType)) {
+        const propertyStructure: PropertyDeclarationStructure = property.getStructure();
+        const propertyType: string = propertyStructure.type as string;
+        const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
+        console.log(chalk.blueBright('propertyyyysssss'), propertyStructure);
+        if (isPrimitiveType(propertyType) || isPrimitiveType(apparentType)) {
             if (hasPrimitiveType(dataValue)) {
                 target[key] = dataValue;
             }
             return;
         }
-        const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
-        console.log(chalk.magentaBright('propertyyyysssss'), apparentType);
+        console.log(chalk.magentaBright('APPPPT TYPE'), apparentType);
+        const apparentTypeImportDeclarationPath: string = this.getApparentTypeImportDeclarationPath(apparentType);
+        let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(apparentTypeImportDeclarationPath);
+        if (isOutOfProject(importSourceFile)) {
+            console.log(chalk.redBright('Is out of project'), key, dataValue, propertyType);
+            console.log(chalk.redBright('Is in folder ??? apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
+            console.log(chalk.redBright('Is in folder ???'), isInFolder(apparentTypeImportDeclarationPath, GLOBAL.projectPath));
+            importSourceFile = GLOBAL.project.addSourceFileAtPath(apparentTypeImportDeclarationPath);
+            importSourceFile = GLOBAL.project.addSourceFileAtPath(apparentTypeImportDeclarationPath);
+        }
+        console.log(chalk.blueBright('SRCF CODEEEEE'), importSourceFile);
+        console.log(chalk.blueBright('SRCF CODEEEEE'), importSourceFile.getFullText());
+        const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === propertyType);
+        if (importClassDeclaration) {
+            for (const propertyKey of importClassDeclaration.getProperties().map(p => p.getName())) {
+                console.log(chalk.cyanBright('PROP KEYYYYY'), propertyKey);
+                // this.deepMap(target[key], importClassDeclaration, propertyKey, dataValue[key]);
+            }
+        }
+    }
+
+
+    /**
+     * Returns the path of the import of a property with its apparent type
+     * @param apparentType
+     * @private
+     */
+    private static getApparentTypeImportDeclarationPath(apparentType: string): string {
+        const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
+        return `${pathWithoutExtension}.ts`;
     }
 
 

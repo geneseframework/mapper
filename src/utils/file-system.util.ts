@@ -1,6 +1,7 @@
 
 import * as fs from 'fs-extra';
 import { GLOBAL } from '../const/global.const';
+import * as chalk from 'chalk';
 
 /**
  * Returns the name of the file at a given path
@@ -30,4 +31,14 @@ export async function ensureDir(folderPath: string): Promise<void> {
 export async function ensureDirAndCopy(source: string, target: string): Promise<void> {
     await fs.ensureDir(getFolderPath(target));
     fs.copySync(source, target);
+}
+
+
+export function isInFolder(path: string, folder: string): boolean {
+    if (!path || ! folder) {
+        return undefined;
+    }
+    const zzz = path.toLowerCase().slice(0, folder.length) === folder.toLowerCase();
+    console.log(chalk.blueBright(''), zzz, path, folder);
+    return zzz;
 }
