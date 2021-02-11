@@ -19,9 +19,9 @@ export class AstService {
     static getClassDeclaration(className: string): ClassDeclaration {
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses().filter(c => c.getName() === className)));
         if (classDeclarations.length === 0) {
-            throwCustom(`ERROR : no class called ${className} in your project`);
+            throwCustom(`ERROR : no class called "${className}" in your project`);
         } else if (classDeclarations.length > 1) {
-            console.log(chalk.yellowBright(`WARNING : multiple classes called ${className} in your project. Please use the option "classFilePath" to fix it.`));
+            console.log(chalk.yellowBright(`WARNING : multiple classes called "${className}" in your project. Please use the option "classFilePath" to fix it.`));
         }
         return classDeclarations[0];
     }
