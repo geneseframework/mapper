@@ -2,7 +2,6 @@ import { ClassDeclaration, EnumDeclaration, SourceFile } from 'ts-morph';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
-import { KeyValue } from '../models/key-value.model';
 
 export function isOutOfProject(sourceFile: SourceFile): boolean {
     return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
@@ -41,7 +40,6 @@ function getImportSourceFile(path: string): SourceFile {
         console.log(chalk.redBright('Is out of project'), path);
         importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
     }
-    console.log(chalk.greenBright('GET IMPORT SRCFFFF'), importSourceFile.getBaseName());
     return importSourceFile;
 }
 

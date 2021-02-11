@@ -9,8 +9,7 @@ export class Cat implements IAnimal {
     colors: Color[] = [];
     friend: Person = undefined;
     hungry = false;
-    // tattoo: [string, number];
-    tattoo: [string, number, Color];
+    tattoo: [string, number, Color, Person];
     mood: Mood = undefined;
     name: string = undefined;
 
