@@ -25,6 +25,6 @@ export const CAT_DATA: any = {
     hungry: false,
     mood: 'happy',
     name: 'Biela',
-    tattoo: ['Jef', 872, Color.BLACK],
+    tattoo: ['Jef', 872, Color.BLACK, { firstName: 'Léo', lastName: 'Renoir' }],
     unknownProperty: 'unknown'
 }

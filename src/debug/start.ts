@@ -1,7 +1,7 @@
 import { Mapper } from '../mapper/mapper';
 import * as chalk from 'chalk';
-import { CAT_DATA } from './project/src/mocks/cat.mock';
 import { Cat } from './project/src/models/cat.model';
+import { CAT_DATA } from './project/src/data/cat.data';
 
 async function start() {
     console.log(chalk.yellowBright('Starts Debug process...'));
