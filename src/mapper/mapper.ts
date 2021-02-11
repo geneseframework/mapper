@@ -41,7 +41,6 @@ export class Mapper<T> {
     async create(data: any): Promise<T | T[]> {
         InitService.start();
         const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.className);
-        console.log(chalk.greenBright('CSTR FILE PATHHHHHH'), classDeclaration?.getName());
         if (Array.isArray(data)) {
             return InstanceService.newInstances(data, this.className, classDeclaration);
         } else {
