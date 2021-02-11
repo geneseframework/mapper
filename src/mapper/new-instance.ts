@@ -1,4 +1,11 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
+import {
+    ClassDeclaration,
+    EnumDeclaration,
+    NamedTupleMember,
+    PropertyDeclaration,
+    TupleTypeNode,
+    TypeNode
+} from 'ts-morph';
 import * as chalk from 'chalk';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
 import { Cat } from '../debug/project/src/models/cat.model';
@@ -32,14 +39,14 @@ export class InstanceService<T> {
 
     private static map<T>(data: any, instance: T, classDeclaration: ClassDeclaration): T {
         for (const key of Object.keys(data)) {
-            this.deepMap(instance, classDeclaration, key, data[key]);
+            this.keyMap(instance, classDeclaration, key, data[key]);
         }
         // console.log(chalk.greenBright('INSTANCEEEEEE'), instance);
         return instance;
     }
 
 
-    private static deepMap<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
+    private static keyMap<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
         const property: PropertyDeclaration = classDeclaration.getProperties().find(p => p.getName() === key);
         if (!property) {
             return;
@@ -47,13 +54,21 @@ export class InstanceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
         const propertyType = propertyStructureType ?? apparentType;
-        // console.log(chalk.yellowBright('propertyyyy '), property.getName(), propertyType, property.getType().isArray());
+        // console.log(chalk.yellowBright('propertyyyy '), property.getName(), propertyType, property.getType().isTuple());
         if (isPrimitiveType(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
             return;
         }
         if (this.isArrayType(property)) {
             this.setArrayType(target, key, dataValue, propertyType, apparentType);
+            return;
+        }
+        if (this.isTupleType(property)) {
+            console.log(chalk.yellowBright('propertyyyy '), property.getName(), propertyType, apparentType);
+            // console.log(chalk.yellowBright('propertyyyy STRUCT'), property.getType());
+            const tupleType: TupleTypeNode = property.getTypeNode() as TupleTypeNode;
+            // console.log(chalk.yellowBright('propertyyyy TUPLE ELTSSSS'), tupleType.getElements());
+            this.setTupleType(target, key, dataValue, propertyType, apparentType, property.getTypeNode() as TupleTypeNode);
             return;
         }
         const declaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
@@ -80,8 +95,6 @@ export class InstanceService<T> {
 
 
     private static setEnumType(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
-        console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), key, target[key], dataValue);
-        console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), isEnumValue(declaration, dataValue));
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }
@@ -95,9 +108,6 @@ export class InstanceService<T> {
 
 
     private static isArrayType(property: PropertyDeclaration): boolean {
-        // if (property.getName() === 'colors') {
-        //     console.log(chalk.cyanBright('IS ARRAY ????'), property.getType().isArray());
-        // }
         return property.getType().isArray();
     }
 
@@ -122,6 +132,54 @@ export class InstanceService<T> {
             }
         }
     }
+
+
+    private static isTupleType(property: PropertyDeclaration): boolean {
+        return property.getType().isTuple();
+    }
+
+
+
+    private static setTupleType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string, tupleType: TupleTypeNode): void {
+        console.log(chalk.redBright('SET TYPE TUPLLLLLL'), propertyType, dataValue, apparentType);
+        console.log(chalk.red('TYPE TUPLLLLLL'), tupleType?.getElements().length, dataValue?.length);
+        const tupleElements: (TypeNode | NamedTupleMember)[] = tupleType?.getElements();
+        const apparentTupleType: string[] = this.toArray(apparentType);
+        if (!Array.isArray(dataValue) || tupleElements.length !== dataValue?.length) {
+            return;
+        }
+        // const typeName: string = propertyType.slice(0, -2);
+        // const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
+        const value: any[] = [];
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < dataValue.length; i++) {
+            if (isPrimitiveType(apparentTupleType[i])) {
+                if (typeof dataValue[i] === apparentTupleType[i]) {
+                    console.log(chalk.cyanBright('PRIMITIVE TIPLE ELTTTTTT'), apparentTupleType[i]);
+                    value.push(dataValue[i]);
+                } else {
+                    return;
+                }
+            }
+            console.log(chalk.yellowBright('TYPE TUPLLLL elt typenameeeee'), dataValue[i]);
+        //     const instance = this.createInstance(typeName);
+        //     if (importArrayDeclaration instanceof ClassDeclaration) {
+        //         const mapped = this.map(element, instance, importArrayDeclaration);
+        //         target[key].push(mapped);
+        //     }
+        //     if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(element)) {
+        //         target[key].push(element);
+        //     }
+        }
+        target[key] = value;
+        console.log(chalk.cyanBright('TUPLE ELTTTTTT'), value);
+    }
+
+
+    private static toArray(arrayLike: string): string[] {
+        return arrayLike.slice(1, -1).split(', ');
+    }
+
 
 
     /**
