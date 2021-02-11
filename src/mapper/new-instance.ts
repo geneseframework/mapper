@@ -35,7 +35,7 @@ export class InstanceService<T> {
         for (const key of Object.keys(data)) {
             this.deepMap(instance, classDeclaration, key, data[key]);
         }
-        console.log(chalk.greenBright('INSTANCEEEEEE'), instance);
+        // console.log(chalk.greenBright('INSTANCEEEEEE'), instance);
         return instance;
     }
 
@@ -48,43 +48,38 @@ export class InstanceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
         const propertyType = propertyStructureType ?? apparentType;
-        console.log(chalk.greenBright('propertyyyy '), property.getName(), propertyType, property.getType().isArray());
+        // console.log(chalk.yellowBright('propertyyyy '), property.getName(), propertyType, property.getType().isArray());
         if (isPrimitiveType(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
             return;
         }
-        const importDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
-        if (!importDeclaration) {
+        if (this.isArrayType(property)) {
+            this.setArrayType(target, key, dataValue, propertyType, apparentType);
             return;
         }
-        if (importDeclaration instanceof ClassDeclaration) {
-            target[key] = this.createInstance(propertyType);
-            console.log(chalk.cyanBright('CLASSSSS DATA VALLLL'), dataValue);
-            console.log(chalk.blueBright('CLASSS PROP KEYYYYY'), key, target[key], dataValue);
-            this.map(dataValue, target[key], importDeclaration);
+        const declaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
+        console.log(chalk.magentaBright('IMPT DECLLLLLLL NAME'), declaration?.getName());
+        if (!declaration) {
             return;
         }
-        if (importDeclaration instanceof EnumDeclaration) {
+        if (declaration instanceof ClassDeclaration) {
             target[key] = this.createInstance(propertyType);
+            // console.log(chalk.cyanBright('CLASSSSS DATA VALLLL'), dataValue);
+            // console.log(chalk.blueBright('CLASSS PROP KEYYYYY'), key, target[key]);
+            this.map(dataValue, target[key], declaration);
+            return;
+        }
+        if (declaration instanceof EnumDeclaration) {
             console.log(chalk.greenBright('ENUMMMM DATA VALLLL'), dataValue);
-            console.log(chalk.green('ENUMMMM PROP KEYYYYY'), key, target[key], dataValue);
+            console.log(chalk.green('ENUMMMM PROP KEYYYYY'), key, target[key]);
+            console.log(chalk.green('ENUMMMM this.isEnumValue(declaration, dataValue)'), this.isEnumValue(declaration, dataValue));
+            if (this.isEnumValue(declaration, dataValue)) {
+                target[key] = dataValue;
+            }
+            // const enumValue: any = declaration.getStructure().members.find(m => m.initializer === dataValue);
+            // console.log(chalk.greenBright('ENUMMMM members'), members);
             // this.map(dataValue, target[key], importDeclaration);
             return;
-        }
-        if (property.getType().isArray() && Array.isArray(dataValue)) {
-            const typeName: string = propertyType.slice(0, -2);
-            console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), propertyType.slice(0, -2));
-            const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
-            // const importClassArrayDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
-            // console.log(chalk.magentaBright('TYPE NAMEEEEEEEE'), property.get[Type().getSymbol().getEscapedName());
-            target[key] = [] as any[];
-            for (const element of dataValue) {
-                const instance = this.createInstance(typeName);
-                if (importArrayDeclaration instanceof ClassDeclaration) {
-                    const mapped = this.map(element, instance, importArrayDeclaration);
-                    target[key].push(mapped);
-                }
-            }
         }
     }
 
@@ -93,6 +88,37 @@ export class InstanceService<T> {
         if (hasPrimitiveType(dataValue)) {
             target[key] = dataValue;
         }
+    }
+
+
+    private static isArrayType(property: PropertyDeclaration): boolean {
+        return property.getType().isArray();
+    }
+
+
+    private static setArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
+        // console.log(chalk.redBright('TYPE ISARAAAY'), propertyType, dataValue);
+        if (!Array.isArray(dataValue)) {
+            return;
+        }
+        const typeName: string = propertyType.slice(0, -2);
+        const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
+        target[key] = [] as any[];
+        for (const element of dataValue) {
+            const instance = this.createInstance(typeName);
+            if (importArrayDeclaration instanceof ClassDeclaration) {
+                const mapped = this.map(element, instance, importArrayDeclaration);
+                target[key].push(mapped);
+            }
+        }
+    }
+
+
+    private static isEnumValue(declaration: EnumDeclaration, value: any): boolean {
+        // const zzz = declaration.getMembers().map(m => m.getKindName() + m.getInitializer().getKindName() + m.getText());
+        const zzz = declaration.getStructure().members.map(m => m.initializer);
+        console.log(chalk.blueBright('IS ENUMMMMM ?'), value, zzz);
+        return !!declaration.getStructure().members.find(m => m.initializer === value);
     }
 
 

@@ -24,21 +24,22 @@ export class Cat implements IAnimal {
 
 
     meaow(): Meaow {
-        let meaow: Meaow;
-        switch (this.mood) {
-            case Mood.ANGRY:
-                meaow = Meaow.ANGRY;
-                break;
-            case Mood.HAPPY:
-                meaow = Meaow.HAPPY;
-                break;
-            case Mood.SAD:
-                meaow = Meaow.SAD;
-                break;
-            default:
-                meaow = Meaow.SAD;
-        }
-        return meaow;
+        return undefined;
+        // let meaow: Meaow;
+        // switch (this.mood) {
+        //     case Mood.ANGRY:
+        //         meaow = Meaow.ANGRY;
+        //         break;
+        //     case Mood.HAPPY:
+        //         meaow = Meaow.HAPPY;
+        //         break;
+        //     case Mood.SAD:
+        //         meaow = Meaow.SAD;
+        //         break;
+        //     default:
+        //         meaow = Meaow.SAD;
+        // }
+        // return meaow;
     }
 
 
@@ -47,10 +48,10 @@ export class Cat implements IAnimal {
             return food === 'croquettes' ? Meaow.HAPPY : Meaow.SAD;
         }
         if (food === 'croquettes') {
-            this.mood = Mood.HAPPY;
+            // this.mood = Mood.HAPPY;
             return Meaow.HAPPY;
         } else {
-            this.mood = Mood.ANGRY;
+            // this.mood = Mood.ANGRY;
             return Meaow.ANGRY;
         }
     }

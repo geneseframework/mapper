@@ -31,7 +31,7 @@ export class Person {
         if (cat) {
             this.addCat(cat);
             this.isHappy = true;
-            cat.mood = Mood.HAPPY;
+            // cat.mood = Mood.HAPPY;
         } else {
             this.isHappy = false;
         }
