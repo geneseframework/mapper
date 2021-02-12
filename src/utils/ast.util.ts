@@ -1,4 +1,4 @@
-import { ClassDeclaration, EnumDeclaration, SourceFile } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, ImportDeclaration, ImportSpecifier, SourceFile } from 'ts-morph';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
@@ -54,3 +54,9 @@ export function enumValues(declaration: EnumDeclaration): any[] {
     return declaration.getStructure().members?.map(m => (m.initializer as string).slice(1, -1));
 }
 
+
+
+export function getImportSpecifier(importDeclaration: ImportDeclaration): ImportSpecifier {
+    const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
+    return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
+}

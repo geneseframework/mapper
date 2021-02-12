@@ -7,6 +7,8 @@ import { Mapper } from './mapper';
 export class Global {
 
     configFilePath: string = undefined;
+    createInstancesPath: string = undefined;
+    createInstancesSourceFile: SourceFile = undefined;
     flaggedProject: Project = undefined;
     isAlreadyInitialized: boolean = false;
     mappers: Mapper<any>[] = [];
