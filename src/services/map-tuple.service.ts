@@ -37,11 +37,10 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType));
-            const instance = generateInstance(instanceGenerator);
-            // const instance = generateInstance(tupleType);
             const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType));
+                const instance = generateInstance(instanceGenerator);
                 MapInstanceService.mapData(dataValue, instance, importArrayDeclaration);
                 return instance;
             }

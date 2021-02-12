@@ -88,7 +88,6 @@ export class MapInstanceService<T> {
     private static setClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath());
         target[key] = generateInstance(instanceGenerator);
-        // target[key] = generateInstance(propertyType);
         this.mapData(dataValue, target[key], classDeclaration);
     }
 

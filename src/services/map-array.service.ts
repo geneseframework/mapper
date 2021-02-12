@@ -24,10 +24,9 @@ export class MapArrayService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
-            console.log(chalk.redBright('ARRAY GENERATOR TYPPPPPP'), getApparentTypeImportDeclarationPath(apparentType));
-            const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType));
-            const instance = generateInstance(instanceGenerator);
             if (importArrayDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType));
+                const instance = generateInstance(instanceGenerator);
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }

@@ -6,7 +6,7 @@ import * as chalk from 'chalk';
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
-    console.log(chalk.magentaBright('INSTANCE GENERATORRRRRR'), instanceGenerator);
+    // console.log(chalk.magentaBright('INSTANCE GENERATORRRRRR'), instanceGenerator);
     console.log(chalk.greenBright('INSTANCE GENERATORRRRRR id'), instanceGenerator.id);
     switch (instanceGenerator.id) {
         case 'Address':
@@ -27,16 +27,3 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
     }
     return instance;
 }
-
-// export function generateInstance(className: string): any {
-//     switch (className) {
-//         case 'Address':
-//             return new Address(undefined, undefined, undefined);
-//         case 'Cat':
-//             return new Cat(undefined, undefined, undefined);
-//         case 'Person':
-//             return new Person(undefined, undefined, undefined, undefined, undefined, undefined);
-//         default:
-//             return undefined;
-//     }
-// }

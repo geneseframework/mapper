@@ -1,8 +1,5 @@
-import { TConstructor } from './t-constructor.model';
-
 export class InstanceGenerator<T> {
 
-    // tConstructor: TConstructor<T> = undefined;
     typeDeclarationPath: string = undefined;
     typeName: string = undefined;
 
