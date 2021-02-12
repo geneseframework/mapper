@@ -6,7 +6,7 @@
         "url": "https://github.com/gillesfabre34"
     },
     "scripts": {
-        "debug": "ts-node src/debug/start.ts",
+        "debug": "ts-node src/debug/project/start.ts",
         "test": "karma start karma.conf.js"
     },
     "dependencies": {},
