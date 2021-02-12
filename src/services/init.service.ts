@@ -22,6 +22,11 @@ export class InitService {
         GLOBAL.project = new Project({
             tsConfigFilePath: GLOBAL.configFilePath,
         });
+        // TODO : remove hard code
+        const nodeModuleMapperPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts`;
+        GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
+        // GLOBAL.project.addSourceFileAtPath(`${GLOBAL.projectPath}/node_modules/@genese-mapper/src/models/mapper.ts`);
+        GLOBAL.nodeModuleMapper = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
     }
 
 

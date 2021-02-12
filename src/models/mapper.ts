@@ -1,5 +1,5 @@
-import { ClassConstructor, TConstructor } from '../models/t-constructor.model';
-import { clone } from '..';
+import { ClassConstructor, TConstructor } from './t-constructor.model';
+import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { AstService } from '../services/ast.service';
 import { ClassDeclaration } from 'ts-morph';
@@ -38,12 +38,12 @@ export class Mapper<T> {
             this.tConstructor = classConstructor;
             this.typeName = classConstructor.name;
         }
-        InitService.start();
     }
 
 
     private static async getInstance<T>(classConstructor: ClassConstructor<T> | string): Promise<Mapper<T>> {
         if (GLOBAL.isFirstMapper) {
+            InitService.start();
             await FlagService.init();
         }
         return this.getMapper<T>(classConstructor) ?? new Mapper<T>(classConstructor);

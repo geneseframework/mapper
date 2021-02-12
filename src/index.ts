@@ -1,2 +1,2 @@
-export * from './mapper/genese.mapper';
+export * from './models/mapper';
 export * from './utils/tools.service';

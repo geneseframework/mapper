@@ -1,7 +1,7 @@
-import { Project } from 'ts-morph';
+import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { ClassConstructor } from './t-constructor.model';
-import { Mapper } from '../mapper/mapper';
+import { Mapper } from './mapper';
 
 
 export class Global {
@@ -10,6 +10,7 @@ export class Global {
     flaggedProject: Project = undefined;
     isAlreadyInitialized: boolean = false;
     mappers: Mapper<any>[] = [];
+    nodeModuleMapper: SourceFile = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
 

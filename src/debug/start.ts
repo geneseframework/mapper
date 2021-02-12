@@ -1,4 +1,4 @@
-import { Mapper } from '../mapper/mapper';
+import { Mapper } from '../models/mapper';
 import * as chalk from 'chalk';
 import { Cat } from './project/src/models/cat.model';
 import { CAT_DATA_0 } from './project/src/data/cat.data';
