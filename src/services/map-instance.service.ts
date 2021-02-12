@@ -6,6 +6,7 @@ import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import * as chalk from 'chalk';
 import { generateInstance } from '../utils/generate-instance';
+import { InstanceGenerator } from '../models/instance-generator.model';
 
 export class MapInstanceService<T> {
 
@@ -21,7 +22,8 @@ export class MapInstanceService<T> {
 
 
     static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
-        const instance: T = generateInstance(className);
+        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath());
+        const instance: T = generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);
         return instance;
     }
@@ -83,9 +85,11 @@ export class MapInstanceService<T> {
     }
 
 
-    private static setClassType(target: any, key: string, dataValue: any, propertyType: string, declaration: ClassDeclaration): void {
-        target[key] = generateInstance(propertyType);
-        this.mapData(dataValue, target[key], declaration);
+    private static setClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
+        const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath());
+        target[key] = generateInstance(instanceGenerator);
+        // target[key] = generateInstance(propertyType);
+        this.mapData(dataValue, target[key], classDeclaration);
     }
 
 }

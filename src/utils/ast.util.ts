@@ -28,7 +28,7 @@ export function getImportDeclaration(apparentType: string, typeName: string): Cl
  * @param apparentType
  * @private
  */
-function getApparentTypeImportDeclarationPath(apparentType: string): string {
+export function getApparentTypeImportDeclarationPath(apparentType: string): string {
     const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
     return `${pathWithoutExtension}.ts`;
 }

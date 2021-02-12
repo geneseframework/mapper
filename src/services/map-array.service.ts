@@ -1,9 +1,11 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import { hasPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration } from '../utils/ast.util';
+import { getApparentTypeImportDeclarationPath, getImportDeclaration } from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { generateInstance } from '../utils/generate-instance';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import * as chalk from 'chalk';
 
 export class MapArrayService<T> {
 
@@ -22,7 +24,9 @@ export class MapArrayService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
-            const instance = generateInstance(typeName);
+            console.log(chalk.redBright('ARRAY GENERATOR TYPPPPPP'), getApparentTypeImportDeclarationPath(apparentType));
+            const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType));
+            const instance = generateInstance(instanceGenerator);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);

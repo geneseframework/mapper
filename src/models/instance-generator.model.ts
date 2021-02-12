@@ -14,6 +14,6 @@ export class InstanceGenerator<T> {
 
 
     get id(): string {
-        return `${this.typeName}_${this.typeDeclarationPath}`;
+        return `${this.typeName}_${this.typeDeclarationPath.toLowerCase()}`;
     }
 }
