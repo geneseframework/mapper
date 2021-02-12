@@ -1,7 +1,7 @@
 import {
     ImportDeclaration, ImportSpecifier,
     MethodDeclaration,
-    Project,
+    Project, PropertyAccessExpression,
     SourceFile,
     SourceFileReferencingNodes,
     SyntaxKind
@@ -30,11 +30,10 @@ export class FlagService {
         const importSpecifier: ImportSpecifier = getImportSpecifier(importDeclaration);
         importSpecifier.getStructure();
         console.log(chalk.blueBright('IMPRT SPECCCCC'), importSpecifier.getStructure());
-        const zzz = importDeclaration.getSourceFile()
+        const propertyAccessExpressions: PropertyAccessExpression[] = importDeclaration.getSourceFile()
             .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-            .map(p => p.getText())
-            // .filter(p => p.getExpression().getText() === importSpecifier.getName() && p.getName() === 'create');
-        console.log(chalk.magentaBright('ZZZZZZZ'), zzz);
+            .filter(p => p.getExpression().getText() === importSpecifier.getName() && p.getName() === 'create');
+        console.log(chalk.magentaBright('FLAG TYPES propertyAccessExpressionssssss'), propertyAccessExpressions.map(p => p.getText()));
     }
 
 }
