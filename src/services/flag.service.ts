@@ -10,7 +10,7 @@ import * as chalk from 'chalk';
 import { GLOBAL } from '../const/global.const';
 import { getImportSpecifier, getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast.util';
 import { InstanceGenerator } from '../models/instance-generator.model';
-import { tabs } from '../utils/strings.util';
+import { tab, tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 
 export class FlagService {
@@ -67,12 +67,12 @@ export class FlagService {
         switchStatement.removeClauses([0, switchStatement.getClauses().length]);
         let switchCode = `switch (instanceGenerator.id) {\n`;
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
-            switchCode = `${switchCode}${tabs(3)}${this.switchClause(instanceGenerator)}`;
+            switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
         }
-        switchCode = `${switchCode}${tabs(3)}default:\n
-            console.log(chalk.yellowBright('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);\n
-            instance = undefined;\n
-            }\n`;
+        switchCode = `${switchCode}${tab}default:
+        console.log(chalk.yellowBright('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);
+        instance = undefined;
+    }`;
         switchStatement.replaceWithText(switchCode);
         console.log(chalk.redBright('SWITCH CLAUSESSSSSSS'), switchStatement?.getClauses().map(c => c.getText()));
         GLOBAL.generateInstancesSourceFile.fixMissingImports();
@@ -81,9 +81,9 @@ export class FlagService {
 
 
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
-        return `case '${instanceGenerator.typeName}':\n
-            instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n
-            break;\n`;
+        return `case '${instanceGenerator.typeName}':
+        instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};
+        break;\n`;
     }
 
 
