@@ -16,7 +16,6 @@ export class FlagService {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
-        // console.log(chalk.greenBright('INIT DECLARRRRR GLOB PROJJJJ'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()));
         await this.generateInstanceGeneratorFile();
         console.log(chalk.yellowBright('Types mapped'));
     }

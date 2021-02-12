@@ -4,12 +4,9 @@ import { Person } from '../debug/project/src/models/person.model';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import * as chalk from 'chalk';
 import { MainAppProcess } from "../debug/project/src/models/main-app-process";
-import { GLOBAL } from '../const/global.const';
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
-    console.log(chalk.blueBright('instanceGeneratorrrrrrr'), instanceGenerator);
-    // console.log(chalk.magentaBright('GENERATE INST FILEEEEEEE'), GLOBAL.generateInstancesSourceFile.getFullText());
     switch (instanceGenerator.id) {
         case 'Address_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/address.model.ts':
             instance = new Address(undefined, undefined, undefined);
