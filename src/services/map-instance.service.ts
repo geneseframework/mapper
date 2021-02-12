@@ -5,6 +5,7 @@ import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type'
 import { createInstance } from '../debug/project/create-instance';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
+import * as chalk from 'chalk';
 
 export class MapInstanceService<T> {
 

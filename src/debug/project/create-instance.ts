@@ -7,9 +7,7 @@ export function createInstance(className: string): any {
         case 'Address':
             return new Address(undefined, undefined, undefined);
         case 'Cat':
-            return undefined;
-            // return new Cat(undefined, undefined);
-            // return new Cat(undefined, undefined, undefined);
+            return new Cat(undefined, undefined, undefined);
         case 'Person':
             return new Person(undefined, undefined, undefined, undefined, undefined, undefined);
         default:

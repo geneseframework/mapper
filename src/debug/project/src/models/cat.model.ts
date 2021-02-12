@@ -13,10 +13,9 @@ export class Cat implements IAnimal {
     mood: Mood = undefined;
     name: string = undefined;
 
-    constructor(age: number, name: string) {
-    // constructor(age: number, name: string, mood: Mood = Mood.SAD) {
+    constructor(age: number, name: string, mood: Mood = Mood.SAD) {
         this.age = age;
-        // this.mood = mood;
+        this.mood = mood;
         this.name = name;
     }
 

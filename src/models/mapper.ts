@@ -62,8 +62,8 @@ export class Mapper<T> {
     static async create<T>(classConstructor: ClassConstructor<T> | string, data: string): Promise<string>
     static async create<T>(classConstructor: ClassConstructor<T> | string, data: any[]): Promise<T[]>
     static async create<T>(classConstructor: ClassConstructor<T> | string, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        console.log(chalk.blueBright('ARGTS CLASS CONSTR'), ((classConstructor as ClassConstructor<T>).length));
         const mapper: Mapper<T> = await this.getInstance<T>(classConstructor);
+        console.log(chalk.cyanBright('MAPPERRRRRRR'), mapper);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else {
