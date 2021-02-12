@@ -44,8 +44,10 @@ export class Mapper<T> {
 
     private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
         if (GLOBAL.isFirstMapper) {
+            console.log(chalk.redBright('IS FIRST MAPPPER'));
             InitService.start();
             await FlagService.init();
+            console.log(chalk.redBright('HAS FLAGGED'));
         }
         return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
     }
@@ -65,6 +67,9 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         console.log(chalk.cyanBright('MAPPERRRRRRR'), mapper);
+        // const reqqqq = await require(GLOBAL.generateInstancesSourceFile.getFilePath());
+        console.log(chalk.cyanBright('REQUIREEEEEE'), GLOBAL.generateInstance);
+        GLOBAL.generateInstancesSourceFile.saveSync();
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else {

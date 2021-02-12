@@ -4,9 +4,8 @@ import { getImportDeclaration, getNumberOfConstructorArguments, isEnumValue } fr
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
-import * as chalk from 'chalk';
-import { generateInstance } from '../utils/generate-instance';
 import { InstanceGenerator } from '../models/instance-generator.model';
+import { GLOBAL } from '../const/global.const';
 
 export class MapInstanceService<T> {
 
@@ -23,7 +22,7 @@ export class MapInstanceService<T> {
 
     static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        const instance: T = generateInstance(instanceGenerator);
+        const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);
         return instance;
     }
@@ -87,7 +86,7 @@ export class MapInstanceService<T> {
 
     private static setClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        target[key] = generateInstance(instanceGenerator);
+        target[key] = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(dataValue, target[key], classDeclaration);
     }
 

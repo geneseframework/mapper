@@ -10,6 +10,7 @@ export class Global {
     configFilePath: string = undefined;
     // createInstancesPath: string = undefined;
     flaggedProject: Project = undefined;
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T
     generateInstancesSourceFile: SourceFile = undefined;
     instanceGenerators: InstanceGenerator<any>[] = [];
     isAlreadyInitialized: boolean = false;
