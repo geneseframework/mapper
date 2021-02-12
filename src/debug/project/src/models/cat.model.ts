@@ -2,8 +2,8 @@ import { Mood } from '../enums/mood.enum';
 import { Person } from './person.model';
 import { Color } from './colors.enum';
 import { Animal } from './animal.model';
-import { Prey } from '../interfaces/iAnimal.interface';
 import { Race } from '../types/race.type';
+import { Prey } from '../interfaces/prey.interface';
 
 export class Cat extends Animal {
 
