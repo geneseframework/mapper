@@ -6,7 +6,6 @@ import * as chalk from 'chalk';
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
-    // console.log(chalk.magentaBright('INSTANCE GENERATORRRRRR'), instanceGenerator);
     console.log(chalk.greenBright('INSTANCE GENERATORRRRRR id'), instanceGenerator.id);
     switch (instanceGenerator.id) {
         case 'Address':

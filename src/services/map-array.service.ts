@@ -1,6 +1,10 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import { hasPrimitiveType } from '../utils/primitives.util';
-import { getApparentTypeImportDeclarationPath, getImportDeclaration } from '../utils/ast.util';
+import {
+    getApparentTypeImportDeclarationPath,
+    getImportDeclaration,
+    getNumberOfConstructorArguments
+} from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { generateInstance } from '../utils/generate-instance';
@@ -25,7 +29,7 @@ export class MapArrayService<T> {
         target[key] = [] as any[];
         for (const element of dataValue) {
             if (importArrayDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType));
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = generateInstance(instanceGenerator);
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);

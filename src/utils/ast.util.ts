@@ -44,7 +44,6 @@ function getImportSourceFile(path: string): SourceFile {
 }
 
 
-
 export function isEnumValue(declaration: EnumDeclaration, value: any): boolean {
     return this.enumValues(declaration).includes(value);
 }
@@ -55,8 +54,18 @@ export function enumValues(declaration: EnumDeclaration): any[] {
 }
 
 
-
 export function getImportSpecifier(importDeclaration: ImportDeclaration): ImportSpecifier {
     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
+}
+
+
+// TODO : Heritage ?
+export function getNumberOfConstructorArguments(classDeclaration: ClassDeclaration): number {
+    const constructorDeclarations = classDeclaration.getConstructors();
+    if (!constructorDeclarations || constructorDeclarations.length === 0) {
+        return 0;
+    } else {
+        return constructorDeclarations[0].getParameters()?.length;
+    }
 }
