@@ -1,5 +1,7 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
+import { ClassConstructor } from './t-constructor.model';
+import { Mapper } from '../mapper/mapper';
 
 
 export class Global {
@@ -7,6 +9,7 @@ export class Global {
     configFilePath: string = undefined;
     flaggedProject: Project = undefined;
     isAlreadyInitialized: boolean = false;
+    mappers: Mapper<any>[] = [];
     project: Project = undefined;
     projectPath: string = undefined;
 
@@ -14,6 +17,13 @@ export class Global {
     get geneseMapperFolder(): string {
         return `${GLOBAL.projectPath}/dist/genese/mapper`;
     }
+
+
+    get isFirstMapper(): boolean {
+        return this.mappers.length === 0;
+    }
+
+
 
 }
 

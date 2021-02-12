@@ -8,6 +8,7 @@ export class InitService {
         if (GLOBAL.isAlreadyInitialized) {
             return;
         }
+        // TODO : flaggedfile
         GLOBAL.projectPath = '/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/debug/project';
         // GLOBAL.projectPath = projectPath;
         GLOBAL.configFilePath = `${GLOBAL.projectPath}/tsconfig.json`;

@@ -6,11 +6,13 @@ import { ARRAY_CAT_DATAS } from './project/src/data/array-cats.data';
 import { STRING_DATA, STRING_DATAS } from './project/src/data/string.data';
 
 async function start() {
-    console.log(chalk.yellowBright('Starts process...'));
+    // await Mapper.init();
+    console.log(chalk.yellowBright('Starts application...'));
     // const catMapper = new Mapper('number[]');
     // const cat: string[] = await catMapper.create(STRING_DATAS);
-    const catMapper = new Mapper(Cat);
-    const cat: Cat[] = await catMapper.create(ARRAY_CAT_DATAS);
+    // const catMapper = new Mapper(Cat);
+    // const cat: Cat[] = await catMapper.create(ARRAY_CAT_DATAS);
+    const cat: Cat[] = await Mapper.create(Cat, ARRAY_CAT_DATAS);
     // const cat: Cat = await catMapper.create(['ee']);
     console.log(chalk.yellowBright('Typed object : '), cat);
 }
