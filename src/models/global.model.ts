@@ -8,7 +8,7 @@ import { InstanceGenerator } from './instance-generator.model';
 export class Global {
 
     configFilePath: string = undefined;
-    createInstancesPath: string = undefined;
+    // createInstancesPath: string = undefined;
     flaggedProject: Project = undefined;
     generateInstancesSourceFile: SourceFile = undefined;
     instanceGenerators: InstanceGenerator<any>[] = [];

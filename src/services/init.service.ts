@@ -25,10 +25,13 @@ export class InitService {
         });
         // TODO : remove hard code
         const nodeModuleMapperPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts`;
-        GLOBAL.createInstancesPath = `${GLOBAL.projectPath}/node_modules/genese/@genese-mapper/create-instance.ts`;
         GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
-        // GLOBAL.project.addSourceFileAtPath(`${GLOBAL.projectPath}/node_modules/@genese-mapper/src/models/mapper.ts`);
         GLOBAL.nodeModuleMapper = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
+        // TODO : remove hard code
+        const generateInstancesPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/utils/generate-instance.ts`;
+        // const generateInstancesPath = `${GLOBAL.projectPath}/node_modules/genese/@genese-mapper/create-instance.ts`;
+        GLOBAL.project.addSourceFileAtPath(generateInstancesPath);
+        GLOBAL.generateInstancesSourceFile = GLOBAL.project.getSourceFile(generateInstancesPath);
     }
 
 
