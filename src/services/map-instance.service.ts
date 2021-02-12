@@ -1,4 +1,4 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
 import {
     getAllProperties,
@@ -6,12 +6,13 @@ import {
     getNumberOfConstructorArguments,
     isEnumValue
 } from '../utils/ast.util';
-import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
 import { InstanceGenerator } from '../models/instance-generator.model';
+import { MapTypeService } from './map-type.service';
 
 export class MapInstanceService<T> {
 
@@ -58,15 +59,10 @@ export class MapInstanceService<T> {
             return;
         }
         if (MapTupleService.isTupleType(property)) {
-            MapTupleService.setTupleType(target, key, dataValue, propertyType, apparentType, property.getTypeNode() as TupleTypeNode);
+            MapTupleService.setTupleType(target, key, dataValue, propertyType, apparentType);
             return;
         }
-        const declaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
-        if (key === 'race') {
-            console.log(chalk.blueBright('RACEEEEEE struct'), property.getStructure());
-            console.log(chalk.cyanBright('RACEEEEEE propertyType, apparentType'), propertyType, apparentType);
-            console.log(chalk.greenBright('RACEEEEEE declaration'), declaration);
-        }
+        const declaration: TypeDeclaration = getImportDeclaration(apparentType, propertyType);
         if (!declaration) {
             return;
         }
@@ -76,6 +72,10 @@ export class MapInstanceService<T> {
         }
         if (declaration instanceof EnumDeclaration) {
             this.setEnumType(target, key, dataValue, declaration);
+            return;
+        }
+        if (declaration instanceof TypeAliasDeclaration) {
+            MapTypeService.setTypeType(target, key, dataValue, propertyType, declaration);
             return;
         }
     }

@@ -6,7 +6,7 @@ import {
     PropertyDeclaration,
     SourceFile, TypeAliasDeclaration
 } from 'ts-morph';
-import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
 import { flat } from './arrays.util';
@@ -17,7 +17,7 @@ export function isOutOfProject(sourceFile: SourceFile): boolean {
 }
 
 
-export function getImportDeclaration(apparentType: string, typeName: string): ClassOrEnumDeclaration {
+export function getImportDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
