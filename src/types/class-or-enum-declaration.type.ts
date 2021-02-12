@@ -1,3 +1,3 @@
-import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, TypeAliasDeclaration } from 'ts-morph';
 
-export type ClassOrEnumDeclaration = ClassDeclaration | EnumDeclaration;
+export type ClassOrEnumDeclaration = ClassDeclaration | EnumDeclaration | TypeAliasDeclaration;

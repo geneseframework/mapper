@@ -62,6 +62,11 @@ export class MapInstanceService<T> {
             return;
         }
         const declaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
+        if (key === 'race') {
+            console.log(chalk.blueBright('RACEEEEEE struct'), property.getStructure());
+            console.log(chalk.cyanBright('RACEEEEEE propertyType, apparentType'), propertyType, apparentType);
+            console.log(chalk.greenBright('RACEEEEEE declaration'), declaration);
+        }
         if (!declaration) {
             return;
         }

@@ -4,7 +4,7 @@ import {
     ImportDeclaration,
     ImportSpecifier, InterfaceDeclaration,
     PropertyDeclaration,
-    SourceFile
+    SourceFile, TypeAliasDeclaration
 } from 'ts-morph';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
@@ -27,6 +27,13 @@ export function getImportDeclaration(apparentType: string, typeName: string): Cl
     const importEnumDeclaration: EnumDeclaration = importSourceFile.getEnums().find(c => c.getName() === typeName);
     if (importEnumDeclaration) {
         return importEnumDeclaration;
+    }
+    const typeAliasDeclaration: TypeAliasDeclaration = importSourceFile.getTypeAlias(typeName);
+    if (typeAliasDeclaration) {
+        // if (typeName === 'Race') {
+        //     console.log(chalk.blueBright('RACEEEEEE struct'), typeAliasDeclaration.getStructure());
+        // }
+        return typeAliasDeclaration;
     }
     return undefined;
 }
