@@ -1,11 +1,17 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration, getNumberOfConstructorArguments, isEnumValue } from '../utils/ast.util';
+import {
+    getAllProperties,
+    getImportDeclaration,
+    getNumberOfConstructorArguments,
+    isEnumValue
+} from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
-import { InstanceGenerator } from '../models/instance-generator.model';
 import { GLOBAL } from '../const/global.const';
+import * as chalk from 'chalk';
+import { InstanceGenerator } from '../models/instance-generator.model';
 
 export class MapInstanceService<T> {
 
@@ -30,16 +36,21 @@ export class MapInstanceService<T> {
 
     static mapData<T>(data: any, instance: T, classDeclaration: ClassDeclaration): void {
         for (const key of Object.keys(data)) {
+            console.log(chalk.cyanBright('DATAAAAA KEY'), key);
             this.mapDataKey(instance, classDeclaration, key, data[key]);
         }
     }
 
 
     private static mapDataKey<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
-        const property: PropertyDeclaration = classDeclaration.getProperties().find(p => p.getName() === key);
+        const property: PropertyDeclaration = getAllProperties(classDeclaration).find(p => p.getName() === key);
         if (!property) {
             return;
         }
+        // console.log(chalk.blueBright('TARGETTTTT key'), key);
+        // if (key === 'age') {
+        //     console.log(chalk.blueBright('TARGETTTTT'), target);
+        // }
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
         const propertyType = propertyStructureType ?? apparentType;

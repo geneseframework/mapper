@@ -1,7 +1,16 @@
-import { ClassDeclaration, EnumDeclaration, ImportDeclaration, ImportSpecifier, SourceFile } from 'ts-morph';
+import {
+    ClassDeclaration,
+    EnumDeclaration, HeritageClause,
+    ImportDeclaration,
+    ImportSpecifier, InterfaceDeclaration,
+    PropertyDeclaration,
+    SourceFile
+} from 'ts-morph';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
+import { flat } from './arrays.util';
+import { SyntaxKind } from '@ts-morph/common';
 
 export function isOutOfProject(sourceFile: SourceFile): boolean {
     return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
@@ -73,4 +82,28 @@ export function getNumberOfConstructorArguments(classDeclaration: ClassDeclarati
 
 export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boolean {
     return ['private', 'protected'].includes(classDeclaration?.getConstructors()?.[0]?.getScope());
+}
+
+
+export function getAllProperties(classDeclaration: ClassDeclaration): PropertyDeclaration[] {
+    const propertyDeclarations: PropertyDeclaration[] = classDeclaration.getProperties();
+    const heritageClause: HeritageClause = classDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
+    if (heritageClause) {
+        const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
+        console.log(chalk.blueBright('HERITAGE CLAUSESSSSSS'), parentClassDeclaration.getStructure());
+        if (parentClassDeclaration) {
+            propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
+        }
+    }
+    return propertyDeclarations;
+}
+
+
+export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDeclaration {
+    return getHeritageDeclarations(heritageClause)?.length > 0 ? getHeritageDeclarations(heritageClause)[0] : undefined;
+}
+
+
+export function getHeritageDeclarations(heritageClause: HeritageClause): ClassDeclaration[] {
+    return flat(heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations() ?? []));
 }
