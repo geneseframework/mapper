@@ -69,3 +69,8 @@ export function getNumberOfConstructorArguments(classDeclaration: ClassDeclarati
         return constructorDeclarations[0].getParameters()?.length;
     }
 }
+
+
+export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boolean {
+    return ['private', 'protected'].includes(classDeclaration?.getConstructors()?.[0]?.getScope());
+}

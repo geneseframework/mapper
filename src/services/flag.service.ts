@@ -8,7 +8,7 @@ import {
 } from 'ts-morph';
 import * as chalk from 'chalk';
 import { GLOBAL } from '../const/global.const';
-import { getImportSpecifier, getNumberOfConstructorArguments } from '../utils/ast.util';
+import { getImportSpecifier, getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast.util';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
@@ -19,7 +19,9 @@ export class FlagService {
         console.log(chalk.yellowBright('Init mapping...'));
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
-            GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+            if (!hasPrivateConstructor(classDeclaration)) {
+                GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+            }
         }
         console.log(chalk.greenBright('INIT DECLARRRRR GLOB PROJJJJ'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()));
         await this.generateInstanceGeneratorFile();
@@ -61,7 +63,7 @@ export class FlagService {
 
     private static async generateInstanceGeneratorFile(): Promise<void> {
         const switchStatement : SwitchStatement = GLOBAL.generateInstancesSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        console.log(chalk.greenBright('SWITCH CLAUSESSSSSSS'), switchStatement?.getClauses().map(c => c.getText()));
+        // console.log(chalk.greenBright('SWITCH CLAUSESSSSSSS'), switchStatement?.getClauses().map(c => c.getText()));
         switchStatement.removeClauses([0, switchStatement.getClauses().length]);
         let switchCode = `switch (instanceGenerator.id) {\n`;
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
@@ -73,7 +75,8 @@ export class FlagService {
             }\n`;
         switchStatement.replaceWithText(switchCode);
         console.log(chalk.redBright('SWITCH CLAUSESSSSSSS'), switchStatement?.getClauses().map(c => c.getText()));
-        // await GLOBAL.generateInstancesSourceFile.save();
+        GLOBAL.generateInstancesSourceFile.fixMissingImports();
+        await GLOBAL.generateInstancesSourceFile.save();
     }
 
 
