@@ -1,6 +1,6 @@
 import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import { ClassConstructor } from './t-constructor.model';
+import { TConstructor } from './t-constructor.model';
 import { Mapper } from './mapper';
 
 
@@ -8,8 +8,8 @@ export class Global {
 
     configFilePath: string = undefined;
     createInstancesPath: string = undefined;
-    createInstancesSourceFile: SourceFile = undefined;
     flaggedProject: Project = undefined;
+    generateInstancesSourceFile: SourceFile = undefined;
     isAlreadyInitialized: boolean = false;
     mappers: Mapper<any>[] = [];
     nodeModuleMapper: SourceFile = undefined;

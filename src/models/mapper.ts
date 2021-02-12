@@ -1,4 +1,4 @@
-import { ClassConstructor, TConstructor } from './t-constructor.model';
+import { TConstructor } from './t-constructor.model';
 import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { AstService } from '../services/ast.service';
@@ -16,6 +16,7 @@ import { MapPrimitiveService } from '../services/map-primitive.service';
 import * as chalk from 'chalk';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
+import { MapParameter } from '../types/map-parameter.type';
 
 export class Mapper<T> {
 
@@ -26,43 +27,43 @@ export class Mapper<T> {
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    private constructor(classConstructor: ClassConstructor<T> | string, options?: MapperOptions) {
-        this.implement(classConstructor);
+    private constructor(mapParameter: MapParameter<T>, options?: MapperOptions) {
+        this.implement(mapParameter);
     }
 
 
-    implement(classConstructor: ClassConstructor<T> | string): void {
-        if (typeof classConstructor === 'string') {
-            this.typeName = classConstructor;
+    implement(mapParameter: MapParameter<T>): void {
+        if (typeof mapParameter === 'string') {
+            this.typeName = mapParameter;
         } else {
-            this.tConstructor = classConstructor;
-            this.typeName = classConstructor.name;
+            this.tConstructor = mapParameter;
+            this.typeName = mapParameter.name;
         }
     }
 
 
-    private static async getInstance<T>(classConstructor: ClassConstructor<T> | string): Promise<Mapper<T>> {
+    private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
             await FlagService.init();
         }
-        return this.getMapper<T>(classConstructor) ?? new Mapper<T>(classConstructor);
+        return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
     }
 
 
-    private static getMapper<T>(classConstructor: ClassConstructor<T> | string): Mapper<T> {
-        const typeName: string = typeof classConstructor === 'string' ? classConstructor : classConstructor.name;
+    private static getMapper<T>(mapParameter: MapParameter<T>): Mapper<T> {
+        const typeName: string = typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
         let mapper: Mapper<T> = GLOBAL.mappers.find(m => m.typeName === typeName);
-        return mapper ?? new Mapper(classConstructor);
+        return mapper ?? new Mapper(mapParameter);
     }
 
 
-    static async create<T>(classConstructor: ClassConstructor<T> | string, data: boolean): Promise<boolean>
-    static async create<T>(classConstructor: ClassConstructor<T> | string, data: number): Promise<number>
-    static async create<T>(classConstructor: ClassConstructor<T> | string, data: string): Promise<string>
-    static async create<T>(classConstructor: ClassConstructor<T> | string, data: any[]): Promise<T[]>
-    static async create<T>(classConstructor: ClassConstructor<T> | string, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        const mapper: Mapper<T> = await this.getInstance<T>(classConstructor);
+    static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
+    static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
+    static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
+        const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         console.log(chalk.cyanBright('MAPPERRRRRRR'), mapper);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);

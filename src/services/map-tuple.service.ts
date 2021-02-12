@@ -2,8 +2,8 @@ import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode }
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
 import { getImportDeclaration } from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
 import { MapInstanceService } from './map-instance.service';
+import { generateInstance } from '../utils/generate-instance';
 
 export class MapTupleService<T> {
 
@@ -36,7 +36,7 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const instance = createInstance(tupleType);
+            const instance = generateInstance(tupleType);
             const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 MapInstanceService.mapData(dataValue, instance, importArrayDeclaration);

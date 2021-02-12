@@ -1,8 +1,8 @@
-import { Address } from './src/models/address.model';
-import { Cat } from './src/models/cat.model';
-import { Person } from './src/models/person.model';
+import { Address } from '../debug/project/src/models/address.model';
+import { Cat } from '../debug/project/src/models/cat.model';
+import { Person } from '../debug/project/src/models/person.model';
 
-export function createInstance(className: string): any {
+export function generateInstance(className: string): any {
     switch (className) {
         case 'Address':
             return new Address(undefined, undefined, undefined);

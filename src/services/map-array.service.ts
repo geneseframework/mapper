@@ -1,18 +1,9 @@
-import {
-    ClassDeclaration,
-    EnumDeclaration,
-    NamedTupleMember,
-    PropertyDeclaration,
-    TupleTypeNode,
-    TypeNode
-} from 'ts-morph';
-import * as chalk from 'chalk';
-import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration, isEnumValue } from '../utils/ast.util';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
+import { hasPrimitiveType } from '../utils/primitives.util';
+import { getImportDeclaration } from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
-import { MapTupleService } from './map-tuple.service';
 import { MapInstanceService } from './map-instance.service';
+import { generateInstance } from '../utils/generate-instance';
 
 export class MapArrayService<T> {
 
@@ -31,7 +22,7 @@ export class MapArrayService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
-            const instance = createInstance(typeName);
+            const instance = generateInstance(typeName);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);

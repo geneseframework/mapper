@@ -1,4 +1,5 @@
 import {
+    CallExpression, Identifier,
     ImportDeclaration, ImportSpecifier,
     MethodDeclaration,
     Project, PropertyAccessExpression,
@@ -30,10 +31,14 @@ export class FlagService {
         const importSpecifier: ImportSpecifier = getImportSpecifier(importDeclaration);
         importSpecifier.getStructure();
         console.log(chalk.blueBright('IMPRT SPECCCCC'), importSpecifier.getStructure());
-        const propertyAccessExpressions: PropertyAccessExpression[] = importDeclaration.getSourceFile()
-            .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-            .filter(p => p.getExpression().getText() === importSpecifier.getName() && p.getName() === 'create');
-        console.log(chalk.magentaBright('FLAG TYPES propertyAccessExpressionssssss'), propertyAccessExpressions.map(p => p.getText()));
+        const callExpressions: CallExpression[] = importDeclaration.getSourceFile()
+            .getDescendantsOfKind(SyntaxKind.CallExpression)
+            .filter(c => c.getExpression().getText() === 'Mapper.create');
+        console.log(chalk.magentaBright('FLAG TYPES propertyAccessExpressionssssss'), callExpressions.map(p => p.getExpression().getText()));
+        const mapParameterIdentifiers: Identifier[] = callExpressions.map(c => c.getArguments()[0] as Identifier);
+        for (const mapParameterIdentifier of mapParameterIdentifiers) {
+
+        }
     }
 
 }

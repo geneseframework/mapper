@@ -2,10 +2,10 @@ import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode }
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
 import { getImportDeclaration, isEnumValue } from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import * as chalk from 'chalk';
+import { generateInstance } from '../utils/generate-instance';
 
 export class MapInstanceService<T> {
 
@@ -21,7 +21,7 @@ export class MapInstanceService<T> {
 
 
     static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
-        const instance: T = createInstance(className);
+        const instance: T = generateInstance(className);
         this.mapData(data, instance, classDeclaration);
         return instance;
     }
@@ -84,7 +84,7 @@ export class MapInstanceService<T> {
 
 
     private static setClassType(target: any, key: string, dataValue: any, propertyType: string, declaration: ClassDeclaration): void {
-        target[key] = createInstance(propertyType);
+        target[key] = generateInstance(propertyType);
         this.mapData(dataValue, target[key], declaration);
     }
 
