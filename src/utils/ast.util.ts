@@ -1,4 +1,4 @@
-import { ClassDeclaration, EnumDeclaration, SourceFile } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, ImportDeclaration, ImportSpecifier, SourceFile } from 'ts-morph';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
@@ -28,7 +28,7 @@ export function getImportDeclaration(apparentType: string, typeName: string): Cl
  * @param apparentType
  * @private
  */
-function getApparentTypeImportDeclarationPath(apparentType: string): string {
+export function getApparentTypeImportDeclarationPath(apparentType: string): string {
     const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
     return `${pathWithoutExtension}.ts`;
 }
@@ -44,7 +44,6 @@ function getImportSourceFile(path: string): SourceFile {
 }
 
 
-
 export function isEnumValue(declaration: EnumDeclaration, value: any): boolean {
     return this.enumValues(declaration).includes(value);
 }
@@ -54,3 +53,24 @@ export function enumValues(declaration: EnumDeclaration): any[] {
     return declaration.getStructure().members?.map(m => (m.initializer as string).slice(1, -1));
 }
 
+
+export function getImportSpecifier(importDeclaration: ImportDeclaration): ImportSpecifier {
+    const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
+    return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
+}
+
+
+// TODO : Heritage ?
+export function getNumberOfConstructorArguments(classDeclaration: ClassDeclaration): number {
+    const constructorDeclarations = classDeclaration.getConstructors();
+    if (!constructorDeclarations || constructorDeclarations.length === 0) {
+        return 0;
+    } else {
+        return constructorDeclarations[0].getParameters()?.length;
+    }
+}
+
+
+export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boolean {
+    return ['private', 'protected'].includes(classDeclaration?.getConstructors()?.[0]?.getScope());
+}

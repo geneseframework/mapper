@@ -1,10 +1,11 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration, isEnumValue } from '../utils/ast.util';
+import { getImportDeclaration, getNumberOfConstructorArguments, isEnumValue } from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import { GLOBAL } from '../const/global.const';
 
 export class MapInstanceService<T> {
 
@@ -20,7 +21,8 @@ export class MapInstanceService<T> {
 
 
     static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
-        const instance: T = createInstance(className);
+        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
+        const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);
         return instance;
     }
@@ -82,9 +84,10 @@ export class MapInstanceService<T> {
     }
 
 
-    private static setClassType(target: any, key: string, dataValue: any, propertyType: string, declaration: ClassDeclaration): void {
-        target[key] = createInstance(propertyType);
-        this.mapData(dataValue, target[key], declaration);
+    private static setClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
+        const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
+        target[key] = GLOBAL.generateInstance(instanceGenerator);
+        this.mapData(dataValue, target[key], classDeclaration);
     }
 
 }

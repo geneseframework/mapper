@@ -1,18 +1,14 @@
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
+import { hasPrimitiveType } from '../utils/primitives.util';
 import {
-    ClassDeclaration,
-    EnumDeclaration,
-    NamedTupleMember,
-    PropertyDeclaration,
-    TupleTypeNode,
-    TypeNode
-} from 'ts-morph';
-import * as chalk from 'chalk';
-import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration, isEnumValue } from '../utils/ast.util';
+    getApparentTypeImportDeclarationPath,
+    getImportDeclaration,
+    getNumberOfConstructorArguments
+} from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
-import { MapTupleService } from './map-tuple.service';
 import { MapInstanceService } from './map-instance.service';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import { GLOBAL } from '../const/global.const';
 
 export class MapArrayService<T> {
 
@@ -31,8 +27,9 @@ export class MapArrayService<T> {
         const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
-            const instance = createInstance(typeName);
             if (importArrayDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
+                const instance = GLOBAL.generateInstance(instanceGenerator);
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }

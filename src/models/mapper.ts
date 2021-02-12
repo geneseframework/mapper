@@ -1,5 +1,5 @@
-import { ClassConstructor, TConstructor } from '../models/t-constructor.model';
-import { clone } from '..';
+import { TConstructor } from './t-constructor.model';
+import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { AstService } from '../services/ast.service';
 import { ClassDeclaration } from 'ts-morph';
@@ -7,75 +7,72 @@ import { InitService } from '../services/init.service';
 import {
     ArrayOfPrimitiveElements,
     isPrimitiveTypeOrArrayOfPrimitiveTypes,
-    PrimitiveElement, PrimitiveType, PrimitiveTypes
+    PrimitiveElement,
+    PrimitiveType,
+    PrimitiveTypes
 } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
+import * as chalk from 'chalk';
+import { FlagService } from '../services/flag.service';
+import { GLOBAL } from '../const/global.const';
+import { MapParameter } from '../types/map-parameter.type';
 
 export class Mapper<T> {
 
-    tConstructor: TConstructor<T> = undefined;
-    typeName: string = undefined;
+    private tConstructor: TConstructor<T> = undefined;
+    private typeName: string = undefined;
 
     /**
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    constructor(classConstructor: ClassConstructor<T> | string, options?: MapperOptions) {
-        this.init(classConstructor);
+    private constructor(mapParameter: MapParameter<T>, options?: MapperOptions) {
+        this.implement(mapParameter);
     }
 
 
-    init(classConstructor: ClassConstructor<T> | string): void {
-        if (typeof classConstructor === 'string') {
-            this.typeName = classConstructor;
+    implement(mapParameter: MapParameter<T>): void {
+        if (typeof mapParameter === 'string') {
+            this.typeName = mapParameter;
         } else {
-            this.tConstructor = classConstructor;
-            this.typeName = classConstructor.name;
+            this.tConstructor = mapParameter;
+            this.typeName = mapParameter.name;
         }
-        InitService.start();
     }
 
 
-    async create(data: boolean): Promise<boolean>
-    async create(data: number): Promise<number>
-    async create(data: string): Promise<string>
-    async create(data: any[]): Promise<T[]>
-    async create(data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(this.typeName)) {
-            return MapPrimitiveService.create(data, this.typeName as PrimitiveType | PrimitiveTypes);
+    private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
+        if (GLOBAL.isFirstMapper) {
+            InitService.start();
+            await FlagService.init();
+        }
+        return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
+    }
+
+
+    private static getMapper<T>(mapParameter: MapParameter<T>): Mapper<T> {
+        const typeName: string = typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
+        let mapper: Mapper<T> = GLOBAL.mappers.find(m => m.typeName === typeName);
+        return mapper ?? new Mapper(mapParameter);
+    }
+
+
+    static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
+    static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
+    static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
+        const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
+            return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else {
-            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(this.typeName);
+            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
             if (Array.isArray(data)) {
-                return MapInstanceService.createInstances(data, this.typeName, classDeclaration);
+                return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
             } else {
-                return MapInstanceService.createInstance(data, this.typeName, classDeclaration);
+                return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
             }
-        }
-    }
-
-
-
-    /**
-     * If source and target are both string or number, we cast source into the target's type and returns it.
-     * This methodName adds a tolerance for http requests which returns numbers instead of strings and inversely
-     * Caution : params target and source should not be falsy values
-     */
-    _castStringAndNumbers(target: any, source: any): any {
-        if ((typeof target !== 'string' && typeof target !== 'number') || source === undefined) {
-            console.warn('Genese _castStringAndNumbers : source or target undefined');
-            return undefined;
-        } else if (source === null) {
-            return null;
-        } else if (typeof target === 'string' && (typeof source === 'number' || typeof source === 'string')) {
-            return  source.toString();
-        } else if (typeof target === 'number' && typeof source === 'number') {
-            return source;
-        } else if (typeof target === 'number' && typeof source === 'string') {
-            return isNaN(Number(source)) ? target : +source;
-        } else {
-            console.warn('Genese _castStringAndNumbers : impossible to cast this elements');
-            return undefined;
         }
     }
 

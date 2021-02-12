@@ -1,9 +1,14 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration } from '../utils/ast.util';
+import {
+    getApparentTypeImportDeclarationPath,
+    getImportDeclaration,
+    getNumberOfConstructorArguments
+} from '../utils/ast.util';
 import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
-import { createInstance } from '../debug/project/create-instance';
 import { MapInstanceService } from './map-instance.service';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import { GLOBAL } from '../const/global.const';
 
 export class MapTupleService<T> {
 
@@ -36,9 +41,10 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const instance = createInstance(tupleType);
             const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
+                const instance = GLOBAL.generateInstance(instanceGenerator);
                 MapInstanceService.mapData(dataValue, instance, importArrayDeclaration);
                 return instance;
             }
