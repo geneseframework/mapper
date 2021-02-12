@@ -90,7 +90,6 @@ export function getAllProperties(classDeclaration: ClassDeclaration): PropertyDe
     const heritageClause: HeritageClause = classDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
     if (heritageClause) {
         const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
-        console.log(chalk.blueBright('HERITAGE CLAUSESSSSSS'), parentClassDeclaration.getStructure());
         if (parentClassDeclaration) {
             propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
         }
