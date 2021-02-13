@@ -1,6 +1,16 @@
-import { LiteralLikeNode, LiteralTypeNode, SyntaxKind, TypeAliasDeclaration, TypeReferenceNode } from 'ts-morph';
+import {
+    LiteralExpression,
+    LiteralLikeNode,
+    LiteralTypeNode,
+    SyntaxKind,
+    TypeAliasDeclaration,
+    TypeReferenceNode
+} from 'ts-morph';
 import * as chalk from 'chalk';
 import { TypeDeclarationNode } from '../types/type-nodes.type';
+import { MapPrimitiveService } from './map-primitive.service';
+import { PrimitiveType, TLiteral } from '../types/primitives.type';
+import { literalToPrimitive } from '../utils/primitives.util';
 
 export class MapTypeService {
 
@@ -21,7 +31,12 @@ export class MapTypeService {
 
     private static setLiteralTypes(target: any, key: string, dataValue: any, propertyType: string, typeAliasDeclaration: TypeAliasDeclaration): void {
         for (const literalType of typeAliasDeclaration.getDescendantsOfKind(SyntaxKind.LiteralType)) {
-            this.setLiteralType(target, key, dataValue, propertyType, literalType);
+            // const zzz: string = literalType;
+            const literal: TLiteral = literalToPrimitive(literalType);
+            console.log(chalk.greenBright('Literal .????'), literal);
+            // literal.getKindName()
+            // this.setLiteralType(target, key, dataValue, propertyType, literalType);
+            // const zzz = MapPrimitiveService.create(dataValue, typeName);
         }
     }
 

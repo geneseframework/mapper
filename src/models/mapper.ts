@@ -5,11 +5,7 @@ import { AstService } from '../services/ast.service';
 import { ClassDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import {
-    ArrayOfPrimitiveElements,
     isPrimitiveTypeOrArrayOfPrimitiveTypes,
-    PrimitiveElement,
-    PrimitiveType,
-    PrimitiveTypes
 } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
@@ -17,6 +13,7 @@ import * as chalk from 'chalk';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 
 export class Mapper<T> {
 
@@ -64,6 +61,8 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
     static async create<T>(mapParameter: MapParameter<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
+        // TODO : Enums and types
+        // TODO : Indexable types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else {

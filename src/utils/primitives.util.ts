@@ -1,3 +1,7 @@
+import { LiteralTypeNode, SyntaxKind } from 'ts-morph';
+import { PrimitiveType, primitiveTypes, TLiteral } from '../types/primitives.type';
+import * as chalk from 'chalk';
+
 export function hasPrimitiveType(element: any): boolean {
     if (element === undefined || element === null) {
         return false;
@@ -21,17 +25,21 @@ export function isArrayOfPrimitiveType(typeName: string): boolean {
 }
 
 
-export const primitiveTypes = ['string', 'number', 'boolean'];
-
-
-export type PrimitiveElement = string | number | boolean;
-
-
-export type ArrayOfPrimitiveElements = string[] | number[] | boolean[];
-
-
-export type PrimitiveType = 'string' | 'number' | 'boolean';
-
-
-export type PrimitiveTypes = 'string[]' | 'number[]' | 'boolean[]';
-
+export function literalToPrimitive(literalTypeNode: LiteralTypeNode): TLiteral {
+    switch (literalTypeNode.getLiteral().getKind()) {
+        case SyntaxKind.StringLiteral:
+            return 'string';
+        case SyntaxKind.NumericLiteral:
+            return 'number';
+        case SyntaxKind.TrueKeyword:
+        case SyntaxKind.FalseKeyword:
+            return 'boolean';
+        case SyntaxKind.TypeReference:
+            return 'TypeReferenceNode';
+        case SyntaxKind.ArrayType:
+            return 'ArrayTypeNode';
+        default:
+            console.log(chalk.redBright('UNKNOWN LITERAL TYPEEEEE'), literalTypeNode.getKindName());
+            return undefined;
+    }
+}
