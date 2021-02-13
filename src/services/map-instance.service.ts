@@ -1,6 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { isEnumValue } from '../utils/ast.util';
+import { getApparentType, isEnumValue } from '../utils/ast.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
@@ -44,7 +44,7 @@ export class MapInstanceService<T> {
             return;
         }
         const propertyStructureType: string = property.getStructure().type as string;
-        const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
+        const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
         if (isPrimitiveType(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
