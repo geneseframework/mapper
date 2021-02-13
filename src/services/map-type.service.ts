@@ -18,7 +18,7 @@ import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
 import { MapInstanceService } from './map-instance.service';
-import { PrimitiveKeyword, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { getApparentType } from '../utils/ast.util';
 import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
@@ -32,9 +32,6 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
-        if (key === 'nickNames') {
-            console.log(chalk.cyanBright('MAP TYPE NODDDDD'), key, typeNode.getKindName(), typeNode.getText());
-        }
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
@@ -54,7 +51,7 @@ export class MapTypeService {
                 this.mapArrayType(target, key, dataValue, typeNode as ArrayTypeNode);
                 break;
             default:
-                console.log(chalk.redBright('UNKNOWN TYPENODE TYPE'), typeNode.getKindName());
+                console.log(chalk.redBright('Unknown kind of TypeNode : '), typeNode.getKindName());
         }
     }
 
@@ -86,10 +83,6 @@ export class MapTypeService {
 
 
     private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
-        if (key === 'nickNames') {
-            console.log(chalk.greenBright('ARRA Y TYPE ????'), key, dataValue, arrayTypeNode.getKindName(), arrayTypeNode.getText());
-        }
-        // console.log(chalk.magentaBright('ARRA Y APT TYPE ????'), getApparentType(arrayTypeNode));
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
@@ -99,14 +92,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: string, dataValue: any, primitiveKeyword: TypeNode): void {
-        if (key === 'nickNames') {
-            console.log(chalk.blueBright('NICKNNAMMMMMM'), key, dataValue, primitiveKeyword.getKindName());
-            // console.log(chalk.blueBright('NICKNNAMMMMMM TGTTTT' ), target[key]);
-        }
         target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType);
-        if (key === 'nickNames') {
-            console.log(chalk.redBright('NICKNNAMMMMMM TGTTTT' ), target[key]);
-        }
     }
 
 }
