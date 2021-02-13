@@ -1,4 +1,4 @@
-import { SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
+import { ClassDeclaration, SyntaxKind, TypeAliasDeclaration } from 'ts-morph';
 import * as chalk from 'chalk';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
@@ -7,9 +7,12 @@ import {
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
+import { getClassDeclaration } from '../utils/ast-class.util';
+import { MapInstanceService } from './map-instance.service';
 
 export class MapTypeService {
 
+    // TODO : Types which are not unions
     static setTypeType(target: any, key: string, dataValue: any, propertyType: string, typeAliasDeclaration: TypeAliasDeclaration): void {
         this.setLiteralTypes(target, key, dataValue, propertyType, typeAliasDeclaration);
         this.setLiteralTypeReferences(target, key, dataValue, propertyType, typeAliasDeclaration);
@@ -29,7 +32,10 @@ export class MapTypeService {
 
     private static setLiteralTypeReferences(target: any, key: string, dataValue: any, propertyType: string, typeAliasDeclaration: TypeAliasDeclaration): void {
         for (const literalType of typeAliasDeclaration.getDescendantsOfKind(SyntaxKind.TypeReference)) {
-            console.log(chalk.cyanBright('TYPE REFFFFFF'), key, dataValue, propertyType);
+            // console.log(chalk.cyanBright('TYPE REFFFFFF'), key, dataValue, propertyType);
+            const classDeclaration: ClassDeclaration = getClassDeclaration(literalType);
+            // const zzz = MapInstanceService.createInstance(dataValue, literalType.getText(), classDeclaration);
+            // console.log(chalk.magentaBright('ZZZZZ TREF'), zzz);
         }
     }
 

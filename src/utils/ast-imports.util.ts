@@ -61,3 +61,9 @@ export function getImportSpecifier(importDeclaration: ImportDeclaration): Import
     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
 }
+
+
+// export function getImportDeclaration(importSpecifier: ImportDeclaration): ImportSpecifier {
+//     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
+//     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
+// }
