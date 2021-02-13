@@ -12,12 +12,17 @@ export class FlagService {
         console.log(chalk.yellowBright('Init mapping...'));
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
-            if (!hasPrivateConstructor(classDeclaration)) {
+            if (this.mayBeInstantiated(classDeclaration)) {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
         await this.generateInstanceGeneratorFile();
         console.log(chalk.yellowBright('Types mapped'));
+    }
+
+
+    private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
+        return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
     }
 
 

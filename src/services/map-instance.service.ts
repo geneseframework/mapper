@@ -1,11 +1,18 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getImportDeclaration, getNumberOfConstructorArguments, isEnumValue } from '../utils/ast.util';
-import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
+import {
+    getAllProperties,
+    getImportDeclaration,
+    getNumberOfConstructorArguments,
+    isEnumValue
+} from '../utils/ast.util';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
-import { InstanceGenerator } from '../models/instance-generator.model';
 import { GLOBAL } from '../const/global.const';
+import * as chalk from 'chalk';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import { MapTypeService } from './map-type.service';
 
 export class MapInstanceService<T> {
 
@@ -36,7 +43,7 @@ export class MapInstanceService<T> {
 
 
     private static mapDataKey<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
-        const property: PropertyDeclaration = classDeclaration.getProperties().find(p => p.getName() === key);
+        const property: PropertyDeclaration = getAllProperties(classDeclaration).find(p => p.getName() === key);
         if (!property) {
             return;
         }
@@ -52,10 +59,10 @@ export class MapInstanceService<T> {
             return;
         }
         if (MapTupleService.isTupleType(property)) {
-            MapTupleService.setTupleType(target, key, dataValue, propertyType, apparentType, property.getTypeNode() as TupleTypeNode);
+            MapTupleService.setTupleType(target, key, dataValue, propertyType, apparentType);
             return;
         }
-        const declaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, propertyType);
+        const declaration: TypeDeclaration = getImportDeclaration(apparentType, propertyType);
         if (!declaration) {
             return;
         }
@@ -65,6 +72,10 @@ export class MapInstanceService<T> {
         }
         if (declaration instanceof EnumDeclaration) {
             this.setEnumType(target, key, dataValue, declaration);
+            return;
+        }
+        if (declaration instanceof TypeAliasDeclaration) {
+            MapTypeService.setTypeType(target, key, dataValue, propertyType, declaration);
             return;
         }
     }

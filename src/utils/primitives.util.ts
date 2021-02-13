@@ -1,3 +1,7 @@
+import { LiteralTypeNode, SyntaxKind } from 'ts-morph';
+import { PrimitiveType, primitiveTypes, TLiteral } from '../types/primitives.type';
+import * as chalk from 'chalk';
+
 export function hasPrimitiveType(element: any): boolean {
     if (element === undefined || element === null) {
         return false;
@@ -11,8 +15,8 @@ export function isPrimitiveTypeOrArrayOfPrimitiveTypes(typeName: string): boolea
 }
 
 
-export function isPrimitiveType(typeName: string): boolean {
-    return primitiveTypes.includes(typeName);
+export function isPrimitiveType(typeNameOrNode: string | LiteralTypeNode): boolean {
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isLiteralPrimitive(typeNameOrNode);
 }
 
 
@@ -21,17 +25,40 @@ export function isArrayOfPrimitiveType(typeName: string): boolean {
 }
 
 
-export const primitiveTypes = ['string', 'number', 'boolean'];
+export function isLiteralPrimitive(literalTypeNode: LiteralTypeNode): boolean {
+    return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword].includes(literalTypeNode.getLiteral().getKind());
+}
 
 
-export type PrimitiveElement = string | number | boolean;
+export function primitiveLiteralValue(literalTypeNode: LiteralTypeNode): string {
+    return isLiteralPrimitive(literalTypeNode) ? literalTypeNode.getLiteral().getText().slice(1, -1) : undefined;
+}
 
 
-export type ArrayOfPrimitiveElements = string[] | number[] | boolean[];
+export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveType {
+    switch (literalTypeNode?.getLiteral()?.getKind()) {
+        case SyntaxKind.StringLiteral:
+            return 'string';
+        case SyntaxKind.NumericLiteral:
+            return 'number';
+        case SyntaxKind.TrueKeyword:
+        case SyntaxKind.FalseKeyword:
+            return 'boolean';
+        default:
+            console.log(chalk.redBright(`${literalTypeNode?.getLiteral()?.getKindName()} is not a LiteralPrimitive`));
+            return undefined;
+    }
+}
 
 
-export type PrimitiveType = 'string' | 'number' | 'boolean';
-
-
-export type PrimitiveTypes = 'string[]' | 'number[]' | 'boolean[]';
-
+export function literalToPrimitive(literalTypeNode: LiteralTypeNode): TLiteral {
+    switch (literalTypeNode.getLiteral().getKind()) {
+        case SyntaxKind.TypeReference:
+            return 'TypeReferenceNode';
+        case SyntaxKind.ArrayType:
+            return 'ArrayTypeNode';
+        default:
+            console.log(chalk.redBright('Unknown LiteralType'), literalTypeNode.getKindName());
+            return undefined;
+    }
+}

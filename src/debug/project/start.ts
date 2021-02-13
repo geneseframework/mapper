@@ -13,7 +13,6 @@ async function start() {
     // const catMapper = new Mapper(Cat);
     // const cat: Cat[] = await catMapper.create(ARRAY_CAT_DATAS);
     const cat: Cat[] = await Mapper.create(Cat, ARRAY_CAT_DATAS);
-    // const cat: Cat = await catMapper.create(['ee']);
     console.log(chalk.yellowBright('Typed object : '), cat);
 }
 

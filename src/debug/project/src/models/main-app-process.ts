@@ -1,6 +1,5 @@
 import { Person } from './person.model';
 import { Cat } from './cat.model';
-import { Meaow } from './meaow.enum';
 
 export class MainAppProcess {
 

@@ -1,14 +1,23 @@
-import { ClassDeclaration, EnumDeclaration, ImportDeclaration, ImportSpecifier, SourceFile } from 'ts-morph';
-import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
+import {
+    ClassDeclaration,
+    EnumDeclaration, HeritageClause,
+    ImportDeclaration,
+    ImportSpecifier, InterfaceDeclaration,
+    PropertyDeclaration,
+    SourceFile, TypeAliasDeclaration
+} from 'ts-morph';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
+import { flat } from './arrays.util';
+import { SyntaxKind } from '@ts-morph/common';
 
 export function isOutOfProject(sourceFile: SourceFile): boolean {
     return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
 }
 
 
-export function getImportDeclaration(apparentType: string, typeName: string): ClassOrEnumDeclaration {
+export function getImportDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
@@ -18,6 +27,13 @@ export function getImportDeclaration(apparentType: string, typeName: string): Cl
     const importEnumDeclaration: EnumDeclaration = importSourceFile.getEnums().find(c => c.getName() === typeName);
     if (importEnumDeclaration) {
         return importEnumDeclaration;
+    }
+    const typeAliasDeclaration: TypeAliasDeclaration = importSourceFile.getTypeAlias(typeName);
+    if (typeAliasDeclaration) {
+        // if (typeName === 'Race') {
+        //     console.log(chalk.blueBright('RACEEEEEE struct'), typeAliasDeclaration.getStructure());
+        // }
+        return typeAliasDeclaration;
     }
     return undefined;
 }
@@ -73,4 +89,27 @@ export function getNumberOfConstructorArguments(classDeclaration: ClassDeclarati
 
 export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boolean {
     return ['private', 'protected'].includes(classDeclaration?.getConstructors()?.[0]?.getScope());
+}
+
+
+export function getAllProperties(classDeclaration: ClassDeclaration): PropertyDeclaration[] {
+    const propertyDeclarations: PropertyDeclaration[] = classDeclaration.getProperties();
+    const heritageClause: HeritageClause = classDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
+    if (heritageClause) {
+        const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
+        if (parentClassDeclaration) {
+            propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
+        }
+    }
+    return propertyDeclarations;
+}
+
+
+export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDeclaration {
+    return getHeritageDeclarations(heritageClause)?.length > 0 ? getHeritageDeclarations(heritageClause)[0] : undefined;
+}
+
+
+export function getHeritageDeclarations(heritageClause: HeritageClause): ClassDeclaration[] {
+    return flat(heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations() ?? []));
 }

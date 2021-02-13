@@ -5,7 +5,7 @@ import {
     getImportDeclaration,
     getNumberOfConstructorArguments
 } from '../utils/ast.util';
-import { ClassOrEnumDeclaration } from '../types/class-or-enum-declaration.type';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { GLOBAL } from '../const/global.const';
@@ -24,7 +24,7 @@ export class MapArrayService<T> {
             return;
         }
         const typeName: string = propertyType.slice(0, -2);
-        const importArrayDeclaration: ClassOrEnumDeclaration = getImportDeclaration(apparentType, typeName);
+        const importArrayDeclaration: TypeDeclaration = getImportDeclaration(apparentType, typeName);
         target[key] = [] as any[];
         for (const element of dataValue) {
             if (importArrayDeclaration instanceof ClassDeclaration) {

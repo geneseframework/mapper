@@ -1,27 +1,27 @@
-import { Mood } from './mood.enum';
-import { IAnimal } from './iAnimal.interface';
+import { Mood } from '../enums/mood.enum';
 import { Person } from './person.model';
 import { Color } from './colors.enum';
+import { Animal } from './animal.model';
+import { Race } from '../types/race.type';
+import { Prey } from '../interfaces/prey.interface';
 
-export class Cat implements IAnimal {
+export class Cat extends Animal {
 
-    age: number = undefined;
     colors: Color[] = [];
+    favouritePrey: Prey = undefined;
     friend: Person = undefined;
     hungry = false;
-    tattoo: [string, number, Color, Person];
     mood: Mood = undefined;
     name: string = undefined;
+    race: Race = undefined;
+    tattoo: [string, number, Color, Person];
 
     constructor(age: number, name: string, mood: Mood = Mood.SAD) {
+        super('Cat');
         this.age = age;
         this.mood = mood;
         this.name = name;
     }
 
-
-    get numberOfLegs(): number {
-        return 4;
-    }
 }
 

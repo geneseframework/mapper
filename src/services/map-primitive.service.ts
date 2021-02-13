@@ -1,4 +1,4 @@
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../utils/primitives.util';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 
 export class MapPrimitiveService {
 
