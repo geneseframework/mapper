@@ -76,7 +76,7 @@ export class MapInstanceService<T> {
         }
         if (typeDeclaration instanceof TypeAliasDeclaration)
         {
-            MapTypeService.setTypeType(target, key, dataValue, typeDeclaration);
+            MapTypeService.mapTypeType(target, key, dataValue, typeDeclaration);
             return;
         }
     }
