@@ -16,7 +16,7 @@ export function isPrimitiveTypeOrArrayOfPrimitiveTypes(typeName: string): boolea
 
 
 export function isPrimitiveType(typeNameOrNode: string | LiteralTypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isPrimitiveLiteral(typeNameOrNode);
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isLiteralPrimitive(typeNameOrNode);
 }
 
 
@@ -25,8 +25,29 @@ export function isArrayOfPrimitiveType(typeName: string): boolean {
 }
 
 
-export function isPrimitiveLiteral(literalTypeNode: LiteralTypeNode): boolean {
+export function isLiteralPrimitive(literalTypeNode: LiteralTypeNode): boolean {
     return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword].includes(literalTypeNode.getLiteral().getKind());
+}
+
+
+export function primitiveLiteralValue(literalTypeNode: LiteralTypeNode): string {
+    return isLiteralPrimitive(literalTypeNode) ? literalTypeNode.getLiteral().getText().slice(1, -1) : undefined;
+}
+
+
+export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveType {
+    switch (literalTypeNode?.getLiteral()?.getKind()) {
+        case SyntaxKind.StringLiteral:
+            return 'string';
+        case SyntaxKind.NumericLiteral:
+            return 'number';
+        case SyntaxKind.TrueKeyword:
+        case SyntaxKind.FalseKeyword:
+            return 'boolean';
+        default:
+            console.log(chalk.redBright(`${literalTypeNode?.getLiteral()?.getKindName()} is not a LiteralPrimitive`));
+            return undefined;
+    }
 }
 
 
