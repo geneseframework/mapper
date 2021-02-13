@@ -5,6 +5,8 @@ import { Animal } from "../debug/project/src/models/animal.model";
 import { Cat } from "../debug/project/src/models/cat.model";
 import { MainAppProcess } from "../debug/project/src/models/main-app-process";
 import { Person } from "../debug/project/src/models/person.model";
+import { Company } from "../debug/project/src/models/company.model";
+import { Ngo } from "../debug/project/src/models/ngo.model";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -18,8 +20,14 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'Cat_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/cat.model.ts':
             instance = new Cat(undefined, undefined, undefined);
             break;
+        case 'Company_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/company.model.ts':
+            instance = new Company();
+            break;
         case 'MainAppProcess_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/main-app-process.ts':
             instance = new MainAppProcess();
+            break;
+        case 'Ngo_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/ngo.model.ts':
+            instance = new Ngo();
             break;
         case 'Person_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/person.model.ts':
             instance = new Person(undefined, undefined, undefined, undefined, undefined, undefined);
