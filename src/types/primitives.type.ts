@@ -1,6 +1,3 @@
-import { BooleanLiteral, LiteralExpression, NullLiteral, PrefixUnaryExpression } from 'ts-morph';
-
-
 export const primitiveTypes = ['string', 'number', 'boolean'];
 
 
@@ -17,5 +14,4 @@ export type PrimitiveTypes = 'string[]' | 'number[]' | 'boolean[]';
 
 
 export type TLiteral = PrimitiveType | 'TypeReferenceNode' | 'ArrayTypeNode';
-// export type Literal = NullLiteral | BooleanLiteral | LiteralExpression | PrefixUnaryExpression;
 

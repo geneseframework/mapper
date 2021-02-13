@@ -1,10 +1,13 @@
 import { Cat } from './cat.model';
 import { Address } from './address.model';
+import { Employer } from '../types/employer.type';
 
 export class Person {
 
     public address: Address = undefined;
     public cats: Cat[] = [];
+    public employer: Employer = undefined;
+    public family: Person[] = [];
     public firstName: string = undefined;
     public isHappy: boolean;
     public lastName: string = undefined;
@@ -18,7 +21,6 @@ export class Person {
         this.isHappy = isHappy;
         this.socialNumber = socialNumber;
     }
-
 
 
 }

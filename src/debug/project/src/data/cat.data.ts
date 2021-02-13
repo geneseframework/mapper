@@ -1,4 +1,5 @@
 import { Color } from '../models/colors.enum';
+import { PERSON_LEA } from './person.data';
 
 export const CAT_DATA_0: any = {
     age: 4,
@@ -9,33 +10,7 @@ export const CAT_DATA_0: any = {
             order: 'vertebrate'
         }
     },
-    friend: {
-        firstName: 'Léa',
-        lastName: 'Renoir',
-        cats: [
-            {
-                age: 7,
-                colors: [Color.RED],
-                name: 'Taka',
-                race: 'British short hair'
-            },
-            {
-                age: 4,
-                colors: [Color.WHITE, Color.BLACK],
-                favouritePrey: {
-                    animal: {
-                        kind: 'Fly',
-                        order: 'invertebrate'
-                    }
-                },
-                name: 'Cibi',
-                race: 'European'
-            },
-            {
-                unknowProp: 0
-            }
-        ]
-    },
+    friend: PERSON_LEA,
     hungry: false,
     mood: 'happy',
     name: 'Biela',
@@ -48,24 +23,7 @@ export const CAT_DATA_0: any = {
 export const CAT_DATA_1: any = {
     age: 4,
     colors: [Color.WHITE, Color.BLACK],
-    friend: {
-        firstName: 'Léa',
-        lastName: 'Renoir',
-        cats: [
-            {
-                age: 7,
-                colors: [Color.RED],
-                name: 'Taka',
-                race: 'British short hair'
-            },
-            {
-                age: 4,
-                colors: [Color.WHITE, Color.BLACK],
-                name: 'Biela',
-                race: 'European'
-            }
-        ]
-    },
+    friend: PERSON_LEA,
     hungry: true,
     mood: 'happy',
     name: 'Cibi',

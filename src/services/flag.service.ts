@@ -1,10 +1,10 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
 import * as chalk from 'chalk';
 import { GLOBAL } from '../const/global.const';
-import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast.util';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
+import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
 
 export class FlagService {
 

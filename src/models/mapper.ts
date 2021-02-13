@@ -25,16 +25,36 @@ export class Mapper<T> {
      * The tConstructor property is an object with the Type corresponding to this Class
      */
     private constructor(mapParameter: MapParameter<T>, options?: MapperOptions) {
-        this.implement(mapParameter);
-    }
-
-
-    implement(mapParameter: MapParameter<T>): void {
         if (typeof mapParameter === 'string') {
             this.typeName = mapParameter;
         } else {
             this.tConstructor = mapParameter;
             this.typeName = mapParameter.name;
+        }
+    }
+
+
+    static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
+    static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
+    static async create<T>(mapParameter: MapParameter<T>, data: string, options?: MapperOptions): Promise<string>
+    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
+        const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
+        // TODO : Enums and types
+        // TODO : Indexable types
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
+            return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
+        } else if (options?.isType === true) {
+            // TODO
+        } else if (options?.isInterface === true) {
+            // TODO
+        } else {
+            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
+            if (Array.isArray(data)) {
+                return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
+            } else {
+                return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
+            }
         }
     }
 
@@ -52,27 +72,6 @@ export class Mapper<T> {
         const typeName: string = typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
         let mapper: Mapper<T> = GLOBAL.mappers.find(m => m.typeName === typeName);
         return mapper ?? new Mapper(mapParameter);
-    }
-
-
-    static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
-    static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
-    static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
-    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
-    static async create<T>(mapParameter: MapParameter<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
-        // TODO : Enums and types
-        // TODO : Indexable types
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
-            return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
-        } else {
-            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
-            if (Array.isArray(data)) {
-                return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
-            } else {
-                return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
-            }
-        }
     }
 
 
