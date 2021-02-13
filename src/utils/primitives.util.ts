@@ -15,13 +15,18 @@ export function isPrimitiveTypeOrArrayOfPrimitiveTypes(typeName: string): boolea
 }
 
 
-export function isPrimitiveType(typeName: string): boolean {
-    return primitiveTypes.includes(typeName);
+export function isPrimitiveType(typeNameOrNode: string | LiteralTypeNode): boolean {
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isPrimitiveLiteral(typeNameOrNode);
 }
 
 
 export function isArrayOfPrimitiveType(typeName: string): boolean {
     return primitiveTypes.includes(typeName.slice(0, -2));
+}
+
+
+export function isPrimitiveLiteral(literalTypeNode: LiteralTypeNode): boolean {
+    return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword].includes(literalTypeNode.getLiteral().getKind());
 }
 
 
