@@ -53,19 +53,12 @@ export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode
 
 export function literalToPrimitive(literalTypeNode: LiteralTypeNode): TLiteral {
     switch (literalTypeNode.getLiteral().getKind()) {
-        case SyntaxKind.StringLiteral:
-            return 'string';
-        case SyntaxKind.NumericLiteral:
-            return 'number';
-        case SyntaxKind.TrueKeyword:
-        case SyntaxKind.FalseKeyword:
-            return 'boolean';
         case SyntaxKind.TypeReference:
             return 'TypeReferenceNode';
         case SyntaxKind.ArrayType:
             return 'ArrayTypeNode';
         default:
-            console.log(chalk.redBright('UNKNOWN LITERAL TYPEEEEE'), literalTypeNode.getKindName());
+            console.log(chalk.redBright('Unknown LiteralType'), literalTypeNode.getKindName());
             return undefined;
     }
 }
