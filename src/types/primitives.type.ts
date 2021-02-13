@@ -12,6 +12,3 @@ export type PrimitiveType = 'string' | 'number' | 'boolean';
 
 export type PrimitiveTypes = 'string[]' | 'number[]' | 'boolean[]';
 
-
-export type TLiteral = PrimitiveType | 'TypeReferenceNode' | 'ArrayTypeNode';
-

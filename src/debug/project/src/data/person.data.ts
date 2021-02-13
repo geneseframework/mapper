@@ -15,8 +15,9 @@ export const PERSON_AUGUSTE = {
     employer: {
         name: 'Himself'
     },
-    firstName: 'Auguste',
+    firstName: 'Pierre-Auguste',
     lastName: 'Renoir',
+    nickNames: ['Auguste', 'The old'],
     cats: []
 }
 
@@ -26,6 +27,7 @@ export const PERSON_PIERRE = {
     },
     firstName: 'Pierre',
     lastName: 'Renoir',
+    nickNames: 'The young',
     cats: []
 }
 
@@ -37,6 +39,7 @@ export const PERSON_LEA = {
     family: [PERSON_LEO, PERSON_AUGUSTE, PERSON_PIERRE],
     firstName: 'Léa',
     lastName: 'Renoir',
+    nickNames: 'Lara',
     cats: [
         {
             age: 7,
