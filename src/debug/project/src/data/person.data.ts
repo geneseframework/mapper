@@ -27,6 +27,7 @@ export const PERSON_PIERRE = {
     },
     firstName: 'Pierre',
     lastName: 'Renoir',
+    nickNames: 'The young',
     cats: []
 }
 

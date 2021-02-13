@@ -26,7 +26,12 @@ export function isArrayOfPrimitiveType(typeName: string): boolean {
 
 
 export function isLiteralPrimitive(literalTypeNode: LiteralTypeNode): boolean {
-    return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword].includes(literalTypeNode.getLiteral().getKind());
+    return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(literalTypeNode.getLiteral().getKind());
+}
+
+
+export function isPrimitiveKeyword(syntaxKind: SyntaxKind): boolean {
+    return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(syntaxKind);
 }
 
 
