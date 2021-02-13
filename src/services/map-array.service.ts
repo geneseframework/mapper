@@ -1,14 +1,11 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import { hasPrimitiveType } from '../utils/primitives.util';
-import {
-    getApparentTypeImportDeclarationPath,
-    getImportDeclaration,
-    getNumberOfConstructorArguments
-} from '../utils/ast.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
-import { InstanceGenerator } from '../models/instance-generator.model';
 import { GLOBAL } from '../const/global.const';
+import { getApparentTypeImportDeclarationPath, getImportDeclaration } from '../utils/ast-imports.util';
+import { InstanceGenerator } from '../models/instance-generator.model';
+import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 
 export class MapArrayService<T> {
 

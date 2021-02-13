@@ -14,7 +14,7 @@ async function start() {
     // const cat: Cat[] = await catMapper.create(ARRAY_CAT_DATAS);
     const cats: Cat[] = await Mapper.create(Cat, ARRAY_CAT_DATAS);
     // console.log(chalk.yellowBright('Typed object : '), cats);
-    console.log(chalk.yellowBright('Typed object : '), cats.map(c => c.friend.cats));
+    // console.log(chalk.yellowBright('Typed object : '), cats.map(c => c.friend));
 }
 
 start()
