@@ -17,7 +17,7 @@ import { getHeritageDeclaration } from './ast-heritage.util';
 import { isOutOfProject } from './ast.util';
 
 
-export function getImportDeclaration(apparentType: string, typeName: string): TypeDeclaration {
+export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
@@ -63,7 +63,7 @@ export function getImportSpecifier(importDeclaration: ImportDeclaration): Import
 }
 
 
-// export function getImportDeclaration(importSpecifier: ImportDeclaration): ImportSpecifier {
+// export function getImportTypeDeclaration(importSpecifier: ImportDeclaration): ImportSpecifier {
 //     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
 //     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
 // }

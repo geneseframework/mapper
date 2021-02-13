@@ -9,6 +9,8 @@ import {
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import * as chalk from 'chalk';
+import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
+import { getImportTypeDeclaration } from './ast-imports.util';
 
 
 // TODO : Heritage ?
@@ -40,14 +42,11 @@ export function getAllProperties(classDeclaration: ClassDeclaration): PropertyDe
 }
 
 
-export function getClassDeclaration(typeReference: TypeReferenceNode): ClassDeclaration {
+export function getTypeReferenceTypeDeclaration(typeReference: TypeReferenceNode): TypeDeclaration {
     const identifier: Identifier = typeReference.getFirstDescendantByKind(SyntaxKind.Identifier);
     const apparentType: string = identifier.getSymbol().getDeclaredType().getApparentType().getText();
     const split: string[] = apparentType.split('.');
     const typeName: string = split[split.length - 1];
-    const importSpecifier: ImportSpecifier = identifier.getSymbol().getDeclarations()[0] as ImportSpecifier;
-    console.log(chalk.blueBright('APPT TYPEEEEEE'), apparentType);
-    console.log(chalk.magentaBright('APPT TYPEEEEEE NAME'), typeName);
-    return undefined;
+    return getImportTypeDeclaration(apparentType, typeName);
 }
 

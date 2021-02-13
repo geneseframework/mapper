@@ -6,7 +6,7 @@ import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
-import { getApparentTypeImportDeclarationPath, getImportDeclaration } from '../utils/ast-imports.util';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 
 export class MapTupleService<T> {
@@ -40,7 +40,7 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const importArrayDeclaration: TypeDeclaration = getImportDeclaration(apparentTupleType, tupleType);
+            const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);

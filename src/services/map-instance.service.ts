@@ -7,7 +7,7 @@ import { MapArrayService } from './map-array.service';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import { getImportDeclaration } from '../utils/ast-imports.util';
+import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { MapTypeService } from './map-type.service';
 
 export class MapInstanceService<T> {
@@ -45,7 +45,7 @@ export class MapInstanceService<T> {
         }
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = property.getType().getApparentType().getText().toLowerCase();
-        const propertyType = propertyStructureType ?? apparentType;
+        const propertyType: string = propertyStructureType ?? apparentType;
         if (isPrimitiveType(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
             return;
@@ -58,20 +58,25 @@ export class MapInstanceService<T> {
             MapTupleService.setTupleType(target, key, dataValue, propertyType, apparentType);
             return;
         }
-        const declaration: TypeDeclaration = getImportDeclaration(apparentType, propertyType);
-        if (!declaration) {
+        this.mapTypeDeclaration(getImportTypeDeclaration(apparentType, propertyType), target, propertyType, key, dataValue);
+    }
+
+
+    static mapTypeDeclaration(typeDeclaration: TypeDeclaration, target: any, propertyType: string, key: string, dataValue: any): void {
+        if (!typeDeclaration) {
             return;
         }
-        if (declaration instanceof ClassDeclaration) {
-            this.setClassType(target, key, dataValue, propertyType, declaration);
+        if (typeDeclaration instanceof ClassDeclaration) {
+            this.setClassType(target, key, dataValue, propertyType, typeDeclaration);
             return;
         }
-        if (declaration instanceof EnumDeclaration) {
-            this.setEnumType(target, key, dataValue, declaration);
+        if (typeDeclaration instanceof EnumDeclaration) {
+            this.setEnumType(target, key, dataValue, typeDeclaration);
             return;
         }
-        if (declaration instanceof TypeAliasDeclaration) {
-            MapTypeService.setTypeType(target, key, dataValue, propertyType, declaration);
+        if (typeDeclaration instanceof TypeAliasDeclaration)
+        {
+            MapTypeService.setTypeType(target, key, dataValue, typeDeclaration);
             return;
         }
     }
