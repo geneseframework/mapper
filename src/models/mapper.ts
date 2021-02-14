@@ -36,8 +36,11 @@ export class Mapper<T> {
 
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
-    static async create<T>(mapParameter: MapParameter<T>, data: string, options?: MapperOptions): Promise<string>
-    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | T[] | any>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T | T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
