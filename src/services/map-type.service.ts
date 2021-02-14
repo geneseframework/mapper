@@ -22,6 +22,7 @@ import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
+import { partialArray } from '../utils/arrays.util';
 
 export class MapTypeService {
 
@@ -93,13 +94,38 @@ export class MapTypeService {
      */
     private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
         const initialValue: any = clone(target[key]);
-        for (const tNode of unionTypeNode.getTypeNodes()) {
-            console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, tNode.getKindName());
-            this.mapTypeNode(target, key, dataValue, tNode);
+        const keys: string[] = [];
+        const unionTypeNodes: TypeNode[] = unionTypeNode.getTypeNodes();
+        for (let i = 0; i < unionTypeNodes.length; i++) {
+            console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, unionTypeNodes[i].getKindName());
+            if (this.isKeyType(key, unionTypeNodes[i])) {
+                this.mapTypeNode(target, key, dataValue, unionTypeNodes[i]);
+                keys.push(key);
+            } else {
+                const nextTypeNodes: TypeNode[] = partialArray(unionTypeNodes, i);
+                const nextTypeNodeIncludingKeys: TypeNode = this.getNextTypeNodeIncludingKeys(keys.concat([key]), nextTypeNodes);
+            }
             if (target[key] !== initialValue) {
                 break;
             }
         }
+    }
+
+
+    private static isKeyType(keys: string[], typeNode: TypeNode): boolean
+    private static isKeyType(key: string, typeNode: TypeNode): boolean
+    private static isKeyType(keys: string | string[], typeNode: TypeNode): boolean {
+        return true;
+    }
+
+
+    private static getNextTypeNodeIncludingKeys(keys: string[], typeNodes: TypeNode[]): TypeNode {
+        for (const typeNode of typeNodes) {
+            if (this.isKeyType(keys, typeNode)) {
+                return typeNode;
+            }
+        }
+        return undefined;
     }
 
 
