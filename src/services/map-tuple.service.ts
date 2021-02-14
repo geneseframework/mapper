@@ -1,7 +1,5 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TupleTypeNode } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import {
-} from '../utils/ast.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';

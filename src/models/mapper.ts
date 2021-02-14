@@ -1,7 +1,6 @@
 import { TConstructor } from './t-constructor.model';
 import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
-import { AstService } from '../services/ast.service';
 import { ClassDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import {
@@ -14,6 +13,7 @@ import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { DeclarationService } from '../services/declaration.service';
 
 export class Mapper<T> {
 
@@ -52,13 +52,13 @@ export class Mapper<T> {
         } else if (options?.isInterface === true) {
             // TODO
         } else {
-            const classDeclaration: ClassDeclaration = AstService.getDeclaration(mapper.typeName, 'ClassDeclaration');
-            // const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
-            if (Array.isArray(data)) {
-                return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
-            } else {
-                return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
-            }
+            const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'ClassDeclaration');
+            return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
+            // if (Array.isArray(data)) {
+            //     return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
+            // } else {
+            //     return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
+            // }
         }
     }
 

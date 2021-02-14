@@ -3,12 +3,11 @@ import { GLOBAL } from '../const/global.const';
 import { flat } from '../utils/arrays.util';
 import * as chalk from 'chalk';
 import { throwCustom } from '../utils/errors.util';
-import { ensureDirAndCopy, getClonedFilePath } from '../utils/file-system.util';
 import { ClassOrTypeAliasDeclaration, ClassOrTypeAliasType } from '../types/class-or-type-alias-declaration.enum';
 import { getClasses } from '../utils/ast-class.util';
+import { MapInstanceService } from './map-instance.service';
 
-export class AstService {
-
+export class DeclarationService {
 
 
     static getDeclaration(name: string, declarationKind: 'ClassDeclaration'): ClassDeclaration
@@ -34,26 +33,12 @@ export class AstService {
     }
 
 
-    static getTypeAliasDeclaration(typeName: string): TypeAliasDeclaration {
-        const typeDeclarations: TypeAliasDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getTypeAliases().filter(c => c.getName() === typeName)));
-        if (typeDeclarations.length === 0) {
-            throwCustom(`ERROR : no type called "${typeName}" in your project`);
-        } else if (typeDeclarations.length > 1) {
-            console.log(chalk.yellowBright(`WARNING : multiple types called "${typeName}" in your project. Please use the option "typeFilePath" to fix it.`));
+    static map(data: any, name: string, declaration: ClassOrTypeAliasDeclaration, create: (data: any, name: string, declaration: ClassOrTypeAliasDeclaration) => ClassOrTypeAliasDeclaration) {
+        if (Array.isArray(data)) {
+            return create(data, name, declaration);
+        } else {
+            return create(data, name, declaration);
         }
-        return typeDeclarations[0];
-    }
-
-
-    private static async cloneFile(sourceFile: SourceFile): Promise<void> {
-        console.log(chalk.blueBright('ORIGGGGGG PATHHHHH'), sourceFile.getFilePath());
-        console.log(chalk.blueBright('FLAG PATHHHHH'), getClonedFilePath(sourceFile.getFilePath()));
-        await ensureDirAndCopy(sourceFile.getFilePath(), getClonedFilePath(sourceFile.getFilePath()));
-    }
-
-
-    private static flag(sourceFile: SourceFile): SourceFile {
-        return undefined;
     }
 
 }

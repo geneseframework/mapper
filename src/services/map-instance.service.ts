@@ -13,7 +13,12 @@ import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 export class MapInstanceService<T> {
 
 
-    static createInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[] {
+    static createInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[]
+    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T | string | number | boolean
+    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+        if (!Array.isArray(data)) {
+            return this.createInstance<T>(data, className, classDeclaration);
+        }
         const instancesArray: T[] = [];
         for (const element of data) {
             const instance: T = this.createInstance(element, className, classDeclaration);
@@ -23,7 +28,7 @@ export class MapInstanceService<T> {
     }
 
 
-    static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
+    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);

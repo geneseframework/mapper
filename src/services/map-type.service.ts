@@ -14,7 +14,6 @@ import {
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
-import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
 import { MapInstanceService } from './map-instance.service';
@@ -22,6 +21,7 @@ import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { getApparentType } from '../utils/ast.util';
 import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
+import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 
 export class MapTypeService {
 
