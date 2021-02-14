@@ -54,11 +54,6 @@ export class Mapper<T> {
         } else {
             const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'ClassDeclaration');
             return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
-            // if (Array.isArray(data)) {
-            //     return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
-            // } else {
-            //     return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
-            // }
         }
     }
 

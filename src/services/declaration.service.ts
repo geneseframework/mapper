@@ -32,13 +32,4 @@ export class DeclarationService {
         return classDeclarations[0];
     }
 
-
-    static map(data: any, name: string, declaration: ClassOrTypeAliasDeclaration, create: (data: any, name: string, declaration: ClassOrTypeAliasDeclaration) => ClassOrTypeAliasDeclaration) {
-        if (Array.isArray(data)) {
-            return create(data, name, declaration);
-        } else {
-            return create(data, name, declaration);
-        }
-    }
-
 }
