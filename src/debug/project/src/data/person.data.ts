@@ -33,8 +33,9 @@ export const PERSON_PIERRE = {
 
 export const PERSON_LEA = {
     employer: {
-        name: 'GreenPeace',
-        volunteers: 3000
+        // name: 'GreenPeace',
+        employees: 3,
+        // volunteers: 3000,
     },
     family: [PERSON_LEO, PERSON_AUGUSTE, PERSON_PIERRE],
     firstName: 'Léa',

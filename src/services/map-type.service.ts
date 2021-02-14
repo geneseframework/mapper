@@ -59,7 +59,6 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
-        console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, typeNode.getKindName());
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
@@ -84,9 +83,18 @@ export class MapTypeService {
     }
 
 
+    /**
+     * Returns the first differentiating type of the union
+     * @param target
+     * @param key
+     * @param dataValue
+     * @param unionTypeNode
+     * @private
+     */
     private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
         const initialValue: any = clone(target[key]);
         for (const tNode of unionTypeNode.getTypeNodes()) {
+            console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, tNode.getKindName());
             this.mapTypeNode(target, key, dataValue, tNode);
             if (target[key] !== initialValue) {
                 break;
