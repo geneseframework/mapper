@@ -13,8 +13,3 @@ export function isEnumValue(declaration: EnumDeclaration, value: any): boolean {
 export function enumValues(declaration: EnumDeclaration): any[] {
     return declaration.getStructure().members?.map(m => (m.initializer as string).slice(1, -1));
 }
-
-
-export function getApparentType(node: Node): string {
-    return node.getType().getApparentType().getText();
-}

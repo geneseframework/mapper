@@ -18,20 +18,21 @@ import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
-import { getApparentType } from '../utils/ast.util';
 import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
+import { getApparentType } from '../utils/ast-types.util';
 
 export class MapTypeService {
 
 
-    static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[] | string[] | number[] | boolean[]
-    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | string | number | boolean
-    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+    static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[]
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T |T[] {
         console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
+        console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
         if (!Array.isArray(data)) {
-            // return this.createInstance<T>(data, className, classDeclaration);
+            return this.mapData<T>(data, typeAliasDeclaration);
         }
         const instancesArray: T[] = [];
         for (const element of data) {
@@ -42,6 +43,15 @@ export class MapTypeService {
     }
 
 
+    private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
+        const target = {} as T;
+        for (const key of Object.keys(dataValue)) {
+            this.mapTypeType(target, key, dataValue, typeAliasDeclaration);
+        }
+        return target;
+    }
+
+
     // TODO : Types which are not unions
     static mapTypeType(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
         this.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
@@ -49,6 +59,7 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
+        console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, typeNode.getKindName());
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);

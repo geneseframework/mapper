@@ -6,6 +6,7 @@ import { throwCustom } from '../utils/errors.util';
 import { ClassOrTypeAliasDeclaration, ClassOrTypeAliasType } from '../types/class-or-type-alias-declaration.enum';
 import { getClasses } from '../utils/ast-class.util';
 import { MapInstanceService } from './map-instance.service';
+import { getTypeAliases } from '../utils/ast-types.util';
 
 export class DeclarationService {
 
@@ -15,10 +16,10 @@ export class DeclarationService {
     static getDeclaration(name: string, declarationKind: ClassOrTypeAliasType): ClassOrTypeAliasDeclaration {
         console.log(chalk.blueBright('GET DECLLLLLLL'), declarationKind);
         if (declarationKind === 'ClassDeclaration') {
-            console.log(chalk.blueBright('GET DECLLLLLLL'), name);
             return this.getClassOrTypeAliasDeclaration(name, getClasses);
+        } else  {
+            return this.getClassOrTypeAliasDeclaration(name, getTypeAliases);
         }
-        return undefined;
     }
 
 
