@@ -1,5 +1,5 @@
 import {
-    ArrayTypeNode,
+    ArrayTypeNode, ClassDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -24,6 +24,23 @@ import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 
 export class MapTypeService {
+
+
+    static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[] | string[] | number[] | boolean[]
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | string | number | boolean
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+        console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
+        if (!Array.isArray(data)) {
+            // return this.createInstance<T>(data, className, classDeclaration);
+        }
+        const instancesArray: T[] = [];
+        for (const element of data) {
+            // const instance: T = this.createInstance(element, className, classDeclaration);
+            // instancesArray.push(instance);
+        }
+        return instancesArray;
+    }
+
 
     // TODO : Types which are not unions
     static mapTypeType(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {

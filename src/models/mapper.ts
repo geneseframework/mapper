@@ -1,7 +1,7 @@
 import { TConstructor } from './t-constructor.model';
 import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
-import { ClassDeclaration } from 'ts-morph';
+import { ClassDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import {
     isPrimitiveTypeOrArrayOfPrimitiveTypes,
@@ -14,6 +14,7 @@ import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { DeclarationService } from '../services/declaration.service';
+import { MapTypeService } from '../services/map-type.service';
 
 export class Mapper<T> {
 
@@ -48,7 +49,8 @@ export class Mapper<T> {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {
-            // TODO
+            const typeDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'TypeAliasDeclaration');
+            return MapTypeService.createTypes(data, mapper.typeName, typeDeclaration);
         } else if (options?.isInterface === true) {
             // TODO
         } else {
