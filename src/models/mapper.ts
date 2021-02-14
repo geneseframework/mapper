@@ -52,7 +52,8 @@ export class Mapper<T> {
         } else if (options?.isInterface === true) {
             // TODO
         } else {
-            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
+            const classDeclaration: ClassDeclaration = AstService.getDeclaration(mapper.typeName, 'ClassDeclaration');
+            // const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
             if (Array.isArray(data)) {
                 return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
             } else {

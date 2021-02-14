@@ -50,3 +50,8 @@ export function getTypeReferenceTypeDeclaration(typeReference: TypeReferenceNode
     return getImportTypeDeclaration(apparentType, typeName);
 }
 
+
+export function getClasses(sourceFile: SourceFile): ClassDeclaration[] {
+    return sourceFile.getClasses();
+}
+

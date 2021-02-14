@@ -5,6 +5,7 @@ import * as chalk from 'chalk';
 import { throwCustom } from '../utils/errors.util';
 import { ensureDirAndCopy, getClonedFilePath } from '../utils/file-system.util';
 import { ClassOrTypeAliasDeclaration, ClassOrTypeAliasType } from '../types/class-or-type-alias-declaration.enum';
+import { getClasses } from '../utils/ast-class.util';
 
 export class AstService {
 
@@ -13,19 +14,21 @@ export class AstService {
     static getDeclaration(name: string, declarationKind: 'ClassDeclaration'): ClassDeclaration
     static getDeclaration(name: string, declarationKind: 'TypeAliasDeclaration'): TypeAliasDeclaration
     static getDeclaration(name: string, declarationKind: ClassOrTypeAliasType): ClassOrTypeAliasDeclaration {
+        console.log(chalk.blueBright('GET DECLLLLLLL'), declarationKind);
         if (declarationKind === 'ClassDeclaration') {
-            return this.getClassDeclaration(name);
+            console.log(chalk.blueBright('GET DECLLLLLLL'), name);
+            return this.getClassOrTypeAliasDeclaration(name, getClasses);
         }
         return undefined;
     }
 
 
-    static getClassDeclaration(className: string): ClassDeclaration {
-        const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses().filter(c => c.getName() === className)));
+    static getClassOrTypeAliasDeclaration(name: string, getElements: (sourceFile: SourceFile) => ClassOrTypeAliasDeclaration[]): ClassOrTypeAliasDeclaration {
+        const classDeclarations: ClassOrTypeAliasDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => getElements(s).filter(c => c.getName() === name)));
         if (classDeclarations.length === 0) {
-            throwCustom(`ERROR : no class called "${className}" in your project`);
+            throwCustom(`ERROR : no declaration called "${name}" in your project`);
         } else if (classDeclarations.length > 1) {
-            console.log(chalk.yellowBright(`WARNING : multiple classes called "${className}" in your project. Please use the option "classFilePath" to fix it.`));
+            console.log(chalk.yellowBright(`WARNING : multiple declarations called "${name}" in your project. Please use the MapperOption "declarationPath" to fix it.`));
         }
         return classDeclarations[0];
     }
