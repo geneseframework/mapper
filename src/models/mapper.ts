@@ -4,7 +4,7 @@ import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { ClassDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import {
-    isPrimitiveTypeOrArrayOfPrimitiveTypes,
+    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
 } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
@@ -47,7 +47,7 @@ export class Mapper<T> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
         // TODO : Indexable types
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {
             const typeDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'TypeAliasDeclaration');

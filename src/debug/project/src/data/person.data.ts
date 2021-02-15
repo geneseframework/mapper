@@ -2,14 +2,14 @@ import { Color } from '../models/colors.enum';
 
 
 export const PERSON_LEO = {
-    employer: {
-        name: 'Total',
-        employees: 30000
-    },
-    firstName: 'Léo',
-    lastName: 'Renoir',
+    // employer: {
+    //     name: 'Total',
+    //     employees: 30000
+    // },
+    // firstName: 'Léo',
+    // lastName: 'Renoir',
     nickNames: 'The young',
-    cats: []
+    // cats: []
 }
 
 export const PERSON_AUGUSTE = {

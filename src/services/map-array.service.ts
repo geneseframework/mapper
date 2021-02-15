@@ -1,5 +1,5 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
-import { hasPrimitiveType } from '../utils/primitives.util';
+import { isPrimitiveValue } from '../utils/primitives.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';
@@ -30,7 +30,7 @@ export class MapArrayService<T> {
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }
-            if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(element)) {
+            if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(element)) {
                 target[key].push(element);
             }
         }

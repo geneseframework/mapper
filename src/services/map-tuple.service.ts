@@ -1,5 +1,5 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
-import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
+import { isPrimitiveValue, isPrimitiveTypeNode } from '../utils/primitives.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';
@@ -33,7 +33,7 @@ export class MapTupleService<T> {
 
 
     private static mapTupleElement(dataValue: any, tupleType: string, apparentTupleType: string): any {
-        if (isPrimitiveType(apparentTupleType)) {
+        if (isPrimitiveTypeNode(apparentTupleType)) {
             if (typeof dataValue === apparentTupleType) {
                 return dataValue;
             }
@@ -45,7 +45,7 @@ export class MapTupleService<T> {
                 MapInstanceService.mapData(dataValue, instance, importArrayDeclaration);
                 return instance;
             }
-            if (importArrayDeclaration instanceof EnumDeclaration && hasPrimitiveType(dataValue)) {
+            if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {
                 return dataValue;
             }
         }

@@ -9,11 +9,11 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
-    hasPrimitiveOrArrayOfPrimitivesType, isLiteralKeyword, isLiteralPrimitive,
-    isPrimitiveType,
-    isPrimitiveTypeOrArrayOfPrimitiveTypes,
+    isPrimitiveOrArrayOfPrimitivesValue, isLiteralKeyword, isLiteralPrimitive,
+    isPrimitiveTypeNode,
+    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
     literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue
+    primitiveLiteralValue, isArrayOfPrimitiveTypeNodes
 } from '../utils/primitives.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
@@ -105,17 +105,41 @@ export class MapTypeService {
             console.log(chalk.greenBright('MAP TNODEEEEEE'), target);
             console.log(chalk.greenBright('MAP TNODEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
         }
-        if (hasPrimitiveOrArrayOfPrimitivesType(dataValue)) {
+        if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
+            const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
             if (Array.isArray(dataValue)) {
-
+                if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
+                    console.log(chalk.redBright('NOT ARRAY OF PRIM TYPEEEEEE'), dataValue, typeNode.getText(), isLiteralKeyword(typeNode));
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
+                    if (key === 'nickNames') {
+                        console.log(chalk.cyanBright('IS PRIMMMM indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
+                    }
+                    if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                        const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                        if (key === 'nickNames') {
+                            console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
+                        }
+                        if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
+                            console.log(chalk.greenBright('SHOULD BE HEEEEERE'));
+                            target[key] = dataValue;
+                            return;
+                        } else {
+                            // TODO : case of primitive Literals
+                            console.log(chalk.redBright('SHOULD NOT BE HEEEEERE : array of primitive literal'));
+                            // this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                        }
+                    }
+                    return;
+                } else {
+                    console.log(chalk.magentaBright('ARRAY TYPEEEEEE IS LITERAL'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                }
             } else {
                 console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE NOT ARRAYY'), dataValue, typeNode.getKindName(), typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
                 if (!isLiteralPrimitive(typeNode)) {
                     console.log(chalk.redBright('HAS PRIM TYPEEEEEE NOT LITERAL'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
                     return;
-                } else if ((isLiteralKeyword(typeNode))
-                    || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+                } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
                     target[key] = dataValue;
                     console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE HAS DATA VALUE'), dataValue, target);
                     return;
@@ -141,7 +165,7 @@ export class MapTypeService {
                     if (key === 'nickNames') {
                         console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
                     }
-                    const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
                     if (key === 'nickNames') {
                         console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
                     }
@@ -198,30 +222,37 @@ export class MapTypeService {
     }
 
 
-    private static getNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[], dataValue: any): number {
-        if (properties.includes('employees')) {
-            console.log(chalk.yellowBright('IS KTYPPPPPP -1111'), properties, typeNodes.map(t => t.getKindName()));
-        }
+    private static getIndexOfNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[], dataValue: any): number {
+        // if (properties.includes('nickNames')) {
+        console.log(chalk.yellowBright('IS KTYPPPPPP -1111'), properties, typeNodes.map(t => t.getKindName()), dataValue);
+        // }
         for (let i = 0; i < typeNodes.length; i++) {
-            if (properties.includes('employees')) {
-                console.log(chalk.yellowBright('IS KTYPPPPPP 0'), properties, typeNodes[i].getKindName());
-            }
+            // if (properties.includes('nickNames')) {
+            console.log(chalk.yellowBright('IS KTYPPPPPP 0'), properties, typeNodes[i].getKindName(), dataValue);
+            // }
             if (this.isKeyType(properties, typeNodes[i], dataValue)) {
-                if (properties.includes('employees')) {
-                    console.log(chalk.yellowBright('IS KTYPPPPPP 1111'), properties, typeNodes[i].getKindName());
-                }
+                // if (properties.includes('nickNames')) {
+                console.log(chalk.yellowBright('IS KTYPPPPPP 1111'), properties, typeNodes[i].getKindName(), dataValue);
+                // }
                 return i;
             }
         }
-        if (properties.includes('employees')) {
-            console.log(chalk.yellowBright('IS KTYPPPPPP RETURN UNDEFINED'), properties, typeNodes.map(t => t.getKindName()));
-        }
+        // if (properties.includes('nickNames')) {
+        console.log(chalk.yellowBright('IS KTYPPPPPP RETURN UNDEFINED'), properties, typeNodes.map(t => t.getKindName()), dataValue);
+        // }
         return undefined;
     }
 
 
+    private static getIndexOfNextArrayOfPrimitiveTypes(typeNodes: TypeNode[]): number {
+        console.log(chalk.magentaBright('NEXT AARRRR PRIM TYPPPPP'), typeNodes.map(t => t.getKindName()));
+        const typeNodeIndex: number = typeNodes.findIndex(t => isArrayOfPrimitiveTypeNodes(t));
+        return typeNodeIndex > -1 ? typeNodeIndex : undefined;
+    }
+
+
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
-        if (isPrimitiveType(literalType) && primitiveLiteralValue(literalType) === dataValue) {
+        if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType));
             return;
         }
@@ -236,7 +267,7 @@ export class MapTypeService {
 
 
     private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(arrayTypeNode.getText())) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
         }
