@@ -9,6 +9,7 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
+    hasPrimitiveOrArrayOfPrimitivesType,
     isPrimitiveType,
     isPrimitiveTypeOrArrayOfPrimitiveTypes,
     literalPrimitiveToPrimitiveType,
@@ -104,28 +105,49 @@ export class MapTypeService {
             console.log(chalk.greenBright('MAP TNODEEEEEE'), target);
             console.log(chalk.greenBright('MAP TNODEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
         }
-        for (const dataKey of Object.keys(dataValue)) {
-            typeProperties.push(dataKey);
-            if (this.isKeyType(dataKey, typeNode)) {
-                if (key === 'race') {
-                    console.log(chalk.green('IS KEY TYPPPPPP'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
-                }
-                this.mapTypeNode(target, key, dataValue, typeNode);
+        if (hasPrimitiveOrArrayOfPrimitivesType(dataValue)) {
+            console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
+            if (Array.isArray(dataValue)) {
+
             } else {
-                const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-                if (key === 'race') {
-                    console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
+                console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE NOT ARRAYY'), dataValue, typeNode.getText().slice(1, -1));
+                if (dataValue === typeNode.getText().slice(1, -1)) {
+                    target[key] = dataValue;
+                    console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE HAS DATA VALUE'), dataValue, target);
+                    return;
+                } else if (typeNodes.length > 1) {
+                    this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
+                    return;
                 }
-                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                return;
+            }
+        } else {
+            for (const dataKey of Object.keys(dataValue)) {
                 if (key === 'race') {
-                    console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
+                    console.log(chalk.green('SHOULD NOT BE HERRRRRRR ?'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                 }
-                if (indexOfNextTypeNodeIncludingKeys !== undefined) {
-                    const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                typeProperties.push(dataKey);
+                if (this.isKeyType(dataKey, typeNode)) {
                     if (key === 'race') {
-                        console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
+                        console.log(chalk.green('IS KEY TYPPPPPP'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                     }
-                    this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                    this.mapTypeNode(target, key, dataValue, typeNode);
+                } else {
+                    const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+                    if (key === 'race') {
+                        console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
+                    }
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                    if (key === 'race') {
+                        console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
+                    }
+                    if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                        const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                        if (key === 'race') {
+                            console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
+                        }
+                        this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                    }
                 }
             }
         }

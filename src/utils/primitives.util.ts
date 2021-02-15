@@ -2,6 +2,12 @@ import { LiteralTypeNode, SyntaxKind } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
 
+export function hasPrimitiveOrArrayOfPrimitivesType(element: any): boolean {
+    const elements: any[] = Array.isArray(element) ? element : [element];
+    return elements.every(e => hasPrimitiveType(e));
+}
+
+
 export function hasPrimitiveType(element: any): boolean {
     if (element === undefined || element === null) {
         return false;
