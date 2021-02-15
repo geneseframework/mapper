@@ -32,25 +32,36 @@ export class MapTypeService {
     static createTypes<T>(data: any[], typeOrArrayTypeName: string): T[]
     static createTypes<T>(data: any, typeOrArrayTypeName: string): T
     static createTypes<T>(data: any, typeOrArrayTypeName: string): T | T[] {
-        console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
         const typeName: string = this.getTypeName(typeOrArrayTypeName);
+        console.log(chalk.blueBright('CREATE TYPESSSSS'), data, typeName);
         const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
-        // console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
-        if (!Array.isArray(data)) {
+        console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration?.getName());
+        if (Array.isArray(data) && this.isArrayType(typeOrArrayTypeName)) {
+            const typesArray: T[] = [];
+            for (const element of data) {
+                const instance: T = this.mapData<T>(element, typeAliasDeclaration);
+                typesArray.push(instance);
+            }
+            return typesArray;
+        } else if (!Array.isArray(data) && !this.isArrayType(typeOrArrayTypeName)) {
             return this.mapData<T>(data, typeAliasDeclaration);
         }
-        const instancesArray: T[] = [];
-        for (const element of data) {
-            // const instance: T = this.createInstance(element, className, classDeclaration);
-            // instancesArray.push(instance);
-        }
-        return instancesArray;
     }
 
 
     private static getTypeName(typeOrArrayTypeName: string): string {
-        return typeOrArrayTypeName.slice(-2) === '[]' ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
+        return this.isArrayType(typeOrArrayTypeName) ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
     }
+
+
+    private static isArrayType(typeOrArrayTypeName: string): boolean {
+        return typeOrArrayTypeName.slice(-2) === '[]';
+    }
+
+
+    // private static mapArrayType(data: any[], arrayTypeName: string): void {
+    //
+    // }
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
