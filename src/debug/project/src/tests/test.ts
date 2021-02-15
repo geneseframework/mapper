@@ -29,7 +29,6 @@ function isSpecFile(path: string): boolean {
 async function executeTests(specFiles: string[]): Promise<void> {
     for (const specFile of specFiles) {
         const file: any = await require(specFile);
-        console.log(chalk.blueBright('FILEEEEEE'), file?.testMappers);
         TESTS.its.push(...file?.testMappers);
     }
 }

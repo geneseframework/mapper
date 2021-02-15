@@ -8,9 +8,7 @@ export async function expect(testMappers: TestMapper[]): Promise<void>
 export async function expect(testMapper: TestMapper): Promise<void>
 export async function expect(testMappers: TestMapper | TestMapper[]): Promise<void> {
     if (Array.isArray(testMappers)) {
-        console.log(chalk.cyanBright('Should be hereeeeee'), testMappers);
         for (const testMapper of testMappers) {
-            console.log(chalk.magentaBright('Should be hereeeeee !!!!'), testMapper);
             await expectMapper(testMapper);
         }
     } else {
@@ -20,7 +18,6 @@ export async function expect(testMappers: TestMapper | TestMapper[]): Promise<vo
 
 
 async function expectMapper(testMapper: TestMapper): Promise<void> {
-    console.log(chalk.cyanBright('TESTMAPPPPPPPP'), testMapper);
     const result = await Mapper.create(testMapper.mapParameter, testMapper.data);
     if (isSameObject(result, testMapper.data)) {
         console.log(chalk.greenBright('Test passed : '), testMapper.title);

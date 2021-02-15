@@ -1,6 +1,5 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import { Global } from '../models/global.model';
 
 export class InitService {
 

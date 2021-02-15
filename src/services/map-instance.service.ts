@@ -47,7 +47,6 @@ export class MapInstanceService<T> {
 
 
     private static mapDataKey<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
-        // console.log(chalk.cyanBright('MAP INSTANCEEEEEE'), target, classDeclaration?.getName(), key, dataValue);
         const property: PropertyDeclaration = getAllProperties(classDeclaration).find(p => p.getName() === key);
         if (!property) {
             return;
@@ -55,8 +54,6 @@ export class MapInstanceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        // console.log(chalk.greenBright('MAP INSTANCEEEEEE'), property.getStructure());
-        // console.log(chalk.blueBright('MAP INSTANCEEEEEE'), propertyType, apparentType);
         if (isPrimitiveTypeNode(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
             return;
