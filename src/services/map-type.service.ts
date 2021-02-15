@@ -117,12 +117,11 @@ export class MapTypeService {
                     }
                     return;
                 } else {
-                    console.log(chalk.magentaBright('TODO : not array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                    console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                    return;
                 }
             } else {
-                if (!isLiteralPrimitive(typeNode)) {
-                    return;
-                } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+                if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
                     target[key] = dataValue;
                     return;
                 } else if (typeNodes.length > 1) {
@@ -130,6 +129,16 @@ export class MapTypeService {
                     return;
                 }
                 return;
+                // if (!isLiteralPrimitive(typeNode)) {
+                //     return;
+                // } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+                //     target[key] = dataValue;
+                //     return;
+                // } else if (typeNodes.length > 1) {
+                //     this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
+                //     return;
+                // }
+                // return;
             }
         } else {
             for (const dataKey of Object.keys(dataValue)) {
