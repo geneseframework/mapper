@@ -6,7 +6,8 @@ export class PersonWithNickNamesStringOrStrings {
 }
 
 export const testMappers: TestMapper[] = [];
-testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {nickNames: 'Auguste'}, { log: true }));
+// testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {nickNames: 'Auguste'}, { log: true }));
+testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {unknownProperty: 'Auguste'}, { log: true }));
 
 
 export type StringsOrString = string[] | string;
@@ -15,6 +16,6 @@ export class PersonWithNickNamesStringsOrString {
     nickNames: StringsOrString;
 }
 
-testMappers.push(new TestMapper('data: string / propertyType: string[] | string', PersonWithNickNamesStringsOrString, {nickNames: 'Auguste'}, { log: true }));
+// testMappers.push(new TestMapper('data: string / propertyType: string[] | string', PersonWithNickNamesStringsOrString, {nickNames: 'Auguste'}, { log: true }));
 
 
