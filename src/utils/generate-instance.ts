@@ -8,7 +8,7 @@ import { Person } from "../debug/project/src/models/person.model";
 import { Company } from "../debug/project/src/models/company.model";
 import { Ngo } from "../debug/project/src/models/ngo.model";
 import { TestMapper } from "../test-engine/test-mapper.model";
-import { NgoSpec, CompanySpec } from "../debug/project/src/tests/employer.spec";
+import { NgoSpec, CompanySpec, PersonSpec } from "../debug/project/src/tests/employer.spec";
 import { PersonWithNickNamesStringOrStrings, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/string-or-strings.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
@@ -40,6 +40,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'CompanySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
             instance = new CompanySpec();
+            break;
+        case 'PersonSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
+            instance = new PersonSpec();
             break;
         case 'PersonWithNickNamesStringOrStrings_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
             instance = new PersonWithNickNamesStringOrStrings();

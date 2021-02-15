@@ -1,6 +1,5 @@
 import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import { TConstructor } from './t-constructor.model';
 import { Mapper } from './mapper';
 import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
