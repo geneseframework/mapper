@@ -1,12 +1,37 @@
-import { expect } from './test.service';
-import { testMapper } from './classes/map-class-types.test';
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
+import { Project } from 'ts-morph';
+import { expect } from './test.service';
 
 async function startTests() {
-    await expect(testMapper);
+    const project: Project = createProject();
+    const specFiles: string[] = project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
+    console.log(chalk.blueBright('PROJJJ'), project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).length);
+    await executeTests(specFiles);
+    await expect(TESTS.its);
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
+}
+
+
+function createProject(): Project {
+    return new Project({
+        tsConfigFilePath: '/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/tsconfig.json'
+    });
+}
+
+
+function isSpecFile(path: string): boolean {
+    return path?.slice(-8) === '.spec.ts';
+}
+
+
+async function executeTests(specFiles: string[]): Promise<void> {
+    for (const specFile of specFiles) {
+        const file: any = await require(specFile);
+        console.log(chalk.blueBright('FILEEEEEE'), file?.testMappers);
+        TESTS.its.push(...file?.testMappers);
+    }
 }
 
 startTests();

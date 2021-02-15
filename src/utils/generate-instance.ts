@@ -7,8 +7,8 @@ import { MainAppProcess } from "../debug/project/src/models/main-app-process";
 import { Person } from "../debug/project/src/models/person.model";
 import { Company } from "../debug/project/src/models/company.model";
 import { Ngo } from "../debug/project/src/models/ngo.model";
-import { PersonWithNickNames } from "../debug/project/src/tests/classes/map-class-types.test";
 import { TestMapper } from "../debug/project/src/tests/test-mapper.model";
+import { PersonWithNickNamesStringOrStrings, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/classes/map-class-types.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -37,8 +37,11 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'TestMapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/test-mapper.model.ts':
             instance = new TestMapper(undefined, undefined, undefined, undefined);
             break;
-        case 'PersonWithNickNames_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes/map-class-types.test.ts':
-            instance = new PersonWithNickNames();
+        case 'PersonWithNickNamesStringOrStrings_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes/map-class-types.spec.ts':
+            instance = new PersonWithNickNamesStringOrStrings();
+            break;
+        case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes/map-class-types.spec.ts':
+            instance = new PersonWithNickNamesStringsOrString();
             break;
         default:
             console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);
