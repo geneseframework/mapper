@@ -7,6 +7,9 @@ import { MainAppProcess } from "../debug/project/src/models/main-app-process";
 import { Person } from "../debug/project/src/models/person.model";
 import { Company } from "../debug/project/src/models/company.model";
 import { Ngo } from "../debug/project/src/models/ngo.model";
+import { TestMapper } from "../test-engine/test-mapper.model";
+import { NgoSpec, CompanySpec, PersonSpec } from "../debug/project/src/tests/employer.spec";
+import { PersonWithNickNamesStringOrStrings, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/string-or-strings.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -31,6 +34,21 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'Person_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/person.model.ts':
             instance = new Person(undefined, undefined, undefined, undefined, undefined, undefined);
+            break;
+        case 'NgoSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
+            instance = new NgoSpec();
+            break;
+        case 'CompanySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
+            instance = new CompanySpec();
+            break;
+        case 'PersonSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
+            instance = new PersonSpec();
+            break;
+        case 'PersonWithNickNamesStringOrStrings_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
+            instance = new PersonWithNickNamesStringOrStrings();
+            break;
+        case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
+            instance = new PersonWithNickNamesStringsOrString();
             break;
         default:
             console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);

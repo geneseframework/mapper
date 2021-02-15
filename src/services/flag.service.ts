@@ -9,7 +9,8 @@ import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils
 export class FlagService {
 
     static async init(): Promise<void> {
-        console.log(chalk.yellowBright('Init mapping...'));
+
+        GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
             if (this.mayBeInstantiated(classDeclaration)) {
@@ -17,7 +18,7 @@ export class FlagService {
             }
         }
         await this.generateInstanceGeneratorFile();
-        console.log(chalk.yellowBright('Types mapped'));
+        GLOBAL.log('Types mapped', '', !GLOBAL.debug);
     }
 
 

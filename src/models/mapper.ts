@@ -47,6 +47,7 @@ export class Mapper<T> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
         // TODO : Indexable types
+        // TODO : properties "any" or without types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {

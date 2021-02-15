@@ -20,7 +20,8 @@
     },
     "exclude": ["node_modules"],
     "include": [
-        "*.ts",
-        "**/*.ts"
+      "*.ts",
+      "**/*.ts",
+      "../../../node_modules/@types/jest/index.d.ts"
     ]
 }

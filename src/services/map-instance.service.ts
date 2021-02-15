@@ -10,6 +10,8 @@ import { MapTypeService } from './map-type.service';
 import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getApparentType } from '../utils/ast-types.util';
+import * as chalk from 'chalk';
+import { type } from 'os';
 
 export class MapInstanceService<T> {
 

@@ -1,8 +1,9 @@
-
-
 /**
  * clone object with deep copy
  */
+import * as chalk from 'chalk';
+
+
 export function clone(model: any): any {
     if (model) {
         if (Array.isArray(model)) {
@@ -47,6 +48,7 @@ export function isSameObject(obj1: any, obj2: any): boolean {
         || (!Array.isArray(obj1) && Array.isArray(obj2))
         || (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length !== obj2.length)
         || obj1 === !obj2
+        || !areObjectsWithDifferentNumberOfKeys(obj1, obj2)
     ) {
         return false;
     }
@@ -82,4 +84,9 @@ export function isSameObject(obj1: any, obj2: any): boolean {
         }
     }
     return true;
+}
+
+
+function areObjectsWithDifferentNumberOfKeys(obj1: any, obj2: any): boolean {
+    return typeof obj1 === 'object' && typeof obj2 === 'object' && !Array.isArray(obj1) && !Array.isArray(obj2) && Object.keys(obj1).length === Object.keys(obj2).length;
 }
