@@ -100,29 +100,29 @@ export class MapTypeService {
 
     private static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
-        if (key === 'employer') {
+        if (key === 'race') {
             console.log(chalk.greenBright('MAP TNODEEEEEE'), target);
             console.log(chalk.greenBright('MAP TNODEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
         }
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
             if (this.isKeyType(dataKey, typeNode)) {
-                if (key === 'employer') {
+                if (key === 'race') {
                     console.log(chalk.green('IS KEY TYPPPPPP'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                 }
                 this.mapTypeNode(target, key, dataValue, typeNode);
             } else {
                 const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-                if (key === 'employer') {
+                if (key === 'race') {
                     console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
                 }
-                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes);
-                if (key === 'employer') {
+                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                if (key === 'race') {
                     console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
                 }
                 if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                     const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
-                    if (key === 'employer') {
+                    if (key === 'race') {
                         console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
                     }
                     this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
@@ -132,41 +132,47 @@ export class MapTypeService {
     }
 
 
-    private static isKeyType(keys: string[], typeNode: TypeNode): boolean
-    private static isKeyType(key: string, typeNode: TypeNode): boolean
-    private static isKeyType(keys: string | string[], typeNode: TypeNode): boolean {
+    private static isKeyType(keys: string[], typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(key: string, typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(keys: string | string[], typeNode: TypeNode, dataValue?: any): boolean {
         if (Array.isArray(keys)) {
-            return keys.every(key => this.isKeyInType(key, typeNode));
+            console.log(chalk.blueBright('IS KT ARRAYYYYYY'), keys, typeNode.getKindName());
+            return keys.every(key => this.isKeyInType(key, typeNode, dataValue));
         } else {
-            return this.isKeyInType(keys, typeNode);
+            return this.isKeyInType(keys, typeNode, dataValue);
         }
 
     }
 
 
-    private static isKeyInType(key: string, typeNode: TypeNode): boolean {
+    private static isKeyInType(key: string, typeNode: TypeNode, value?: any): boolean {
         switch (typeNode.getKind()) {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
                 if (typeDeclaration instanceof ClassDeclaration) {
-                    if (key.includes('employer')) {
+                    if (key.includes('race')) {
                         console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
                     }
                     return !!typeDeclaration.getProperties().find(p => p.getName() === key);
                 } else  {
                     return false;
                 }
+            case SyntaxKind.LiteralType:
+                // if (value === typeNode.getText().slice(1, -1)) {
+                    console.log(chalk.blueBright('LITERALLLLLL'), key, value, typeNode.getText().slice(1, -1));
+                // }
+                return value === typeNode.getText().slice(1, -1);
             case SyntaxKind.ArrayType:
                 // TODO
                 return false;
             default:
-                console.log(chalk.redBright('Unknown kind of TypeNode : key not found in Type '), typeNode.getKindName());
+                console.log(chalk.redBright(`Unknown key in TypeNode : key ${key} not found in Type `), typeNode.getKindName());
                 return false;
         }
     }
 
 
-    private static getNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[]): number {
+    private static getNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[], dataValue: any): number {
         if (properties.includes('employees')) {
             console.log(chalk.yellowBright('IS KTYPPPPPP -1111'), properties, typeNodes.map(t => t.getKindName()));
         }
@@ -174,7 +180,7 @@ export class MapTypeService {
             if (properties.includes('employees')) {
                 console.log(chalk.yellowBright('IS KTYPPPPPP 0'), properties, typeNodes[i].getKindName());
             }
-            if (this.isKeyType(properties, typeNodes[i])) {
+            if (this.isKeyType(properties, typeNodes[i], dataValue)) {
                 if (properties.includes('employees')) {
                     console.log(chalk.yellowBright('IS KTYPPPPPP 1111'), properties, typeNodes[i].getKindName());
                 }

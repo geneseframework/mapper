@@ -25,7 +25,7 @@ export class Mapper<T> {
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    private constructor(mapParameter: MapParameter<T>, options?: MapperOptions) {
+    private constructor(mapParameter: MapParameter<T>) {
         if (typeof mapParameter === 'string') {
             this.typeName = mapParameter;
         } else {
@@ -39,9 +39,9 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
     static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | T[] | any>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T | T[]>
-    static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T | T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | any>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T>
+    static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     // static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);

@@ -1,3 +1,3 @@
-import { CAT_DATA_0, CAT_DATA_1 } from './cat.data';
+import { CAT_DATA_BIELA, CAT_DATA_CIBI } from './cat.data';
 
-export const ARRAY_CAT_DATAS = [CAT_DATA_0, CAT_DATA_1];
+export const ARRAY_CAT_DATAS = [CAT_DATA_BIELA, CAT_DATA_CIBI];
