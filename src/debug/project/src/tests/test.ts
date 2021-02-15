@@ -1,6 +1,12 @@
-import { kuzzyTest } from './test.service';
+import { testMapping } from './test.service';
+import { testMapper } from './classes/map-class-types.test';
+import * as chalk from 'chalk';
+import { TESTS } from './tests.const';
 
-export const TESTS = {
-    testsFailed: 0,
-    testsPassed: 0,
+async function startTests() {
+    await testMapping(testMapper);
+    console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
+    console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
 }
+
+startTests();

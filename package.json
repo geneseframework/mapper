@@ -7,7 +7,7 @@
     },
     "scripts": {
         "debug": "ts-node src/debug/project/start.ts",
-        "test": "ts-node src/debug/project/src/tests/classes/map-class-types.test.ts"
+        "test": "ts-node src/debug/project/src/tests/test.ts"
     },
     "devDependencies": {
         "@types/jest": "^26.0.20",

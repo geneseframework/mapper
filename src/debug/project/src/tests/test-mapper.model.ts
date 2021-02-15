@@ -1,6 +1,6 @@
 import { MapParameter } from '../../../../types/map-parameter.type';
 
-export class TestMapperModel {
+export class TestMapper {
 
     title: string;
     mapParameter: MapParameter<any>;
