@@ -7,7 +7,7 @@ export class PersonWithNickNamesStringOrStrings {
 
 export const testMappers: TestMapper[] = [];
 // testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {nickNames: 'Auguste'}, { log: true }));
-testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {unknownProperty: 'Auguste'}, { log: true }));
+testMappers.push(new TestMapper('data: string / propertyType: string | string[]', PersonWithNickNamesStringOrStrings, {unknownProperty: 'Auguste'}, { log: true, shouldFail: true }));
 
 
 export type StringsOrString = string[] | string;

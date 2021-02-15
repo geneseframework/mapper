@@ -6,7 +6,6 @@ import { expect } from './test.service';
 async function startTests() {
     const project: Project = createProject();
     const specFiles: string[] = project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
-    console.log(chalk.blueBright('PROJJJ'), project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).length);
     await executeTests(specFiles);
     await expect(TESTS.its);
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);

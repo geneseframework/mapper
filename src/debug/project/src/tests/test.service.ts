@@ -18,18 +18,31 @@ export async function expect(testMappers: TestMapper | TestMapper[]): Promise<vo
 
 
 async function expectMapper(testMapper: TestMapper): Promise<void> {
-    const result = await Mapper.create(testMapper.mapParameter, testMapper.data);
-    if (isSameObject(result, testMapper.data)) {
+    const result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.mapperOptions);
+    if (isExpectedResult(testMapper.data, result, testMapper.options?.shouldFail) ) {
         console.log(chalk.greenBright('Test passed : '), testMapper.title);
         TESTS.testsPassed++;
         if (testMapper.options?.log) {
-            console.log(chalk.blueBright('data : '), testMapper.data);
-            console.log(chalk.blueBright('result : '), result);
+           log(testMapper.data, result);
         }
     } else {
         console.log(chalk.redBright('Test failed : '), testMapper.title);
-        console.log(chalk.redBright('data : '), testMapper.data);
-        console.log(chalk.redBright('response : '), result);
         TESTS.testsFailed++;
+        log(testMapper.data, result);
     }
+}
+
+
+function isExpectedResult(data: any, result: any, shouldFail: boolean): boolean {
+    if (isSameObject(result, data)) {
+        return !shouldFail;
+    } else {
+        return shouldFail;
+    }
+}
+
+
+function log(data: any, result: any): void {
+    console.log(chalk.blueBright('data : '), data);
+    console.log(chalk.blueBright('response : '), result);
 }
