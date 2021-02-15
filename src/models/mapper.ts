@@ -41,7 +41,8 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | T[] | any>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T | T[]>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
+    static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T | T[]>
+    // static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
@@ -52,6 +53,8 @@ export class Mapper<T> {
             const typeDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'TypeAliasDeclaration');
             return MapTypeService.createTypes(data, mapper.typeName, typeDeclaration);
         } else if (options?.isInterface === true) {
+            // TODO
+        } else if (options?.isEnum === true) {
             // TODO
         } else {
             const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'ClassDeclaration');

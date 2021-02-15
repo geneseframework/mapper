@@ -1,3 +1,5 @@
+import * as chalk from 'chalk';
+
 export function flat(array: any[]): any[] {
     if(!array || array.length === 0) {
         return [];
@@ -11,16 +13,18 @@ export function flat(array: any[]): any[] {
 }
 
 
-export function partialArray<T>(array: T[], fromIndex: number, toIndex?: number): T[] {
-    if (!array || (!fromIndex && !toIndex)) {
+export function partialClone<T>(array: T[], fromIndex: number, toIndex?: number): T[] {
+    // console.log(chalk.magentaBright('PARTIAL ARRRR'), array.length, fromIndex, toIndex);
+    if (!array || (fromIndex !== undefined && toIndex !== undefined)) {
         return undefined;
     }
     if (!toIndex || toIndex > array.length) {
         toIndex = array.length;
     }
-    const partialArray: T[] = [];
+    const partialArr: T[] = [];
     for (let i = fromIndex; i < toIndex; i++) {
-        partialArray.push(array[i]);
+        partialArr.push(array[i]);
     }
-    return partialArray;
+    // console.log(chalk.magentaBright('PARTIAL ARRRR'), partialArr.length);
+    return partialArr;
 }

@@ -1,5 +1,5 @@
 import {
-    ArrayTypeNode, ClassDeclaration,
+    ArrayTypeNode, ClassDeclaration, EnumDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -22,14 +22,14 @@ import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { partialArray } from '../utils/arrays.util';
+import { partialClone } from '../utils/arrays.util';
 
 export class MapTypeService {
 
 
     static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[]
     static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T
-    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T |T[] {
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | T[] {
         console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
         console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
         if (!Array.isArray(data)) {
@@ -45,11 +45,12 @@ export class MapTypeService {
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
-        const target = {} as T;
+        const rootValue: T = undefined;
+        const target: { root: T } = { root: rootValue };
         for (const key of Object.keys(dataValue)) {
-            this.mapTypeType(target, key, dataValue, typeAliasDeclaration);
+            this.mapTypeType(target, 'root', dataValue, typeAliasDeclaration);
         }
-        return target;
+        return target.root;
     }
 
 
@@ -93,36 +94,97 @@ export class MapTypeService {
      * @private
      */
     private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
+        this.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
+    }
+
+
+    private static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const initialValue: any = clone(target[key]);
-        const keys: string[] = [];
-        const unionTypeNodes: TypeNode[] = unionTypeNode.getTypeNodes();
-        for (let i = 0; i < unionTypeNodes.length; i++) {
-            console.log(chalk.cyanBright('MAP TNODEEEEEE'), key, dataValue, unionTypeNodes[i].getKindName());
-            if (this.isKeyType(key, unionTypeNodes[i])) {
-                this.mapTypeNode(target, key, dataValue, unionTypeNodes[i]);
-                keys.push(key);
+        const typeNode: TypeNode = typeNodes[0];
+        // const keys: string[] = [];
+        // for (let i = 0; i < typeNodes.length; i++) {
+        if (key === 'employer') {
+            console.log(chalk.greenBright('MAP TNODEEEEEE'), target, key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
+        }
+        for (const dataKey of Object.keys(dataValue)) {
+            typeProperties.push(dataKey);
+            if (this.isKeyType(dataKey, typeNode)) {
+                if (key === 'employer') {
+                    console.log(chalk.green('IS KEY TYPPPPPP'), key, dataValue, typeProperties, typeNode?.getKindName());
+                }
+                this.mapTypeNode(target, key, dataValue, typeNode);
             } else {
-                const nextTypeNodes: TypeNode[] = partialArray(unionTypeNodes, i);
-                const nextTypeNodeIncludingKeys: TypeNode = this.getNextTypeNodeIncludingKeys(keys.concat([key]), nextTypeNodes);
-            }
-            if (target[key] !== initialValue) {
-                break;
+                const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+                if (key === 'employer') {
+                    console.log(chalk.redBright('NOT IN TYPEEEEEE'), typeProperties, nextTypeNodes.map(n => n.getKindName()));
+                }
+                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties.concat([dataKey]), nextTypeNodes);
+                if (key === 'employer') {
+                    console.log(chalk.redBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
+                }
+                if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                    const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                    if (key === 'employer') {
+                        console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
+                    }
+                    this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                }
             }
         }
+        if (target[key] !== initialValue) {
+            // break;
+        }
+        // }
     }
 
 
     private static isKeyType(keys: string[], typeNode: TypeNode): boolean
     private static isKeyType(key: string, typeNode: TypeNode): boolean
     private static isKeyType(keys: string | string[], typeNode: TypeNode): boolean {
+        if (Array.isArray(keys)) {
+            return keys.every(key => this.isKeyInType(key, typeNode));
+        } else {
+            return this.isKeyInType(keys, typeNode);
+        }
+
+    }
+
+
+    private static isKeyInType(key: string, typeNode: TypeNode): boolean {
+        switch (typeNode.getKind()) {
+            case SyntaxKind.TypeReference:
+                const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
+                if (typeDeclaration instanceof ClassDeclaration) {
+                    if (key.includes('employer')) {
+                        console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
+                    }
+                    return !!typeDeclaration.getProperties().find(p => p.getName() === key);
+                } else  {
+                    return false;
+                }
+            case SyntaxKind.ArrayType:
+                // TODO
+                return false;
+            default:
+                console.log(chalk.redBright('Unknown kind of TypeNode : key not found in Type '), typeNode.getKindName());
+        }
         return true;
     }
 
 
-    private static getNextTypeNodeIncludingKeys(keys: string[], typeNodes: TypeNode[]): TypeNode {
-        for (const typeNode of typeNodes) {
-            if (this.isKeyType(keys, typeNode)) {
-                return typeNode;
+    private static getNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[]): number {
+        if (properties.includes('employer')) {
+            console.log(chalk.yellowBright('IS KTYPPPPPP -1111'), properties, typeNodes.map(t => t.getKindName()));
+        }
+        for (let i = 0; i < typeNodes.length; i++) {
+            if (properties.includes('employer')) {
+                console.log(chalk.yellowBright('IS KTYPPPPPP 0'), properties, typeNodes[i].getKindName());
+            }
+            if (this.isKeyType(properties, typeNodes[i])) {
+                if (properties.includes('employer')) {
+                    console.log(chalk.yellowBright('IS KTYPPPPPP'), properties, typeNodes[i].getKindName());
+                }
+                return i;
             }
         }
         return undefined;
