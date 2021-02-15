@@ -1,11 +1,10 @@
 import { TConstructor } from './t-constructor.model';
 import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
-import { AstService } from '../services/ast.service';
-import { ClassDeclaration } from 'ts-morph';
+import { ClassDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import {
-    isPrimitiveTypeOrArrayOfPrimitiveTypes,
+    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
 } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
@@ -14,6 +13,8 @@ import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { DeclarationService } from '../services/declaration.service';
+import { MapTypeService } from '../services/map-type.service';
 
 export class Mapper<T> {
 
@@ -24,7 +25,7 @@ export class Mapper<T> {
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
-    private constructor(mapParameter: MapParameter<T>, options?: MapperOptions) {
+    private constructor(mapParameter: MapParameter<T>) {
         if (typeof mapParameter === 'string') {
             this.typeName = mapParameter;
         } else {
@@ -36,25 +37,28 @@ export class Mapper<T> {
 
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
-    static async create<T>(mapParameter: MapParameter<T>, data: string, options?: MapperOptions): Promise<string>
-    static async create<T>(mapParameter: MapParameter<T>, data: any[]): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | any>
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T>
+    static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
+    // static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
         // TODO : Indexable types
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(mapper.typeName)) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {
-            // TODO
+            const typeDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'TypeAliasDeclaration');
+            return MapTypeService.createTypes(data, mapper.typeName, typeDeclaration);
         } else if (options?.isInterface === true) {
             // TODO
+        } else if (options?.isEnum === true) {
+            // TODO
         } else {
-            const classDeclaration: ClassDeclaration = AstService.getClassDeclaration(mapper.typeName);
-            if (Array.isArray(data)) {
-                return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
-            } else {
-                return MapInstanceService.createInstance(data, mapper.typeName, classDeclaration);
-            }
+            const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'ClassDeclaration');
+            return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
         }
     }
 

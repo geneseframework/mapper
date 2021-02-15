@@ -1,6 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { hasPrimitiveType, isPrimitiveType } from '../utils/primitives.util';
-import { getApparentType, isEnumValue } from '../utils/ast.util';
+import { isPrimitiveValue, isPrimitiveTypeNode } from '../utils/primitives.util';
+import { isEnumValue } from '../utils/ast.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
@@ -9,11 +9,17 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { MapTypeService } from './map-type.service';
 import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
+import { getApparentType } from '../utils/ast-types.util';
 
 export class MapInstanceService<T> {
 
 
-    static createInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[] {
+    static createInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[]
+    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T | string | number | boolean
+    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+        if (!Array.isArray(data)) {
+            return this.createInstance<T>(data, className, classDeclaration);
+        }
         const instancesArray: T[] = [];
         for (const element of data) {
             const instance: T = this.createInstance(element, className, classDeclaration);
@@ -23,7 +29,7 @@ export class MapInstanceService<T> {
     }
 
 
-    static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
+    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);
@@ -46,7 +52,7 @@ export class MapInstanceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        if (isPrimitiveType(propertyType)) {
+        if (isPrimitiveTypeNode(propertyType)) {
             this.setPrimitiveType(target, key, dataValue);
             return;
         }
@@ -83,7 +89,7 @@ export class MapInstanceService<T> {
 
 
     private static setPrimitiveType(target: any, key: string, dataValue: any): void {
-        if (hasPrimitiveType(dataValue)) {
+        if (isPrimitiveValue(dataValue)) {
             target[key] = dataValue;
         }
     }

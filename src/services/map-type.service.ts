@@ -1,5 +1,5 @@
 import {
-    ArrayTypeNode,
+    ArrayTypeNode, ClassDeclaration, EnumDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -9,21 +9,51 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
-    isPrimitiveType,
-    isPrimitiveTypeOrArrayOfPrimitiveTypes,
+    isPrimitiveOrArrayOfPrimitivesValue, isLiteralKeyword, isLiteralPrimitive,
+    isPrimitiveTypeNode,
+    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
     literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue
+    primitiveLiteralValue, isArrayOfPrimitiveTypeNodes
 } from '../utils/primitives.util';
-import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
-import { getApparentType } from '../utils/ast.util';
 import { MapArrayService } from './map-array.service';
 import { clone } from '../utils/tools.service';
+import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
+import { getApparentType } from '../utils/ast-types.util';
+import { partialClone } from '../utils/arrays.util';
 
 export class MapTypeService {
+
+
+    static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[]
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T
+    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | T[] {
+        console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
+        console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
+        if (!Array.isArray(data)) {
+            return this.mapData<T>(data, typeAliasDeclaration);
+        }
+        const instancesArray: T[] = [];
+        for (const element of data) {
+            // const instance: T = this.createInstance(element, className, classDeclaration);
+            // instancesArray.push(instance);
+        }
+        return instancesArray;
+    }
+
+
+    private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
+        const rootValue: T = undefined;
+        const target: { root: T } = { root: rootValue };
+        for (const key of Object.keys(dataValue)) {
+            this.mapTypeType(target, 'root', dataValue, typeAliasDeclaration);
+        }
+        return target.root;
+    }
+
 
     // TODO : Types which are not unions
     static mapTypeType(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
@@ -56,23 +86,127 @@ export class MapTypeService {
     }
 
 
+    /**
+     * Returns the first differentiating type of the union
+     * @param target
+     * @param key
+     * @param dataValue
+     * @param unionTypeNode
+     * @private
+     */
     private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
-        const initialValue: any = clone(target[key]);
-        for (const tNode of unionTypeNode.getTypeNodes()) {
-            this.mapTypeNode(target, key, dataValue, tNode);
-            if (target[key] !== initialValue) {
-                break;
+        this.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
+    }
+
+
+    private static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
+        const typeNode: TypeNode = typeNodes[0];
+        if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
+            const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+            if (Array.isArray(dataValue)) {
+                if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
+                    if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                        if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
+                            target[key] = dataValue;
+                            return;
+                        } else {
+                            // TODO : case of primitive Literals
+                            console.log(chalk.redBright('TODO : array of primitive literal'));
+                        }
+                    }
+                    return;
+                } else {
+                    console.log(chalk.magentaBright('TODO : not array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                }
+            } else {
+                if (!isLiteralPrimitive(typeNode)) {
+                    return;
+                } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+                    target[key] = dataValue;
+                    return;
+                } else if (typeNodes.length > 1) {
+                    this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
+                    return;
+                }
+                return;
+            }
+        } else {
+            for (const dataKey of Object.keys(dataValue)) {
+                typeProperties.push(dataKey);
+                if (this.isKeyType(dataKey, typeNode)) {
+                    this.mapTypeNode(target, key, dataValue, typeNode);
+                } else {
+                    const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                    if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                        const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                        this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                    }
+                }
             }
         }
     }
 
 
+    private static isKeyType(keys: string[], typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(key: string, typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(keys: string | string[], typeNode: TypeNode, dataValue?: any): boolean {
+        if (Array.isArray(keys)) {
+            return keys.every(key => this.isKeyInType(key, typeNode, dataValue));
+        } else {
+            return this.isKeyInType(keys, typeNode, dataValue);
+        }
+
+    }
+
+
+    private static isKeyInType(key: string, typeNode: TypeNode, value?: any): boolean {
+        switch (typeNode.getKind()) {
+            case SyntaxKind.TypeReference:
+                const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
+                if (typeDeclaration instanceof ClassDeclaration) {
+                    if (key.includes('nickNames')) {
+                        console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
+                    }
+                    return !!typeDeclaration.getProperties().find(p => p.getName() === key);
+                } else  {
+                    return false;
+                }
+            case SyntaxKind.LiteralType:
+                return value === typeNode.getText().slice(1, -1);
+            case SyntaxKind.ArrayType:
+                // TODO
+                return false;
+            default:
+                console.log(chalk.redBright(`Unknown key in TypeNode : key ${key} not found in Type `), typeNode.getKindName());
+                return false;
+        }
+    }
+
+
+    private static getIndexOfNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[], dataValue: any): number {
+        for (let i = 0; i < typeNodes.length; i++) {
+            if (this.isKeyType(properties, typeNodes[i], dataValue)) {
+                return i;
+            }
+        }
+        return undefined;
+    }
+
+
+    private static getIndexOfNextArrayOfPrimitiveTypes(typeNodes: TypeNode[]): number {
+        const typeNodeIndex: number = typeNodes.findIndex(t => isArrayOfPrimitiveTypeNodes(t));
+        return typeNodeIndex > -1 ? typeNodeIndex : undefined;
+    }
+
+
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
-        if (isPrimitiveType(literalType) && primitiveLiteralValue(literalType) === dataValue) {
+        if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType));
             return;
         }
-        // TODO : Literal objects, true, false, null,...
+// TODO : Literal objects, true, false, null,...
     }
 
 
@@ -83,7 +217,7 @@ export class MapTypeService {
 
 
     private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypes(arrayTypeNode.getText())) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
         }

@@ -8,6 +8,7 @@ export const PERSON_LEO = {
     },
     firstName: 'Léo',
     lastName: 'Renoir',
+    nickNames: 'The young',
     cats: []
 }
 
@@ -34,7 +35,8 @@ export const PERSON_PIERRE = {
 export const PERSON_LEA = {
     employer: {
         name: 'GreenPeace',
-        volunteers: 3000
+        employees: 3,
+        volunteers: 3000,
     },
     family: [PERSON_LEO, PERSON_AUGUSTE, PERSON_PIERRE],
     firstName: 'Léa',
