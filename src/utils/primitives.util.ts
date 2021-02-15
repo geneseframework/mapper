@@ -1,4 +1,4 @@
-import { LiteralTypeNode, SyntaxKind } from 'ts-morph';
+import { LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
 
@@ -31,8 +31,18 @@ export function isArrayOfPrimitiveType(typeName: string): boolean {
 }
 
 
-export function isLiteralPrimitive(literalTypeNode: LiteralTypeNode): boolean {
-    return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral, SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(literalTypeNode.getLiteral().getKind());
+export function isLiteralPrimitive(typeNode: TypeNode): boolean {
+    if (typeNode instanceof LiteralTypeNode) {
+        return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral().getKind());
+    } else {
+        console.log(chalk.blueBright('IS LIT PRIMMMM ?'), typeNode.getKindName());
+        return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
+    }
+}
+
+
+export function isLiteralKeyword(typeNode: TypeNode): boolean {
+    return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
 }
 
 

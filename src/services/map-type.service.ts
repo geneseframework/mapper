@@ -9,7 +9,7 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
-    hasPrimitiveOrArrayOfPrimitivesType,
+    hasPrimitiveOrArrayOfPrimitivesType, isLiteralKeyword, isLiteralPrimitive,
     isPrimitiveType,
     isPrimitiveTypeOrArrayOfPrimitiveTypes,
     literalPrimitiveToPrimitiveType,
@@ -101,7 +101,7 @@ export class MapTypeService {
 
     private static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
-        if (key === 'race') {
+        if (key === 'nickNames') {
             console.log(chalk.greenBright('MAP TNODEEEEEE'), target);
             console.log(chalk.greenBright('MAP TNODEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
         }
@@ -110,8 +110,12 @@ export class MapTypeService {
             if (Array.isArray(dataValue)) {
 
             } else {
-                console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE NOT ARRAYY'), dataValue, typeNode.getText().slice(1, -1));
-                if (dataValue === typeNode.getText().slice(1, -1)) {
+                console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE NOT ARRAYY'), dataValue, typeNode.getKindName(), typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                if (!isLiteralPrimitive(typeNode)) {
+                    console.log(chalk.redBright('HAS PRIM TYPEEEEEE NOT LITERAL'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+                    return;
+                } else if ((isLiteralKeyword(typeNode))
+                    || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
                     target[key] = dataValue;
                     console.log(chalk.cyanBright('HAS PRIM TYPEEEEEE HAS DATA VALUE'), dataValue, target);
                     return;
@@ -123,27 +127,27 @@ export class MapTypeService {
             }
         } else {
             for (const dataKey of Object.keys(dataValue)) {
-                if (key === 'race') {
+                if (key === 'nickNames') {
                     console.log(chalk.green('SHOULD NOT BE HERRRRRRR ?'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                 }
                 typeProperties.push(dataKey);
                 if (this.isKeyType(dataKey, typeNode)) {
-                    if (key === 'race') {
+                    if (key === 'nickNames') {
                         console.log(chalk.green('IS KEY TYPPPPPP'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                     }
                     this.mapTypeNode(target, key, dataValue, typeNode);
                 } else {
                     const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-                    if (key === 'race') {
+                    if (key === 'nickNames') {
                         console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
                     }
                     const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
-                    if (key === 'race') {
+                    if (key === 'nickNames') {
                         console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
                     }
                     if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                         const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
-                        if (key === 'race') {
+                        if (key === 'nickNames') {
                             console.log(chalk.magentaBright('NEXT TYPENODDDDDDD'), nextTypeNodesIncludingKeys?.map(t => t.getKindName()));
                         }
                         this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
@@ -172,7 +176,7 @@ export class MapTypeService {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
                 if (typeDeclaration instanceof ClassDeclaration) {
-                    if (key.includes('race')) {
+                    if (key.includes('nickNames')) {
                         console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
                     }
                     return !!typeDeclaration.getProperties().find(p => p.getName() === key);
@@ -181,7 +185,7 @@ export class MapTypeService {
                 }
             case SyntaxKind.LiteralType:
                 // if (value === typeNode.getText().slice(1, -1)) {
-                    console.log(chalk.blueBright('LITERALLLLLL'), key, value, typeNode.getText().slice(1, -1));
+                console.log(chalk.blueBright('LITERALLLLLL'), key, value, typeNode.getText().slice(1, -1));
                 // }
                 return value === typeNode.getText().slice(1, -1);
             case SyntaxKind.ArrayType:
@@ -221,7 +225,7 @@ export class MapTypeService {
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType));
             return;
         }
-        // TODO : Literal objects, true, false, null,...
+// TODO : Literal objects, true, false, null,...
     }
 
 

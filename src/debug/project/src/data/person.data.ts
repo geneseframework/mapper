@@ -8,6 +8,7 @@ export const PERSON_LEO = {
     },
     firstName: 'Léo',
     lastName: 'Renoir',
+    nickNames: 'The young',
     cats: []
 }
 
