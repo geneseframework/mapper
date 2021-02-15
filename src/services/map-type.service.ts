@@ -24,14 +24,17 @@ import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
+import { DeclarationService } from './declaration.service';
 
 export class MapTypeService {
 
 
-    static createTypes<T>(data: any[], className: string, typeAliasDeclaration: TypeAliasDeclaration): T[]
-    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T
-    static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | T[] {
+    static createTypes<T>(data: any[], typeOrArrayTypeName: string): T[]
+    static createTypes<T>(data: any, typeOrArrayTypeName: string): T
+    static createTypes<T>(data: any, typeOrArrayTypeName: string): T | T[] {
         console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
+        const typeName: string = this.getTypeName(typeOrArrayTypeName);
+        const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
         // console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
         if (!Array.isArray(data)) {
             return this.mapData<T>(data, typeAliasDeclaration);
@@ -42,6 +45,11 @@ export class MapTypeService {
             // instancesArray.push(instance);
         }
         return instancesArray;
+    }
+
+
+    private static getTypeName(typeOrArrayTypeName: string): string {
+        return typeOrArrayTypeName.slice(-2) === '[]' ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
     }
 
 

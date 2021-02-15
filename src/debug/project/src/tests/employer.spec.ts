@@ -30,7 +30,7 @@ const testMapper2 = new TestMapper(`{ name: 'Total', employees: 30000 } / Employ
 testMappers.push(testMapper2);
 
 
-const testMapper3 = new TestMapper(`{ name: 'Total', employees: 30000 } / Employer`,
+const testMapper3 = new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerSpec`,
     'EmployerSpec',
     [{ name: 'Total', employees: 30000 }],
     { mapperOptions: { isType: true }, log: true, shouldFail: true }
@@ -38,12 +38,12 @@ const testMapper3 = new TestMapper(`{ name: 'Total', employees: 30000 } / Employ
 testMappers.push(testMapper3);
 
 
-// const testMapper4 = new TestMapper(`{ name: 'Total', volunteers: 3000 } / Employer`,
-//     'EmployerSpec',
-//     [{ name: 'Total', volunteers: 3000 }],
-//     { mapperOptions: { isType: true }, log: true }
-// );
-// testMappers.push(testMapper4);
+const testMapper4 = new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`,
+    'EmployerSpec[]',
+    [{ name: 'Total', volunteers: 3000 }],
+    { mapperOptions: { isType: true }, log: true, i: true }
+);
+testMappers.push(testMapper4);
 
 
 const testMapper5 = new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`,
