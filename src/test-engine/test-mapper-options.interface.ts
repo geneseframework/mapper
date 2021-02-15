@@ -1,4 +1,4 @@
-import { MapperOptions } from '../../../../interfaces/mapper-options.interface';
+import { MapperOptions } from '../interfaces/mapper-options.interface';
 
 export interface TestMapperOptions {
     log?: boolean;

@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { Project } from 'ts-morph';
 import { expect } from './test.service';
-import { GLOBAL } from '../../../../const/global.const';
+import { GLOBAL } from '../const/global.const';
 
 GLOBAL.debug = true;
 

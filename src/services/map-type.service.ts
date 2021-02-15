@@ -32,7 +32,7 @@ export class MapTypeService {
     static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T
     static createTypes<T>(data: any, className: string, typeAliasDeclaration: TypeAliasDeclaration): T | T[] {
         console.log(chalk.blueBright('CREATE TYPESSSSS'), data);
-        console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
+        // console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration);
         if (!Array.isArray(data)) {
             return this.mapData<T>(data, typeAliasDeclaration);
         }

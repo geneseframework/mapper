@@ -7,7 +7,7 @@
     },
     "scripts": {
         "debug": "ts-node src/debug/project/start.ts",
-        "test": "ts-node src/debug/project/src/tests/test.ts"
+        "test": "ts-node src/test-engine/test.ts"
     },
     "devDependencies": {
         "@types/node": "^12.12.14",

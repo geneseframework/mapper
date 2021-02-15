@@ -1,4 +1,4 @@
-import { MapParameter } from '../../../../types/map-parameter.type';
+import { MapParameter } from '../types/map-parameter.type';
 import { TestMapperOptions } from './test-mapper-options.interface';
 
 export class TestMapper {

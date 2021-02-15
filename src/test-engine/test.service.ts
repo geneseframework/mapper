@@ -1,5 +1,5 @@
-import { Mapper } from '../../../../models/mapper';
-import { isSameObject } from '../../../../utils/tools.service';
+import { Mapper } from '../models/mapper';
+import { isSameObject } from '../utils/tools.service';
 import * as chalk from 'chalk';
 import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
