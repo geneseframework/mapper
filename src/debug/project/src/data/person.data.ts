@@ -2,14 +2,14 @@ import { Color } from '../models/colors.enum';
 
 
 export const PERSON_LEO = {
-    // employer: {
-    //     name: 'Total',
-    //     employees: 30000
-    // },
-    // firstName: 'Léo',
-    // lastName: 'Renoir',
+    employer: {
+        name: 'Total',
+        employees: 30000
+    },
+    firstName: 'Léo',
+    lastName: 'Renoir',
     nickNames: 'The young',
-    // cats: []
+    cats: []
 }
 
 export const PERSON_AUGUSTE = {
@@ -34,9 +34,9 @@ export const PERSON_PIERRE = {
 
 export const PERSON_LEA = {
     employer: {
-        // name: 'GreenPeace',
+        name: 'GreenPeace',
         employees: 3,
-        // volunteers: 3000,
+        volunteers: 3000,
     },
     family: [PERSON_LEO, PERSON_AUGUSTE, PERSON_PIERRE],
     firstName: 'Léa',
