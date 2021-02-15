@@ -14,7 +14,6 @@ export class DeclarationService {
     static getDeclaration(name: string, declarationKind: 'ClassDeclaration'): ClassDeclaration
     static getDeclaration(name: string, declarationKind: 'TypeAliasDeclaration'): TypeAliasDeclaration
     static getDeclaration(name: string, declarationKind: ClassOrTypeAliasType): ClassOrTypeAliasDeclaration {
-        console.log(chalk.blueBright('GET DECLLLLLLL'), declarationKind);
         if (declarationKind === 'ClassDeclaration') {
             return this.getClassOrTypeAliasDeclaration(name, getClasses);
         } else  {

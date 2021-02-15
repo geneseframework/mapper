@@ -42,7 +42,6 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
     if (typeof typeNameOrNode === 'string') {
         return primitiveTypes.includes(typeNameOrNode.slice(0, -2));
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
-        console.log(chalk.green('Should be hereeeee'));
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
     } else {
         return false;
@@ -54,7 +53,6 @@ export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
         return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral().getKind());
     } else {
-        console.log(chalk.blueBright('IS LIT PRIMMMM ?'), typeNode.getKindName());
         return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
     }
 }
