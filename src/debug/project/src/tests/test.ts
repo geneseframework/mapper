@@ -1,3 +1,6 @@
 import { kuzzyTest } from './test.service';
 
-kuzzyTest()
+export const TESTS = {
+    testsFailed: 0,
+    testsPassed: 0,
+}
