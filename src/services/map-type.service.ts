@@ -99,28 +99,26 @@ export class MapTypeService {
 
 
     private static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
-        const initialValue: any = clone(target[key]);
         const typeNode: TypeNode = typeNodes[0];
-        // const keys: string[] = [];
-        // for (let i = 0; i < typeNodes.length; i++) {
         if (key === 'employer') {
-            console.log(chalk.greenBright('MAP TNODEEEEEE'), target, key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
+            console.log(chalk.greenBright('MAP TNODEEEEEE'), target);
+            console.log(chalk.greenBright('MAP TNODEEEEEE'), key, dataValue, typeProperties, typeNodes.map(n => n.getKindName()));
         }
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
             if (this.isKeyType(dataKey, typeNode)) {
                 if (key === 'employer') {
-                    console.log(chalk.green('IS KEY TYPPPPPP'), key, dataValue, typeProperties, typeNode?.getKindName());
+                    console.log(chalk.green('IS KEY TYPPPPPP'), key, dataKey, dataValue, typeProperties, typeNode?.getKindName());
                 }
                 this.mapTypeNode(target, key, dataValue, typeNode);
             } else {
                 const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
                 if (key === 'employer') {
-                    console.log(chalk.redBright('NOT IN TYPEEEEEE'), typeProperties, nextTypeNodes.map(n => n.getKindName()));
+                    console.log(chalk.redBright('NOT IN TYPEEEEEE'), key, dataKey, dataValue, typeProperties, nextTypeNodes.map(n => n.getKindName()));
                 }
-                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties.concat([dataKey]), nextTypeNodes);
+                const indexOfNextTypeNodeIncludingKeys: number = this.getNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes);
                 if (key === 'employer') {
-                    console.log(chalk.redBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
+                    console.log(chalk.cyanBright('indexOfNextTypeNodeIncludingKeyssssss'), indexOfNextTypeNodeIncludingKeys);
                 }
                 if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                     const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
@@ -131,10 +129,6 @@ export class MapTypeService {
                 }
             }
         }
-        if (target[key] !== initialValue) {
-            // break;
-        }
-        // }
     }
 
 
@@ -167,25 +161,28 @@ export class MapTypeService {
                 return false;
             default:
                 console.log(chalk.redBright('Unknown kind of TypeNode : key not found in Type '), typeNode.getKindName());
+                return false;
         }
-        return true;
     }
 
 
     private static getNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[]): number {
-        if (properties.includes('employer')) {
+        if (properties.includes('employees')) {
             console.log(chalk.yellowBright('IS KTYPPPPPP -1111'), properties, typeNodes.map(t => t.getKindName()));
         }
         for (let i = 0; i < typeNodes.length; i++) {
-            if (properties.includes('employer')) {
+            if (properties.includes('employees')) {
                 console.log(chalk.yellowBright('IS KTYPPPPPP 0'), properties, typeNodes[i].getKindName());
             }
             if (this.isKeyType(properties, typeNodes[i])) {
-                if (properties.includes('employer')) {
-                    console.log(chalk.yellowBright('IS KTYPPPPPP'), properties, typeNodes[i].getKindName());
+                if (properties.includes('employees')) {
+                    console.log(chalk.yellowBright('IS KTYPPPPPP 1111'), properties, typeNodes[i].getKindName());
                 }
                 return i;
             }
+        }
+        if (properties.includes('employees')) {
+            console.log(chalk.yellowBright('IS KTYPPPPPP RETURN UNDEFINED'), properties, typeNodes.map(t => t.getKindName()));
         }
         return undefined;
     }
