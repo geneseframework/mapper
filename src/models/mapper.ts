@@ -51,8 +51,7 @@ export class Mapper<T> {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(mapper.typeName)) {
             return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {
-            const typeDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'TypeAliasDeclaration');
-            return MapTypeService.createTypes(data, mapper.typeName, typeDeclaration);
+            return MapTypeService.createTypes(data, mapper.typeName);
         } else if (options?.isInterface === true) {
             // TODO
         } else if (options?.isEnum === true) {

@@ -1,14 +1,14 @@
 import { Mapper } from '../models/mapper';
-import { isSameObject } from '../utils/tools.service';
 import * as chalk from 'chalk';
 import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
+import { isSameObject } from '../utils/is-same-object.util';
 
 export async function expect(testMappers: TestMapper[]): Promise<void>
 export async function expect(testMapper: TestMapper): Promise<void>
 export async function expect(testMappers: TestMapper | TestMapper[]): Promise<void> {
     if (Array.isArray(testMappers)) {
-        for (const testMapper of testMappers) {
+        for (const testMapper of includedTestMappers(testMappers)) {
             await expectMapper(testMapper);
         }
     } else {
@@ -30,6 +30,12 @@ async function expectMapper(testMapper: TestMapper): Promise<void> {
         TESTS.testsFailed++;
         log(testMapper.data, result);
     }
+}
+
+
+function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
+    const includedMappers: TestMapper[] = testMappers.filter(t => t.options?.i === true);
+    return includedMappers.length > 0 ? includedMappers : testMappers;
 }
 
 
