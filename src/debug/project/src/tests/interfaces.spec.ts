@@ -1,18 +1,17 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Animal } from '../models/animal.model';
 
-export interface NameSpec {
+export interface AnimalSpec {
     name: string;
 }
 
 export const testMappers: TestMapper[] = [];
-// testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'NameSpec', { name: 'Léa' }));
-testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'NameSpec', { name: 'Léa' }));
+testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'AnimalSpec', { name: 'Léa' }));
 
 
 
-export interface PreySpec {
-    animal: Animal;
+export class AnimalOwner {
+    animal: AnimalSpec;
 }
 
-// testMappers.push(new TestMapper(`{ color: 'White' } / PreySpec`, 'PreySpec', { color: 'White' }));
+testMappers.push(new TestMapper(`{ animal: { name: 'Biela' } } / AnimalOwner`, 'AnimalOwner', { animal: { name: 'Biela' } }, { isolate: true}));

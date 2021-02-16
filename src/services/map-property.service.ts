@@ -4,21 +4,29 @@ import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
+import * as chalk from 'chalk';
+import { MapInterfaceService } from './map-interface.service';
+import { InterfaceDeclaration } from 'ts-morph';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
+        console.log(chalk.blueBright('MAP PROPPPPP'), target, key, dataValue, propertyKind, propertyType);
+        console.log(chalk.cyanBright('MAP PROPPPPP APT TYPE'), apparentType);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue);
             return;
         }
         switch (propertyKind) {
-            case PropertyKind.ARRAY_TYPE:
+            case PropertyKind.ARRAY:
                 MapArrayService.map(target, key, dataValue, propertyType, apparentType);
                 return;
-            case PropertyKind.TUPLE_TYPE:
+            case PropertyKind.TUPLE:
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
+                return;
+            case PropertyKind.INTERFACE:
+                target[key] = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 return;
             default:
                 MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));

@@ -2,7 +2,7 @@ import {
     ClassDeclaration,
     EnumDeclaration,
     ImportDeclaration,
-    ImportSpecifier,
+    ImportSpecifier, InterfaceDeclaration,
     SourceFile,
     TypeAliasDeclaration
 } from 'ts-morph';
@@ -14,6 +14,7 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
+    console.log(chalk.greenBright('GET IMPORTTTTTTT DECL'), typeName, apparentTypeImportDeclarationPath, importSourceFile.getBaseName());
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
     if (importClassDeclaration) {
         return importClassDeclaration;
@@ -25,6 +26,10 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
     const typeAliasDeclaration: TypeAliasDeclaration = importSourceFile.getTypeAlias(typeName);
     if (typeAliasDeclaration) {
         return typeAliasDeclaration;
+    }
+    const interfaceDeclaration: InterfaceDeclaration = importSourceFile.getInterface(typeName);
+    if (interfaceDeclaration) {
+        return interfaceDeclaration;
     }
     return undefined;
 }

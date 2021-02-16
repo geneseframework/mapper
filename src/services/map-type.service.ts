@@ -64,14 +64,14 @@ export class MapTypeService {
         const rootValue: T = undefined;
         const target: { root: T } = { root: rootValue };
         for (const key of Object.keys(dataValue)) {
-            this.mapTypeType(target, 'root', dataValue, typeAliasDeclaration);
+            this.map(target, 'root', dataValue, typeAliasDeclaration);
         }
         return target.root;
     }
 
 
     // TODO : Types which are not unions
-    static mapTypeType(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
+    static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
         this.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 

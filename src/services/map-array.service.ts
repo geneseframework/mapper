@@ -10,12 +10,6 @@ import { MapEnumService } from './map-enum.service';
 export class MapArrayService<T> {
 
 
-
-    static isArrayType(property: PropertyDeclaration | PropertySignature): boolean {
-        return property.getType().isArray();
-    }
-
-
     static map(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
         if (!Array.isArray(dataValue)) {
             return;
@@ -27,12 +21,12 @@ export class MapArrayService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceService.mapData(element, instance, importArrayDeclaration);
+                MapInstanceService.map(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }
             if (importArrayDeclaration instanceof EnumDeclaration) {
                 const root = { rootKey: [] };
-                MapEnumService.mapEnumType(root, 'rootKey', element, importArrayDeclaration);
+                MapEnumService.map(root, 'rootKey', element, importArrayDeclaration);
                 target[key].push(root.rootKey);
             }
         }

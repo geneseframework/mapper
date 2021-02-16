@@ -1,6 +1,4 @@
-import { ClassDeclaration, PropertyDeclaration } from 'ts-morph';
-import { MapTupleService } from './map-tuple.service';
-import { MapArrayService } from './map-array.service';
+import { ClassDeclaration, PropertyDeclaration, Type } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
@@ -8,6 +6,7 @@ import { getApparentType } from '../utils/ast-types.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
+import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 
 export class MapInstanceService<T> {
 
@@ -33,12 +32,12 @@ export class MapInstanceService<T> {
     private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
-        this.mapData(data, instance, classDeclaration);
+        this.map(data, instance, classDeclaration);
         return instance;
     }
 
 
-    static mapData<T>(data: any, instance: T, classDeclaration: ClassDeclaration): void {
+    static map<T>(data: any, instance: T, classDeclaration: ClassDeclaration): void {
         for (const key of Object.keys(data)) {
             this.mapDataKey(instance, classDeclaration, key, data[key]);
         }
@@ -57,12 +56,27 @@ export class MapInstanceService<T> {
     }
 
 
-    private static getPropertyKind(property: PropertyDeclaration): PropertyKind {
-        if (MapArrayService.isArrayType(property)) {
-            return PropertyKind.ARRAY_TYPE;
-        } else if (MapTupleService.isTupleType(property)) {
-            return PropertyKind.TUPLE_TYPE;
+    static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
+        const propertyType: Type = property.getType();
+        if (propertyType.isArray()) {
+            return PropertyKind.ARRAY;
+        } else if (propertyType.isTuple()) {
+            return PropertyKind.TUPLE;
+        } else if (propertyType.isInterface()) {
+            return PropertyKind.INTERFACE
         }
+        return undefined;
     }
+
+
+
+    // private static getPropertyKind(property: PropertyDeclaration): PropertyKind {
+    //     if (MapArrayService.isArrayType(property)) {
+    //         return PropertyKind.ARRAY;
+    //     } else if (MapTupleService.isTupleType(property)) {
+    //         return PropertyKind.TUPLE;
+    //     }
+    //     return undefined;
+    // }
 
 }
