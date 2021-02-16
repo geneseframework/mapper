@@ -28,7 +28,6 @@ export class Mapper<T> {
         const typeName = infos.typeName;
         const isArray = infos.isArray;
         await this.init();
-        // TODO : Enums and types
         // TODO : Indexable types
         // TODO : properties "any" or without types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
