@@ -19,16 +19,16 @@ export async function expect(testMappers: TestMapper | TestMapper[]): Promise<vo
 
 async function expectMapper(testMapper: TestMapper): Promise<void> {
     const result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.mapperOptions);
-    if (isExpectedResult(testMapper.data, result, testMapper.options?.shouldFail) ) {
+    if (isExpectedResult(testMapper, result) ) {
         console.log(chalk.greenBright('Test passed : '), testMapper.title);
         TESTS.testsPassed++;
         if (testMapper.options?.log) {
-           log(testMapper.data, result);
+           log(testMapper, result);
         }
     } else {
         console.log(chalk.redBright('Test failed : '), testMapper.title);
         TESTS.testsFailed++;
-        log(testMapper.data, result);
+        log(testMapper, result);
     }
 }
 
@@ -39,8 +39,10 @@ function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
 }
 
 
-function isExpectedResult(data: any, result: any, shouldFail: boolean): boolean {
-    if (isSameObject(result, data)) {
+function isExpectedResult(testMapper: TestMapper, result: any): boolean {
+    const shouldFail: boolean = testMapper.options?.shouldFail;
+    const objectToCompare: any = testMapper.options?.expectedValue ?? testMapper?.data;
+    if (isSameObject(result, objectToCompare)) {
         return !shouldFail;
     } else {
         return shouldFail;
@@ -48,7 +50,10 @@ function isExpectedResult(data: any, result: any, shouldFail: boolean): boolean 
 }
 
 
-function log(data: any, result: any): void {
-    console.log(chalk.blueBright('data : '), data);
+function log(testMapper: TestMapper, result: any): void {
+    console.log(chalk.blueBright('data : '), testMapper.data);
     console.log(chalk.blueBright('response : '), result);
+    if (testMapper.options.hasOwnProperty('expectedValue')) {
+        console.log(chalk.blueBright('expected value : '), testMapper.options.expectedValue);
+    }
 }

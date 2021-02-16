@@ -1,11 +1,4 @@
-import {
-    ClassDeclaration,
-    EnumDeclaration,
-    ImportDeclaration,
-    ImportSpecifier, InterfaceDeclaration,
-    SourceFile,
-    TypeAliasDeclaration
-} from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
 import { TypeDeclaration } from '../types/type-declaration.type';
@@ -52,12 +45,6 @@ function getImportSourceFile(path: string): SourceFile {
         importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
     }
     return importSourceFile;
-}
-
-
-export function getImportSpecifier(importDeclaration: ImportDeclaration): ImportSpecifier {
-    const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
-    return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
 }
 
 

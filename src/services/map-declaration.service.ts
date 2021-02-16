@@ -5,10 +5,9 @@ import { MapTypeService } from './map-type.service';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapInstanceService } from './map-instance.service';
 import { getDeclarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInterfaceService } from './map-interface.service';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapDeclarationService<T> {
 
@@ -22,7 +21,7 @@ export class MapDeclarationService<T> {
                 MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 return;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                MapInterfaceService.map(dataValue, target[key], typeDeclaration as InterfaceDeclaration);
+                MapInstanceOrInterfaceService.map(dataValue, target[key], typeDeclaration as InterfaceDeclaration);
                 return;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
@@ -36,7 +35,7 @@ export class MapDeclarationService<T> {
     private static mapClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = GLOBAL.generateInstance(instanceGenerator);
-        MapInstanceService.map(dataValue, target[key], classDeclaration);
+        MapInstanceOrInterfaceService.map(dataValue, target[key], classDeclaration);
     }
 
 }

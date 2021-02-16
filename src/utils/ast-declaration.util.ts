@@ -21,22 +21,22 @@ export function declarationKind(typeName: string): TypeDeclarationKind {
 }
 
 
-export function isClassDeclaration(typeName: string): boolean {
+function isClassDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getClasses());
 }
 
 
-export function isEnumDeclaration(typeName: string): boolean {
+function isEnumDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getEnums());
 }
 
 
-export function isInterfaceDeclaration(typeName: string): boolean {
+function isInterfaceDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getInterfaces());
 }
 
 
-export function isTypeAliasDeclaration(typeName: string): boolean {
+function isTypeAliasDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getTypeAliases());
 }
 
