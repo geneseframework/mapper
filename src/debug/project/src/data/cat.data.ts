@@ -1,4 +1,4 @@
-import { Color } from '../models/colors.enum';
+import { Color } from '../enums/colors.enum';
 import { PERSON_LEA } from './person.data';
 
 export const CAT_DATA_BIELA: any = {

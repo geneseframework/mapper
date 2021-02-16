@@ -1,20 +1,17 @@
 import { TConstructor } from './t-constructor.model';
-import { clone } from '../index';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
-import { ClassDeclaration, TypeAliasDeclaration } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
-import {
-    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
-} from '../utils/primitives.util';
+import { isPrimitiveTypeOrArrayOfPrimitiveTypeNodes, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
-import * as chalk from 'chalk';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { DeclarationService } from '../services/declaration.service';
 import { MapTypeService } from '../services/map-type.service';
+import { clone } from '../utils/clone.util';
 
 export class Mapper<T> {
 

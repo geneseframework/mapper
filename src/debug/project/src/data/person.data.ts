@@ -1,4 +1,4 @@
-import { Color } from '../models/colors.enum';
+import { Color } from '../enums/colors.enum';
 
 
 export const PERSON_LEO = {
