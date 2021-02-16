@@ -4,10 +4,10 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
-import { PropertyKind } from '../types/property-kind.enum';
-import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { PropertyKind } from '../types/property-kind.enum';
+import { MapPropertyService } from './map-property.service';
 
 export class MapInstanceService<T> {
 
@@ -16,12 +16,12 @@ export class MapInstanceService<T> {
     static createInstances<T>(data: any, className: string): T
     static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        return Array.isArray(data) ? MapInstanceOrInterfaceService.createArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
+        return Array.isArray(data) ? MapInstanceOrInterfaceService.createArray(data, classDeclaration, className) : this.createInstance<T>(data, className, classDeclaration);
         // return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
     }
 
 
-    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
+    static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.map(data, instance, classDeclaration);
