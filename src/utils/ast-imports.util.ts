@@ -1,11 +1,4 @@
-import {
-    ClassDeclaration,
-    EnumDeclaration,
-    ImportDeclaration,
-    ImportSpecifier, InterfaceDeclaration,
-    SourceFile,
-    TypeAliasDeclaration
-} from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
 import { TypeDeclaration } from '../types/type-declaration.type';

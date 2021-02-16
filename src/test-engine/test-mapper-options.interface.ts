@@ -4,5 +4,6 @@ export interface TestMapperOptions {
     isolate?: boolean;
     log?: boolean;
     mapperOptions?: MapperOptions;
+    returnedValue?: any;
     shouldFail?: boolean;
 }
