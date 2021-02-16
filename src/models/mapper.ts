@@ -14,6 +14,7 @@ import { MapEnumService } from '../services/map-enum.service';
 import * as chalk from 'chalk';
 import { declarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
+import { MapInterfaceService } from '../services/map-interface.service';
 
 export class Mapper<T> {
 
@@ -38,6 +39,8 @@ export class Mapper<T> {
                     return MapInstanceService.createInstances(data, typeName);
                 case TypeDeclarationEnum.ENUM_DECLARATION:
                     return MapEnumService.createEnums(data, typeName, isArray);
+                case TypeDeclarationEnum.INTERFACE_DECLARATION:
+                    return MapInterfaceService.createInterfaces(data, typeName, isArray);
                 case TypeDeclarationEnum.TYPE_DECLARATION:
                     return MapTypeService.createTypes(data, typeName, isArray);
                 default:

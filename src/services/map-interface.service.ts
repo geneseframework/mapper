@@ -1,5 +1,7 @@
 import { InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { isInterfaceValue } from '../utils/ast-interfaces.util';
+import * as chalk from 'chalk';
 
 export class MapInterfaceService {
 
@@ -7,6 +9,7 @@ export class MapInterfaceService {
     static createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean): T[]
     static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T
     static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T | T[] {
+        console.log(chalk.blueBright(''), data, interfaceName, isArray);
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
         if (Array.isArray(data) && isArray) {
             return this.createInterfacesArray(data, interfaceDeclaration);
