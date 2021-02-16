@@ -17,7 +17,6 @@ export const testMappers: TestMapper[] = [];
 const testMapper1 = new TestMapper(`{ name: 'Greenpeace', volunteers: 3000 } / Employer`,
     'EmployerSpec',
     { name: 'Greenpeace', volunteers: 3000 },
-    { mapperOptions: { isType: true }}
 );
 testMappers.push(testMapper1);
 
@@ -25,7 +24,6 @@ testMappers.push(testMapper1);
 const testMapper2 = new TestMapper(`{ name: 'Total', employees: 30000 } / Employer`,
     'EmployerSpec',
     { name: 'Total', employees: 30000 },
-    { mapperOptions: { isType: true }}
 );
 testMappers.push(testMapper2);
 
@@ -33,7 +31,7 @@ testMappers.push(testMapper2);
 const testMapper3 = new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerSpec`,
     'EmployerSpec',
     [{ name: 'Total', employees: 30000 }],
-    { mapperOptions: { isType: true }, shouldFail: true }
+    { shouldFail: true }
 );
 testMappers.push(testMapper3);
 
@@ -41,7 +39,6 @@ testMappers.push(testMapper3);
 const testMapper4 = new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`,
     'EmployerSpec[]',
     [{ name: 'Total', volunteers: 3000 }],
-    { mapperOptions: { isType: true } }
 );
 testMappers.push(testMapper4);
 

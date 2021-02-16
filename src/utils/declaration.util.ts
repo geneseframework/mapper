@@ -6,7 +6,7 @@ import * as chalk from 'chalk';
 import { throwCustom } from './errors.util';
 
 
-export function typeDeclarationEnum(typeName: string): TypeDeclarationEnum {
+export function declarationKind(typeName: string): TypeDeclarationEnum {
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationEnum.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
@@ -41,7 +41,7 @@ function hasDeclaration(typeName: string, getTypeDeclaration: (sourceFile: Sourc
 
 
 export function getTypeDeclaration(typeName: string): TypeDeclaration {
-    const declarationEnum: TypeDeclarationEnum = typeDeclarationEnum(typeName);
+    const declarationEnum: TypeDeclarationEnum = declarationKind(typeName);
     switch (declarationEnum) {
         case TypeDeclarationEnum.CLASS_DECLARATION:
             return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getClasses());

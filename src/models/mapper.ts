@@ -10,7 +10,7 @@ import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
-import { typeDeclarationEnum } from '../utils/declaration.util';
+import { declarationKind } from '../utils/declaration.util';
 import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
 import { MapEnumService } from '../services/map-enum.service';
 import * as chalk from 'chalk';
@@ -22,8 +22,6 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
     static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | any>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const infos: { typeName: string, isArray: boolean } = this.getInfos(mapParameter);
@@ -36,8 +34,7 @@ export class Mapper<T> {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
         } else {
-            console.log(chalk.greenBright('MAPPPPPPER'), typeName, typeDeclarationEnum(typeName));
-            switch (typeDeclarationEnum(typeName)) {
+            switch (declarationKind(typeName)) {
                 case TypeDeclarationEnum.CLASS_DECLARATION:
                     return MapInstanceService.createInstances(data, typeName);
                 case TypeDeclarationEnum.ENUM_DECLARATION:
