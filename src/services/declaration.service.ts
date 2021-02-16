@@ -5,7 +5,6 @@ import * as chalk from 'chalk';
 import { throwCustom } from '../utils/errors.util';
 import { ClassOrTypeAliasDeclaration, ClassOrTypeAliasType } from '../types/class-or-type-alias-declaration.enum';
 import { getClasses } from '../utils/ast-class.util';
-import { MapInstanceService } from './map-instance.service';
 import { getTypeAliases } from '../utils/ast-types.util';
 
 export class DeclarationService {

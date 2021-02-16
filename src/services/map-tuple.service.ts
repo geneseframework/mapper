@@ -1,7 +1,7 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
 import { isPrimitiveValue, isPrimitiveTypeNode } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
+import { TypeDeclaration } from '../types/type-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';

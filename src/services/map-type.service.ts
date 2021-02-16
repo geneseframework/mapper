@@ -18,8 +18,8 @@ import {
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
+import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
@@ -31,21 +31,21 @@ import { DeclarationService } from './declaration.service';
 export class MapTypeService {
 
 
-    static createTypes<T>(data: any[], typeOrArrayTypeName: string): T[]
-    static createTypes<T>(data: any, typeOrArrayTypeName: string): T
-    static createTypes<T>(data: any, typeOrArrayTypeName: string): T | T[] {
-        const typeName: string = this.getTypeName(typeOrArrayTypeName);
+    static createTypes<T>(data: any[], typeName: string, isArray: boolean): T[]
+    static createTypes<T>(data: any, typeName: string, isArray: boolean): T
+    static createTypes<T>(data: any, typeName: string, isArray: boolean): T | T[] {
+        // const typeName: string = this.getTypeName(typeOrArrayTypeName);
         // console.log(chalk.yellowBright('CREATE TYPESSSSS'), data, typeName);
         const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
         // console.log(chalk.yellowBright('ALIAS TYPESSSSS'), typeAliasDeclaration?.getName());
-        if (Array.isArray(data) && this.isArrayType(typeOrArrayTypeName)) {
+        if (Array.isArray(data) && isArray) {
             const typesArray: T[] = [];
             for (const element of data) {
                 const instance: T = this.mapData<T>(element, typeAliasDeclaration);
                 typesArray.push(instance);
             }
             return typesArray;
-        } else if (!Array.isArray(data) && !this.isArrayType(typeOrArrayTypeName)) {
+        } else if (!Array.isArray(data) && !isArray) {
             return this.mapData<T>(data, typeAliasDeclaration);
         }
     }

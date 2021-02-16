@@ -10,6 +10,10 @@ import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
+import { typeDeclaration } from '../utils/declaration.util';
+import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
+import { MapEnumService } from '../services/map-enum.service';
+import * as chalk from 'chalk';
 
 export class Mapper<T> {
 
@@ -22,22 +26,37 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        const typeName: string = this.getTypeName(mapParameter);
+        const infos: { typeName: string, isArray: boolean } = this.getInfos(mapParameter);
+        const typeName = infos.typeName;
+        const isArray = infos.isArray;
         await this.init();
         // TODO : Enums and types
         // TODO : Indexable types
         // TODO : properties "any" or without types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
-        } else if (options?.isType === true) {
-            return MapTypeService.createTypes(data, typeName);
-        } else if (options?.isInterface === true) {
-            // TODO
-        } else if (options?.isEnum === true) {
-            // TODO
         } else {
-            return MapInstanceService.createInstances(data, typeName);
+            console.log(chalk.greenBright('MAPPPPPPER'), typeName, typeDeclaration(typeName));
+            switch (typeDeclaration(typeName)) {
+                case TypeDeclarationEnum.CLASS_DECLARATION:
+                    return MapInstanceService.createInstances(data, typeName, isArray);
+                case TypeDeclarationEnum.ENUM_DECLARATION:
+                    return MapEnumService.createEnums(data, typeName, isArray);
+                case TypeDeclarationEnum.TYPE_DECLARATION:
+                    return MapTypeService.createTypes(data, typeName, isArray);
+                default:
+                    return undefined;
+            }
         }
+//     } else if (options?.isType === true) {
+//     return MapTypeService.createTypes(data, typeName);
+// } else if (options?.isInterface === true) {
+//     // TODO
+// } else if (options?.isEnum === true) {
+//     // TODO
+// } else {
+//     return MapInstanceService.createInstances(data, typeName);
+// }
     }
 
 
@@ -49,10 +68,31 @@ export class Mapper<T> {
     }
 
 
-    private static getTypeName<T>(mapParameter: MapParameter<T>): string {
-        return typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
+    private static getInfos<T>(mapParameter: MapParameter<T>): { typeName: string, isArray: boolean } {
+        return {
+            typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : mapParameter.name,
+            isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
+        }
     }
 
+
+    // private static getTypeName<T>(mapParameter: MapParameter<T>): string {
+    //     if (typeof mapParameter === 'string') {
+    //         return this.removeBrackets(mapParameter);
+    //     } else {
+    //         return mapParameter.name;
+    //     }
+    // }
+
+
+    private static removeBrackets(typeOrArrayTypeName: string): string {
+        return this.isArrayType(typeOrArrayTypeName) ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
+    }
+
+
+    private static isArrayType(typeOrArrayTypeName: string): boolean {
+        return typeOrArrayTypeName.slice(-2) === '[]';
+    }
 
 
 
