@@ -43,20 +43,8 @@ export class MapInstanceOrInterfaceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        MapPropertyService.map(target, key, dataValue, MapInstanceService.getPropertyKind(property), propertyType, apparentType);
+        MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
     }
-
-
-    // private static mapDataKey<T>(target: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, key: string, dataValue: any): void {
-    //     const property: PropertyDeclaration = getAllClassProperties(classOrInterfaceDeclaration).find(p => p.getName() === key);
-    //     if (!property) {
-    //         return;
-    //     }
-    //     const propertyStructureType: string = property.getStructure().type as string;
-    //     const apparentType: string = getApparentType(property).toLowerCase();
-    //     const propertyType: string = propertyStructureType ?? apparentType;
-    //     MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
-    // }
 
 
     static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
@@ -70,16 +58,5 @@ export class MapInstanceOrInterfaceService<T> {
         }
         return undefined;
     }
-
-
-
-    // private static getPropertyKind(property: PropertyDeclaration): PropertyKind {
-    //     if (MapArrayService.isArrayType(property)) {
-    //         return PropertyKind.ARRAY;
-    //     } else if (MapTupleService.isTupleType(property)) {
-    //         return PropertyKind.TUPLE;
-    //     }
-    //     return undefined;
-    // }
 
 }

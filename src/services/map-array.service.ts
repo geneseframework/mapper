@@ -6,6 +6,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapEnumService } from './map-enum.service';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapArrayService<T> {
 
@@ -21,7 +22,7 @@ export class MapArrayService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceService.map(element, instance, importArrayDeclaration);
+                MapInstanceOrInterfaceService.map(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }
             if (importArrayDeclaration instanceof EnumDeclaration) {

@@ -7,6 +7,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapTupleService<T> {
 
@@ -43,7 +44,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceService.map(dataValue, instance, importArrayDeclaration);
+                MapInstanceOrInterfaceService.map(dataValue, instance, importArrayDeclaration);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {
