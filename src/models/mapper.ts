@@ -10,7 +10,7 @@ import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
-import { typeDeclaration } from '../utils/declaration.util';
+import { typeDeclarationEnum } from '../utils/declaration.util';
 import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
 import { MapEnumService } from '../services/map-enum.service';
 import * as chalk from 'chalk';
@@ -36,8 +36,8 @@ export class Mapper<T> {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
         } else {
-            console.log(chalk.greenBright('MAPPPPPPER'), typeName, typeDeclaration(typeName));
-            switch (typeDeclaration(typeName)) {
+            console.log(chalk.greenBright('MAPPPPPPER'), typeName, typeDeclarationEnum(typeName));
+            switch (typeDeclarationEnum(typeName)) {
                 case TypeDeclarationEnum.CLASS_DECLARATION:
                     return MapInstanceService.createInstances(data, typeName, isArray);
                 case TypeDeclarationEnum.ENUM_DECLARATION:

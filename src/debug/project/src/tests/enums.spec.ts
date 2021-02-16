@@ -24,3 +24,6 @@ testMappers.push(new TestMapper(`{ colors: ['White'] } / ColorClassSpec`, Colors
 testMappers.push(new TestMapper(`{ colors: ['Blue'] } / ColorClassSpec / ShouldFail`, ColorsClassSpec, { colors: ['Blue'] }, { shouldFail: true }));
 testMappers.push(new TestMapper(`{ colors: [ColorSpec.WHITE] } / ColorClassSpec`, ColorsClassSpec, { colors: [ColorSpec.WHITE] }));
 testMappers.push(new TestMapper(`{ colors: [ColorSpec.WHITE, ColorSpec.BLACK] } / ColorClassSpec`, ColorsClassSpec, { colors: [ColorSpec.WHITE, ColorSpec.BLACK] }));
+
+
+testMappers.push(new TestMapper(`'White' / ColorSpec`, 'ColorSpec', 'White'));

@@ -12,6 +12,7 @@ import { getApparentType } from '../utils/ast-types.util';
 import { DeclarationService } from './declaration.service';
 import { MapEnumService } from './map-enum.service';
 import * as chalk from 'chalk';
+import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapInstanceService<T> {
 
@@ -19,10 +20,7 @@ export class MapInstanceService<T> {
     static createInstances<T>(data: any[], className: string, isArray: boolean): T[] | string[] | number[] | boolean[]
     static createInstances<T>(data: any, className: string, isArray: boolean): T
     static createInstances<T>(data: any, className: string, isArray: boolean): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
-        if (className === 'EmployerSpec' && isArray) {
-            console.log(chalk.redBright('CLASS NAMEEEEE'), className);
-        }
-        const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(className, 'ClassDeclaration');
+        const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
     }
 

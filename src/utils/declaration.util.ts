@@ -6,7 +6,7 @@ import * as chalk from 'chalk';
 import { throwCustom } from './errors.util';
 
 
-export function typeDeclaration(typeName: string): TypeDeclarationEnum {
+export function typeDeclarationEnum(typeName: string): TypeDeclarationEnum {
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationEnum.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
@@ -21,33 +21,41 @@ export function typeDeclaration(typeName: string): TypeDeclarationEnum {
 
 
 export function isClassDeclaration(typeName: string): boolean {
-    if (typeName === 'EmployerSpec') {
-        console.log(chalk.magentaBright('SEARCH CLASSSES'));
-    }
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getClasses());
 }
 
 
 export function isEnumDeclaration(typeName: string): boolean {
-    if (typeName === 'EmployerSpec') {
-        console.log(chalk.yellowBright('SEARCH ENUMMMMS'));
-    }
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getEnums());
 }
 
 
 export function isTypeAliasDeclaration(typeName: string): boolean {
-    if (typeName === 'EmployerSpec') {
-        console.log(chalk.greenBright('SEARCH TYPEEEES'));
-    }
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getTypeAliases());
 }
 
 
 function hasDeclaration(typeName: string, getTypeDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    if (typeName === 'EmployerSpec') {
-        console.log(chalk.blueBright('CLASSSS ?'), GLOBAL.project.getSourceFiles().find(s => s.getClasses().map(t => t.getName()).includes(typeName)));
-        console.log(chalk.cyanBright('RETURNNNNNN'), GLOBAL.project.getSourceFiles().find(s => getTypeDeclaration(s).map(c => c.getName()).includes(typeName))?.getBaseName());
-    }
     return !!GLOBAL.project.getSourceFiles().find(s => getTypeDeclaration(s).map(c => c.getName()).includes(typeName));
+}
+
+
+export function getTypeDeclaration(typeName: string): TypeDeclaration {
+    const declarationEnum: TypeDeclarationEnum = typeDeclarationEnum(typeName);
+    switch (declarationEnum) {
+        case TypeDeclarationEnum.CLASS_DECLARATION:
+            return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getClasses());
+        case TypeDeclarationEnum.ENUM_DECLARATION:
+            return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getEnums());
+        case TypeDeclarationEnum.TYPE_DECLARATION:
+            return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getTypeAliases());
+        default:
+            throwCustom('Impossible to find TypeDeclaration corresponding to ', typeName);
+    }
+}
+
+
+function getDeclaration(typeName: string, getTypeDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
+    const sourceFile: SourceFile = GLOBAL.project.getSourceFiles().find(s => getTypeDeclaration(s).map(c => c.getName()).includes(typeName));
+    return getTypeDeclaration(sourceFile).find(t => t.getName() === typeName);
 }

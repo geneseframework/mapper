@@ -27,6 +27,7 @@ import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
 import { DeclarationService } from './declaration.service';
+import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapTypeService {
 
@@ -35,7 +36,7 @@ export class MapTypeService {
     static createTypes<T>(data: any, typeName: string, isArray: boolean): T
     static createTypes<T>(data: any, typeName: string, isArray: boolean): T | T[] {
         // console.log(chalk.yellowBright('CREATE TYPESSSSS'), data, typeName);
-        const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
+        const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
         if (Array.isArray(data) && isArray) {
             const typesArray: T[] = [];
             for (const element of data) {
