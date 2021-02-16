@@ -39,7 +39,7 @@ export class Mapper<T> {
             console.log(chalk.greenBright('MAPPPPPPER'), typeName, typeDeclarationEnum(typeName));
             switch (typeDeclarationEnum(typeName)) {
                 case TypeDeclarationEnum.CLASS_DECLARATION:
-                    return MapInstanceService.createInstances(data, typeName, isArray);
+                    return MapInstanceService.createInstances(data, typeName);
                 case TypeDeclarationEnum.ENUM_DECLARATION:
                     return MapEnumService.createEnums(data, typeName, isArray);
                 case TypeDeclarationEnum.TYPE_DECLARATION:

@@ -15,9 +15,9 @@ import { getTypeDeclaration } from '../utils/declaration.util';
 export class MapInstanceService<T> {
 
 
-    static createInstances<T>(data: any[], className: string, isArray: boolean): T[] | string[] | number[] | boolean[]
-    static createInstances<T>(data: any, className: string, isArray: boolean): T
-    static createInstances<T>(data: any, className: string, isArray: boolean): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+    static createInstances<T>(data: any[], className: string): T[] | string[] | number[] | boolean[]
+    static createInstances<T>(data: any, className: string): T
+    static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
     }
