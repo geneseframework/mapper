@@ -9,9 +9,7 @@ import { MapTypeService } from './map-type.service';
 import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { DeclarationService } from './declaration.service';
 import { MapEnumService } from './map-enum.service';
-import * as chalk from 'chalk';
 import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapInstanceService<T> {

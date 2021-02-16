@@ -26,7 +26,6 @@ import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
-import { DeclarationService } from './declaration.service';
 import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapTypeService {
