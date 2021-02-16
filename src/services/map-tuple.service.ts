@@ -15,7 +15,7 @@ export class MapTupleService<T> {
     }
 
 
-    static setTupleType(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {
+    static mapTupleType(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {
         const tupleTypeArray: string[] = this.toArray(stringifiedTupleTypeArray);
         const apparentTupleTypeArray: string[] = this.toArray(stringifiedApparentTypeArray);
         if (!Array.isArray(dataValue) || tupleTypeArray.length !== dataValue?.length) {
