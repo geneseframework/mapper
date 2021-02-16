@@ -48,15 +48,6 @@ export class Mapper<T> {
                     return undefined;
             }
         }
-//     } else if (options?.isType === true) {
-//     return MapTypeService.createTypes(data, typeName);
-// } else if (options?.isInterface === true) {
-//     // TODO
-// } else if (options?.isEnum === true) {
-//     // TODO
-// } else {
-//     return MapInstanceService.createInstances(data, typeName);
-// }
     }
 
 
@@ -74,15 +65,6 @@ export class Mapper<T> {
             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
         }
     }
-
-
-    // private static getTypeName<T>(mapParameter: MapParameter<T>): string {
-    //     if (typeof mapParameter === 'string') {
-    //         return this.removeBrackets(mapParameter);
-    //     } else {
-    //         return mapParameter.name;
-    //     }
-    // }
 
 
     private static removeBrackets(typeOrArrayTypeName: string): string {
