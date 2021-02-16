@@ -1,6 +1,5 @@
 import { TConstructor } from './t-constructor.model';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
-import { ClassDeclaration } from 'ts-morph';
 import { InitService } from '../services/init.service';
 import { isPrimitiveTypeOrArrayOfPrimitiveTypeNodes, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
@@ -9,25 +8,10 @@ import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
-import { DeclarationService } from '../services/declaration.service';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
 
 export class Mapper<T> {
-
-    // private typeName: string = undefined;
-
-    /**
-     * The constructor takes a Class (ie its constructor) as parameter, or a class name.
-     * The tConstructor property is an object with the Type corresponding to this Class
-     */
-    private constructor(mapParameter: MapParameter<T>) {
-        // if (typeof mapParameter === 'string') {
-        //     this.typeName = mapParameter;
-        // } else {
-        //     this.typeName = mapParameter.name;
-        // }
-    }
 
 
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
@@ -37,12 +21,11 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isType: true }): Promise<T | any>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options: { isInterface: true }): Promise<T>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
-    // static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
         const typeName: string = this.getTypeName(mapParameter);
-        await this.getInstance<T>(mapParameter);
+        await this.init();
         // TODO : Enums and types
-        // TODO : Indexable typesikoplm
+        // TODO : Indexable types
         // TODO : properties "any" or without types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
@@ -58,32 +41,12 @@ export class Mapper<T> {
     }
 
 
-    private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<void> {
+    private static async init<T>(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
             await FlagService.init();
         }
     }
-
-    // private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
-    //     if (GLOBAL.isFirstMapper) {
-    //         InitService.start();
-    //         await FlagService.init();
-    //     }
-    //     return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
-    // }
-
-
-    // private static getMapper<T>(mapParameter: MapParameter<T>): Mapper<T> {
-    //     let typeName: string;
-    //     if (typeof mapParameter === 'string') {
-    //         typeName = mapParameter;
-    //     } else {
-    //         typeName = mapParameter.name;
-    //     }
-    //     let mapper: string = GLOBAL.mappers.find(m => m === typeName);
-    //     return mapper ?? new Mapper(mapParameter);
-    // }
 
 
     private static getTypeName<T>(mapParameter: MapParameter<T>): string {
