@@ -1,8 +1,8 @@
 import { Mapper } from '../models/mapper';
-import { isSameObject } from '../utils/tools.service';
 import * as chalk from 'chalk';
 import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
+import { isSameObject } from '../utils/is-same-object.util';
 
 export async function expect(testMappers: TestMapper[]): Promise<void>
 export async function expect(testMapper: TestMapper): Promise<void>
