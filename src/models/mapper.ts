@@ -54,8 +54,7 @@ export class Mapper<T> {
         } else if (options?.isEnum === true) {
             // TODO
         } else {
-            const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(mapper.typeName, 'ClassDeclaration');
-            return MapInstanceService.createInstances(data, mapper.typeName, classDeclaration);
+            return MapInstanceService.createInstances(data, mapper.typeName);
         }
     }
 

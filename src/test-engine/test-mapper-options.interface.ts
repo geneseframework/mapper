@@ -1,7 +1,7 @@
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 
 export interface TestMapperOptions {
-    i?: boolean;
+    isolate?: boolean;
     log?: boolean;
     mapperOptions?: MapperOptions;
     shouldFail?: boolean;

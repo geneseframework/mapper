@@ -34,7 +34,7 @@ async function expectMapper(testMapper: TestMapper): Promise<void> {
 
 
 function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
-    const includedMappers: TestMapper[] = testMappers.filter(t => t.options?.i === true);
+    const includedMappers: TestMapper[] = testMappers.filter(t => t.options?.isolate === true);
     return includedMappers.length > 0 ? includedMappers : testMappers;
 }
 

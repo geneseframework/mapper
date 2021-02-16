@@ -12,22 +12,16 @@ import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getApparentType } from '../utils/ast-types.util';
 import * as chalk from 'chalk';
 import { type } from 'os';
+import { DeclarationService } from './declaration.service';
 
 export class MapInstanceService<T> {
 
 
-    static createInstances<T>(data: any[], className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[]
-    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T | string | number | boolean
-    static createInstances<T>(data: any, className: string, classDeclaration: ClassDeclaration): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
-        if (!Array.isArray(data)) {
-            return this.createInstance<T>(data, className, classDeclaration);
-        }
-        const instancesArray: T[] = [];
-        for (const element of data) {
-            const instance: T = this.createInstance(element, className, classDeclaration);
-            instancesArray.push(instance);
-        }
-        return instancesArray;
+    static createInstances<T>(data: any[], className: string): T[] | string[] | number[] | boolean[]
+    static createInstances<T>(data: any, className: string): T
+    static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
+        const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(className, 'ClassDeclaration');
+        return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
     }
 
 
@@ -36,6 +30,16 @@ export class MapInstanceService<T> {
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
         this.mapData(data, instance, classDeclaration);
         return instance;
+    }
+
+
+    private static createInstanceArray<T>(data: any, className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[] {
+        const instancesArray: T[] = [];
+        for (const element of data) {
+            const instance: T = this.createInstance(element, className, classDeclaration);
+            instancesArray.push(instance);
+        }
+        return instancesArray;
     }
 
 
