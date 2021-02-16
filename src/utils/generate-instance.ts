@@ -7,14 +7,17 @@ import { MainAppProcess } from "../debug/project/src/models/main-app-process";
 import { Person } from "../debug/project/src/models/person.model";
 import { Company } from "../debug/project/src/models/company.model";
 import { Ngo } from "../debug/project/src/models/ngo.model";
-import { TestMapper } from "../test-engine/test-mapper.model";
 import { NickNamesSpec, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/string-or-strings.spec";
 import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enums.spec";
-import { NgoSpec, CompanySpec, PersonSpec } from "../debug/project/src/tests/types-of-classes.spec";
+import { CompanySpec, NgoSpec, PersonSpec } from "../debug/project/src/tests/types-of-classes.spec";
+import { Mapper } from "../models/mapper";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
     switch (instanceGenerator.id) {
+        case 'Mapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts':
+            instance = new Mapper();
+            break;
         case 'Address_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/address.model.ts':
             instance = new Address(undefined, undefined, undefined);
             break;

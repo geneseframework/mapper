@@ -1,12 +1,10 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
-import { isPrimitiveValue } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import * as chalk from 'chalk';
+import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapEnumService } from './map-enum.service';
 
 export class MapArrayService<T> {

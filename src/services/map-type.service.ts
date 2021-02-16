@@ -18,52 +18,46 @@ import {
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
+import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
-import { DeclarationService } from './declaration.service';
+import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapTypeService {
 
 
-    static createTypes<T>(data: any[], typeOrArrayTypeName: string): T[]
-    static createTypes<T>(data: any, typeOrArrayTypeName: string): T
-    static createTypes<T>(data: any, typeOrArrayTypeName: string): T | T[] {
-        const typeName: string = this.getTypeName(typeOrArrayTypeName);
-        // console.log(chalk.yellowBright('CREATE TYPESSSSS'), data, typeName);
-        const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
-        // console.log(chalk.yellowBright('ALIAS TYPESSSSS'), typeAliasDeclaration?.getName());
-        if (Array.isArray(data) && this.isArrayType(typeOrArrayTypeName)) {
-            const typesArray: T[] = [];
-            for (const element of data) {
-                const instance: T = this.mapData<T>(element, typeAliasDeclaration);
-                typesArray.push(instance);
-            }
-            return typesArray;
-        } else if (!Array.isArray(data) && !this.isArrayType(typeOrArrayTypeName)) {
-            return this.mapData<T>(data, typeAliasDeclaration);
+    static createTypes<T>(data: any[], typeName: string, isArray: boolean): T[]
+    static createTypes<T>(data: any, typeName: string, isArray: boolean): T
+    static createTypes<T>(data: any, typeName: string, isArray: boolean): T | T[] {
+        const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
+        if (Array.isArray(data) && isArray) {
+            return this.createTypesArray(data, typeAliasDeclaration);
+        } else if (!Array.isArray(data) && !isArray) {
+            return this.createType(data, typeAliasDeclaration);
+        } else {
+            return undefined;
         }
     }
 
 
-    private static getTypeName(typeOrArrayTypeName: string): string {
-        return this.isArrayType(typeOrArrayTypeName) ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
+    private static createTypesArray<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration): T[] {
+        const typesArray: T[] = [];
+        for (const element of data) {
+            const instance: T = this.mapData<T>(element, typeAliasDeclaration);
+            typesArray.push(instance);
+        }
+        return typesArray;
     }
 
 
-    private static isArrayType(typeOrArrayTypeName: string): boolean {
-        return typeOrArrayTypeName.slice(-2) === '[]';
+    private static createType<T>(data: any, typeAliasDeclaration: TypeAliasDeclaration): T {
+        return this.mapData<T>(data, typeAliasDeclaration);
     }
-
-
-    // private static mapArrayType(data: any[], arrayTypeName: string): void {
-    //
-    // }
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {

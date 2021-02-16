@@ -1,7 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { isPrimitiveValue, isPrimitiveTypeNode } from '../utils/primitives.util';
-import { isEnumValue } from '../utils/ast.util';
-import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
+import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
+import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { GLOBAL } from '../const/global.const';
@@ -10,10 +9,8 @@ import { MapTypeService } from './map-type.service';
 import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getApparentType } from '../utils/ast-types.util';
-import * as chalk from 'chalk';
-import { type } from 'os';
-import { DeclarationService } from './declaration.service';
 import { MapEnumService } from './map-enum.service';
+import { getTypeDeclaration } from '../utils/declaration.util';
 
 export class MapInstanceService<T> {
 
@@ -21,7 +18,7 @@ export class MapInstanceService<T> {
     static createInstances<T>(data: any[], className: string): T[] | string[] | number[] | boolean[]
     static createInstances<T>(data: any, className: string): T
     static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
-        const classDeclaration: ClassDeclaration = DeclarationService.getDeclaration(className, 'ClassDeclaration');
+        const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
     }
 
