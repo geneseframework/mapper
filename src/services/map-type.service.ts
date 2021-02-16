@@ -33,15 +33,17 @@ export class MapTypeService {
     static createTypes<T>(data: any, typeOrArrayTypeName: string): T
     static createTypes<T>(data: any, typeOrArrayTypeName: string): T | T[] {
         const typeName: string = this.getTypeName(typeOrArrayTypeName);
-        console.log(chalk.blueBright('CREATE TYPESSSSS'), data, typeName);
+        console.log(chalk.yellowBright('CREATE TYPESSSSS'), data, typeName);
         const typeAliasDeclaration: TypeAliasDeclaration = DeclarationService.getDeclaration(typeName, 'TypeAliasDeclaration');
-        console.log(chalk.cyanBright('ALIAS TYPESSSSS'), typeAliasDeclaration?.getName());
+        console.log(chalk.yellowBright('ALIAS TYPESSSSS'), typeAliasDeclaration?.getName());
         if (Array.isArray(data) && this.isArrayType(typeOrArrayTypeName)) {
             const typesArray: T[] = [];
             for (const element of data) {
+                console.log(chalk.yellowBright('CREATE TYPESSSSS ELTTTTT'), element);
                 const instance: T = this.mapData<T>(element, typeAliasDeclaration);
                 typesArray.push(instance);
             }
+            console.log(chalk.greenBright('CREATE TYPESSSSS typesArray'), typesArray);
             return typesArray;
         } else if (!Array.isArray(data) && !this.isArrayType(typeOrArrayTypeName)) {
             return this.mapData<T>(data, typeAliasDeclaration);

@@ -19,6 +19,7 @@ export async function expect(testMappers: TestMapper | TestMapper[]): Promise<vo
 
 async function expectMapper(testMapper: TestMapper): Promise<void> {
     const result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.mapperOptions);
+    // console.log(chalk.magentaBright('TEST RESULTTTTTT'), result);
     if (isExpectedResult(testMapper.data, result, testMapper.options?.shouldFail) ) {
         console.log(chalk.greenBright('Test passed : '), testMapper.title);
         TESTS.testsPassed++;
@@ -40,7 +41,9 @@ function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
 
 
 function isExpectedResult(data: any, result: any, shouldFail: boolean): boolean {
+    console.log(chalk.magentaBright('TEST RESULTTTTTT'), data, result, shouldFail, isSameObject(result, data));
     if (isSameObject(result, data)) {
+        console.log(chalk.magentaBright('TEST RESULTTTTTT IS SAMEEEEEEE'), data, result, shouldFail);
         return !shouldFail;
     } else {
         return shouldFail;

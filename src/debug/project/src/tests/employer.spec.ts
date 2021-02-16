@@ -41,7 +41,7 @@ testMappers.push(testMapper3);
 const testMapper4 = new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`,
     'EmployerSpec[]',
     [{ name: 'Total', volunteers: 3000 }],
-    { mapperOptions: { isType: true }, log: true, i: true }
+    { mapperOptions: { isType: true }, log: true }
 );
 testMappers.push(testMapper4);
 

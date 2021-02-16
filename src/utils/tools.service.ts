@@ -42,19 +42,23 @@ export function isSameObject(obj1: any, obj2: any): boolean {
     if (typeof obj1 === 'number' && obj1.toString() === obj2.toString()) {
         return true;
     }
+    console.log(chalk.blueBright('IS SAME OBJJJJJ'), obj1, obj2);
+    console.log(chalk.cyanBright('ARE OBJJJJJ WITH SAME KEYSNBBBBB'), areObjectsWithDifferentNumberOfKeys(obj1, obj2));
     if (
         (obj1 === undefined || obj2 === undefined)
         || (Array.isArray(obj1) && !Array.isArray(obj2))
         || (!Array.isArray(obj1) && Array.isArray(obj2))
         || (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length !== obj2.length)
         || obj1 === !obj2
-        || !areObjectsWithDifferentNumberOfKeys(obj1, obj2)
+        || areObjectsWithDifferentNumberOfKeys(obj1, obj2)
     ) {
+        console.log(chalk.redBright('ARE OBJJJJJ WITH SAME KEYSNBBBBB'), areObjectsWithDifferentNumberOfKeys(obj1, obj2));
         return false;
     }
     if (Array.isArray(obj1) && Array.isArray(obj2)) {
         let index = 0;
         for (const element of obj1) {
+            console.log(chalk.greenBright('ARE OBJJJJJ ELTTTTT'), element, obj2[index]);
             if (!this.isSameObject(element, obj2[index])) {
                 return false;
             }
@@ -88,5 +92,10 @@ export function isSameObject(obj1: any, obj2: any): boolean {
 
 
 function areObjectsWithDifferentNumberOfKeys(obj1: any, obj2: any): boolean {
-    return typeof obj1 === 'object' && typeof obj2 === 'object' && !Array.isArray(obj1) && !Array.isArray(obj2) && Object.keys(obj1).length === Object.keys(obj2).length;
+    // console.log(chalk.blueBright('typeof obj1 === \'object\''), typeof obj1 === 'object');
+    // console.log(chalk.blueBright('typeof obj2 === \'object\''), typeof obj2 === 'object');
+    // console.log(chalk.blueBright('!Array.isArray(obj1)'), !Array.isArray(obj1));
+    // console.log(chalk.blueBright('!Array.isArray(obj2)'), !Array.isArray(obj2));
+    // console.log(chalk.blueBright('!Array.isArray(obj2)'), !Array.isArray(obj2));
+    return typeof obj1 === 'object' && typeof obj2 === 'object' && !Array.isArray(obj1) && !Array.isArray(obj2) && Object.keys(obj1).length !== Object.keys(obj2).length;
 }
