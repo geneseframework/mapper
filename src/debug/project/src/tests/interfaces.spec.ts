@@ -1,5 +1,4 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
-import { Animal } from '../models/animal.model';
 
 export interface AnimalSpec {
     name: string;
@@ -14,4 +13,4 @@ export class AnimalOwner {
     animal: AnimalSpec;
 }
 
-testMappers.push(new TestMapper(`{ animal: { name: 'Biela' } } / AnimalOwner`, 'AnimalOwner', { animal: { name: 'Biela' } }, { isolate: true}));
+testMappers.push(new TestMapper(`{ animal: { name: 'Biela' } } / AnimalOwner`, 'AnimalOwner', { animal: { name: 'Biela' } }));

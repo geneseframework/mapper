@@ -3,9 +3,6 @@ import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import * as chalk from 'chalk';
 import { MapPropertyService } from './map-property.service';
 import { getApparentType } from '../utils/ast-types.util';
-import { PropertyKind } from '../types/property-kind.enum';
-import { MapArrayService } from './map-array.service';
-import { MapTupleService } from './map-tuple.service';
 import { getAllInterfaceProperties, implementsRequiredProperties } from '../utils/ast-interfaces.util';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 import { MapInstanceService } from './map-instance.service';
@@ -16,7 +13,6 @@ export class MapInterfaceService {
     static createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean): T[]
     static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T
     static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T | T[] {
-        console.log(chalk.blueBright(''), data, interfaceName, isArray);
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
         if (Array.isArray(data) && isArray) {
             return this.createInterfacesArray(data, interfaceDeclaration);
@@ -46,7 +42,6 @@ export class MapInterfaceService {
 
 
     static map<T>(data: any, tInterface: T, interfaceDeclaration: InterfaceDeclaration): void {
-    // static map<T>(data: any, tInterface: T, interfaceDeclaration: InterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
             this.mapDataKey(tInterface, interfaceDeclaration, key, data[key]);
         }
@@ -63,29 +58,5 @@ export class MapInterfaceService {
         const propertyType: string = propertyStructureType ?? apparentType;
         MapPropertyService.map(target, key, dataValue, MapInstanceService.getPropertyKind(property), propertyType, apparentType);
     }
-
-
-    // private static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
-    //     if (MapArrayService.isArrayType(property)) {
-    //         return PropertyKind.ARRAY;
-    //     } else if (MapTupleService.isTupleType(property)) {
-    //         return PropertyKind.TUPLE;
-    //     }
-    // }
-
-
-    // static mapInterfaceType(target: any, key: string, dataValue: any, interfaceDeclaration: InterfaceDeclaration): void {
-    //     console.log(chalk.blueBright('MAP INTERFFFFFF TYPE'), target, key, dataValue, interfaceDeclaration?.getName());
-    //     const property: PropertyDeclaration = getAllClassProperties(classDeclaration).find(p => p.getName() === key);
-    //     if (!property) {
-    //         return;
-    //     }
-    //     const propertyStructureType: string = property.getStructure().type as string;
-    //     const apparentType: string = getApparentType(property).toLowerCase();
-    //     const propertyType: string = propertyStructureType ?? apparentType;
-    //     target[key] = MapPropertyService.map(target, key, dataValue, undefined, interfaceDeclaration.getName(), undefined);
-    //     // target[key] = MapDeclarationService.map(target, interfaceDeclaration.getName(), key, dataValue, interfaceDeclaration);
-    //     console.log(chalk.blueBright('MAP INTERFFFFFF target[key]'), target[key]);
-    // }
 
 }

@@ -8,7 +8,6 @@ import {
 } from 'ts-morph';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { getAllClassProperties } from './ast-class.util';
-import * as chalk from 'chalk';
 import { includes } from './arrays.util';
 
 

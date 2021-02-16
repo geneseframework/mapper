@@ -4,16 +4,12 @@ import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
-import * as chalk from 'chalk';
 import { MapInterfaceService } from './map-interface.service';
-import { InterfaceDeclaration } from 'ts-morph';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
-        console.log(chalk.blueBright('MAP PROPPPPP'), target, key, dataValue, propertyKind, propertyType);
-        console.log(chalk.cyanBright('MAP PROPPPPP APT TYPE'), apparentType);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue);
             return;

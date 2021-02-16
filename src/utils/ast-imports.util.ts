@@ -14,7 +14,6 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
-    console.log(chalk.greenBright('GET IMPORTTTTTTT DECL'), typeName, apparentTypeImportDeclarationPath, importSourceFile.getBaseName());
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
     if (importClassDeclaration) {
         return importClassDeclaration;
