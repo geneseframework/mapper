@@ -26,4 +26,4 @@ testMappers.push(new TestMapper(`{ colors: [ColorSpec.WHITE] } / ColorClassSpec`
 testMappers.push(new TestMapper(`{ colors: [ColorSpec.WHITE, ColorSpec.BLACK] } / ColorClassSpec`, ColorsClassSpec, { colors: [ColorSpec.WHITE, ColorSpec.BLACK] }));
 
 
-testMappers.push(new TestMapper(`'White' / ColorSpec`, 'ColorSpec', 'White', { isolate: true }));
+testMappers.push(new TestMapper(`'White' / ColorSpec`, 'ColorSpec', 'White'));

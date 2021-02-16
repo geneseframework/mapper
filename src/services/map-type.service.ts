@@ -55,9 +55,10 @@ export class MapTypeService {
     }
 
 
-    private static createType<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration): T {
+    private static createType<T>(data: any, typeAliasDeclaration: TypeAliasDeclaration): T {
         return this.mapData<T>(data, typeAliasDeclaration);
     }
+
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
         const rootValue: T = undefined;
