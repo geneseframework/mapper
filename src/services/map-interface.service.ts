@@ -24,7 +24,7 @@ export class MapInterfaceService {
     }
 
 
-    private static createInterfacesArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): T[] {
+    static createInterfacesArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): T[] {
         const interfacesArray: T[] = [];
         for (const element of data) {
             const value: T = this.createInterface(element, interfaceDeclaration);
@@ -34,7 +34,7 @@ export class MapInterfaceService {
     }
 
 
-    private static createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): T {
+    static createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): T {
         const tInterface = {};
         this.map(data, tInterface, interfaceDeclaration);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;

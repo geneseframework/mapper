@@ -1,4 +1,4 @@
-import { ClassDeclaration, PropertyDeclaration, Type } from 'ts-morph';
+import { ClassDeclaration, InterfaceDeclaration, PropertyDeclaration, Type } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
@@ -7,17 +7,21 @@ import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
-import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { MapInterfaceService } from './map-interface.service';
 
-export class MapInstanceService<T> {
+export class MapInstanceOrInterfaceService<T> {
 
 
-    static createInstances<T>(data: any[], className: string): T[] | string[] | number[] | boolean[]
-    static createInstances<T>(data: any, className: string): T
-    static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
-        const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        return Array.isArray(data) ? MapInstanceOrInterfaceService.createArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
-        // return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
+    static createArray<T>(data: any, interfaceName: string, interfaceDeclaration: InterfaceDeclaration): T[]
+    static createArray<T>(data: any, className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[]
+    static createArray<T>(data: any, classOrInterfaceName: string, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): T[] | string[] | number[] | boolean[] {
+        const instancesArray: T[] = [];
+        for (const element of data) {
+            const instance: T = classOrInterfaceDeclaration instanceof ClassDeclaration ? this.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
+            instancesArray.push(instance);
+        }
+        return instancesArray;
     }
 
 
