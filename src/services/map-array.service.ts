@@ -16,7 +16,7 @@ export class MapArrayService<T> {
     }
 
 
-    static mapArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
+    static map(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
         if (!Array.isArray(dataValue)) {
             return;
         }

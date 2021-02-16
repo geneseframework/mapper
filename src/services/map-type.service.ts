@@ -19,7 +19,6 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
@@ -27,6 +26,8 @@ import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
+import { MapPropertyService } from './map-property.service';
+import { MapDeclarationService } from './map-declaration.service';
 
 export class MapTypeService {
 
@@ -226,7 +227,7 @@ export class MapTypeService {
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        MapInstanceService.mapTypeDeclaration(typeDeclaration, target, typeDeclaration.getName(), key, dataValue);
+        MapDeclarationService.map(typeDeclaration, target, typeDeclaration.getName(), key, dataValue);
     }
 
 
@@ -235,7 +236,7 @@ export class MapTypeService {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
         }
-        MapArrayService.mapArrayType(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
+        MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
     }
 
 
