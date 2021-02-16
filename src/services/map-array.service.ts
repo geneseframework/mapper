@@ -33,7 +33,9 @@ export class MapArrayService<T> {
                 target[key].push(instance);
             }
             if (importArrayDeclaration instanceof EnumDeclaration) {
-                MapEnumService.mapEnumType(target, key, element, importArrayDeclaration)
+                const root = { rootKey: [] };
+                MapEnumService.mapEnumType(root, 'rootKey', element, importArrayDeclaration);
+                target[key].push(root.rootKey);
             }
         }
     }
