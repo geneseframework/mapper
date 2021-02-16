@@ -15,20 +15,18 @@ import { clone } from '../utils/clone.util';
 
 export class Mapper<T> {
 
-    private tConstructor: TConstructor<T> = undefined;
-    private typeName: string = undefined;
+    // private typeName: string = undefined;
 
     /**
      * The constructor takes a Class (ie its constructor) as parameter, or a class name.
      * The tConstructor property is an object with the Type corresponding to this Class
      */
     private constructor(mapParameter: MapParameter<T>) {
-        if (typeof mapParameter === 'string') {
-            this.typeName = mapParameter;
-        } else {
-            this.tConstructor = mapParameter;
-            this.typeName = mapParameter.name;
-        }
+        // if (typeof mapParameter === 'string') {
+        //     this.typeName = mapParameter;
+        // } else {
+        //     this.typeName = mapParameter.name;
+        // }
     }
 
 
@@ -41,37 +39,55 @@ export class Mapper<T> {
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     // static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
-        const mapper: Mapper<T> = await this.getInstance<T>(mapParameter);
+        const typeName: string = this.getTypeName(mapParameter);
+        await this.getInstance<T>(mapParameter);
         // TODO : Enums and types
-        // TODO : Indexable types
+        // TODO : Indexable typesikoplm
         // TODO : properties "any" or without types
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(mapper.typeName)) {
-            return MapPrimitiveService.create(data, mapper.typeName as PrimitiveType | PrimitiveTypes);
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
+            return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
         } else if (options?.isType === true) {
-            return MapTypeService.createTypes(data, mapper.typeName);
+            return MapTypeService.createTypes(data, typeName);
         } else if (options?.isInterface === true) {
             // TODO
         } else if (options?.isEnum === true) {
             // TODO
         } else {
-            return MapInstanceService.createInstances(data, mapper.typeName);
+            return MapInstanceService.createInstances(data, typeName);
         }
     }
 
 
-    private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
+    private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
             await FlagService.init();
         }
-        return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
     }
 
+    // private static async getInstance<T>(mapParameter: MapParameter<T>): Promise<Mapper<T>> {
+    //     if (GLOBAL.isFirstMapper) {
+    //         InitService.start();
+    //         await FlagService.init();
+    //     }
+    //     return this.getMapper<T>(mapParameter) ?? new Mapper<T>(mapParameter);
+    // }
 
-    private static getMapper<T>(mapParameter: MapParameter<T>): Mapper<T> {
-        const typeName: string = typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
-        let mapper: Mapper<T> = GLOBAL.mappers.find(m => m.typeName === typeName);
-        return mapper ?? new Mapper(mapParameter);
+
+    // private static getMapper<T>(mapParameter: MapParameter<T>): Mapper<T> {
+    //     let typeName: string;
+    //     if (typeof mapParameter === 'string') {
+    //         typeName = mapParameter;
+    //     } else {
+    //         typeName = mapParameter.name;
+    //     }
+    //     let mapper: string = GLOBAL.mappers.find(m => m === typeName);
+    //     return mapper ?? new Mapper(mapParameter);
+    // }
+
+
+    private static getTypeName<T>(mapParameter: MapParameter<T>): string {
+        return typeof mapParameter === 'string' ? mapParameter : mapParameter.name;
     }
 
 
