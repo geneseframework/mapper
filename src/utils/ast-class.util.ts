@@ -1,11 +1,4 @@
-import {
-    ClassDeclaration,
-    HeritageClause,
-    Identifier,
-    PropertyDeclaration,
-    SourceFile,
-    TypeReferenceNode
-} from 'ts-morph';
+import { ClassDeclaration, HeritageClause, Identifier, PropertyDeclaration, TypeReferenceNode } from 'ts-morph';
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { getImportTypeDeclaration } from './ast-imports.util';
@@ -28,13 +21,13 @@ export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boole
 }
 
 
-export function getAllProperties(classDeclaration: ClassDeclaration): PropertyDeclaration[] {
+export function getAllClassProperties(classDeclaration: ClassDeclaration): PropertyDeclaration[] {
     const propertyDeclarations: PropertyDeclaration[] = classDeclaration.getProperties();
     const heritageClause: HeritageClause = classDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
     if (heritageClause) {
         const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
         if (parentClassDeclaration) {
-            propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
+            propertyDeclarations.push(...getAllClassProperties(parentClassDeclaration));
         }
     }
     return propertyDeclarations;
@@ -47,10 +40,5 @@ export function getTypeReferenceTypeDeclaration(typeReference: TypeReferenceNode
     const split: string[] = apparentType.split('.');
     const typeName: string = split[split.length - 1];
     return getImportTypeDeclaration(apparentType, typeName);
-}
-
-
-export function getClasses(sourceFile: SourceFile): ClassDeclaration[] {
-    return sourceFile.getClasses();
 }
 

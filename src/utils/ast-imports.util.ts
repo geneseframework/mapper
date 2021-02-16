@@ -2,13 +2,12 @@ import {
     ClassDeclaration,
     EnumDeclaration,
     ImportDeclaration,
-    ImportSpecifier,
+    ImportSpecifier, InterfaceDeclaration,
     SourceFile,
     TypeAliasDeclaration
 } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
-import { isOutOfProject } from './ast.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 
 
@@ -26,6 +25,10 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
     const typeAliasDeclaration: TypeAliasDeclaration = importSourceFile.getTypeAlias(typeName);
     if (typeAliasDeclaration) {
         return typeAliasDeclaration;
+    }
+    const interfaceDeclaration: InterfaceDeclaration = importSourceFile.getInterface(typeName);
+    if (interfaceDeclaration) {
+        return interfaceDeclaration;
     }
     return undefined;
 }
@@ -58,7 +61,6 @@ export function getImportSpecifier(importDeclaration: ImportDeclaration): Import
 }
 
 
-// export function getImportTypeDeclaration(importSpecifier: ImportDeclaration): ImportSpecifier {
-//     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
-//     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
-// }
+export function isOutOfProject(sourceFile: SourceFile): boolean {
+    return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
+}

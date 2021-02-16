@@ -6,16 +6,17 @@ import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 
 export class MapTupleService<T> {
 
 
-    static isTupleType(property: PropertyDeclaration): boolean {
+    static isTupleType(property: PropertyDeclarationOrSignature): boolean {
         return property.getType().isTuple();
     }
 
 
-    static mapTupleType(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {
+    static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {
         const tupleTypeArray: string[] = this.toArray(stringifiedTupleTypeArray);
         const apparentTupleTypeArray: string[] = this.toArray(stringifiedApparentTypeArray);
         if (!Array.isArray(dataValue) || tupleTypeArray.length !== dataValue?.length) {
@@ -42,7 +43,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceService.mapData(dataValue, instance, importArrayDeclaration);
+                MapInstanceService.map(dataValue, instance, importArrayDeclaration);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {

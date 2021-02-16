@@ -19,14 +19,14 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { TypeDeclaration } from '../types/type-declaration.type';
+import { MapDeclarationService } from './map-declaration.service';
 
 export class MapTypeService {
 
@@ -64,14 +64,14 @@ export class MapTypeService {
         const rootValue: T = undefined;
         const target: { root: T } = { root: rootValue };
         for (const key of Object.keys(dataValue)) {
-            this.mapTypeType(target, 'root', dataValue, typeAliasDeclaration);
+            this.map(target, 'root', dataValue, typeAliasDeclaration);
         }
         return target.root;
     }
 
 
     // TODO : Types which are not unions
-    static mapTypeType(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
+    static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
         this.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
@@ -144,16 +144,6 @@ export class MapTypeService {
                     return;
                 }
                 return;
-                // if (!isLiteralPrimitive(typeNode)) {
-                //     return;
-                // } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
-                //     target[key] = dataValue;
-                //     return;
-                // } else if (typeNodes.length > 1) {
-                //     this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
-                //     return;
-                // }
-                // return;
             }
         } else {
             for (const dataKey of Object.keys(dataValue)) {
@@ -236,7 +226,7 @@ export class MapTypeService {
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        MapInstanceService.mapTypeDeclaration(typeDeclaration, target, typeDeclaration.getName(), key, dataValue);
+        MapDeclarationService.map(target, typeDeclaration.getName(), key, dataValue, typeDeclaration);
     }
 
 
@@ -245,7 +235,7 @@ export class MapTypeService {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
         }
-        MapArrayService.mapArrayType(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
+        MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
     }
 
 

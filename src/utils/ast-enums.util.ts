@@ -1,8 +1,4 @@
-import { EnumDeclaration, Node, SourceFile } from 'ts-morph';
-
-export function isOutOfProject(sourceFile: SourceFile): boolean {
-    return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
-}
+import { EnumDeclaration } from 'ts-morph';
 
 
 export function isEnumValue(declaration: EnumDeclaration, value: any): boolean {

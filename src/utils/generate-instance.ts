@@ -11,6 +11,7 @@ import { NickNamesSpec, PersonWithNickNamesStringsOrString } from "../debug/proj
 import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enums.spec";
 import { CompanySpec, NgoSpec, PersonSpec } from "../debug/project/src/tests/types-of-classes.spec";
 import { Mapper } from "../models/mapper";
+import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -44,6 +45,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'ColorsClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts':
             instance = new ColorsClassSpec();
+            break;
+        case 'AnimalOwner_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts':
+            instance = new AnimalOwner();
             break;
         case 'NickNamesSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
             instance = new NickNamesSpec();

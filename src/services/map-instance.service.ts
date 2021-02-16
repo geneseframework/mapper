@@ -1,16 +1,12 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapTupleService } from './map-tuple.service';
-import { MapArrayService } from './map-array.service';
+import { ClassDeclaration, PropertyDeclaration, Type } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
-import { MapTypeService } from './map-type.service';
-import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import { getImportTypeDeclaration } from '../utils/ast-imports.util';
+import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { MapEnumService } from './map-enum.service';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { PropertyKind } from '../types/property-kind.enum';
+import { MapPropertyService } from './map-property.service';
+import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 
 export class MapInstanceService<T> {
 
@@ -20,14 +16,6 @@ export class MapInstanceService<T> {
     static createInstances<T>(data: any, className: string): T |T[] | string | string[] | number | number[] | boolean | boolean[] {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? this.createInstanceArray(data, className, classDeclaration) : this.createInstance<T>(data, className, classDeclaration);
-    }
-
-
-    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
-        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        const instance: T = GLOBAL.generateInstance(instanceGenerator);
-        this.mapData(data, instance, classDeclaration);
-        return instance;
     }
 
 
@@ -41,7 +29,15 @@ export class MapInstanceService<T> {
     }
 
 
-    static mapData<T>(data: any, instance: T, classDeclaration: ClassDeclaration): void {
+    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
+        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
+        const instance: T = GLOBAL.generateInstance(instanceGenerator);
+        this.map(data, instance, classDeclaration);
+        return instance;
+    }
+
+
+    static map<T>(data: any, instance: T, classDeclaration: ClassDeclaration): void {
         for (const key of Object.keys(data)) {
             this.mapDataKey(instance, classDeclaration, key, data[key]);
         }
@@ -49,60 +45,38 @@ export class MapInstanceService<T> {
 
 
     private static mapDataKey<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
-        const property: PropertyDeclaration = getAllProperties(classDeclaration).find(p => p.getName() === key);
+        const property: PropertyDeclaration = getAllClassProperties(classDeclaration).find(p => p.getName() === key);
         if (!property) {
             return;
         }
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        if (isPrimitiveTypeNode(propertyType)) {
-            this.mapPrimitiveType(target, key, dataValue);
-            return;
-        }
-        if (MapArrayService.isArrayType(property)) {
-            MapArrayService.mapArrayType(target, key, dataValue, propertyType, apparentType);
-            return;
-        }
-        if (MapTupleService.isTupleType(property)) {
-            MapTupleService.mapTupleType(target, key, dataValue, propertyType, apparentType);
-            return;
-        }
-        this.mapTypeDeclaration(getImportTypeDeclaration(apparentType, propertyType), target, propertyType, key, dataValue);
+        MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
     }
 
 
-    static mapTypeDeclaration(typeDeclaration: TypeDeclaration, target: any, propertyType: string, key: string, dataValue: any): void {
-        if (!typeDeclaration) {
-            return;
+    static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
+        const propertyType: Type = property.getType();
+        if (propertyType.isArray()) {
+            return PropertyKind.ARRAY;
+        } else if (propertyType.isTuple()) {
+            return PropertyKind.TUPLE;
+        } else if (propertyType.isInterface()) {
+            return PropertyKind.INTERFACE
         }
-        if (typeDeclaration instanceof ClassDeclaration) {
-            this.mapClassType(target, key, dataValue, propertyType, typeDeclaration);
-            return;
-        }
-        if (typeDeclaration instanceof EnumDeclaration) {
-            MapEnumService.mapEnumType(target, key, dataValue, typeDeclaration);
-            return;
-        }
-        if (typeDeclaration instanceof TypeAliasDeclaration)
-        {
-            MapTypeService.mapTypeType(target, key, dataValue, typeDeclaration);
-            return;
-        }
+        return undefined;
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any): void {
-        if (isPrimitiveValue(dataValue)) {
-            target[key] = dataValue;
-        }
-    }
 
-
-    private static mapClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
-        const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        target[key] = GLOBAL.generateInstance(instanceGenerator);
-        this.mapData(dataValue, target[key], classDeclaration);
-    }
+    // private static getPropertyKind(property: PropertyDeclaration): PropertyKind {
+    //     if (MapArrayService.isArrayType(property)) {
+    //         return PropertyKind.ARRAY;
+    //     } else if (MapTupleService.isTupleType(property)) {
+    //         return PropertyKind.TUPLE;
+    //     }
+    //     return undefined;
+    // }
 
 }

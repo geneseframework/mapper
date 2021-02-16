@@ -1,6 +1,6 @@
-import { EnumDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { isEnumValue } from '../utils/ast.util';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { EnumDeclaration } from 'ts-morph';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { isEnumValue } from '../utils/ast-enums.util';
 
 export class MapEnumService {
 
@@ -31,12 +31,12 @@ export class MapEnumService {
 
     private static createEnum<T>(data: any, enumDeclaration: EnumDeclaration): T {
         const root = { rootKey: undefined };
-        this.mapEnumType(root, 'rootKey', data, enumDeclaration);
+        this.map(root, 'rootKey', data, enumDeclaration);
         return root.rootKey;
     }
 
 
-    static mapEnumType(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
+    static map(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }
