@@ -1,6 +1,6 @@
 import { Mood } from '../enums/mood.enum';
 import { Person } from './person.model';
-import { Color } from './colors.enum';
+import { Color } from '../enums/colors.enum';
 import { Animal } from './animal.model';
 import { Race } from '../types/race.type';
 import { Prey } from '../interfaces/prey.interface';

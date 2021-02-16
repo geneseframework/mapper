@@ -1,5 +1,6 @@
 import {
-    ArrayTypeNode, ClassDeclaration, EnumDeclaration,
+    ArrayTypeNode,
+    ClassDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -9,18 +10,19 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
-    isPrimitiveOrArrayOfPrimitivesValue, isLiteralKeyword, isLiteralPrimitive,
+    isArrayOfPrimitiveTypeNodes,
+    isLiteralKeyword,
+    isPrimitiveOrArrayOfPrimitivesValue,
     isPrimitiveTypeNode,
     isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
     literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue, isArrayOfPrimitiveTypeNodes
+    primitiveLiteralValue
 } from '../utils/primitives.util';
 import { TypeDeclaration } from '../types/class-or-enum-declaration.type';
 import * as chalk from 'chalk';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
-import { clone } from '../utils/tools.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
@@ -249,7 +251,7 @@ export class MapTypeService {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
             return;
         }
-        MapArrayService.setArrayType(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
+        MapArrayService.mapArrayType(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
     }
 
 

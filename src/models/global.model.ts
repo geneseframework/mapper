@@ -15,7 +15,8 @@ export class Global {
     generateInstancesSourceFile: SourceFile = undefined;
     instanceGenerators: InstanceGenerator<any>[] = [];
     isAlreadyInitialized: boolean = false;
-    mappers: Mapper<any>[] = [];
+    mappers: string[] = [];
+    // mappers: Mapper<any>[] = [];
     nodeModuleMapper: SourceFile = undefined;
     project: Project = undefined;
     projectPath: string = undefined;

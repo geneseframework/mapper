@@ -6,6 +6,8 @@ import { GLOBAL } from '../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import * as chalk from 'chalk';
+import { MapEnumService } from './map-enum.service';
 
 export class MapArrayService<T> {
 
@@ -16,7 +18,7 @@ export class MapArrayService<T> {
     }
 
 
-    static setArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
+    static mapArrayType(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
         if (!Array.isArray(dataValue)) {
             return;
         }
@@ -30,8 +32,10 @@ export class MapArrayService<T> {
                 MapInstanceService.mapData(element, instance, importArrayDeclaration);
                 target[key].push(instance);
             }
-            if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(element)) {
-                target[key].push(element);
+            if (importArrayDeclaration instanceof EnumDeclaration) {
+                const root = { rootKey: [] };
+                MapEnumService.mapEnumType(root, 'rootKey', element, importArrayDeclaration);
+                target[key].push(root.rootKey);
             }
         }
     }

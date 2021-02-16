@@ -8,8 +8,9 @@ import { Person } from "../debug/project/src/models/person.model";
 import { Company } from "../debug/project/src/models/company.model";
 import { Ngo } from "../debug/project/src/models/ngo.model";
 import { TestMapper } from "../test-engine/test-mapper.model";
-import { NgoSpec, CompanySpec, PersonSpec } from "../debug/project/src/tests/employer.spec";
-import { PersonWithNickNamesStringOrStrings, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/string-or-strings.spec";
+import { NickNamesSpec, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/string-or-strings.spec";
+import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enums.spec";
+import { NgoSpec, CompanySpec, PersonSpec } from "../debug/project/src/tests/types-of-classes.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -35,20 +36,26 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'Person_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/person.model.ts':
             instance = new Person(undefined, undefined, undefined, undefined, undefined, undefined);
             break;
-        case 'NgoSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
-            instance = new NgoSpec();
+        case 'ColorClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts':
+            instance = new ColorClassSpec();
             break;
-        case 'CompanySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
-            instance = new CompanySpec();
+        case 'ColorsClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts':
+            instance = new ColorsClassSpec();
             break;
-        case 'PersonSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/employer.spec.ts':
-            instance = new PersonSpec();
-            break;
-        case 'PersonWithNickNamesStringOrStrings_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
-            instance = new PersonWithNickNamesStringOrStrings();
+        case 'NickNamesSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
+            instance = new NickNamesSpec();
             break;
         case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
             instance = new PersonWithNickNamesStringsOrString();
+            break;
+        case 'NgoSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types-of-classes.spec.ts':
+            instance = new NgoSpec();
+            break;
+        case 'CompanySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types-of-classes.spec.ts':
+            instance = new CompanySpec();
+            break;
+        case 'PersonSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types-of-classes.spec.ts':
+            instance = new PersonSpec();
             break;
         default:
             console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);
