@@ -1,5 +1,4 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, PropertySignature } from 'ts-morph';
-import { MapInstanceService } from './map-instance.service';
+import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { InstanceGenerator } from '../models/instance-generator.model';

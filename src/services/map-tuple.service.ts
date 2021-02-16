@@ -1,20 +1,13 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
-import { isPrimitiveValue, isPrimitiveTypeNode } from '../utils/primitives.util';
-import { MapInstanceService } from './map-instance.service';
+import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
+import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapTupleService<T> {
-
-
-    static isTupleType(property: PropertyDeclarationOrSignature): boolean {
-        return property.getType().isTuple();
-    }
 
 
     static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {

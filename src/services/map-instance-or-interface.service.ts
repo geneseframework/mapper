@@ -1,9 +1,6 @@
-import { ClassDeclaration, InterfaceDeclaration, PropertyDeclaration, Type } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
-import { InstanceGenerator } from '../models/instance-generator.model';
-import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { ClassDeclaration, InterfaceDeclaration, Type } from 'ts-morph';
+import { getAllClassProperties } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';

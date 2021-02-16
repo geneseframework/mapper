@@ -55,12 +55,6 @@ function getImportSourceFile(path: string): SourceFile {
 }
 
 
-export function getImportSpecifier(importDeclaration: ImportDeclaration): ImportSpecifier {
-    const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
-    return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
-}
-
-
 export function isOutOfProject(sourceFile: SourceFile): boolean {
     return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
 }

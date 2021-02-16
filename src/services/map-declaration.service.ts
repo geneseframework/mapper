@@ -5,10 +5,8 @@ import { MapTypeService } from './map-type.service';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapInstanceService } from './map-instance.service';
 import { getDeclarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInterfaceService } from './map-interface.service';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapDeclarationService<T> {
