@@ -26,7 +26,6 @@ import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapPropertyService } from './map-property.service';
 import { MapDeclarationService } from './map-declaration.service';
 
 export class MapTypeService {
@@ -227,7 +226,7 @@ export class MapTypeService {
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        MapDeclarationService.map(typeDeclaration, target, typeDeclaration.getName(), key, dataValue);
+        MapDeclarationService.map(target, typeDeclaration.getName(), key, dataValue, typeDeclaration);
     }
 
 

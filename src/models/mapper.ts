@@ -13,7 +13,7 @@ import { clone } from '../utils/clone.util';
 import { MapEnumService } from '../services/map-enum.service';
 import * as chalk from 'chalk';
 import { declarationKind } from '../utils/ast-declaration.util';
-import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
+import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInterfaceService } from '../services/map-interface.service';
 
 export class Mapper<T> {
@@ -35,13 +35,13 @@ export class Mapper<T> {
             return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
         } else {
             switch (declarationKind(typeName)) {
-                case TypeDeclarationEnum.CLASS_DECLARATION:
+                case TypeDeclarationKind.CLASS_DECLARATION:
                     return MapInstanceService.createInstances(data, typeName);
-                case TypeDeclarationEnum.ENUM_DECLARATION:
+                case TypeDeclarationKind.ENUM_DECLARATION:
                     return MapEnumService.createEnums(data, typeName, isArray);
-                case TypeDeclarationEnum.INTERFACE_DECLARATION:
+                case TypeDeclarationKind.INTERFACE_DECLARATION:
                     return MapInterfaceService.createInterfaces(data, typeName, isArray);
-                case TypeDeclarationEnum.TYPE_DECLARATION:
+                case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                     return MapTypeService.createTypes(data, typeName, isArray);
                 default:
                     return undefined;

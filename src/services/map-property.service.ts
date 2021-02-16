@@ -21,7 +21,7 @@ export class MapPropertyService<T> {
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             default:
-                MapDeclarationService.map(getImportTypeDeclaration(apparentType, propertyType), target, propertyType, key, dataValue);
+                MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
 

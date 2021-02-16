@@ -6,26 +6,27 @@ import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapInstanceService } from './map-instance.service';
+import { getDeclarationKind } from '../utils/ast-declaration.util';
+import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 
 export class MapDeclarationService<T> {
 
 
-    static map(typeDeclaration: TypeDeclaration, target: any, propertyType: string, key: string, dataValue: any): void {
-        if (!typeDeclaration) {
-            return;
-        }
-        if (typeDeclaration instanceof ClassDeclaration) {
-            this.mapClassType(target, key, dataValue, propertyType, typeDeclaration);
-            return;
-        }
-        if (typeDeclaration instanceof EnumDeclaration) {
-            MapEnumService.mapEnumType(target, key, dataValue, typeDeclaration);
-            return;
-        }
-        if (typeDeclaration instanceof TypeAliasDeclaration)
-        {
-            MapTypeService.mapTypeType(target, key, dataValue, typeDeclaration);
-            return;
+    static map(target: any, propertyType: string, key: string, dataValue: any, typeDeclaration: TypeDeclaration): void {
+        switch (getDeclarationKind(typeDeclaration)) {
+            case TypeDeclarationKind.CLASS_DECLARATION:
+                this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
+                return;
+            case TypeDeclarationKind.ENUM_DECLARATION:
+                MapEnumService.mapEnumType(target, key, dataValue, typeDeclaration as EnumDeclaration);
+                return;
+            case TypeDeclarationKind.INTERFACE_DECLARATION:
+                return;
+            case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
+                MapTypeService.mapTypeType(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
+                return;
+            default:
+                return;
         }
     }
 

@@ -1,6 +1,6 @@
-export enum TypeDeclarationEnum {
+export enum TypeDeclarationKind {
     CLASS_DECLARATION = 'ClassDeclaration',
     ENUM_DECLARATION = 'EnumDeclaration',
     INTERFACE_DECLARATION = 'InterfaceDeclaration',
-    TYPE_DECLARATION = 'TypeDeclaration',
+    TYPE_ALIAS_DECLARATION = 'TypeAliasDeclaration',
 }

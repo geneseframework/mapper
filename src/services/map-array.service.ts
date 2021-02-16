@@ -1,4 +1,4 @@
-import { ClassDeclaration, EnumDeclaration, PropertyDeclaration } from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, PropertySignature } from 'ts-morph';
 import { MapInstanceService } from './map-instance.service';
 import { GLOBAL } from '../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
@@ -11,7 +11,7 @@ export class MapArrayService<T> {
 
 
 
-    static isArrayType(property: PropertyDeclaration): boolean {
+    static isArrayType(property: PropertyDeclaration | PropertySignature): boolean {
         return property.getType().isArray();
     }
 

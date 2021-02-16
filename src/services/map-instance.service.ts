@@ -3,7 +3,7 @@ import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
-import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { getAllClassProperties, getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { PropertyKind } from '../types/property-kind.enum';
@@ -20,14 +20,6 @@ export class MapInstanceService<T> {
     }
 
 
-    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
-        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        const instance: T = GLOBAL.generateInstance(instanceGenerator);
-        this.mapData(data, instance, classDeclaration);
-        return instance;
-    }
-
-
     private static createInstanceArray<T>(data: any, className: string, classDeclaration: ClassDeclaration): T[] | string[] | number[] | boolean[] {
         const instancesArray: T[] = [];
         for (const element of data) {
@@ -35,6 +27,14 @@ export class MapInstanceService<T> {
             instancesArray.push(instance);
         }
         return instancesArray;
+    }
+
+
+    private static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
+        const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
+        const instance: T = GLOBAL.generateInstance(instanceGenerator);
+        this.mapData(data, instance, classDeclaration);
+        return instance;
     }
 
 
@@ -46,7 +46,7 @@ export class MapInstanceService<T> {
 
 
     private static mapDataKey<T>(target: any, classDeclaration: ClassDeclaration, key: string, dataValue: any): void {
-        const property: PropertyDeclaration = getAllProperties(classDeclaration).find(p => p.getName() === key);
+        const property: PropertyDeclaration = getAllClassProperties(classDeclaration).find(p => p.getName() === key);
         if (!property) {
             return;
         }

@@ -1,14 +1,31 @@
-import { InterfaceDeclaration } from 'ts-morph';
+import {
+    ClassDeclaration,
+    HeritageClause,
+    InterfaceDeclaration,
+    PropertyDeclaration,
+    PropertySignature,
+    SyntaxKind
+} from 'ts-morph';
+import { getHeritageDeclaration } from './ast-heritage.util';
+import { getAllClassProperties } from './ast-class.util';
 import * as chalk from 'chalk';
+import { includes } from './arrays.util';
 
 
-export function isInterfaceValue(declaration: InterfaceDeclaration, value: any): boolean {
-    return this.interfaceValues(declaration).includes(value);
+export function getAllInterfaceProperties(interfaceDeclaration: InterfaceDeclaration): (PropertySignature | PropertyDeclaration)[] {
+    const propertyDeclarations: (PropertySignature | PropertyDeclaration)[] = interfaceDeclaration.getProperties();
+    const heritageClause: HeritageClause = interfaceDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
+    if (heritageClause) {
+        const parentInterfaceDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
+        if (parentInterfaceDeclaration) {
+            propertyDeclarations.push(...getAllClassProperties(parentInterfaceDeclaration));
+        }
+    }
+    return propertyDeclarations;
 }
 
 
-export function interfaceValues(declaration: InterfaceDeclaration): any[] {
-    console.log(chalk.blueBright('declaration.getStructure())))))'), declaration.getStructure());
-    console.log(chalk.blueBright('declaration.getStructure())))))'), declaration.getProperties().map(p => p.getName()));
-    return declaration.getProperties().map(p => p.getName());
+export function implementsRequiredProperties(data: any, interfaceDeclaration: InterfaceDeclaration): boolean {
+    const requiredProperties: any[] = interfaceDeclaration.getProperties().filter(p => !p.hasQuestionToken()).map(p => p.getName());
+    return includes(Object.keys(data), requiredProperties);
 }

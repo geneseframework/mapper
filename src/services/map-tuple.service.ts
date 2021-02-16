@@ -6,11 +6,12 @@ import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 
 export class MapTupleService<T> {
 
 
-    static isTupleType(property: PropertyDeclaration): boolean {
+    static isTupleType(property: PropertyDeclarationOrSignature): boolean {
         return property.getType().isTuple();
     }
 

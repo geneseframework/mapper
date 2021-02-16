@@ -6,8 +6,8 @@ export interface NameSpec {
 }
 
 export const testMappers: TestMapper[] = [];
+// testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'NameSpec', { name: 'Léa' }));
 testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'NameSpec', { name: 'Léa' }));
-// testMappers.push(new TestMapper(`{ name: 'Léa' } / PreySpec`, 'NameSpec', { name: 'Léa' }, { isolate: true }));
 
 
 

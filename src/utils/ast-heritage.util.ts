@@ -1,4 +1,4 @@
-import { ClassDeclaration, HeritageClause } from 'ts-morph';
+import { ClassDeclaration, HeritageClause, Node } from 'ts-morph';
 import { flat } from './arrays.util';
 
 
@@ -8,5 +8,6 @@ export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDec
 
 
 export function getHeritageDeclarations(heritageClause: HeritageClause): ClassDeclaration[] {
+    // const zzz: Node[][] = heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations());
     return flat(heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations() ?? []));
 }

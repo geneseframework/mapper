@@ -14,7 +14,6 @@ export function flat(array: any[]): any[] {
 
 
 export function partialClone<T>(array: T[], fromIndex: number, toIndex?: number): T[] {
-    // console.log(chalk.magentaBright('PARTIAL ARRRR'), array.length, fromIndex, toIndex);
     if (!array || (fromIndex !== undefined && toIndex !== undefined)) {
         return undefined;
     }
@@ -25,6 +24,18 @@ export function partialClone<T>(array: T[], fromIndex: number, toIndex?: number)
     for (let i = fromIndex; i < toIndex; i++) {
         partialArr.push(array[i]);
     }
-    // console.log(chalk.magentaBright('PARTIAL ARRRR'), partialArr.length);
     return partialArr;
+}
+
+
+/**
+ * Checks if all the elements of the array2 are in the array2
+ * @param bigArray
+ * @param smallArray
+ */
+export function includes(bigArray: any[], smallArray: any[]): boolean {
+    if (!Array.isArray(bigArray) || !Array.isArray(smallArray)) {
+        return false;
+    }
+    return smallArray.some(element => bigArray.includes(element));
 }
