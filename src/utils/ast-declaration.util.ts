@@ -11,6 +11,8 @@ export function declarationKind(typeName: string): TypeDeclarationEnum {
         return TypeDeclarationEnum.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
         return TypeDeclarationEnum.ENUM_DECLARATION;
+    } else if (isInterfaceDeclaration(typeName)) {
+        return TypeDeclarationEnum.INTERFACE_DECLARATION;
     } else if (isTypeAliasDeclaration(typeName)) {
         return TypeDeclarationEnum.TYPE_DECLARATION;
     } else {
@@ -30,13 +32,18 @@ export function isEnumDeclaration(typeName: string): boolean {
 }
 
 
+export function isInterfaceDeclaration(typeName: string): boolean {
+    return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getInterfaces());
+}
+
+
 export function isTypeAliasDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getTypeAliases());
 }
 
 
-function hasDeclaration(typeName: string, getTypeDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    return !!GLOBAL.project.getSourceFiles().find(s => getTypeDeclaration(s).map(c => c.getName()).includes(typeName));
+function hasDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+    return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
 }
 
 
@@ -47,6 +54,8 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
             return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getClasses());
         case TypeDeclarationEnum.ENUM_DECLARATION:
             return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getEnums());
+        case TypeDeclarationEnum.INTERFACE_DECLARATION:
+            return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getInterfaces());
         case TypeDeclarationEnum.TYPE_DECLARATION:
             return getDeclaration(typeName, (sourceFile: SourceFile) => sourceFile.getTypeAliases());
         default:
@@ -55,7 +64,7 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
 }
 
 
-function getDeclaration(typeName: string, getTypeDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
-    const sourceFile: SourceFile = GLOBAL.project.getSourceFiles().find(s => getTypeDeclaration(s).map(c => c.getName()).includes(typeName));
-    return getTypeDeclaration(sourceFile).find(t => t.getName() === typeName);
+function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
+    const sourceFile: SourceFile = GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+    return getTDeclaration(sourceFile).find(t => t.getName() === typeName);
 }

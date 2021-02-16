@@ -19,14 +19,14 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapInstanceService } from './map-instance.service';
 import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { partialClone } from '../utils/arrays.util';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { TypeDeclaration } from '../types/type-declaration.type';
 
 export class MapTypeService {
 
@@ -144,16 +144,6 @@ export class MapTypeService {
                     return;
                 }
                 return;
-                // if (!isLiteralPrimitive(typeNode)) {
-                //     return;
-                // } else if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
-                //     target[key] = dataValue;
-                //     return;
-                // } else if (typeNodes.length > 1) {
-                //     this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
-                //     return;
-                // }
-                // return;
             }
         } else {
             for (const dataKey of Object.keys(dataValue)) {

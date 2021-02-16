@@ -8,7 +8,6 @@ import {
 } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
-import { isOutOfProject } from './ast.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 
 
@@ -58,7 +57,6 @@ export function getImportSpecifier(importDeclaration: ImportDeclaration): Import
 }
 
 
-// export function getImportTypeDeclaration(importSpecifier: ImportDeclaration): ImportSpecifier {
-//     const importSpecifiers: ImportSpecifier[] = importDeclaration.getNamedImports();
-//     return importSpecifiers.length > 0 ? importSpecifiers[0] : undefined;
-// }
+export function isOutOfProject(sourceFile: SourceFile): boolean {
+    return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
+}

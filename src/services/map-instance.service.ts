@@ -1,6 +1,5 @@
 import { ClassDeclaration, EnumDeclaration, PropertyDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { GLOBAL } from '../const/global.const';
@@ -10,7 +9,8 @@ import { getAllProperties, getNumberOfConstructorArguments } from '../utils/ast-
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { MapEnumService } from './map-enum.service';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { TypeDeclaration } from '../types/type-declaration.type';
 
 export class MapInstanceService<T> {
 

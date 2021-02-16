@@ -10,10 +10,10 @@ import { MapParameter } from '../types/map-parameter.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
-import { declarationKind } from '../utils/declaration.util';
-import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
 import { MapEnumService } from '../services/map-enum.service';
 import * as chalk from 'chalk';
+import { declarationKind } from '../utils/ast-declaration.util';
+import { TypeDeclarationEnum } from '../enums/type-declaration.enum';
 
 export class Mapper<T> {
 

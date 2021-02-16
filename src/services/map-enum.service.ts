@@ -1,6 +1,6 @@
-import { EnumDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { isEnumValue } from '../utils/ast.util';
-import { getTypeDeclaration } from '../utils/declaration.util';
+import { EnumDeclaration } from 'ts-morph';
+import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { isEnumValue } from '../utils/ast-enums.util';
 
 export class MapEnumService {
 
