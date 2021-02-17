@@ -21,8 +21,13 @@ export class MapTupleService<T> {
             return undefined;
         }
         const tuple: any[] = [];
-        for (const element of data) {
-            console.log(chalk.cyanBright('MAPTUPLE ELTTTTT'), element);
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] === null || data[i] === undefined) {
+                tuple.push(data[i]);
+            } else {
+                
+            }
+            console.log(chalk.cyanBright('MAPTUPLE ELTTTTT'), data[i], mapParameterTuple[i]);
         }
         return tuple.length > 0 ? tuple : undefined;
     }
