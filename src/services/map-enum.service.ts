@@ -32,18 +32,8 @@ export class MapEnumService {
 
 
     private static createEnum<T>(data: any, enumDeclaration: EnumDeclaration): T {
-        console.log(chalk.blueBright('CREATE ENUMMMMM'), data, enumDeclaration.getStructure());
-        const zzz = newMappedElement(this.map, data, enumDeclaration) as T;
-        console.log(chalk.greenBright('ZZZZZZ'), zzz);
-        return zzz;
+        return newMappedElement(this.map, data, enumDeclaration);
     }
-
-
-    // private static createEnum<T>(data: any, enumDeclaration: EnumDeclaration): T {
-    //     const root = { rootKey: undefined };
-    //     this.map(root, 'rootKey', data, enumDeclaration);
-    //     return root.rootKey;
-    // }
 
 
     static map(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {

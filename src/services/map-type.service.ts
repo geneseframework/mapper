@@ -63,9 +63,11 @@ export class MapTypeService {
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
         const rootValue: T = undefined;
         const target: { root: T } = { root: rootValue };
-        for (const key of Object.keys(dataValue)) {
+        console.log(chalk.redBright('MAT TYPE STRANGE !!!'), dataValue);
+        // for (const key of Object.keys(dataValue)) {
+        //     console.log(chalk.redBright('FOR KEYYYYY STRANGE !!!'), key);
             this.map(target, 'root', dataValue, typeAliasDeclaration);
-        }
+        // }
         return target.root;
     }
 
@@ -217,7 +219,7 @@ export class MapTypeService {
 
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
-            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType));
+            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
             return;
         }
 // TODO : Literal objects, true, false, null,...
@@ -232,7 +234,7 @@ export class MapTypeService {
 
     private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
-            target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
+            target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true);
             return;
         }
         MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
@@ -240,7 +242,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: string, dataValue: any, primitiveKeyword: TypeNode): void {
-        target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType);
+        target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false);
     }
 
 }
