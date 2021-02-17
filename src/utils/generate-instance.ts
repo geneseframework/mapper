@@ -12,6 +12,7 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { CompanySpec, NgoSpec, PersonSpec } from "../debug/project/src/tests/types-of-classes.spec";
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
+import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -54,6 +55,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/string-or-strings.spec.ts':
             instance = new PersonWithNickNamesStringsOrString();
+            break;
+        case 'TupleClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts':
+            instance = new TupleClassSpec();
             break;
         case 'NgoSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types-of-classes.spec.ts':
             instance = new NgoSpec();

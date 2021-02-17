@@ -18,7 +18,6 @@ export class MapTupleService<T> {
 
 
     static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
-        console.log(chalk.blueBright('MAPTUPLE CREATEEEEE'), data, mapParameterTuple);
         if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
             return undefined;
         }
@@ -28,14 +27,12 @@ export class MapTupleService<T> {
                 tuple.push(data[i]);
             } else {
                 const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
-                console.log(chalk.magentaBright('MAPPPED ELT'), mappedElement);
                 if (mappedElement) {
                     tuple.push(mappedElement);
                 } else {
                     return undefined;
                 }
             }
-            console.log(chalk.cyanBright('MAPTUPLE ELTTTTT'), data[i], mapParameterTuple[i]);
         }
         return tuple.length > 0 ? tuple : undefined;
     }
