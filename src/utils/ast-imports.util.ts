@@ -33,18 +33,43 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
  * @private
  */
 export function getApparentTypeImportDeclarationPath(apparentType: string): string {
-    const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
-    return `${pathWithoutExtension}.ts`;
+    console.log(chalk.cyanBright('PATHHHHHH'), apparentType);
+    console.log(chalk.cyanBright('PATHHHHHH IS TS FILE ????'), isTsFilePath(apparentType));
+    if (isTsFilePath(apparentType)) {
+        return apparentType;
+    } else {
+        const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
+        console.log(chalk.cyanBright('PATHHHHHH pathWithoutExtension'), pathWithoutExtension);
+        return `${pathWithoutExtension}.ts`;
+    }
+}
+
+
+function isTsFilePath(path: string): boolean {
+    return /^\/([A-z0-9-_+]+\/)*([A-z0-9]+\.(ts|d.ts))$/gm.test(path);
 }
 
 
 function getImportSourceFile(path: string): SourceFile {
-    let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(path);
-    if (isOutOfProject(importSourceFile)) {
-        console.log(chalk.redBright('Is out of project'), path);
-        importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
-    }
+    console.log(chalk.greenBright('get   IMPORTTTTT'), path);
+    console.log(chalk.greenBright('get   IMPORTTTTT declarationFile(path)'), declarationFile(path));
+    let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(path) ?? GLOBAL.project.getSourceFile(declarationFile(path));
+    console.log(chalk.greenBright('get   IMPORTTTTT importSourceFile'), importSourceFile?.getFilePath());
+    // if (isOutOfProject(importSourceFile)) {
+    //     console.log(chalk.redBright('Is out of project'), path);
+    //     importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
+    //     console.log(chalk.greenBright('IMPORTTTTT'), importSourceFile?.getBaseName());
+    // }
     return importSourceFile;
+}
+
+
+function declarationFile(tsPath: string): string {
+    if (tsPath.slice(-3) === '.ts' && tsPath.slice(-5) !== '.d.ts') {
+        return `${tsPath.slice(0, -3)}.d.ts`;
+    } else {
+        return undefined;
+    }
 }
 
 

@@ -13,12 +13,71 @@ import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
 import { OutOfProjectSpec } from "../debug/project/src/tests/classes.spec";
 import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/types.spec";
+import { Global } from "../models/global.model";
+import { FlagService } from "../services/flag.service";
+import { InitService } from "../services/init.service";
+import { MapArrayService } from "../services/map-array.service";
+import { MapDeclarationService } from "../services/map-declaration.service";
+import { MapEnumService } from "../services/map-enum.service";
+import { MapInstanceOrInterfaceService } from "../services/map-instance-or-interface.service";
+import { MapInstanceService } from "../services/map-instance.service";
+import { MapInterfaceService } from "../services/map-interface.service";
+import { MapPrimitiveService } from "../services/map-primitive.service";
+import { MapPropertyService } from "../services/map-property.service";
+import { MapTupleService } from "../services/map-tuple.service";
+import { MapTypeService } from "../services/map-type.service";
+import { TestMapper } from "../test-engine/test-mapper.model";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
     switch (instanceGenerator.id) {
+        case 'Global_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/global.model.ts':
+            instance = new Global();
+            break;
+        case 'InstanceGenerator_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/instance-generator.model.ts':
+            instance = new InstanceGenerator(undefined, undefined, undefined);
+            break;
         case 'Mapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts':
             instance = new Mapper();
+            break;
+        case 'FlagService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/flag.service.ts':
+            instance = new FlagService();
+            break;
+        case 'InitService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/init.service.ts':
+            instance = new InitService();
+            break;
+        case 'MapArrayService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-array.service.ts':
+            instance = new MapArrayService();
+            break;
+        case 'MapDeclarationService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-declaration.service.ts':
+            instance = new MapDeclarationService();
+            break;
+        case 'MapEnumService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-enum.service.ts':
+            instance = new MapEnumService();
+            break;
+        case 'MapInstanceOrInterfaceService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-instance-or-interface.service.ts':
+            instance = new MapInstanceOrInterfaceService();
+            break;
+        case 'MapInstanceService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-instance.service.ts':
+            instance = new MapInstanceService();
+            break;
+        case 'MapInterfaceService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-interface.service.ts':
+            instance = new MapInterfaceService();
+            break;
+        case 'MapPrimitiveService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-primitive.service.ts':
+            instance = new MapPrimitiveService();
+            break;
+        case 'MapPropertyService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-property.service.ts':
+            instance = new MapPropertyService();
+            break;
+        case 'MapTupleService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-tuple.service.ts':
+            instance = new MapTupleService();
+            break;
+        case 'MapTypeService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-type.service.ts':
+            instance = new MapTypeService();
+            break;
+        case 'TestMapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/test-engine/test-mapper.model.ts':
+            instance = new TestMapper(undefined, undefined, undefined, undefined);
             break;
         case 'Address_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/address.model.ts':
             instance = new Address(undefined, undefined, undefined);

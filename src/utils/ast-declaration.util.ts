@@ -12,6 +12,7 @@ import {
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { throwCustom } from './errors.util';
 import { flat } from './arrays.util';
+// import { ColorSupport } from 'chalk';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -53,6 +54,7 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
 
 
 function declarationKind(typeName: string): TypeDeclarationKind {
+    // const zzz: ColorSupport = undefined;
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
