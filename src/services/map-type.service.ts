@@ -27,6 +27,7 @@ import { partialClone } from '../utils/arrays.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
+import { newMappedElement } from '../utils/mapping.util';
 
 export class MapTypeService {
 
@@ -61,20 +62,20 @@ export class MapTypeService {
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
+        const zzz = newMappedElement(this.map, dataValue, typeAliasDeclaration);
+        console.log(chalk.redBright('MAT TYPE STRANGE !!!'), zzz);
         const rootValue: T = undefined;
         const target: { root: T } = { root: rootValue };
-        console.log(chalk.redBright('MAT TYPE STRANGE !!!'), dataValue);
-        // for (const key of Object.keys(dataValue)) {
-        //     console.log(chalk.redBright('FOR KEYYYYY STRANGE !!!'), key);
             this.map(target, 'root', dataValue, typeAliasDeclaration);
-        // }
+        console.log(chalk.yellowBright('MAT TYPE STRANGE !!!'), target.root);
         return target.root;
     }
 
 
     // TODO : Types which are not unions
     static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
-        this.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
+        console.log(chalk.magentaBright('MAPPPPPPP STRANGE !!!'), target, key, dataValue, typeAliasDeclaration?.getStructure());
+        MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
 
