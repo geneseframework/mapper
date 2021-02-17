@@ -7,4 +7,4 @@ export class OutOfProjectSpec {
 
 
 export const testMappers: TestMapper[] = [];
-testMappers.push(new TestMapper(`{ color: 'White' } / ColorClassSpec`, 'Chalk', { color: 'White' }, { isolate: true }));
+testMappers.push(new TestMapper(`{ color: 'White' } / ColorClassSpec`, 'Chalk', { color: 'White' }, { isolate: false }));
