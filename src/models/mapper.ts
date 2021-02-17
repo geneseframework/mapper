@@ -32,7 +32,7 @@ export class Mapper<T> {
         // TODO : Indexable types
         // TODO : properties "any" or without types
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
-            return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
+            return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
             switch (declarationKind(typeName)) {
                 case TypeDeclarationKind.CLASS_DECLARATION:

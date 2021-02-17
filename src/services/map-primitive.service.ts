@@ -1,23 +1,25 @@
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
 import { isPrimitiveValue } from '../utils/primitives.util';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
 
-    static create(data: any[], typeName: PrimitiveType): PrimitiveElement
-    static create(data: any, typeName: PrimitiveTypes): ArrayOfPrimitiveElements
-    static create(data: any, typeName: PrimitiveType | PrimitiveTypes): PrimitiveElement | ArrayOfPrimitiveElements
-    static create(data: any, typeName: PrimitiveType | PrimitiveTypes): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
+    static create(data: any[], typeName: PrimitiveType, isArray: boolean): ArrayOfPrimitiveElements
+    static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement
+    static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
+        if (!this.corresponds(data, isArray)) {
+            return undefined;
+        }
         if (Array.isArray(data)) {
-            return this.createArrayElements(data, typeName as PrimitiveTypes);
+            return this.createArrayElements(data, typeName);
         } else {
-            return this.createElement(data, typeName as PrimitiveType);
+            return this.createElement(data, typeName);
         }
     }
 
 
-    private static createArrayElements(data: any[], arrayTypeName: PrimitiveTypes): ArrayOfPrimitiveElements {
-        const typeName: PrimitiveType = arrayTypeName.slice(0, -2) as PrimitiveType;
+    private static createArrayElements(data: any[], typeName: PrimitiveType): ArrayOfPrimitiveElements {
         const instancesArray = [];
         for (const element of data) {
             const primitiveElement: PrimitiveElement = this.createElement(element, typeName);
@@ -38,6 +40,11 @@ export class MapPrimitiveService {
         if (isPrimitiveValue(dataValue)) {
             target[key] = dataValue;
         }
+    }
+
+
+    private static corresponds(data: any, isArray: boolean): boolean {
+        return (Array.isArray(data) && isArray) || (!Array.isArray(data) && !isArray);
     }
 
 }
