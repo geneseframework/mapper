@@ -38,6 +38,7 @@ export class Mapper<T> {
         await this.init();
         // TODO : Indexable types
         // TODO : properties "any" or without types
+        // TODO : Dates
         // console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
@@ -72,21 +73,6 @@ export class Mapper<T> {
             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
         }
     }
-
-
-    // private static getInfos<T>(mapParameter: MapParameter<T>): { typeName: string, isArray: boolean } {
-    //     if (isTuple(mapParameter)) {
-    //         return {
-    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
-    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
-    //         }
-    //     } else {
-    //         return {
-    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
-    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
-    //         }
-    //     }
-    // }
 
 
     private static removeBrackets(typeOrArrayTypeName: string): string {

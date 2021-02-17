@@ -20,6 +20,7 @@ export class Global {
     nodeModuleMapper: SourceFile = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
+    private _projectWithNodeModules: Project = undefined;
 
 
     get geneseMapperFolder(): string {
@@ -29,6 +30,14 @@ export class Global {
 
     get isFirstMapper(): boolean {
         return this.mappers.length === 0;
+    }
+
+
+    get projectWithNodeModules(): Project {
+        if (!this._projectWithNodeModules) {
+            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
+        }
+        return this._projectWithNodeModules;
     }
 
 

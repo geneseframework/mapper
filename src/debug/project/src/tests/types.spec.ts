@@ -1,4 +1,5 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
+import { StringOrStrings } from '../types/string-or-strings.type';
 
 export type EmployerSpec = NgoSpec | NgoSpec[] | CompanySpec;
 export class NgoSpec {
@@ -19,3 +20,24 @@ testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / Employer`
 testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], { expectedValue: undefined }));
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: { name: 'Total', employees: 30000 } }));
+
+
+export class NickNamesSpec {
+    nickNames: StringOrStrings;
+}
+
+testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string | string[]`, NickNamesSpec, { nickNames: 'Auguste' }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, NickNamesSpec, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ nickNames: ['Auguste', 'The old ]} / string | string[]`, NickNamesSpec, { nickNames: ['Auguste', 'The old'] }));
+
+
+export type StringsOrStringSpec = string[] | string;
+
+export class PersonWithNickNamesStringsOrString {
+    nickNames: StringsOrStringSpec;
+}
+
+testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string[] | string`, PersonWithNickNamesStringsOrString, { nickNames: 'Auguste' }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
+
+
