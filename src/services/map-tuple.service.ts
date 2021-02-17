@@ -6,8 +6,26 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
+import { MapParameter } from '../types/map-parameter.type';
+import { Tuple } from '../types/tuple.type';
+import * as chalk from 'chalk';
 
 export class MapTupleService<T> {
+
+
+
+    static create(data: any[], mapParameterTuple: Tuple): Tuple {
+        console.log(chalk.blueBright('MAPTUPLE CREATEEEEE'), data, mapParameterTuple);
+        if (!Array.isArray(data)) {
+            return undefined;
+        }
+        const tuple: any[] = [];
+        for (const element of data) {
+            console.log(chalk.cyanBright('MAPTUPLE ELTTTTT'), element);
+        }
+        return tuple.length > 0 ? tuple : undefined;
+    }
 
 
     static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string): void {
