@@ -2,7 +2,6 @@ import { EnumDeclaration } from 'ts-morph';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { isEnumValue } from '../utils/ast-enums.util';
 import { newMappedElement } from '../utils/mapping.util';
-import * as chalk from 'chalk';
 
 export class MapEnumService {
 
@@ -37,8 +36,6 @@ export class MapEnumService {
 
 
     static map(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
-        console.log(chalk.redBright('MAPPPPPPe ????'), target, key, dataValue);
-        console.log(chalk.red('NAMEEEEEE ????'), declaration?.getName());
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }

@@ -19,7 +19,7 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { PrimitiveType } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
@@ -62,19 +62,12 @@ export class MapTypeService {
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
-        const zzz = newMappedElement(this.map, dataValue, typeAliasDeclaration);
-        console.log(chalk.redBright('MAT TYPE STRANGE !!!'), zzz);
-        const rootValue: T = undefined;
-        const target: { root: T } = { root: rootValue };
-            this.map(target, 'root', dataValue, typeAliasDeclaration);
-        console.log(chalk.yellowBright('MAT TYPE STRANGE !!!'), target.root);
-        return target.root;
+        return newMappedElement(this.map, dataValue, typeAliasDeclaration);
     }
 
 
     // TODO : Types which are not unions
     static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
-        console.log(chalk.magentaBright('MAPPPPPPP STRANGE !!!'), target, key, dataValue, typeAliasDeclaration?.getStructure());
         MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
