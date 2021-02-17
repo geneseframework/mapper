@@ -19,7 +19,7 @@ export class MapTupleService<T> {
 
     static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
         console.log(chalk.blueBright('MAPTUPLE CREATEEEEE'), data, mapParameterTuple);
-        if (!Array.isArray(data)) {
+        if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
             return undefined;
         }
         const tuple: any[] = [];

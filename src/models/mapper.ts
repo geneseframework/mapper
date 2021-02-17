@@ -29,7 +29,6 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple> {
-        console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data);
         if (isTuple(mapParameter)) {
             return MapTupleService.create(data, mapParameter as Tuple);
         }
@@ -39,7 +38,7 @@ export class Mapper<T> {
         await this.init();
         // TODO : Indexable types
         // TODO : properties "any" or without types
-        console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
+        // console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
