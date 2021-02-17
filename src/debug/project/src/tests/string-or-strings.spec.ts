@@ -7,7 +7,7 @@ export class NickNamesSpec {
 
 export const testMappers: TestMapper[] = [];
 testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string | string[]`, NickNamesSpec, { nickNames: 'Auguste' }));
-testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / should fail`, NickNamesSpec, { unknownProperty: 'Auguste' }, { shouldFail: true }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, NickNamesSpec, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
 testMappers.push(new TestMapper(`{ nickNames: ['Auguste', 'The old ]} / string | string[]`, NickNamesSpec, { nickNames: ['Auguste', 'The old'] }));
 
 
@@ -18,6 +18,6 @@ export class PersonWithNickNamesStringsOrString {
 }
 
 testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string[] | string`, PersonWithNickNamesStringsOrString, { nickNames: 'Auguste' }));
-testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / should fail`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { shouldFail: true }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
 
 
