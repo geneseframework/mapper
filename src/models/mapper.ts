@@ -7,17 +7,17 @@ import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
 import { MapEnumService } from '../services/map-enum.service';
-import * as chalk from 'chalk';
-import { declarationKind } from '../utils/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInterfaceService } from '../services/map-interface.service';
 import { isTuple } from '../utils/tuples.util';
 import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
+import { TypeDeclaration } from '../types/type-declaration.type';
 
 export class Mapper<T> {
 
@@ -43,7 +43,8 @@ export class Mapper<T> {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
-            switch (declarationKind(typeName)) {
+            const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
+            switch (getDeclarationKind(typeDeclaration)) {
                 case TypeDeclarationKind.CLASS_DECLARATION:
                     return MapInstanceService.createInstances(data, typeName);
                 case TypeDeclarationKind.ENUM_DECLARATION:
