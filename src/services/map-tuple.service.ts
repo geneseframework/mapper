@@ -10,12 +10,14 @@ import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../ty
 import { MapParameter } from '../types/map-parameter.type';
 import { Tuple } from '../types/tuple.type';
 import * as chalk from 'chalk';
+import { newMappedElement } from '../utils/mapping.util';
+import { Mapper } from '../models/mapper';
 
 export class MapTupleService<T> {
 
 
 
-    static create(data: any[], mapParameterTuple: Tuple): Tuple {
+    static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
         console.log(chalk.blueBright('MAPTUPLE CREATEEEEE'), data, mapParameterTuple);
         if (!Array.isArray(data)) {
             return undefined;
@@ -25,7 +27,13 @@ export class MapTupleService<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                
+                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
+                console.log(chalk.magentaBright('MAPPPED ELT'), mappedElement);
+                if (mappedElement) {
+                    tuple.push(mappedElement);
+                } else {
+                    return undefined;
+                }
             }
             console.log(chalk.cyanBright('MAPTUPLE ELTTTTT'), data[i], mapParameterTuple[i]);
         }
