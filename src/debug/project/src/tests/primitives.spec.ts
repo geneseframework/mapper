@@ -19,4 +19,6 @@ testMappers.push(new TestMapper(`['blue', 2] / string[] / ['blue']`, 'string[]',
 testMappers.push(new TestMapper(`undefined / string[]`, 'string[]',undefined));
 testMappers.push(new TestMapper(`'blue' / string[] / undefined`, 'string[]','blue', { expectedValue: undefined }));
 testMappers.push(new TestMapper(`[2] / string[] / undefined`, 'string[]',[2], { expectedValue: undefined }));
+testMappers.push(new TestMapper(`[undefined] / string[] / [undefined]`, 'string[]',[undefined], { expectedValue: [undefined] }));
+testMappers.push(new TestMapper(`[null] / string[] / [null]`, 'string[]',[null], { expectedValue: [null] }));
 
