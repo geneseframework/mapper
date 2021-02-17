@@ -32,6 +32,10 @@ export class MapPrimitiveService {
 
 
     private static createElement(data: any, typeName: PrimitiveType): PrimitiveElement {
+        console.log(chalk.blueBright('MAP PRIMMMMM'), data, typeName, typeof data);
+        if (data === null) {
+            return null;
+        }
         return typeof data === typeName ? data : undefined;
     }
 
