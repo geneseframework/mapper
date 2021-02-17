@@ -4,6 +4,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import * as chalk from 'chalk';
 
 export class MapInstanceService<T> {
 

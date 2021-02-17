@@ -19,7 +19,7 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { PrimitiveType } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
@@ -27,6 +27,7 @@ import { partialClone } from '../utils/arrays.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
+import { newMappedElement } from '../utils/mapping.util';
 
 export class MapTypeService {
 
@@ -61,18 +62,13 @@ export class MapTypeService {
 
 
     private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
-        const rootValue: T = undefined;
-        const target: { root: T } = { root: rootValue };
-        for (const key of Object.keys(dataValue)) {
-            this.map(target, 'root', dataValue, typeAliasDeclaration);
-        }
-        return target.root;
+        return newMappedElement(this.map, dataValue, typeAliasDeclaration);
     }
 
 
     // TODO : Types which are not unions
     static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
-        this.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
+        MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
 
@@ -217,7 +213,7 @@ export class MapTypeService {
 
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
-            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType));
+            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
             return;
         }
 // TODO : Literal objects, true, false, null,...
@@ -232,7 +228,7 @@ export class MapTypeService {
 
     private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
-            target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveTypes);
+            target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true);
             return;
         }
         MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
@@ -240,7 +236,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: string, dataValue: any, primitiveKeyword: TypeNode): void {
-        target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType);
+        target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false);
     }
 
 }

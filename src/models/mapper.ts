@@ -15,6 +15,9 @@ import * as chalk from 'chalk';
 import { declarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInterfaceService } from '../services/map-interface.service';
+import { isTuple } from '../utils/tuples.util';
+import { MapTupleService } from '../services/map-tuple.service';
+import { Tuple } from '../types/tuple.type';
 
 export class Mapper<T> {
 
@@ -22,17 +25,22 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
     static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<T>(mapParameter: Tuple, data: any[], options?: MapperOptions): Promise<Tuple>
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements> {
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple> {
+        if (isTuple(mapParameter)) {
+            return MapTupleService.create(data, mapParameter as Tuple);
+        }
         const infos: { typeName: string, isArray: boolean } = this.getInfos(mapParameter);
         const typeName = infos.typeName;
         const isArray = infos.isArray;
         await this.init();
         // TODO : Indexable types
         // TODO : properties "any" or without types
+        // console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
-            return MapPrimitiveService.create(data, typeName as PrimitiveType | PrimitiveTypes);
+            return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
             switch (declarationKind(typeName)) {
                 case TypeDeclarationKind.CLASS_DECLARATION:
@@ -60,10 +68,25 @@ export class Mapper<T> {
 
     private static getInfos<T>(mapParameter: MapParameter<T>): { typeName: string, isArray: boolean } {
         return {
-            typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : mapParameter.name,
+            typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
         }
     }
+
+
+    // private static getInfos<T>(mapParameter: MapParameter<T>): { typeName: string, isArray: boolean } {
+    //     if (isTuple(mapParameter)) {
+    //         return {
+    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
+    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
+    //         }
+    //     } else {
+    //         return {
+    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
+    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
+    //         }
+    //     }
+    // }
 
 
     private static removeBrackets(typeOrArrayTypeName: string): string {

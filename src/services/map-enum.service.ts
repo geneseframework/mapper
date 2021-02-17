@@ -1,6 +1,7 @@
 import { EnumDeclaration } from 'ts-morph';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { isEnumValue } from '../utils/ast-enums.util';
+import { newMappedElement } from '../utils/mapping.util';
 
 export class MapEnumService {
 
@@ -30,9 +31,7 @@ export class MapEnumService {
 
 
     private static createEnum<T>(data: any, enumDeclaration: EnumDeclaration): T {
-        const root = { rootKey: undefined };
-        this.map(root, 'rootKey', data, enumDeclaration);
-        return root.rootKey;
+        return newMappedElement(this.map, data, enumDeclaration);
     }
 
 

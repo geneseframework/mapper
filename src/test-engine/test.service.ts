@@ -41,7 +41,7 @@ function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
 
 function isExpectedResult(testMapper: TestMapper, result: any): boolean {
     const shouldFail: boolean = testMapper.options?.shouldFail;
-    const objectToCompare: any = testMapper.options?.expectedValue ?? testMapper?.data;
+    const objectToCompare: any = testMapper.options?.hasOwnProperty('expectedValue') ? testMapper.options.expectedValue : testMapper?.data;
     if (isSameObject(result, objectToCompare)) {
         return !shouldFail;
     } else {
@@ -53,7 +53,7 @@ function isExpectedResult(testMapper: TestMapper, result: any): boolean {
 function log(testMapper: TestMapper, result: any): void {
     console.log(chalk.blueBright('data : '), testMapper.data);
     console.log(chalk.blueBright('response : '), result);
-    if (testMapper.options.hasOwnProperty('expectedValue')) {
+    if (testMapper.options?.hasOwnProperty('expectedValue')) {
         console.log(chalk.blueBright('expected value : '), testMapper.options.expectedValue);
     }
 }
