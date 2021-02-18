@@ -5,11 +5,13 @@ import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
+import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
+        console.log(chalk.blueBright('MAPPROPPPPPP'), target, key, dataValue, propertyKind, propertyType);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue);
             return;
@@ -26,10 +28,12 @@ export class MapPropertyService<T> {
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
-                MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
+                console.log(chalk.blueBright('MAPPROPPPPPP'), target, key, dataValue, propertyKind, propertyType);
+                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
-                MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
+                console.log(chalk.redBright('Unknown property kind : '), target, key, dataValue, propertyKind, propertyType);
+                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
 

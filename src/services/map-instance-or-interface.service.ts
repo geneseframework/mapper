@@ -42,6 +42,8 @@ export class MapInstanceOrInterfaceService<T> {
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
         MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+        console.log(chalk.greenBright('AFTER MAPPROPPPPPP'), target[key]);
+
     }
 
 
