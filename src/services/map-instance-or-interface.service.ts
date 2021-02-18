@@ -30,8 +30,9 @@ export class MapInstanceOrInterfaceService<T> {
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
+            } else {
+                this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
             }
-            this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
         }
     }
 

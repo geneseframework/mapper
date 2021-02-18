@@ -31,7 +31,7 @@ const colorSupport: ColorSupport = {
 const colorSupportWithNullAndUndefined: ColorSupport = {
     level: 2,
     has16m: null,
-    has256: true,
+    has256: undefined,
     hasBasic: false
 }
 
