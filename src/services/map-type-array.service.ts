@@ -57,6 +57,7 @@ export class MapTypeArrayService {
 
     private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+        console.log(chalk.cyanBright('MAP TYPE NODES ARRRRRAY'), target, key, dataValue, typeNodes.map(t => t.getKindName()), typeProperties.length, nextTypeNodes.map(n => n.getKindName()));
         if (Array.isArray(dataValue)) {
             this.mapTypesNodesPrimitivesArrayWhenDataIsArray(target, key, dataValue, typeNode, nextTypeNodes);
         } else {
@@ -66,34 +67,38 @@ export class MapTypeArrayService {
 
 
     private static mapTypesNodesPrimitivesArrayWhenDataIsArray(target: any, key: string, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
-        if (Array.isArray(dataValue)) {
-            if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
-                const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
-                if (indexOfNextTypeNodeIncludingKeys !== undefined) {
-                    if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
-                        target[key] = dataValue;
-                        return;
-                    } else {
-                        // TODO : case of primitive Literals
-                        console.log(chalk.redBright('TODO : array of primitive literal'));
-                    }
+        if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
+            const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
+            if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
+                    target[key] = dataValue;
+                    return;
+                } else {
+                    // TODO : case of primitive Literals
+                    console.log(chalk.redBright('TODO : array of primitive literal'));
                 }
-                return;
-            } else {
-                console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
-                return;
             }
+            return;
+        } else {
+            console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+            return;
         }
     }
 
 
     private static mapTypesNodesPrimitivesArrayWhenDataIsNotArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
-        if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+        console.log(chalk.magentaBright('MAP TYPE NODES DATA NOT ARRRRRAY'), target, key, dataValue, typeNode.getKindName(), typeNode.getText(), typeNodes.map(t => t.getKindName()), typeProperties.length);
+        console.log(chalk.magentaBright('MAP TYPE NODES DATA NOT ARRRRRAY primitiveLiteralValue'), primitiveLiteralValue(typeNode as LiteralTypeNode), dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode));
+        if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
+        // if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
+            console.log(chalk.yellowBright('MAP TYPE NODES DATA NOT ARRRRRAY primitiveLiteralValue(typeNode as LiteralTypeNode)'), dataValue);
             target[key] = dataValue;
             return;
         } else if (typeNodes.length > 1) {
             this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
             return;
+        } else {
+            console.log(chalk.redBright('Unknown primitive literal type : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
         }
         return;
     }
