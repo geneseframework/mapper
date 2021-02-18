@@ -12,6 +12,7 @@ import * as chalk from 'chalk';
 import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../utils/any.util';
 import { isArray } from '../utils/arrays.util';
 import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
+import { PropertyInfos } from '../types/property-infos.type';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -49,25 +50,31 @@ export class MapInstanceOrInterfaceService<T> {
         if (this.ketIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
             return;
         }
-        if (!property) {
-            const indexSignatureName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
-            if (indexSignatureName) {
-                propertyType = indexSignatureName;
-                propertyKind = PropertyKind.PROPERTY_DECLARATION;
-            } else {
-                return;
-            }
+        const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
+        // if (!property) {
+        //     const indexSignatureName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+        //     if (indexSignatureName) {
+        //         propertyType = indexSignatureName;
+        //         propertyKind = PropertyKind.PROPERTY_DECLARATION;
+        //     } else {
+        //         return;
+        //     }
+        // } else {
+        //     const propertyStructureType: string = property.getStructure().type as string ?? 'any';
+        //     apparentType = getApparentType(property).toLowerCase();
+        //     propertyType = propertyStructureType ?? apparentType;
+        //     propertyKind = this.getPropertyKind(property);
+        // }
+        if (isAnyOrAnyArray(propertyInfos.propertyType)) {
+            this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
-            const propertyStructureType: string = property.getStructure().type as string ?? 'any';
-            apparentType = getApparentType(property).toLowerCase();
-            propertyType = propertyStructureType ?? apparentType;
-            propertyKind = this.getPropertyKind(property);
+            MapPropertyService.map(target, key, dataValue, propertyInfos);
         }
-        if (isAnyOrAnyArray(propertyType)) {
-            this.mapAny(target, key, dataValue, propertyType);
-        } else {
-            MapPropertyService.map(target, key, dataValue, propertyKind, propertyType, apparentType);
-        }
+        // if (isAnyOrAnyArray(propertyType)) {
+        //     this.mapAny(target, key, dataValue, propertyType);
+        // } else {
+        //     MapPropertyService.map(target, key, dataValue, propertyKind, propertyType, apparentType);
+        // }
     }
 
 
@@ -76,13 +83,27 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
-        if (isAnyOrAnyArray(indexSignatureName)) {
-            this.mapAny(target, key, dataValue, indexSignatureName);
-        } else {
-            MapPropertyService.map(target, key, dataValue, PropertyKind.PROPERTY_DECLARATION, indexSignatureName, undefined);
-        }
+    private static getPropertyInfos(property: PropertyDeclarationOrSignature): PropertyInfos {
+        const propertyStructureType: string = property.getStructure().type as string ?? 'any';
+        const apparentType = getApparentType(property).toLowerCase();
+        const propertyType = propertyStructureType ?? apparentType;
+        return new PropertyInfos(apparentType, propertyType, this.getPropertyKind(property));
     }
+
+
+    private static getPropertyInfosWithIndexSignature(key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): PropertyInfos {
+        const propertyName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+        return new PropertyInfos(undefined, propertyName, PropertyKind.PROPERTY_DECLARATION);
+    }
+
+
+    // private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
+    //     if (isAnyOrAnyArray(indexSignatureName)) {
+    //         this.mapAny(target, key, dataValue, indexSignatureName);
+    //     } else {
+    //         MapPropertyService.map(target, key, dataValue, PropertyKind.PROPERTY_DECLARATION, indexSignatureName, undefined);
+    //     }
+    // }
 
 
     private static mapAny(target: any, key: string, dataValue: any, typeName: string): void {

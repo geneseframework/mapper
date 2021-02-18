@@ -28,6 +28,7 @@ import { MapTupleService } from "../services/map-tuple.service";
 import { MapTypeService } from "../services/map-type.service";
 import { TestMapper } from "../test-engine/test-mapper.model";
 import { MapTypeArrayService } from "../services/map-type-array.service";
+import { PropertyInfos } from "../types/property-infos.type";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -79,6 +80,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'MapTypeService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-type.service.ts':
             instance = new MapTypeService();
+            break;
+        case 'PropertyInfos_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/types/property-infos.type.ts':
+            instance = new PropertyInfos(undefined, undefined, undefined);
             break;
         case 'TestMapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/test-engine/test-mapper.model.ts':
             instance = new TestMapper(undefined, undefined, undefined, undefined);
