@@ -11,8 +11,8 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
-import { OutOfProjectSpec } from "../debug/project/src/tests/classes.spec";
-import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString } from "../debug/project/src/tests/types.spec";
+import { CatSpec, OutOfProjectSpec, PersonCatSpec } from "../debug/project/src/tests/classes.spec";
+import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString, LevelClassSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
 import { InitService } from "../services/init.service";
@@ -100,6 +100,12 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'Person_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/models/person.model.ts':
             instance = new Person(undefined, undefined, undefined, undefined, undefined, undefined);
             break;
+        case 'CatSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new CatSpec();
+            break;
+        case 'PersonCatSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new PersonCatSpec();
+            break;
         case 'OutOfProjectSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new OutOfProjectSpec();
             break;
@@ -129,6 +135,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
             instance = new PersonWithNickNamesStringsOrString();
+            break;
+        case 'LevelClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
+            instance = new LevelClassSpec();
             break;
         default:
             console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);

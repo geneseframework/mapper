@@ -20,7 +20,7 @@ export class InitService {
     private static createProject(): void {
         GLOBAL.project = new Project({
             tsConfigFilePath: GLOBAL.configFilePath,
-            // skipFileDependencyResolution: true
+            skipFileDependencyResolution: true
         });
         // TODO : remove hard code
         const nodeModuleMapperPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts`;

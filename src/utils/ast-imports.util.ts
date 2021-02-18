@@ -6,6 +6,7 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
+    console.log(chalk.redBright('PATHHHHHH apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
     if (importClassDeclaration) {

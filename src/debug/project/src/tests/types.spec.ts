@@ -32,7 +32,6 @@ testMappers.push(new TestMapper(`{ nickNames: ['Auguste', 'The old ]} / string |
 
 
 export type StringsOrStringSpec = string[] | string;
-
 export class PersonWithNickNamesStringsOrString {
     nickNames: StringsOrStringSpec;
 }
@@ -40,4 +39,14 @@ export class PersonWithNickNamesStringsOrString {
 testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string[] | string`, PersonWithNickNamesStringsOrString, { nickNames: 'Auguste' }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
 
+export type LevelSpec = 1 | 2 | 3;
+export class LevelClassSpec {
+    level: LevelSpec
+}
 
+testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec, { level: 1 }, { isolate: false }));
+
+
+export type ColorsTypeSpec = 'Blue' | 'White';
+testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Blue'));
+testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined }));
