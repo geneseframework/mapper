@@ -93,7 +93,7 @@ export class MapTypeArrayService {
             // TODO : check if we should return something
             console.log(chalk.redBright('Is Literal primitive : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
 
-            if (this.isKeyInType(undefined, typeNode, dataValue)) {
+            if (this.isKeyType(undefined, typeNode, dataValue)) {
                 MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
                 // MapTypeService.mapLiteralType(target, key, dataValue, typeNode as LiteralTypeNode);
             } else {
