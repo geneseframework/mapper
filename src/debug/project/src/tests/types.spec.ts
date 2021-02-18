@@ -39,12 +39,20 @@ export class PersonWithNickNamesStringsOrString {
 testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string[] | string`, PersonWithNickNamesStringsOrString, { nickNames: 'Auguste' }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
 
+
+// -------------------------------------------------------------------------------------------------
+
+
 export type LevelSpec = 1 | 2 | 3;
 export class LevelClassSpec {
     level: LevelSpec
 }
 
 testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec, { level: 1 }));
+
+
+// -------------------------------------------------------------------------------------------------
+
 
 
 export type ColorsTypeSpec = 'Blue' | 'White';

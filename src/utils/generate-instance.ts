@@ -11,7 +11,7 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
-import { CatSpec, OutOfProjectSpec, PersonCatSpec } from "../debug/project/src/tests/classes.spec";
+import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  IndexableSpec,    OutOfProjectSpec, PersonCatSpec } from "../debug/project/src/tests/classes.spec";
 import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString, LevelClassSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
@@ -28,6 +28,7 @@ import { MapTupleService } from "../services/map-tuple.service";
 import { MapTypeService } from "../services/map-type.service";
 import { TestMapper } from "../test-engine/test-mapper.model";
 import { MapTypeArrayService } from "../services/map-type-array.service";
+import { PropertyInfos } from "../types/property-infos.type";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -80,6 +81,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'MapTypeService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-type.service.ts':
             instance = new MapTypeService();
             break;
+        case 'PropertyInfos_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/types/property-infos.type.ts':
+            instance = new PropertyInfos(undefined, undefined, undefined);
+            break;
         case 'TestMapper_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/test-engine/test-mapper.model.ts':
             instance = new TestMapper(undefined, undefined, undefined, undefined);
             break;
@@ -109,6 +113,15 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'PersonCatSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new PersonCatSpec();
+            break;
+        case 'ClassWithPrimitivesSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new ClassWithPrimitivesSpec();
+            break;
+        case 'ClassWithAnySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new ClassWithAnySpec();
+            break;
+        case 'IndexableSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new IndexableSpec();
             break;
         case 'OutOfProjectSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new OutOfProjectSpec();

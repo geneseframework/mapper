@@ -9,6 +9,10 @@ import { MapInterfaceService } from './map-interface.service';
 import { getAllInterfaceProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceService } from './map-instance.service';
 import * as chalk from 'chalk';
+import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../utils/any.util';
+import { isArray } from '../utils/arrays.util';
+import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
+import { PropertyInfos } from '../types/property-infos.type';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -22,12 +26,16 @@ export class MapInstanceOrInterfaceService<T> {
             instancesArray.push(instance);
         }
         return instancesArray;
-    }$
+    }
 
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
-            this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
+            if (keyExistsButIsNullOrUndefined(data, key)) {
+                target[key] = data[key];
+            } else {
+                this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
+            }
         }
     }
 
@@ -35,14 +43,42 @@ export class MapInstanceOrInterfaceService<T> {
     private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        if (!property) {
+        // TODO : try type = false keyword
+        if (this.ketIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
             return;
         }
-        const propertyStructureType: string = property.getStructure().type as string;
-        const apparentType: string = getApparentType(property).toLowerCase();
-        const propertyType: string = propertyStructureType ?? apparentType;
-        MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+        const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
+        if (isAnyOrAnyArray(propertyInfos.propertyType)) {
+            this.mapAny(target, key, dataValue, propertyInfos.propertyType);
+        } else {
+            MapPropertyService.map(target, key, dataValue, propertyInfos);
+        }
+    }
 
+
+    private static ketIsIncompatibleWithDeclarationType(property: PropertyDeclarationOrSignature, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): boolean {
+        return !property && !indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+    }
+
+
+    private static getPropertyInfos(property: PropertyDeclarationOrSignature): PropertyInfos {
+        const propertyStructureType: string = property.getStructure().type as string ?? 'any';
+        const apparentType = getApparentType(property).toLowerCase();
+        const propertyType = propertyStructureType ?? apparentType;
+        return new PropertyInfos(apparentType, propertyType, this.getPropertyKind(property));
+    }
+
+
+    private static getPropertyInfosWithIndexSignature(key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): PropertyInfos {
+        const propertyName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+        return new PropertyInfos(undefined, propertyName, PropertyKind.PROPERTY_DECLARATION);
+    }
+
+
+    private static mapAny(target: any, key: string, dataValue: any, typeName: string): void {
+        if (isAny(typeName) || (isAnyArray(typeName) && isArray(dataValue)) || typeName === undefined) {
+            target[key] = dataValue;
+        }
     }
 
 

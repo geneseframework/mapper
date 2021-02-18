@@ -1,5 +1,4 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
-import * as chalk from 'chalk';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab } from '../utils/strings.util';

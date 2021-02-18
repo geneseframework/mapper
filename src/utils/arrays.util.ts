@@ -44,3 +44,8 @@ export function includes(bigArray: any[], smallArray: any[]): boolean {
 export function isEmptyArray(data: any): boolean {
     return Array.isArray(data) && data.length === 0;
 }
+
+
+export function isArray(data: any): boolean {
+    return Array.isArray(data);
+}

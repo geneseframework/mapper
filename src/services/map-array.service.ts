@@ -7,6 +7,10 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isEnumValue } from '../utils/ast-enums.util';
 import { isEmptyArray } from '../utils/arrays.util';
+import * as chalk from 'chalk';
+import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
+import { isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
+import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapArrayService<T> {
 
@@ -25,18 +29,34 @@ export class MapArrayService<T> {
 
     private static mapArray(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
         const typeName: string = propertyType.slice(0, -2);
-        const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
+        const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
-            if (importArrayDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
+            if (typeDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(element, instance, importArrayDeclaration);
+                MapInstanceOrInterfaceService.map(element, instance, typeDeclaration);
                 this.push(target, key, instance);
-            }
-            if (importArrayDeclaration instanceof EnumDeclaration && isEnumValue(importArrayDeclaration, element)) {
+            } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName)) {
                 this.push(target, key, element);
+            } else {
+                // No correspondance between element and property type => do nothing
             }
         }
+    }
+
+
+    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string): boolean {
+        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element) || isNullOrUndefined(element);
+    }
+
+
+    private static isEnumWithCorrectValue(declaration: TypeDeclaration, element: any): boolean {
+        return declaration instanceof EnumDeclaration && isEnumValue(declaration, element);
+    }
+
+
+    private static isPrimitiveWithCorrectValue(typeName: string, element: any): boolean {
+        return primitiveTypes.includes(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType);
     }
 
 

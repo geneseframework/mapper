@@ -1,4 +1,5 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
+import { ColorSupport } from 'chalk';
 
 export interface AnimalSpec {
     name: string;
@@ -18,3 +19,26 @@ export class AnimalOwner {
 }
 
 testMappers.push(new TestMapper(`{ animal: { name: 'Biela' } } / AnimalOwner`, 'AnimalOwner', { animal: { name: 'Biela' } }));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+const colorSupport: ColorSupport = {
+    level: 1,
+    has16m: true,
+    has256: true,
+    hasBasic: false
+}
+
+const colorSupportWithNullAndUndefined: ColorSupport = {
+    level: 2,
+    has16m: null,
+    has256: undefined,
+    hasBasic: false
+}
+
+
+testMappers.push(new TestMapper(`valid ColorSupport / ColorSupport `, 'ColorSupport', colorSupport));
+testMappers.push(new TestMapper(`valid ColorSupport with nulls & undefined / ColorSupport `, 'ColorSupport', colorSupportWithNullAndUndefined, { isolate: false}));
+

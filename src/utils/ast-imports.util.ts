@@ -2,9 +2,13 @@ import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, Ty
 import { GLOBAL } from '../const/global.const';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getTypeDeclaration } from './ast-declaration.util';
+import { primitiveTypes } from '../types/primitives.type';
 
 
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
+    if (primitiveTypes.includes(typeName)) {
+        return undefined;
+    }
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
