@@ -11,7 +11,7 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
-import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  DateSpec,    IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, PersonCatSpec, ValuesByDefault, ValuesOnConstructor } from "../debug/project/src/tests/classes.spec";
+import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, PersonCatSpec, ValuesByDefault } from "../debug/project/src/tests/classes.spec";
 import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString, LevelClassSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
@@ -29,15 +29,10 @@ import { MapTypeService } from "../services/map-type.service";
 import { TestMapper } from "../test-engine/test-mapper.model";
 import { MapTypeArrayService } from "../services/map-type-array.service";
 import { PropertyInfos } from "../types/property-infos.type";
-import { DateDeclaration } from "../models/date-declaration.model";
-import { MapDateService } from "../services/map-date.service";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
     switch (instanceGenerator.id) {
-        case 'DateDeclaration_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/date-declaration.model.ts':
-            instance = new DateDeclaration();
-            break;
         case 'Global_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/global.model.ts':
             instance = new Global();
             break;
@@ -55,9 +50,6 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'MapArrayService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-array.service.ts':
             instance = new MapArrayService();
-            break;
-        case 'MapDateService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-date.service.ts':
-            instance = new MapDateService();
             break;
         case 'MapDeclarationService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-declaration.service.ts':
             instance = new MapDeclarationService();
@@ -136,12 +128,6 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'ValuesByDefault_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new ValuesByDefault();
-            break;
-        case 'ValuesOnConstructor_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
-            instance = new ValuesOnConstructor(undefined, undefined, undefined, undefined);
-            break;
-        case 'DateSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
-            instance = new DateSpec();
             break;
         case 'OutOfProjectSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new OutOfProjectSpec();
