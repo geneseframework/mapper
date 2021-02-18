@@ -17,9 +17,26 @@ testMappers.push(new TestMapper(`{ cat: null, firstName: 'Léa' } / PersonCatSpe
 testMappers.push(new TestMapper(`{ cat: undefined, firstName: 'Léa' } / PersonCatSpec`, PersonCatSpec, { cat: undefined, firstName: 'Léa' }));
 
 
+// -------------------------------------------------------------------------------------------------
+
+export class ClassWithPrimitivesSpec {
+    str: string;
+    num: number;
+    bool: boolean;
+    strs: string[];
+    nums: number[];
+    bools: boolean[];
+}
+
+// testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { strs: ['str1', 'str2'] }, { isolate: true}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 'num', bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }, { isolate: false}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
 export class OutOfProjectSpec {
     color: Chalk;
 }
-
 
 testMappers.push(new TestMapper(`{ color: 'White' } / Chalk / undefined`, 'Chalk', { color: 'White' }, { expectedValue: undefined }));

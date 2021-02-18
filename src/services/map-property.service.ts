@@ -6,6 +6,7 @@ import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
 import * as chalk from 'chalk';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapPropertyService<T> {
 
@@ -17,6 +18,7 @@ export class MapPropertyService<T> {
         }
         switch (propertyKind) {
             case PropertyKind.ARRAY:
+                console.log(chalk.greenBright('MAPPPPPP PROPPP'), target, key, dataValue, propertyKind, propertyType);
                 MapArrayService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.TUPLE:
@@ -27,6 +29,7 @@ export class MapPropertyService<T> {
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
+                console.log(chalk.cyanBright('MAPPPPPP'), target, key, dataValue);
                 MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
