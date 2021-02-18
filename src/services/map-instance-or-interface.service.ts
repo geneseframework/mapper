@@ -38,7 +38,6 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
-        console.log(chalk.cyanBright('MAPPPPPP DATA KEY'), target, key, dataValue);
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (!property) {

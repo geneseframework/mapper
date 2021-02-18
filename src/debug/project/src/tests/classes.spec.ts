@@ -19,6 +19,7 @@ testMappers.push(new TestMapper(`{ cat: undefined, firstName: 'Léa' } / PersonC
 
 // -------------------------------------------------------------------------------------------------
 
+
 export class ClassWithPrimitivesSpec {
     str: string;
     num: number;
@@ -28,8 +29,7 @@ export class ClassWithPrimitivesSpec {
     bools: boolean[];
 }
 
-// testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { strs: ['str1', 'str2'] }, { isolate: true}));
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 'num', bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }, { isolate: false}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 'num', bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }));
 
 
 // -------------------------------------------------------------------------------------------------

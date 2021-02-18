@@ -27,24 +27,35 @@ export class MapArrayService<T> {
 
 
     private static mapArray(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
-        console.log(chalk.magentaBright('MAPPPPPP ARRAY'), target, key, dataValue, propertyType, apparentType);
         const typeName: string = propertyType.slice(0, -2);
-        const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
+        const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
-            console.log(chalk.yellowBright('MAPPPPPP ARRAY'), target, key, dataValue, propertyType, apparentType, element, primitiveTypes.includes(propertyType), isPrimitiveValue(element));
-            if (importArrayDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(importArrayDeclaration));
+            if (typeDeclaration instanceof ClassDeclaration) {
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(element, instance, importArrayDeclaration);
+                MapInstanceOrInterfaceService.map(element, instance, typeDeclaration);
                 this.push(target, key, instance);
-            } else if (importArrayDeclaration instanceof EnumDeclaration && isEnumValue(importArrayDeclaration, element)) {
-                this.push(target, key, element);
-            } else if (primitiveTypes.includes(typeName) && isPrimitiveValue(element)) {
+            } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName)) {
                 this.push(target, key, element);
             } else {
-                console.log(chalk.redBright('No correspondance between element and property type : '), target, key, dataValue, propertyType, apparentType);
+                // No correspondance between element and property type => do nothing
             }
         }
+    }
+
+
+    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string): boolean {
+        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element);
+    }
+
+
+    private static isEnumWithCorrectValue(declaration: TypeDeclaration, element: any): boolean {
+        return declaration instanceof EnumDeclaration && isEnumValue(declaration, element);
+    }
+
+
+    private static isPrimitiveWithCorrectValue(typeName: string, element: any): boolean {
+        return primitiveTypes.includes(typeName) && isPrimitiveValue(element);
     }
 
 

@@ -21,6 +21,9 @@ export class AnimalOwner {
 testMappers.push(new TestMapper(`{ animal: { name: 'Biela' } } / AnimalOwner`, 'AnimalOwner', { animal: { name: 'Biela' } }));
 
 
+// -------------------------------------------------------------------------------------------------
+
+
 const colorSupport: ColorSupport = {
     level: 1,
     has16m: true,
