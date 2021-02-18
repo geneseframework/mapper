@@ -26,14 +26,14 @@ export class MapPropertyService<T> {
                 target[key] = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 return;
             default:
-                console.log(chalk.magentaBright('MAP PROPPPP'), target, key, propertyType, dataValue, propertyKind);
+                // console.log(chalk.magentaBright('MAP PROPPPP'), target, key, propertyType, dataValue, propertyKind);
                 MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
 
 
     private static mapPrimitiveType(target: any, key: string, dataValue: any): void {
-        console.log(chalk.magentaBright('MAP PROPPPP PRIM TTTTT'), target, key, dataValue, isPrimitiveValue(dataValue), target[key]);
+        // console.log(chalk.magentaBright('MAP PROPPPP PRIM TTTTT'), target, key, dataValue, isPrimitiveValue(dataValue), target[key]);
         if (isPrimitiveValue(dataValue)) {
             target[key] = dataValue;
         }

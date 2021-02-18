@@ -6,7 +6,7 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
-    console.log(chalk.redBright('PATHHHHHH apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
+    // console.log(chalk.redBright('PATHHHHHH apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
     if (importClassDeclaration) {
@@ -34,13 +34,13 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
  * @private
  */
 export function getApparentTypeImportDeclarationPath(apparentType: string): string {
-    console.log(chalk.cyanBright('PATHHHHHH'), apparentType);
-    console.log(chalk.cyanBright('PATHHHHHH IS TS FILE ????'), isTsFilePath(apparentType));
+    // console.log(chalk.cyanBright('PATHHHHHH'), apparentType);
+    // console.log(chalk.cyanBright('PATHHHHHH IS TS FILE ????'), isTsFilePath(apparentType));
     if (isTsFilePath(apparentType)) {
         return apparentType;
     } else {
         const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
-        console.log(chalk.cyanBright('PATHHHHHH pathWithoutExtension'), pathWithoutExtension);
+        // console.log(chalk.cyanBright('PATHHHHHH pathWithoutExtension'), pathWithoutExtension);
         return `${pathWithoutExtension}.ts`;
     }
 }
@@ -52,10 +52,10 @@ function isTsFilePath(path: string): boolean {
 
 
 function getImportSourceFile(path: string): SourceFile {
-    console.log(chalk.greenBright('get   IMPORTTTTT'), path);
-    console.log(chalk.greenBright('get   IMPORTTTTT declarationFile(path)'), declarationFile(path));
+    // console.log(chalk.greenBright('get   IMPORTTTTT'), path);
+    // console.log(chalk.greenBright('get   IMPORTTTTT declarationFile(path)'), declarationFile(path));
     let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(path) ?? GLOBAL.project.getSourceFile(declarationFile(path));
-    console.log(chalk.greenBright('get   IMPORTTTTT importSourceFile'), importSourceFile?.getFilePath());
+    // console.log(chalk.greenBright('get   IMPORTTTTT importSourceFile'), importSourceFile?.getFilePath());
     // if (isOutOfProject(importSourceFile)) {
     //     console.log(chalk.redBright('Is out of project'), path);
     //     importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
