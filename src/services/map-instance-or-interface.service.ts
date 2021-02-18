@@ -30,7 +30,6 @@ export class MapInstanceOrInterfaceService<T> {
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
-            console.log(chalk.yellowBright('mapDataKeyyyyy'), target, key, data, Object.keys(data).length)
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
@@ -52,13 +51,15 @@ export class MapInstanceOrInterfaceService<T> {
                 return;
             }
         }
-        const propertyStructureType: string = property.getStructure().type as string;
+        // TODO : try type = false keyword
+        const propertyStructureType: string = property.getStructure().type as string ?? 'any';
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        console.log(chalk.blueBright('mapDataKeyyyyy'), property.getStructure())
-        console.log(chalk.blueBright('mapDataKeyyyyy'), target, key, dataValue, propertyStructureType, apparentType)
+        // console.log(chalk.blueBright('mapDataKeyyyyy'), property.getStructure())
+        // console.log(chalk.blueBright('mapDataKeyyyyy'), target, key, dataValue, propertyStructureType, apparentType)
         if (isAnyOrAnyArray(propertyType)) {
-            this.mapAny(target, key, dataValue, propertyStructureType);
+            this.mapAny(target, key, dataValue, propertyType);
+            // this.mapAny(target, key, dataValue, propertyStructureType);
         } else {
             MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
         }
@@ -68,10 +69,12 @@ export class MapInstanceOrInterfaceService<T> {
     private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
         console.log(chalk.magentaBright('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
         if (isAnyOrAnyArray(indexSignatureName)) {
+            console.log(chalk.red('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
             this.mapAny(target, key, dataValue, indexSignatureName);
         } else {
             // TODO: implement
-            // MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+            console.log(chalk.magentaBright('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
+            MapPropertyService.map(target, key, dataValue, PropertyKind.PROPERTY_DECLARATION, indexSignatureName, undefined);
         }
     }
 
