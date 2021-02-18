@@ -9,7 +9,8 @@ import { MapInterfaceService } from './map-interface.service';
 import { getAllInterfaceProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceService } from './map-instance.service';
 import * as chalk from 'chalk';
-import { keyExistsButIsNullOrUndefined } from '../utils/any.util';
+import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../utils/any.util';
+import { isArray } from '../utils/arrays.util';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -23,7 +24,7 @@ export class MapInstanceOrInterfaceService<T> {
             instancesArray.push(instance);
         }
         return instancesArray;
-    }$
+    }
 
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
@@ -46,8 +47,18 @@ export class MapInstanceOrInterfaceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+        if (isAnyOrAnyArray(propertyType)) {
+            this.mapAny(target, key, dataValue, propertyStructureType);
+        } else {
+            MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+        }
+    }
 
+
+    private static mapAny(target: any, key: string, dataValue: any, typeName: string): void {
+        if (isAny(typeName) || (isAnyArray(typeName) && isArray(dataValue)) || typeName === undefined) {
+            target[key] = dataValue;
+        }
     }
 
 

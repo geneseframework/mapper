@@ -30,8 +30,20 @@ export class ClassWithPrimitivesSpec {
 }
 
 testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 2, bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }));
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 3, num: 'num', bool: null }, { expectedValue: { bool: null }}));
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { strs: [1, null], nums: ['2', undefined], bools: ['a', undefined] }, { expectedValue: { strs:[null], nums: [undefined], bools: [undefined]}}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec / { bool: null }`, ClassWithPrimitivesSpec, { str: 3, num: 'num', bool: null }, { expectedValue: { bool: null }}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec / { strs:[null], nums: [undefined], bools: [undefined]}`, ClassWithPrimitivesSpec, { strs: [1, null], nums: ['2', undefined], bools: ['a', undefined] }, { expectedValue: { strs:[null], nums: [undefined], bools: [undefined]}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ClassWithAnySpec {
+    a: any;
+    b: any[];
+    c;
+}
+
+testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: 2, b: ['b'], c: 'c'}, { isolate: false }));
 
 
 // -------------------------------------------------------------------------------------------------
