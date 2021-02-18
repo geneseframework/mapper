@@ -17,6 +17,11 @@ export function isPrimitiveValue(value: any): boolean {
 }
 
 
+export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType): boolean {
+    return isPrimitiveValue(value) && typeName === typeof value;
+}
+
+
 export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeNode: TypeNode): boolean
 export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName: string): boolean
 export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): boolean {

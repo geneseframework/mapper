@@ -1,4 +1,4 @@
-import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
+import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
@@ -6,14 +6,14 @@ import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
 import * as chalk from 'chalk';
-import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { PrimitiveType } from '../types/primitives.type';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
         if (isPrimitiveTypeNode(propertyType)) {
-            this.mapPrimitiveType(target, key, dataValue);
+            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
             return;
         }
         switch (propertyKind) {
@@ -37,8 +37,8 @@ export class MapPropertyService<T> {
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any): void {
-        if (isPrimitiveValue(dataValue)) {
+    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType): void {
+        if (isPrimitiveValueWithCorrectType(dataValue, typeName)) {
             target[key] = dataValue;
         }
     }

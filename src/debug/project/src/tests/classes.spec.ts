@@ -29,7 +29,9 @@ export class ClassWithPrimitivesSpec {
     bools: boolean[];
 }
 
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 'num', bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 'str', num: 2, bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false] }));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { str: 3, num: 'num', bool: null }, { expectedValue: { bool: null }}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, { strs: [1, null], nums: ['2', undefined], bools: ['a', undefined] }, { expectedValue: { strs:[null], nums: [undefined], bools: [undefined]}}));
 
 
 // -------------------------------------------------------------------------------------------------

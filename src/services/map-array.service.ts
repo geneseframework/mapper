@@ -8,8 +8,9 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { isEnumValue } from '../utils/ast-enums.util';
 import { isEmptyArray } from '../utils/arrays.util';
 import * as chalk from 'chalk';
-import { primitiveTypes } from '../types/primitives.type';
-import { isPrimitiveValue } from '../utils/primitives.util';
+import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
+import { isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
+import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapArrayService<T> {
 
@@ -45,7 +46,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string): boolean {
-        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element);
+        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element) || isNullOrUndefined(element);
     }
 
 
@@ -55,7 +56,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveWithCorrectValue(typeName: string, element: any): boolean {
-        return primitiveTypes.includes(typeName) && isPrimitiveValue(element);
+        return primitiveTypes.includes(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType);
     }
 
 
