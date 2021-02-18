@@ -9,11 +9,12 @@ import { getDeclarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import * as chalk from 'chalk';
+import { Key } from '../types/key.type';
 
 export class MapDeclarationService<T> {
 
 
-    static map(target: any, key: string, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): void {
+    static map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): void {
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
@@ -34,7 +35,7 @@ export class MapDeclarationService<T> {
     }
 
 
-    private static mapClassType(target: any, key: string, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
+    private static mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = GLOBAL.generateInstance(instanceGenerator);
         MapInstanceOrInterfaceService.map(dataValue, target[key], classDeclaration);
