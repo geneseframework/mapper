@@ -11,7 +11,7 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
-import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  OutOfProjectSpec, PersonCatSpec } from "../debug/project/src/tests/classes.spec";
+import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  IndexableSpec,    OutOfProjectSpec, PersonCatSpec } from "../debug/project/src/tests/classes.spec";
 import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString, LevelClassSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
@@ -115,6 +115,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'ClassWithAnySpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new ClassWithAnySpec();
+            break;
+        case 'IndexableSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new IndexableSpec();
             break;
         case 'OutOfProjectSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new OutOfProjectSpec();

@@ -11,6 +11,7 @@ import { MapInstanceService } from './map-instance.service';
 import * as chalk from 'chalk';
 import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../utils/any.util';
 import { isArray } from '../utils/arrays.util';
+import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -29,6 +30,7 @@ export class MapInstanceOrInterfaceService<T> {
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
+            console.log(chalk.yellowBright('mapDataKeyyyyy'), target, key, data, Object.keys(data).length)
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
@@ -42,15 +44,34 @@ export class MapInstanceOrInterfaceService<T> {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (!property) {
-            return;
+            const indexSignatureName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+            if (indexSignatureName) {
+                this.mapIndexSignature(target, key, dataValue, indexSignatureName);
+                return;
+            } else {
+                return;
+            }
         }
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
+        console.log(chalk.blueBright('mapDataKeyyyyy'), property.getStructure())
+        console.log(chalk.blueBright('mapDataKeyyyyy'), target, key, dataValue, propertyStructureType, apparentType)
         if (isAnyOrAnyArray(propertyType)) {
             this.mapAny(target, key, dataValue, propertyStructureType);
         } else {
             MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+        }
+    }
+
+
+    private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
+        console.log(chalk.magentaBright('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
+        if (isAnyOrAnyArray(indexSignatureName)) {
+            this.mapAny(target, key, dataValue, indexSignatureName);
+        } else {
+            // TODO: implement
+            // MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
         }
     }
 

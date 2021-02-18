@@ -44,8 +44,20 @@ export class ClassWithAnySpec {
 }
 
 testMappers.push(new TestMapper(` { a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, { a: 2, b: ['b'], c: 'c'}));
-testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: undefined, b: 'b'}, { expectedValue: { a: undefined } }));
-testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: [2], b: [null]}));
+testMappers.push(new TestMapper(` { a: undefined, b: 'b'} / ClassWithAnySpec / { a: undefined }`, ClassWithAnySpec, { a: undefined, b: 'b'}, { expectedValue: { a: undefined } }));
+testMappers.push(new TestMapper(` { a: [2], b: [null]} / ClassWithAnySpec`, ClassWithAnySpec, { a: [2], b: [null]}));
+testMappers.push(new TestMapper(` { d: 3 } / ClassWithAnySpec`, ClassWithAnySpec, { d: 3 }, { expectedValue: {}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class IndexableSpec {
+    a: string;
+    [key: string]: string;
+}
+
+testMappers.push(new TestMapper(` { a: 'a', b: 'b' } / IndexableSpec`, IndexableSpec, { a: 'a', b: 'b' }, { isolate: false}));
 
 
 // -------------------------------------------------------------------------------------------------

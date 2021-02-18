@@ -3,8 +3,8 @@ import { GLOBAL } from '../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
-    ImportDeclaration,
-    InterfaceDeclaration,
+    ImportDeclaration, IndexSignatureDeclaration, IndexSignatureDeclarationStructure,
+    InterfaceDeclaration, PropertyDeclaration, PropertySignature,
     SourceFile,
     SyntaxKind,
     TypeAliasDeclaration
@@ -12,6 +12,11 @@ import {
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { throwErrorCustom, throwWarning } from './errors.util';
 import { flat } from './arrays.util';
+import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import * as chalk from 'chalk';
+import { Key } from '../types/key.type';
+import { primitiveTypes } from '../types/primitives.type';
+import { isPrimitiveTypeNode } from './primitives.util';
 // import { ColorSupport } from 'chalk';
 
 
@@ -144,4 +149,34 @@ function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFi
 
 function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): SourceFile {
     return GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+}
+
+
+export function indexSignatureWithSameType(key: Key, value: any, declaration: ClassOrInterfaceDeclaration): string {
+    const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
+    if (indexSignatures.length === 0) {
+        return undefined;
+    } else if (indexSignatures.length === 1) {
+        return indexSignatureName(key, value, indexSignatures[0]);
+    } else {
+        throwWarning(`Warning: ${declaration?.getName()} has multiple index signatures.`);
+        return undefined;
+    }
+}
+
+
+function indexSignatureName(key: Key, value: any, indexSignature: IndexSignatureDeclaration): string {
+    const indexStructure: IndexSignatureDeclarationStructure = indexSignature?.getStructure();
+    console.log(chalk.blueBright('hasSameTypeThanIndexSignatureeee'), value, indexStructure);
+    if (indexStructure.keyType !== typeof key) {
+        return undefined;
+    }
+    const returnType: string = indexStructure.returnType as string;
+    if (isPrimitiveTypeNode(returnType) && returnType === typeof value) {
+        return returnType;
+    }
+    if (!isPrimitiveTypeNode(returnType) && value?.constructor.name === returnType) {
+        return returnType;
+    }
+    return undefined;
 }
