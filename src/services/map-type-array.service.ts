@@ -35,15 +35,21 @@ export class MapTypeArrayService {
 
     static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
+        console.log(chalk.magentaBright('mapTypeNodesArrayyyyyy'), target, key, dataValue, typeNode.getKindName(), typeProperties);
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
             for (const dataKey of Object.keys(dataValue)) {
                 typeProperties.push(dataKey);
-                if (this.isKeyType(dataKey, typeNode, undefined)) {
+                if (this.isKeyType(dataKey, typeNode)) {
                     MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
                 } else {
-                    this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
+                    const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+                    const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                    if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                        const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                        this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                    }
                 }
             }
         }
@@ -84,26 +90,26 @@ export class MapTypeArrayService {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
-            if (this.isKeyType(key, typeNode, dataValue)) {
+            // TODO : check if we should return something
+            console.log(chalk.redBright('Is Literal primitive : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
+
+            if (this.isKeyInType(undefined, typeNode, dataValue)) {
                 MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
+                // MapTypeService.mapLiteralType(target, key, dataValue, typeNode as LiteralTypeNode);
             } else {
-                this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
+                const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
+                const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
+                if (indexOfNextTypeNodeIncludingKeys !== undefined) {
+                    const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+                    this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+                }
             }
+            // MapTypeService.mapLiteralType(target, key, dataValue, typeNode as LiteralTypeNode);
             return;
         } else if (typeNodes.length > 1) {
             this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
         } else {
             console.log(chalk.redBright('Unknown primitive literal type : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
-        }
-    }
-
-
-    private static mapKeyType(target: any, key: string, typeNodes: TypeNode[], typeProperties: any[], dataValue?: any): void {
-        const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-        const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
-        if (indexOfNextTypeNodeIncludingKeys !== undefined) {
-            const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
-            this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
         }
     }
 
@@ -140,6 +146,7 @@ export class MapTypeArrayService {
                     return false;
                 }
             case SyntaxKind.LiteralType:
+                console.log(chalk.greenBright('SHOULD BE HEREEEEEE is key in type'), value, typeNode.getText());
                 return value === typeNode.getText().slice(1, -1);
             case SyntaxKind.ArrayType:
                 // TODO
