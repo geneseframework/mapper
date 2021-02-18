@@ -88,6 +88,29 @@ testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false
 testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, undefined));
 
 
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ValuesOnConstructor {
+    a;
+    b;
+    c;
+    d;
+
+    constructor(a = 'aaa', b = 2, c = false, d = true) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+    }
+}
+
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'aaa', b: 2, c: false, d: true}`, ValuesOnConstructor, {}, {expectedValue: {a: 'aaa', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, {a: 'z'}, {expectedValue: {a: 'z', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, undefined));
+
+
 // -------------------------------------------------------------------------------------------------
 
 
