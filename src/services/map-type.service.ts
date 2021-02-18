@@ -108,8 +108,11 @@ export class MapTypeService {
 
 
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
+        console.log(chalk.yellowBright('mapLiteralTypeeeeee : '), target, key, dataValue, literalType.getKindName(), isPrimitiveTypeNode(literalType), primitiveLiteralValue(literalType));
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
+            console.log(chalk.redBright('mapLiteralTypeeeeee : '), target, key, dataValue, literalType.getKindName(), isPrimitiveTypeNode(literalType));
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
+            console.log(chalk.redBright('mapLiteralTypeeeeee result : '), target[key]);
             return;
         }
 // TODO : Literal objects, true, false, null,...
