@@ -43,38 +43,16 @@ export class MapInstanceOrInterfaceService<T> {
     private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        let apparentType: string;
-        let propertyType: string;
-        let propertyKind: PropertyKind;
         // TODO : try type = false keyword
         if (this.ketIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
-        // if (!property) {
-        //     const indexSignatureName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
-        //     if (indexSignatureName) {
-        //         propertyType = indexSignatureName;
-        //         propertyKind = PropertyKind.PROPERTY_DECLARATION;
-        //     } else {
-        //         return;
-        //     }
-        // } else {
-        //     const propertyStructureType: string = property.getStructure().type as string ?? 'any';
-        //     apparentType = getApparentType(property).toLowerCase();
-        //     propertyType = propertyStructureType ?? apparentType;
-        //     propertyKind = this.getPropertyKind(property);
-        // }
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
             MapPropertyService.map(target, key, dataValue, propertyInfos);
         }
-        // if (isAnyOrAnyArray(propertyType)) {
-        //     this.mapAny(target, key, dataValue, propertyType);
-        // } else {
-        //     MapPropertyService.map(target, key, dataValue, propertyKind, propertyType, apparentType);
-        // }
     }
 
 
@@ -95,15 +73,6 @@ export class MapInstanceOrInterfaceService<T> {
         const propertyName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
         return new PropertyInfos(undefined, propertyName, PropertyKind.PROPERTY_DECLARATION);
     }
-
-
-    // private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
-    //     if (isAnyOrAnyArray(indexSignatureName)) {
-    //         this.mapAny(target, key, dataValue, indexSignatureName);
-    //     } else {
-    //         MapPropertyService.map(target, key, dataValue, PropertyKind.PROPERTY_DECLARATION, indexSignatureName, undefined);
-    //     }
-    // }
 
 
     private static mapAny(target: any, key: string, dataValue: any, typeName: string): void {

@@ -167,7 +167,6 @@ export function indexSignatureWithSameType(key: Key, value: any, declaration: Cl
 
 function indexSignatureName(key: Key, value: any, indexSignature: IndexSignatureDeclaration): string {
     const indexStructure: IndexSignatureDeclarationStructure = indexSignature?.getStructure();
-    console.log(chalk.blueBright('hasSameTypeThanIndexSignatureeee'), value, indexStructure);
     if (indexStructure.keyType !== typeof key) {
         return undefined;
     }
