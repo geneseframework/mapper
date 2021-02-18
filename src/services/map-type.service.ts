@@ -69,7 +69,6 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
-        console.log(chalk.cyanBright('MAPTYPPPPPP'), target, key, dataValue, typeNode.getKindName());
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
@@ -108,11 +107,8 @@ export class MapTypeService {
 
 
     private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
-        console.log(chalk.yellowBright('mapLiteralTypeeeeee : '), target, key, dataValue, literalType.getKindName(), isPrimitiveTypeNode(literalType), primitiveLiteralValue(literalType));
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
-            console.log(chalk.redBright('mapLiteralTypeeeeee : '), target, key, dataValue, literalType.getKindName(), isPrimitiveTypeNode(literalType));
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
-            console.log(chalk.redBright('mapLiteralTypeeeeee result : '), target[key]);
             return;
         }
 // TODO : Literal objects, true, false, null,...
@@ -120,7 +116,6 @@ export class MapTypeService {
 
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
-        console.log(chalk.redBright('mapLiteralTypeReferenceeeeee'), target, key, dataValue, typeReferenceNode.getKindName());
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
     }

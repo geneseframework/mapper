@@ -11,7 +11,6 @@ export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
-        console.log(chalk.blueBright('MAPPROPPPPPP'), target, key, dataValue, propertyKind, propertyType);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue);
             return;
@@ -28,7 +27,6 @@ export class MapPropertyService<T> {
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
-                console.log(chalk.blueBright('MAPPROPPPPPP'), target, key, dataValue, propertyKind, propertyType);
                 MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
