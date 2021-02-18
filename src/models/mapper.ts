@@ -7,17 +7,17 @@ import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { MapParameter } from '../types/map-parameter.type';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { clone } from '../utils/clone.util';
 import { MapEnumService } from '../services/map-enum.service';
-import * as chalk from 'chalk';
-import { declarationKind } from '../utils/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInterfaceService } from '../services/map-interface.service';
 import { isTuple } from '../utils/tuples.util';
 import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
+import { TypeDeclaration } from '../types/type-declaration.type';
 
 export class Mapper<T> {
 
@@ -38,11 +38,12 @@ export class Mapper<T> {
         await this.init();
         // TODO : Indexable types
         // TODO : properties "any" or without types
-        // console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
+        // TODO : Dates
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
-            switch (declarationKind(typeName)) {
+            const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
+            switch (getDeclarationKind(typeDeclaration)) {
                 case TypeDeclarationKind.CLASS_DECLARATION:
                     return MapInstanceService.createInstances(data, typeName);
                 case TypeDeclarationKind.ENUM_DECLARATION:
@@ -72,21 +73,6 @@ export class Mapper<T> {
             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
         }
     }
-
-
-    // private static getInfos<T>(mapParameter: MapParameter<T>): { typeName: string, isArray: boolean } {
-    //     if (isTuple(mapParameter)) {
-    //         return {
-    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
-    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
-    //         }
-    //     } else {
-    //         return {
-    //             typeName: typeof mapParameter === 'string' ? this.removeBrackets(mapParameter) : (mapParameter as TConstructor<T>).name,
-    //             isArray: typeof mapParameter === 'string' ? this.isArrayType(mapParameter) : false
-    //         }
-    //     }
-    // }
 
 
     private static removeBrackets(typeOrArrayTypeName: string): string {

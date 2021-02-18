@@ -4,9 +4,7 @@ import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapEnumService } from './map-enum.service';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import * as chalk from 'chalk';
 import { isEnumValue } from '../utils/ast-enums.util';
 import { isEmptyArray } from '../utils/arrays.util';
 

@@ -1,6 +1,7 @@
 import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
+import { LiteralNode } from '../types/literal-node.type';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -64,7 +65,10 @@ export function isLiteralKeyword(typeNode: TypeNode): boolean {
 
 
 export function primitiveLiteralValue(literalTypeNode: LiteralTypeNode): string {
-    return isLiteralPrimitive(literalTypeNode) ? literalTypeNode.getLiteral().getText().slice(1, -1) : undefined;
+    if (isLiteralKeyword(literalTypeNode)) {
+        return literalTypeNode?.getText();
+    }
+    return isLiteralPrimitive(literalTypeNode) ? literalValue(literalTypeNode) : undefined;
 }
 
 
@@ -79,6 +83,20 @@ export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode
             return 'boolean';
         default:
             console.log(chalk.redBright(`${literalTypeNode?.getLiteral()?.getKindName()} is not a LiteralPrimitive`));
+            return undefined;
+    }
+}
+
+
+export function literalValue(literalTypeNode: LiteralTypeNode): string {
+    const literal: LiteralNode = literalTypeNode?.getLiteral();
+    switch (literal.getKind()) {
+        case SyntaxKind.NumericLiteral:
+            return literal.getText();
+        case SyntaxKind.StringLiteral:
+            return literal.getText().slice(1, -1);
+        default:
+            console.log(chalk.yellowBright('Warning: unknown Literal value type : '), literal?.getKindName(), literal?.getText());
             return undefined;
     }
 }

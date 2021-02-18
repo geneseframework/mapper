@@ -1,4 +1,4 @@
-import { ClassDeclaration, InterfaceDeclaration, Type } from 'ts-morph';
+import { ClassDeclaration, InterfaceDeclaration, SyntaxKind, Type } from 'ts-morph';
 import { getAllClassProperties } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { PropertyKind } from '../types/property-kind.enum';
@@ -8,6 +8,7 @@ import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declara
 import { MapInterfaceService } from './map-interface.service';
 import { getAllInterfaceProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceService } from './map-instance.service';
+import * as chalk from 'chalk';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -26,12 +27,12 @@ export class MapInstanceOrInterfaceService<T> {
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
-            this.mapDataKey(target, classOrInterfaceDeclaration, key, data[key]);
+            this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
         }
     }
 
 
-    private static mapDataKey<T>(target: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, key: string, dataValue: any): void {
+    private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (!property) {
@@ -52,8 +53,14 @@ export class MapInstanceOrInterfaceService<T> {
             return PropertyKind.TUPLE;
         } else if (propertyType.isInterface()) {
             return PropertyKind.INTERFACE
+        } else if (property.getKind() === SyntaxKind.PropertyDeclaration) {
+            return PropertyKind.PROPERTY_DECLARATION;
+        } else if (property.getKind() === SyntaxKind.PropertySignature) {
+            return PropertyKind.PROPERTY_SIGNATURE;
+        } else {
+            console.log(chalk.redBright('Unknown property kind :'), property.getKindName());
+            return undefined;
         }
-        return undefined;
     }
 
 }
