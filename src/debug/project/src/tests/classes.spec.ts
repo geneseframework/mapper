@@ -43,7 +43,9 @@ export class ClassWithAnySpec {
     c;
 }
 
-testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: 2, b: ['b'], c: 'c'}, { isolate: false }));
+testMappers.push(new TestMapper(` { a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, { a: 2, b: ['b'], c: 'c'}));
+testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: undefined, b: 'b'}, { expectedValue: { a: undefined } }));
+testMappers.push(new TestMapper(` / ClassWithAnySpec`, ClassWithAnySpec, { a: [2], b: [null]}));
 
 
 // -------------------------------------------------------------------------------------------------
