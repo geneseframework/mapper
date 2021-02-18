@@ -58,7 +58,7 @@ export class MapTypeArrayService {
     private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         if (Array.isArray(dataValue)) {
-            this.mapTypesNodesPrimitivesArrayWhenDataIsArray(target, key, dataValue, typeNode, nextTypeNodes);
+            this.mapTypesNodesPrimitivesArrayWhenDataIsArray(target, key, dataValue, typeNode, typeNodes);
         } else {
             this.mapTypesNodesPrimitivesArrayWhenDataIsNotArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         }
