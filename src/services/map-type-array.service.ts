@@ -11,7 +11,7 @@ import {
 import { MapPrimitiveService } from './map-primitive.service';
 import {
     isArrayOfPrimitiveTypeNodes,
-    isLiteralKeyword,
+    isLiteralKeyword, isLiteralPrimitive,
     isPrimitiveOrArrayOfPrimitivesValue,
     isPrimitiveTypeNode,
     isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
@@ -36,7 +36,7 @@ export class MapTypeArrayService {
     static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
-            this.mapTypesNodesPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
+            this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
             for (const dataKey of Object.keys(dataValue)) {
                 typeProperties.push(dataKey);
@@ -55,17 +55,17 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
+    private static mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         if (Array.isArray(dataValue)) {
-            this.mapTypesNodesPrimitivesArrayWhenDataIsArray(target, key, dataValue, typeNode, nextTypeNodes);
+            this.mapTypesNodesPrimitivesArray(target, key, dataValue, typeNode, nextTypeNodes);
         } else {
-            this.mapTypesNodesPrimitivesArrayWhenDataIsNotArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
+            this.mapTypesNodesPrimitive(target, key, dataValue, typeNode, typeNodes, typeProperties);
         }
     }
 
 
-    private static mapTypesNodesPrimitivesArrayWhenDataIsArray(target: any, key: string, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
+    private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
@@ -85,17 +85,18 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitivesArrayWhenDataIsNotArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
+    private static mapTypesNodesPrimitive(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
+        } else if (isLiteralPrimitive(typeNode)) {
+            // TODO : check if we should return something
+            // console.log(chalk.redBright('Is Literal primitive : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
             return;
         } else if (typeNodes.length > 1) {
             this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
-            return;
         } else {
             console.log(chalk.redBright('Unknown primitive literal type : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
         }
-        return;
     }
 
 

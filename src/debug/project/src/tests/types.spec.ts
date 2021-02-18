@@ -44,9 +44,9 @@ export class LevelClassSpec {
     level: LevelSpec
 }
 
-testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec, { level: 1 }, { isolate: false }));
+testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec, { level: 1 }));
 
 
 export type ColorsTypeSpec = 'Blue' | 'White';
 testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Blue'));
-testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined, isolate: true }));
+testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined }));

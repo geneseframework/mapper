@@ -5,7 +5,6 @@ import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
-import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
 
