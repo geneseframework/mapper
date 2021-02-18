@@ -42,38 +42,44 @@ export class MapInstanceOrInterfaceService<T> {
     private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
+        let apparentType: string;
+        let propertyType: string;
+        let propertyKind: PropertyKind;
+        // TODO : try type = false keyword
+        if (this.ketIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
+            return;
+        }
         if (!property) {
             const indexSignatureName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
             if (indexSignatureName) {
-                this.mapIndexSignature(target, key, dataValue, indexSignatureName);
-                return;
+                propertyType = indexSignatureName;
+                propertyKind = PropertyKind.PROPERTY_DECLARATION;
             } else {
                 return;
             }
+        } else {
+            const propertyStructureType: string = property.getStructure().type as string ?? 'any';
+            apparentType = getApparentType(property).toLowerCase();
+            propertyType = propertyStructureType ?? apparentType;
+            propertyKind = this.getPropertyKind(property);
         }
-        // TODO : try type = false keyword
-        const propertyStructureType: string = property.getStructure().type as string ?? 'any';
-        const apparentType: string = getApparentType(property).toLowerCase();
-        const propertyType: string = propertyStructureType ?? apparentType;
-        // console.log(chalk.blueBright('mapDataKeyyyyy'), property.getStructure())
-        // console.log(chalk.blueBright('mapDataKeyyyyy'), target, key, dataValue, propertyStructureType, apparentType)
         if (isAnyOrAnyArray(propertyType)) {
             this.mapAny(target, key, dataValue, propertyType);
-            // this.mapAny(target, key, dataValue, propertyStructureType);
         } else {
-            MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
+            MapPropertyService.map(target, key, dataValue, propertyKind, propertyType, apparentType);
         }
     }
 
 
+    private static ketIsIncompatibleWithDeclarationType(property: PropertyDeclarationOrSignature, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): boolean {
+        return !property && !indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+    }
+
+
     private static mapIndexSignature(target: any, key: string, dataValue: any, indexSignatureName: string): void {
-        console.log(chalk.magentaBright('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
         if (isAnyOrAnyArray(indexSignatureName)) {
-            console.log(chalk.red('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
             this.mapAny(target, key, dataValue, indexSignatureName);
         } else {
-            // TODO: implement
-            console.log(chalk.magentaBright('mapDataKeyyyyy'), target, key, dataValue, indexSignatureName)
             MapPropertyService.map(target, key, dataValue, PropertyKind.PROPERTY_DECLARATION, indexSignatureName, undefined);
         }
     }
