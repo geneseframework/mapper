@@ -69,6 +69,7 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
+        console.log(chalk.cyanBright('MAPTYPPPPPP'), target, key, dataValue, typeNode.getKindName());
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
@@ -116,6 +117,7 @@ export class MapTypeService {
 
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
+        console.log(chalk.redBright('mapLiteralTypeReferenceeeeee'), target, key, dataValue, typeReferenceNode.getKindName());
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
     }
