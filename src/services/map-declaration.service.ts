@@ -25,9 +25,7 @@ export class MapDeclarationService<T> {
                 MapInstanceOrInterfaceService.map(dataValue, target[key], typeDeclaration as InterfaceDeclaration);
                 return;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                // console.log(chalk.blueBright('MapDeclarationServiceeeeeee '), target, propertyType, key, dataValue);
                 MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
-                // console.log(chalk.blueBright('MapDeclarationServiceeeeeee '), target, propertyType, key, dataValue, target[key]);
                 return;
             default:
                 return;

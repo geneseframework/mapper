@@ -54,7 +54,6 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
 
 
 function declarationKind(typeName: string): TypeDeclarationKind {
-    // const zzz: ColorSupport = undefined;
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {

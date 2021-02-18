@@ -39,7 +39,6 @@ export class Mapper<T> {
         // TODO : Indexable types
         // TODO : properties "any" or without types
         // TODO : Dates
-        // console.log(chalk.blueBright('MAPPERRRRRR'), mapParameter, data, typeName, isArray);
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {

@@ -1,12 +1,10 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import * as chalk from 'chalk';
 import { TypeDeclaration } from '../types/type-declaration.type';
 
 
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
-    // console.log(chalk.redBright('PATHHHHHH apparentTypeImportDeclarationPath'), apparentTypeImportDeclarationPath);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
     const importClassDeclaration: ClassDeclaration = importSourceFile.getClasses().find(c => c.getName() === typeName);
     if (importClassDeclaration) {
@@ -52,16 +50,7 @@ function isTsFilePath(path: string): boolean {
 
 
 function getImportSourceFile(path: string): SourceFile {
-    // console.log(chalk.greenBright('get   IMPORTTTTT'), path);
-    // console.log(chalk.greenBright('get   IMPORTTTTT declarationFile(path)'), declarationFile(path));
-    let importSourceFile: SourceFile = GLOBAL.project.getSourceFile(path) ?? GLOBAL.project.getSourceFile(declarationFile(path));
-    // console.log(chalk.greenBright('get   IMPORTTTTT importSourceFile'), importSourceFile?.getFilePath());
-    // if (isOutOfProject(importSourceFile)) {
-    //     console.log(chalk.redBright('Is out of project'), path);
-    //     importSourceFile = GLOBAL.project.addSourceFileAtPath(path);
-    //     console.log(chalk.greenBright('IMPORTTTTT'), importSourceFile?.getBaseName());
-    // }
-    return importSourceFile;
+    return GLOBAL.project.getSourceFile(path) ?? GLOBAL.project.getSourceFile(declarationFile(path));
 }
 
 
@@ -71,9 +60,4 @@ function declarationFile(tsPath: string): string {
     } else {
         return undefined;
     }
-}
-
-
-export function isOutOfProject(sourceFile: SourceFile): boolean {
-    return !sourceFile || sourceFile.isInNodeModules() || sourceFile.isFromExternalLibrary();
 }

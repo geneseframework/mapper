@@ -1,6 +1,5 @@
 import {
     ArrayTypeNode,
-    ClassDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -10,7 +9,6 @@ import {
 } from 'ts-morph';
 import { MapPrimitiveService } from './map-primitive.service';
 import {
-    isArrayOfPrimitiveTypeNodes,
     isPrimitiveTypeNode,
     isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
     literalPrimitiveToPrimitiveType,
@@ -71,7 +69,6 @@ export class MapTypeService {
 
 
     static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
-        console.log(chalk.magentaBright('MapDeclarationServiceeeeeee '), target, key, dataValue, target[key], typeNode.getKindName());
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
@@ -106,58 +103,6 @@ export class MapTypeService {
      */
     private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
         MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
-    }
-
-
-    private static isKeyType(keys: string[], typeNode: TypeNode, dataValue?: any): boolean
-    private static isKeyType(key: string, typeNode: TypeNode, dataValue?: any): boolean
-    private static isKeyType(keys: string | string[], typeNode: TypeNode, dataValue?: any): boolean {
-        if (Array.isArray(keys)) {
-            return keys.every(key => this.isKeyInType(key, typeNode, dataValue));
-        } else {
-            return this.isKeyInType(keys, typeNode, dataValue);
-        }
-
-    }
-
-
-    private static isKeyInType(key: string, typeNode: TypeNode, value?: any): boolean {
-        switch (typeNode.getKind()) {
-            case SyntaxKind.TypeReference:
-                const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
-                if (typeDeclaration instanceof ClassDeclaration) {
-                    if (key.includes('nickNames')) {
-                        console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
-                    }
-                    return !!typeDeclaration.getProperties().find(p => p.getName() === key);
-                } else  {
-                    return false;
-                }
-            case SyntaxKind.LiteralType:
-                return value === typeNode.getText().slice(1, -1);
-            case SyntaxKind.ArrayType:
-                // TODO
-                return false;
-            default:
-                console.log(chalk.redBright(`Unknown key in TypeNode : key ${key} not found in Type `), typeNode.getKindName());
-                return false;
-        }
-    }
-
-
-    private static getIndexOfNextTypeNodeIncludingKeys(properties: string[], typeNodes: TypeNode[], dataValue: any): number {
-        for (let i = 0; i < typeNodes.length; i++) {
-            if (this.isKeyType(properties, typeNodes[i], dataValue)) {
-                return i;
-            }
-        }
-        return undefined;
-    }
-
-
-    private static getIndexOfNextArrayOfPrimitiveTypes(typeNodes: TypeNode[]): number {
-        const typeNodeIndex: number = typeNodes.findIndex(t => isArrayOfPrimitiveTypeNodes(t));
-        return typeNodeIndex > -1 ? typeNodeIndex : undefined;
     }
 
 

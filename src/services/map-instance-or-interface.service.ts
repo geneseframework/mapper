@@ -41,28 +41,18 @@ export class MapInstanceOrInterfaceService<T> {
         const propertyStructureType: string = property.getStructure().type as string;
         const apparentType: string = getApparentType(property).toLowerCase();
         const propertyType: string = propertyStructureType ?? apparentType;
-        // console.log(chalk.blueBright('MAPTYPEEEEE'), target, key, propertyType, dataValue, target[key]);
         MapPropertyService.map(target, key, dataValue, this.getPropertyKind(property), propertyType, apparentType);
     }
 
 
     static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
         const propertyType: Type = property.getType();
-        // console.log(chalk.yellowBright('propertyTypeeeee'), property.getStructure());
-        // console.log(chalk.yellowBright('propertyTypeeeee'), property.getKindName());
-        // console.log(chalk.yellowBright('propertyTypeeeee'), propertyType.getAliasSymbol());
-        // console.log(chalk.yellowBright('propertyTypeeeee'), propertyType.getAliasSymbol().getValueDeclaration()?.getKindName());
-        // console.log(chalk.yellowBright('propertyTypeeeee'), propertyType.getAliasSymbol().getDeclarations()?.map(d => d.getKindName()));
-        // console.log(chalk.yellowBright('propertyTypeeeee'), propertyType.getSymbol().getDeclarations()?.map(d => d.getKindName()));
         if (propertyType.isArray()) {
             return PropertyKind.ARRAY;
         } else if (propertyType.isTuple()) {
             return PropertyKind.TUPLE;
         } else if (propertyType.isInterface()) {
             return PropertyKind.INTERFACE
-        // } else if (propertyType.isClass()) {
-        //     console.log(chalk.redBright('Type parammmmmm :'), property.getKindName());
-        //
         }
         console.log(chalk.redBright('Unknown property kind :'), property.getKindName());
         return undefined;

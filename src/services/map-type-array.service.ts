@@ -57,7 +57,6 @@ export class MapTypeArrayService {
 
     private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-        console.log(chalk.cyanBright('MAP TYPE NODES ARRRRRAY'), target, key, dataValue, typeNodes.map(t => t.getKindName()), typeProperties.length, nextTypeNodes.map(n => n.getKindName()));
         if (Array.isArray(dataValue)) {
             this.mapTypesNodesPrimitivesArrayWhenDataIsArray(target, key, dataValue, typeNode, nextTypeNodes);
         } else {
@@ -87,11 +86,7 @@ export class MapTypeArrayService {
 
 
     private static mapTypesNodesPrimitivesArrayWhenDataIsNotArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
-        console.log(chalk.magentaBright('MAP TYPE NODES DATA NOT ARRRRRAY'), target, key, dataValue, typeNode.getKindName(), typeNode.getText(), typeNodes.map(t => t.getKindName()), typeProperties.length);
-        console.log(chalk.magentaBright('MAP TYPE NODES DATA NOT ARRRRRAY primitiveLiteralValue'), primitiveLiteralValue(typeNode as LiteralTypeNode), dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode));
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
-        // if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue === typeNode.getText().slice(1, -1))) {
-            console.log(chalk.yellowBright('MAP TYPE NODES DATA NOT ARRRRRAY primitiveLiteralValue(typeNode as LiteralTypeNode)'), dataValue);
             target[key] = dataValue;
             return;
         } else if (typeNodes.length > 1) {
@@ -131,9 +126,6 @@ export class MapTypeArrayService {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
                 if (typeDeclaration instanceof ClassDeclaration) {
-                    if (key.includes('nickNames')) {
-                        console.log(chalk.blueBright('IS KEY IN TYPEEEEE ?'), key, typeDeclaration.getName(), typeDeclaration.getProperties().map(p => p.getName()));
-                    }
                     return !!typeDeclaration.getProperties().find(p => p.getName() === key);
                 } else  {
                     return false;
