@@ -10,7 +10,7 @@ import {
     TypeAliasDeclaration
 } from 'ts-morph';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { throwCustom } from './errors.util';
+import { throwErrorCustom, throwWarning } from './errors.util';
 import { flat } from './arrays.util';
 // import { ColorSupport } from 'chalk';
 
@@ -48,7 +48,7 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
         case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
-            throwCustom('Impossible to find TypeAliasDeclaration corresponding to ', typeName);
+            throwErrorCustom('Impossible to find TypeAliasDeclaration corresponding to ', typeName);
     }
 }
 
@@ -63,7 +63,7 @@ function declarationKind(typeName: string): TypeDeclarationKind {
     } else if (isTypeAliasDeclaration(typeName)) {
         return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;
     } else {
-        throwCustom(`Error: declaration not found for ${typeName}`);
+        throwErrorCustom(`Error: declaration not found for ${typeName}`);
         return undefined;
     }
 }
@@ -104,8 +104,7 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
     if (declarations.length === 0) {
         return false;
     } else if (declarations.length > 1) {
-        // TODO : implement
-        throwCustom(`Error: ${typeName} is declared in multiple files.`)
+        throwWarning(`Error: ${typeName} is declared in multiple files.`)
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
         if (getTDeclaration(importSourceFile)?.length > 0) {
@@ -121,7 +120,19 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
 
 function getImportDeclarations(typeName: string): ImportDeclaration[] {
     const declarations: ImportDeclaration[] = flat(GLOBAL.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
-    return declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
+    const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
+    return groupByImportPath(declarationsWithSameName);
+}
+
+
+function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration[] {
+    const importDeclarations: ImportDeclaration[] = [];
+    for (const declaration of declarations) {
+        if (!importDeclarations.map(d => d.getModuleSpecifierSourceFile()?.getFilePath()).includes(declaration.getModuleSpecifierSourceFile().getFilePath())) {
+            importDeclarations.push(declaration);
+        }
+    }
+    return importDeclarations;
 }
 
 
