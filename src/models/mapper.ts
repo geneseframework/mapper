@@ -18,6 +18,8 @@ import { isTuple } from '../utils/tuples.util';
 import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
+import * as chalk from 'chalk';
+import { isNullOrUndefined } from '../utils/any.util';
 
 export class Mapper<T> {
 
@@ -29,6 +31,9 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple> {
+        if (isNullOrUndefined(data)) {
+            return data;
+        }
         if (isTuple(mapParameter)) {
             return MapTupleService.create(data, mapParameter as Tuple);
         }
@@ -36,8 +41,6 @@ export class Mapper<T> {
         const typeName = infos.typeName;
         const isArray = infos.isArray;
         await this.init();
-        // TODO : Indexable types
-        // TODO : properties "any" or without types
         // TODO : Dates
         if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);

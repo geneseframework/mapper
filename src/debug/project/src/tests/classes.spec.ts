@@ -57,7 +57,35 @@ export class IndexableSpec {
     [key: string]: string;
 }
 
-testMappers.push(new TestMapper(` { a: 'a', b: 'b' } / IndexableSpec`, IndexableSpec, { a: 'a', b: 'b' }, { isolate: false}));
+testMappers.push(new TestMapper(` { a: 'a', b: 'b' } / IndexableSpec`, IndexableSpec, { a: 'a', b: 'b' }));
+testMappers.push(new TestMapper(` { a: 'a', b: 3 } / IndexableSpec / {a: 'a'}`, IndexableSpec, { a: 'a', b: 3 }, { expectedValue: {a: 'a'}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class IndexableNumberSpec {
+    a: string;
+    [key: number]: string;
+}
+
+testMappers.push(new TestMapper(` { a: 'a', 2: 'b' } / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, { a: 'a', 2: 'b' }, {expectedValue: {a: 'a'}}));
+testMappers.push(new TestMapper(` { a: 'a', b: 3 } / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, { a: 'a', b: 3 }, { expectedValue: {a: 'a'}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ValuesByDefault {
+    a = 'aaa';
+    b = 2;
+    c = false;
+    d = true;
+}
+
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'aaa', b: 2, c: false, d: true}`, ValuesByDefault, {}, {expectedValue: {a: 'aaa', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, {a: 'z'}, {expectedValue: {a: 'z', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, undefined));
 
 
 // -------------------------------------------------------------------------------------------------
