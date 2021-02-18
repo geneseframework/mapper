@@ -1,6 +1,7 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { TypeDeclaration } from '../types/type-declaration.type';
+import { getTypeDeclaration } from './ast-declaration.util';
 
 
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
@@ -22,7 +23,12 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
     if (interfaceDeclaration) {
         return interfaceDeclaration;
     }
-    return undefined;
+    return getNotExportedDeclarations(typeName);
+}
+
+
+function getNotExportedDeclarations(typeName: string): TypeDeclaration {
+    return getTypeDeclaration(typeName);
 }
 
 
@@ -32,13 +38,10 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
  * @private
  */
 export function getApparentTypeImportDeclarationPath(apparentType: string): string {
-    // console.log(chalk.cyanBright('PATHHHHHH'), apparentType);
-    // console.log(chalk.cyanBright('PATHHHHHH IS TS FILE ????'), isTsFilePath(apparentType));
     if (isTsFilePath(apparentType)) {
         return apparentType;
     } else {
         const pathWithoutExtension: string = /^import\("(.*)"/.exec(apparentType)?.[1];
-        // console.log(chalk.cyanBright('PATHHHHHH pathWithoutExtension'), pathWithoutExtension);
         return `${pathWithoutExtension}.ts`;
     }
 }

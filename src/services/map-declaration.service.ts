@@ -8,25 +8,27 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import * as chalk from 'chalk';
 
 export class MapDeclarationService<T> {
 
 
-    static map(target: any, propertyType: string, key: string, dataValue: any, typeDeclaration: TypeDeclaration): void {
+    static map(target: any, key: string, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): void {
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
-                return;
+                break;
             case TypeDeclarationKind.ENUM_DECLARATION:
                 MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
-                return;
+                break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 MapInstanceOrInterfaceService.map(dataValue, target[key], typeDeclaration as InterfaceDeclaration);
-                return;
+                break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
-                return;
+                break;
             default:
+                console.log(chalk.redBright('Unknown TypeDeclaration kind : '), target, key, dataValue, typeDeclaration?.getName());
                 return;
         }
     }

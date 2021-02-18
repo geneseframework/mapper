@@ -117,7 +117,7 @@ export class MapTypeService {
 
     private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        MapDeclarationService.map(target, typeDeclaration.getName(), key, dataValue, typeDeclaration);
+        MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
     }
 
 
