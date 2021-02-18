@@ -27,4 +27,4 @@ const colorSupport: ColorSupport = {
 
 
 testMappers.push(new TestMapper(`{ color: 'White' } / Chalk / undefined`, 'Chalk', { color: 'White' }, { expectedValue: undefined }));
-testMappers.push(new TestMapper(`valid ColorSupport / Chalk `, 'ColorSupport', colorSupport, { isolate: true }));
+testMappers.push(new TestMapper(`valid ColorSupport / Chalk `, 'ColorSupport', colorSupport, { isolate: false }));
