@@ -22,8 +22,9 @@ import { getApparentType } from '../utils/ast-types.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
-import { MapTypeArrayService } from './map-type-array.service';
 import { newMappedElement } from '../utils/mapping.util';
+import { MapTypeArrayService } from './map-type-array.service';
+import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapTypeService {
 
@@ -68,7 +69,11 @@ export class MapTypeService {
     }
 
 
-    static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode) {
+    static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode): void {
+        if (isNullOrUndefined(dataValue)) {
+            target[key] = dataValue;
+            return;
+        }
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);

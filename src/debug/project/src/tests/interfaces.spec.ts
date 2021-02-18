@@ -29,13 +29,13 @@ const colorSupport: ColorSupport = {
 }
 
 const colorSupportWithNullAndUndefined: ColorSupport = {
-    level: null,
-    has16m: undefined,
+    level: 2,
+    has16m: null,
     has256: true,
-    hasBasic: null
+    hasBasic: false
 }
 
 
 testMappers.push(new TestMapper(`valid ColorSupport / ColorSupport `, 'ColorSupport', colorSupport));
-testMappers.push(new TestMapper(`valid ColorSupport with nulls & undefined / ColorSupport `, 'ColorSupport', colorSupportWithNullAndUndefined, { isolate: true}));
+testMappers.push(new TestMapper(`valid ColorSupport with nulls & undefined / ColorSupport `, 'ColorSupport', colorSupportWithNullAndUndefined, { isolate: false}));
 

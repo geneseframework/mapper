@@ -29,6 +29,7 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
 import { newMappedElement } from '../utils/mapping.util';
 import { MapTypeService } from './map-type.service';
+import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapTypeArrayService {
 

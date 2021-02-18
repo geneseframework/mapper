@@ -9,6 +9,7 @@ import { MapInterfaceService } from './map-interface.service';
 import { getAllInterfaceProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceService } from './map-instance.service';
 import * as chalk from 'chalk';
+import { isNullOrUndefined, keyExistsButIsNullOrUndefined } from '../utils/any.util';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -27,6 +28,9 @@ export class MapInstanceOrInterfaceService<T> {
 
     static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
+            if (keyExistsButIsNullOrUndefined(data, key)) {
+                target[key] = data[key];
+            }
             this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
         }
     }
