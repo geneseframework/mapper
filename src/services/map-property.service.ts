@@ -25,6 +25,10 @@ export class MapPropertyService<T> {
             case PropertyKind.INTERFACE:
                 target[key] = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 return;
+            case PropertyKind.PROPERTY_DECLARATION:
+            case PropertyKind.PROPERTY_SIGNATURE:
+                MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
+                break;
             default:
                 MapDeclarationService.map(target, propertyType, key, dataValue, getImportTypeDeclaration(apparentType, propertyType));
         }

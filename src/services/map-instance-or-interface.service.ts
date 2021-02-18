@@ -1,4 +1,4 @@
-import { ClassDeclaration, InterfaceDeclaration, Type } from 'ts-morph';
+import { ClassDeclaration, InterfaceDeclaration, SyntaxKind, Type } from 'ts-morph';
 import { getAllClassProperties } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
 import { PropertyKind } from '../types/property-kind.enum';
@@ -53,9 +53,14 @@ export class MapInstanceOrInterfaceService<T> {
             return PropertyKind.TUPLE;
         } else if (propertyType.isInterface()) {
             return PropertyKind.INTERFACE
+        } else if (property.getKind() === SyntaxKind.PropertyDeclaration) {
+            return PropertyKind.PROPERTY_DECLARATION;
+        } else if (property.getKind() === SyntaxKind.PropertySignature) {
+            return PropertyKind.PROPERTY_SIGNATURE;
+        } else {
+            console.log(chalk.redBright('Unknown property kind :'), property.getKindName());
+            return undefined;
         }
-        console.log(chalk.redBright('Unknown property kind :'), property.getKindName());
-        return undefined;
     }
 
 }

@@ -49,4 +49,4 @@ testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec,
 
 export type ColorsTypeSpec = 'Blue' | 'White';
 testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Blue'));
-testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined }));
+testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined, isolate: true }));
