@@ -35,7 +35,6 @@ export class MapTypeArrayService {
 
     static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
-        console.log(chalk.magentaBright('mapTypeNodesArrayyyyyy'), target, key, dataValue, typeNode.getKindName(), typeProperties);
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
@@ -85,8 +84,6 @@ export class MapTypeArrayService {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
-            // TODO : check if we should return something
-            console.log(chalk.redBright('Is Literal primitive : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
             if (this.isKeyType(key, typeNode, dataValue)) {
                 MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
             } else {

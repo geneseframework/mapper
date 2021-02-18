@@ -14,7 +14,6 @@ export class MapDeclarationService<T> {
 
 
     static map(target: any, key: string, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): void {
-        console.log(chalk.yellowBright('MAPDECLLLLL'), target, key, dataValue, typeDeclaration?.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
