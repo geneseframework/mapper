@@ -10,7 +10,7 @@ import {
 import { MapPrimitiveService } from './map-primitive.service';
 import {
     isPrimitiveTypeNode,
-    isPrimitiveTypeOrArrayOfPrimitiveType,
+    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
@@ -128,7 +128,7 @@ export class MapTypeService {
 
 
     private static mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
-        if (isPrimitiveTypeOrArrayOfPrimitiveType(arrayTypeNode.getText())) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true);
             return;
         }
