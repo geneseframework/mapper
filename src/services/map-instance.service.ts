@@ -19,7 +19,7 @@ export class MapInstanceService<T> {
     static createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): T {
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = GLOBAL.generateInstance(instanceGenerator);
-        MapInstanceOrInterfaceService.map(data, instance, classDeclaration);
+        MapInstanceOrInterfaceService.map(instance, data, classDeclaration);
         return instance;
     }
 }

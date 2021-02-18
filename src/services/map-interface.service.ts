@@ -22,7 +22,7 @@ export class MapInterfaceService {
 
     static createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): T {
         const tInterface = {};
-        MapInstanceOrInterfaceService.map(data, tInterface, interfaceDeclaration);
+        MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 

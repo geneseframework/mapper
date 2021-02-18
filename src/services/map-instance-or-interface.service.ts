@@ -29,7 +29,7 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    static map<T>(data: any, target: T, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
+    static map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
