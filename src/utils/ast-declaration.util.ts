@@ -17,7 +17,8 @@ import { flat } from './arrays.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 import { Key } from '../types/key.type';
 import { isPrimitiveTypeNode } from './primitives.util';
-// import { ColorSupport } from 'chalk';
+import * as chalk from 'chalk';
+import * as fs from 'fs-extra';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -100,7 +101,7 @@ function isTypeAliasDeclaration(typeName: string): boolean {
 
 
 function hasDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration);
+    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
 }
 
 
@@ -125,6 +126,34 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
         }
     }
     return !!GLOBAL.projectWithNodeModules.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+}
+
+
+function hasDeclarationInTypeScript(typeName: string): boolean {
+    const tsSourceFile: SourceFile = getTsSourceFile();
+    console.log(chalk.blueBright('HAS TS DECLLLLL'), typeName, tsSourceFile?.getFilePath());
+    return undefined;
+}
+
+
+function getTsSourceFile(): SourceFile {
+// async function getTsSourceFile(): Promise<SourceFile> {
+    const tsLibPath: string = `${GLOBAL.configFilePath}/node_modules/typescript/lib/lib.es5.d.ts`;
+    console.log(chalk.yellowBright('TS LIB PATH'), tsLibPath);
+    try {
+        fs.readSync(tsLibPath);
+        console.log(chalk.greenBright('TS LIB'));
+    }
+    catch(err) {
+        throwWarning(`Warning : ES5 library not found. Impossible to do type checking for TS declarations (Date, ...). Did you install node_modules ?`)
+        return undefined;
+    }
+    console.log(chalk.yellowBright('TS LIBBBB'));
+    GLOBAL.project.addSourceFileAtPath(tsLibPath);
+    console.log(chalk.yellowBright('TS FILEEEEE'));
+    const tsSourceFile: SourceFile = GLOBAL.project.getSourceFile(tsLibPath);
+    console.log(chalk.blueBright('TS FILEEEEE'), tsSourceFile?.getBaseName());
+    return tsSourceFile;
 }
 
 
