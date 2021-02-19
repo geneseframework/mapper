@@ -198,6 +198,12 @@ export function isValidDate(d): boolean {
 }
 
 
+export function isValidDateConstructor(d: any): boolean {
+    console.log(chalk.cyanBright('date fromatttttt'), d, typeof d);
+    return d && typeof d === 'string' || typeof d === 'number' || (typeof d.year === 'string' && typeof d.month === 'number') || isValidDate(d);
+}
+
+
 export function indexSignatureWithSameType(key: Key, value: any, declaration: ClassOrInterfaceDeclaration): string {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {

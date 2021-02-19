@@ -118,12 +118,15 @@ export class DateSpec {
     date: Date;
 }
 
-testMappers.push(new TestMapper(`{date: new Date()} / DateSpec / undefined`, DateSpec, {date: new Date()}));
-testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 'a'}, { expectedValue: {}}));
-testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: null}));
-testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: undefined}));
-testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 1613756213999}, { isolate: true}));
-console.log('ZZZZ', new Date(1613756213999))
+testMappers.push(new TestMapper(`{date: new Date()} / DateSpec / ~2021-02-19T18:07:29.446Z`, DateSpec, {date: new Date()}));
+testMappers.push(new TestMapper(`{date: 'a'} / DateSpec / {date : 'Invalid Date'}`, DateSpec, {date: 'a'}, { expectedValue: {date : 'Invalid Date'}}));
+testMappers.push(new TestMapper(`{date: null} / DateSpec`, DateSpec, {date: null}));
+testMappers.push(new TestMapper(`{date: undefined} / DateSpec`, DateSpec, {date: undefined}));
+testMappers.push(new TestMapper(`null / DateSpec / null`, DateSpec, null));
+testMappers.push(new TestMapper(`{date: 1613756213999} / DateSpec / { date: 2021-02-19T17:36:53.999Z }`, DateSpec, {date: 1613756213999}));
+const a = new Date('a')
+console.log('ZZZZ', a)
+console.log('ZZZZ', a.toDateString() === 'Invalid Date')
 
 // -------------------------------------------------------------------------------------------------
 
