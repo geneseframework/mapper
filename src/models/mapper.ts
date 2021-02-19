@@ -27,10 +27,12 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
     static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<Date>(mapParameter: MapParameter<Date>, data: Date): Promise<Date>
     static async create<T>(mapParameter: Tuple, data: any[], options?: MapperOptions): Promise<Tuple>
+    static async create<Date>(mapParameter: MapParameter<Date>, data: Date[]): Promise<Date[]>
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple> {
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[]> {
         if (isNullOrUndefined(data)) {
             return data;
         }

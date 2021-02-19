@@ -9,9 +9,9 @@ import { DateDeclaration } from '../models/date-declaration.model';
 export class MapInterfaceService {
 
 
-    static createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean): T[]
-    static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T
-    static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T | T[] {
+    static createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean): T[] | Date[]
+    static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T | Date
+    static createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): T | T[] | Date | Date[] {
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
         console.log(chalk.redBright('MAP INTERFACEEEE'), data, interfaceName, interfaceDeclaration);
         if (!interfaceDeclaration) {
@@ -19,7 +19,7 @@ export class MapInterfaceService {
             return undefined;
         } else if (interfaceDeclaration instanceof DateDeclaration) {
             console.log(chalk.greenBright('MAP INTERFACEEEE'), data, interfaceName, interfaceDeclaration);
-            return undefined;
+            return this.createDateInterface(data);
         } else if (Array.isArray(data) && isArray) {
             return MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration);
         } else if (!Array.isArray(data) && !isArray) {
@@ -30,10 +30,26 @@ export class MapInterfaceService {
     }
 
 
-    static createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): T {
+    static createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): T | Date {
         const tInterface = {};
         MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
+    }
+
+
+    private static createDateInterface(data: any): Date | Date[] {
+        if (data && this.hasDateConstructorFormat(data)) {
+            return new Date(data);
+        } else {
+            return undefined;
+        }
+    }
+
+
+    private static hasDateConstructorFormat(data: any): boolean {
+        return typeof data === 'string'
+        || typeof data === 'number'
+        || (typeof data?.year === 'number' && typeof data?.month === 'number');
     }
 
 }
