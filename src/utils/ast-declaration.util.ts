@@ -19,6 +19,7 @@ import { Key } from '../types/key.type';
 import { isPrimitiveTypeNode } from './primitives.util';
 import * as chalk from 'chalk';
 import * as fs from 'fs-extra';
+import { DateDeclaration } from '../models/date-declaration.model';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -130,30 +131,11 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
 
 
 function hasDeclarationInTypeScript(typeName: string): boolean {
-    const tsSourceFile: SourceFile = getTsSourceFile();
-    console.log(chalk.blueBright('HAS TS DECLLLLL'), typeName, tsSourceFile?.getFilePath());
+    if (typeName === 'Date') {
+        console.log(chalk.blueBright('HAS TS DECLLLLL'), typeName);
+        return true;
+    }
     return undefined;
-}
-
-
-function getTsSourceFile(): SourceFile {
-// async function getTsSourceFile(): Promise<SourceFile> {
-    const tsLibPath: string = `${GLOBAL.configFilePath}/node_modules/typescript/lib/lib.es5.d.ts`;
-    console.log(chalk.yellowBright('TS LIB PATH'), tsLibPath);
-    try {
-        fs.readSync(tsLibPath);
-        console.log(chalk.greenBright('TS LIB'));
-    }
-    catch(err) {
-        throwWarning(`Warning : ES5 library not found. Impossible to do type checking for TS declarations (Date, ...). Did you install node_modules ?`)
-        return undefined;
-    }
-    console.log(chalk.yellowBright('TS LIBBBB'));
-    GLOBAL.project.addSourceFileAtPath(tsLibPath);
-    console.log(chalk.yellowBright('TS FILEEEEE'));
-    const tsSourceFile: SourceFile = GLOBAL.project.getSourceFile(tsLibPath);
-    console.log(chalk.blueBright('TS FILEEEEE'), tsSourceFile?.getBaseName());
-    return tsSourceFile;
 }
 
 
@@ -176,6 +158,9 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 
 
 function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
+    if (hasDeclarationInTypeScript(typeName)) {
+        return getTypeScriptDeclaration(typeName);
+    }
     let sourceFile: SourceFile = getDeclarationSourceFileInProject(typeName, getTDeclaration);
     return getTDeclaration(sourceFile).find(t => t.getName() === typeName);
 }
@@ -188,7 +173,7 @@ function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (s
 
 function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
     if (typeName === 'Date') {
-
+        return new DateDeclaration();
     }
     return undefined;
 }

@@ -29,10 +29,14 @@ import { MapTypeService } from "../services/map-type.service";
 import { TestMapper } from "../test-engine/test-mapper.model";
 import { MapTypeArrayService } from "../services/map-type-array.service";
 import { PropertyInfos } from "../types/property-infos.type";
+import { DateDeclaration } from "../models/date-declaration.model";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
     switch (instanceGenerator.id) {
+        case 'DateDeclaration_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/date-declaration.model.ts':
+            instance = new DateDeclaration();
+            break;
         case 'Global_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/models/global.model.ts':
             instance = new Global();
             break;
