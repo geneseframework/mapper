@@ -117,11 +117,13 @@ testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: f
 export class DateSpec {
     date: Date;
 }
-// const zzz = new DateSpec();
-// zzz.date = new Date()
-testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 'a'}, {expectedValue: {}, isolate: true}));
-// testMappers.push(new TestMapper(`{ color: 'White' } / DateSpec / undefined`, DateSpec, {date: new Date()}, {isolate: true}));
 
+testMappers.push(new TestMapper(`{date: new Date()} / DateSpec / undefined`, DateSpec, {date: new Date()}));
+testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 'a'}, { expectedValue: {}}));
+testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: null}));
+testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: undefined}));
+testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 1613756213999}, { isolate: true}));
+console.log('ZZZZ', new Date(1613756213999))
 
 // -------------------------------------------------------------------------------------------------
 
