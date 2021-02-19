@@ -3,19 +3,19 @@ import { GLOBAL } from '../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
-    ImportDeclaration, IndexSignatureDeclaration, IndexSignatureDeclarationStructure,
-    InterfaceDeclaration, PropertyDeclaration, PropertySignature,
+    ImportDeclaration,
+    IndexSignatureDeclaration,
+    IndexSignatureDeclarationStructure,
+    InterfaceDeclaration,
     SourceFile,
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { throwErrorCustom, throwWarning } from './errors.util';
+import { throwWarning } from './errors.util';
 import { flat } from './arrays.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import * as chalk from 'chalk';
 import { Key } from '../types/key.type';
-import { primitiveTypes } from '../types/primitives.type';
 import { isPrimitiveTypeNode } from './primitives.util';
 // import { ColorSupport } from 'chalk';
 

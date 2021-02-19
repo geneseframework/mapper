@@ -9,18 +9,11 @@ import * as chalk from 'chalk';
 import { PrimitiveType } from '../types/primitives.type';
 import { PropertyInfos } from '../types/property-infos.type';
 import { throwWarning } from '../utils/errors.util';
-import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): void {
-        if (isNullOrUndefined(dataValue)) {
-            // TODO :test this case
-            console.log(chalk.redBright('TODO : test'), dataValue);
-            target[key] = dataValue;
-            return;
-        }
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
@@ -36,10 +29,7 @@ export class MapPropertyService<T> {
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.INTERFACE:
-                const value: any = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
-                if (value) {
-                    target[key] = value;
-                }
+                target[key] = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
