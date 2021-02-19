@@ -10,6 +10,7 @@ import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import * as chalk from 'chalk';
 import { Key } from '../types/key.type';
+import { throwWarning } from '../utils/errors.util';
 
 export class MapDeclarationService<T> {
 
@@ -29,7 +30,7 @@ export class MapDeclarationService<T> {
                 MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
                 break;
             default:
-                console.log(chalk.redBright('Unknown TypeDeclaration kind : '), target, key, dataValue, typeDeclaration?.getName());
+                throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);
                 return;
         }
     }

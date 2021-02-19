@@ -1,5 +1,5 @@
 import { InterfaceDeclaration } from 'ts-morph';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { getTypeDeclaration, isValidDate } from '../utils/ast-declaration.util';
 import { implementsRequiredProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import * as chalk from 'chalk';
@@ -38,7 +38,9 @@ export class MapInterfaceService {
 
 
     private static createDateInterface(data: any): Date | Date[] {
-        if (data && this.hasDateConstructorFormat(data)) {
+        console.log(chalk.magentaBright('IS VALID ADTE??????'), data, isValidDate(data));
+        if (isValidDate(data)) {
+        // if (data && this.hasDateConstructorFormat(data)) {
             return new Date(data);
         } else {
             return undefined;

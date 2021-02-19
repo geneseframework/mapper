@@ -179,6 +179,25 @@ function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
 }
 
 
+export function isValidDate(d): boolean {
+    // return d instanceof Date && !isNaN(d);
+// }
+    if (Object.prototype.toString.call(d) === "[object Date]") {
+        // it is a date
+        if (isNaN(d.getTime())) {  // d.valueOf() could also work
+            // date is not valid
+            return false;
+        } else {
+            // date is valid
+            return true;
+        }
+    } else {
+        // not a date
+        return false;
+    }
+}
+
+
 export function indexSignatureWithSameType(key: Key, value: any, declaration: ClassOrInterfaceDeclaration): string {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
