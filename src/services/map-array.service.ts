@@ -11,11 +11,12 @@ import * as chalk from 'chalk';
 import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
 import { isNullOrUndefined } from '../utils/any.util';
+import { Key } from '../types/key.type';
 
 export class MapArrayService<T> {
 
 
-    static map(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
+    static map(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): void {
         if (!Array.isArray(dataValue)) {
             return;
         } else if (isEmptyArray(dataValue)) {
@@ -27,14 +28,14 @@ export class MapArrayService<T> {
     }
 
 
-    private static mapArray(target: any, key: string, dataValue: any, propertyType: string, apparentType: string): void {
+    private static mapArray(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): void {
         const typeName: string = propertyType.slice(0, -2);
         const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(element, instance, typeDeclaration);
+                MapInstanceOrInterfaceService.map(instance, element, typeDeclaration);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName)) {
                 this.push(target, key, element);
@@ -60,7 +61,7 @@ export class MapArrayService<T> {
     }
 
 
-    private static push(target: any, key: string, element: any): void {
+    private static push(target: any, key: Key, element: any): void {
         target[key] = target[key] ?? [] as any[];
         target[key].push(element);
     }

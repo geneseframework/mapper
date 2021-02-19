@@ -1,6 +1,7 @@
 import { EnumDeclaration } from 'ts-morph';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { isEnumValue } from '../utils/ast-enums.util';
+import { Key } from '../types/key.type';
 import { newMappedElement } from '../utils/mapping.util';
 
 export class MapEnumService {
@@ -35,7 +36,7 @@ export class MapEnumService {
     }
 
 
-    static map(target: any, key: string, dataValue: any, declaration: EnumDeclaration): void {
+    static map(target: any, key: Key, dataValue: any, declaration: EnumDeclaration): void {
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }

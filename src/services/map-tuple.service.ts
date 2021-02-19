@@ -65,7 +65,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(dataValue, instance, importArrayDeclaration);
+                MapInstanceOrInterfaceService.map(instance, dataValue, importArrayDeclaration);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {

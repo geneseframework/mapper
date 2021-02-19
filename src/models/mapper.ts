@@ -1,7 +1,7 @@
 import { TConstructor } from './t-constructor.model';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { InitService } from '../services/init.service';
-import { isPrimitiveTypeOrArrayOfPrimitiveTypeNodes, } from '../utils/primitives.util';
+import { isPrimitiveTypeOrArrayOfPrimitiveType, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
@@ -18,6 +18,9 @@ import { isTuple } from '../utils/tuples.util';
 import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
+import * as chalk from 'chalk';
+import { isNullOrUndefined } from '../utils/any.util';
+import { MapDateService } from '../services/map-date.service';
 
 export class Mapper<T> {
 
@@ -25,22 +28,27 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: boolean): Promise<boolean>
     static async create<T>(mapParameter: MapParameter<T>, data: number): Promise<number>
     static async create<T>(mapParameter: MapParameter<T>, data: string): Promise<string>
+    static async create<Date>(mapParameter: MapParameter<Date>, data: Date): Promise<Date>
     static async create<T>(mapParameter: Tuple, data: any[], options?: MapperOptions): Promise<Tuple>
+    static async create<Date>(mapParameter: MapParameter<Date>, data: Date[]): Promise<Date[]>
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
-    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple> {
+    static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[]> {
+        await this.init();
+        if (isNullOrUndefined(data)) {
+            return data;
+        }
         if (isTuple(mapParameter)) {
             return MapTupleService.create(data, mapParameter as Tuple);
         }
         const infos: { typeName: string, isArray: boolean } = this.getInfos(mapParameter);
         const typeName = infos.typeName;
         const isArray = infos.isArray;
-        await this.init();
-        // TODO : Indexable types
-        // TODO : properties "any" or without types
         // TODO : Dates
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveType(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
+        } else if (this.isDateOrDatesArrayType(typeName)) {
+            return MapDateService.createDates(data, isArray);
         } else {
             const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
             switch (getDeclarationKind(typeDeclaration)) {
@@ -82,6 +90,11 @@ export class Mapper<T> {
 
     private static isArrayType(typeOrArrayTypeName: string): boolean {
         return typeOrArrayTypeName.slice(-2) === '[]';
+    }
+
+
+    private static isDateOrDatesArrayType(typeName: string): boolean {
+        return typeName === 'Date' || typeName === 'Date[]';
     }
 
 

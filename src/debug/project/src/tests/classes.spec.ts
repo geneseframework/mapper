@@ -57,7 +57,77 @@ export class IndexableSpec {
     [key: string]: string;
 }
 
-testMappers.push(new TestMapper(` { a: 'a', b: 'b' } / IndexableSpec`, IndexableSpec, { a: 'a', b: 'b' }, { isolate: false}));
+testMappers.push(new TestMapper(` { a: 'a', b: 'b' } / IndexableSpec`, IndexableSpec, { a: 'a', b: 'b' }));
+testMappers.push(new TestMapper(` { a: 'a', b: 3 } / IndexableSpec / {a: 'a'}`, IndexableSpec, { a: 'a', b: 3 }, { expectedValue: {a: 'a'}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class IndexableNumberSpec {
+    a: string;
+    [key: number]: string;
+}
+
+testMappers.push(new TestMapper(` { a: 'a', 2: 'b' } / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, { a: 'a', 2: 'b' }, {expectedValue: {a: 'a'}}));
+testMappers.push(new TestMapper(` { a: 'a', b: 3 } / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, { a: 'a', b: 3 }, { expectedValue: {a: 'a'}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ValuesByDefault {
+    a = 'aaa';
+    b = 2;
+    c = false;
+    d = true;
+}
+
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'aaa', b: 2, c: false, d: true}`, ValuesByDefault, {}, {expectedValue: {a: 'aaa', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, {a: 'z'}, {expectedValue: {a: 'z', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, undefined));
+
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ValuesOnConstructor {
+    a;
+    b;
+    c;
+    d;
+
+    constructor(a = 'aaa', b = 2, c = false, d = true) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+    }
+}
+
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'aaa', b: 2, c: false, d: true}`, ValuesOnConstructor, {}, {expectedValue: {a: 'aaa', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, {a: 'z'}, {expectedValue: {a: 'z', b: 2, c: false, d: true}}));
+testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, undefined));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class DateSpec {
+    date: Date;
+}
+
+testMappers.push(new TestMapper(`{date: new Date()} / DateSpec / ~2021-02-19T18:07:29.446Z`, DateSpec, {date: new Date()}));
+testMappers.push(new TestMapper(`{date: 'a'} / DateSpec / {date : 'Invalid Date'}`, DateSpec, {date: 'a'}, { expectedValue: {date : 'Invalid Date'}}));
+testMappers.push(new TestMapper(`{date: null} / DateSpec`, DateSpec, {date: null}));
+testMappers.push(new TestMapper(`{date: undefined} / DateSpec`, DateSpec, {date: undefined}));
+testMappers.push(new TestMapper(`null / DateSpec / null`, DateSpec, null));
+testMappers.push(new TestMapper(`{date: 1613756213999} / DateSpec / { date: 2021-02-19T17:36:53.999Z }`, DateSpec, {date: 1613756213999}));
+
+// -------------------------------------------------------------------------------------------------
+
+testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / Date`, Date, '2021-02-19T17:36:53.999Z', {isolate: false}));
 
 
 // -------------------------------------------------------------------------------------------------

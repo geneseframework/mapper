@@ -14,7 +14,7 @@ import {
     isLiteralKeyword, isLiteralPrimitive,
     isPrimitiveOrArrayOfPrimitivesValue,
     isPrimitiveTypeNode,
-    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
+    isPrimitiveTypeOrArrayOfPrimitiveType,
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
@@ -30,11 +30,12 @@ import { MapDeclarationService } from './map-declaration.service';
 import { newMappedElement } from '../utils/mapping.util';
 import { MapTypeService } from './map-type.service';
 import { isNullOrUndefined } from '../utils/any.util';
+import { Key } from '../types/key.type';
 
 export class MapTypeArrayService {
 
 
-    static mapTypeNodesArray(target: any, key: string, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
+    static mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
@@ -51,7 +52,7 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
+    private static mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         if (Array.isArray(dataValue)) {
             this.mapTypesNodesPrimitivesArray(target, key, dataValue, typeNode, nextTypeNodes);
@@ -61,7 +62,7 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitivesArray(target: any, key: string, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
+    private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
@@ -81,7 +82,7 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitive(target: any, key: string, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
+    private static mapTypesNodesPrimitive(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
@@ -99,7 +100,7 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapKeyType(target: any, key: string, typeNodes: TypeNode[], typeProperties: any[], dataValue?: any): void {
+    private static mapKeyType(target: any, key: Key, typeNodes: TypeNode[], typeProperties: any[], dataValue?: any): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
         if (indexOfNextTypeNodeIncludingKeys !== undefined) {
@@ -119,9 +120,9 @@ export class MapTypeArrayService {
     }
 
 
-    private static isKeyType(keys: string[], typeNode: TypeNode, dataValue?: any): boolean
-    private static isKeyType(key: string, typeNode: TypeNode, dataValue?: any): boolean
-    private static isKeyType(keys: string | string[], typeNode: TypeNode, dataValue?: any): boolean {
+    private static isKeyType(keys: Key[], typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(key: Key, typeNode: TypeNode, dataValue?: any): boolean
+    private static isKeyType(keys: Key | Key[], typeNode: TypeNode, dataValue?: any): boolean {
         if (Array.isArray(keys)) {
             return keys.every(key => this.isKeyInType(key, typeNode, dataValue));
         } else {
@@ -131,7 +132,7 @@ export class MapTypeArrayService {
     }
 
 
-    private static isKeyInType(key: string, typeNode: TypeNode, value?: any): boolean {
+    private static isKeyInType(key: Key, typeNode: TypeNode, value?: any): boolean {
         switch (typeNode.getKind()) {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);

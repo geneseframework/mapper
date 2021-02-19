@@ -10,7 +10,7 @@ import {
 import { MapPrimitiveService } from './map-primitive.service';
 import {
     isPrimitiveTypeNode,
-    isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
+    isPrimitiveTypeOrArrayOfPrimitiveType,
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../utils/primitives.util';
@@ -25,6 +25,7 @@ import { MapDeclarationService } from './map-declaration.service';
 import { newMappedElement } from '../utils/mapping.util';
 import { MapTypeArrayService } from './map-type-array.service';
 import { isNullOrUndefined } from '../utils/any.util';
+import { Key } from '../types/key.type';
 
 export class MapTypeService {
 
@@ -64,12 +65,12 @@ export class MapTypeService {
 
 
     // TODO : Types which are not unions
-    static map(target: any, key: string, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
+    static map(target: any, key: Key, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
         MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
 
-    static mapTypeNode(target: any, key: string, dataValue: any, typeNode: TypeNode): void {
+    static mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode): void {
         if (isNullOrUndefined(dataValue)) {
             target[key] = dataValue;
             return;
@@ -106,12 +107,12 @@ export class MapTypeService {
      * @param unionTypeNode
      * @private
      */
-    private static mapUnionType(target: any, key: string, dataValue: any, unionTypeNode: UnionTypeNode): void {
+    private static mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode): void {
         MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
     }
 
 
-    private static mapLiteralType(target: any, key: string, dataValue: any, literalType: LiteralTypeNode): void {
+    private static mapLiteralType(target: any, key: Key, dataValue: any, literalType: LiteralTypeNode): void {
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
             return;
@@ -120,14 +121,14 @@ export class MapTypeService {
     }
 
 
-    private static mapLiteralTypeReference(target: any, key: string, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
+    private static mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
     }
 
 
-    private static mapArrayType(target: any, key: string, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(arrayTypeNode.getText())) {
+    private static mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
+        if (isPrimitiveTypeOrArrayOfPrimitiveType(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true);
             return;
         }
@@ -135,7 +136,7 @@ export class MapTypeService {
     }
 
 
-    private static mapPrimitiveKeywordType(target: any, key: string, dataValue: any, primitiveKeyword: TypeNode): void {
+    private static mapPrimitiveKeywordType(target: any, key: Key, dataValue: any, primitiveKeyword: TypeNode): void {
         target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false);
     }
 

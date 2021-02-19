@@ -14,7 +14,7 @@
 //     isLiteralKeyword,
 //     isPrimitiveOrArrayOfPrimitivesValue,
 //     isPrimitiveTypeNode,
-//     isPrimitiveTypeOrArrayOfPrimitiveTypeNodes,
+//     isPrimitiveTypeOrArrayOfPrimitiveType,
 //     literalPrimitiveToPrimitiveType,
 //     primitiveLiteralValue
 // } from '../utils/primitives.util';
