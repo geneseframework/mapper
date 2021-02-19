@@ -53,8 +53,13 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
         case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
-            throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
-            return undefined;
+            const typeScriptDeclaration: TypeDeclaration = getTypeScriptDeclaration(typeName);
+            if (typeScriptDeclaration) {
+                return typeScriptDeclaration;
+            } else {
+                throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
+                return undefined;
+            }
     }
 }
 
@@ -149,6 +154,14 @@ function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFi
 
 function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): SourceFile {
     return GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+}
+
+
+function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
+    if (typeName === 'Date') {
+
+    }
+    return undefined;
 }
 
 
