@@ -125,9 +125,14 @@ testMappers.push(new TestMapper(`{date: undefined} / DateSpec`, DateSpec, {date:
 testMappers.push(new TestMapper(`null / DateSpec / null`, DateSpec, null));
 testMappers.push(new TestMapper(`{date: 1613756213999} / DateSpec / { date: 2021-02-19T17:36:53.999Z }`, DateSpec, {date: 1613756213999}));
 
+
 // -------------------------------------------------------------------------------------------------
 
-testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / Date`, Date, '2021-02-19T17:36:53.999Z', {isolate: false}));
+
+testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / Date`, Date, '2021-02-19T17:36:53.999Z'));
+testMappers.push(new TestMapper(`{} / Date / undefined`, Date, {}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / 'Date'`, 'Date', '2021-02-19T17:36:53.999Z'));
+testMappers.push(new TestMapper(`['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z'] / Date[]`, 'Date[]', ['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z']));
 
 
 // -------------------------------------------------------------------------------------------------

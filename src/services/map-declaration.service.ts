@@ -8,7 +8,6 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import * as chalk from 'chalk';
 import { Key } from '../types/key.type';
 import { throwWarning } from '../utils/errors.util';
 
