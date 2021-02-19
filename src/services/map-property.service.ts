@@ -27,7 +27,6 @@ export class MapPropertyService<T> {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
             return;
         }
-        console.log(chalk.magentaBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
                 MapArrayService.map(target, key, dataValue, propertyType, apparentType);

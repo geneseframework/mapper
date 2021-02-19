@@ -27,7 +27,6 @@ export class MapDateService {
 
 
     static createDate<T>(data: any): Date {
-        console.log(chalk.magentaBright('IS VALID ADTE??????'), data, this.isValidDateConstructor(data));
         if (this.isValidDateConstructor(data)) {
             return new Date(data);
         } else {
@@ -42,10 +41,6 @@ export class MapDateService {
 
 
     private static isValidDate(d): boolean {
-        if (Object.prototype.toString.call(d) === "[object Date]") {
-            return !isNaN(d.getTime());
-        } else {
-            return false;
-        }
+        return Object.prototype.toString.call(d) === "[object Date]" ? !isNaN(d.getTime()) : false;
     }
 }

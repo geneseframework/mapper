@@ -131,7 +131,6 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
 
 function hasDeclarationInTypeScript(typeName: string): boolean {
     if (typeName === 'Date') {
-        console.log(chalk.blueBright('HAS TS DECLLLLL'), typeName);
         return true;
     }
     return undefined;
