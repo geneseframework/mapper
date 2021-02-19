@@ -18,7 +18,6 @@ import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declara
 import { Key } from '../types/key.type';
 import { isPrimitiveTypeNode } from './primitives.util';
 import * as chalk from 'chalk';
-import * as fs from 'fs-extra';
 import { DateDeclaration } from '../models/date-declaration.model';
 
 
@@ -176,31 +175,6 @@ function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
         return new DateDeclaration();
     }
     return undefined;
-}
-
-
-export function isValidDate(d): boolean {
-    // return d instanceof Date && !isNaN(d);
-// }
-    if (Object.prototype.toString.call(d) === "[object Date]") {
-        // it is a date
-        if (isNaN(d.getTime())) {  // d.valueOf() could also work
-            // date is not valid
-            return false;
-        } else {
-            // date is valid
-            return true;
-        }
-    } else {
-        // not a date
-        return false;
-    }
-}
-
-
-export function isValidDateConstructor(d: any): boolean {
-    console.log(chalk.cyanBright('date fromatttttt'), d, typeof d);
-    return d && typeof d === 'string' || typeof d === 'number' || (typeof d.year === 'string' && typeof d.month === 'number') || isValidDate(d);
 }
 
 

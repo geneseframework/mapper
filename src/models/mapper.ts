@@ -20,6 +20,7 @@ import { Tuple } from '../types/tuple.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import * as chalk from 'chalk';
 import { isNullOrUndefined } from '../utils/any.util';
+import { MapDateService } from '../services/map-date.service';
 
 export class Mapper<T> {
 
@@ -33,6 +34,7 @@ export class Mapper<T> {
     static async create<T>(mapParameter: MapParameter<T>, data: any[], options?: MapperOptions): Promise<T[]>
     static async create<T>(mapParameter: TConstructor<T>, data: any, options?: MapperOptions): Promise<T>
     static async create<T>(mapParameter: MapParameter<T>, data: any, options?: MapperOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[]> {
+        await this.init();
         if (isNullOrUndefined(data)) {
             return data;
         }
@@ -42,10 +44,11 @@ export class Mapper<T> {
         const infos: { typeName: string, isArray: boolean } = this.getInfos(mapParameter);
         const typeName = infos.typeName;
         const isArray = infos.isArray;
-        await this.init();
         // TODO : Dates
         if (isPrimitiveTypeOrArrayOfPrimitiveType(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
+        } else if (this.isDateOrDatesArrayType(typeName)) {
+            return MapDateService.createDates(data, isArray);
         } else {
             const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
             switch (getDeclarationKind(typeDeclaration)) {
@@ -87,6 +90,11 @@ export class Mapper<T> {
 
     private static isArrayType(typeOrArrayTypeName: string): boolean {
         return typeOrArrayTypeName.slice(-2) === '[]';
+    }
+
+
+    private static isDateOrDatesArrayType(typeName: string): boolean {
+        return typeName === 'Date' || typeName === 'Date[]';
     }
 
 
