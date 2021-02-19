@@ -4,6 +4,7 @@ import { implementsRequiredProperties } from '../utils/ast-interfaces.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import * as chalk from 'chalk';
 import { throwWarning } from '../utils/errors.util';
+import { DateDeclaration } from '../models/date-declaration.model';
 
 export class MapInterfaceService {
 
@@ -16,12 +17,14 @@ export class MapInterfaceService {
         if (!interfaceDeclaration) {
             throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);
             return undefined;
-        }
-        if (Array.isArray(data) && isArray) {
+        } else if (interfaceDeclaration instanceof DateDeclaration) {
+            console.log(chalk.greenBright('MAP INTERFACEEEE'), data, interfaceName, interfaceDeclaration);
+            return undefined;
+        } else if (Array.isArray(data) && isArray) {
             return MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration);
         } else if (!Array.isArray(data) && !isArray) {
             return this.createInterface(data, interfaceDeclaration);
-        } else {
+        }  else {
             return undefined;
         }
     }
