@@ -8,6 +8,7 @@ import { MapInterfaceService } from './map-interface.service';
 import * as chalk from 'chalk';
 import { PrimitiveType } from '../types/primitives.type';
 import { PropertyInfos } from '../types/property-infos.type';
+import { throwWarning } from '../utils/errors.util';
 
 export class MapPropertyService<T> {
 
@@ -35,7 +36,7 @@ export class MapPropertyService<T> {
                 MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
-                console.log(chalk.redBright('Unknown property kind : '), target, key, dataValue, propertyInfos.propertyKind, propertyType);
+                throwWarning(`Unknown property kind.\nTarget : ${target}\nKey : ${key}\n Data : ${dataValue}\n Property infos : ${propertyInfos}`);
                 MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
