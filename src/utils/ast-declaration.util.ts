@@ -3,22 +3,21 @@ import { GLOBAL } from '../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
-    ImportDeclaration,
-    IndexSignatureDeclaration,
-    IndexSignatureDeclarationStructure,
-    InterfaceDeclaration,
+    ImportDeclaration, IndexSignatureDeclaration, IndexSignatureDeclarationStructure,
+    InterfaceDeclaration, PropertyDeclaration, PropertySignature,
     SourceFile,
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { throwWarning } from './errors.util';
+import { throwErrorCustom, throwWarning } from './errors.util';
 import { flat } from './arrays.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { Key } from '../types/key.type';
-import { isPrimitiveTypeNode } from './primitives.util';
 import * as chalk from 'chalk';
-import { DateDeclaration } from '../models/date-declaration.model';
+import { Key } from '../types/key.type';
+import { primitiveTypes } from '../types/primitives.type';
+import { isPrimitiveTypeNode } from './primitives.util';
+// import { ColorSupport } from 'chalk';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -54,13 +53,8 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
         case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
-            const typeScriptDeclaration: TypeDeclaration = getTypeScriptDeclaration(typeName);
-            if (typeScriptDeclaration) {
-                return typeScriptDeclaration;
-            } else {
-                throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
-                return undefined;
-            }
+            throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
+            return undefined;
     }
 }
 
@@ -101,7 +95,7 @@ function isTypeAliasDeclaration(typeName: string): boolean {
 
 
 function hasDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
+    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration);
 }
 
 
@@ -129,15 +123,6 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
 }
 
 
-function hasDeclarationInTypeScript(typeName: string): boolean {
-    if (typeName === 'Date') {
-        console.log(chalk.blueBright('HAS TS DECLLLLL'), typeName);
-        return true;
-    }
-    return undefined;
-}
-
-
 function getImportDeclarations(typeName: string): ImportDeclaration[] {
     const declarations: ImportDeclaration[] = flat(GLOBAL.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
     const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
@@ -157,9 +142,6 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 
 
 function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
-    if (hasDeclarationInTypeScript(typeName)) {
-        return getTypeScriptDeclaration(typeName);
-    }
     let sourceFile: SourceFile = getDeclarationSourceFileInProject(typeName, getTDeclaration);
     return getTDeclaration(sourceFile).find(t => t.getName() === typeName);
 }
@@ -167,14 +149,6 @@ function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFi
 
 function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): SourceFile {
     return GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
-}
-
-
-function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
-    if (typeName === 'Date') {
-        return new DateDeclaration();
-    }
-    return undefined;
 }
 
 

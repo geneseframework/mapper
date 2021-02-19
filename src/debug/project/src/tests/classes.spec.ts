@@ -114,6 +114,18 @@ testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: f
 // -------------------------------------------------------------------------------------------------
 
 
+export class DateSpec {
+    date: Date;
+}
+// const zzz = new DateSpec();
+// zzz.date = new Date()
+testMappers.push(new TestMapper(`{} / DateSpec / undefined`, DateSpec, {date: 'a'}, {expectedValue: {}, isolate: true}));
+// testMappers.push(new TestMapper(`{ color: 'White' } / DateSpec / undefined`, DateSpec, {date: new Date()}, {isolate: true}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
 export class OutOfProjectSpec {
     color: Chalk;
 }
