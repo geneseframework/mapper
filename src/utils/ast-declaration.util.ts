@@ -53,7 +53,8 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
         case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
-            throwErrorCustom('Impossible to find TypeAliasDeclaration corresponding to ', typeName);
+            throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
+            return undefined;
     }
 }
 
@@ -68,7 +69,6 @@ function declarationKind(typeName: string): TypeDeclarationKind {
     } else if (isTypeAliasDeclaration(typeName)) {
         return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;
     } else {
-        throwErrorCustom(`Error: declaration not found for ${typeName}`);
         return undefined;
     }
 }

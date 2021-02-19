@@ -15,11 +15,11 @@ export class MapPropertyService<T> {
     static map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): void {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
-    // static map<T>(target: any, key: string, dataValue: any, propertyKind: PropertyKind, propertyType: string, apparentType: string): void {
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
             return;
         }
+        console.log(chalk.magentaBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
                 MapArrayService.map(target, key, dataValue, propertyType, apparentType);
