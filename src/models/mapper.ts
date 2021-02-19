@@ -1,7 +1,7 @@
 import { TConstructor } from './t-constructor.model';
 import { MapperOptions } from '../interfaces/mapper-options.interface';
 import { InitService } from '../services/init.service';
-import { isPrimitiveTypeOrArrayOfPrimitiveTypeNodes, } from '../utils/primitives.util';
+import { isPrimitiveTypeOrArrayOfPrimitiveType, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
@@ -42,7 +42,7 @@ export class Mapper<T> {
         const isArray = infos.isArray;
         await this.init();
         // TODO : Dates
-        if (isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName)) {
+        if (isPrimitiveTypeOrArrayOfPrimitiveType(typeName)) {
             return MapPrimitiveService.create(data, typeName as PrimitiveType, isArray);
         } else {
             const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);

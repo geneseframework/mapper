@@ -22,9 +22,9 @@ export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveT
 }
 
 
-export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeNode: TypeNode): boolean
-export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeName: string): boolean
-export function isPrimitiveTypeOrArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): boolean {
+export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNode: TypeNode): boolean
+export function isPrimitiveTypeOrArrayOfPrimitiveType(typeName: string): boolean
+export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNameOrNode: string | TypeNode): boolean {
     if (typeof typeNameOrNode === 'string') {
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
