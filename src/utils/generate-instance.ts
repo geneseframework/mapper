@@ -30,6 +30,7 @@ import { TestMapper } from "../test-engine/test-mapper.model";
 import { MapTypeArrayService } from "../services/map-type-array.service";
 import { PropertyInfos } from "../types/property-infos.type";
 import { DateDeclaration } from "../models/date-declaration.model";
+import { MapDateService } from "../services/map-date.service";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -54,6 +55,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'MapArrayService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-array.service.ts':
             instance = new MapArrayService();
+            break;
+        case 'MapDateService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-date.service.ts':
+            instance = new MapDateService();
             break;
         case 'MapDeclarationService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-declaration.service.ts':
             instance = new MapDeclarationService();
