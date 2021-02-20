@@ -22,22 +22,42 @@ testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / Employe
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: { name: 'Total', employees: 30000 } }));
 
 
-export class NickNamesSpec {
-    nickNames: StringOrStrings;
+// -------------------------------------------------------------------------------------------------
+
+
+export class PaintStringOrStringsSpec {
+    colors: StringOrStrings;
 }
 
-testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string | string[]`, NickNamesSpec, { nickNames: 'Auguste' }));
-testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, NickNamesSpec, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
-testMappers.push(new TestMapper(`{ nickNames: ['Auguste', 'The old ]} / string | string[]`, NickNamesSpec, { nickNames: ['Auguste', 'The old'] }));
+testMappers.push(new TestMapper(`{ colors: 'Blue' } / PaintStringOrStringsSpec`, PaintStringOrStringsSpec, { colors: 'Blue' }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / PaintStringOrStringsSpec / {}`, PaintStringOrStringsSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ colors: ['Blue', 'White']} / PaintStringOrStringsSpec`, PaintStringOrStringsSpec, { colors: ['Blue', 'White'] }));
+
+
+// -------------------------------------------------------------------------------------------------
 
 
 export type StringsOrStringSpec = string[] | string;
-export class PersonWithNickNamesStringsOrString {
-    nickNames: StringsOrStringSpec;
+export class PaintStringsOrStringSpec {
+    colors: StringsOrStringSpec;
 }
 
-testMappers.push(new TestMapper(`{ nickNames: 'Auguste' } / string[] | string`, PersonWithNickNamesStringsOrString, { nickNames: 'Auguste' }));
-testMappers.push(new TestMapper(`{ unknownProperty: 'Auguste' } / string | string[] / {}`, PersonWithNickNamesStringsOrString, { unknownProperty: 'Auguste' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ colors: 'Blue' } / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, { colors: 'Blue' }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / PaintStringsOrStringSpec / {}`, PaintStringsOrStringSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ colors: ['Blue', 'White']} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, { colors: ['Blue', 'White'] }, {isolate: false}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export type NumbersSpec = number[] | number;
+export class AgeNumbersOrNumberSpec {
+    ages: NumbersSpec;
+}
+
+testMappers.push(new TestMapper(`{ ages: 2 } / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: 2 }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / AgeNumbersOrNumberSpec / {}`, AgeNumbersOrNumberSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: [4, 6] }, {isolate: false}));
 
 
 // -------------------------------------------------------------------------------------------------

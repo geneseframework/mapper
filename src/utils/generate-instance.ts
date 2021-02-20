@@ -12,7 +12,7 @@ import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
 import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  DateSpec,    IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, PersonCatSpec, ValuesByDefault, ValuesOnConstructor } from "../debug/project/src/tests/classes.spec";
-import { NgoSpec, CompanySpec, PersonSpec, NickNamesSpec, PersonWithNickNamesStringsOrString, LevelClassSpec } from "../debug/project/src/tests/types.spec";
+import { NgoSpec, CompanySpec, PersonSpec, PaintStringOrStringsSpec, LevelClassSpec, AgeNumbersOrNumberSpec, PaintStringsOrStringSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
 import { InitService } from "../services/init.service";
@@ -171,11 +171,14 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
         case 'PersonSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
             instance = new PersonSpec();
             break;
-        case 'NickNamesSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
-            instance = new NickNamesSpec();
+        case 'PaintStringOrStringsSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
+            instance = new PaintStringOrStringsSpec();
             break;
-        case 'PersonWithNickNamesStringsOrString_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
-            instance = new PersonWithNickNamesStringsOrString();
+        case 'PaintStringsOrStringSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
+            instance = new PaintStringsOrStringSpec();
+            break;
+        case 'AgeNumbersOrNumberSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
+            instance = new AgeNumbersOrNumberSpec();
             break;
         case 'LevelClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
             instance = new LevelClassSpec();
