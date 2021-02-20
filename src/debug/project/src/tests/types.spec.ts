@@ -21,7 +21,7 @@ testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerS
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: { name: 'Total', employees: 30000 } }));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Total', employees: 30000 }] }, {expectedValue: {}}));
-testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Greenpeace', volunteers: 3000 }] }, {isolate: false}));
+testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Greenpeace', volunteers: 3000 }] }));
 
 
 // -------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ export class AgeNumberOrNumbersSpec {
 testMappers.push(new TestMapper(`{ ages: 2 } / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: 2 }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / AgeNumberOrNumbersSpec / {}`, AgeNumberOrNumbersSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
 testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: [4, 6] }));
-testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: ['rtty', 6] }, {expectedValue: {ages: [6]}, isolate: false, log: true}));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: ['rtty', 6] }, {expectedValue: {ages: [6]}}));
 
 
 // -------------------------------------------------------------------------------------------------

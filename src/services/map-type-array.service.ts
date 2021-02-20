@@ -7,7 +7,6 @@ import {
     primitiveLiteralValue,
     typeOfDataCorrespondsToPrimitiveKeyword
 } from '../utils/primitives.util';
-import * as chalk from 'chalk';
 import { PrimitiveElement } from '../types/primitives.type';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { isArray, partialClone } from '../utils/arrays.util';
@@ -23,26 +22,10 @@ export class MapTypeArrayService {
         const typeNode: TypeNode = typeNodes[0];
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
-        } else if (isArray(dataValue) && typeNode.getKind() === SyntaxKind.ArrayType) {
-            console.log(chalk.yellowBright('MapTypeArrayServiceeeeee'), target, key, dataValue, typeNode.getKindName(), (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
-            const root = {}
-            let i = 0;
-            for (const element of dataValue) {
-                this.mapTypeNodesArray(root, i, element, [(typeNode as ArrayTypeNode).getElementTypeNode()], typeProperties);
-                i++
-            }
-            console.log(chalk.blueBright('ROOOOOOT'), root);
-            target[key] = [...Object.values(root)];
+        } else if (this.isArrayOfNonPrimitives(dataValue, typeNode)) {
+            this.mapTypesNodesNonPrimitivesArray(target, key, dataValue, typeNode, typeProperties);
         } else {
-            console.log(chalk.greenBright('MapTypeArrayServiceeeeee'), target, key, dataValue, typeNode.getKindName());
-            for (const dataKey of Object.keys(dataValue)) {
-                typeProperties.push(dataKey);
-                if (this.isKeyType(dataKey, typeNode, undefined)) {
-                    MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
-                } else {
-                    this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
-                }
-            }
+            this.mapDataKeys(target, key, dataValue, typeNode, typeNodes, typeProperties);
         }
     }
 
@@ -55,6 +38,30 @@ export class MapTypeArrayService {
             this.mapTypesNodesPrimitive(target, key, dataValue, typeNode, typeNodes, typeProperties);
         }
     }
+
+
+    private static mapTypesNodesNonPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeProperties: any[]): void {
+        const root = {}
+        let i = 0;
+        for (const element of dataValue) {
+            this.mapTypeNodesArray(root, i, element, [(typeNode as ArrayTypeNode).getElementTypeNode()], typeProperties);
+            i++
+        }
+        target[key] = [...Object.values(root)];
+    }
+
+
+    private static mapDataKeys(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
+        for (const dataKey of Object.keys(dataValue)) {
+            typeProperties.push(dataKey);
+            if (this.isKeyType(dataKey, typeNode, undefined)) {
+                MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
+            } else {
+                this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
+            }
+        }
+    }
+
 
 
     private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[] = []): void {
@@ -92,7 +99,7 @@ export class MapTypeArrayService {
         } else if (typeNodes.length > 1) {
             this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
         } else {
-            console.log(chalk.redBright('Unknown primitive literal type : '), target, key, dataValue, typeNode.getKindName(), typeNodes.map(t => t.getKindName()), typeProperties.length);
+            throwWarning(`Unknown primitive literal type : \nTarget: ${target}\nKey: key\nDataValue: ${dataValue}\nTypeNode: ${typeNode.getKindName()}`);
         }
     }
 
@@ -102,7 +109,6 @@ export class MapTypeArrayService {
         const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
         if (indexOfNextTypeNodeIncludingKeys !== undefined) {
             const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
-            console.log(chalk.blueBright('mapKeyTypeeeee'), target, key, dataValue);
             this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
         }
     }
@@ -131,8 +137,6 @@ export class MapTypeArrayService {
 
 
     private static isKeyInType(key: Key, typeNode: TypeNode, dataValue?: any): boolean {
-        console.log(chalk.cyanBright('isKeyInType TYPE'), key, typeNode.getKindName(), dataValue);
-        console.log(chalk.magentaBright('isKeyInType typeNode.getText()'), typeNode.getText());
         switch (typeNode.getKind()) {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
@@ -148,23 +152,17 @@ export class MapTypeArrayService {
                     return false;
                 } else {
                     for (const element of dataValue) {
-                        console.log(chalk.greenBright('ARRAY TYPE'), key, typeNode.getKindName(), element, dataValue, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
                         if (typeof element !== 'object') {
                             return false;
                         }
                         for (const elementKey of Object.keys(element)) {
-                            console.log(chalk.yellowBright('ARRAY TYPEeeee'), key, typeNode.getKindName(), dataValue, elementKey, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
-                            console.log(chalk.redBright('IS KEY INNNNNN TYPE'), this.isKeyInType(elementKey, (typeNode as ArrayTypeNode).getElementTypeNode()));
                             if (!this.isKeyInType(elementKey, (typeNode as ArrayTypeNode).getElementTypeNode())) {
                                 return false;
                             }
                         }
                     }
-                    console.log(chalk.greenBright('ARRAY TYPEeeee OKKKKK'), key, typeNode.getKindName(), dataValue, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
                      return true;
                 }
-                console.log(chalk.redBright('ARRAY TYPE'), key, typeNode.getKindName(), dataValue);
-                // TODO
                 return false;
             default:
                 throwWarning(`Unknown key in TypeNode : key ${key} not found in Type ${typeNode.getKindName()}`);
@@ -176,6 +174,11 @@ export class MapTypeArrayService {
     private static getIndexOfNextArrayOfPrimitiveTypes(typeNodes: TypeNode[]): number {
         const typeNodeIndex: number = typeNodes.findIndex(t => isArrayOfPrimitiveTypeNodes(t));
         return typeNodeIndex > -1 ? typeNodeIndex : undefined;
+    }
+
+
+    private static isArrayOfNonPrimitives(dataValue: any, typeNode: TypeNode): boolean {
+        return isArray(dataValue) && typeNode.getKind() === SyntaxKind.ArrayType;
     }
 
 }
