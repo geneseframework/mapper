@@ -59,7 +59,6 @@ export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
         return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
-        console.log(chalk.greenBright('SHOULD BE HEREEEEE'), typeNode?.getKindName(), PRIMITIVE_KEYWORDS.includes(typeNode.getKind()));
         return PRIMITIVE_KEYWORDS.includes(typeNode.getKind());
     }
 }

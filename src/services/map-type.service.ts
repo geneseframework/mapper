@@ -108,7 +108,6 @@ export class MapTypeService {
      * @private
      */
     private static mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode): void {
-       console.log(chalk.yellowBright('mapUnionTypeeeee'), target, key, dataValue, unionTypeNode.getKindName(), unionTypeNode.getTypeNodes().map(t => t.getKindName()));
         MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
     }
 

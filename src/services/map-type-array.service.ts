@@ -37,7 +37,7 @@ export class MapTypeArrayService {
 
     static mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
-        console.log(chalk.cyanBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), typeProperties);
+        // console.log(chalk.cyanBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), typeProperties);
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
@@ -64,9 +64,8 @@ export class MapTypeArrayService {
 
 
     private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
-        console.log(chalk.blueBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
-            console.log(chalk.redBright('SHOULD NOT BE HERRRRRRE'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
+            // console.log(chalk.redBright('SHOULD NOT BE HERRRRRRE'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                 if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
@@ -79,10 +78,8 @@ export class MapTypeArrayService {
             }
             return;
         } else {
-            console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText(), isLiteralKeyword(typeNode));
             const primitiveElements: PrimitiveElement[] = [];
             for (const element of dataValue) {
-                console.log(chalk.yellowBright('typeOfDataCorrespondsToPrimitiveKeywordddddd'), element, typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode));
                 if (typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode)) {
                     primitiveElements.push(element);
                 }

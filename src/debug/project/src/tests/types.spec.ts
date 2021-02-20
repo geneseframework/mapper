@@ -57,7 +57,7 @@ export class AgeNumbersOrNumberSpec {
 
 testMappers.push(new TestMapper(`{ ages: 2 } / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: 2 }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / AgeNumbersOrNumberSpec / {}`, AgeNumbersOrNumberSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
-testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: [4, 6] }, {isolate: true}));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: [4, 6] }, {isolate: false}));
 
 
 // -------------------------------------------------------------------------------------------------
