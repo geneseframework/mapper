@@ -14,6 +14,7 @@ import { isArray, partialClone } from '../utils/arrays.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapTypeService } from './map-type.service';
 import { Key } from '../types/key.type';
+import { throwWarning } from '../utils/errors.util';
 
 export class MapTypeArrayService {
 
@@ -22,7 +23,18 @@ export class MapTypeArrayService {
         const typeNode: TypeNode = typeNodes[0];
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
+        } else if (isArray(dataValue) && typeNode.getKind() === SyntaxKind.ArrayType) {
+            console.log(chalk.yellowBright('MapTypeArrayServiceeeeee'), target, key, dataValue, typeNode.getKindName(), (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
+            const root = {}
+            let i = 0;
+            for (const element of dataValue) {
+                this.mapTypeNodesArray(root, i, element, [(typeNode as ArrayTypeNode).getElementTypeNode()], typeProperties);
+                i++
+            }
+            console.log(chalk.blueBright('ROOOOOOT'), root);
+            target[key] = [...Object.values(root)];
         } else {
+            console.log(chalk.greenBright('MapTypeArrayServiceeeeee'), target, key, dataValue, typeNode.getKindName());
             for (const dataKey of Object.keys(dataValue)) {
                 typeProperties.push(dataKey);
                 if (this.isKeyType(dataKey, typeNode, undefined)) {
@@ -90,6 +102,7 @@ export class MapTypeArrayService {
         const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
         if (indexOfNextTypeNodeIncludingKeys !== undefined) {
             const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
+            console.log(chalk.blueBright('mapKeyTypeeeee'), target, key, dataValue);
             this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
         }
     }
@@ -117,7 +130,9 @@ export class MapTypeArrayService {
     }
 
 
-    private static isKeyInType(key: Key, typeNode: TypeNode, value?: any): boolean {
+    private static isKeyInType(key: Key, typeNode: TypeNode, dataValue?: any): boolean {
+        console.log(chalk.cyanBright('isKeyInType TYPE'), key, typeNode.getKindName(), dataValue);
+        console.log(chalk.magentaBright('isKeyInType typeNode.getText()'), typeNode.getText());
         switch (typeNode.getKind()) {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
@@ -127,12 +142,32 @@ export class MapTypeArrayService {
                     return false;
                 }
             case SyntaxKind.LiteralType:
-                return value === typeNode.getText().slice(1, -1);
+                return dataValue === typeNode.getText().slice(1, -1);
             case SyntaxKind.ArrayType:
+                if (!isArray(dataValue)) {
+                    return false;
+                } else {
+                    for (const element of dataValue) {
+                        console.log(chalk.greenBright('ARRAY TYPE'), key, typeNode.getKindName(), element, dataValue, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
+                        if (typeof element !== 'object') {
+                            return false;
+                        }
+                        for (const elementKey of Object.keys(element)) {
+                            console.log(chalk.yellowBright('ARRAY TYPEeeee'), key, typeNode.getKindName(), dataValue, elementKey, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
+                            console.log(chalk.redBright('IS KEY INNNNNN TYPE'), this.isKeyInType(elementKey, (typeNode as ArrayTypeNode).getElementTypeNode()));
+                            if (!this.isKeyInType(elementKey, (typeNode as ArrayTypeNode).getElementTypeNode())) {
+                                return false;
+                            }
+                        }
+                    }
+                    console.log(chalk.greenBright('ARRAY TYPEeeee OKKKKK'), key, typeNode.getKindName(), dataValue, (typeNode as ArrayTypeNode).getElementTypeNode()?.getKindName());
+                     return true;
+                }
+                console.log(chalk.redBright('ARRAY TYPE'), key, typeNode.getKindName(), dataValue);
                 // TODO
                 return false;
             default:
-                console.log(chalk.redBright(`Unknown key in TypeNode : key ${key} not found in Type `), typeNode.getKindName());
+                throwWarning(`Unknown key in TypeNode : key ${key} not found in Type ${typeNode.getKindName()}`);
                 return false;
         }
     }
