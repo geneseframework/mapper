@@ -161,8 +161,8 @@ export class ChildClassSpec extends ParentClassSpec {
         this.color = color;
     }
 }
-testMappers.push(new TestMapper(`{ color: 'White' } / ChildClassSpec / { color: 'White', name: 'unknown' }`, ChildClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }, isolate: true}));
-testMappers.push(new TestMapper(`{} / ChildClassSpec / { color: undefined, name: 'unknown' }`, ChildClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}, isolate: true}));
+testMappers.push(new TestMapper(`{ color: 'White' } / ChildClassSpec / { color: 'White', name: 'unknown' }`, ChildClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }}));
+testMappers.push(new TestMapper(`{} / ChildClassSpec / { color: undefined, name: 'unknown' }`, ChildClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
 
 
 // -------------------------------------------------------------------------------------------------
@@ -181,6 +181,6 @@ export class ChildAbstractClassSpec extends AbstractParentClassSpec {
         this.color = color;
     }
 }
-testMappers.push(new TestMapper(`{ color: 'White' } / ChildAbstractClassSpec / { color: 'White', name: 'unknown' }`, ChildAbstractClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }, isolate: true}));
-testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / { color: undefined, name: 'unknown' }`, ChildAbstractClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}, isolate: true}));
-testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`{ color: 'White' } / ChildAbstractClassSpec / { color: 'White', name: 'unknown' }`, ChildAbstractClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }}));
+testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / { color: undefined, name: 'unknown' }`, ChildAbstractClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
+testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));

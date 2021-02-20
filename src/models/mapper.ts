@@ -23,6 +23,7 @@ import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { isTuple } from '../utils/tuples.util';
 import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
 import { MapObjectService } from '../services/map-object.service';
+import { throwWarning } from '../utils/errors.util';
 
 export class Mapper<T> {
 
@@ -95,6 +96,7 @@ export class Mapper<T> {
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 return MapTypeService.createTypes(data, info.typeName, info.isArray);
             default:
+                throwWarning(`Warning : type declaration "${info.typeName}" not found.`);
                 return undefined;
         }
     }
