@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import { isValidDateConstructor } from '../utils/dates.util';
 
 export class MapDateService {
 
@@ -27,20 +27,10 @@ export class MapDateService {
 
 
     static createDate<T>(data: any): Date {
-        if (this.isValidDateConstructor(data)) {
+        if (isValidDateConstructor(data)) {
             return new Date(data);
         } else {
             return undefined;
         }
-    }
-
-
-    private static isValidDateConstructor(d: any): boolean {
-        return d && typeof d === 'string' || typeof d === 'number' || (typeof d.year === 'string' && typeof d.month === 'number') || this.isValidDate(d);
-    }
-
-
-    private static isValidDate(d): boolean {
-        return Object.prototype.toString.call(d) === "[object Date]" ? !isNaN(d.getTime()) : false;
     }
 }

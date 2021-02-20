@@ -22,9 +22,9 @@ export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveT
 }
 
 
-export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNode: TypeNode): boolean
-export function isPrimitiveTypeOrArrayOfPrimitiveType(typeName: string): boolean
-export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNameOrNode: string | TypeNode): boolean {
+export function isPrimitiveOrPrimitivesArray(typeNode: TypeNode): boolean
+export function isPrimitiveOrPrimitivesArray(typeName: string): boolean
+export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode): boolean {
     if (typeof typeNameOrNode === 'string') {
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
@@ -38,7 +38,7 @@ export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNameOrNode: string | T
 export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
 export function isPrimitiveTypeNode(typeName: string): boolean
 export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isLiteralPrimitive(typeNameOrNode);
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
 }
 
 
@@ -57,7 +57,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
 
 export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
-        return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral().getKind());
+        return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
         return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
     }

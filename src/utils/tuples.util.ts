@@ -1,5 +1,7 @@
-import { MapParameter } from '../types/map-parameter.type';
+import { MapTarget } from '../types/map-target.type';
+import { isArray } from './arrays.util';
 
-export function isTuple(mapParameter: MapParameter<any>) {
-    return Array.isArray(mapParameter);
+
+export function isTuple(mapTarget: MapTarget<any>) {
+    return isArray(mapTarget);
 }

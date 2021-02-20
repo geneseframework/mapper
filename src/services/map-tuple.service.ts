@@ -6,11 +6,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
-import { MapParameter } from '../types/map-parameter.type';
 import { Tuple } from '../types/tuple.type';
-import * as chalk from 'chalk';
-import { newMappedElement } from '../utils/mapping.util';
 import { Mapper } from '../models/mapper';
 
 export class MapTupleService<T> {
