@@ -11,7 +11,7 @@ import { ColorClassSpec, ColorsClassSpec } from "../debug/project/src/tests/enum
 import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
-import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  DateSpec,    IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, PersonCatSpec, ValuesByDefault, ValuesOnConstructor } from "../debug/project/src/tests/classes.spec";
+import { CatSpec, ChildAbstractClassSpec,  ChildClassSpec,  ClassWithAnySpec,  ClassWithPrimitivesSpec,  DateSpec,    IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, ParentClassSpec,  PersonCatSpec, ValuesByDefault, ValuesOnConstructor } from "../debug/project/src/tests/classes.spec";
 import { NgoSpec, CompanySpec, PersonSpec, PaintStringOrStringsSpec, LevelClassSpec, AgeNumbersOrNumberSpec, PaintStringsOrStringSpec, AgeNumberOrNumbersSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
@@ -149,6 +149,15 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'OutOfProjectSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
             instance = new OutOfProjectSpec();
+            break;
+        case 'ParentClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new ParentClassSpec(undefined);
+            break;
+        case 'ChildClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new ChildClassSpec(undefined, undefined);
+            break;
+        case 'ChildAbstractClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+            instance = new ChildAbstractClassSpec(undefined, undefined);
             break;
         case 'ColorClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts':
             instance = new ColorClassSpec();

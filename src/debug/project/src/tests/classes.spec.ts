@@ -143,3 +143,44 @@ export class OutOfProjectSpec {
 }
 
 testMappers.push(new TestMapper(`{ color: 'White' } / Chalk / undefined`, 'Chalk', { color: 'White' }, { expectedValue: undefined }));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export class ParentClassSpec {
+    name: string;
+    constructor(name: string) {
+        this.name = name ?? 'unknown';
+    }
+}
+export class ChildClassSpec extends ParentClassSpec {
+    color: string;
+    constructor(name: string, color: string) {
+        super(name);
+        this.color = color;
+    }
+}
+testMappers.push(new TestMapper(`{ color: 'White' } / ChildClassSpec / { color: 'White', name: 'unknown' }`, ChildClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }}));
+testMappers.push(new TestMapper(`{} / ChildClassSpec / { color: undefined, name: 'unknown' }`, ChildClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export abstract class AbstractParentClassSpec {
+    name: string;
+    protected constructor(name: string) {
+        this.name = name ?? 'unknown';
+    }
+}
+export class ChildAbstractClassSpec extends AbstractParentClassSpec {
+    color: string;
+    constructor(name: string, color: string) {
+        super(name);
+        this.color = color;
+    }
+}
+testMappers.push(new TestMapper(`{ color: 'White' } / ChildAbstractClassSpec / { color: 'White', name: 'unknown' }`, ChildAbstractClassSpec, { color: 'White' }, {expectedValue:{ color: 'White', name: 'unknown' }}));
+testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / { color: undefined, name: 'unknown' }`, ChildAbstractClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
+testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));
