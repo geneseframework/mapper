@@ -54,7 +54,6 @@ export class Mapper<T> {
 
     private static isTrivialCase<T>(mapTarget: MapTarget<T>, data: any): boolean {
         const info: MapTargetInfo = this.getInfo(mapTarget);
-        console.log(chalk.blueBright('MAPPPPER'), mapTarget, data, info);
         return isNullOrUndefined(data)
             || this.isTuple(mapTarget)
             || isPrimitiveTypeOrArrayOfPrimitiveType(info.typeName)
