@@ -31,6 +31,7 @@ import { MapTypeArrayService } from "../services/map-type-array.service";
 import { PropertyInfos } from "../types/property-infos.type";
 import { DateDeclaration } from "../models/date-declaration.model";
 import { MapDateService } from "../services/map-date.service";
+import { MapObjectService } from "../services/map-object.service";
 
 export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
     let instance: any;
@@ -73,6 +74,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'MapInterfaceService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-interface.service.ts':
             instance = new MapInterfaceService();
+            break;
+        case 'MapObjectService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-object.service.ts':
+            instance = new MapObjectService();
             break;
         case 'MapPrimitiveService_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/services/map-primitive.service.ts':
             instance = new MapPrimitiveService();

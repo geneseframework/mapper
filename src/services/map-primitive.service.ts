@@ -6,7 +6,7 @@ export class MapPrimitiveService {
     static create(data: any[], typeName: PrimitiveType, isArray: boolean): ArrayOfPrimitiveElements
     static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement
     static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
-        if (!this.corresponds(data, isArray)) {
+        if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
             return undefined;
         }
         if (Array.isArray(data)) {
@@ -18,14 +18,14 @@ export class MapPrimitiveService {
 
 
     private static createArrayElements(data: any[], typeName: PrimitiveType): ArrayOfPrimitiveElements {
-        const instancesArray = [];
+        const primitiveElementsArray = [];
         for (const element of data) {
             const primitiveElement: PrimitiveElement = this.createElement(element, typeName);
             if (primitiveElement || element === undefined || element === null) {
-                instancesArray.push(primitiveElement);
+                primitiveElementsArray.push(primitiveElement);
             }
         }
-        return instancesArray.length > 0 ? instancesArray : undefined;
+        return primitiveElementsArray.length > 0 ? primitiveElementsArray : undefined;
     }
 
 
@@ -37,7 +37,7 @@ export class MapPrimitiveService {
     }
 
 
-    private static corresponds(data: any, isArray: boolean): boolean {
+    private static targetAndDataAreBothArrayOrNot(data: any, isArray: boolean): boolean {
         return (Array.isArray(data) && isArray) || (!Array.isArray(data) && !isArray);
     }
 
