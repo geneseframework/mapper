@@ -6,8 +6,14 @@
         "url": "https://github.com/gillesfabre34"
     },
     "scripts": {
+        "build": "tsc",
+        "start": "npm run build && node dist/src/index.js",
+        "publish_package": "npm run build && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "ts-node src/test-engine/test.ts"
+    },
+    "bin": {
+        "genese": "dist/src/index.js"
     },
     "devDependencies": {
         "@types/node": "^12.12.14",

@@ -32,7 +32,6 @@ export class Mapper<T> {
     static async create<T>(mapTarget: MapTarget<T>, data: number): Promise<number>
     static async create<T>(mapTarget: MapTarget<T>, data: string): Promise<string>
     static async create<T>(mapTarget: {} | Object, data: object): Promise<object>
-    static async create<T>(mapTarget: [{}] | Object[], data: object[]): Promise<object[]>
     static async create<Date>(mapTarget: MapTarget<Date>, data: Date): Promise<Date>
     static async create<T>(mapTarget: Tuple, data: any[], options?: MapOptions): Promise<Tuple>
     static async create<Date>(mapTarget: MapTarget<Date>, data: Date[]): Promise<Date[]>
