@@ -63,12 +63,15 @@ export class MapTypeArrayService {
     }
 
 
-    private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
+    private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[] = []): void {
+        console.log(chalk.blueBright('mapTypesNodesPrimitivesArrayyyyy'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
-            // console.log(chalk.redBright('SHOULD NOT BE HERRRRRRE'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
+            console.log(chalk.redBright('mapTypesNodesPrimitivesArrayyyyy idx'), indexOfNextTypeNodeIncludingKeys);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
-                if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
+                this.mapTypesNodesPrimitivesArray(target, key, dataValue, nextTypeNodes[indexOfNextTypeNodeIncludingKeys]);
+                if (typeOfDataCorrespondsToPrimitiveKeyword(dataValue, nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode)) {
+                    // if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
                     target[key] = dataValue;
                     return;
                 } else {
@@ -80,6 +83,7 @@ export class MapTypeArrayService {
         } else {
             const primitiveElements: PrimitiveElement[] = [];
             for (const element of dataValue) {
+                console.log(chalk.cyanBright('mapTypesNodesPrimitivesArrayyyyy'), element, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()), typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode));
                 if (typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode)) {
                     primitiveElements.push(element);
                 }
