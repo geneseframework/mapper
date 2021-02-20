@@ -57,7 +57,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
 
 export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
-        return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral().getKind());
+        return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
         return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
     }
