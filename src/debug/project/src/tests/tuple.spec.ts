@@ -15,7 +15,3 @@ export class TupleClassSpec {
 testMappers.push(new TestMapper(`[{ name: 'Léa'}] / [TupleClassSpec]`, [TupleClassSpec],[{ name: 'Léa'}]));
 testMappers.push(new TestMapper(`[{ name: 'Léa'}, { name: 'Léo'}] / [TupleClassSpec, TupleClassSpec]`, [TupleClassSpec, TupleClassSpec],[{ name: 'Léa'}, { name: 'Léo'}]));
 testMappers.push(new TestMapper(`[{ name: 'Léa'}, 'Blue'] / [TupleClassSpec, 'string']`, [TupleClassSpec, 'string'],[{ name: 'Léa'}, 'Blue']));
-
-// TODO : Tuple of Tuples
-// testMappers.push(new TestMapper(`[{ name: 'Léa'}, 'Blue'] / [TupleClassSpec, ['string', 'number']]`, [TupleClassSpec, ['string', 'number']],[{ name: 'Léa'}, ['Blue', 0]]));
-

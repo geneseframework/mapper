@@ -5,22 +5,14 @@ import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../types/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
-import * as chalk from 'chalk';
 import { PrimitiveType } from '../types/primitives.type';
 import { PropertyInfos } from '../types/property-infos.type';
 import { throwWarning } from '../utils/errors.util';
-import { isNullOrUndefined } from '../utils/any.util';
 
 export class MapPropertyService<T> {
 
 
     static map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): void {
-        if (isNullOrUndefined(dataValue)) {
-            // TODO :test this case
-            console.log(chalk.redBright('TODO : test'), dataValue);
-            target[key] = dataValue;
-            return;
-        }
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
