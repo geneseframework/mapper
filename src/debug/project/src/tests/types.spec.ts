@@ -20,6 +20,8 @@ testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / Employer`
 testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], { expectedValue: undefined }));
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: { name: 'Total', employees: 30000 } }));
+testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Total', employees: 30000 }] }, {expectedValue: {}}));
+testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Greenpeace', volunteers: 3000 }] }));
 
 
 // -------------------------------------------------------------------------------------------------
@@ -44,20 +46,34 @@ export class PaintStringsOrStringSpec {
 
 testMappers.push(new TestMapper(`{ colors: 'Blue' } / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, { colors: 'Blue' }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / PaintStringsOrStringSpec / {}`, PaintStringsOrStringSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
-testMappers.push(new TestMapper(`{ colors: ['Blue', 'White']} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, { colors: ['Blue', 'White'] }, {isolate: false}));
+testMappers.push(new TestMapper(`{ colors: ['Blue', 'White']} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, { colors: ['Blue', 'White'] }));
 
 
 // -------------------------------------------------------------------------------------------------
 
 
-export type NumbersSpec = number[] | number;
+export type NumbersOrNumberSpec = number[] | number;
 export class AgeNumbersOrNumberSpec {
-    ages: NumbersSpec;
+    ages: NumbersOrNumberSpec;
 }
 
 testMappers.push(new TestMapper(`{ ages: 2 } / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: 2 }));
 testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / AgeNumbersOrNumberSpec / {}`, AgeNumbersOrNumberSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
-testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: [4, 6] }, {isolate: false}));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, { ages: [4, 6] }));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export type NumberOrNumbersSpec = number | number[];
+export class AgeNumberOrNumbersSpec {
+    ages: NumberOrNumbersSpec;
+}
+
+testMappers.push(new TestMapper(`{ ages: 2 } / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: 2 }));
+testMappers.push(new TestMapper(`{ unknownProperty: 'Blue' } / AgeNumberOrNumbersSpec / {}`, AgeNumberOrNumbersSpec, { unknownProperty: 'Blue' }, { expectedValue: {} }));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: [4, 6] }));
+testMappers.push(new TestMapper(`{ ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, { ages: ['rtty', 6] }, {expectedValue: {ages: [6]}}));
 
 
 // -------------------------------------------------------------------------------------------------

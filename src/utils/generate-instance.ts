@@ -12,7 +12,7 @@ import { Mapper } from "../models/mapper";
 import { AnimalOwner } from "../debug/project/src/tests/interfaces.spec";
 import { TupleClassSpec } from "../debug/project/src/tests/tuple.spec";
 import { CatSpec, ClassWithAnySpec,  ClassWithPrimitivesSpec,  DateSpec,    IndexableNumberSpec,    IndexableSpec,    OutOfProjectSpec, PersonCatSpec, ValuesByDefault, ValuesOnConstructor } from "../debug/project/src/tests/classes.spec";
-import { NgoSpec, CompanySpec, PersonSpec, PaintStringOrStringsSpec, LevelClassSpec, AgeNumbersOrNumberSpec, PaintStringsOrStringSpec } from "../debug/project/src/tests/types.spec";
+import { NgoSpec, CompanySpec, PersonSpec, PaintStringOrStringsSpec, LevelClassSpec, AgeNumbersOrNumberSpec, PaintStringsOrStringSpec, AgeNumberOrNumbersSpec } from "../debug/project/src/tests/types.spec";
 import { Global } from "../models/global.model";
 import { FlagService } from "../services/flag.service";
 import { InitService } from "../services/init.service";
@@ -179,6 +179,9 @@ export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T 
             break;
         case 'AgeNumbersOrNumberSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
             instance = new AgeNumbersOrNumberSpec();
+            break;
+        case 'AgeNumberOrNumbersSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
+            instance = new AgeNumberOrNumbersSpec();
             break;
         case 'LevelClassSpec_/users/utilisateur/documents/perso_gilles_fabre/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
             instance = new LevelClassSpec();
