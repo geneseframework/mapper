@@ -64,7 +64,6 @@ export class MapTypeService {
     }
 
 
-    // TODO : Types which are not unions
     static map(target: any, key: Key, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
         MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
@@ -117,7 +116,6 @@ export class MapTypeService {
             target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false);
             return;
         }
-// TODO : Literal objects, true, false, null,...
     }
 
 

@@ -90,7 +90,22 @@ testMappers.push(new TestMapper(`{ level: 1 } / LevelClassSpec`, LevelClassSpec,
 // -------------------------------------------------------------------------------------------------
 
 
-
 export type ColorsTypeSpec = 'Blue' | 'White';
 testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Blue'));
 testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', { expectedValue: undefined }));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export type StringAloneSpec = string;
+testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue'));
+testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined}));
+
+
+// -------------------------------------------------------------------------------------------------
+
+
+export type CompanyAloneSpec = CompanySpec;
+testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / CompanyAloneSpec`, 'CompanyAloneSpec', { name: 'Total', employees: 30000 }));
+testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: {}}));
