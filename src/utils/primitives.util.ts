@@ -38,7 +38,7 @@ export function isPrimitiveTypeOrArrayOfPrimitiveType(typeNameOrNode: string | T
 export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
 export function isPrimitiveTypeNode(typeName: string): boolean
 export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode) : isLiteralPrimitive(typeNameOrNode);
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
 }
 
 

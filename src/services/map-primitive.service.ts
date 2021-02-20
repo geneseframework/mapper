@@ -33,7 +33,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
-        return typeof data === typeName ? data : undefined;
+        return typeof data === typeName?.toLowerCase() ? data : undefined;
     }
 
 

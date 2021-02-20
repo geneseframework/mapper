@@ -2,6 +2,7 @@ import { TestMapper } from '../../../../test-engine/test-mapper.model';
 
 export const testMappers: TestMapper[] = [];
 testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
+testMappers.push(new TestMapper(`'blue' / string`, String,'blue', {isolate: true}));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null, { isolate: false }));
 testMappers.push(new TestMapper(`'blue' / string / undefined`, 'string',2, { expectedValue: undefined }));

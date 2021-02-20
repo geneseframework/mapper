@@ -1,7 +1,7 @@
 import { TConstructor } from './t-constructor.model';
 import { MapOptions } from '../interfaces/mapper-options.interface';
 import { InitService } from '../services/init.service';
-import { isPrimitiveTypeOrArrayOfPrimitiveType, } from '../utils/primitives.util';
+import { isPrimitiveTypeNode, isPrimitiveTypeOrArrayOfPrimitiveType, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
@@ -21,6 +21,7 @@ import { MapDateService } from '../services/map-date.service';
 import { MapTargetInfo } from '../types/map-target-info.type';
 import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { isArray } from '../utils/arrays.util';
+import * as chalk from 'chalk';
 
 export class Mapper<T> {
 
@@ -53,6 +54,7 @@ export class Mapper<T> {
 
     private static isTrivialCase<T>(mapTarget: MapTarget<T>, data: any): boolean {
         const info: MapTargetInfo = this.getInfo(mapTarget);
+        console.log(chalk.blueBright('MAPPPPER'), mapTarget, data, info);
         return isNullOrUndefined(data)
             || this.isTuple(mapTarget)
             || isPrimitiveTypeOrArrayOfPrimitiveType(info.typeName)
