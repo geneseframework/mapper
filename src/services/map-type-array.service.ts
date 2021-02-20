@@ -1,35 +1,18 @@
-import {
-    ArrayTypeNode,
-    ClassDeclaration,
-    LiteralTypeNode,
-    SyntaxKind,
-    TypeAliasDeclaration,
-    TypeNode,
-    TypeReferenceNode,
-    UnionTypeNode
-} from 'ts-morph';
-import { MapPrimitiveService } from './map-primitive.service';
+import { ArrayTypeNode, ClassDeclaration, LiteralTypeNode, SyntaxKind, TypeNode, TypeReferenceNode } from 'ts-morph';
 import {
     isArrayOfPrimitiveTypeNodes,
-    isLiteralKeyword, isLiteralPrimitive,
+    isLiteralKeyword,
+    isLiteralPrimitive,
     isPrimitiveOrArrayOfPrimitivesValue,
-    isPrimitiveTypeNode,
-    isPrimitiveOrPrimitivesArray,
-    literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue, typeOfDataCorrespondsToPrimitiveKeyword
+    primitiveLiteralValue,
+    typeOfDataCorrespondsToPrimitiveKeyword
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveElement, PrimitiveType } from '../types/primitives.type';
-import { MapArrayService } from './map-array.service';
+import { PrimitiveElement } from '../types/primitives.type';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
-import { getApparentType } from '../utils/ast-types.util';
 import { isArray, partialClone } from '../utils/arrays.util';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { MapDeclarationService } from './map-declaration.service';
-import { newMappedElement } from '../utils/mapping.util';
 import { MapTypeService } from './map-type.service';
-import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
 
 export class MapTypeArrayService {
@@ -37,7 +20,6 @@ export class MapTypeArrayService {
 
     static mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
-        // console.log(chalk.cyanBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), typeProperties);
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
@@ -64,26 +46,15 @@ export class MapTypeArrayService {
 
 
     private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[] = []): void {
-        console.log(chalk.blueBright('mapTypesNodesPrimitivesArrayyyyy'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
-            console.log(chalk.redBright('mapTypesNodesPrimitivesArrayyyyy idx'), indexOfNextTypeNodeIncludingKeys);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                 this.mapTypesNodesPrimitivesArray(target, key, dataValue, nextTypeNodes[indexOfNextTypeNodeIncludingKeys]);
-                if (typeOfDataCorrespondsToPrimitiveKeyword(dataValue, nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode)) {
-                    // if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
-                    target[key] = dataValue;
-                    return;
-                } else {
-                    // TODO : case of primitive Literals
-                    console.log(chalk.redBright('TODO : array of primitive literal'));
-                }
             }
             return;
         } else {
             const primitiveElements: PrimitiveElement[] = [];
             for (const element of dataValue) {
-                console.log(chalk.cyanBright('mapTypesNodesPrimitivesArrayyyyy'), element, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()), typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode));
                 if (typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode)) {
                     primitiveElements.push(element);
                 }
