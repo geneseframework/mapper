@@ -1,6 +1,6 @@
 import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
-import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
+import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { LiteralNode } from '../types/literal-node.type';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
@@ -35,13 +35,6 @@ export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode):
 }
 
 
-export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
-export function isPrimitiveTypeNode(typeName: string): boolean
-export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
-}
-
-
 export function isArrayOfPrimitiveTypeNodes(typeNode: TypeNode): boolean
 export function isArrayOfPrimitiveTypeNodes(typeName: string): boolean
 export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): boolean {
@@ -55,17 +48,25 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
 }
 
 
+export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
+export function isPrimitiveTypeNode(typeName: string): boolean
+export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
+    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
+}
+
+
 export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
         return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
-        return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
+        console.log(chalk.greenBright('SHOULD BE HEREEEEE'), typeNode?.getKindName(), PRIMITIVE_KEYWORDS.includes(typeNode.getKind()));
+        return PRIMITIVE_KEYWORDS.includes(typeNode.getKind());
     }
 }
 
 
 export function isLiteralKeyword(typeNode: TypeNode): boolean {
-    return [SyntaxKind.TrueKeyword, SyntaxKind.FalseKeyword, SyntaxKind.StringKeyword, SyntaxKind.NumberKeyword, SyntaxKind.BooleanKeyword].includes(typeNode.getKind());
+    return PRIMITIVE_KEYWORDS.includes(typeNode.getKind());
 }
 
 
@@ -104,4 +105,14 @@ export function literalValue(literalTypeNode: LiteralTypeNode): string {
             console.log(chalk.yellowBright('Warning: unknown Literal value type : '), literal?.getKindName(), literal?.getText());
             return undefined;
     }
+}
+
+
+export function typeOfDataCorrespondsToPrimitiveKeyword(data: any, arrayTypeNode: ArrayTypeNode): boolean {
+    const elementTypeNode = arrayTypeNode.getElementTypeNode();
+    return PRIMITIVE_KEYWORDS.includes(elementTypeNode?.getKind()) && (
+        (typeof data === 'string' && elementTypeNode?.getKind() === SyntaxKind.StringKeyword)
+        || (typeof data === 'number' && elementTypeNode?.getKind() === SyntaxKind.NumberKeyword)
+        || (typeof data === 'boolean' && elementTypeNode?.getKind() === SyntaxKind.BooleanKeyword)
+    );
 }

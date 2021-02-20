@@ -16,14 +16,14 @@ import {
     isPrimitiveTypeNode,
     isPrimitiveOrPrimitivesArray,
     literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue
+    primitiveLiteralValue, typeOfDataCorrespondsToPrimitiveKeyword
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveType } from '../types/primitives.type';
+import { PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { partialClone } from '../utils/arrays.util';
+import { isArray, partialClone } from '../utils/arrays.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
@@ -37,6 +37,7 @@ export class MapTypeArrayService {
 
     static mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): void {
         const typeNode: TypeNode = typeNodes[0];
+        console.log(chalk.cyanBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), typeProperties);
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
             this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
         } else {
@@ -54,7 +55,7 @@ export class MapTypeArrayService {
 
     private static mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): void {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
-        if (Array.isArray(dataValue)) {
+        if (isArray(dataValue)) {
             this.mapTypesNodesPrimitivesArray(target, key, dataValue, typeNode, nextTypeNodes);
         } else {
             this.mapTypesNodesPrimitive(target, key, dataValue, typeNode, typeNodes, typeProperties);
@@ -63,7 +64,9 @@ export class MapTypeArrayService {
 
 
     private static mapTypesNodesPrimitivesArray(target: any, key: Key, dataValue: any[], typeNode: TypeNode, nextTypeNodes: TypeNode[]): void {
+        console.log(chalk.blueBright('MAP ARRRRAY'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
         if (!isArrayOfPrimitiveTypeNodes(typeNode)) {
+            console.log(chalk.redBright('SHOULD NOT BE HERRRRRRE'), target, key, dataValue, typeNode.getKindName(), nextTypeNodes.map(n => n.getKindName()));
             const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextArrayOfPrimitiveTypes(nextTypeNodes);
             if (indexOfNextTypeNodeIncludingKeys !== undefined) {
                 if (isLiteralKeyword((nextTypeNodes[indexOfNextTypeNodeIncludingKeys] as ArrayTypeNode).getElementTypeNode())) {
@@ -76,7 +79,17 @@ export class MapTypeArrayService {
             }
             return;
         } else {
-            console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText().slice(1, -1), isLiteralKeyword(typeNode));
+            console.log(chalk.magentaBright('TODO : is array of primitive nodes'), dataValue, typeNode.getText(), isLiteralKeyword(typeNode));
+            const primitiveElements: PrimitiveElement[] = [];
+            for (const element of dataValue) {
+                console.log(chalk.yellowBright('typeOfDataCorrespondsToPrimitiveKeywordddddd'), element, typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode));
+                if (typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode)) {
+                    primitiveElements.push(element);
+                }
+            }
+            if (primitiveElements.length > 0) {
+                target[key] = primitiveElements;
+            }
             return;
         }
     }
