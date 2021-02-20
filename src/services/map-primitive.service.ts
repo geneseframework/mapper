@@ -1,6 +1,4 @@
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType, PrimitiveTypes } from '../types/primitives.type';
-import { isPrimitiveValue } from '../utils/primitives.util';
-import * as chalk from 'chalk';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 
 export class MapPrimitiveService {
 
@@ -22,7 +20,6 @@ export class MapPrimitiveService {
     private static createArrayElements(data: any[], typeName: PrimitiveType): ArrayOfPrimitiveElements {
         const instancesArray = [];
         for (const element of data) {
-            // console.log(chalk.magentaBright('MAP PRIMMMMM'), data, typeName, element);
             const primitiveElement: PrimitiveElement = this.createElement(element, typeName);
             if (primitiveElement || element === undefined || element === null) {
                 instancesArray.push(primitiveElement);
@@ -33,18 +30,10 @@ export class MapPrimitiveService {
 
 
     private static createElement(data: any, typeName: PrimitiveType): PrimitiveElement {
-        // console.log(chalk.blueBright('MAP PRIMMMMM'), data, typeName, typeof data);
         if (data === null) {
             return null;
         }
         return typeof data === typeName ? data : undefined;
-    }
-
-
-    static mapPrimitiveType(target: any, key: string, dataValue: any): void {
-        if (isPrimitiveValue(dataValue)) {
-            target[key] = dataValue;
-        }
     }
 
 

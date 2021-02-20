@@ -17,7 +17,6 @@ import { flat } from './arrays.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 import { Key } from '../types/key.type';
 import { isPrimitiveTypeNode } from './primitives.util';
-import * as chalk from 'chalk';
 import { DateDeclaration } from '../models/date-declaration.model';
 
 
@@ -115,7 +114,7 @@ function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFi
     if (declarations.length === 0) {
         return false;
     } else if (declarations.length > 1) {
-        throwWarning(`Error: ${typeName} is declared in multiple files.`)
+        throwWarning(`Warning: ${typeName} is declared in multiple files.`)
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
         if (getTDeclaration(importSourceFile)?.length > 0) {
