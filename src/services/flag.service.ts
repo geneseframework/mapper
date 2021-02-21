@@ -5,11 +5,13 @@ import { tab } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
 import * as chalk from 'chalk';
+import * as fs from 'fs-extra';
+import { writeFile } from '../utils/file-system.util';
 
 export class FlagService {
 
     static async init(): Promise<void> {
-
+        await this.createInstanceGeneratorFile();
         GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
@@ -17,7 +19,7 @@ export class FlagService {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
-        console.log(chalk.redBright('INIT FLAGGGGGGG'));
+        console.log(chalk.redBright('INIT FLAGGGGGGG'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()));
         await this.generateInstanceGeneratorFile();
         console.log(chalk.greenBright('INIT FLAGGGGGGG END'));
         GLOBAL.log('Types mapped', '', !GLOBAL.debug);
@@ -26,6 +28,26 @@ export class FlagService {
 
     private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
         return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
+    }
+
+
+    private static async createInstanceGeneratorFile(): Promise<void> {
+        const nodeModulePath = GLOBAL.debug ? GLOBAL.projectPath : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
+        const nodeModuleMapperPath = `${nodeModulePath}/dist/models/mapper.d.ts`;
+        // const nodeModuleMapperPath = `${GLOBAL.projectPath}/node_modules/@genese/mapper/dist/models/mapper.ts`;
+        console.log(chalk.greenBright('nodeModulePathhhh'), nodeModulePath);
+        console.log(chalk.greenBright('nodeModuleMapperPathhhhh'), nodeModuleMapperPath);
+        GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
+        GLOBAL.nodeModuleMapper = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
+        const generateInstancesPath = `${nodeModulePath}/dist/utils/generate-instance.ts`;
+        console.log(chalk.magentaBright(' generateInstancesPathhhhhhh'), generateInstancesPath);
+        await writeFile(generateInstancesPath, 'zzz');
+        // throw Error ('ENDDDDD')
+        // TODO : remove hard code
+        // const generateInstancesPath = `${GLOBAL.projectPath}/node_modules/genese/@genese-mapper/create-instance.ts`;
+        GLOBAL.project.addSourceFileAtPath(generateInstancesPath);
+        GLOBAL.generateInstancesSourceFile = GLOBAL.project.getSourceFile(generateInstancesPath);
+        console.log(chalk.cyanBright('GENERATOR PATHHHH'), GLOBAL.generateInstancesSourceFile.getFullText());
     }
 
 
