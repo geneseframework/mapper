@@ -36,7 +36,7 @@ export async function ensureDirAndCopy(source: string, target: string): Promise<
 
 export async function writeFile(filePath: string, content: string): Promise<any> {
     await fs.ensureDir(getFolderPath(filePath));
-    await fs.writeFile(filePath, content, {encoding: 'utf-8'});
+    await fs.writeFile(filePath, content, {encoding: 'utf-8', overwrite: true});
 }
 
 

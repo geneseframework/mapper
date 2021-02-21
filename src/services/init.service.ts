@@ -1,6 +1,6 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import * as chalk from 'chalk';
+
 const appRoot = require('app-root-path');
 
 export class InitService {
@@ -11,12 +11,11 @@ export class InitService {
         }
         GLOBAL.debug ? this.createDebugProject() : this.createProject();
         GLOBAL.isAlreadyInitialized = true;
-        console.log(chalk.greenBright('SRC FILESSSSSSSS'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()).length);
+        GLOBAL.nodeModulePath = GLOBAL.debug ? GLOBAL.projectPath : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
     }
 
 
     private static createProject(): void {
-        console.log(chalk.greenBright('INITTTTTT'), appRoot);
         GLOBAL.projectPath = appRoot;
         GLOBAL.project = new Project({
             tsConfigFilePath: GLOBAL.configFilePath,

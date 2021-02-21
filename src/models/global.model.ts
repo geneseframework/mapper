@@ -12,7 +12,8 @@ export class Global {
     instanceGenerators: InstanceGenerator<any>[] = [];
     isAlreadyInitialized: boolean = false;
     mappers: string[] = [];
-    nodeModuleMapper: SourceFile = undefined;
+    mapperSourceFile: SourceFile = undefined;
+    nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
@@ -22,8 +23,14 @@ export class Global {
         return `${GLOBAL.projectPath}/tsconfig.json`;
     }
 
+
     get geneseMapperFolder(): string {
         return `${GLOBAL.projectPath}/dist/genese/mapper`;
+    }
+
+
+    get instanceGeneratorPath(): string {
+        return `${GLOBAL.nodeModulePath}/dist/instance-generator.ts`;
     }
 
 
