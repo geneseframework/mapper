@@ -24,6 +24,7 @@ import { isTuple } from '../utils/tuples.util';
 import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
 import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class Mapper<T> {
 
@@ -31,14 +32,14 @@ export class Mapper<T> {
     static async create<T>(mapTarget: MapTarget<T>, data: boolean): Promise<boolean>
     static async create<T>(mapTarget: MapTarget<T>, data: number): Promise<number>
     static async create<T>(mapTarget: MapTarget<T>, data: string): Promise<string>
-    static async create<T>(mapTarget: {} | Object, data: object): Promise<object>
-    static async create<T>(mapTarget: [{}] | Object[], data: object[]): Promise<object[]>
+    static async create<T>(mapTarget: 'Object' | 'object', data: object): Promise<object>
     static async create<Date>(mapTarget: MapTarget<Date>, data: Date): Promise<Date>
     static async create<T>(mapTarget: Tuple, data: any[], options?: MapOptions): Promise<Tuple>
     static async create<Date>(mapTarget: MapTarget<Date>, data: Date[]): Promise<Date[]>
     static async create<T>(mapTarget: MapTarget<T>, data: any[], options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+        console.log(chalk.magentaBright('STARTS MAPPING'), mapTarget, data?.length);
         await this.init();
         if (this.isTrivialCase<T>(mapTarget, data)) {
             return this.mapTrivialCase(mapTarget, data, options);
@@ -51,7 +52,9 @@ export class Mapper<T> {
     private static async init<T>(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
+            console.log(chalk.blueBright('AFTER INITTTTTT'));
             await FlagService.init();
+            console.log(chalk.cyanBright('AFTER FLAGGGGGG'));
         }
     }
 

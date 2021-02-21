@@ -1,6 +1,7 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import * as chalk from 'chalk';
+
+const appRoot = require('app-root-path');
 
 export class InitService {
 
@@ -8,28 +9,27 @@ export class InitService {
         if (GLOBAL.isAlreadyInitialized) {
             return;
         }
-        GLOBAL.projectPath = '/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/debug/project';
-        // GLOBAL.projectPath = projectPath;
-        GLOBAL.configFilePath = `${GLOBAL.projectPath}/tsconfig.json`;
-        this.createProject();
-        const zzz = GLOBAL.project.resolveSourceFileDependencies();
+        GLOBAL.debug ? this.createDebugProject() : this.createProject();
         GLOBAL.isAlreadyInitialized = true;
+        GLOBAL.nodeModulePath = GLOBAL.debug ? GLOBAL.projectPath : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
     }
 
 
     private static createProject(): void {
+        GLOBAL.projectPath = appRoot;
         GLOBAL.project = new Project({
             tsConfigFilePath: GLOBAL.configFilePath,
             skipFileDependencyResolution: true
         });
-        // TODO : remove hard code
-        const nodeModuleMapperPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts`;
-        GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
-        GLOBAL.nodeModuleMapper = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
-        // TODO : remove hard code
-        const generateInstancesPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/utils/generate-instance.ts`;
-        // const generateInstancesPath = `${GLOBAL.projectPath}/node_modules/genese/@genese-mapper/create-instance.ts`;
-        GLOBAL.project.addSourceFileAtPath(generateInstancesPath);
-        GLOBAL.generateInstancesSourceFile = GLOBAL.project.getSourceFile(generateInstancesPath);
+    }
+
+
+    private static createDebugProject(): void {
+        GLOBAL.projectPath = process.cwd();
+        GLOBAL.project = new Project({
+            tsConfigFilePath: GLOBAL.configFilePath,
+            skipFileDependencyResolution: true
+        });
+        GLOBAL.project.addSourceFilesAtPaths(`${GLOBAL.projectPath}/src/debug/**/*{.d.ts,.ts}`);
     }
 }

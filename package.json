@@ -1,11 +1,16 @@
 {
     "name": "@genese/mapper",
-    "version": "0.0.1",
+    "version": "1.0.7",
     "author": {
         "name": "Gilles Fabre",
         "url": "https://github.com/gillesfabre34"
     },
     "scripts": {
+        "build": "tsc",
+        "build_and_test": "tsc && ts-node src/test-engine/test.ts",
+        "start": "npm run build && node dist/index.js",
+        "publish_package": "npm run build && npm publish",
+        "republish_package": "npm unpublish -f && npm run build && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "ts-node src/test-engine/test.ts"
     },
@@ -26,5 +31,8 @@
     ],
     "license": "MIT",
     "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "types": "dist/index.d.ts",
+    "dependencies": {
+        "app-root-path": "^3.0.0"
+    }
 }
