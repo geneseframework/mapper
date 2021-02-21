@@ -9,6 +9,7 @@
         "build": "tsc",
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
+        "republish_package": "npm unpublish -f && npm run build && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "ts-node src/test-engine/test.ts"
     },
@@ -29,5 +30,8 @@
     ],
     "license": "MIT",
     "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "types": "dist/index.d.ts",
+    "dependencies": {
+        "app-root-path": "^3.0.0"
+    }
 }

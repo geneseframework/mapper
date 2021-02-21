@@ -4,6 +4,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
+import * as chalk from 'chalk';
 
 export class FlagService {
 
@@ -16,7 +17,9 @@ export class FlagService {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
+        console.log(chalk.redBright('INIT FLAGGGGGGG'));
         await this.generateInstanceGeneratorFile();
+        console.log(chalk.greenBright('INIT FLAGGGGGGG END'));
         GLOBAL.log('Types mapped', '', !GLOBAL.debug);
     }
 
@@ -40,7 +43,11 @@ export class FlagService {
         switchStatement.replaceWithText(switchCode);
         GLOBAL.generateInstancesSourceFile.fixMissingImports();
         GLOBAL.generateInstancesSourceFile.saveSync();
-        GLOBAL.generateInstance = await require(GLOBAL.generateInstancesSourceFile.getFilePath()).generateInstance;
+        console.log(chalk.greenBright('generateInstanceGeneratorFileeeeee'), GLOBAL.generateInstancesSourceFile.getFilePath());
+        GLOBAL.generateInstance = await require(GLOBAL.generateInstancesSourceFile.getFilePath())?.generateInstance;
+        console.log(chalk.yellowBright('AAAAAHHHHHH !!!!!!!!!'), GLOBAL.generateInstance);
+        GLOBAL.generateInstance = await require(GLOBAL.generateInstancesSourceFile.getFilePath())?.generateInstance;
+        console.log(chalk.redBright('AAAAAHHHHHH GLOBAL.generateInstanceeeeeeee'), GLOBAL.generateInstance);
     }
 
 

@@ -1,6 +1,7 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
+var appRoot = require('app-root-path');
 
 export class InitService {
 
@@ -8,12 +9,15 @@ export class InitService {
         if (GLOBAL.isAlreadyInitialized) {
             return;
         }
-        GLOBAL.projectPath = '/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/debug/project';
+        console.log(chalk.greenBright('APPROOOOOOOOT'), appRoot);
+        GLOBAL.projectPath = '/Users/utilisateur/Documents/perso_gilles_fabre/projets/kuzzy/repo';
+        // GLOBAL.projectPath = '/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/debug/project';
         // GLOBAL.projectPath = projectPath;
         GLOBAL.configFilePath = `${GLOBAL.projectPath}/tsconfig.json`;
         this.createProject();
-        const zzz = GLOBAL.project.resolveSourceFileDependencies();
+        // GLOBAL.project.resolveSourceFileDependencies();
         GLOBAL.isAlreadyInitialized = true;
+        console.log(chalk.greenBright('SRC FILESSSSSSSS'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()).length);
     }
 
 
@@ -22,13 +26,15 @@ export class InitService {
             tsConfigFilePath: GLOBAL.configFilePath,
             skipFileDependencyResolution: true
         });
-        // TODO : remove hard code
-        const nodeModuleMapperPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/models/mapper.ts`;
+// TODO : remove hard code
+        const nodeModuleMapperPath = `${GLOBAL.projectPath}/node_modules/@genese/mapper/dist/models/mapper.ts`;
+        console.log(chalk.greenBright('APPROOOOOOOOT nodeModuleMapperPath'), nodeModuleMapperPath);
         GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
         GLOBAL.nodeModuleMapper = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
         // TODO : remove hard code
-        const generateInstancesPath = `/Users/utilisateur/Documents/perso_gilles_fabre/genese/genesemapper/src/utils/generate-instance.ts`;
+        const generateInstancesPath = `${GLOBAL.projectPath}/node_modules/@genese/mapper/dist/utils/generate-instance.ts`;
         // const generateInstancesPath = `${GLOBAL.projectPath}/node_modules/genese/@genese-mapper/create-instance.ts`;
+        console.log(chalk.greenBright('APPROOOOOOOOT generateInstancesPath'), generateInstancesPath);
         GLOBAL.project.addSourceFileAtPath(generateInstancesPath);
         GLOBAL.generateInstancesSourceFile = GLOBAL.project.getSourceFile(generateInstancesPath);
     }

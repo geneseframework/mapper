@@ -13,6 +13,7 @@
         "src/**/*"
     ],
     "exclude": [
-        "src/debug/**/*.ts"
+        "src/debug/**/*.ts",
+        "src/utils/generate-instance.ts"
     ]
 }
