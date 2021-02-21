@@ -39,7 +39,6 @@ export class Mapper<T> {
     static async create<T>(mapTarget: MapTarget<T>, data: any[], options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
-        console.log(chalk.magentaBright('STARTS MAPPING'), mapTarget, data?.length);
         await this.init();
         if (this.isTrivialCase<T>(mapTarget, data)) {
             return this.mapTrivialCase(mapTarget, data, options);
@@ -52,9 +51,7 @@ export class Mapper<T> {
     private static async init<T>(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
-            console.log(chalk.blueBright('AFTER INITTTTTT'));
             await FlagService.init();
-            console.log(chalk.cyanBright('AFTER FLAGGGGGG'));
         }
     }
 
