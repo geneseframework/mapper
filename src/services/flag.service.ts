@@ -1,7 +1,7 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
-import { tab } from '../utils/strings.util';
+import { tab, tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
 import * as chalk from 'chalk';
@@ -52,17 +52,17 @@ export class FlagService {
 
 
     private static getInstanceGeneratorCode(): string {
-        let code = `\nexport function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {
-        let instance: any;
-        switch (instanceGenerator.id) {\n`;
+        let code = `\nexport function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {\n` +
+            `${tab}let instance: any;\n` +
+            `${tab}switch (instanceGenerator.id) {\n`;
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
-            code = `${code}${tab}${this.switchClause(instanceGenerator)}`;
+            code = `${code}${tabs(2)}${this.switchClause(instanceGenerator)}`;
         }
-        code = `${code}${tab}default:\n` +
-            `console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id)\n;` +
-            `instance = undefined;\n` +
-            `}\n` +
-            `return instance;\n` +
+        code = `${code}${tabs(2)}default:\n` +
+            `${tabs(3)}console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);\n` +
+            `${tabs(3)}instance = undefined;\n` +
+            `${tabs(2)}}\n` +
+            `${tab}return instance;\n` +
             `}\n`;
         console.log(chalk.yellowBright('CODEEEEEEE'), code);
         return code;
