@@ -11,7 +11,6 @@ export class Global {
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     isAlreadyInitialized: boolean = false;
-    mappers: string[] = [];
     mapperSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
     project: Project = undefined;
@@ -35,7 +34,7 @@ export class Global {
 
 
     get isFirstMapper(): boolean {
-        return this.mappers.length === 0;
+        return this.instanceGenerators.length === 0;
     }
 
 

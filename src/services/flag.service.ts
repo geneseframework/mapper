@@ -4,25 +4,24 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
-import * as chalk from 'chalk';
-import * as fs from 'fs-extra';
-import { writeFile } from '../utils/file-system.util';
 
 export class FlagService {
 
     static async init(): Promise<void> {
         GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
+        this.setInstanceGenerators();
+        await this.createInstanceGeneratorFile();
+        GLOBAL.log('Types mapped', '', !GLOBAL.debug);
+    }
+
+
+    private static setInstanceGenerators(): void {
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
             if (this.mayBeInstantiated(classDeclaration)) {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
-        await this.createInstanceGeneratorFile();
-        // console.log(chalk.redBright('INIT FLAGGGGGGG'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()));
-        // await this.getInstanceGeneratorCode();
-        console.log(chalk.greenBright('INIT FLAGGGGGGG END'));
-        GLOBAL.log('Types mapped', '', !GLOBAL.debug);
     }
 
 
@@ -32,17 +31,10 @@ export class FlagService {
 
 
     private static async createInstanceGeneratorFile(): Promise<void> {
-        const nodeModuleMapperPath = `${GLOBAL.nodeModulePath}/dist/models/mapper.d.ts`;
-        GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
-        GLOBAL.mapperSourceFile = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
         const code: string = this.getInstanceGeneratorCode();
-        console.log(chalk.yellowBright('CODEEEEEEE'), code);
-        GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true}).saveSync();
-        GLOBAL.project.addSourceFileAtPath(GLOBAL.instanceGeneratorPath);
-        GLOBAL.instanceGeneratorSourceFile = GLOBAL.project.getSourceFile(GLOBAL.instanceGeneratorPath);
-        console.log(chalk.blueBright('AFTER SAVESYNCCCCC'), GLOBAL.instanceGeneratorSourceFile.getFilePath());
+        GLOBAL.instanceGeneratorSourceFile = GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true});
+        GLOBAL.instanceGeneratorSourceFile.saveSync();
         await this.setGlobalGenerateInstance();
-        console.log(chalk.blueBright('AFTERR SETTTTTT'));
     }
 
 
@@ -60,8 +52,6 @@ export class FlagService {
 
     private static async setGlobalGenerateInstance(): Promise<void> {
         const switchStatement: SwitchStatement = GLOBAL.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        console.log(chalk.yellowBright('switchStatementtttt'), switchStatement.getText());
-        console.log(chalk.greenBright('GLOBAL.instanceGeneratorsssssss'), GLOBAL.instanceGenerators.length);
         let switchCode = `switch (instanceGenerator.id) {\n`;
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
@@ -73,10 +63,6 @@ export class FlagService {
         switchStatement.replaceWithText(switchCode);
         GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
         GLOBAL.instanceGeneratorSourceFile.saveSync();
-        // console.log(chalk.greenBright('generateInstanceGeneratorFileeeeee'), GLOBAL.instanceGeneratorSourceFile.getFilePath());
-        // GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
-        console.log(chalk.yellowBright('AAAAAHHHHHH !!!!!!!!!'), GLOBAL.generateInstance);
-        throw Error('zzzz')
         GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
     }
 

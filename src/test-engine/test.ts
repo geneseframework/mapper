@@ -8,8 +8,6 @@ GLOBAL.debug = true;
 
 async function startTests() {
     InitService.start();
-    // createProject();
-    console.log(chalk.blueBright('\nGLOBAL.configFilePathhhhh : '), GLOBAL.configFilePath);
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.its);
