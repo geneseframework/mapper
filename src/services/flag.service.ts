@@ -12,13 +12,13 @@ export class FlagService {
 
     static async init(): Promise<void> {
         GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
-        await this.createInstanceGeneratorFile();
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         for (const classDeclaration of classDeclarations) {
             if (this.mayBeInstantiated(classDeclaration)) {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
             }
         }
+        await this.createInstanceGeneratorFile();
         // console.log(chalk.redBright('INIT FLAGGGGGGG'), GLOBAL.project.getSourceFiles().map(s => s.getBaseName()));
         // await this.getInstanceGeneratorCode();
         console.log(chalk.greenBright('INIT FLAGGGGGGG END'));
@@ -36,7 +36,8 @@ export class FlagService {
         GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
         GLOBAL.mapperSourceFile = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
         const code: string = this.getInstanceGeneratorCode();
-        GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true});
+        console.log(chalk.yellowBright('CODEEEEEEE'), code);
+        GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true}).saveSync();
         GLOBAL.project.addSourceFileAtPath(GLOBAL.instanceGeneratorPath);
         GLOBAL.instanceGeneratorSourceFile = GLOBAL.project.getSourceFile(GLOBAL.instanceGeneratorPath);
         console.log(chalk.blueBright('AFTER SAVESYNCCCCC'), GLOBAL.instanceGeneratorSourceFile.getFilePath());
@@ -46,43 +47,28 @@ export class FlagService {
 
 
     private static getInstanceGeneratorCode(): string {
-        let code = `\nexport function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {\n` +
+        return `import { InstanceGenerator } from './models/instance-generator.model';\n\n` +
+            `export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {\n` +
             `${tab}let instance: any;\n` +
-            `${tab}switch (instanceGenerator.id) {\n`;
+            `${tab}switch (instanceGenerator.id) {\n` +
+            `}` +
+            `${tab}return instance;\n` +
             `}\n`;
-        console.log(chalk.yellowBright('CODEEEEEEE'), code);
-        return code;
     }
-
-    // private static async generateInstanceGeneratorFile(): Promise<void> {
-    //     const switchStatement : SwitchStatement = GLOBAL.generateInstancesSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-    //     switchStatement.removeClauses([0, switchStatement.getClauses().length]);
-    //     let switchCode = `switch (instanceGenerator.id) {\n`;
-    //     for (const instanceGenerator of GLOBAL.instanceGenerators) {
-    //         switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
-    //     }
-    //     switchCode = `${switchCode}${tab}default:
-    //     console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);
-    //     instance = undefined;
-    // }`;
-    //     switchStatement.replaceWithText(switchCode);
-    //     GLOBAL.generateInstancesSourceFile.fixMissingImports();
-    //     GLOBAL.generateInstancesSourceFile.saveSync();
-    //     GLOBAL.generateInstance = await require(GLOBAL.generateInstancesSourceFile.getFilePath()).generateInstance;
-    // }
 
 
 
     private static async setGlobalGenerateInstance(): Promise<void> {
         const switchStatement: SwitchStatement = GLOBAL.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
         console.log(chalk.yellowBright('switchStatementtttt'), switchStatement.getText());
+        console.log(chalk.greenBright('GLOBAL.instanceGeneratorsssssss'), GLOBAL.instanceGenerators.length);
         let switchCode = `switch (instanceGenerator.id) {\n`;
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
-            switchCode = `${switchCode}${tabs(2)}${this.switchClause(instanceGenerator)}`;
+            switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tab}default:\n` +
-            `console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);\n` +
-            `instance = undefined;\n` +
+            `${tabs(2)}console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);\n` +
+            `${tabs(2)}instance = undefined;\n` +
             `}\n`;
         switchStatement.replaceWithText(switchCode);
         GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
@@ -90,14 +76,15 @@ export class FlagService {
         // console.log(chalk.greenBright('generateInstanceGeneratorFileeeeee'), GLOBAL.instanceGeneratorSourceFile.getFilePath());
         // GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
         console.log(chalk.yellowBright('AAAAAHHHHHH !!!!!!!!!'), GLOBAL.generateInstance);
+        throw Error('zzzz')
         GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
     }
 
 
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
-        return `case '${instanceGenerator.id}':
-        instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};
-        break;\n`;
+        return `case '${instanceGenerator.id}':\n` +
+        `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
+        `${tabs(2)}break;\n`;
     }
 
 

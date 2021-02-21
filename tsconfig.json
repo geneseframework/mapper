@@ -13,6 +13,6 @@
         "src/**/*"
     ],
     "exclude": [
-        "src/utils/generate-instance.ts"
+        "dist/instance-generator.ts"
     ]
 }
