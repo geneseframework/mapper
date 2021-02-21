@@ -8,8 +8,8 @@ export class Global {
 
     debug = false;
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T
-    generateInstancesSourceFile: SourceFile = undefined;
     instanceGenerators: InstanceGenerator<any>[] = [];
+    instanceGeneratorSourceFile: SourceFile = undefined;
     isAlreadyInitialized: boolean = false;
     mappers: string[] = [];
     mapperSourceFile: SourceFile = undefined;
