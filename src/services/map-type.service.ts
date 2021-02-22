@@ -80,7 +80,7 @@ export class MapTypeService {
                 this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
                 break;
             case SyntaxKind.TypeReference:
-                this.mapLiteralTypeReference(target, key, dataValue, typeNode as TypeReferenceNode);
+                await this.mapLiteralTypeReference(target, key, dataValue, typeNode as TypeReferenceNode);
                 break;
             case SyntaxKind.LiteralType:
                 this.mapLiteralType(target, key, dataValue, typeNode as LiteralTypeNode);
@@ -120,10 +120,10 @@ export class MapTypeService {
     }
 
 
-    private static mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
+    private static async mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
         console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee'), target, key, dataValue, typeReferenceNode?.getKindName());
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
+        await MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
         console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee 222'), target, key, dataValue, typeReferenceNode?.getKindName());
     }
 

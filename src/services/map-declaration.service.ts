@@ -28,7 +28,7 @@ export class MapDeclarationService<T> {
                 await MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
+                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
                 break;
             default:
                 throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);

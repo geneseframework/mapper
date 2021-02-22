@@ -18,13 +18,13 @@ import { DateDeclaration } from '../models/date-declaration.model';
 export class MapInstanceOrInterfaceService<T> {
 
 
-    static createArray<T>(data: any[], dateDeclaration: DateDeclaration): Date[]
-    static createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): T[]
-    static createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): T[] | string[] | number[] | boolean[]
-    static createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): T[] | string[] | number[] | boolean[] | Date | Date[] {
+    static async createArray<T>(data: any[], dateDeclaration: DateDeclaration): Promise<Date[]>
+    static async createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): Promise<T[]>
+    static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): Promise<T[] | string[] | number[] | boolean[]>
+    static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
         const instancesArray: T[] | Date[] = [];
         for (const element of data) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
+            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
             instancesArray.push(instance);
         }
         return instancesArray;

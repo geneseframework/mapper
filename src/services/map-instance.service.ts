@@ -14,7 +14,7 @@ export class MapInstanceService<T> {
     static async createInstances<T>(data: any, className: string): Promise<T>
     static async createInstances<T>(data: any, className: string): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        return Array.isArray(data) ? MapInstanceOrInterfaceService.createArray(data, classDeclaration, className) : this.createInstance<T>(data, className, classDeclaration);
+        return Array.isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, className) : await this.createInstance<T>(data, className, classDeclaration);
     }
 
 
@@ -27,7 +27,7 @@ export class MapInstanceService<T> {
         // console.log(chalk.blueBright('MAP INSTANCEEEEE'), data, className);
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
         // console.log(chalk.cyanBright('MAP INSTANCEEEEE ?????'), instance);
-        MapInstanceOrInterfaceService.map(instance, data, classDeclaration);
+        await MapInstanceOrInterfaceService.map(instance, data, classDeclaration);
         // console.log(chalk.magentaBright('MAP INSTANCEEEEE ?????'), instance);
         return instance;
     }

@@ -39,6 +39,6 @@ const colorSupportWithNullAndUndefined: ColorSupport = {
 }
 
 
-testMappers.push(new TestMapper(`valid ColorSupport / ColorSupport `, 'ColorSupport', colorSupport));
+testMappers.push(new TestMapper(`valid ColorSupport / ColorSupport `, 'ColorSupport', colorSupport, {isolate: true}));
 testMappers.push(new TestMapper(`valid ColorSupport with nulls & undefined / ColorSupport `, 'ColorSupport', colorSupportWithNullAndUndefined, { isolate: false}));
 
