@@ -30,9 +30,10 @@ import { Key } from '../types/key.type';
 export class MapTypeService {
 
 
-    static createTypes<T>(data: any[], typeName: string, isArray: boolean): T[]
-    static createTypes<T>(data: any, typeName: string, isArray: boolean): T
-    static createTypes<T>(data: any, typeName: string, isArray: boolean): T | T[] {
+    static async createTypes<T>(data: any[], typeName: string, isArray: boolean): Promise<T[]>
+    static async createTypes<T>(data: any, typeName: string, isArray: boolean): Promise<T>
+    static async createTypes<T>(data: any, typeName: string, isArray: boolean): Promise<T | T[]> {
+        console.log(chalk.blueBright('MAP TYPPPPPP'), data, typeName);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
         if (Array.isArray(data) && isArray) {
             return this.createTypesArray(data, typeAliasDeclaration);
@@ -44,32 +45,32 @@ export class MapTypeService {
     }
 
 
-    private static createTypesArray<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration): T[] {
+    private static async createTypesArray<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration): Promise<T[]> {
         const typesArray: T[] = [];
         for (const element of data) {
-            const instance: T = this.mapData<T>(element, typeAliasDeclaration);
+            const instance: T = await this.mapData<T>(element, typeAliasDeclaration);
             typesArray.push(instance);
         }
         return typesArray;
     }
 
 
-    private static createType<T>(data: any, typeAliasDeclaration: TypeAliasDeclaration): T {
-        return this.mapData<T>(data, typeAliasDeclaration);
+    private static async createType<T>(data: any, typeAliasDeclaration: TypeAliasDeclaration): Promise<T> {
+        return await this.mapData<T>(data, typeAliasDeclaration);
     }
 
 
-    private static mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): T {
-        return newMappedElement(this.map, dataValue, typeAliasDeclaration);
+    private static async mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): Promise<T> {
+        return await newMappedElement(this.map, dataValue, typeAliasDeclaration);
     }
 
 
-    static map(target: any, key: Key, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): void {
-        MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
+    static async map(target: any, key: Key, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration): Promise<void> {
+        await MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode());
     }
 
 
-    static mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode): void {
+    static async mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode): Promise<void> {
         if (isNullOrUndefined(dataValue)) {
             target[key] = dataValue;
             return;
@@ -90,7 +91,7 @@ export class MapTypeService {
                 this.mapPrimitiveKeywordType(target, key, dataValue, typeNode);
                 break;
             case SyntaxKind.ArrayType:
-                this.mapArrayType(target, key, dataValue, typeNode as ArrayTypeNode);
+                await this.mapArrayType(target, key, dataValue, typeNode as ArrayTypeNode);
                 break;
             default:
                 console.log(chalk.redBright('Unknown kind of TypeNode : '), typeNode.getKindName());
@@ -120,17 +121,19 @@ export class MapTypeService {
 
 
     private static mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): void {
+        console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee'), target, key, dataValue, typeReferenceNode?.getKindName());
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
+        console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee 222'), target, key, dataValue, typeReferenceNode?.getKindName());
     }
 
 
-    private static mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode): void {
+    private static async mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode): Promise<void> {
         if (isPrimitiveOrPrimitivesArray(arrayTypeNode.getText())) {
             target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true);
             return;
         }
-        MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
+        await MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode));
     }
 
 

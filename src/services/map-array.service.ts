@@ -16,26 +16,26 @@ import { Key } from '../types/key.type';
 export class MapArrayService<T> {
 
 
-    static map(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): void {
+    static async map(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): Promise<void> {
         if (!Array.isArray(dataValue)) {
             return;
         } else if (isEmptyArray(dataValue)) {
             target[key] = [];
             return;
         } else {
-            this.mapArray(target, key, dataValue, propertyType, apparentType);
+            await this.mapArray(target, key, dataValue, propertyType, apparentType);
         }
     }
 
 
-    private static mapArray(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): void {
+    private static async mapArray(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string): Promise<void> {
         const typeName: string = propertyType.slice(0, -2);
         const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(instance, element, typeDeclaration);
+                await MapInstanceOrInterfaceService.map(instance, element, typeDeclaration);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName)) {
                 this.push(target, key, element);

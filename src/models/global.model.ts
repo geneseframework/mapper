@@ -7,7 +7,7 @@ import * as chalk from 'chalk';
 export class Global {
 
     debug = false;
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     isAlreadyInitialized: boolean = false;

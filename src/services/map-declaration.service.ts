@@ -10,20 +10,22 @@ import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { Key } from '../types/key.type';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MapDeclarationService<T> {
 
 
-    static map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): void {
+    static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): Promise<void> {
+        console.log(chalk.greenBright('MAP DECLLLLL'), target, key, dataValue, propertyType, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
+                await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
                 break;
             case TypeDeclarationKind.ENUM_DECLARATION:
                 MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration);
+                await MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
@@ -35,10 +37,13 @@ export class MapDeclarationService<T> {
     }
 
 
-    private static mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): void {
+    private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        target[key] = GLOBAL.generateInstance(instanceGenerator);
-        MapInstanceOrInterfaceService.map(target[key], dataValue, classDeclaration);
+        target[key] = await GLOBAL.generateInstance(instanceGenerator);
+        console.log(chalk.blueBright('MAP CLASSSS TYPE'), target, key, instanceGenerator);
+        console.log(chalk.cyanBright('MAP CLASSSS TYPE target[key]'), target[key]);
+        await MapInstanceOrInterfaceService.map(target[key], dataValue, classDeclaration);
+        console.log(chalk.cyanBright('MAP CLASSSS TYPE target[key] 222'), target[key]);
     }
 
 }

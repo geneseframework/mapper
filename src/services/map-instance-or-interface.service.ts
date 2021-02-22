@@ -31,20 +31,22 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    static map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
+    static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
-                this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
+                await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
             }
         }
+        console.log(chalk.blueBright('END OF MAP INST OR INTERFFFFFF'), target, data, classOrInterfaceDeclaration?.getName());
     }
 
 
-    private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
+    private static async mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
+        console.log(chalk.magentaBright('MAP DATA KKKKKK'), target, key, dataValue, classOrInterfaceDeclaration?.getName());
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
             return;
         }
@@ -52,7 +54,7 @@ export class MapInstanceOrInterfaceService<T> {
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
-            MapPropertyService.map(target, key, dataValue, propertyInfos);
+            await MapPropertyService.map(target, key, dataValue, propertyInfos);
         }
     }
 

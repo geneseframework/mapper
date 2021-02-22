@@ -8,20 +8,22 @@ import { MapInterfaceService } from './map-interface.service';
 import { PrimitiveType } from '../types/primitives.type';
 import { PropertyInfos } from '../types/property-infos.type';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
 
 
-    static map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): void {
+    static async map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): Promise<void> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
+        console.log(chalk.yellowBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
             return;
         }
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
-                MapArrayService.map(target, key, dataValue, propertyType, apparentType);
+                await MapArrayService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.TUPLE:
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
@@ -34,19 +36,21 @@ export class MapPropertyService<T> {
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
-                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
+                await MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
                 throwWarning(`Unknown property kind.\nTarget : ${target}\nKey : ${key}\n Data : ${dataValue}\n Property infos : ${propertyInfos}`);
-                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
+                await MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
 
 
     private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType): void {
+        console.log(chalk.yellowBright('MAP PRIM TYPPPPP'), target, key, dataValue, typeName, isPrimitiveValueWithCorrectType(dataValue, typeName));
         if (isPrimitiveValueWithCorrectType(dataValue, typeName)) {
             target[key] = dataValue;
         }
+        console.log(chalk.yellowBright('MAP PRIM TYPPPPP 22222'), target, key, dataValue, typeName, isPrimitiveValueWithCorrectType(dataValue, typeName));
     }
 
 }

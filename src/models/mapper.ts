@@ -39,9 +39,7 @@ export class Mapper<T> {
     static async create<T>(mapTarget: MapTarget<T>, data: any[], options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
-        // console.log(chalk.yellowBright('START INITTTTTT'), data);
         await this.init();
-        // console.log(chalk.blueBright('EN D INITTTTTT'), data);
         if (this.isTrivialCase<T>(mapTarget, data)) {
             return this.mapTrivialCase(mapTarget, data, options);
         } else {
@@ -87,7 +85,7 @@ export class Mapper<T> {
     }
 
 
-    private static mapTypeDeclaration<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): T | T[] | Date {
+    private static async mapTypeDeclaration<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | Date> {
         const info: MapTargetInfo = this.getInfo(mapTarget);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
