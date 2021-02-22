@@ -29,7 +29,7 @@ export class MapPropertyService<T> {
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.INTERFACE:
-                const value: any = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
+                const value: any = await MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 if (value) {
                     target[key] = value;
                 }

@@ -22,7 +22,7 @@ export class MapDeclarationService<T> {
                 await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
                 break;
             case TypeDeclarationKind.ENUM_DECLARATION:
-                MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
+                await MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 await MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration);

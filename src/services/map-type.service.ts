@@ -77,7 +77,7 @@ export class MapTypeService {
         }
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
-                this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
+                await this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
                 break;
             case SyntaxKind.TypeReference:
                 await this.mapLiteralTypeReference(target, key, dataValue, typeNode as TypeReferenceNode);
@@ -107,8 +107,8 @@ export class MapTypeService {
      * @param unionTypeNode
      * @private
      */
-    private static mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode): void {
-        MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
+    private static async mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode): Promise<void> {
+        await MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), []);
     }
 
 

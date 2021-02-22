@@ -36,6 +36,7 @@ export class MapInstanceOrInterfaceService<T> {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
+                console.log(chalk.cyanBright('INSIDE  MAP INST OR INTERFFFFFF'), target, data, key, classOrInterfaceDeclaration?.getName());
                 await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
             }
         }
@@ -54,6 +55,7 @@ export class MapInstanceOrInterfaceService<T> {
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
+            console.log(chalk.magentaBright('MAP DATA KKKKKK2222'), target, key, dataValue, classOrInterfaceDeclaration?.getName());
             await MapPropertyService.map(target, key, dataValue, propertyInfos);
         }
     }
