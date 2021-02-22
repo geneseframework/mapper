@@ -4,6 +4,9 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
+import * as chalk from 'chalk';
+import * as fs from 'fs-extra';
+import { ensureDirAndCopy } from '../utils/file-system.util';
 
 export class FlagService {
 
@@ -17,9 +20,11 @@ export class FlagService {
 
     private static setInstanceGenerators(): void {
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
+        const classNames: string[] = []
         for (const classDeclaration of classDeclarations) {
-            if (this.mayBeInstantiated(classDeclaration)) {
+            if (this.mayBeInstantiated(classDeclaration) && !classNames.includes(classDeclaration.getName())) {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+                classNames.push(classDeclaration.getName());
             }
         }
     }
@@ -39,7 +44,8 @@ export class FlagService {
 
 
     private static getInstanceGeneratorCode(): string {
-        return `const generateInstance = function(instanceGenerator) {\n` +
+        // return `export function generateInstance(instanceGenerator) {\n` +
+        return `const generateInstance = async function(instanceGenerator) {\n` +
             `${tab}let instance;\n` +
             `${tab}switch (instanceGenerator.id) {\n` +
             `}` +
@@ -63,10 +69,16 @@ export class FlagService {
             `${tabs(2)}instance = undefined;\n` +
             `}\n`;
         switchStatement.replaceWithText(switchCode);
-        GLOBAL.instanceGeneratorSourceFile.insertText(0, importsCode);
-        // GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
+        // GLOBAL.instanceGeneratorSourceFile.insertText(0, importsCode);
+        GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
         GLOBAL.instanceGeneratorSourceFile.saveSync();
-        GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
+        const mjsPath = GLOBAL.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
+        await ensureDirAndCopy(GLOBAL.instanceGeneratorSourceFile.getFilePath(), mjsPath);
+        console.log(chalk.redBright('BEFOREEEEE REQUIRE ??', GLOBAL.instanceGeneratorSourceFile.getFilePath()));
+        // GLOBAL.generateInstance = await import(GLOBAL.instanceGeneratorSourceFile.getFilePath());
+        GLOBAL.generateInstance = await require(mjsPath).generateInstance;
+        // GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
+        console.log(chalk.redBright('AFTERRRRRR REQUIRE'), GLOBAL.generateInstance);
     }
 
 
@@ -77,7 +89,9 @@ export class FlagService {
 
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `case '${instanceGenerator.id}':\n` +
+        `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
         `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
+            `${tabs(2)}console.log('NEW INSTANCE OFFFFFF', ${instanceGenerator.typeName});\n` +
         `${tabs(2)}break;\n`;
     }
 

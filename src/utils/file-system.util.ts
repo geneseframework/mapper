@@ -18,11 +18,6 @@ export function getFolderPath(filePath: string): string {
 }
 
 
-export function getClonedFilePath(originalPath: string): string {
-    return originalPath?.replace(GLOBAL.projectPath, GLOBAL.geneseMapperFolder);
-}
-
-
 export async function ensureDir(folderPath: string): Promise<void> {
     await fs.ensureDir(folderPath);
 }
