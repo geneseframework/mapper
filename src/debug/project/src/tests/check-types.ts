@@ -13,7 +13,28 @@ import { WrongDataType } from '../../../../types/wrong-data-type.type';
  * The compilation should crash if one of the result values has wrong type
  */
 async function checkTypes() {
-    const personCatSpec: PersonCatSpec = await Mapper.create(PersonCatSpec, {});
+
+    // ---------------------------------------------   Primitives   -----------------------------------------------------
+
+    const primitiveString: string = await Mapper.create('string', 'a');
+    const primitiveStringNumber: WrongDataType = await Mapper.create('string', 2);
+    const primitiveStringType: string = await Mapper.create(String, 'a');
+    const primitiveStringTypeNumber: WrongDataType = await Mapper.create(String, 2);
+    const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
+    const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
+    const primitiveStringArrayWrong: WrongDataType = await Mapper.create('string[]', 'a');
+
+    // -----------------------------------------------   Class   -----------------------------------------------------
+
+    const personCatSpecObject: PersonCatSpec = await Mapper.create(PersonCatSpec, {});
+    const personCatSpecObjectWithProperty: PersonCatSpec = await Mapper.create(PersonCatSpec, {property: 'a'});
+    const personCatSpecString: WrongDataType = await Mapper.create(PersonCatSpec, 'a');
+    const personCatSpecNumber: WrongDataType = await Mapper.create(PersonCatSpec, 2);
+    const personCatSpecBoolean: WrongDataType = await Mapper.create(PersonCatSpec, true);
+    const personCatSpecArray: WrongDataType = await Mapper.create(PersonCatSpec, [{}]);
+
+    // ----------------------------------------------   Class[]   ----------------------------------------------------
+
     const personCatSpecArrayOfPersonCatSpec: PersonCatSpec[] = await Mapper.create([PersonCatSpec], [new PersonCatSpec()]);
     const personCatSpecArrayOfObjects: PersonCatSpec[] = await Mapper.create([PersonCatSpec], [{}]);
     const personCatSpecArrayOfString: WrongDataType = await Mapper.create([PersonCatSpec], ['a']);
@@ -28,7 +49,7 @@ async function checkTypes() {
     console.log(chalk.blueBright('ZZZZZZZ'), zzz);
     console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor);
     console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor.name);
-    const aaaa = [2];
+    const aaaa = [zzz];
     console.log(chalk.magentaBright('AAAAA'), aaaa);
     console.log(chalk.magentaBright('AAAAA'), aaaa.constructor);
     console.log(chalk.magentaBright('AAAAA'), aaaa.constructor.name);
