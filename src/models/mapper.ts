@@ -29,6 +29,8 @@ import * as chalk from 'chalk';
 export class Mapper<T> {
 
 
+    static async create<T>(mapTarget: TConstructor<T>, data: any[], options?: MapOptions): Promise<T[]>
+    static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: boolean): Promise<boolean>
     static async create<T>(mapTarget: MapTarget<T>, data: number): Promise<number>
     static async create<T>(mapTarget: MapTarget<T>, data: string): Promise<string>
@@ -37,9 +39,10 @@ export class Mapper<T> {
     static async create<T>(mapTarget: Tuple, data: any[], options?: MapOptions): Promise<Tuple>
     static async create<Date>(mapTarget: MapTarget<Date>, data: Date[]): Promise<Date[]>
     static async create<T>(mapTarget: MapTarget<T>, data: any[], options?: MapOptions): Promise<T[]>
-    static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+        GLOBAL.start = Date.now();
         await this.init();
+        GLOBAL.logDuration('Finished initialization');
         if (this.isTrivialCase<T>(mapTarget, data)) {
             return this.mapTrivialCase(mapTarget, data, options);
         } else {
@@ -51,9 +54,7 @@ export class Mapper<T> {
     private static async init<T>(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             InitService.start();
-            console.log(chalk.magentaBright('EN D INIT, START FLAGGGG'));
             await FlagService.init();
-            console.log(chalk.magentaBright('EN D FLAGGGGG'));
         }
     }
 

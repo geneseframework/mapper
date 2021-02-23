@@ -16,15 +16,11 @@ export class Global {
     project: Project = undefined;
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
+    start: number = undefined;
 
 
     get configFilePath(): string {
         return `${GLOBAL.projectPath}/tsconfig.json`;
-    }
-
-
-    get geneseMapperFolder(): string {
-        return `${GLOBAL.projectPath}/dist/genese/mapper`;
     }
 
 
@@ -59,6 +55,10 @@ export class Global {
         if (predicate) {
             console.log(chalk.yellowBright(message), value);
         }
+    }
+
+    logDuration(message: string): void {
+        console.log(chalk.blueBright(`${message} : TIME `), Date.now() - this.start);
     }
 
 }

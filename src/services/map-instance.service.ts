@@ -25,7 +25,9 @@ export class MapInstanceService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         // console.log(chalk.blueBright('MAP INSTANCEEEEE'), data, className);
+        GLOBAL.logDuration('beFORE INSTANCEEEEE')
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
+        GLOBAL.logDuration('AFTER INSTANCEEEEE')
         // console.log(chalk.cyanBright('MAP INSTANCEEEEE ?????'), instance);
         await MapInstanceOrInterfaceService.map(instance, data, classDeclaration);
         // console.log(chalk.magentaBright('MAP INSTANCEEEEE ?????'), instance);
