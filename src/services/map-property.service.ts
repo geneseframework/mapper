@@ -8,11 +8,12 @@ import { MapInterfaceService } from './map-interface.service';
 import { PrimitiveType } from '../types/primitives.type';
 import { PropertyInfos } from '../types/property-infos.type';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
 
 
-    static map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): void {
+    static async map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): Promise<void> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
@@ -21,24 +22,24 @@ export class MapPropertyService<T> {
         }
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
-                MapArrayService.map(target, key, dataValue, propertyType, apparentType);
+                await MapArrayService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.TUPLE:
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType);
                 return;
             case PropertyKind.INTERFACE:
-                const value: any = MapInterfaceService.createInterfaces(dataValue, propertyType, false);
+                const value: any = await MapInterfaceService.createInterfaces(dataValue, propertyType, false);
                 if (value) {
                     target[key] = value;
                 }
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
-                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
+                await MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
                 break;
             default:
                 throwWarning(`Unknown property kind.\nTarget : ${target}\nKey : ${key}\n Data : ${dataValue}\n Property infos : ${propertyInfos}`);
-                MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
+                await MapDeclarationService.map(target, key, dataValue, propertyType, getImportTypeDeclaration(apparentType, propertyType));
         }
     }
 

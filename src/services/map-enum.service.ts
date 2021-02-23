@@ -7,36 +7,36 @@ import { newMappedElement } from '../utils/mapping.util';
 export class MapEnumService {
 
 
-    static createEnums<T>(data: any[], enumName: string, isArray: boolean): T[]
-    static createEnums<T>(data: any, enumName: string, isArray: boolean): T
-    static createEnums<T>(data: any, enumName: string, isArray: boolean): T | T[] {
+    static async createEnums<T>(data: any[], enumName: string, isArray: boolean): Promise<T[]>
+    static async createEnums<T>(data: any, enumName: string, isArray: boolean): Promise<T>
+    static async createEnums<T>(data: any, enumName: string, isArray: boolean): Promise<T | T[]> {
         const enumDeclaration: EnumDeclaration = getTypeDeclaration(enumName) as EnumDeclaration;
         if (Array.isArray(data) && isArray) {
-            return this.createEnumsArray(data, enumDeclaration);
+            return await this.createEnumsArray(data, enumDeclaration);
         } else if (!Array.isArray(data) && !isArray) {
-            return this.createEnum(data, enumDeclaration);
+            return await this.createEnum(data, enumDeclaration);
         } else {
             return undefined;
         }
     }
 
 
-    private static createEnumsArray<T>(data: any[], enumDeclaration: EnumDeclaration): T[] {
+    private static async createEnumsArray<T>(data: any[], enumDeclaration: EnumDeclaration): Promise<T[]> {
         const enumsArray: T[] = [];
         for (const element of data) {
-            const value: T = this.createEnum(element, enumDeclaration);
+            const value: T = await this.createEnum(element, enumDeclaration);
             enumsArray.push(value);
         }
         return enumsArray;
     }
 
 
-    private static createEnum<T>(data: any, enumDeclaration: EnumDeclaration): T {
-        return newMappedElement(this.map, data, enumDeclaration);
+    private static async createEnum<T>(data: any, enumDeclaration: EnumDeclaration): Promise<T> {
+        return await newMappedElement(this.map, data, enumDeclaration);
     }
 
 
-    static map(target: any, key: Key, dataValue: any, declaration: EnumDeclaration): void {
+    static async map(target: any, key: Key, dataValue: any, declaration: EnumDeclaration): Promise<void> {
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }

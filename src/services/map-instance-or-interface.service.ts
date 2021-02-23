@@ -18,31 +18,31 @@ import { DateDeclaration } from '../models/date-declaration.model';
 export class MapInstanceOrInterfaceService<T> {
 
 
-    static createArray<T>(data: any[], dateDeclaration: DateDeclaration): Date[]
-    static createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): T[]
-    static createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): T[] | string[] | number[] | boolean[]
-    static createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): T[] | string[] | number[] | boolean[] | Date | Date[] {
+    static async createArray<T>(data: any[], dateDeclaration: DateDeclaration): Promise<Date[]>
+    static async createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): Promise<T[]>
+    static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): Promise<T[] | string[] | number[] | boolean[]>
+    static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
         const instancesArray: T[] | Date[] = [];
         for (const element of data) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
+            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
             instancesArray.push(instance);
         }
         return instancesArray;
     }
 
 
-    static map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
+    static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
-                this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
+                await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
             }
         }
     }
 
 
-    private static mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): void {
+    private static async mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
@@ -52,7 +52,7 @@ export class MapInstanceOrInterfaceService<T> {
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
-            MapPropertyService.map(target, key, dataValue, propertyInfos);
+            await MapPropertyService.map(target, key, dataValue, propertyInfos);
         }
     }
 

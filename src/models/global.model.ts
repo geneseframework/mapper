@@ -7,15 +7,15 @@ import * as chalk from 'chalk';
 export class Global {
 
     debug = false;
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     isAlreadyInitialized: boolean = false;
-    mapperSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
+    start: number = undefined;
 
 
     get configFilePath(): string {
@@ -23,12 +23,8 @@ export class Global {
     }
 
 
-    get geneseMapperFolder(): string {
-        return `${GLOBAL.projectPath}/dist/genese/mapper`;
-    }
-
-
     get instanceGeneratorPath(): string {
+        // return `${GLOBAL.nodeModulePath}/dist/instance-generator.js`;
         return `${GLOBAL.nodeModulePath}/dist/instance-generator.ts`;
     }
 
@@ -58,6 +54,10 @@ export class Global {
         if (predicate) {
             console.log(chalk.yellowBright(message), value);
         }
+    }
+
+    logDuration(message: string): void {
+        console.log(chalk.blueBright(`${message} : TIME `), Date.now() - this.start);
     }
 
 }

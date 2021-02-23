@@ -4,8 +4,8 @@
  * @param mapper
  * @param args
  */
-export function newMappedElement<T>(mapper: (target: any, key: any, ...args: any[]) => void, ...args: any): T {
+export async function newMappedElement<T>(mapper: (target: any, key: any, ...args: any[]) => Promise<void>, ...args: any): Promise<T> {
     const root = { rootKey: undefined };
-    mapper(root, 'rootKey', ...args);
+    await mapper(root, 'rootKey', ...args);
     return root.rootKey;
 }

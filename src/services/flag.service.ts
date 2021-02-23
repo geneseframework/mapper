@@ -4,6 +4,7 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/strings.util';
 import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
+import { ensureDirAndCopy } from '../utils/file-system.util';
 
 export class FlagService {
 
@@ -17,9 +18,11 @@ export class FlagService {
 
     private static setInstanceGenerators(): void {
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
+        const classNames: string[] = []
         for (const classDeclaration of classDeclarations) {
-            if (this.mayBeInstantiated(classDeclaration)) {
+            if (this.mayBeInstantiated(classDeclaration) && !classNames.includes(classDeclaration.getName())) {
                 GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+                classNames.push(classDeclaration.getName());
             }
         }
     }
@@ -39,13 +42,13 @@ export class FlagService {
 
 
     private static getInstanceGeneratorCode(): string {
-        return `import { InstanceGenerator } from './models/instance-generator.model';\n\n` +
-            `export function generateInstance<T>(instanceGenerator: InstanceGenerator<T>): T {\n` +
-            `${tab}let instance: any;\n` +
+        return `const generateInstance = async function(instanceGenerator) {\n` +
+            `${tab}let instance;\n` +
             `${tab}switch (instanceGenerator.id) {\n` +
             `}` +
             `${tab}return instance;\n` +
-            `}\n`;
+            `}\n` +
+            `exports.generateInstance = generateInstance;\n`;
     }
 
 
@@ -53,22 +56,32 @@ export class FlagService {
     private static async setGlobalGenerateInstance(): Promise<void> {
         const switchStatement: SwitchStatement = GLOBAL.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
         let switchCode = `switch (instanceGenerator.id) {\n`;
+        let importsCode = ''
         for (const instanceGenerator of GLOBAL.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
+            importsCode = `${importsCode}${tab}${this.importsCode(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tab}default:\n` +
-            `${tabs(2)}console.log(chalk.yellow('WARNING: No instance found for instanceGenerator id = '), instanceGenerator?.id);\n` +
+            `${tabs(2)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
             `${tabs(2)}instance = undefined;\n` +
             `}\n`;
         switchStatement.replaceWithText(switchCode);
         GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
         GLOBAL.instanceGeneratorSourceFile.saveSync();
-        GLOBAL.generateInstance = await require(GLOBAL.instanceGeneratorSourceFile.getFilePath())?.generateInstance;
+        const mjsPath = GLOBAL.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
+        await ensureDirAndCopy(GLOBAL.instanceGeneratorSourceFile.getFilePath(), mjsPath);
+        GLOBAL.generateInstance = await require(mjsPath).generateInstance;
+    }
+
+
+    private static importsCode(instanceGenerator: InstanceGenerator<any>): string {
+        return `const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
     }
 
 
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `case '${instanceGenerator.id}':\n` +
+        `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
         `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
         `${tabs(2)}break;\n`;
     }
