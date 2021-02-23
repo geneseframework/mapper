@@ -16,7 +16,6 @@ export class MapDeclarationService<T> {
 
 
     static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): Promise<void> {
-        console.log(chalk.greenBright('MAP DECLLLLL'), target, key, dataValue, propertyType, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
@@ -40,10 +39,7 @@ export class MapDeclarationService<T> {
     private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        console.log(chalk.blueBright('MAP CLASSSS TYPE'), target, key, instanceGenerator);
-        console.log(chalk.cyanBright('MAP CLASSSS TYPE target[key]'), target[key]);
         await MapInstanceOrInterfaceService.map(target[key], dataValue, classDeclaration);
-        console.log(chalk.cyanBright('MAP CLASSSS TYPE target[key] 222'), target[key]);
     }
 
 }

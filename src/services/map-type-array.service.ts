@@ -163,7 +163,6 @@ export class MapTypeArrayService {
                     }
                      return true;
                 }
-                return false;
             default:
                 throwWarning(`Unknown key in TypeNode : key ${key} not found in Type ${typeNode.getKindName()}`);
                 return false;

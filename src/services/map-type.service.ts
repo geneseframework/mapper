@@ -33,7 +33,6 @@ export class MapTypeService {
     static async createTypes<T>(data: any[], typeName: string, isArray: boolean): Promise<T[]>
     static async createTypes<T>(data: any, typeName: string, isArray: boolean): Promise<T>
     static async createTypes<T>(data: any, typeName: string, isArray: boolean): Promise<T | T[]> {
-        console.log(chalk.blueBright('MAP TYPPPPPP'), data, typeName);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
         if (Array.isArray(data) && isArray) {
             return this.createTypesArray(data, typeAliasDeclaration);
@@ -121,10 +120,8 @@ export class MapTypeService {
 
 
     private static async mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
-        console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee'), target, key, dataValue, typeReferenceNode?.getKindName());
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         await MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
-        console.log(chalk.greenBright('mapLiteralTypeReferenceeeeee 222'), target, key, dataValue, typeReferenceNode?.getKindName());
     }
 
 

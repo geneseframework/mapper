@@ -42,7 +42,7 @@ export class Mapper<T> {
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         await this.init();
-        GLOBAL.logDuration('Finished initialization');
+        // GLOBAL.logDuration('Finished initialization');
         if (this.isTrivialCase<T>(mapTarget, data)) {
             return this.mapTrivialCase(mapTarget, data, options);
         } else {

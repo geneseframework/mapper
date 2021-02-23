@@ -5,7 +5,6 @@ import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
 
 export class MapInstanceService<T> {
 
@@ -24,13 +23,8 @@ export class MapInstanceService<T> {
             return undefined;
         }
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        // console.log(chalk.blueBright('MAP INSTANCEEEEE'), data, className);
-        GLOBAL.logDuration('beFORE INSTANCEEEEE')
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        GLOBAL.logDuration('AFTER INSTANCEEEEE')
-        // console.log(chalk.cyanBright('MAP INSTANCEEEEE ?????'), instance);
         await MapInstanceOrInterfaceService.map(instance, data, classDeclaration);
-        // console.log(chalk.magentaBright('MAP INSTANCEEEEE ?????'), instance);
         return instance;
     }
 }

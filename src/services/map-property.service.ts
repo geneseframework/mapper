@@ -16,7 +16,6 @@ export class MapPropertyService<T> {
     static async map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos): Promise<void> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
-        console.log(chalk.yellowBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
             return;
@@ -46,11 +45,9 @@ export class MapPropertyService<T> {
 
 
     private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType): void {
-        console.log(chalk.yellowBright('MAP PRIM TYPPPPP'), target, key, dataValue, typeName, isPrimitiveValueWithCorrectType(dataValue, typeName));
         if (isPrimitiveValueWithCorrectType(dataValue, typeName)) {
             target[key] = dataValue;
         }
-        console.log(chalk.yellowBright('MAP PRIM TYPPPPP 22222'), target, key, dataValue, typeName, isPrimitiveValueWithCorrectType(dataValue, typeName));
     }
 
 }
