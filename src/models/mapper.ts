@@ -25,11 +25,12 @@ import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } fro
 import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
 import { NotArray, NotArrayOfInstances } from '../types/any-or-not-any.type';
+import { WrongDataType } from '../types/wrong-data-type.type';
 
 export class Mapper<T> {
 
 
-    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: NotArrayOfInstances<T>, options?: MapOptions): Promise<Error> // data must have type which could be an array of T
+    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: NotArrayOfInstances<T>, options?: MapOptions): Promise<WrongDataType> // data must have type which could be an array of T
     static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: any, options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: boolean): Promise<boolean>
