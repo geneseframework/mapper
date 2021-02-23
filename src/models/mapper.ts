@@ -24,12 +24,13 @@ import { isTuple } from '../utils/tuples.util';
 import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
 import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
+import { NotArray, NotArrayOfInstances } from '../types/any-or-not-any.type';
 
 export class Mapper<T> {
 
 
-    static async create<T>(mapTarget: TConstructor<T>, data: any[], options?: MapOptions): Promise<T[]>
+    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: NotArrayOfInstances<T>, options?: MapOptions): Promise<Error> // data must have type which could be an array of T
+    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: any, options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: MapTarget<T>, data: boolean): Promise<boolean>
     static async create<T>(mapTarget: MapTarget<T>, data: number): Promise<number>
