@@ -14,7 +14,7 @@ import { WrongDataType } from '../../../../types/wrong-data-type.type';
  */
 async function checkTypes() {
 
-    // ---------------------------------------------   Primitives   -----------------------------------------------------
+    // ---------------------------------------------   Strings   -----------------------------------------------------
 
     const primitiveString: string = await Mapper.create('string', 'a');
     const primitiveStringNumber: WrongDataType = await Mapper.create('string', 2);
@@ -22,7 +22,38 @@ async function checkTypes() {
     const primitiveStringTypeNumber: WrongDataType = await Mapper.create(String, 2);
     const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
+    const primitiveStringArrayDifferentTypes: WrongDataType = await Mapper.create('string[]', ['a', 2]);
     const primitiveStringArrayWrong: WrongDataType = await Mapper.create('string[]', 'a');
+
+    // ---------------------------------------------   Numbers   -----------------------------------------------------
+
+    const primitiveNumber: number = await Mapper.create('number', 3);
+    const primitiveNumberNumber: WrongDataType = await Mapper.create('number', 'a');
+    const primitiveNumberType: number = await Mapper.create(Number, 3);
+    const primitiveNumberTypeNumber: WrongDataType = await Mapper.create(Number, 'a');
+    const primitiveNumberObject: WrongDataType = await Mapper.create('number', {});
+    const primitiveNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
+    const primitiveNumberArrayDifferentTypes: WrongDataType = await Mapper.create('number[]', ['a', 4]);
+    const primitiveNumberArrayWrong: WrongDataType = await Mapper.create('number[]', 3);
+
+    // ---------------------------------------------   Booleans   -----------------------------------------------------
+
+    const primitiveBoolean: boolean = await Mapper.create('boolean', false);
+    const primitiveBooleanBoolean: WrongDataType = await Mapper.create('boolean', 'a');
+    const primitiveBooleanType: boolean = await Mapper.create(Boolean, false);
+    const primitiveBooleanTypeBoolean: WrongDataType = await Mapper.create(Boolean, 'a');
+    const primitiveBooleanObject: WrongDataType = await Mapper.create('boolean', {});
+    const primitiveBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
+    const primitiveBooleanArrayDifferentTypes: WrongDataType = await Mapper.create('boolean[]', ['a', true]);
+    const primitiveBooleanArrayWrong: WrongDataType = await Mapper.create('boolean[]', false);
+
+    // ---------------------------------------------   Dates   -----------------------------------------------------
+
+    const primitiveDate: Date = await Mapper.create(Date, 1614094099126);
+    const primitiveDateDate: Date = await Mapper.create(Date, 'Tue Feb 23 2021');
+    const primitiveDateType: Date = await Mapper.create(Date, 'a');
+    const primitiveDateTypeDate: WrongDataType = await Mapper.create(Date, false);
+    const primitiveDateObject: WrongDataType = await Mapper.create(Date, {});
 
     // -----------------------------------------------   Class   -----------------------------------------------------
 
