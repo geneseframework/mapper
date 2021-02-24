@@ -3,18 +3,15 @@ import { GLOBAL } from '../const/global.const';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getTypeDeclaration } from './ast-declaration.util';
 import { primitiveTypes } from '../types/primitives.type';
-import * as chalk from 'chalk';
 import { throwWarning } from './errors.util';
 
-
+// TODO: Fix case of properties with type which is Union Type
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
     if (primitiveTypes.includes(typeName)) {
         return undefined;
     }
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);
     const importSourceFile: SourceFile = getImportSourceFile(apparentTypeImportDeclarationPath);
-    console.log(chalk.yellowBright('Import apppt typeeee'), apparentType, typeName);
-    console.log(chalk.cyanBright('Import apppt typeeee'), apparentTypeImportDeclarationPath, importSourceFile?.getFilePath());
     if (!importSourceFile) {
         throwWarning(`Import declaration not found for type "${typeName}" and apparent type "${apparentType}"`);
         return undefined;
