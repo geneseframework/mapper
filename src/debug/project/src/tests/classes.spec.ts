@@ -1,5 +1,6 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Chalk, ColorSupport } from 'chalk';
+import { Mapper } from '../../../../models/mapper';
 
 export const testMappers: TestMapper[] = [];
 
@@ -13,7 +14,7 @@ export class PersonCatSpec {
 
 testMappers.push(new TestMapper(`{ cat: { name: 'Cibi' }, firstName: 'Léa' } / PersonCatSpec`, PersonCatSpec, { cat: { name: 'Cibi' }, firstName: 'Léa' }));
 testMappers.push(new TestMapper(`{ cat: { name: 'Cibi' }, firstName: 'Léa' } / PersonCatSpec / { cat: { name: 'Cibi' }, firstName: 'Léa' }`, PersonCatSpec, { cat: { name: 'Cibi', otherProperty: 'a' }, firstName: 'Léa' }, { expectedValue: { cat: { name: 'Cibi' }, firstName: 'Léa' } }));
-testMappers.push(new TestMapper(`{ cat: null, firstName: 'Léa' } / PersonCatSpec`, PersonCatSpec, { cat: null, firstName: 'Léa' }));
+testMappers.push(new TestMapper(`{ cat: null, firstName: 'Léa' } / PersonCatSpec`, [PersonCatSpec], { cat: null, firstName: 'Léa' }, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{ cat: undefined, firstName: 'Léa' } / PersonCatSpec`, PersonCatSpec, { cat: undefined, firstName: 'Léa' }));
 
 

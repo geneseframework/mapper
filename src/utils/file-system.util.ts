@@ -1,6 +1,4 @@
-
 import * as fs from 'fs-extra';
-import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
 
 /**
