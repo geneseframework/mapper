@@ -54,6 +54,7 @@ async function checkTypes() {
 
     const primitiveNumberConstructorType: number[] = await Mapper.create([Number], [3, 4]);
     const primitiveNumberConstructorTypeNumber: unknown = await Mapper.create([Number], 'a');
+
     const primitiveNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
     const primitiveNumberArrayDifferentTypes: number[] = await Mapper.create('number[]', ['a', 4]);
     const primitiveNumberArrayWrong: unknown = await Mapper.create('number[]', 3);
@@ -69,6 +70,7 @@ async function checkTypes() {
 
     const primitiveBooleanConstructorType: boolean[] = await Mapper.create([Boolean], [false, true]);
     const primitiveBooleanConstructorTypeBoolean: unknown = await Mapper.create([Boolean], 'a');
+
     const primitiveBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
     const primitiveBooleanArrayDifferentTypes: boolean[] = await Mapper.create('boolean[]', ['a', true]);
     const primitiveBooleanArrayWrong: unknown = await Mapper.create('boolean[]', false);
@@ -86,6 +88,7 @@ async function checkTypes() {
 
     const primitiveObjectConstructorArrayBooleans: object[] = await Mapper.create([Object], [false, true]);
     const primitiveObjectConstructorTypeObject: unknown = await Mapper.create([Object], 'a');
+
     const primitiveObjectArrayBooleans: object[] = await Mapper.create('object[]', [false, true]);
     const primitiveObjectArrayDifferentTypes: object[] = await Mapper.create('object[]', ['a', true]);
     const primitiveObjectArrayWrong: unknown = await Mapper.create('object[]', false);

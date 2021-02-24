@@ -75,6 +75,10 @@ export class Mapper<T> {
     static async create(mapTarget: 'object' | ObjectConstructor, data: NotObject | Array<any>): Promise<unknown>
     static async create(mapTarget: 'object' | ObjectConstructor, data: object): Promise<object | undefined>
 
+    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: Array<any>): Promise<object[]>
+    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: NotArray): Promise<unknown>
+    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: any): Promise<object[] | undefined>
+
     // -------------------------------------------   Dates overloads   ----------------------------------------------------
 
     static async create(mapTarget: DateConstructor, data: DateConstructorParameters): Promise<Date>
