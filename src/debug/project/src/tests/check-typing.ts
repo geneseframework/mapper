@@ -22,6 +22,7 @@ class BarClass {
  */
 async function checkTyping() {
 
+
     // ---------------------------------------------   Strings   -----------------------------------------------------
 
     const fooString: string = await Mapper.create('string', 'a');
@@ -47,7 +48,7 @@ async function checkTyping() {
     const fooStringArrayString: unknown = await Mapper.create('string[]', 'a');
     const fooStringArrayObject: unknown = await Mapper.create('string[]', {a: 3});
 
-    // ---------------------------------------------   Numbers   -----------------------------------------------------
+    // --------------------------------------------------   Numbers   -----------------------------------------------------
 
     const fooNumber: number = await Mapper.create('number', 3);
     const fooNumberNumber: unknown = await Mapper.create('number', 'a');
@@ -133,23 +134,6 @@ async function checkTyping() {
     const fooClassArrayTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
     const fooClassArrayTupleWithTData: unknown = await Mapper.create([FooClass, FooClass], new FooClass());
 
-    // -----------------------------------------------   Tuples   -----------------------------------------------------
-
-    // const fooTupleTupleStringNumber: [string, number] = await Mapper.create(any, ['a', 2]);
-    // const fooTupleTupleFooBar: [FooClass, BarClass] = await Mapper.create([FooClass, BarClass], [new FooClass(), new BarClass()]);
-
-    const zzz = new FooClass();
-    console.log(chalk.blueBright('ZZZZZZZ'), zzz);
-    console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor);
-    console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor.name);
-    const aaaa = [zzz];
-    console.log(chalk.magentaBright('AAAAA'), aaaa);
-    console.log(chalk.magentaBright('AAAAA'), aaaa.constructor);
-    console.log(chalk.magentaBright('AAAAA'), aaaa.constructor.name);
-    const bbbb = {};
-    console.log(chalk.cyanBright('BBBB'), bbbb);
-    console.log(chalk.cyanBright('BBBB'), bbbb.constructor);
-    console.log(chalk.cyanBright('BBBB'), bbbb.constructor.name);
 }
 
 checkTyping()

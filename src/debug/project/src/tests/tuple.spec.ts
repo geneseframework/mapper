@@ -4,8 +4,8 @@ export const testMappers: TestMapper[] = [];
 
 testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue']));
 testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],['blue', 'white']));
-testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'number'],['blue', 3], {isolate: true}));
-testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['number', 'string'],['blue', 3], {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'number'],['blue', 3]));
+testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['number', 'string'],['blue', 3], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'blue' / ['string'] / undefined`, ['string'],'blue', { expectedValue: undefined }));
 testMappers.push(new TestMapper(`['blue'] / ['string', 'string'] / undefined`, ['string', 'string'],['blue'], { expectedValue: undefined }));
 testMappers.push(new TestMapper(`[2] / ['string']`, ['string'],[2], { expectedValue: undefined }));

@@ -23,7 +23,6 @@ import { isTuple } from '../utils/tuples.util';
 import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
 import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
-import { WrongDataType } from '../types/wrong-data-type.type';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
     NotArray,
@@ -37,8 +36,7 @@ import {
 
 export class Mapper<T> {
 
-
-    // --------------------------------------------   String overloads   -----------------------------------------------------
+    // --------------------------------------------   String overloads   --------------------------------------------------
 
     static async create(target: 'string' | StringConstructor, data: string): Promise<string>
     static async create(target: 'string' | StringConstructor, data: NotString): Promise<unknown>
@@ -48,7 +46,7 @@ export class Mapper<T> {
     static async create(target: 'string[]' | [StringConstructor], data: NotArray): Promise<unknown>
     static async create(target: 'string[]' | [StringConstructor], data: any): Promise<string[] | undefined>
 
-    // --------------------------------------------   Number overloads   -----------------------------------------------------
+    // --------------------------------------------   Number overloads   --------------------------------------------------
 
     static async create(target: 'number' | NumberConstructor, data: number): Promise<number>
     static async create(target: 'number' | NumberConstructor, data: NotNumber): Promise<unknown>
