@@ -1,4 +1,4 @@
-import { Create } from '../models/create';
+import { Mapper } from '../models/mapper';
 import * as chalk from 'chalk';
 import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
@@ -18,7 +18,7 @@ export async function expect(testMappers: TestMapper | TestMapper[]): Promise<vo
 
 
 async function expectMapper(testMapper: TestMapper): Promise<void> {
-    const result = await Create.create(testMapper.mapParameter, testMapper.data);
+    const result = await Mapper.create(testMapper.mapParameter, testMapper.data);
     if (isExpectedResult(testMapper, result) ) {
         console.log(chalk.greenBright('Test passed : '), testMapper.title);
         TESTS.testsPassed++;

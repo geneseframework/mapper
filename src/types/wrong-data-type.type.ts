@@ -1,5 +1,5 @@
 /**
- *  WrongDataType is returned in Create.create() method when its parameter "data" type is incompatible with the type of the parameter "mapTarget"
+ *  WrongDataType is returned in Mapper.create() method when its parameter "data" type is incompatible with the type of the parameter "mapTarget"
  */
 export class WrongDataType {
     error : 'Mapper.create() method called with parameter "data" type is incompatible with the type of the parameter "mapTarget"';

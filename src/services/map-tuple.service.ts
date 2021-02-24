@@ -7,7 +7,7 @@ import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { Tuple } from '../types/tuple.type';
-import { Create } from '../models/create';
+import { Mapper } from '../models/mapper';
 
 export class MapTupleService<T> {
 
@@ -22,7 +22,7 @@ export class MapTupleService<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Create.create(mapParameterTuple[i], data[i]);
+                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
                 if (mappedElement) {
                     tuple.push(mappedElement);
                 } else {

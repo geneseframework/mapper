@@ -35,7 +35,7 @@ import {
 import * as chalk from 'chalk';
 
 
-export class Create<T> {
+export class Mapper<T> {
 
     // --------------------------------------------   String overloads   --------------------------------------------------
 
