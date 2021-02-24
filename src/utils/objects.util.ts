@@ -1,13 +1,13 @@
-import { MapTarget } from '../types/map-target.type';
+import { Target } from '../types/target.type';
 import * as chalk from 'chalk';
 
 
-export function isObjectOrObjectsArrayTarget(mapTarget: MapTarget<any>): boolean {
+export function isObjectOrObjectsArrayTarget(mapTarget: Target<any>): boolean {
     return isObjectTarget(mapTarget) || isObjectTargetArray(mapTarget);
 }
 
 
-export function isObjectTarget(mapTarget: MapTarget<any>): boolean {
+export function isObjectTarget(mapTarget: Target<any>): boolean {
     if (mapTarget === {} || mapTarget === Object) {
         return true;
     } else {
@@ -16,7 +16,7 @@ export function isObjectTarget(mapTarget: MapTarget<any>): boolean {
 }
 
 
-export function isObjectTargetArray(mapTarget: MapTarget<any>): boolean {
+export function isObjectTargetArray(mapTarget: Target<any>): boolean {
     if (mapTarget === [{}]) {
         return true;
     } else {

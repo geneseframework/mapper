@@ -1,12 +1,12 @@
-import { MapTargetInfo } from '../types/map-target-info.type';
+import { TargetInfo } from '../types/target-info.type';
 import { isArray } from '../utils/arrays.util';
 
 export class MapObjectService {
 
 
-    static create(data: object[], info: MapTargetInfo): object[]
-    static create(data: object, info: MapTargetInfo): object
-    static create(data: object, info: MapTargetInfo): object | object[] | undefined {
+    static create(data: object[], info: TargetInfo): object[]
+    static create(data: object, info: TargetInfo): object
+    static create(data: object, info: TargetInfo): object | object[] | undefined {
         if (!this.targetAndDataAreBothArrayOrNot(data, info)) {
             return undefined;
         } else if (isArray(data)) {
@@ -37,7 +37,7 @@ export class MapObjectService {
     }
 
 
-    private static targetAndDataAreBothArrayOrNot(data: any, info: MapTargetInfo): boolean {
+    private static targetAndDataAreBothArrayOrNot(data: any, info: TargetInfo): boolean {
         return (isArray(data) && info.isArray) || (!isArray(data) && !info.isArray);
     }
 

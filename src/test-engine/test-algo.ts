@@ -1,12 +1,12 @@
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
-import { expect } from './test.service';
+import { expect } from './test-algo.service';
 import { GLOBAL } from '../const/global.const';
 import { InitService } from '../services/init.service';
 
 GLOBAL.debug = true;
 
-async function startTests() {
+async function startTestAlgo() {
     InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
@@ -28,4 +28,4 @@ async function getTests(specFiles: string[]): Promise<void> {
     }
 }
 
-startTests();
+startTestAlgo();

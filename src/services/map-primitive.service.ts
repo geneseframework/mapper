@@ -1,4 +1,5 @@
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
@@ -25,7 +26,7 @@ export class MapPrimitiveService {
                 primitiveElementsArray.push(primitiveElement);
             }
         }
-        return primitiveElementsArray.length > 0 ? primitiveElementsArray : undefined;
+        return primitiveElementsArray;
     }
 
 

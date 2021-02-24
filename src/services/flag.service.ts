@@ -43,10 +43,14 @@ export class FlagService {
 
     private static getInstanceGeneratorCode(): string {
         return `const generateInstance = async function(instanceGenerator) {\n` +
-            `${tab}let instance;\n` +
-            `${tab}switch (instanceGenerator.id) {\n` +
+            `${tab}try {\n` +
+            `${tabs(2)}let instance;\n` +
+            `${tabs(2)}switch (instanceGenerator.id) {\n` +
             `}` +
-            `${tab}return instance;\n` +
+            `${tabs(2)}return instance;\n` +
+            `${tab}} catch(err) {\n` +
+            `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +
+            `${tab}}\n` +
             `}\n` +
             `exports.generateInstance = generateInstance;\n`;
     }
