@@ -4,7 +4,6 @@
 
 
 import { Mapper } from '../../../../models/mapper';
-import * as chalk from 'chalk';
 
 let valueAny: any;
 let valueUnknown: unknown;
