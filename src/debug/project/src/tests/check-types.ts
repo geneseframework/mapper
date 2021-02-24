@@ -21,23 +21,22 @@ async function checkTypes() {
     const primitiveStringValueAny: string = await Mapper.create('string', valueAny);
     const primitiveStringValueUnknown: string = await Mapper.create('string', valueUnknown);
     const primitiveStringNumber: unknown = await Mapper.create('string', 2);
+    const primitiveStringObject: unknown = await Mapper.create('string', {});
 
     const primitiveStringConstructor: string = await Mapper.create(String, 'a');
-    const primitiveStringConstructorNumber: WrongDataType = await Mapper.create(String, 2);
+    const primitiveStringConstructorNumber: unknown = await Mapper.create(String, 2);
     const primitiveStringConstructorValueAny: string = await Mapper.create(String, valueAny);
     const primitiveStringConstructorValueUnknown: string = await Mapper.create(String, valueUnknown);
 
     const primitiveStringConstructorArrayStringArray: string[] = await Mapper.create([String], ['a', 'b']);
-    const primitiveStringConstructorArrayString: undefined = await Mapper.create([String], 'a');
-    const primitiveStringConstructorArrayNumber: WrongDataType = await Mapper.create([String], 2);
-    const primitiveStringConstructorArrayNumberArray: WrongDataType = await Mapper.create([String], [2, 3]);
-    // const primitiveStringConstructorArrayValueAny: string[] | undefined | null = await Mapper.create([String], valueAny);
-    // const primitiveStringConstructorArrayValueUnknown: string[] = await Mapper.create([String], valueUnknown);
+    const primitiveStringConstructorArrayString: unknown = await Mapper.create([String], 'a');
+    const primitiveStringConstructorArrayNumber: unknown = await Mapper.create([String], 2);
+    const primitiveStringConstructorArrayNumberArray: string[] = await Mapper.create([String], [2, 3]);
 
-    const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
     const primitiveStringArrayDifferentTypes: string[] = await Mapper.create('string[]', ['a', 2]);
-    const primitiveStringArrayWrong: WrongDataType = await Mapper.create('string[]', 'a');
+    const primitiveStringArrayString: unknown = await Mapper.create('string[]', 'a');
+    const primitiveStringArrayObject: unknown = await Mapper.create('string[]', {a: 3});
 
     // ---------------------------------------------   Numbers   -----------------------------------------------------
 

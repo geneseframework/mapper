@@ -46,17 +46,11 @@ export class Mapper<T> {
 
     static async create<T>(mapTarget: 'string' | StringConstructor, data: string): Promise<string>
     static async create<T>(mapTarget: 'string' | StringConstructor, data: NotString): Promise<unknown>
-    static async create<T>(mapTarget: 'string' | StringConstructor, data: any): Promise<any>
+    static async create<T>(mapTarget: 'string' | StringConstructor, data: any): Promise<string | undefined>
 
     static async create<T>(mapTarget: 'string[]' | [StringConstructor], data: string[] | ObjectArray): Promise<string[]>
-    static async create<T>(mapTarget: 'string[]' | [StringConstructor], data: NotArray): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'string[]' | [StringConstructor], data: any): Promise<unknown>
-    // static async create<T>(mapTarget: [StringConstructor], data: undefined): Promise<undefined>
-    // static async create<T>(mapTarget: [StringConstructor], data: null): Promise<null>
-    // static async create<T>(mapTarget: [StringConstructor], data: any): Promise<string[] | undefined | null>
-
-    // static async create<T>(mapTarget: 'string[]', data: string[]): Promise<string[]>
-    // static async create<T>(mapTarget: 'string[]', data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: 'string[]' | [StringConstructor], data: NotArray): Promise<unknown>
+    static async create<T>(mapTarget: 'string[]' | [StringConstructor], data: any): Promise<string[] | undefined>
 
     // --------------------------------------------   Number overloads   -----------------------------------------------------
 
