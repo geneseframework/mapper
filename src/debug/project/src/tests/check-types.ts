@@ -20,7 +20,7 @@ async function checkTypes() {
     const primitiveString: string = await Mapper.create('string', 'a');
     const primitiveStringValueAny: string = await Mapper.create('string', valueAny);
     const primitiveStringValueUnknown: string = await Mapper.create('string', valueUnknown);
-    const primitiveStringNumber: WrongDataType = await Mapper.create('string', 2);
+    const primitiveStringNumber: unknown = await Mapper.create('string', 2);
 
     const primitiveStringConstructor: string = await Mapper.create(String, 'a');
     const primitiveStringConstructorNumber: WrongDataType = await Mapper.create(String, 2);
@@ -28,7 +28,7 @@ async function checkTypes() {
     const primitiveStringConstructorValueUnknown: string = await Mapper.create(String, valueUnknown);
 
     const primitiveStringConstructorArrayStringArray: string[] = await Mapper.create([String], ['a', 'b']);
-    const primitiveStringConstructorArrayString: WrongDataType = await Mapper.create([String], 'a');
+    const primitiveStringConstructorArrayString: undefined = await Mapper.create([String], 'a');
     const primitiveStringConstructorArrayNumber: WrongDataType = await Mapper.create([String], 2);
     const primitiveStringConstructorArrayNumberArray: WrongDataType = await Mapper.create([String], [2, 3]);
     // const primitiveStringConstructorArrayValueAny: string[] | undefined | null = await Mapper.create([String], valueAny);
@@ -36,7 +36,7 @@ async function checkTypes() {
 
     const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
-    const primitiveStringArrayDifferentTypes: WrongDataType = await Mapper.create('string[]', ['a', 2]);
+    const primitiveStringArrayDifferentTypes: string[] = await Mapper.create('string[]', ['a', 2]);
     const primitiveStringArrayWrong: WrongDataType = await Mapper.create('string[]', 'a');
 
     // ---------------------------------------------   Numbers   -----------------------------------------------------
