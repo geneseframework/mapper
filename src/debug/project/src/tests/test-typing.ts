@@ -9,7 +9,7 @@ import * as chalk from 'chalk';
 let valueAny: any;
 let valueUnknown: unknown;
 
-class FooClass {
+export class FooClass {
     foo: string;
 }
 
@@ -20,7 +20,7 @@ class BarClass {
 /**
  * The compilation should crash if one of the result values has wrong type
  */
-async function checkTyping() {
+async function testTyping() {
 
 
     // ---------------------------------------------   Strings   -----------------------------------------------------
@@ -136,4 +136,4 @@ async function checkTyping() {
 
 }
 
-checkTyping()
+testTyping()

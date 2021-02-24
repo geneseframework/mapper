@@ -32,6 +32,7 @@ import {
     NotNumber, NotObject,
     NotString, ObjectNotArray
 } from '../types/not-some-type.type';
+import * as chalk from 'chalk';
 
 
 export class Mapper<T> {
@@ -109,6 +110,7 @@ export class Mapper<T> {
         await this.init();
         // GLOBAL.logDuration('Finished initialization');
         if (this.isTrivialCase<T>(target, data)) {
+            // console.log(chalk.blueBright('IS TRIVIALLLL'), target, data);
             return this.mapTrivialCase(target, data);
         } else {
             return this.mapTypeDeclaration(target, data);
