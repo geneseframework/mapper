@@ -54,17 +54,13 @@ export class Mapper<T> {
 
     // --------------------------------------------   Number overloads   -----------------------------------------------------
 
-    static async create<T>(mapTarget: NumberConstructor, data: number): Promise<number>
-    static async create<T>(mapTarget: NumberConstructor, data: NotNumber): Promise<WrongDataType>
-    static async create<T>(mapTarget: NumberConstructor, data: any): Promise<any>
+    static async create<T>(mapTarget: 'number' | NumberConstructor, data: number): Promise<number>
+    static async create<T>(mapTarget: 'number' | NumberConstructor, data: NotNumber): Promise<unknown>
+    static async create<T>(mapTarget: 'number' | NumberConstructor, data: any): Promise<number | undefined>
 
-    static async create<T>(mapTarget: [NumberConstructor], data: number[]): Promise<number[]>
-    static async create<T>(mapTarget: [NumberConstructor], data: NotNumber): Promise<WrongDataType>
-    static async create<T>(mapTarget: [NumberConstructor], data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'number', data: number): Promise<number>
-    static async create<T>(mapTarget: 'number', data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'number[]', data: number[]): Promise<number[]>
-    static async create<T>(mapTarget: 'number[]', data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: 'number[]' | [NumberConstructor], data: number[]): Promise<number[]>
+    static async create<T>(mapTarget: 'number[]' | [NumberConstructor], data: NotArray): Promise<unknown>
+    static async create<T>(mapTarget: 'number[]' | [NumberConstructor], data: any): Promise<number[] | undefined>
 
     // -------------------------------------------   Boolean overloads   ----------------------------------------------------
 

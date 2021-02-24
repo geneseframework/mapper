@@ -32,6 +32,8 @@ async function checkTypes() {
     const primitiveStringConstructorArrayString: unknown = await Mapper.create([String], 'a');
     const primitiveStringConstructorArrayNumber: unknown = await Mapper.create([String], 2);
     const primitiveStringConstructorArrayNumberArray: string[] = await Mapper.create([String], [2, 3]);
+    const primitiveStringConstructorArrayValueAny: string[] = await Mapper.create([String], valueAny);
+    const primitiveStringConstructorArrayValueUnknown: string[] = await Mapper.create([String], valueUnknown);
 
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
     const primitiveStringArrayDifferentTypes: string[] = await Mapper.create('string[]', ['a', 2]);
@@ -41,15 +43,17 @@ async function checkTypes() {
     // ---------------------------------------------   Numbers   -----------------------------------------------------
 
     const primitiveNumber: number = await Mapper.create('number', 3);
-    const primitiveNumberNumber: WrongDataType = await Mapper.create('number', 'a');
+    const primitiveNumberNumber: unknown = await Mapper.create('number', 'a');
+    const primitiveNumberObject: unknown = await Mapper.create('number', {});
+
     const primitiveNumberType: number = await Mapper.create(Number, 3);
-    const primitiveNumberTypeNumber: WrongDataType = await Mapper.create(Number, 'a');
+    const primitiveNumberTypeNumber: unknown = await Mapper.create(Number, 'a');
+
     const primitiveNumberConstructorType: number[] = await Mapper.create([Number], [3, 4]);
-    const primitiveNumberConstructorTypeNumber: WrongDataType = await Mapper.create([Number], 'a');
-    const primitiveNumberObject: WrongDataType = await Mapper.create('number', {});
+    const primitiveNumberConstructorTypeNumber: unknown = await Mapper.create([Number], 'a');
     const primitiveNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
-    const primitiveNumberArrayDifferentTypes: WrongDataType = await Mapper.create('number[]', ['a', 4]);
-    const primitiveNumberArrayWrong: WrongDataType = await Mapper.create('number[]', 3);
+    const primitiveNumberArrayDifferentTypes: number[] = await Mapper.create('number[]', ['a', 4]);
+    const primitiveNumberArrayWrong: unknown = await Mapper.create('number[]', 3);
 
     // ---------------------------------------------   Booleans   -----------------------------------------------------
 
