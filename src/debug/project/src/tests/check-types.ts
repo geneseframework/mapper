@@ -8,7 +8,7 @@ import { PersonCatSpec } from './classes.spec';
 import * as chalk from 'chalk';
 import { WrongDataType } from '../../../../types/wrong-data-type.type';
 
-
+let unknownValue: any;
 /**
  * The compilation should crash if one of the result values has wrong type
  */
@@ -17,9 +17,12 @@ async function checkTypes() {
     // ---------------------------------------------   Strings   -----------------------------------------------------
 
     const primitiveString: string = await Mapper.create('string', 'a');
+    const primitiveStringUnknownValue: string = await Mapper.create('string', unknownValue);
     const primitiveStringNumber: WrongDataType = await Mapper.create('string', 2);
     const primitiveStringType: string = await Mapper.create(String, 'a');
     const primitiveStringTypeNumber: WrongDataType = await Mapper.create(String, 2);
+    const primitiveStringConstructorArrayType: string[] = await Mapper.create([String], ['a', 'b']);
+    const primitiveStringConstructorTypeNumber: WrongDataType = await Mapper.create([String], 2);
     const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
     const primitiveStringArrayDifferentTypes: WrongDataType = await Mapper.create('string[]', ['a', 2]);
@@ -31,6 +34,8 @@ async function checkTypes() {
     const primitiveNumberNumber: WrongDataType = await Mapper.create('number', 'a');
     const primitiveNumberType: number = await Mapper.create(Number, 3);
     const primitiveNumberTypeNumber: WrongDataType = await Mapper.create(Number, 'a');
+    const primitiveNumberConstructorType: number[] = await Mapper.create([Number], [3, 4]);
+    const primitiveNumberConstructorTypeNumber: WrongDataType = await Mapper.create([Number], 'a');
     const primitiveNumberObject: WrongDataType = await Mapper.create('number', {});
     const primitiveNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
     const primitiveNumberArrayDifferentTypes: WrongDataType = await Mapper.create('number[]', ['a', 4]);
@@ -42,6 +47,8 @@ async function checkTypes() {
     const primitiveBooleanBoolean: WrongDataType = await Mapper.create('boolean', 'a');
     const primitiveBooleanType: boolean = await Mapper.create(Boolean, false);
     const primitiveBooleanTypeBoolean: WrongDataType = await Mapper.create(Boolean, 'a');
+    const primitiveBooleanConstructorType: boolean[] = await Mapper.create([Boolean], [false, true]);
+    const primitiveBooleanConstructorTypeBoolean: WrongDataType = await Mapper.create([Boolean], 'a');
     const primitiveBooleanObject: WrongDataType = await Mapper.create('boolean', {});
     const primitiveBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
     const primitiveBooleanArrayDifferentTypes: WrongDataType = await Mapper.create('boolean[]', ['a', true]);

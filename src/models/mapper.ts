@@ -29,15 +29,19 @@ import { WrongDataType } from '../types/wrong-data-type.type';
 import * as chalk from 'chalk';
 import { DateCpnstructorParameters } from '../types/date-cpnstructor-parameters.type';
 
+
+
 export class Mapper<T> {
 
 
     // --------------------------------------------   String overloads   -----------------------------------------------------
 
+    static async create<T extends string | any>(mapTarget: 'string', data: T): Promise<T extends string ? string : WrongDataType>
+    static async create<T>(mapTarget: 'string', data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: StringConstructor, data: string): Promise<string>
     static async create<T>(mapTarget: StringConstructor, data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'string', data: string): Promise<string>
-    static async create<T>(mapTarget: 'string', data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: [StringConstructor], data: string[]): Promise<string[]>
+    static async create<T>(mapTarget: [StringConstructor], data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: 'string[]', data: string[]): Promise<string[]>
     static async create<T>(mapTarget: 'string[]', data: any): Promise<WrongDataType>
 
@@ -45,6 +49,8 @@ export class Mapper<T> {
 
     static async create<T>(mapTarget: NumberConstructor, data: number): Promise<number>
     static async create<T>(mapTarget: NumberConstructor, data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: [NumberConstructor], data: number[]): Promise<number[]>
+    static async create<T>(mapTarget: [NumberConstructor], data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: 'number', data: number): Promise<number>
     static async create<T>(mapTarget: 'number', data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: 'number[]', data: number[]): Promise<number[]>
@@ -54,11 +60,12 @@ export class Mapper<T> {
 
     static async create<T>(mapTarget: BooleanConstructor, data: boolean): Promise<boolean>
     static async create<T>(mapTarget: BooleanConstructor, data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: [BooleanConstructor], data: boolean[]): Promise<boolean[]>
+    static async create<T>(mapTarget: [BooleanConstructor], data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: 'boolean', data: boolean): Promise<boolean>
     static async create<T>(mapTarget: 'boolean', data: any): Promise<WrongDataType>
     static async create<T>(mapTarget: 'boolean[]', data: boolean[]): Promise<boolean[]>
     static async create<T>(mapTarget: 'boolean[]', data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'boolean', data: any): Promise<WrongDataType>
 
     // -------------------------------------------   Dates overloads   ----------------------------------------------------
 
@@ -71,9 +78,7 @@ export class Mapper<T> {
     static async create<T>(mapTarget: TConstructor<T>, data: NotInstance, options?: MapOptions): Promise<WrongDataType>
     static async create<T>(mapTarget: TConstructor<T>, data: any, options?: MapOptions): Promise<T>
     static async create<T>(mapTarget: 'Object' | 'object', data: object): Promise<object>
-    static async create<Date>(mapTarget: MapTarget<Date>, data: Date): Promise<Date>
     static async create<T>(mapTarget: Tuple, data: any[], options?: MapOptions): Promise<Tuple>
-    static async create<Date>(mapTarget: MapTarget<Date>, data: Date[]): Promise<Date[]>
     static async create<T>(mapTarget: MapTarget<T>, data: any[], options?: MapOptions): Promise<T[]>
     static async create<T>(mapTarget: MapTarget<T>, data: any, options?: MapOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
