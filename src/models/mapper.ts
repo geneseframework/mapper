@@ -102,6 +102,8 @@ export class Mapper<T> {
 
     static async create<T>(target: Tuple, data: any[]): Promise<Tuple>
 
+    // --------------------------------------------   Other overloads   ---------------------------------------------------
+
     static async create<T>(target: MapTarget<T>, data: any[]): Promise<T[]>
     static async create<T>(target: MapTarget<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: MapTarget<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
