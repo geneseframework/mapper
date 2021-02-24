@@ -108,13 +108,17 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: any[]): Promise<T[]>
     static async create<T>(target: Target<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
-        GLOBAL.start = Date.now();
-        await this.init();
-        // GLOBAL.logDuration('Finished initialization');
-        if (this.isTrivialCase<T>(target, data)) {
-            return this.mapTrivialCase(target, data);
-        } else {
-            return this.mapTypeDeclaration(target, data);
+        try {
+            GLOBAL.start = Date.now();
+            await this.init();
+            // GLOBAL.logDuration('Finished initialization');
+            if (this.isTrivialCase<T>(target, data)) {
+                return this.mapTrivialCase(target, data);
+            } else {
+                return this.mapTypeDeclaration(target, data);
+            }
+        } catch (err) {
+            throwWarning('Mapping failed : an unknown error occurred.')
         }
     }
 

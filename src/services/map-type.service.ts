@@ -121,7 +121,7 @@ export class MapTypeService {
 
     private static async mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        await MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
+        await MapDeclarationService.map(target, key, dataValue, typeDeclaration?.getName(), typeDeclaration);
     }
 
 

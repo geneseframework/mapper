@@ -141,7 +141,7 @@ export class MapTypeArrayService {
             case SyntaxKind.TypeReference:
                 const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeNode as TypeReferenceNode);
                 if (typeDeclaration instanceof ClassDeclaration) {
-                    return !!typeDeclaration.getProperties().find(p => p.getName() === key);
+                    return !!typeDeclaration?.getProperties()?.find(p => p.getName() === key);
                 } else  {
                     return false;
                 }
