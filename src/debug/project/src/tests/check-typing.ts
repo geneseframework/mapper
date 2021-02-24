@@ -128,7 +128,7 @@ async function checkTyping() {
     const fooClassArrayOfString: FooClass[] = await Mapper.create([FooClass], ['a']);
     const fooClassArrayOfBooleans: FooClass[] = await Mapper.create([FooClass], [true]);
     const fooClassArrayOfNumbers: FooClass[] = await Mapper.create([FooClass], [2]);
-    const fooClassArrayTupleWithObjectNotArrayData: string = await Mapper.create([FooClass, FooClass], {});
+    const fooClassArrayTupleWithObjectNotArrayData: unknown = await Mapper.create([FooClass, FooClass], {});
     const fooClassArrayTupleWithBooleanData: unknown = await Mapper.create([FooClass, FooClass], true);
     const fooClassArrayTupleWithStringData: unknown = await Mapper.create([FooClass, FooClass], 'a');
     const fooClassArrayTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
