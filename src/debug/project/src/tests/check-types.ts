@@ -8,7 +8,8 @@ import { PersonCatSpec } from './classes.spec';
 import * as chalk from 'chalk';
 import { WrongDataType } from '../../../../types/wrong-data-type.type';
 
-let unknownValue: any;
+let valueAny: any;
+let valueUnknown: unknown;
 /**
  * The compilation should crash if one of the result values has wrong type
  */
@@ -17,12 +18,22 @@ async function checkTypes() {
     // ---------------------------------------------   Strings   -----------------------------------------------------
 
     const primitiveString: string = await Mapper.create('string', 'a');
-    const primitiveStringUnknownValue: string = await Mapper.create('string', unknownValue);
+    const primitiveStringValueAny: string = await Mapper.create('string', valueAny);
+    const primitiveStringValueUnknown: string = await Mapper.create('string', valueUnknown);
     const primitiveStringNumber: WrongDataType = await Mapper.create('string', 2);
-    const primitiveStringType: string = await Mapper.create(String, 'a');
-    const primitiveStringTypeNumber: WrongDataType = await Mapper.create(String, 2);
-    const primitiveStringConstructorArrayType: string[] = await Mapper.create([String], ['a', 'b']);
-    const primitiveStringConstructorTypeNumber: WrongDataType = await Mapper.create([String], 2);
+
+    const primitiveStringConstructor: string = await Mapper.create(String, 'a');
+    const primitiveStringConstructorNumber: WrongDataType = await Mapper.create(String, 2);
+    const primitiveStringConstructorValueAny: string = await Mapper.create(String, valueAny);
+    const primitiveStringConstructorValueUnknown: string = await Mapper.create(String, valueUnknown);
+
+    const primitiveStringConstructorArrayStringArray: string[] = await Mapper.create([String], ['a', 'b']);
+    const primitiveStringConstructorArrayString: WrongDataType = await Mapper.create([String], 'a');
+    const primitiveStringConstructorArrayNumber: WrongDataType = await Mapper.create([String], 2);
+    const primitiveStringConstructorArrayNumberArray: WrongDataType = await Mapper.create([String], [2, 3]);
+    // const primitiveStringConstructorArrayValueAny: string[] | undefined | null = await Mapper.create([String], valueAny);
+    // const primitiveStringConstructorArrayValueUnknown: string[] = await Mapper.create([String], valueUnknown);
+
     const primitiveStringObject: WrongDataType = await Mapper.create('string', {});
     const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
     const primitiveStringArrayDifferentTypes: WrongDataType = await Mapper.create('string[]', ['a', 2]);
