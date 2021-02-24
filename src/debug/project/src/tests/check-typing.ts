@@ -21,7 +21,7 @@ class BarClass {
 /**
  * The compilation should crash if one of the result values has wrong type
  */
-async function checkTypes() {
+async function checkTyping() {
 
     // ---------------------------------------------   Strings   -----------------------------------------------------
 
@@ -128,7 +128,7 @@ async function checkTypes() {
     const fooClassArrayOfString: FooClass[] = await Mapper.create([FooClass], ['a']);
     const fooClassArrayOfBooleans: FooClass[] = await Mapper.create([FooClass], [true]);
     const fooClassArrayOfNumbers: FooClass[] = await Mapper.create([FooClass], [2]);
-    const fooClassArrayTupleWithObjectNotArrayData: unknown = await Mapper.create([FooClass, FooClass], {});
+    const fooClassArrayTupleWithObjectNotArrayData: string = await Mapper.create([FooClass, FooClass], {});
     const fooClassArrayTupleWithBooleanData: unknown = await Mapper.create([FooClass, FooClass], true);
     const fooClassArrayTupleWithStringData: unknown = await Mapper.create([FooClass, FooClass], 'a');
     const fooClassArrayTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
@@ -153,4 +153,4 @@ async function checkTypes() {
     console.log(chalk.cyanBright('BBBB'), bbbb.constructor.name);
 }
 
-checkTypes()
+checkTyping()
