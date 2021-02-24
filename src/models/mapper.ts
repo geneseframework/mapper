@@ -26,7 +26,7 @@ import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
 import {
     NotArray,
-    NotArrayOfInstances, NotBoolean,
+    NotArrayOfInstances, NotBoolean, NotDate,
     NotInstance,
     NotNumber,
     NotString,
@@ -35,7 +35,7 @@ import {
 } from '../types/not-some-type.type';
 import { WrongDataType } from '../types/wrong-data-type.type';
 import * as chalk from 'chalk';
-import { DateCpnstructorParameters } from '../types/date-cpnstructor-parameters.type';
+import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 
 
 
@@ -74,9 +74,15 @@ export class Mapper<T> {
 
     // -------------------------------------------   Dates overloads   ----------------------------------------------------
 
-    static async create<T>(mapTarget: DateConstructor, data: DateCpnstructorParameters): Promise<Date>
-    static async create<T>(mapTarget: DateConstructor, data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: DateConstructor, data: DateConstructorParameters): Promise<Date>
+    static async create<T>(mapTarget: DateConstructor, data: NotDate): Promise<unknown>
+    static async create<T>(mapTarget: DateConstructor, data: any): Promise<Date | undefined>
 
+    static async create<T>(mapTarget: DateConstructor[], data: DateConstructorParameters[]): Promise<Date[]>
+    static async create<T>(mapTarget: DateConstructor[], data: NotArray): Promise<unknown>
+    static async create<T>(mapTarget: DateConstructor[], data: any): Promise<Date[] | undefined>
+
+    // ---------------------------------------   Constructor overloads   --------------------------------------------------
 
     static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: NotArrayOfInstances<T>, options?: MapOptions): Promise<WrongDataType> // data must have type which could be an array of T
     static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: any, options?: MapOptions): Promise<T[]>

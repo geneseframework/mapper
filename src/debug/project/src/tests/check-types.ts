@@ -75,8 +75,14 @@ async function checkTypes() {
     const primitiveDate: Date = await Mapper.create(Date, 1614094099126);
     const primitiveDateDate: Date = await Mapper.create(Date, 'Tue Feb 23 2021');
     const primitiveDateType: Date = await Mapper.create(Date, 'a');
-    const primitiveDateTypeDate: WrongDataType = await Mapper.create(Date, false);
-    const primitiveDateObject: WrongDataType = await Mapper.create(Date, {});
+    const primitiveDateTypeDate: unknown = await Mapper.create(Date, false);
+    const primitiveDateObject: unknown = await Mapper.create(Date, {});
+
+    const primitiveDateArray: Date[] = await Mapper.create([Date], [1614094099126, 1614094099127]);
+    const primitiveDateDateArray: Date[] = await Mapper.create([Date], ['Tue Feb 23 2021', 'Tue Feb 24 2021']);
+    const primitiveDateTypeArray: Date[] = await Mapper.create([Date], ['a', 'b']);
+    const primitiveDateTypeDateArray: unknown = await Mapper.create([Date], false);
+    const primitiveDateObjectArray: unknown = await Mapper.create([Date], {});
 
     // -----------------------------------------------   Class   -----------------------------------------------------
 
