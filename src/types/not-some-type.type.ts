@@ -14,5 +14,6 @@ export type NotArrayOfInstances<T> = NotArray | PrimitiveElement[] | T;
 export type NotStringArray = NotArray | number[] | boolean[] | object[];
 
 const zzz: ObjectArray = [2]
+const zzzgjh: Array<any> = [2]
 const zzzaaa: ObjectNotArray = {a: 2}
 const ssss: NotArray = 2

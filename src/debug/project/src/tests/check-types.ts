@@ -4,12 +4,15 @@
 
 
 import { Mapper } from '../../../../models/mapper';
-import { PersonCatSpec } from './classes.spec';
 import * as chalk from 'chalk';
-import { WrongDataType } from '../../../../types/wrong-data-type.type';
 
 let valueAny: any;
 let valueUnknown: unknown;
+
+class FooClass {
+    foo: string;
+}
+
 /**
  * The compilation should crash if one of the result values has wrong type
  */
@@ -55,7 +58,7 @@ async function checkTypes() {
     const primitiveNumberArrayDifferentTypes: number[] = await Mapper.create('number[]', ['a', 4]);
     const primitiveNumberArrayWrong: unknown = await Mapper.create('number[]', 3);
 
-    // ---------------------------------------------   Booleans   -----------------------------------------------------
+    // -------------------------------------------------   Booleans   -----------------------------------------------------
 
     const primitiveBoolean: boolean = await Mapper.create('boolean', false);
     const primitiveBooleanBoolean: unknown = await Mapper.create('boolean', 'a');
@@ -69,6 +72,23 @@ async function checkTypes() {
     const primitiveBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
     const primitiveBooleanArrayDifferentTypes: boolean[] = await Mapper.create('boolean[]', ['a', true]);
     const primitiveBooleanArrayWrong: unknown = await Mapper.create('boolean[]', false);
+
+    // -------------------------------------------   Objects (not arrays)   -----------------------------------------------
+
+    const primitiveObject: object = await Mapper.create('object', {a: 2});
+    const primitiveObjectString: unknown = await Mapper.create('object', 'a');
+    const primitiveObjectNumber: unknown = await Mapper.create('object', 2);
+    const primitiveObjectArray: unknown = await Mapper.create('object', [2]);
+
+    const primitiveObjectConstructorObject: object = await Mapper.create('object', {a: 2});
+    const primitiveObjectConstructorBoolean: unknown = await Mapper.create(Object, false);
+    const primitiveObjectConstructorString: unknown = await Mapper.create(Object, 'a');
+
+    const primitiveObjectConstructorArrayBooleans: object[] = await Mapper.create([Object], [false, true]);
+    const primitiveObjectConstructorTypeObject: unknown = await Mapper.create([Object], 'a');
+    const primitiveObjectArrayBooleans: object[] = await Mapper.create('object[]', [false, true]);
+    const primitiveObjectArrayDifferentTypes: object[] = await Mapper.create('object[]', ['a', true]);
+    const primitiveObjectArrayWrong: unknown = await Mapper.create('object[]', false);
 
     // ---------------------------------------------   Dates   -----------------------------------------------------
 
@@ -86,26 +106,28 @@ async function checkTypes() {
 
     // -----------------------------------------------   Class   -----------------------------------------------------
 
-    const personCatSpecObject: PersonCatSpec = await Mapper.create(PersonCatSpec, {});
-    const personCatSpecObjectWithProperty: PersonCatSpec = await Mapper.create(PersonCatSpec, {property: 'a'});
-    const personCatSpecString: WrongDataType = await Mapper.create(PersonCatSpec, 'a');
-    const personCatSpecNumber: WrongDataType = await Mapper.create(PersonCatSpec, 2);
-    const personCatSpecBoolean: WrongDataType = await Mapper.create(PersonCatSpec, true);
-    const personCatSpecArray: WrongDataType = await Mapper.create(PersonCatSpec, [{}]);
+    const personCatSpecObject: FooClass = await Mapper.create(FooClass, {});
+    const personCatSpecObjectWithProperty: FooClass = await Mapper.create(FooClass, {property: 'a'});
+    const personCatSpecString: unknown = await Mapper.create(FooClass, 'a');
+    const personCatSpecNumber: unknown = await Mapper.create(FooClass, 2);
+    const personCatSpecBoolean: unknown = await Mapper.create(FooClass, true);
+    const personCatSpecArray: unknown = await Mapper.create(FooClass, [{}]);
 
     // ----------------------------------------------   Class[]   ----------------------------------------------------
 
-    const personCatSpecArrayOfPersonCatSpec: PersonCatSpec[] = await Mapper.create([PersonCatSpec], [new PersonCatSpec()]);
-    const personCatSpecArrayOfObjects: PersonCatSpec[] = await Mapper.create([PersonCatSpec], [{}]);
-    const personCatSpecArrayOfString: WrongDataType = await Mapper.create([PersonCatSpec], ['a']);
-    const personCatSpecArrayOfBooleans: WrongDataType = await Mapper.create([PersonCatSpec], [true]);
-    const personCatSpecArrayOfNumbers: WrongDataType = await Mapper.create([PersonCatSpec], [2]);
-    const personCatSpecTupleWithObjectNotArrayData: WrongDataType = await Mapper.create([PersonCatSpec, PersonCatSpec], {});
-    const personCatSpecTupleWithBooleanData: WrongDataType = await Mapper.create([PersonCatSpec, PersonCatSpec], true);
-    const personCatSpecTupleWithStringData: WrongDataType = await Mapper.create([PersonCatSpec, PersonCatSpec], 'a');
-    const personCatSpecTupleWithNumberData: WrongDataType = await Mapper.create([PersonCatSpec, PersonCatSpec], 2);
-    const personCatSpecTupleWithTData: WrongDataType = await Mapper.create([PersonCatSpec, PersonCatSpec], new PersonCatSpec());
-    const zzz = new PersonCatSpec();
+    const personCatSpecArrayOfFooClass: FooClass[] = await Mapper.create([FooClass], [new FooClass()]);
+    const personCatSpecArrayOfObjects: FooClass[] = await Mapper.create([FooClass], [{}]);
+    const personCatSpecArrayOfString: FooClass[] = await Mapper.create([FooClass], ['a']);
+    const personCatSpecArrayOfBooleans: FooClass[] = await Mapper.create([FooClass], [true]);
+    const personCatSpecArrayOfNumbers: FooClass[] = await Mapper.create([FooClass], [2]);
+    const personCatSpecTupleWithObjectNotArrayData: unknown = await Mapper.create([FooClass, FooClass], {});
+    const personCatSpecTupleWithBooleanData: unknown = await Mapper.create([FooClass, FooClass], true);
+    const personCatSpecTupleWithStringData: unknown = await Mapper.create([FooClass, FooClass], 'a');
+    const personCatSpecTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
+    const personCatSpecTupleWithTData: unknown = await Mapper.create([FooClass, FooClass], new FooClass());
+
+
+    const zzz = new FooClass();
     console.log(chalk.blueBright('ZZZZZZZ'), zzz);
     console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor);
     console.log(chalk.blueBright('ZZZZZZZ'), zzz.constructor.name);
