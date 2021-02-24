@@ -5,12 +5,17 @@
 
 import { Mapper } from '../../../../models/mapper';
 import * as chalk from 'chalk';
+import * as stream from 'stream';
 
 let valueAny: any;
 let valueUnknown: unknown;
 
 class FooClass {
     foo: string;
+}
+
+class BarClass {
+    bar: string;
 }
 
 /**
@@ -20,115 +25,119 @@ async function checkTypes() {
 
     // ---------------------------------------------   Strings   -----------------------------------------------------
 
-    const primitiveString: string = await Mapper.create('string', 'a');
-    const primitiveStringValueAny: string = await Mapper.create('string', valueAny);
-    const primitiveStringValueUnknown: string = await Mapper.create('string', valueUnknown);
-    const primitiveStringNumber: unknown = await Mapper.create('string', 2);
-    const primitiveStringObject: unknown = await Mapper.create('string', {});
+    const fooString: string = await Mapper.create('string', 'a');
+    const fooStringValueAny: string = await Mapper.create('string', valueAny);
+    const fooStringValueUnknown: string = await Mapper.create('string', valueUnknown);
+    const fooStringNumber: unknown = await Mapper.create('string', 2);
+    const fooStringObject: unknown = await Mapper.create('string', {});
 
-    const primitiveStringConstructor: string = await Mapper.create(String, 'a');
-    const primitiveStringConstructorNumber: unknown = await Mapper.create(String, 2);
-    const primitiveStringConstructorValueAny: string = await Mapper.create(String, valueAny);
-    const primitiveStringConstructorValueUnknown: string = await Mapper.create(String, valueUnknown);
+    const fooStringConstructor: string = await Mapper.create(String, 'a');
+    const fooStringConstructorNumber: unknown = await Mapper.create(String, 2);
+    const fooStringConstructorValueAny: string = await Mapper.create(String, valueAny);
+    const fooStringConstructorValueUnknown: string = await Mapper.create(String, valueUnknown);
 
-    const primitiveStringConstructorArrayStringArray: string[] = await Mapper.create([String], ['a', 'b']);
-    const primitiveStringConstructorArrayString: unknown = await Mapper.create([String], 'a');
-    const primitiveStringConstructorArrayNumber: unknown = await Mapper.create([String], 2);
-    const primitiveStringConstructorArrayNumberArray: string[] = await Mapper.create([String], [2, 3]);
-    const primitiveStringConstructorArrayValueAny: string[] = await Mapper.create([String], valueAny);
-    const primitiveStringConstructorArrayValueUnknown: string[] = await Mapper.create([String], valueUnknown);
+    const fooStringConstructorArrayStringArray: string[] = await Mapper.create([String], ['a', 'b']);
+    const fooStringConstructorArrayString: unknown = await Mapper.create([String], 'a');
+    const fooStringConstructorArrayNumber: unknown = await Mapper.create([String], 2);
+    const fooStringConstructorArrayNumberArray: string[] = await Mapper.create([String], [2, 3]);
+    const fooStringConstructorArrayValueAny: string[] = await Mapper.create([String], valueAny);
+    const fooStringConstructorArrayValueUnknown: string[] = await Mapper.create([String], valueUnknown);
 
-    const primitiveStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
-    const primitiveStringArrayDifferentTypes: string[] = await Mapper.create('string[]', ['a', 2]);
-    const primitiveStringArrayString: unknown = await Mapper.create('string[]', 'a');
-    const primitiveStringArrayObject: unknown = await Mapper.create('string[]', {a: 3});
+    const fooStringArray: string[] = await Mapper.create('string[]', ['a', 'b']);
+    const fooStringArrayDifferentTypes: string[] = await Mapper.create('string[]', ['a', 2]);
+    const fooStringArrayString: unknown = await Mapper.create('string[]', 'a');
+    const fooStringArrayObject: unknown = await Mapper.create('string[]', {a: 3});
 
     // ---------------------------------------------   Numbers   -----------------------------------------------------
 
-    const primitiveNumber: number = await Mapper.create('number', 3);
-    const primitiveNumberNumber: unknown = await Mapper.create('number', 'a');
-    const primitiveNumberObject: unknown = await Mapper.create('number', {});
+    const fooNumber: number = await Mapper.create('number', 3);
+    const fooNumberNumber: unknown = await Mapper.create('number', 'a');
+    const fooNumberObject: unknown = await Mapper.create('number', {});
 
-    const primitiveNumberType: number = await Mapper.create(Number, 3);
-    const primitiveNumberTypeNumber: unknown = await Mapper.create(Number, 'a');
+    const fooNumberType: number = await Mapper.create(Number, 3);
+    const fooNumberTypeNumber: unknown = await Mapper.create(Number, 'a');
 
-    const primitiveNumberConstructorType: number[] = await Mapper.create([Number], [3, 4]);
-    const primitiveNumberConstructorTypeNumber: unknown = await Mapper.create([Number], 'a');
+    const fooNumberConstructorType: number[] = await Mapper.create([Number], [3, 4]);
+    const fooNumberConstructorTypeNumber: unknown = await Mapper.create([Number], 'a');
 
-    const primitiveNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
-    const primitiveNumberArrayDifferentTypes: number[] = await Mapper.create('number[]', ['a', 4]);
-    const primitiveNumberArrayWrong: unknown = await Mapper.create('number[]', 3);
+    const fooNumberArray: number[] = await Mapper.create('number[]', [3, 4]);
+    const fooNumberArrayDifferentTypes: number[] = await Mapper.create('number[]', ['a', 4]);
+    const fooNumberArrayWrong: unknown = await Mapper.create('number[]', 3);
 
     // -------------------------------------------------   Booleans   -----------------------------------------------------
 
-    const primitiveBoolean: boolean = await Mapper.create('boolean', false);
-    const primitiveBooleanBoolean: unknown = await Mapper.create('boolean', 'a');
-    const primitiveBooleanObject: unknown = await Mapper.create('boolean', {});
+    const fooBoolean: boolean = await Mapper.create('boolean', false);
+    const fooBooleanBoolean: unknown = await Mapper.create('boolean', 'a');
+    const fooBooleanObject: unknown = await Mapper.create('boolean', {});
 
-    const primitiveBooleanType: boolean = await Mapper.create(Boolean, false);
-    const primitiveBooleanTypeBoolean: unknown = await Mapper.create(Boolean, 'a');
+    const fooBooleanType: boolean = await Mapper.create(Boolean, false);
+    const fooBooleanTypeBoolean: unknown = await Mapper.create(Boolean, 'a');
 
-    const primitiveBooleanConstructorType: boolean[] = await Mapper.create([Boolean], [false, true]);
-    const primitiveBooleanConstructorTypeBoolean: unknown = await Mapper.create([Boolean], 'a');
+    const fooBooleanConstructorType: boolean[] = await Mapper.create([Boolean], [false, true]);
+    const fooBooleanConstructorTypeBoolean: unknown = await Mapper.create([Boolean], 'a');
 
-    const primitiveBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
-    const primitiveBooleanArrayDifferentTypes: boolean[] = await Mapper.create('boolean[]', ['a', true]);
-    const primitiveBooleanArrayWrong: unknown = await Mapper.create('boolean[]', false);
+    const fooBooleanArray: boolean[] = await Mapper.create('boolean[]', [false, true]);
+    const fooBooleanArrayDifferentTypes: boolean[] = await Mapper.create('boolean[]', ['a', true]);
+    const fooBooleanArrayWrong: unknown = await Mapper.create('boolean[]', false);
 
     // -------------------------------------------   Objects (not arrays)   -----------------------------------------------
 
-    const primitiveObject: object = await Mapper.create('object', {a: 2});
-    const primitiveObjectString: unknown = await Mapper.create('object', 'a');
-    const primitiveObjectNumber: unknown = await Mapper.create('object', 2);
-    const primitiveObjectArray: unknown = await Mapper.create('object', [2]);
+    const fooObject: object = await Mapper.create('object', {a: 2});
+    const fooObjectString: unknown = await Mapper.create('object', 'a');
+    const fooObjectNumber: unknown = await Mapper.create('object', 2);
+    const fooObjectArray: unknown = await Mapper.create('object', [2]);
 
-    const primitiveObjectConstructorObject: object = await Mapper.create('object', {a: 2});
-    const primitiveObjectConstructorBoolean: unknown = await Mapper.create(Object, false);
-    const primitiveObjectConstructorString: unknown = await Mapper.create(Object, 'a');
+    const fooObjectConstructorObject: object = await Mapper.create('object', {a: 2});
+    const fooObjectConstructorBoolean: unknown = await Mapper.create(Object, false);
+    const fooObjectConstructorString: unknown = await Mapper.create(Object, 'a');
 
-    const primitiveObjectConstructorArrayBooleans: object[] = await Mapper.create([Object], [false, true]);
-    const primitiveObjectConstructorTypeObject: unknown = await Mapper.create([Object], 'a');
+    const fooObjectConstructorArrayBooleans: object[] = await Mapper.create([Object], [false, true]);
+    const fooObjectConstructorTypeObject: unknown = await Mapper.create([Object], 'a');
 
-    const primitiveObjectArrayBooleans: object[] = await Mapper.create('object[]', [false, true]);
-    const primitiveObjectArrayDifferentTypes: object[] = await Mapper.create('object[]', ['a', true]);
-    const primitiveObjectArrayWrong: unknown = await Mapper.create('object[]', false);
+    const fooObjectArrayBooleans: object[] = await Mapper.create('object[]', [false, true]);
+    const fooObjectArrayDifferentTypes: object[] = await Mapper.create('object[]', ['a', true]);
+    const fooObjectArrayWrong: unknown = await Mapper.create('object[]', false);
 
     // ---------------------------------------------   Dates   -----------------------------------------------------
 
-    const primitiveDate: Date = await Mapper.create(Date, 1614094099126);
-    const primitiveDateDate: Date = await Mapper.create(Date, 'Tue Feb 23 2021');
-    const primitiveDateType: Date = await Mapper.create(Date, 'a');
-    const primitiveDateTypeDate: unknown = await Mapper.create(Date, false);
-    const primitiveDateObject: unknown = await Mapper.create(Date, {});
+    const fooDate: Date = await Mapper.create(Date, 1614094099126);
+    const fooDateDate: Date = await Mapper.create(Date, 'Tue Feb 23 2021');
+    const fooDateType: Date = await Mapper.create(Date, 'a');
+    const fooDateTypeDate: unknown = await Mapper.create(Date, false);
+    const fooDateObject: unknown = await Mapper.create(Date, {});
 
-    const primitiveDateArray: Date[] = await Mapper.create([Date], [1614094099126, 1614094099127]);
-    const primitiveDateDateArray: Date[] = await Mapper.create([Date], ['Tue Feb 23 2021', 'Tue Feb 24 2021']);
-    const primitiveDateTypeArray: Date[] = await Mapper.create([Date], ['a', 'b']);
-    const primitiveDateTypeDateArray: unknown = await Mapper.create([Date], false);
-    const primitiveDateObjectArray: unknown = await Mapper.create([Date], {});
+    const fooDateArray: Date[] = await Mapper.create([Date], [1614094099126, 1614094099127]);
+    const fooDateDateArray: Date[] = await Mapper.create([Date], ['Tue Feb 23 2021', 'Tue Feb 24 2021']);
+    const fooDateTypeArray: Date[] = await Mapper.create([Date], ['a', 'b']);
+    const fooDateTypeDateArray: unknown = await Mapper.create([Date], false);
+    const fooDateObjectArray: unknown = await Mapper.create([Date], {});
 
     // -----------------------------------------------   Class   -----------------------------------------------------
 
-    const personCatSpecObject: FooClass = await Mapper.create(FooClass, {});
-    const personCatSpecObjectWithProperty: FooClass = await Mapper.create(FooClass, {property: 'a'});
-    const personCatSpecString: unknown = await Mapper.create(FooClass, 'a');
-    const personCatSpecNumber: unknown = await Mapper.create(FooClass, 2);
-    const personCatSpecBoolean: unknown = await Mapper.create(FooClass, true);
-    const personCatSpecArray: unknown = await Mapper.create(FooClass, [{}]);
+    const fooClassObject: FooClass = await Mapper.create(FooClass, {});
+    const fooClassObjectWithProperty: FooClass = await Mapper.create(FooClass, {property: 'a'});
+    const fooClassString: unknown = await Mapper.create(FooClass, 'a');
+    const fooClassNumber: unknown = await Mapper.create(FooClass, 2);
+    const fooClassBoolean: unknown = await Mapper.create(FooClass, true);
+    const fooClassArray: unknown = await Mapper.create(FooClass, [{}]);
 
     // ----------------------------------------------   Class[]   ----------------------------------------------------
 
-    const personCatSpecArrayOfFooClass: FooClass[] = await Mapper.create([FooClass], [new FooClass()]);
-    const personCatSpecArrayOfObjects: FooClass[] = await Mapper.create([FooClass], [{}]);
-    const personCatSpecArrayOfString: FooClass[] = await Mapper.create([FooClass], ['a']);
-    const personCatSpecArrayOfBooleans: FooClass[] = await Mapper.create([FooClass], [true]);
-    const personCatSpecArrayOfNumbers: FooClass[] = await Mapper.create([FooClass], [2]);
-    const personCatSpecTupleWithObjectNotArrayData: unknown = await Mapper.create([FooClass, FooClass], {});
-    const personCatSpecTupleWithBooleanData: unknown = await Mapper.create([FooClass, FooClass], true);
-    const personCatSpecTupleWithStringData: unknown = await Mapper.create([FooClass, FooClass], 'a');
-    const personCatSpecTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
-    const personCatSpecTupleWithTData: unknown = await Mapper.create([FooClass, FooClass], new FooClass());
+    const fooClassArrayOfFooClass: FooClass[] = await Mapper.create([FooClass], [new FooClass()]);
+    const fooClassArrayOfObjects: FooClass[] = await Mapper.create([FooClass], [{}]);
+    const fooClassArrayOfString: FooClass[] = await Mapper.create([FooClass], ['a']);
+    const fooClassArrayOfBooleans: FooClass[] = await Mapper.create([FooClass], [true]);
+    const fooClassArrayOfNumbers: FooClass[] = await Mapper.create([FooClass], [2]);
+    const fooClassArrayTupleWithObjectNotArrayData: unknown = await Mapper.create([FooClass, FooClass], {});
+    const fooClassArrayTupleWithBooleanData: unknown = await Mapper.create([FooClass, FooClass], true);
+    const fooClassArrayTupleWithStringData: unknown = await Mapper.create([FooClass, FooClass], 'a');
+    const fooClassArrayTupleWithNumberData: unknown = await Mapper.create([FooClass, FooClass], 2);
+    const fooClassArrayTupleWithTData: unknown = await Mapper.create([FooClass, FooClass], new FooClass());
 
+    // -----------------------------------------------   Tuples   -----------------------------------------------------
+
+    // const fooTupleTupleStringNumber: [string, number] = await Mapper.create(any, ['a', 2]);
+    // const fooTupleTupleFooBar: [FooClass, BarClass] = await Mapper.create([FooClass, BarClass], [new FooClass(), new BarClass()]);
 
     const zzz = new FooClass();
     console.log(chalk.blueBright('ZZZZZZZ'), zzz);

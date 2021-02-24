@@ -27,7 +27,6 @@ import { WrongDataType } from '../types/wrong-data-type.type';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
     NotArray,
-    NotArrayOfInstances,
     NotBoolean,
     NotDate,
     NotInstance,
@@ -41,75 +40,78 @@ export class Mapper<T> {
 
     // --------------------------------------------   String overloads   -----------------------------------------------------
 
-    static async create(mapTarget: 'string' | StringConstructor, data: string): Promise<string>
-    static async create(mapTarget: 'string' | StringConstructor, data: NotString): Promise<unknown>
-    static async create(mapTarget: 'string' | StringConstructor, data: any): Promise<string | undefined>
+    static async create(target: 'string' | StringConstructor, data: string): Promise<string>
+    static async create(target: 'string' | StringConstructor, data: NotString): Promise<unknown>
+    static async create(target: 'string' | StringConstructor, data: any): Promise<string | undefined>
 
-    static async create(mapTarget: 'string[]' | [StringConstructor], data: Array<any>): Promise<string[]>
-    static async create(mapTarget: 'string[]' | [StringConstructor], data: NotArray): Promise<unknown>
-    static async create(mapTarget: 'string[]' | [StringConstructor], data: any): Promise<string[] | undefined>
+    static async create(target: 'string[]' | [StringConstructor], data: Array<any>): Promise<string[]>
+    static async create(target: 'string[]' | [StringConstructor], data: NotArray): Promise<unknown>
+    static async create(target: 'string[]' | [StringConstructor], data: any): Promise<string[] | undefined>
 
     // --------------------------------------------   Number overloads   -----------------------------------------------------
 
-    static async create(mapTarget: 'number' | NumberConstructor, data: number): Promise<number>
-    static async create(mapTarget: 'number' | NumberConstructor, data: NotNumber): Promise<unknown>
-    static async create(mapTarget: 'number' | NumberConstructor, data: any): Promise<number | undefined>
+    static async create(target: 'number' | NumberConstructor, data: number): Promise<number>
+    static async create(target: 'number' | NumberConstructor, data: NotNumber): Promise<unknown>
+    static async create(target: 'number' | NumberConstructor, data: any): Promise<number | undefined>
 
-    static async create(mapTarget: 'number[]' | [NumberConstructor], data: Array<any>): Promise<number[]>
-    static async create(mapTarget: 'number[]' | [NumberConstructor], data: NotArray): Promise<unknown>
-    static async create(mapTarget: 'number[]' | [NumberConstructor], data: any): Promise<number[] | undefined>
+    static async create(target: 'number[]' | [NumberConstructor], data: Array<any>): Promise<number[]>
+    static async create(target: 'number[]' | [NumberConstructor], data: NotArray): Promise<unknown>
+    static async create(target: 'number[]' | [NumberConstructor], data: any): Promise<number[] | undefined>
 
     // -------------------------------------------   Boolean overloads   --------------------------------------------------
 
-    static async create(mapTarget: 'boolean' | BooleanConstructor, data: boolean): Promise<boolean>
-    static async create(mapTarget: 'boolean' | BooleanConstructor, data: NotBoolean): Promise<unknown>
-    static async create(mapTarget: 'boolean' | BooleanConstructor, data: any): Promise<boolean | undefined>
+    static async create(target: 'boolean' | BooleanConstructor, data: boolean): Promise<boolean>
+    static async create(target: 'boolean' | BooleanConstructor, data: NotBoolean): Promise<unknown>
+    static async create(target: 'boolean' | BooleanConstructor, data: any): Promise<boolean | undefined>
 
-    static async create(mapTarget: 'boolean[]' | [BooleanConstructor], data: Array<any>): Promise<boolean[]>
-    static async create(mapTarget: 'boolean[]' | [BooleanConstructor], data: NotArray): Promise<unknown>
-    static async create(mapTarget: 'boolean[]' | [BooleanConstructor], data: any): Promise<boolean[] | undefined>
+    static async create(target: 'boolean[]' | [BooleanConstructor], data: Array<any>): Promise<boolean[]>
+    static async create(target: 'boolean[]' | [BooleanConstructor], data: NotArray): Promise<unknown>
+    static async create(target: 'boolean[]' | [BooleanConstructor], data: any): Promise<boolean[] | undefined>
 
     // -------------------------------------   Objects overloads (not arrays)   -------------------------------------------
 
-    static async create(mapTarget: 'object' | ObjectConstructor, data: ObjectNotArray): Promise<object>
-    static async create(mapTarget: 'object' | ObjectConstructor, data: NotObject | Array<any>): Promise<unknown>
-    static async create(mapTarget: 'object' | ObjectConstructor, data: object): Promise<object | undefined>
+    static async create(target: 'object' | ObjectConstructor, data: ObjectNotArray): Promise<object>
+    static async create(target: 'object' | ObjectConstructor, data: NotObject | Array<any>): Promise<unknown>
+    static async create(target: 'object' | ObjectConstructor, data: object): Promise<object | undefined>
 
-    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: Array<any>): Promise<object[]>
-    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: NotArray): Promise<unknown>
-    static async create(mapTarget: 'object[]' | [ObjectConstructor], data: any): Promise<object[] | undefined>
+    static async create(target: 'object[]' | [ObjectConstructor], data: Array<any>): Promise<object[]>
+    static async create(target: 'object[]' | [ObjectConstructor], data: NotArray): Promise<unknown>
+    static async create(target: 'object[]' | [ObjectConstructor], data: any): Promise<object[] | undefined>
 
     // -------------------------------------------   Dates overloads   ----------------------------------------------------
 
-    static async create(mapTarget: DateConstructor, data: DateConstructorParameters): Promise<Date>
-    static async create(mapTarget: DateConstructor, data: NotDate): Promise<unknown>
-    static async create(mapTarget: DateConstructor, data: any): Promise<Date | undefined>
+    static async create(target: DateConstructor, data: DateConstructorParameters): Promise<Date>
+    static async create(target: DateConstructor, data: NotDate): Promise<unknown>
+    static async create(target: DateConstructor, data: any): Promise<Date | undefined>
 
-    static async create(mapTarget: DateConstructor[], data: Array<any>): Promise<Date[]>
-    static async create(mapTarget: DateConstructor[], data: NotArray): Promise<unknown>
-    static async create(mapTarget: DateConstructor[], data: any): Promise<Date[] | undefined>
+    static async create(target: DateConstructor[], data: Array<any>): Promise<Date[]>
+    static async create(target: DateConstructor[], data: NotArray): Promise<unknown>
+    static async create(target: DateConstructor[], data: any): Promise<Date[] | undefined>
 
     // ----------------------------------------   Constructor overloads   -------------------------------------------------
 
-    static async create<T>(mapTarget: TConstructor<T>, data: T): Promise<T>
-    static async create<T>(mapTarget: TConstructor<T>, data: NotInstance): Promise<unknown>
-    static async create<T>(mapTarget: TConstructor<T>, data: any): Promise<T | undefined>
+    static async create<T>(target: TConstructor<T>, data: T): Promise<T>
+    static async create<T>(target: TConstructor<T>, data: NotInstance): Promise<unknown>
+    static async create<T>(target: TConstructor<T>, data: any): Promise<T | undefined>
 
-    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: T[]): Promise<T[]> // data must have type which could be an array of T
-    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: NotArray): Promise<unknown> // data must have type which could be an array of T
-    static async create<T>(mapTarget: [TConstructor<T>] | TConstructor<T>[], data: any): Promise<T[] | undefined>
+    static async create<T>(target: [TConstructor<T>] | TConstructor<T>[], data: T[]): Promise<T[]>
+    static async create<T>(target: [TConstructor<T>] | TConstructor<T>[], data: NotArray): Promise<unknown>
+    static async create<T>(target: [TConstructor<T>] | TConstructor<T>[], data: any): Promise<T[] | undefined>
 
-    static async create<T>(mapTarget: Tuple, data: any[]): Promise<Tuple>
-    static async create<T>(mapTarget: MapTarget<T>, data: any[]): Promise<T[]>
-    static async create<T>(mapTarget: MapTarget<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
-    static async create<T>(mapTarget: MapTarget<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+    // -------------------------------------------   Tuples overloads   ---------------------------------------------------
+
+    static async create<T>(target: Tuple, data: any[]): Promise<Tuple>
+
+    static async create<T>(target: MapTarget<T>, data: any[]): Promise<T[]>
+    static async create<T>(target: MapTarget<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
+    static async create<T>(target: MapTarget<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         await this.init();
         // GLOBAL.logDuration('Finished initialization');
-        if (this.isTrivialCase<T>(mapTarget, data)) {
-            return this.mapTrivialCase(mapTarget, data);
+        if (this.isTrivialCase<T>(target, data)) {
+            return this.mapTrivialCase(target, data);
         } else {
-            return this.mapTypeDeclaration(mapTarget, data);
+            return this.mapTypeDeclaration(target, data);
         }
     }
 
@@ -122,24 +124,24 @@ export class Mapper<T> {
     }
 
 
-    private static isTrivialCase<T>(mapTarget: MapTarget<T>, data: any): boolean {
-        const info: MapTargetInfo = this.getInfo(mapTarget);
+    private static isTrivialCase<T>(target: MapTarget<T>, data: any): boolean {
+        const info: MapTargetInfo = this.getInfo(target);
         return isNullOrUndefined(data)
-            || isObjectOrObjectsArrayTarget(mapTarget)
-            || isTuple(mapTarget)
+            || isObjectOrObjectsArrayTarget(target)
+            || isTuple(target)
             || isPrimitiveOrPrimitivesArray(info.typeName)
             || isDateOrDatesArrayType(info.typeName);
     }
 
 
-    private static mapTrivialCase(mapTarget: MapTarget<any>, data: any):  PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
+    private static mapTrivialCase(target: MapTarget<any>, data: any):  PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
-        } else if (isTuple(mapTarget)) {
-            return MapTupleService.create(data, mapTarget as Tuple);
+        } else if (isTuple(target)) {
+            return MapTupleService.create(data, target as Tuple);
         }
-        const info: MapTargetInfo = this.getInfo(mapTarget);
-        if (isObjectOrObjectsArrayTarget(mapTarget)) {
+        const info: MapTargetInfo = this.getInfo(target);
+        if (isObjectOrObjectsArrayTarget(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
             return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray);
@@ -149,8 +151,8 @@ export class Mapper<T> {
     }
 
 
-    private static async mapTypeDeclaration<T>(mapTarget: MapTarget<T>, data: any): Promise<T | T[] | Date> {
-        const info: MapTargetInfo = this.getInfo(mapTarget);
+    private static async mapTypeDeclaration<T>(target: MapTarget<T>, data: any): Promise<T | T[] | Date> {
+        const info: MapTargetInfo = this.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
@@ -168,15 +170,15 @@ export class Mapper<T> {
     }
 
 
-    private static getInfo<T>(mapTarget: MapTarget<T>): MapTargetInfo {
-        if (isObjectTarget(mapTarget)) {
+    private static getInfo<T>(target: MapTarget<T>): MapTargetInfo {
+        if (isObjectTarget(target)) {
             return { typeName: 'object', isArray: false}
-        } else if (isObjectTargetArray(mapTarget)) {
+        } else if (isObjectTargetArray(target)) {
             return { typeName: 'object', isArray: true}
         } else {
             return {
-                typeName: typeof mapTarget === 'string' ? this.removeBrackets(mapTarget) : (mapTarget as TConstructor<T>).name,
-                isArray: typeof mapTarget === 'string' ? this.isArrayType(mapTarget) : false
+                typeName: typeof target === 'string' ? this.removeBrackets(target) : (target as TConstructor<T>).name,
+                isArray: typeof target === 'string' ? this.isArrayType(target) : false
             }
         }
     }
