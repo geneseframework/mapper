@@ -26,7 +26,7 @@ import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
 import {
     NotArray,
-    NotArrayOfInstances,
+    NotArrayOfInstances, NotBoolean,
     NotInstance,
     NotNumber,
     NotString,
@@ -64,14 +64,13 @@ export class Mapper<T> {
 
     // -------------------------------------------   Boolean overloads   ----------------------------------------------------
 
-    static async create<T>(mapTarget: BooleanConstructor, data: boolean): Promise<boolean>
-    static async create<T>(mapTarget: BooleanConstructor, data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: [BooleanConstructor], data: boolean[]): Promise<boolean[]>
-    static async create<T>(mapTarget: [BooleanConstructor], data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'boolean', data: boolean): Promise<boolean>
-    static async create<T>(mapTarget: 'boolean', data: any): Promise<WrongDataType>
-    static async create<T>(mapTarget: 'boolean[]', data: boolean[]): Promise<boolean[]>
-    static async create<T>(mapTarget: 'boolean[]', data: any): Promise<WrongDataType>
+    static async create<T>(mapTarget: 'boolean' | BooleanConstructor, data: boolean): Promise<boolean>
+    static async create<T>(mapTarget: 'boolean' | BooleanConstructor, data: NotBoolean): Promise<unknown>
+    static async create<T>(mapTarget: 'boolean' | BooleanConstructor, data: any): Promise<boolean | undefined>
+
+    static async create<T>(mapTarget: 'boolean[]' | [BooleanConstructor], data: boolean[]): Promise<boolean[]>
+    static async create<T>(mapTarget: 'boolean[]' | [BooleanConstructor], data: NotArray): Promise<unknown>
+    static async create<T>(mapTarget: 'boolean[]' | [BooleanConstructor], data: any): Promise<boolean[] | undefined>
 
     // -------------------------------------------   Dates overloads   ----------------------------------------------------
 
