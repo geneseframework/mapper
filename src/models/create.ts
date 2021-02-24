@@ -5,7 +5,7 @@ import { MapInstanceService } from '../services/map-instance.service';
 import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
-import { MapTarget } from '../types/map-target.type';
+import { Target } from '../types/target.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { MapEnumService } from '../services/map-enum.service';
@@ -17,7 +17,7 @@ import { Tuple } from '../types/tuple.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { isNullOrUndefined } from '../utils/any.util';
 import { MapDateService } from '../services/map-date.service';
-import { MapTargetInfo } from '../types/map-target-info.type';
+import { TargetInfo } from '../types/target-info.type';
 import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { isTuple } from '../utils/tuples.util';
 import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
@@ -35,7 +35,7 @@ import {
 import * as chalk from 'chalk';
 
 
-export class Mapper<T> {
+export class Create<T> {
 
     // --------------------------------------------   String overloads   --------------------------------------------------
 
@@ -105,14 +105,13 @@ export class Mapper<T> {
 
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 
-    static async create<T>(target: MapTarget<T>, data: any[]): Promise<T[]>
-    static async create<T>(target: MapTarget<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
-    static async create<T>(target: MapTarget<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+    static async create<T>(target: Target<T>, data: any[]): Promise<T[]>
+    static async create<T>(target: Target<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
+    static async create<T>(target: Target<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         await this.init();
         // GLOBAL.logDuration('Finished initialization');
         if (this.isTrivialCase<T>(target, data)) {
-            // console.log(chalk.blueBright('IS TRIVIALLLL'), target, data);
             return this.mapTrivialCase(target, data);
         } else {
             return this.mapTypeDeclaration(target, data);
@@ -128,8 +127,8 @@ export class Mapper<T> {
     }
 
 
-    private static isTrivialCase<T>(target: MapTarget<T>, data: any): boolean {
-        const info: MapTargetInfo = this.getInfo(target);
+    private static isTrivialCase<T>(target: Target<T>, data: any): boolean {
+        const info: TargetInfo = this.getInfo(target);
         return isNullOrUndefined(data)
             || isObjectOrObjectsArrayTarget(target)
             || isTuple(target)
@@ -138,13 +137,13 @@ export class Mapper<T> {
     }
 
 
-    private static mapTrivialCase(target: MapTarget<any>, data: any):  PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
+    private static mapTrivialCase(target: Target<any>, data: any):  PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isTuple(target)) {
             return MapTupleService.create(data, target as Tuple);
         }
-        const info: MapTargetInfo = this.getInfo(target);
+        const info: TargetInfo = this.getInfo(target);
         if (isObjectOrObjectsArrayTarget(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
@@ -155,8 +154,8 @@ export class Mapper<T> {
     }
 
 
-    private static async mapTypeDeclaration<T>(target: MapTarget<T>, data: any): Promise<T | T[] | Date> {
-        const info: MapTargetInfo = this.getInfo(target);
+    private static async mapTypeDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date> {
+        const info: TargetInfo = this.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
@@ -174,7 +173,7 @@ export class Mapper<T> {
     }
 
 
-    private static getInfo<T>(target: MapTarget<T>): MapTargetInfo {
+    private static getInfo<T>(target: Target<T>): TargetInfo {
         if (isObjectTarget(target)) {
             return { typeName: 'object', isArray: false}
         } else if (isObjectTargetArray(target)) {

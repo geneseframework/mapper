@@ -1,7 +1,7 @@
-import { MapTarget } from '../types/map-target.type';
+import { Target } from '../types/target.type';
 import { isArray } from './arrays.util';
 
 
-export function isTuple(mapTarget: MapTarget<any>) {
+export function isTuple(mapTarget: Target<any>) {
     return isArray(mapTarget);
 }

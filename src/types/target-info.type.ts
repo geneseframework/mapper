@@ -1,4 +1,4 @@
-export interface MapTargetInfo {
+export interface TargetInfo {
     typeName: string,
     isArray: boolean,
 }

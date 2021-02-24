@@ -1,3 +1,3 @@
-import { MapTarget } from './map-target.type';
+import { Target } from './target.type';
 
-export type Tuple = MapTarget<any>[];
+export type Tuple = Target<any>[];
