@@ -9,6 +9,7 @@ export class MapObjectService {
     static create(data: object[], info: TargetInfo): object[]
     static create(data: object, info: TargetInfo): object
     static create(data: object, info: TargetInfo): object | object[] | undefined {
+        // console.log(chalk.blueBright('MAP OBJJJJJ'), data, info, haveArrayIncompatibility(data, info?.isArray));
         if (haveArrayIncompatibility(data, info?.isArray)) {
             return undefined;
         } else if (isArray(data)) {
@@ -27,7 +28,7 @@ export class MapObjectService {
                 objectsArray.push(objectElement);
             }
         }
-        return objectsArray.length > 0 ? objectsArray : undefined;
+        return objectsArray;
     }
 
 

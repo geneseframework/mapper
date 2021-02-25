@@ -91,7 +91,11 @@ export class TargetService {
 
 
     private static isObjectArray(target: Target<any>): boolean {
-        return typeof target === 'string' && ['object[]', 'Object[]'].includes(target);
+        if (Array.isArray(target) && target[0] === Object) {
+            return true;
+        } else {
+            return typeof target === 'string' && ['object[]', 'Object[]'].includes(target);
+        }
     }
 
 

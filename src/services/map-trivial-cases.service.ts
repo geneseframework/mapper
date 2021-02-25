@@ -10,12 +10,14 @@ import { MapObjectService } from './map-object.service';
 import { MapPrimitiveService } from './map-primitive.service';
 import { MapDateService } from './map-date.service';
 import { TargetService } from './target.service';
+import * as chalk from 'chalk';
 
 export class MapTrivialCasesService {
 
 
     static isTrivialCase<T>(target: Target<T>, data: any): boolean {
         const info: TargetInfo = TargetService.getInfo(target);
+        console.log(chalk.magentaBright('TargetService.isObjectOrObjectsArray(target))))'), target, target === [Object], TargetService.isObjectOrObjectsArray(target));
         return isNullOrUndefined(data)
             || TargetService.isObjectOrObjectsArray(target)
             || isPrimitiveOrPrimitivesArray(info.typeName)
