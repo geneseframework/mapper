@@ -19,7 +19,7 @@ testMappers.push(new TestMapper(`{color: 'blue'} / Object`, Object,{color: 'blue
 
 testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[{color: 'blue'}]));
 testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[{}]));
-testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[[{}]], {expectedValue: [], isolate: true}));
+testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[[{}]], {expectedValue: []}));
 
 testMappers.push(new TestMapper(`[{color: 'blue'}] / [Object]`, [Object],[{color: 'blue'}]));
 testMappers.push(new TestMapper(`'a' / [Object]`, [Object],'a', {expectedValue: undefined}));
