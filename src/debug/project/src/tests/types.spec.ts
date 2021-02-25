@@ -20,7 +20,7 @@ testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / Employer`
 testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], { expectedValue: undefined }));
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: { name: 'Total', employees: 30000 } }, {isolate: false}));
-testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Total', employees: 30000 }] }, {expectedValue: {}, isolate: false}));
+testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Total', employees: 30000 }] }, {expectedValue: [], isolate: false}));
 testMappers.push(new TestMapper(`{ employer: { name: 'Total', employees: 30000 } } / PersonSpec`, PersonSpec,{ employer: [{ name: 'Greenpeace', volunteers: 3000 }] }, {isolate: false}));
 
 
@@ -108,4 +108,4 @@ testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneS
 
 export type CompanyAloneSpec = CompanySpec;
 testMappers.push(new TestMapper(`{ name: 'Total', employees: 30000 } / CompanyAloneSpec`, 'CompanyAloneSpec', { name: 'Total', employees: 30000 }, {isolate: false}));
-testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: {}}));
+testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined, isolate: false}));

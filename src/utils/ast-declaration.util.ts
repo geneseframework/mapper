@@ -64,6 +64,14 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
 }
 
 
+export function isDeclaration(typeName: string): boolean {
+    return isClassDeclaration(typeName)
+    || isEnumDeclaration(typeName)
+    || isInterfaceDeclaration(typeName)
+    || isTypeAliasDeclaration(typeName)
+}
+
+
 function declarationKind(typeName: string): TypeDeclarationKind {
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
@@ -79,22 +87,22 @@ function declarationKind(typeName: string): TypeDeclarationKind {
 }
 
 
-function isClassDeclaration(typeName: string): boolean {
+export function isClassDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, getDescendantClasses);
 }
 
 
-function isEnumDeclaration(typeName: string): boolean {
+export function isEnumDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, getDescendantEnums);
 }
 
 
-function isInterfaceDeclaration(typeName: string): boolean {
+export function isInterfaceDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, getDescendantInterfaces);
 }
 
 
-function isTypeAliasDeclaration(typeName: string): boolean {
+export function isTypeAliasDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, getDescendantTypeAliases);
 }
 

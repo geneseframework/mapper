@@ -2,12 +2,12 @@ import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, Ty
 import { GLOBAL } from '../const/global.const';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getTypeDeclaration } from './ast-declaration.util';
-import { primitiveTypes } from '../types/primitives.type';
 import { throwWarning } from './errors.util';
+import { isAPrimitiveTypeName } from './primitives.util';
 
 // TODO: Fix case of properties with type which is Union Type
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
-    if (primitiveTypes.includes(typeName)) {
+    if (isAPrimitiveTypeName(typeName)) {
         return undefined;
     }
     const apparentTypeImportDeclarationPath: string = getApparentTypeImportDeclarationPath(apparentType);

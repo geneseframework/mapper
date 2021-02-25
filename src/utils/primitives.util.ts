@@ -15,7 +15,7 @@ export function isPrimitiveValue(value: any): boolean {
     if (value === undefined || value === null) {
         return false;
     }
-    return primitiveTypes.includes(typeof value);
+    return isAPrimitiveTypeName(typeof value);
 }
 
 
@@ -43,7 +43,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNode: TypeNode): boolean
 export function isArrayOfPrimitiveTypeNodes(typeName: string): boolean
 export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): boolean {
     if (typeof typeNameOrNode === 'string') {
-        return primitiveTypes.includes(typeNameOrNode.slice(0, -2));
+        return isAPrimitiveTypeName(typeNameOrNode.slice(0, -2));
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
     } else {
@@ -55,7 +55,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
 export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
 export function isPrimitiveTypeNode(typeName: string): boolean
 export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
+    return typeof typeNameOrNode === 'string' ? isAPrimitiveTypeName(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
 }
 
 
@@ -118,4 +118,14 @@ export function typeOfDataCorrespondsToPrimitiveKeyword(data: any, arrayTypeNode
         || (typeof data === 'number' && elementTypeNode?.getKind() === SyntaxKind.NumberKeyword)
         || (typeof data === 'boolean' && elementTypeNode?.getKind() === SyntaxKind.BooleanKeyword)
     );
+}
+
+
+export function isAPrimitiveTypeName(type: any): boolean {
+    return typeof type === 'string' && primitiveTypes.includes(type);
+}
+
+
+export function isAPrimitiveConstructor(type: any): boolean {
+    return [String, Number, Boolean].includes(type);
 }

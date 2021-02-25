@@ -37,6 +37,7 @@ import { Key } from '../types/key.type';
 import { TargetService } from '../services/target.service';
 import { MapTrivialCasesService } from '../services/map-trivial-cases.service';
 import { haveIncompatibleTypes } from '../utils/incompatibility.util';
+import { IncompatibilityService } from '../services/incompatibility.service';
 
 
 export class Mapper<T> {
@@ -115,16 +116,16 @@ export class Mapper<T> {
         try {
             GLOBAL.start = Date.now();
             await this.init();
-            console.log(chalk.yellowBright('CREATEEEEE'), target, data);
+            // console.log(chalk.yellowBright('CREATEEEEE'), target, data);
             // GLOBAL.logDuration('Finished initialization');
-            if (haveIncompatibleTypes(target, data)) {
-                console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
+            if (IncompatibilityService.areIncompatible(target, data)) {
+                // console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase<T>(target, data)) {
-                console.log(chalk.redBright('CREATEEEEE trivial'), target, data);
+                // console.log(chalk.redBright('CREATEEEEE trivial'), target, data);
                 return MapTrivialCasesService.mapTrivialCase(target, data);
             } else {
-                console.log(chalk.greenBright('CREATEEEEE not trivial'), target, data);
+                // console.log(chalk.greenBright('CREATEEEEE not trivial'), target, data);
                 return this.mapTypeDeclaration(target, data);
             }
         } catch (err) {
@@ -142,14 +143,14 @@ export class Mapper<T> {
 
 
     private static async mapTypeDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
-        console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        // console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
         if (isTuple(target)) {// TODO: check why Tuple is a trivial case
-            console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
+            // console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
             return MapTupleService.create(data, target as Tuple);
         }
-        console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        // console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
         const info: TargetInfo = TargetService.getInfo(target);
-        console.log(chalk.blueBright('INFOOOO'), info);
+        // console.log(chalk.blueBright('INFOOOO'), info);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
