@@ -6,12 +6,11 @@ import { InitService } from '../services/init.service';
 
 GLOBAL.debug = true;
 
-async function startTestAlgo() {
+export async function startTests(logPassed: boolean) {
     InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.its);
-    console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
+    await expect(TESTS.its, logPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
 }
 
@@ -27,5 +26,3 @@ async function getTests(specFiles: string[]): Promise<void> {
         TESTS.its.push(...file?.testMappers);
     }
 }
-
-startTestAlgo();

@@ -4,23 +4,25 @@ import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
 import { isSameObject } from '../utils/is-same-object.util';
 
-export async function expect(testMappers: TestMapper[]): Promise<void>
-export async function expect(testMapper: TestMapper): Promise<void>
-export async function expect(testMappers: TestMapper | TestMapper[]): Promise<void> {
+export async function expect(testMappers: TestMapper[], logPassed: boolean): Promise<void>
+export async function expect(testMapper: TestMapper, logPassed: boolean): Promise<void>
+export async function expect(testMappers: TestMapper | TestMapper[], logPassed: boolean): Promise<void> {
     if (Array.isArray(testMappers)) {
         for (const testMapper of includedTestMappers(testMappers)) {
-            await expectMapper(testMapper);
+            await expectMapper(testMapper, logPassed);
         }
     } else {
-        await expectMapper(testMappers);
+        await expectMapper(testMappers, logPassed);
     }
 }
 
 
-async function expectMapper(testMapper: TestMapper): Promise<void> {
+async function expectMapper(testMapper: TestMapper, logPassed: boolean): Promise<void> {
     const result = await Mapper.create(testMapper.mapParameter, testMapper.data);
     if (isExpectedResult(testMapper, result) ) {
-        console.log(chalk.greenBright('Test passed : '), testMapper.title);
+        if (logPassed) {
+            console.log(chalk.greenBright('Test passed : '), testMapper.title);
+        }
         TESTS.testsPassed++;
         if (testMapper.options?.log) {
            log(testMapper, result);
