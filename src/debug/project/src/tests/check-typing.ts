@@ -86,7 +86,7 @@ async function checkTyping() {
     const fooObjectNumber: unknown = await Mapper.create('object', 2);
     const fooObjectArray: unknown = await Mapper.create('object', [2]);
 
-    const fooObjectConstructorObject: object = await Mapper.create('object', {a: 2});
+    const fooObjectConstructorObject: object = await Mapper.create(Object, {a: 2});
     const fooObjectConstructorBoolean: unknown = await Mapper.create(Object, false);
     const fooObjectConstructorString: unknown = await Mapper.create(Object, 'a');
 

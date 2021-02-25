@@ -33,6 +33,10 @@ import {
     NotString, ObjectNotArray
 } from '../types/not-some-type.type';
 import * as chalk from 'chalk';
+import { Key } from '../types/key.type';
+import { TargetService } from '../services/target.service';
+import { MapTrivialCasesService } from '../services/map-trivial-cases.service';
+import { haveIncompatibleTypes } from '../utils/incompatibility.util';
 
 
 export class Mapper<T> {
@@ -111,14 +115,20 @@ export class Mapper<T> {
         try {
             GLOBAL.start = Date.now();
             await this.init();
+            console.log(chalk.yellowBright('CREATEEEEE'), target, data);
             // GLOBAL.logDuration('Finished initialization');
-            if (this.isTrivialCase<T>(target, data)) {
-                return this.mapTrivialCase(target, data);
+            if (haveIncompatibleTypes(target, data)) {
+                console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
+                return undefined;
+            } else if (MapTrivialCasesService.isTrivialCase<T>(target, data)) {
+                console.log(chalk.redBright('CREATEEEEE trivial'), target, data);
+                return MapTrivialCasesService.mapTrivialCase(target, data);
             } else {
+                console.log(chalk.greenBright('CREATEEEEE not trivial'), target, data);
                 return this.mapTypeDeclaration(target, data);
             }
         } catch (err) {
-            throwWarning('Mapping failed : an unknown error occurred.')
+            throwWarning('Mapping failed : an unknown error occurred.', err)
         }
     }
 
@@ -131,35 +141,15 @@ export class Mapper<T> {
     }
 
 
-    private static isTrivialCase<T>(target: Target<T>, data: any): boolean {
-        const info: TargetInfo = this.getInfo(target);
-        return isNullOrUndefined(data)
-            || isObjectOrObjectsArrayTarget(target)
-            || isTuple(target)
-            || isPrimitiveOrPrimitivesArray(info.typeName)
-            || isDateOrDatesArrayType(info.typeName);
-    }
-
-
-    private static mapTrivialCase(target: Target<any>, data: any):  PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
-        if (isNullOrUndefined(data)) {
-            return data;
-        } else if (isTuple(target)) {
+    private static async mapTypeDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
+        console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        if (isTuple(target)) {// TODO: check why Tuple is a trivial case
+            console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
             return MapTupleService.create(data, target as Tuple);
         }
-        const info: TargetInfo = this.getInfo(target);
-        if (isObjectOrObjectsArrayTarget(target)) {
-            return MapObjectService.create(data, info);
-        } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
-            return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray);
-        } else if (isDateOrDatesArrayType(info.typeName)) {
-            return MapDateService.createDates(data, info.isArray);
-        }
-    }
-
-
-    private static async mapTypeDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date> {
-        const info: TargetInfo = this.getInfo(target);
+        console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        const info: TargetInfo = TargetService.getInfo(target);
+        console.log(chalk.blueBright('INFOOOO'), info);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
@@ -174,29 +164,5 @@ export class Mapper<T> {
                 throwWarning(`Warning : type declaration "${info.typeName}" not found.`);
                 return undefined;
         }
-    }
-
-
-    private static getInfo<T>(target: Target<T>): TargetInfo {
-        if (isObjectTarget(target)) {
-            return { typeName: 'object', isArray: false}
-        } else if (isObjectTargetArray(target)) {
-            return { typeName: 'object', isArray: true}
-        } else {
-            return {
-                typeName: typeof target === 'string' ? this.removeBrackets(target) : (target as TConstructor<T>).name,
-                isArray: typeof target === 'string' ? this.isArrayType(target) : false
-            }
-        }
-    }
-
-
-    private static removeBrackets(typeOrArrayTypeName: string): string {
-        return this.isArrayType(typeOrArrayTypeName) ? typeOrArrayTypeName.slice(0, -2) : typeOrArrayTypeName;
-    }
-
-
-    private static isArrayType(typeOrArrayTypeName: string): boolean {
-        return typeOrArrayTypeName.slice(-2) === '[]';
     }
 }

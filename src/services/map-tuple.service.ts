@@ -12,7 +12,6 @@ import { Mapper } from '../models/mapper';
 export class MapTupleService<T> {
 
 
-
     static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
         if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
             return undefined;

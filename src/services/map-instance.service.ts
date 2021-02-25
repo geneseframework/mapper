@@ -17,6 +17,9 @@ export class MapInstanceService<T> {
     }
 
 
+    // private static
+
+
     static async createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): Promise<T> {
         if (classDeclaration.isAbstract()) {
             throwWarning(`Warning: "${className}" is abstract and can't be instantiated.`);

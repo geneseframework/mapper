@@ -2,6 +2,8 @@ import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { LiteralNode } from '../types/literal-node.type';
+import { isTuple } from './tuples.util';
+import { isArray } from './arrays.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -29,6 +31,8 @@ export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode):
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
+    } else if (isArray(typeNameOrNode)) {
+        return false;
     } else {
         return isPrimitiveTypeNode(typeNameOrNode);
     }
@@ -59,7 +63,7 @@ export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
         return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
-        return PRIMITIVE_KEYWORDS.includes(typeNode.getKind());
+        return PRIMITIVE_KEYWORDS.includes(typeNode?.getKind());
     }
 }
 
