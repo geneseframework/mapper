@@ -71,11 +71,6 @@ export class TargetService {
     }
 
 
-    private static getConstructorName<T>(target: TConstructor<T> | [TConstructor<T>]): string {
-        return Array.isArray(target) ? target[0]?.name : target.name;
-    }
-
-
     static isConstructorNotPrimitive<T>(target: Target<T>): boolean {
         return typeof target === 'function' && !isPrimitiveConstructor(target);
     }

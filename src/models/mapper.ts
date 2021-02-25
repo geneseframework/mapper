@@ -106,19 +106,12 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: any): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         try {
-            GLOBAL.start = Date.now();
             await this.init();
-            console.log(chalk.yellowBright('CREATEEEEE'), target, data);
-            // console.log(chalk.redBright('CREATEEEEE trivial????'), MapTrivialCasesService.isTrivialCase<T>(target, data));
-            // GLOBAL.logDuration('Finished initialization');
             if (IncompatibilityService.areIncompatible(target, data)) {
-                // console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
-                // console.log(chalk.redBright('CREATEEEEE trivial'), target, data);
                 return MapTrivialCasesService.mapTrivialCase(target, data);
             } else {
-                // console.log(chalk.greenBright('CREATEEEEE not trivial'), target, data);
                 return this.mapDeclaration(target, data);
             }
         } catch (err) {
@@ -136,14 +129,11 @@ export class Mapper<T> {
 
 
     private static async mapDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
-        if (TargetService.isTuple(target)) {// TODO: check why Tuple is a trivial case
-            console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
+        if (TargetService.isTuple(target)) {
             return MapTupleService.create(data, target as Tuple);
         }
         const info: TargetInfo = TargetService.getInfo(target);
-        console.log(chalk.blueBright('INFOOOO'), info);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
-        // console.log(chalk.greenBright('TYPE DECLLLL'), typeDeclaration?.getName(), (typeDeclaration as any)?.getKindName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return MapInstanceService.createInstances<T>(data, info.typeName);
