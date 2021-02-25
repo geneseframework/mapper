@@ -26,16 +26,6 @@ export class TargetService {
             typeName: typeName,
             isArray: isArray,
         }
-        // if (this.isObject(target)) {
-        //     return { typeName: 'object', isArray: false}
-        // } else if (this.isObjectArray(target)) {
-        //     return { typeName: 'object', isArray: true}
-        // } else {
-        //     return {
-        //         typeName: typeof target === 'string' ? this.removeBrackets(target) : this.getConstructorName(target as TConstructor<T> | [TConstructor<T>]),
-        //         isArray: typeof target === 'string' ? this.isStringArray(target) : this.isArrayButNotTuple(target)
-        //     }
-        // }
     }
 
 

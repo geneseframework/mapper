@@ -18,7 +18,7 @@ import { SyntaxKind, TypeNode } from 'ts-morph';
 export class IncompatibilityService {
 
     static areIncompatible<T>(target: Target<T>, data: any): boolean {
-        // console.log(chalk.blueBright('ARE INCOMPPPP ??'), target, data, typeof target);
+        console.log(chalk.blueBright('ARE INCOMPPPP ??'), target, data, typeof target);
         if (isPrimitiveValue(data) && this.isIncompatibleWithPrimitive(target, data)) {
                 console.log(chalk.greenBright('isIncompatibleWithAPrimitiveeeeee)'), data);
                 return true;
@@ -31,7 +31,7 @@ export class IncompatibilityService {
         } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target, data) && isArray(data)) {
             return true;
         }
-        // console.log(chalk.greenBright('ARE COMPPPPP !!!!'), target, data, typeof target);
+        console.log(chalk.greenBright('ARE COMPPPPP !!!!'), target, data, typeof target);
         return false;
     }
 

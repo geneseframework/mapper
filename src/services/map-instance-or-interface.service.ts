@@ -56,9 +56,9 @@ export class MapInstanceOrInterfaceService<T> {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
-        // console.log(chalk.magentaBright('MAP DATA KKKKKK'), target, key, dataValue, propertyInfos);
+        console.log(chalk.magentaBright('MAP DATA KKKKKK'), target, key, dataValue, propertyInfos);
         if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue)) {
-            // console.log(chalk.magentaBright('MAP DATA KKKKKK INCOMP ????'), IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue));
+            console.log(chalk.magentaBright('MAP DATA KKKKKK INCOMP ????'), IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue));
             return;
         }
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {

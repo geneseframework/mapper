@@ -11,6 +11,7 @@ export async function startTests(logPassed: boolean) {
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.its, logPassed);
+    console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
 }
 

@@ -108,7 +108,7 @@ export class Mapper<T> {
         try {
             GLOBAL.start = Date.now();
             await this.init();
-            // console.log(chalk.yellowBright('CREATEEEEE'), target, data);
+            console.log(chalk.yellowBright('CREATEEEEE'), target, data);
             // console.log(chalk.redBright('CREATEEEEE trivial????'), MapTrivialCasesService.isTrivialCase<T>(target, data));
             // GLOBAL.logDuration('Finished initialization');
             if (IncompatibilityService.areIncompatible(target, data)) {
@@ -141,7 +141,7 @@ export class Mapper<T> {
             return MapTupleService.create(data, target as Tuple);
         }
         const info: TargetInfo = TargetService.getInfo(target);
-        // console.log(chalk.blueBright('INFOOOO'), info);
+        console.log(chalk.blueBright('INFOOOO'), info);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         // console.log(chalk.greenBright('TYPE DECLLLL'), typeDeclaration?.getName(), (typeDeclaration as any)?.getKindName());
         switch (getDeclarationKind(typeDeclaration)) {

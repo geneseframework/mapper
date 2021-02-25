@@ -71,7 +71,7 @@ export class MapTypeService {
 
 
     static async mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode): Promise<void> {
-        // console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode?.getKindName(), IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeNode));
+        console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode?.getKindName(), IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeNode));
         if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeNode)) {
             return;
         }
@@ -125,9 +125,11 @@ export class MapTypeService {
 
 
     private static async mapTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
-        if (IncompatibilityService.areIncompatible(target, dataValue)) {
+        if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeReferenceNode)) {
+        // if (IncompatibilityService.areIncompatible(target, dataValue)) {
             return undefined;
         }
+        console.log(chalk.blueBright('mapTypeReferenceeeeeee'), target, key, dataValue);
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         await MapDeclarationService.map(target, key, dataValue, typeDeclaration?.getName(), typeDeclaration);
     }
