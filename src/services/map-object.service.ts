@@ -1,6 +1,7 @@
 import { TargetInfo } from '../types/target-info.type';
 import { isArray } from '../utils/arrays.util';
-import { arrayIncompatibility } from '../utils/incompatibility.util';
+import { haveArrayIncompatibility } from '../utils/incompatibility.util';
+import * as chalk from 'chalk';
 
 export class MapObjectService {
 
@@ -8,7 +9,7 @@ export class MapObjectService {
     static create(data: object[], info: TargetInfo): object[]
     static create(data: object, info: TargetInfo): object
     static create(data: object, info: TargetInfo): object | object[] | undefined {
-        if (arrayIncompatibility(data, info?.isArray)) {
+        if (haveArrayIncompatibility(data, info?.isArray)) {
             return undefined;
         } else if (isArray(data)) {
             return this.createArrayObjects(data as object[]);

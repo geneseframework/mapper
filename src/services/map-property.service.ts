@@ -2,7 +2,7 @@ import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../utils/p
 import { MapTupleService } from './map-tuple.service';
 import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
-import { PropertyKind } from '../types/property-kind.enum';
+import { PropertyKind } from '../enums/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
 import { PrimitiveType } from '../types/primitives.type';

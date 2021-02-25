@@ -5,6 +5,7 @@ import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MapInstanceService<T> {
 
@@ -12,12 +13,10 @@ export class MapInstanceService<T> {
     static async createInstances<T>(data: any[], className: string): Promise<T[] | string[] | number[] | boolean[]>
     static async createInstances<T>(data: any, className: string): Promise<T>
     static async createInstances<T>(data: any, className: string): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
+        console.log(chalk.cyanBright('CREATE INSTSSSSSS'), className);
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, className) : await this.createInstance<T>(data, className, classDeclaration);
     }
-
-
-    // private static
 
 
     static async createInstance<T>(data: any, className: string, classDeclaration: ClassDeclaration): Promise<T> {

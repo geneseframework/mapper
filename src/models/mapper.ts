@@ -1,12 +1,10 @@
-import { TConstructor } from './t-constructor.model';
+import { TConstructor } from '../types/t-constructor.type';
 import { InitService } from '../services/init.service';
-import { isPrimitiveOrPrimitivesArray, } from '../utils/primitives.util';
 import { MapInstanceService } from '../services/map-instance.service';
-import { MapPrimitiveService } from '../services/map-primitive.service';
 import { FlagService } from '../services/flag.service';
 import { GLOBAL } from '../const/global.const';
 import { Target } from '../types/target.type';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
 import { MapTypeService } from '../services/map-type.service';
 import { MapEnumService } from '../services/map-enum.service';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
@@ -15,13 +13,7 @@ import { MapInterfaceService } from '../services/map-interface.service';
 import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { isNullOrUndefined } from '../utils/any.util';
-import { MapDateService } from '../services/map-date.service';
 import { TargetInfo } from '../types/target-info.type';
-import { isDateOrDatesArrayType } from '../utils/dates.util';
-import { isTuple } from '../utils/tuples.util';
-import { isObjectOrObjectsArrayTarget, isObjectTarget, isObjectTargetArray } from '../utils/objects.util';
-import { MapObjectService } from '../services/map-object.service';
 import { throwWarning } from '../utils/errors.util';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
@@ -29,15 +21,15 @@ import {
     NotBoolean,
     NotDate,
     NotInstance,
-    NotNumber, NotObject,
-    NotString, ObjectNotArray
+    NotNumber,
+    NotObject,
+    NotString,
+    ObjectNotArray
 } from '../types/not-some-type.type';
-import * as chalk from 'chalk';
-import { Key } from '../types/key.type';
 import { TargetService } from '../services/target.service';
 import { MapTrivialCasesService } from '../services/map-trivial-cases.service';
-import { haveIncompatibleTypes } from '../utils/incompatibility.util';
 import { IncompatibilityService } from '../services/incompatibility.service';
+import * as chalk from 'chalk';
 
 
 export class Mapper<T> {
@@ -119,14 +111,14 @@ export class Mapper<T> {
             // console.log(chalk.yellowBright('CREATEEEEE'), target, data);
             // GLOBAL.logDuration('Finished initialization');
             if (IncompatibilityService.areIncompatible(target, data)) {
-                // console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
+                console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase<T>(target, data)) {
                 // console.log(chalk.redBright('CREATEEEEE trivial'), target, data);
                 return MapTrivialCasesService.mapTrivialCase(target, data);
             } else {
                 // console.log(chalk.greenBright('CREATEEEEE not trivial'), target, data);
-                return this.mapTypeDeclaration(target, data);
+                return this.mapDeclaration(target, data);
             }
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
@@ -142,15 +134,15 @@ export class Mapper<T> {
     }
 
 
-    private static async mapTypeDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
-        // console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
-        if (isTuple(target)) {// TODO: check why Tuple is a trivial case
-            // console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
+    private static async mapDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
+        console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        if (TargetService.isTuple(target)) {// TODO: check why Tuple is a trivial case
+            console.log(chalk.magentaBright('IS TUPLEEEEE'), target, data);
             return MapTupleService.create(data, target as Tuple);
         }
-        // console.log(chalk.yellowBright('mapTypeDeclarationnnnn'), target, data);
+        console.log(chalk.yellowBright('mapTypeDeclarationnnnn 22222'), target, data);
         const info: TargetInfo = TargetService.getInfo(target);
-        // console.log(chalk.blueBright('INFOOOO'), info);
+        console.log(chalk.blueBright('INFOOOO'), info);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:

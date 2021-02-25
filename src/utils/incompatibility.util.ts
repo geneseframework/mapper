@@ -1,11 +1,15 @@
 import { isArray } from './arrays.util';
 import { isPrimitiveValue } from './primitives.util';
-import { Target } from '../types/target.type';
 import * as chalk from 'chalk';
 
 
-export function arrayIncompatibility(first: any, last: any): boolean {
-    return (isArray(first) && last) || (!isArray(first) && !last);
+export function haveArrayIncompatibility(first: any, lastIsArray: boolean): boolean
+export function haveArrayIncompatibility(first: any, last: any): boolean
+export function haveArrayIncompatibility(first: any, last: any): boolean {
+    if (typeof last === 'boolean') {
+        return isArray(first) !== last;
+    }
+    return isArray(first) !== isArray(last);
 }
 
 

@@ -19,7 +19,7 @@ testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, Pers
 
 testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatSpec] / undefined`, [PersonCatSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatSpec]`, [PersonCatSpec], [{cat: null, firstName: 'Léa'}]));
-testMappers.push(new TestMapper(`['a'] / [PersonCatSpec] / []`, [PersonCatSpec], ['a'], {expectedValue: [], isolate: false}));
+testMappers.push(new TestMapper(`['a'] / [PersonCatSpec] / []`, [PersonCatSpec], ['a'], {expectedValue: [], isolate: true}));
 // testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], [], {expectedValue: [], isolate: true}));
 
 
