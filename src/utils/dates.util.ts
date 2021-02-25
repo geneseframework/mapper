@@ -10,6 +10,6 @@ export function isValidDateConstructor(d: any): boolean {
 }
 
 
-export function isValidDate(d): boolean {
+export function isValidDate(d: any): boolean {
     return Object.prototype.toString.call(d) === "[object Date]" ? !isNaN(d.getTime()) : false;
 }

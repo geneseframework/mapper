@@ -108,11 +108,11 @@ export class Mapper<T> {
         try {
             GLOBAL.start = Date.now();
             await this.init();
-            console.log(chalk.yellowBright('CREATEEEEE'), target, data);
+            // console.log(chalk.yellowBright('CREATEEEEE'), target, data);
             // console.log(chalk.redBright('CREATEEEEE trivial????'), MapTrivialCasesService.isTrivialCase<T>(target, data));
             // GLOBAL.logDuration('Finished initialization');
             if (IncompatibilityService.areIncompatible(target, data)) {
-                console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
+                // console.log(chalk.redBright('INCOMPATBILE TYPES !!!!'), target, data);
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
                 // console.log(chalk.redBright('CREATEEEEE trivial'), target, data);

@@ -4,6 +4,7 @@ import { TConstructor } from '../types/t-constructor.type';
 import { Key } from '../types/key.type';
 import { Tuple } from '../types/tuple.type';
 import { throwWarning } from '../utils/errors.util';
+import { isPrimitiveConstructor } from '../utils/primitives.util';
 
 export class TargetService {
 
@@ -85,8 +86,8 @@ export class TargetService {
     }
 
 
-    private static isFunction<T>(target: Target<T>): boolean {
-        return typeof target === 'function';
+    static isConstructorNotPrimitive<T>(target: Target<T>): boolean {
+        return typeof target === 'function' && !isPrimitiveConstructor(target);
     }
 
 
@@ -106,6 +107,11 @@ export class TargetService {
 
     private static isObjectArray(target: Target<any>): boolean {
         return typeof target === 'string' && ['object[]', 'Object[]'].includes(target);
+    }
+
+
+    static isDate(target: Target<any>): boolean {
+        return target === 'Date' || (typeof target === 'function' && target?.name === 'Date');
     }
 
 
