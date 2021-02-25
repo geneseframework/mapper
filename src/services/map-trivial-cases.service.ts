@@ -1,7 +1,6 @@
 import { Target } from '../types/target.type';
 import { TargetInfo } from '../types/target-info.type';
 import { isNullOrUndefined } from '../utils/any.util';
-import { isObjectOrObjectsArrayTarget } from '../utils/objects.util';
 import { isPrimitiveOrPrimitivesArray } from '../utils/primitives.util';
 import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
@@ -11,20 +10,23 @@ import { MapObjectService } from './map-object.service';
 import { MapPrimitiveService } from './map-primitive.service';
 import { MapDateService } from './map-date.service';
 import { TargetService } from './target.service';
+import * as chalk from 'chalk';
 
 export class MapTrivialCasesService {
 
 
     static isTrivialCase<T>(target: Target<T>, data: any): boolean {
         const info: TargetInfo = TargetService.getInfo(target);
+        // console.log(chalk.cyanBright('IS TRIVIALLLLL INFO'), info);
         return isNullOrUndefined(data)
-            || isObjectOrObjectsArrayTarget(target)
+            || TargetService.isObjectOrObjectsArray(target)
             || isPrimitiveOrPrimitivesArray(info.typeName)
             || isDateOrDatesArrayType(info.typeName);
     }
 
 
     static mapTrivialCase(target: Target<any>, data: any): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
+        // console.log(chalk.cyanBright('MAP TRIBIALLLLL is tupleee'), target, TargetService.isTuple(target));
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
@@ -32,7 +34,7 @@ export class MapTrivialCasesService {
         }
         const info: TargetInfo = TargetService.getInfo(target);
         // console.log(chalk.cyanBright('MAP TRIBIALLLLL'), info);
-        if (isObjectOrObjectsArrayTarget(target)) {
+        if (TargetService.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
             return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray);

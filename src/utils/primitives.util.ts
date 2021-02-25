@@ -2,7 +2,6 @@ import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { LiteralNode } from '../types/literal-node.type';
-import { isTuple } from './tuples.util';
 import { isArray } from './arrays.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
@@ -126,6 +125,6 @@ export function isAPrimitiveTypeName(type: any): boolean {
 }
 
 
-export function isAPrimitiveConstructor(type: any): boolean {
+export function isPrimitiveConstructor(type: any): boolean {
     return [String, Number, Boolean].includes(type);
 }

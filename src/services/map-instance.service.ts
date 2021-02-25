@@ -13,7 +13,7 @@ export class MapInstanceService<T> {
     static async createInstances<T>(data: any[], className: string): Promise<T[] | string[] | number[] | boolean[]>
     static async createInstances<T>(data: any, className: string): Promise<T>
     static async createInstances<T>(data: any, className: string): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
-        console.log(chalk.cyanBright('CREATE INSTSSSSSS'), className);
+        // console.log(chalk.cyanBright('CREATE INSTSSSSSS'), className);
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, className) : await this.createInstance<T>(data, className, classDeclaration);
     }

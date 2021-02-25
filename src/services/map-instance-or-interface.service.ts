@@ -14,6 +14,7 @@ import { isArray } from '../utils/arrays.util';
 import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
 import { PropertyInfos } from '../types/property-infos.type';
 import { DateDeclaration } from '../models/date-declaration.model';
+import { IncompatibilityService } from './incompatibility.service';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -55,6 +56,11 @@ export class MapInstanceOrInterfaceService<T> {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
+        // console.log(chalk.magentaBright('MAP DATA KKKKKK'), target, key, dataValue, propertyInfos);
+        if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue)) {
+            // console.log(chalk.magentaBright('MAP DATA KKKKKK INCOMP ????'), IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue));
+            return;
+        }
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
