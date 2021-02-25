@@ -11,8 +11,6 @@ export class IncompatibilityService {
     static areIncompatible<T>(target: Target<T>, data: any): boolean {
         console.log(chalk.blueBright('ARE INCOMPPPP ??'), target, data, typeof target, isAPrimitiveTypeName(target));
         console.log(chalk.magentaBright('isPrimitiveValue(data)))))'), isPrimitiveValue(data));
-        console.log(chalk.magentaBright('TargetService.isArray(target)))))'), TargetService.isArray(target));
-        console.log(chalk.yellowBright('isPrimitiveValue(dagfuygfyudsgdfsuyta)))))'), this.isIncompatibleWithTargetArray(target as any[], data));
         if (isPrimitiveValue(data)) {
             if (this.isIncompatibleWithAPrimitive(target)) {
                 console.log(chalk.greenBright('isIncompatibleWithAPrimitiveeeeee)'), data);
@@ -22,9 +20,8 @@ export class IncompatibilityService {
             return true;
         } else if (TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 
@@ -34,6 +31,7 @@ export class IncompatibilityService {
 
 
     private static isIncompatibleWithAPrimitive<T>(target: Target<T>): boolean {
+        console.log(chalk.blueBright('this.isClassOrInterface(target))))))'), target, this.isClassOrInterface(target));
         return this.isNotAStringAndNotAPrimitiveConstructor(target) || this.isClassOrInterface(target) || typeof target === 'function';
     }
 
@@ -44,11 +42,6 @@ export class IncompatibilityService {
 
 
     private static isClassOrInterface<T>(target: Target<T>): boolean {
-        return this.isClassOrInterfaceName(target);
-    }
-
-
-    private static isClassOrInterfaceName<T>(target: Target<T>): boolean {
         return typeof target === 'string' && (isClassDeclaration(target) || isInterfaceDeclaration(target));
     }
 
