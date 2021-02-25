@@ -5,6 +5,7 @@ import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { getTypeDeclaration } from '../utils/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MapInstanceService<T> {
 

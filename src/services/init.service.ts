@@ -11,7 +11,7 @@ export class InitService {
         }
         GLOBAL.debug ? this.createDebugProject() : this.createProject();
         GLOBAL.isAlreadyInitialized = true;
-        this.addMapperFileToProject();
+        this.setGlobalNodeModulePath();
     }
 
 
@@ -34,10 +34,7 @@ export class InitService {
     }
 
 
-    private static addMapperFileToProject(): void {
+    private static setGlobalNodeModulePath(): void {
         GLOBAL.nodeModulePath = GLOBAL.debug ? GLOBAL.projectPath : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
-        // const nodeModuleMapperPath = `${GLOBAL.nodeModulePath}/dist/models/mapper.d.ts`;
-        // GLOBAL.project.addSourceFileAtPath(nodeModuleMapperPath);
-        // GLOBAL.mapperSourceFile = GLOBAL.project.getSourceFile(nodeModuleMapperPath);
     }
 }

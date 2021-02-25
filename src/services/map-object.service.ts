@@ -1,5 +1,7 @@
 import { TargetInfo } from '../types/target-info.type';
 import { isArray } from '../utils/arrays.util';
+import { haveArrayIncompatibility } from '../utils/incompatibility.util';
+import * as chalk from 'chalk';
 
 export class MapObjectService {
 
@@ -7,7 +9,7 @@ export class MapObjectService {
     static create(data: object[], info: TargetInfo): object[]
     static create(data: object, info: TargetInfo): object
     static create(data: object, info: TargetInfo): object | object[] | undefined {
-        if (!this.targetAndDataAreBothArrayOrNot(data, info)) {
+        if (haveArrayIncompatibility(data, info?.isArray)) {
             return undefined;
         } else if (isArray(data)) {
             return this.createArrayObjects(data as object[]);
@@ -34,11 +36,6 @@ export class MapObjectService {
             return null;
         }
         return typeof data === 'object' ? data : undefined;
-    }
-
-
-    private static targetAndDataAreBothArrayOrNot(data: any, info: TargetInfo): boolean {
-        return (isArray(data) && info.isArray) || (!isArray(data) && !info.isArray);
     }
 
 }

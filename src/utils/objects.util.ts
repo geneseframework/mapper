@@ -1,25 +1,21 @@
-import { Target } from '../types/target.type';
-import * as chalk from 'chalk';
-
-
-export function isObjectOrObjectsArrayTarget(mapTarget: Target<any>): boolean {
-    return isObjectTarget(mapTarget) || isObjectTargetArray(mapTarget);
-}
-
-
-export function isObjectTarget(mapTarget: Target<any>): boolean {
-    if (mapTarget === {} || mapTarget === Object) {
-        return true;
-    } else {
-        return typeof mapTarget === 'string' && ['object', 'Object'].includes(mapTarget);
-    }
-}
-
-
-export function isObjectTargetArray(mapTarget: Target<any>): boolean {
-    if (mapTarget === [{}]) {
-        return true;
-    } else {
-        return typeof mapTarget === 'string' && ['object[]', 'Object[]'].includes(mapTarget);
-    }
-}
+// import { Target } from '../types/target.type';
+// import * as chalk from 'chalk';
+//
+//
+// export function isObjectOrObjectsArrayTarget(target: Target<any>): boolean {
+//     return isObjectTarget(target) || isObjectTargetArray(target);
+// }
+//
+//
+// export function isObjectTarget(target: Target<any>): boolean {
+//     if (target === Object) {
+//         return true;
+//     } else {
+//         return typeof target === 'string' && ['object', 'Object'].includes(target);
+//     }
+// }
+//
+//
+// export function isObjectTargetArray(target: Target<any>): boolean {
+//     return typeof target === 'string' && ['object[]', 'Object[]'].includes(target);
+// }

@@ -1,7 +1,7 @@
 import { ClassDeclaration, InterfaceDeclaration, SyntaxKind, Type } from 'ts-morph';
 import { getAllClassProperties } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
-import { PropertyKind } from '../types/property-kind.enum';
+import { PropertyKind } from '../enums/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
@@ -14,6 +14,7 @@ import { isArray } from '../utils/arrays.util';
 import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
 import { PropertyInfos } from '../types/property-infos.type';
 import { DateDeclaration } from '../models/date-declaration.model';
+import { IncompatibilityService } from './incompatibility.service';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -23,11 +24,17 @@ export class MapInstanceOrInterfaceService<T> {
     static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): Promise<T[] | string[] | number[] | boolean[]>
     static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
         const instancesArray: T[] | Date[] = [];
-        for (const element of data) {
+        const elementsWhichCouldBeAnInstance: object[] = data.filter(d => this.couldBeAnInstanceOrInterface(d));
+        for (const element of elementsWhichCouldBeAnInstance) {
             const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
             instancesArray.push(instance);
         }
         return instancesArray;
+    }
+
+
+    private static couldBeAnInstanceOrInterface(element: any): boolean {
+        return typeof element === 'object' && !Array.isArray(element);
     }
 
 
@@ -49,6 +56,9 @@ export class MapInstanceOrInterfaceService<T> {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
+        if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue)) {
+            return;
+        }
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {

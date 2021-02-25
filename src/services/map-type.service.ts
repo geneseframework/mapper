@@ -26,6 +26,7 @@ import { newMappedElement } from '../utils/mapping.util';
 import { MapTypeArrayService } from './map-type-array.service';
 import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
+import { IncompatibilityService } from './incompatibility.service';
 
 export class MapTypeService {
 
@@ -70,6 +71,9 @@ export class MapTypeService {
 
 
     static async mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode): Promise<void> {
+        if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeNode)) {
+            return;
+        }
         if (isNullOrUndefined(dataValue)) {
             target[key] = dataValue;
             return;
@@ -79,7 +83,7 @@ export class MapTypeService {
                 await this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode);
                 break;
             case SyntaxKind.TypeReference:
-                await this.mapLiteralTypeReference(target, key, dataValue, typeNode as TypeReferenceNode);
+                await this.mapTypeReference(target, key, dataValue, typeNode as TypeReferenceNode);
                 break;
             case SyntaxKind.LiteralType:
                 this.mapLiteralType(target, key, dataValue, typeNode as LiteralTypeNode);
@@ -119,9 +123,14 @@ export class MapTypeService {
     }
 
 
-    private static async mapLiteralTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
+    private static async mapTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode): Promise<void> {
+        if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeReferenceNode)) {
+        // if (IncompatibilityService.areIncompatible(target, dataValue)) {
+            return undefined;
+        }
+        // console.log(chalk.blueBright('mapTypeReferenceeeeeee'), target, key, dataValue);
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
-        await MapDeclarationService.map(target, key, dataValue, typeDeclaration.getName(), typeDeclaration);
+        await MapDeclarationService.map(target, key, dataValue, typeDeclaration?.getName(), typeDeclaration);
     }
 
 

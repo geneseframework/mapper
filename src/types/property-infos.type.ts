@@ -1,4 +1,4 @@
-import { PropertyKind } from './property-kind.enum';
+import { PropertyKind } from '../enums/property-kind.enum';
 
 export class PropertyInfos {
 

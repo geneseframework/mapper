@@ -2,6 +2,7 @@ import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { LiteralNode } from '../types/literal-node.type';
+import { isArray } from './arrays.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -13,7 +14,7 @@ export function isPrimitiveValue(value: any): boolean {
     if (value === undefined || value === null) {
         return false;
     }
-    return primitiveTypes.includes(typeof value);
+    return isPrimitiveTypeName(typeof value);
 }
 
 
@@ -29,6 +30,8 @@ export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode):
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
+    } else if (isArray(typeNameOrNode)) {
+        return false;
     } else {
         return isPrimitiveTypeNode(typeNameOrNode);
     }
@@ -39,7 +42,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNode: TypeNode): boolean
 export function isArrayOfPrimitiveTypeNodes(typeName: string): boolean
 export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): boolean {
     if (typeof typeNameOrNode === 'string') {
-        return primitiveTypes.includes(typeNameOrNode.slice(0, -2));
+        return isPrimitiveTypeName(typeNameOrNode.slice(0, -2));
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
     } else {
@@ -51,7 +54,7 @@ export function isArrayOfPrimitiveTypeNodes(typeNameOrNode: string | TypeNode): 
 export function isPrimitiveTypeNode(typeNode: TypeNode): boolean
 export function isPrimitiveTypeNode(typeName: string): boolean
 export function isPrimitiveTypeNode(typeNameOrNode: string | TypeNode): boolean {
-    return typeof typeNameOrNode === 'string' ? primitiveTypes.includes(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
+    return typeof typeNameOrNode === 'string' ? isPrimitiveTypeName(typeNameOrNode?.toLowerCase()) : isLiteralPrimitive(typeNameOrNode);
 }
 
 
@@ -59,7 +62,7 @@ export function isLiteralPrimitive(typeNode: TypeNode): boolean {
     if (typeNode instanceof LiteralTypeNode) {
         return [SyntaxKind.StringLiteral, SyntaxKind.NumericLiteral].includes(typeNode.getLiteral()?.getKind());
     } else {
-        return PRIMITIVE_KEYWORDS.includes(typeNode.getKind());
+        return PRIMITIVE_KEYWORDS.includes(typeNode?.getKind());
     }
 }
 
@@ -114,4 +117,14 @@ export function typeOfDataCorrespondsToPrimitiveKeyword(data: any, arrayTypeNode
         || (typeof data === 'number' && elementTypeNode?.getKind() === SyntaxKind.NumberKeyword)
         || (typeof data === 'boolean' && elementTypeNode?.getKind() === SyntaxKind.BooleanKeyword)
     );
+}
+
+
+export function isPrimitiveTypeName(type: any): boolean {
+    return typeof type === 'string' && primitiveTypes.includes(type);
+}
+
+
+export function isPrimitiveConstructor(type: any): boolean {
+    return [String, Number, Boolean].includes(type);
 }
