@@ -1,12 +1,12 @@
-
 /**
  * Check if two objects have the same values for every key
  */
-export function isSameObject(obj1: any, obj2: any): boolean {
-    if (trivialEquality(obj1, obj2)) {
+
+export function isSameObject(obj1: any, obj2: any, differentiateStringsAndNumbers = false): boolean {
+    if (trivialEquality(obj1, obj2, differentiateStringsAndNumbers)) {
         return true;
     }
-    if (trivialInequality(obj1, obj2)) {
+    if (trivialInequality(obj1, obj2, differentiateStringsAndNumbers)) {
         return false;
     }
     if (areArrays(obj1, obj2)) {
@@ -22,18 +22,61 @@ export function isSameObject(obj1: any, obj2: any): boolean {
 }
 
 
-function trivialEquality(obj1: any, obj2: any): boolean {
-    return (obj1 === obj2) || (typeof obj1 === 'number' && obj1.toString() === obj2.toString());
+function trivialEquality(obj1: any, obj2: any, differentiateStringsAndNumbers): boolean {
+    return obj1 === obj2
+        || areSameNumberOrString(obj1, obj2, differentiateStringsAndNumbers)
+        || areInvalidDates(obj1, obj2);
 }
 
 
-function trivialInequality(obj1: any, obj2: any): boolean {
+function areSameNumberOrString(obj1: any, obj2: any, differentiateStringsAndNumbers): boolean {
+    return !differentiateStringsAndNumbers && (typeof obj1 === 'number' || typeof obj2 === 'number') && obj1.toString() === obj2.toString();
+}
+
+
+function trivialInequality(obj1: any, obj2: any, differentiateStringsAndNumbers): boolean {
     return (obj1 === undefined || obj2 === undefined)
-        || (Array.isArray(obj1) && !Array.isArray(obj2))
-        || (!Array.isArray(obj1) && Array.isArray(obj2))
-        || (Array.isArray(obj1) && Array.isArray(obj2) && obj1.length !== obj2.length)
+        || !areBothArrayOrNot(obj1, obj2)
+        || (areArrays(obj1, obj2) && obj1.length !== obj2.length)
         || obj1 === !obj2
+        || haveDifferentTypes(obj1, obj2, differentiateStringsAndNumbers)
         || areObjectsWithDifferentNumberOfKeys(obj1, obj2);
+}
+
+
+function haveDifferentTypes(obj1: any, obj2: any, differentiateStringsAndNumbers): boolean {
+    if ((differentiateStringsAndNumbers && areStringAndNumber(obj1, obj2))
+        || typeof obj1 !== typeof obj2
+        || areObjectAndArray(obj1, obj2)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function areBothArrayOrNot(obj1: any, obj2: any): boolean {
+    return areArrays(obj1, obj2) || (!Array.isArray(obj1) && !Array.isArray(obj2));
+}
+
+
+function areArrays(obj1: any, obj2: any): boolean {
+    return Array.isArray(obj1) && Array.isArray(obj2);
+}
+
+
+function areStringAndNumber(obj1: any, obj2: any): boolean {
+    return (typeof obj1 === 'number' && typeof obj2 === 'string') || (typeof obj1 === 'string' && typeof obj2 === 'number');
+}
+
+
+function areObjectAndArray(obj1: any, obj2: any): boolean {
+    return (hasTypeOfObjectButIsNotArray(obj1) && Array.isArray(obj2)) || (Array.isArray(obj1) && hasTypeOfObjectButIsNotArray(obj2));
+}
+
+
+function hasTypeOfObjectButIsNotArray(obj: any): boolean {
+    return typeof obj === 'object' && !Array.isArray(obj);
 }
 
 
@@ -42,8 +85,8 @@ function areObjectsWithDifferentNumberOfKeys(obj1: any, obj2: any): boolean {
 }
 
 
-function areArrays(obj1: any, obj2: any): boolean {
-    return Array.isArray(obj1) && Array.isArray(obj2);
+function areInvalidDates(obj1: any, obj2: any): boolean {
+    return obj1.toString() === 'Invalid Date' && obj2.toString() === 'Invalid Date';
 }
 
 

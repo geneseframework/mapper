@@ -25,14 +25,12 @@ export class MapTrivialCasesService {
 
 
     static mapTrivialCase(target: Target<any>, data: any): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
-        // console.log(chalk.cyanBright('mapTrivialCaseeeeee'), target, data);
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
             return MapTupleService.create(data, target as Tuple);
         }
         const info: TargetInfo = TargetService.getInfo(target);
-        console.log(chalk.cyanBright('mapTrivialCaseeeeee info'), info);
         if (TargetService.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
