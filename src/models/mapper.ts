@@ -129,13 +129,11 @@ export class Mapper<T> {
 
 
     private static async mapDeclaration<T>(target: Target<T>, data: any): Promise<T | T[] | Date | Tuple> {
-        // console.log(chalk.yellowBright('mapDeclarationnnnn'), target, data);
         if (TargetService.isTuple(target)) {
             return MapTupleService.create(data, target as Tuple);
         }
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
-        // console.log(chalk.blueBright('mapDeclarationnnnn'), target, data, info, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return MapInstanceService.createInstances<T>(data, info.typeName);

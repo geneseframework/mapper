@@ -1,5 +1,6 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Chalk } from 'chalk';
+import { PersonSpec } from './types.spec';
 
 export const testMappers: TestMapper[] = [];
 
@@ -16,6 +17,7 @@ testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / Pers
 testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: new PersonCatSpec()}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}));
 
 testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatSpec] / undefined`, [PersonCatSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatSpec]`, [PersonCatSpec], [{cat: null, firstName: 'Léa'}]));
@@ -95,7 +97,7 @@ testMappers.push(new TestMapper(` {} / ValuesByDefault / {a: 'z', b: 2, c: false
 
 
 
-// -------------------------------------------------------------------------------------------------
+// -----------------------------------------------   Constructor with values   --------------------------------------------
 
 
 export class ValuesOnConstructor {
@@ -117,13 +119,13 @@ testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: f
 testMappers.push(new TestMapper(` {} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, undefined));
 
 
-// -------------------------------------------------------------------------------------------------
+// --------------------------------------------------   External Module   -------------------------------------------------
 
 
 testMappers.push(new TestMapper(`{color: 'White'} / Chalk / undefined`, 'Chalk', {color: 'White'}, {expectedValue: undefined }));
 
 
-// -------------------------------------------------------------------------------------------------
+// -----------------------------------------------------   Heritage   -----------------------------------------------------
 
 
 export class ParentClassSpec {
@@ -139,11 +141,24 @@ export class ChildClassSpec extends ParentClassSpec {
         this.color = color;
     }
 }
-testMappers.push(new TestMapper(`{color: 'White'} / ChildClassSpec / {color: 'White', name: 'unknown'}`, ChildClassSpec, {color: 'White'}, {expectedValue:{ color: 'White', name: 'unknown'}}));
-testMappers.push(new TestMapper(`{} / ChildClassSpec / {color: undefined, name: 'unknown'}`, ChildClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
+testMappers.push(new TestMapper(`{color: 'White'} / ChildClassSpec / {color: 'White', name: 'unknown'}`, ChildClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}}));
+testMappers.push(new TestMapper(`{} / ChildClassSpec / {color: undefined, name: 'unknown'}`, ChildClassSpec, {}, {expectedValue: {color: undefined, name: 'unknown'}}));
 
 
-// -------------------------------------------------------------------------------------------------
+// -------------------------------------------   Property with Union Type   -----------------------------------------------
+
+export type UnionTypeClassAndStringSpec = CatSpec | string;
+export class ClassWithUnionTypeSpec {
+    union: UnionTypeClassAndStringSpec;
+}
+
+testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: undefined}));
+testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
+testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
+testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new CatSpec()}, {isolate: true}));
+
+
+// --------------------------------------------------   Abstract   --------------------------------------------------------
 
 
 export abstract class AbstractParentClassSpec {
@@ -159,6 +174,6 @@ export class ChildAbstractClassSpec extends AbstractParentClassSpec {
         this.color = color;
     }
 }
-testMappers.push(new TestMapper(`{color: 'White'} / ChildAbstractClassSpec / {color: 'White', name: 'unknown'}`, ChildAbstractClassSpec, {color: 'White'}, {expectedValue:{ color: 'White', name: 'unknown'}}));
-testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / {color: undefined, name: 'unknown'}`, ChildAbstractClassSpec, {}, {expectedValue:{color: undefined, name: 'unknown'}}));
+testMappers.push(new TestMapper(`{color: 'White'} / ChildAbstractClassSpec / {color: 'White', name: 'unknown'}`, ChildAbstractClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}}));
+testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / {color: undefined, name: 'unknown'}`, ChildAbstractClassSpec, {}, {expectedValue: {color: undefined, name: 'unknown'}}));
 testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));
