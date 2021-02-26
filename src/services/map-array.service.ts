@@ -38,7 +38,7 @@ export class MapArrayService<T> {
                 const instance = GLOBAL.generateInstance(instanceGenerator);
                 await MapInstanceOrInterfaceService.map(instance, element, typeDeclaration, options);
                 this.push(target, key, instance);
-            } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName)) {
+            } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName, options)) {
                 this.push(target, key, element);
             } else {
                 // No correspondance between element and property type => do nothing
@@ -47,8 +47,8 @@ export class MapArrayService<T> {
     }
 
 
-    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string): boolean {
-        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element) || isNullOrUndefined(element);
+    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string, options: CreateOptions): boolean {
+        return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element, options) || isNullOrUndefined(element);
     }
 
 
@@ -57,8 +57,8 @@ export class MapArrayService<T> {
     }
 
 
-    private static isPrimitiveWithCorrectValue(typeName: string, element: any): boolean {
-        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType);
+    private static isPrimitiveWithCorrectValue(typeName: string, element: any, options: CreateOptions): boolean {
+        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
     }
 
 

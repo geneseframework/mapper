@@ -19,7 +19,7 @@ export class MapPropertyService<T> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
-            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType);
+            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;
         }
         switch (propertyInfos.propertyKind) {
@@ -46,8 +46,8 @@ export class MapPropertyService<T> {
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType): void {
-        if (isPrimitiveValueWithCorrectType(dataValue, typeName)) {
+    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
+        if (isPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
             target[key] = dataValue;
         }
     }

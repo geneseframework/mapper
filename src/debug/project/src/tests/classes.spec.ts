@@ -3,10 +3,14 @@ import { Chalk } from 'chalk';
 
 export const testMappers: TestMapper[] = [];
 
+
+// ----------------------------------------   Class with property of type Class   -----------------------------------------
+
 export class CatSpec {
     name: string;
 }
 export class PersonCatSpec {
+    age: number;
     cat: CatSpec;
     firstName: string;
 }
@@ -26,6 +30,24 @@ testMappers.push(new TestMapper(`['a'] / [PersonCatSpec] / []`, [PersonCatSpec],
 testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], [], {expectedValue: []}));
 testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], new PersonCatSpec(), {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], {}, {expectedValue: undefined}));
+
+
+// --------------------------------------   Not differentiate string and numbers   ----------------------------------------
+
+
+const personWithCorrectTypes = new PersonCatSpec();
+personWithCorrectTypes.age = 49;
+personWithCorrectTypes.firstName = 'Léo';
+
+testMappers.push(new TestMapper(`personWithCorrectTypes / PersonCatSpec`, PersonCatSpec, personWithCorrectTypes));
+testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / PersonCatSpec`, PersonCatSpec, {age: 49, firstName: 'Léo'}));
+
+const age: string | number = '49';
+const personWithWrongTypes = new PersonCatSpec();
+personWithWrongTypes.age = age as unknown as number;
+personWithWrongTypes.firstName = 2 as unknown as string;
+
+testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / personWithWrongTypes`, PersonCatSpec, {age: '49', firstName: 2}, {expectedValue: personWithWrongTypes, createOptions: {differentiateStringsAndNumbers: false}}));
 
 
 // -------------------------------------------------------------------------------------------------

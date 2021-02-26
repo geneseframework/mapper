@@ -18,8 +18,13 @@ export function isPrimitiveValue(value: any): boolean {
 }
 
 
-export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType): boolean {
-    return isPrimitiveValue(value) && typeName === typeof value;
+export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
+    return isPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(value, typeName, differentiateStringsAndNumbers));
+}
+
+
+function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
+    return !differentiateStringsAndNumbers && ((typeName === 'string' && typeof value === 'number') || (typeName === 'number' && typeof value === 'string'));
 }
 
 
