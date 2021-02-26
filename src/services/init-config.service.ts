@@ -10,8 +10,6 @@ export class InitConfigService {
 
     static async initConfig(): Promise<void> {
         const jsonConfig: Config = await this.getJsonConfig();
-        console.log(chalk.cyanBright('JSON CONFIGGGGG'), jsonConfig);
-        this.addDefaultValues(jsonConfig);
         Object.assign(CONFIG, jsonConfig);
         console.log(chalk.greenBright('CONFIGGGGG'), CONFIG);
     }
@@ -27,12 +25,7 @@ export class InitConfigService {
         if (!jsonConfigObject?.mapper) {
             return undefined;
         }
-        return undefined;
-        // return await Mapper.create(Config, jsonConfigObject.mapper);
-    }
-
-
-    private static addDefaultValues(jsonConfig: Config): void {
-
+        // return undefined;
+        return await Mapper.create(Config, jsonConfigObject.mapper);
     }
 }

@@ -32,6 +32,7 @@ import { IncompatibilityService } from '../services/incompatibility.service';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { ClassDeclaration } from 'ts-morph';
+import { CONFIG } from '../const/config.const';
 
 
 export class Mapper<T> {
@@ -131,7 +132,7 @@ export class Mapper<T> {
 
     private static setOptions(options: CreateOptions): CreateOptions {
         if (!options) {
-            return {differentiateStringsAndNumbers: true};
+            return CONFIG.create;
         } else if (options.differentiateStringsAndNumbers !== false) {
             options.differentiateStringsAndNumbers = true;
         }
