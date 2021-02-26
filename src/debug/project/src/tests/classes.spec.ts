@@ -1,6 +1,5 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Chalk } from 'chalk';
-import { PersonSpec } from './types.spec';
 
 export const testMappers: TestMapper[] = [];
 
@@ -18,6 +17,8 @@ testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCat
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: new PersonCatSpec()}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}));
+testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, [new CatSpec()], {expectedValue: []}));
+testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, [new PersonCatSpec()], {expectedValue: []}));
 
 testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatSpec] / undefined`, [PersonCatSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatSpec]`, [PersonCatSpec], [{cat: null, firstName: 'Léa'}]));
