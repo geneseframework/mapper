@@ -34,7 +34,6 @@ export class MapInterfaceService {
     static async createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {
         const tInterface = {};
         await MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration, options);
-        console.log(chalk.yellowBright('CREATE INTERFFFFFF'), data, interfaceDeclaration?.getName(), tInterface);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 

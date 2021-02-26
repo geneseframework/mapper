@@ -27,6 +27,5 @@ export function getAllInterfaceProperties(interfaceDeclaration: InterfaceDeclara
 
 export function implementsRequiredProperties(data: any, interfaceDeclaration: InterfaceDeclaration): boolean {
     const requiredProperties: any[] = interfaceDeclaration.getProperties().filter(p => !p.hasQuestionToken()).map(p => p.getName());
-    console.log(chalk.blueBright('REQQQQ PROPS'), data, requiredProperties, includes(Object.keys(data), requiredProperties));
     return includes(Object.keys(data), requiredProperties);
 }

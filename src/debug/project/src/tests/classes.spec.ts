@@ -40,7 +40,7 @@ personWithCorrectTypes.age = 49;
 personWithCorrectTypes.firstName = 'Léo';
 
 testMappers.push(new TestMapper(`personWithCorrectTypes / PersonCatSpec`, PersonCatSpec, personWithCorrectTypes));
-testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / PersonCatSpec`, PersonCatSpec, {age: 49, firstName: 'Léo'}, {isolate: true}));
+testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / PersonCatSpec`, PersonCatSpec, {age: 49, firstName: 'Léo'}));
 
 const age: string | number = '49';
 const personWithWrongTypes = new PersonCatSpec();
@@ -205,3 +205,17 @@ export class ChildAbstractClassSpec extends AbstractParentClassSpec {
 testMappers.push(new TestMapper(`{color: 'White'} / ChildAbstractClassSpec / {color: 'White', name: 'unknown'}`, ChildAbstractClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}}));
 testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / {color: undefined, name: 'unknown'}`, ChildAbstractClassSpec, {}, {expectedValue: {color: undefined, name: 'unknown'}}));
 testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));
+
+
+// -----------------------------------   With default value on Interface property   ---------------------------------------
+
+export interface IDefaultsSpec {
+    name?: string
+}
+export class CDefaultsSpec {
+    person: IDefaultsSpec = {
+        name: 'Léa'
+    }
+}
+
+testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {person: {}}, {expectedValue: new CDefaultsSpec()}));

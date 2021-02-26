@@ -37,7 +37,6 @@ export function includes(bigArray: any[], smallArray: any[]): boolean {
     if (areNoyArrays(bigArray, smallArray)) {
         return false;
     }
-    console.log(chalk.redBright('INCLUDESSSS ?'), !smallArray.some(element => !bigArray.includes(element)));
     return !smallArray.some(element => !bigArray.includes(element));
 }
 

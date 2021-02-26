@@ -10,15 +10,15 @@ export class InitConfigService {
 
     static async initConfig(): Promise<void> {
         const jsonConfig: Config = await this.getJsonConfig();
-        CONFIG.create = {
-            differentiateStringsAndNumbers: undefined
-        }
+        console.log(chalk.cyanBright('JSON CONFIGGGGG'), jsonConfig);
+        this.addDefaultValues(jsonConfig);
+        Object.assign(CONFIG, jsonConfig);
+        console.log(chalk.greenBright('CONFIGGGGG'), CONFIG);
     }
 
 
     private static async getJsonConfig(): Promise<Config> {
         const path: string = `${GLOBAL.projectPath}/geneseconfig.json`;
-        console.log(chalk.cyanBright('CONFIGGGGG'), path);
         return this.parseConfig(await requireFile(path));
     }
 
@@ -27,9 +27,12 @@ export class InitConfigService {
         if (!jsonConfigObject?.mapper) {
             return undefined;
         }
-        const jsonConfig: Config = await Mapper.create(Config, jsonConfigObject.mapper);
-        console.log(chalk.cyanBright('CONFIGGGGG'), jsonConfig);
-        return jsonConfig;
+        return undefined;
+        // return await Mapper.create(Config, jsonConfigObject.mapper);
+    }
+
+
+    private static addDefaultValues(jsonConfig: Config): void {
 
     }
 }

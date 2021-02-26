@@ -22,6 +22,7 @@ export class MapPropertyService<T> {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;
         }
+        // console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
                 await MapArrayService.map(target, key, dataValue, propertyType, apparentType, options);
@@ -30,12 +31,7 @@ export class MapPropertyService<T> {
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.INTERFACE:
-                console.log(chalk.greenBright('MAP PROPPPPP'), dataValue, propertyType);
-                const value: any = await MapInterfaceService.createInterfaces(dataValue, propertyType, false, options);
-                console.log(chalk.greenBright('MAP PROPPPPP valueeee'), value);
-                if (value) {
-                    target[key] = value;
-                }
+                await this.mapInterfaceProperty(target, key, dataValue, propertyType, options);
                 return;
             case PropertyKind.PROPERTY_DECLARATION:
             case PropertyKind.PROPERTY_SIGNATURE:
@@ -51,6 +47,27 @@ export class MapPropertyService<T> {
     private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
         if (isPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
             target[key] = dataValue;
+        }
+    }
+
+
+    private static async mapInterfaceProperty(target: any, key: string, dataValue: any, propertyType: string, options: CreateOptions): Promise<void> {
+        const newInterface: object = await MapInterfaceService.createInterfaces(dataValue, propertyType, false, options);
+        this.addDefaultValues(target, key, newInterface);
+        if (newInterface) {
+            target[key] = newInterface;
+        }
+    }
+
+
+    private static addDefaultValues(target: any, key: string, newInterface: any): void {
+        if (!target[key]) {
+            return;
+        }
+        for (const property of Object.keys(target[key])) {
+            if (!newInterface.hasOwnProperty(property)) {
+                newInterface[property] = target[key][property];
+            }
         }
     }
 
