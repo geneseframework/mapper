@@ -1,5 +1,4 @@
 import * as fs from 'fs-extra';
-import * as chalk from 'chalk';
 import { throwWarning } from './errors.util';
 
 /**
@@ -17,27 +16,15 @@ export function getFolderPath(filePath: string): string {
 }
 
 
-export async function ensureDir(folderPath: string): Promise<void> {
-    await fs.ensureDir(folderPath);
-}
-
-
 export async function ensureDirAndCopy(source: string, target: string): Promise<void> {
     await fs.ensureDir(getFolderPath(target));
     fs.copySync(source, target);
 }
 
 
-export async function requireFile(filePath: string): Promise<any> {
+export async function requireFile(filePath: string): Promise<object> {
     try {
-        const pathExists: boolean = await fs.pathExists(filePath);
-        if (pathExists) {
-            console.log(chalk.greenBright('FILEEEEE 000'), filePath, pathExists);
-            const file: object = await fs.readJson(filePath);
-            console.log(chalk.greenBright('FILEEEEE'), file, pathExists);
-
-        }
-        console.log(chalk.blueBright('FILEEEEE'), filePath, pathExists);
+        return await fs.pathExists(filePath) ? await fs.readJson(filePath) : undefined;
     } catch (err) {
         throwWarning(`Error reading file "${filePath}".`, err);
     }
