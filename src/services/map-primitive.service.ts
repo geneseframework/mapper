@@ -8,7 +8,6 @@ export class MapPrimitiveService {
     static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement
     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
-        console.log(chalk.magentaBright('MapPrimitiveServiceeeee'), data, typeName, options);
         if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
             return undefined;
         }
@@ -41,7 +40,6 @@ export class MapPrimitiveService {
 
 
     private static haveSameType(data: any, typeName: PrimitiveType, options: CreateOptions): boolean {
-        console.log(chalk.blueBright('haveSameTypeeeeee'), data, typeName, options);
         return typeof data === typeName?.toLowerCase()
             || (typeof data === 'string' && typeName?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
             || (typeof data === 'number' && typeName?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);

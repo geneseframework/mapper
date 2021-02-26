@@ -8,7 +8,7 @@ testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null, { isolate: false}));
 testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined}));
-testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', log: true, createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', createOptions: {differentiateStringsAndNumbers: false}}));
 
 testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 

@@ -18,8 +18,6 @@ export class MapDeclarationService<T> {
 
 
     static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration, options: CreateOptions): Promise<void> {
-        // console.log(chalk.cyanBright('MAP DECL SERVVVV'), target, key, dataValue, propertyType, typeDeclaration?.getName());
-        // console.log(chalk.cyanBright('MAP DECL SERVVVV getDeclarationKind'), getDeclarationKind(typeDeclaration));
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration, options);

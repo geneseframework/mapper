@@ -122,9 +122,6 @@ export class TargetService {
 
 
     static areStringAndNumberButNotDifferentiateThem(target: Target<any>, data: any, options: CreateOptions): boolean {
-        // console.log(chalk.blueBright('COMPAREEEEE'), target, data, options);
-        // console.log(chalk.cyanBright('COMPAREEEEE'), this.targetIsStringButNotClassOrInterface(target));
-        // console.log(chalk.redBright('COMPAREEEEE'), typeof data === 'number' && options.differentiateStringsAndNumbers === false);
         return (this.targetIsStringButNotClassOrInterface(target) && (typeof data === 'string' || (typeof data === 'number' && options.differentiateStringsAndNumbers === false)))
             || (this.isNumber(target) && (typeof data === 'number' || (typeof data === 'string' && options.differentiateStringsAndNumbers === false)));
     }

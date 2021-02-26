@@ -145,7 +145,6 @@ export class Mapper<T> {
         }
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
-        console.log(chalk.cyanBright('MAPPPPP'), target, data, options, typeDeclaration.getName(), getDeclarationKind(typeDeclaration));
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return MapInstanceService.createInstances<T>(data, info.typeName, options);
