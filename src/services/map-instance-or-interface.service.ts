@@ -15,18 +15,19 @@ import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
 import { PropertyInfos } from '../types/property-infos.type';
 import { DateDeclaration } from '../models/date-declaration.model';
 import { IncompatibilityService } from './incompatibility.service';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapInstanceOrInterfaceService<T> {
 
 
-    static async createArray<T>(data: any[], dateDeclaration: DateDeclaration): Promise<Date[]>
-    static async createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration): Promise<T[]>
-    static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, className: string): Promise<T[] | string[] | number[] | boolean[]>
-    static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
+    static async createArray<T>(data: any[], dateDeclaration: DateDeclaration, options: CreateOptions): Promise<Date[]>
+    static async createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T[]>
+    static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, options: CreateOptions, className: string): Promise<T[] | string[] | number[] | boolean[]>
+    static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
         const instancesArray: T[] | Date[] = [];
         const elementsWhichCouldBeAnInstance: object[] = data.filter(d => this.couldBeAnInstanceOrInterface(d));
         for (const element of elementsWhichCouldBeAnInstance) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration) ;
+            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceService.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration, options) ;
             instancesArray.push(instance);
         }
         return instancesArray;
@@ -38,32 +39,32 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
+    static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
-                await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration);
+                await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration, options);
             }
         }
     }
 
 
-    private static async mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): Promise<void> {
+    private static async mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
-        // console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos);
-        if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue)) {
+        console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos, options);
+        if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options)) {
             return;
         }
         if (isAnyOrAnyArray(propertyInfos.propertyType)) {
             this.mapAny(target, key, dataValue, propertyInfos.propertyType);
         } else {
-            await MapPropertyService.map(target, key, dataValue, propertyInfos);
+            await MapPropertyService.map(target, key, dataValue, propertyInfos, options);
         }
     }
 

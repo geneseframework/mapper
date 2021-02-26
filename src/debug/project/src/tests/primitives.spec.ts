@@ -5,17 +5,22 @@ export const testMappers: TestMapper[] = [];
 // --------------------------------------------------   Strings   ---------------------------------------------------------
 
 testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
-testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null, { isolate: false}));
-testMappers.push(new TestMapper(`'blue' / string / undefined`, 'string',2, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', log: true, createOptions: {differentiateStringsAndNumbers: false}}));
+
+testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 
 // --------------------------------------------------   Numbers   ---------------------------------------------------------
 
 testMappers.push(new TestMapper(`2 / number`, 'number',2));
-testMappers.push(new TestMapper(`2 / Number`, Number,2));
+testMappers.push(new TestMapper(`'2' / number / undefined`, 'number','2', {expectedValue: undefined}));
+testMappers.push(new TestMapper(`'2' / number & !differentiate / 2`, 'number','2', {expectedValue: 2, createOptions: {differentiateStringsAndNumbers: false}}));
 testMappers.push(new TestMapper(`undefined / number`, 'number',undefined));
 testMappers.push(new TestMapper(`2 / number / undefined`, 'number','blue', {expectedValue: undefined}));
+
+testMappers.push(new TestMapper(`2 / Number`, Number,2));
 
 // -------------------------------------------------   Booleans   ---------------------------------------------------------
 

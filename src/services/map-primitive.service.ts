@@ -1,27 +1,29 @@
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import * as chalk from 'chalk';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapPrimitiveService {
 
 
-    static create(data: any[], typeName: PrimitiveType, isArray: boolean): ArrayOfPrimitiveElements
-    static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement
-    static create(data: any, typeName: PrimitiveType, isArray: boolean): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
+    static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
+    static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement
+    static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
+        console.log(chalk.magentaBright('MapPrimitiveServiceeeee'), data, typeName, options);
         if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
             return undefined;
         }
         if (Array.isArray(data)) {
-            return this.createArrayElements(data, typeName);
+            return this.createArrayElements(data, typeName, options);
         } else {
-            return this.createElement(data, typeName);
+            return this.createElement(data, typeName, options);
         }
     }
 
 
-    private static createArrayElements(data: any[], typeName: PrimitiveType): ArrayOfPrimitiveElements {
+    private static createArrayElements(data: any[], typeName: PrimitiveType, options: CreateOptions): ArrayOfPrimitiveElements {
         const primitiveElementsArray = [];
         for (const element of data) {
-            const primitiveElement: PrimitiveElement = this.createElement(element, typeName);
+            const primitiveElement: PrimitiveElement = this.createElement(element, typeName, options);
             if (primitiveElement || element === undefined || element === null) {
                 primitiveElementsArray.push(primitiveElement);
             }
@@ -30,11 +32,19 @@ export class MapPrimitiveService {
     }
 
 
-    private static createElement(data: any, typeName: PrimitiveType): PrimitiveElement {
+    private static createElement(data: any, typeName: PrimitiveType, options: CreateOptions): PrimitiveElement {
         if (data === null) {
             return null;
         }
-        return typeof data === typeName?.toLowerCase() ? data : undefined;
+        return this.haveSameType(data, typeName, options) ? data : undefined;
+    }
+
+
+    private static haveSameType(data: any, typeName: PrimitiveType, options: CreateOptions): boolean {
+        console.log(chalk.blueBright('haveSameTypeeeeee'), data, typeName, options);
+        return typeof data === typeName?.toLowerCase()
+            || (typeof data === 'string' && typeName?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
+            || (typeof data === 'number' && typeName?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);
     }
 
 

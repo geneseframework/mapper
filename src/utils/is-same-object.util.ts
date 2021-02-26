@@ -30,7 +30,7 @@ function trivialEquality(obj1: any, obj2: any, differentiateStringsAndNumbers): 
 
 
 function areSameNumberOrString(obj1: any, obj2: any, differentiateStringsAndNumbers): boolean {
-    return !differentiateStringsAndNumbers && (typeof obj1 === 'number' || typeof obj2 === 'number') && obj1.toString() === obj2.toString();
+    return !differentiateStringsAndNumbers && (typeof obj1 === 'number' || typeof obj2 === 'number') && obj1?.toString() === obj2?.toString();
 }
 
 

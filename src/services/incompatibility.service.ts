@@ -5,26 +5,29 @@ import {
     isPrimitiveTypeName,
     isPrimitiveValue
 } from '../utils/primitives.util';
-import { isClassDeclaration, isInterfaceDeclaration } from '../utils/ast-declaration.util';
+import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
 import { isArray } from '../utils/arrays.util';
 import { Tuple } from '../types/tuple.type';
-import * as chalk from 'chalk';
 import { TargetService } from './target.service';
 import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type';
-import { types } from 'util';
 import { isValidDateConstructor } from '../utils/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
+import { CreateOptions } from '../interfaces/create-options.interface';
+import * as chalk from 'chalk';
 
 export class IncompatibilityService {
 
-    static areIncompatible(target: Target<any>, data: any): boolean {
+    static areIncompatible(target: Target<any>, data: any, options: CreateOptions): boolean {
+        if (TargetService.areStringAndNumberButNotDifferentiateThem(target, data, options)) {
+            return false;
+        }
         if (this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
             || this.targetIsBooleanAndDataNot(target, data)
             || this.targetIsNumberAndDataNot(target, data)
             || this.targetIsConstructorAndDataIsArray(target, data)
-            || this.targetIsArrayAndDataIsIncompatible(target, data)) {
+            || this.targetIsArrayAndDataIsIncompatible(target, data, options)) {
             return true;
-        } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target, data) && isArray(data)) {
+        } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target) && isArray(data)) {
             return true;
         }
         return false;
@@ -37,12 +40,12 @@ export class IncompatibilityService {
 
 
     private static targetIsBooleanAndDataNot(target: Target<any>, data: any): boolean {
-        return this.isBoolean(target) && typeof data !== 'boolean';
+        return TargetService.isBoolean(target) && typeof data !== 'boolean';
     }
 
 
     private static targetIsNumberAndDataNot(target: Target<any>, data: any): boolean {
-        return this.isNumber(target) && typeof data !== 'number';
+        return TargetService.isNumber(target) && typeof data !== 'number' && typeof data !== 'string';
     }
 
 
@@ -51,18 +54,8 @@ export class IncompatibilityService {
     }
 
 
-    private static targetIsArrayAndDataIsIncompatible(target: Target<any>, data: any): boolean {
-        return TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data);
-    }
-
-
-    private static isBoolean(target: any): boolean {
-        return ['boolean', Boolean].includes(target);
-    }
-
-
-    private static isNumber(target: any): boolean {
-        return ['number', Number].includes(target);
+    private static targetIsArrayAndDataIsIncompatible(target: Target<any>, data: any, options: CreateOptions): boolean {
+        return TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data, options);
     }
 
 
@@ -72,7 +65,7 @@ export class IncompatibilityService {
         }
         return this.isPrimitiveConstructorNotCorrespondingToDataType(target, data)
             || this.isPrimitiveNameNotCorrespondingToDataType(target, data)
-            || this.isClassOrInterfaceIncompatibleWithPrimitive(target, data);
+            || this.isClassOrInterfaceIncompatibleWithPrimitive(target);
     }
 
 
@@ -91,18 +84,18 @@ export class IncompatibilityService {
     }
 
 
-    private static isClassOrInterfaceIncompatibleWithPrimitive<T>(target: Target<T>, data: PrimitiveElement): boolean {
+    private static isClassOrInterfaceIncompatibleWithPrimitive<T>(target: Target<T>): boolean {
         if (TargetService.isConstructorNotPrimitive(target)) {
             return true;
         } else {
-            return typeof target === 'string' && (isClassDeclaration(target) || isInterfaceDeclaration(target));
+            return typeof target === 'string' && isClassOrInterfaceDeclaration(target);
         }
     }
 
 
-    private static isIncompatibleWithTargetArray(target: any[], data: any): boolean {
+    private static isIncompatibleWithTargetArray(target: any[], data: any, options: CreateOptions): boolean {
         if (TargetService.isTuple(target)) {
-            return this.isIncompatibleWithTuple(target, data);
+            return this.isIncompatibleWithTuple(target, data, options);
         } else if (!isArray(data)) {
             return true;
         } else {
@@ -111,12 +104,12 @@ export class IncompatibilityService {
     }
 
 
-    private static isIncompatibleWithTuple(target: Tuple, data: any): boolean {
+    private static isIncompatibleWithTuple(target: Tuple, data: any, options: CreateOptions): boolean {
         if (!isArray(data) || data?.length !== target.length) {
             return false;
         } else {
             for (let i = 0; i < target.length; i++) {
-                if (this.areIncompatible(target[i], data[i])) {
+                if (this.areIncompatible(target[i], data[i], options)) {
                     return true;
                 }
             }

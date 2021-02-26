@@ -16,53 +16,54 @@ import { Key } from '../types/key.type';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
 import { Mapper } from '../models/mapper';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapTypeArrayService {
 
 
-    static async mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+    static async mapTypeNodesArray(target: any, key: Key, dataValue: any, typeNodes: TypeNode[], typeProperties: any[], options: CreateOptions): Promise<void> {
         const typeNode: TypeNode = typeNodes[0];
         if (isPrimitiveOrArrayOfPrimitivesValue(dataValue)) {
-            await this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties);
+            await this.mapTypesNodesPrimitivesOrPrimitivesArray(target, key, dataValue, typeNode, typeNodes, typeProperties, options);
         } else if (this.isArrayOfNonPrimitives(dataValue, typeNode)) {
-            await this.mapTypesNodesNonPrimitivesArray(target, key, dataValue, typeNode, typeProperties);
+            await this.mapTypesNodesNonPrimitivesArray(target, key, dataValue, typeNode, typeProperties, options);
         } else {
-            await this.mapDataKeys(target, key, dataValue, typeNode as TypeReferenceNode, typeNodes, typeProperties);
+            await this.mapDataKeys(target, key, dataValue, typeNode as TypeReferenceNode, typeNodes, typeProperties, options);
         }
     }
 
 
-    private static async mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+    private static async mapTypesNodesPrimitivesOrPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[], options: CreateOptions): Promise<void> {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         if (isArray(dataValue)) {
             this.mapTypesNodesPrimitivesArray(target, key, dataValue, typeNode, nextTypeNodes);
         } else {
-            await this.mapTypesNodesPrimitive(target, key, dataValue, typeNode, typeNodes, typeProperties);
+            await this.mapTypesNodesPrimitive(target, key, dataValue, typeNode, typeNodes, typeProperties, options);
         }
     }
 
 
-    private static async mapTypesNodesNonPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeProperties: any[]): Promise<void> {
+    private static async mapTypesNodesNonPrimitivesArray(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeProperties: any[], options: CreateOptions): Promise<void> {
         const root = {}
         let i = 0;
         for (const element of dataValue) {
-            await this.mapTypeNodesArray(root, i, element, [(typeNode as ArrayTypeNode).getElementTypeNode()], typeProperties);
+            await this.mapTypeNodesArray(root, i, element, [(typeNode as ArrayTypeNode).getElementTypeNode()], typeProperties, options);
             i++
         }
         target[key] = [...Object.values(root)];
     }
 
 
-    private static async mapDataKeys(target: any, key: Key, dataValue: any, typeNode: TypeReferenceNode, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+    private static async mapDataKeys(target: any, key: Key, dataValue: any, typeNode: TypeReferenceNode, typeNodes: TypeNode[], typeProperties: any[], options: CreateOptions): Promise<void> {
         if (this.hasNoProperties(dataValue)) {
             target[key] = Mapper.create(typeNode?.getText(), {});
         }
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
             if (this.isKeyType(dataKey, typeNode, undefined)) {
-                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
+                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
             } else {
-                await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
+                await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
             }
         }
     }
@@ -96,30 +97,30 @@ export class MapTypeArrayService {
     }
 
 
-    private static async mapTypesNodesPrimitive(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+    private static async mapTypesNodesPrimitive(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[], options: CreateOptions): Promise<void> {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
             if (this.isKeyType(key, typeNode, dataValue)) {
-                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode);
+                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
             } else {
-                await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
+                await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
             }
             return;
         } else if (typeNodes.length > 1) {
-            await this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties);
+            await this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties, options);
         } else {
             throwWarning(`Unknown primitive literal type : \nTarget: ${target}\nKey: key\nDataValue: ${dataValue}\nTypeNode: ${typeNode.getKindName()}`);
         }
     }
 
 
-    private static async mapKeyType(target: any, key: Key, typeNodes: TypeNode[], typeProperties: any[], dataValue?: any): Promise<void> {
+    private static async mapKeyType(target: any, key: Key, typeNodes: TypeNode[], typeProperties: any[], dataValue: any, options: CreateOptions): Promise<void> {
         const nextTypeNodes: TypeNode[] = partialClone(typeNodes, 1);
         const indexOfNextTypeNodeIncludingKeys: number = this.getIndexOfNextTypeNodeIncludingKeys(typeProperties, nextTypeNodes, dataValue);
         if (indexOfNextTypeNodeIncludingKeys !== undefined) {
             const nextTypeNodesIncludingKeys: TypeNode[] = nextTypeNodes.slice(indexOfNextTypeNodeIncludingKeys);
-            await this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties);
+            await this.mapTypeNodesArray(target, key, dataValue, nextTypeNodesIncludingKeys, typeProperties, options);
         }
     }
 
