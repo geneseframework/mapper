@@ -1,4 +1,6 @@
 import { isValidDateConstructor } from '../utils/dates.util';
+import * as chalk from 'chalk';
+import { IncompatibilityService } from './incompatibility.service';
 
 export class MapDateService {
 
@@ -17,10 +19,13 @@ export class MapDateService {
 
 
     private static createDatesArray(data: any[]): Date[] {
+        console.log(chalk.magentaBright('CREATE DATES ARRRRR'), data);
         const typesArray: Date[] = [];
         for (const element of data) {
-            const instance: Date = this.createDate(element);
-            typesArray.push(instance);
+            if (isValidDateConstructor(element)) {
+                const instance: Date = this.createDate(element);
+                typesArray.push(instance);
+            }
         }
         return typesArray;
     }
