@@ -5,6 +5,8 @@ import { Key } from '../types/key.type';
 import { Tuple } from '../types/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
+import { CreateOptions } from '../interfaces/create-options.interface';
+import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
 
 export class TargetService {
 
@@ -99,9 +101,34 @@ export class TargetService {
     }
 
 
+    static isBoolean(target: any): boolean {
+        return ['boolean', Boolean].includes(target);
+    }
+
+
+    static isNumber(target: any): boolean {
+        return ['number', Number].includes(target);
+    }
+
+
+    static isString(target: any): boolean {
+        return ['string', String].includes(target);
+    }
+
+
     static isDate(target: Target<any>): boolean {
         return target === 'Date' || (typeof target === 'function' && target?.name === 'Date');
     }
 
+
+    static areStringAndNumberButNotDifferentiateThem(target: Target<any>, data: any, options: CreateOptions): boolean {
+        return (this.targetIsStringButNotClassOrInterface(target) && (typeof data === 'string' || (typeof data === 'number' && options.differentiateStringsAndNumbers === false)))
+            || (this.isNumber(target) && (typeof data === 'number' || (typeof data === 'string' && options.differentiateStringsAndNumbers === false)));
+    }
+
+
+    private static targetIsStringButNotClassOrInterface(target: Target<any>): boolean {
+        return this.isString(target) && !isClassOrInterfaceDeclaration(target as string);
+    }
 
 }

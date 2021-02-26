@@ -11,23 +11,25 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { Key } from '../types/key.type';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
+import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapDeclarationService<T> {
 
 
-    static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration): Promise<void> {
+    static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration, options: CreateOptions): Promise<void> {
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration);
+                await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration, options);
                 break;
             case TypeDeclarationKind.ENUM_DECLARATION:
                 await MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                await MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration);
+                await MapInstanceOrInterfaceService.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration, options);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration);
+                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
                 break;
             default:
                 throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);
@@ -36,10 +38,10 @@ export class MapDeclarationService<T> {
     }
 
 
-    private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration): Promise<void> {
+    private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(target[key], dataValue, classDeclaration);
+        await MapInstanceOrInterfaceService.map(target[key], dataValue, classDeclaration, options);
     }
 
 }

@@ -87,6 +87,11 @@ function declarationKind(typeName: string): TypeDeclarationKind {
 }
 
 
+export function isClassOrInterfaceDeclaration(typeName: string): boolean {
+    return isClassDeclaration(typeName) || isInterfaceDeclaration(typeName);
+}
+
+
 export function isClassDeclaration(typeName: string): boolean {
     return hasDeclaration(typeName, getDescendantClasses);
 }

@@ -11,6 +11,7 @@ import { MapPrimitiveService } from './map-primitive.service';
 import { MapDateService } from './map-date.service';
 import { TargetService } from './target.service';
 import * as chalk from 'chalk';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapTrivialCasesService {
 
@@ -24,7 +25,7 @@ export class MapTrivialCasesService {
     }
 
 
-    static mapTrivialCase(target: Target<any>, data: any): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
+    static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
@@ -34,7 +35,7 @@ export class MapTrivialCasesService {
         if (TargetService.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
-            return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray);
+            return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {
             return MapDateService.createDates(data, info.isArray);
         }

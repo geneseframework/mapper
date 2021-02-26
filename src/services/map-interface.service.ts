@@ -5,13 +5,15 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { throwWarning } from '../utils/errors.util';
 import { DateDeclaration } from '../models/date-declaration.model';
 import { MapDateService } from './map-date.service';
+import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapInterfaceService {
 
 
-    static async createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean): Promise<T[] | Date[]>
-    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): Promise<T | Date>
-    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean): Promise<T | T[] | Date | Date[]> {
+    static async createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T[] | Date[]>
+    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | Date>
+    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | T[] | Date | Date[]> {
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
         if (!interfaceDeclaration) {
             throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);
@@ -19,18 +21,18 @@ export class MapInterfaceService {
         } else if (interfaceDeclaration instanceof DateDeclaration) {
             return MapDateService.createDate(data);
         } else if (Array.isArray(data) && isArray) {
-            return await MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration);
+            return await MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration, options);
         } else if (!Array.isArray(data) && !isArray) {
-            return await this.createInterface(data, interfaceDeclaration);
+            return await this.createInterface(data, interfaceDeclaration, options);
         }  else {
             return undefined;
         }
     }
 
 
-    static async createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration): Promise<T | Date> {
+    static async createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {
         const tInterface = {};
-        await MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration);
+        await MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration, options);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 

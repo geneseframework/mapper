@@ -18,7 +18,7 @@ export async function expect(testMappers: TestMapper | TestMapper[], logPassed: 
 
 
 async function expectMapper(testMapper: TestMapper, logPassed: boolean): Promise<void> {
-    const result = await Mapper.create(testMapper.mapParameter, testMapper.data);
+    const result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
     if (isExpectedResult(testMapper, result) ) {
         if (logPassed) {
             console.log(chalk.greenBright('Test passed : '), testMapper.title);
