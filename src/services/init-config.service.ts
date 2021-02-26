@@ -27,7 +27,6 @@ export class InitConfigService {
         if (!jsonConfigObject?.mapper) {
             return undefined;
         }
-        console.log(chalk.cyanBright('CONFIGGGGG'), jsonConfigObject);
         const jsonConfig: Config = await Mapper.create(Config, jsonConfigObject.mapper);
         console.log(chalk.cyanBright('CONFIGGGGG'), jsonConfig);
         return jsonConfig;

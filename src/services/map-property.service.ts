@@ -30,7 +30,9 @@ export class MapPropertyService<T> {
                 MapTupleService.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.INTERFACE:
+                console.log(chalk.greenBright('MAP PROPPPPP'), dataValue, propertyType);
                 const value: any = await MapInterfaceService.createInterfaces(dataValue, propertyType, false, options);
+                console.log(chalk.greenBright('MAP PROPPPPP valueeee'), value);
                 if (value) {
                     target[key] = value;
                 }

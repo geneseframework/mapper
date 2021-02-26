@@ -7,6 +7,7 @@ import { DateDeclaration } from '../models/date-declaration.model';
 import { MapDateService } from './map-date.service';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import * as chalk from 'chalk';
 
 export class MapInterfaceService {
 
@@ -33,6 +34,7 @@ export class MapInterfaceService {
     static async createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {
         const tInterface = {};
         await MapInstanceOrInterfaceService.map(tInterface, data, interfaceDeclaration, options);
+        console.log(chalk.yellowBright('CREATE INTERFFFFFF'), data, interfaceDeclaration?.getName(), tInterface);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 
