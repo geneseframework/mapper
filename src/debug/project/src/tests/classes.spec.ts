@@ -24,6 +24,8 @@ testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatSpec
 testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatSpec]`, [PersonCatSpec], [{cat: null, firstName: 'Léa'}]));
 testMappers.push(new TestMapper(`['a'] / [PersonCatSpec] / []`, [PersonCatSpec], ['a'], {expectedValue: []}));
 testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], [], {expectedValue: []}));
+testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], new PersonCatSpec(), {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], {}, {expectedValue: undefined}));
 
 
 // -------------------------------------------------------------------------------------------------
