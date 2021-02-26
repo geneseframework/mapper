@@ -151,11 +151,14 @@ export type UnionTypeClassAndStringSpec = CatSpec | string;
 export class ClassWithUnionTypeSpec {
     union: UnionTypeClassAndStringSpec;
 }
+const catSpec = new CatSpec();
+catSpec.name = 'Biela';
 
 testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: undefined}));
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new CatSpec()}, {isolate: true}));
+testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new CatSpec()}));
+testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: catSpec}));
 
 
 // --------------------------------------------------   Abstract   --------------------------------------------------------

@@ -56,6 +56,7 @@ export class MapInstanceOrInterfaceService<T> {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
+        // console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos);
         if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue)) {
             return;
         }

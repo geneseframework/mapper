@@ -14,6 +14,8 @@ import { TypeDeclaration } from '../types/type-declaration.type';
 import { MapTypeService } from './map-type.service';
 import { Key } from '../types/key.type';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
+import { Mapper } from '../models/mapper';
 
 export class MapTypeArrayService {
 
@@ -25,7 +27,7 @@ export class MapTypeArrayService {
         } else if (this.isArrayOfNonPrimitives(dataValue, typeNode)) {
             await this.mapTypesNodesNonPrimitivesArray(target, key, dataValue, typeNode, typeProperties);
         } else {
-            await this.mapDataKeys(target, key, dataValue, typeNode, typeNodes, typeProperties);
+            await this.mapDataKeys(target, key, dataValue, typeNode as TypeReferenceNode, typeNodes, typeProperties);
         }
     }
 
@@ -51,7 +53,10 @@ export class MapTypeArrayService {
     }
 
 
-    private static async mapDataKeys(target: any, key: Key, dataValue: any, typeNode: TypeNode, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+    private static async mapDataKeys(target: any, key: Key, dataValue: any, typeNode: TypeReferenceNode, typeNodes: TypeNode[], typeProperties: any[]): Promise<void> {
+        if (this.hasNoProperties(dataValue)) {
+            target[key] = Mapper.create(typeNode?.getText(), {});
+        }
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
             if (this.isKeyType(dataKey, typeNode, undefined)) {
@@ -60,6 +65,11 @@ export class MapTypeArrayService {
                 await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue);
             }
         }
+    }
+
+
+    private static hasNoProperties(dataValue: any): boolean {
+        return Object.keys(dataValue)?.length === 0;
     }
 
 
