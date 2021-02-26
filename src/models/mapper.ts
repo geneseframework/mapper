@@ -123,7 +123,7 @@ export class Mapper<T> {
 
     private static async init<T>(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
-            InitService.start();
+            await InitService.start();
             await FlagService.init();
         }
     }

@@ -1,5 +1,6 @@
 import * as fs from 'fs-extra';
 import * as chalk from 'chalk';
+import { throwWarning } from './errors.util';
 
 /**
  * Returns the name of the file at a given path
@@ -27,17 +28,17 @@ export async function ensureDirAndCopy(source: string, target: string): Promise<
 }
 
 
-export async function writeFile(filePath: string, content: string): Promise<any> {
-    await fs.ensureDir(getFolderPath(filePath));
-    await fs.writeFile(filePath, content, {encoding: 'utf-8', overwrite: true});
-}
+export async function requireFile(filePath: string): Promise<any> {
+    try {
+        const pathExists: boolean = await fs.pathExists(filePath);
+        if (pathExists) {
+            console.log(chalk.greenBright('FILEEEEE 000'), filePath, pathExists);
+            const file: object = await fs.readJson(filePath);
+            console.log(chalk.greenBright('FILEEEEE'), file, pathExists);
 
-
-export function isInFolder(path: string, folder: string): boolean {
-    if (!path || ! folder) {
-        return undefined;
+        }
+        console.log(chalk.blueBright('FILEEEEE'), filePath, pathExists);
+    } catch (err) {
+        throwWarning(`Error reading file "${filePath}".`, err);
     }
-    const zzz = path.toLowerCase().slice(0, folder.length) === folder.toLowerCase();
-    console.log(chalk.blueBright(''), zzz, path, folder);
-    return zzz;
 }

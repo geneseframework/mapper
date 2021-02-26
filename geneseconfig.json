@@ -1,0 +1,7 @@
+{
+    "mapper": {
+        "create": {
+            "differentiateStringsAndNumbers": false
+        }
+    }
+}
