@@ -9,12 +9,14 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { Tuple } from '../types/tuple.type';
 import { Mapper } from '../models/mapper';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import * as chalk from 'chalk';
 
 export class MapTupleService<T> {
 
 
     static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
         if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
+            // TODO : remove this condition : obsolete with incompatibilities tests
             return undefined;
         }
         const tuple: any[] = [];
@@ -23,7 +25,8 @@ export class MapTupleService<T> {
                 tuple.push(data[i]);
             } else {
                 const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
-                if (mappedElement) {
+                console.log(chalk.magentaBright('MAP TUPLLLLL SERV'), data, mapParameterTuple, mappedElement);
+                if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {
                     return undefined;
@@ -35,6 +38,7 @@ export class MapTupleService<T> {
 
 
     static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): void {
+        console.log(chalk.blueBright('MAP TUPLLLLL'), target, key, dataValue, stringifiedTupleTypeArray, stringifiedApparentTypeArray);
         const tupleTypeArray: string[] = this.toArray(stringifiedTupleTypeArray);
         const apparentTupleTypeArray: string[] = this.toArray(stringifiedApparentTypeArray);
         if (!Array.isArray(dataValue) || tupleTypeArray.length !== dataValue?.length) {

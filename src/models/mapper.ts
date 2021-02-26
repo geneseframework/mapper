@@ -114,7 +114,11 @@ export class Mapper<T> {
             if (IncompatibilityService.areIncompatible(target, data, options)) {
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
+                console.log(chalk.yellowBright('MAP DECLLLLL'), target, data);
                 return MapTrivialCasesService.mapTrivialCase(target, data, options);
+            } else if (TargetService.isTuple(target)) {
+                console.log(chalk.greenBright('SHOULD ENTER HERRRE'), target, data);
+                return MapTupleService.create(data as any[], target as Tuple);
             } else {
                 return this.mapDeclaration(target, data, options);
             }
@@ -148,6 +152,7 @@ export class Mapper<T> {
         }
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
+        console.log(chalk.yellowBright('MAP DECLLLLL'), target, data, info, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return MapInstanceService.createInstances<T>(data, info.typeName, options);

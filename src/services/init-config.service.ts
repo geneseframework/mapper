@@ -25,7 +25,7 @@ export class InitConfigService {
         if (!jsonConfigObject?.mapper) {
             return undefined;
         }
-        // return undefined;
-        return await Mapper.create(Config, jsonConfigObject.mapper);
+        return undefined;
+        // return await Mapper.create(Config, jsonConfigObject.mapper);
     }
 }

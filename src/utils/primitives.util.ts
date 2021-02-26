@@ -3,6 +3,7 @@ import * as chalk from 'chalk';
 import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
 import { LiteralNode } from '../types/literal-node.type';
 import { isArray } from './arrays.util';
+import { TargetService } from '../services/target.service';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -31,11 +32,12 @@ function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: Primiti
 export function isPrimitiveOrPrimitivesArray(typeNode: TypeNode): boolean
 export function isPrimitiveOrPrimitivesArray(typeName: string): boolean
 export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode): boolean {
+   console.log(chalk.blueBright('IS PRIMMMM ARRR'), typeNameOrNode);
     if (typeof typeNameOrNode === 'string') {
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
-    } else if (isArray(typeNameOrNode)) {
+    } else if (TargetService.isArrayButNotTuple(typeNameOrNode)) {
         return false;
     } else {
         return isPrimitiveTypeNode(typeNameOrNode);

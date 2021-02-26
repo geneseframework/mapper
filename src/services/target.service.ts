@@ -21,6 +21,11 @@ export class TargetService {
     }
 
 
+    static isArrayButNotTuple<T>(target: any): boolean {
+        return Array.isArray(target) && !this.isTuple(target);
+    }
+
+
     static getInfo<T>(target: Target<T>): TargetInfo {
         let typeName: string = this.getInfoTypeName(target);
         let isArray: boolean = this.getInfoIsArray(target);
@@ -65,11 +70,6 @@ export class TargetService {
 
     private static removeBrackets<T>(targetName: string): string {
         return this.isStringArray(targetName) ? targetName.slice(0, -2) : targetName;
-    }
-
-
-    private static isArrayButNotTuple<T>(target: TConstructor<T> | Key | Tuple): boolean {
-        return Array.isArray(target) && !this.isTuple(target);
     }
 
 
