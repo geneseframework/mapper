@@ -1,3 +1,3 @@
 export interface CreateOptions {
-    differentiateStringsAndNumbers: boolean;
+    differentiateStringsAndNumbers?: boolean;
 }

@@ -34,10 +34,10 @@ export function partialClone<T>(array: T[], fromIndex: number, toIndex?: number)
  * @param smallArray
  */
 export function includes(bigArray: any[], smallArray: any[]): boolean {
-    if (!Array.isArray(bigArray) || !Array.isArray(smallArray)) {
+    if (areNoyArrays(bigArray, smallArray)) {
         return false;
     }
-    return smallArray.some(element => bigArray.includes(element));
+    return !smallArray.some(element => !bigArray.includes(element));
 }
 
 
@@ -48,4 +48,14 @@ export function isEmptyArray(data: any): boolean {
 
 export function isArray(data: any): boolean {
     return Array.isArray(data);
+}
+
+
+export function areArrays(first: any, last: any): boolean {
+    return isArray(first) && isArray(last);
+}
+
+
+export function areNoyArrays(first: any, last: any): boolean {
+    return !isArray(first) || !isArray(last);
 }

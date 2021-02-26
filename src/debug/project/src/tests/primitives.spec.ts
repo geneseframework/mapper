@@ -1,4 +1,5 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
+import { CONFIG } from '../../../../const/config.const';
 
 export const testMappers: TestMapper[] = [];
 

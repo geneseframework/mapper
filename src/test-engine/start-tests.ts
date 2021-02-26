@@ -7,7 +7,7 @@ import { InitService } from '../services/init.service';
 GLOBAL.debug = true;
 
 export async function startTests(logPassed: boolean) {
-    InitService.start();
+    await InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.its, logPassed);
