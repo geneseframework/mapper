@@ -21,6 +21,7 @@ export class IncompatibilityService {
         if (this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
             || this.targetIsBooleanAndDataNot(target, data)
             || this.targetIsNumberAndDataNot(target, data)
+            || this.targetIsConstructorAndDataIsArray(target, data)
             || this.targetIsArrayAndDataIsIncompatible(target, data)) {
             return true;
         } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target, data) && isArray(data)) {
@@ -42,6 +43,11 @@ export class IncompatibilityService {
 
     private static targetIsNumberAndDataNot(target: Target<any>, data: any): boolean {
         return this.isNumber(target) && typeof data !== 'number';
+    }
+
+
+    private static targetIsConstructorAndDataIsArray(target: Target<any>, data: any): boolean {
+        return typeof target === 'function' && isArray(data);
     }
 
 

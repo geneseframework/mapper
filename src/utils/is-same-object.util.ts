@@ -86,7 +86,7 @@ function areObjectsWithDifferentNumberOfKeys(obj1: any, obj2: any): boolean {
 
 
 function areInvalidDates(obj1: any, obj2: any): boolean {
-    return obj1.toString() === 'Invalid Date' && obj2.toString() === 'Invalid Date';
+    return obj1?.toString() === 'Invalid Date' && obj2?.toString() === 'Invalid Date';
 }
 
 

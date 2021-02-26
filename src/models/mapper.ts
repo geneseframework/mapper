@@ -87,8 +87,6 @@ export class Mapper<T> {
     // ----------------------------------------   Constructor overloads   -------------------------------------------------
 
     static async create<T>(target: TConstructor<T>, data: T): Promise<T>
-    // TODO : remove ability to receive InstanceArray when target is not an array
-    static async create<T>(target: TConstructor<T>, data: T[]): Promise<T[]>
     static async create<T>(target: TConstructor<T>, data: NotInstance): Promise<unknown>
     static async create<T>(target: TConstructor<T>, data: any): Promise<T | undefined>
 
