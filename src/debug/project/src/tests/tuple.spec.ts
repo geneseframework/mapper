@@ -2,7 +2,7 @@ import { TestMapper} from '../../../../test-engine/test-mapper.model';
 
 export const testMappers: TestMapper[] = [];
 
-// ----------------------------------------------   Tuples of primitives   ---------------------------------------------------
+// ----------------------------------------------   Tuples of primitives   ------------------------------------------------
 
 
 
