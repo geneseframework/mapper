@@ -100,6 +100,8 @@ export class Mapper<T> {
     // -------------------------------------------   Tuples overloads   ---------------------------------------------------
 
     static async create<T>(target: Tuple, data: any[], options?: CreateOptions): Promise<Tuple>
+    static async create<T>(target: Tuple, data: NotArray, options?: CreateOptions): Promise<unknown>
+    static async create<T>(target: Tuple, data: any, options?: CreateOptions): Promise<Tuple | undefined>
 
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 

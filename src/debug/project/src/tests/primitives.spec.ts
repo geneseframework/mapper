@@ -54,6 +54,11 @@ testMappers.push(new TestMapper(`['blue'] / [String]`, [String],['blue']));
 testMappers.push(new TestMapper(`['blue', 'white'] / [String]`, [String],['blue', 'white']));
 testMappers.push(new TestMapper(`[] / [String]`, [String],[], {expectedValue: []}));
 
+testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue']));
+testMappers.push(new TestMapper(`[2] / ['string'] / []`, ['string'],[2], {expectedValue: []}));
+testMappers.push(new TestMapper(`[2] / ['string'] && !differentiate / ['2']`, ['string'],[2], {expectedValue: ['2'], createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`'blue' / ['string'] / undefined`, ['string'],'blue', {expectedValue: undefined}));
+
 
 // --------------------------------------------------   Numbers   ---------------------------------------------------------
 
