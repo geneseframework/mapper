@@ -17,19 +17,36 @@ import { SyntaxKind, TypeNode } from 'ts-morph';
 
 export class IncompatibilityService {
 
-    static areIncompatible<T>(target: Target<T>, data: any): boolean {
-        if (isPrimitiveValue(data) && this.isIncompatibleWithPrimitive(target, data)) {
-                return true;
-        } else if (this.isBoolean(target) && typeof data !== 'boolean') {
-            return true;
-        } else if (this.isNumber(target) && typeof data !== 'number') {
-            return true;
-        } else if (TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data)) {
+    static areIncompatible(target: Target<any>, data: any): boolean {
+        if (this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
+            || this.targetIsBooleanAndDataNot(target, data)
+            || this.targetIsNumberAndDataNot(target, data)
+            || this.targetIsArrayAndDataIsIncompatible(target, data)) {
             return true;
         } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target, data) && isArray(data)) {
             return true;
         }
         return false;
+    }
+
+
+    private static dataIsPrimitiveAndTargetIsIncompatible(target: Target<any>, data: any): boolean {
+        return isPrimitiveValue(data) && this.isIncompatibleWithPrimitive(target, data);
+    }
+
+
+    private static targetIsBooleanAndDataNot(target: Target<any>, data: any): boolean {
+        return this.isBoolean(target) && typeof data !== 'boolean';
+    }
+
+
+    private static targetIsNumberAndDataNot(target: Target<any>, data: any): boolean {
+        return this.isNumber(target) && typeof data !== 'number';
+    }
+
+
+    private static targetIsArrayAndDataIsIncompatible(target: Target<any>, data: any): boolean {
+        return TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data);
     }
 
 

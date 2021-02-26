@@ -2,6 +2,7 @@ import { TargetInfo } from '../types/target-info.type';
 import { isArray } from '../utils/arrays.util';
 import { haveArrayIncompatibility } from '../utils/incompatibility.util';
 import * as chalk from 'chalk';
+import { hasTypeOfObjectButIsNotArray } from '../utils/objects.util';
 
 export class MapObjectService {
 
@@ -9,6 +10,7 @@ export class MapObjectService {
     static create(data: object[], info: TargetInfo): object[]
     static create(data: object, info: TargetInfo): object
     static create(data: object, info: TargetInfo): object | object[] | undefined {
+        // console.log(chalk.blueBright('MAP OBJJJJJ'), data, info, haveArrayIncompatibility(data, info?.isArray));
         if (haveArrayIncompatibility(data, info?.isArray)) {
             return undefined;
         } else if (isArray(data)) {
@@ -27,7 +29,7 @@ export class MapObjectService {
                 objectsArray.push(objectElement);
             }
         }
-        return objectsArray.length > 0 ? objectsArray : undefined;
+        return objectsArray;
     }
 
 
@@ -35,7 +37,7 @@ export class MapObjectService {
         if (data === null) {
             return null;
         }
-        return typeof data === 'object' ? data : undefined;
+        return hasTypeOfObjectButIsNotArray(data) ? data : undefined;
     }
 
 }

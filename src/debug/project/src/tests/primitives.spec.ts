@@ -23,7 +23,13 @@ testMappers.push(new TestMapper(`true / boolean`, 'boolean',true));
 testMappers.push(new TestMapper(`undefined / boolean`, 'boolean',undefined));
 testMappers.push(new TestMapper(`2 / boolean / undefined`, 'boolean','blue', {expectedValue: undefined}));
 
+// ------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------   Arrays   ---------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+
+// --------------------------------------------------   Strings   ---------------------------------------------------------
+
 
 testMappers.push(new TestMapper(`['blue'] / string[]`, 'string[]',['blue']));
 testMappers.push(new TestMapper(`['blue', 'white'] / string[]`, 'string[]',['blue', 'white']));
@@ -33,6 +39,11 @@ testMappers.push(new TestMapper(`'blue' / string[] / undefined`, 'string[]','blu
 testMappers.push(new TestMapper(`[2] / string[] / []`, 'string[]',[2], {expectedValue: []}));
 testMappers.push(new TestMapper(`[2] / string[] / []`, 'string[]',[], {expectedValue: []}));
 testMappers.push(new TestMapper(`[{}] / string[] / [{}]`, 'string[]',[{}], {expectedValue: []}));
+testMappers.push(new TestMapper(`[{}] / string[] / [['a']]`, 'string[]',[['a']], {expectedValue: []}));
 testMappers.push(new TestMapper(`[undefined] / string[] / [undefined]`, 'string[]',[undefined], {expectedValue: [undefined]}));
 testMappers.push(new TestMapper(`[null] / string[] / [null]`, 'string[]',[null], {expectedValue: [null]}));
+
+testMappers.push(new TestMapper(`['blue'] / [String]`, [String],['blue']));
+testMappers.push(new TestMapper(`['blue', 'white'] / [String]`, [String],['blue', 'white']));
+testMappers.push(new TestMapper(`[] / [String]`, [String],[], {expectedValue: []}));
 

@@ -10,6 +10,7 @@ import { MapObjectService } from './map-object.service';
 import { MapPrimitiveService } from './map-primitive.service';
 import { MapDateService } from './map-date.service';
 import { TargetService } from './target.service';
+import * as chalk from 'chalk';
 
 export class MapTrivialCasesService {
 
