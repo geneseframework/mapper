@@ -7,9 +7,7 @@ import { IncompatibilityService } from './incompatibility.service';
 import { MapTrivialCasesService } from './map-trivial-cases.service';
 import { TargetService } from './target.service';
 import { MapTupleService } from './map-tuple.service';
-import { GLOBAL } from '../const/global.const';
 import { InitService } from './init.service';
-import { FlagService } from './flag.service';
 import { TargetInfo } from '../types/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
@@ -22,7 +20,18 @@ import { throwWarning } from '../utils/errors.util';
 
 export class MainService {
 
+    /**
+     * Returns the data formatted with the target's model
+     * - Initializes the instance generator and the global configuration.
+     * - Set options for the current mapping.
+     * - Returns undefined when data is incompatible with target
+     * - Returns mapped data instead
+     * @param target
+     * @param data
+     * @param options
+     */
     static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+        await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
@@ -38,6 +47,13 @@ export class MainService {
     }
 
 
+    /**
+     * Returns mapped data when target is a Declaration node.
+     * @param target
+     * @param data
+     * @param options
+     * @private
+     */
     private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Date | Tuple> {
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);

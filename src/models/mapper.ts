@@ -18,7 +18,9 @@ import {
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { MainService } from '../services/main.service';
 
-
+/**
+ * Maps some data in the target's format.
+ */
 export class Mapper<T> {
 
     // --------------------------------------------   String overloads   --------------------------------------------------
@@ -93,7 +95,6 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         try {
-            await InitService.start();
             return await MainService.map(target, data, options);
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
