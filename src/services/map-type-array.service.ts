@@ -109,8 +109,11 @@ export class MapTypeArrayService {
             return;
         } else if (typeNodes.length > 1) {
             await this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties, options);
+        } else if (target?.hasOwnProperty('rootKey')) {
+            throwWarning('Warning: type probably incompatible with data = ', dataValue);
+            return undefined;
         } else {
-            throwWarning(`Unknown primitive literal type : \nTarget: ${target}\nKey: key\nDataValue: ${dataValue}\nTypeNode: ${typeNode.getKindName()}`);
+            throwWarning(`Warning: unknown primitive literal type : \nKey: key\nDataValue: ${dataValue}\nTypeNode: ${typeNode.getKindName()}\nTarget: `, target);
         }
     }
 

@@ -134,3 +134,14 @@ export function isPrimitiveTypeName(type: any): boolean {
 export function isPrimitiveConstructor(type: any): boolean {
     return [String, Number, Boolean].includes(type);
 }
+
+
+export function castStringAndNumbers(typeName: string, data: string | number): string | number | typeof NaN {
+    if (typeName === 'string') {
+        return data?.toString();
+    } else if (typeName === 'number') {
+        return Number(data);
+    } else {
+        return data;
+    }
+}
