@@ -1,7 +1,7 @@
 import { CreateOptions } from '../interfaces/create-options.interface';
 import 'reflect-metadata';
 import { isObjectButNotArray } from '../utils/objects.util';
-import { InitConfigService } from './init-config.service';
+import { CONFIG } from '../const/config.const';
 
 export class OptionsService {
 
@@ -13,15 +13,12 @@ export class OptionsService {
         return Reflect.hasMetadata('initialized', options);
     }
 
-    static async initialize(options: CreateOptions = {}): Promise<CreateOptions> {
-        options.differentiateStringsAndNumbers = options.hasOwnProperty('differentiateStringsAndNumbers') ? options.differentiateStringsAndNumbers : true;
+    static initialize(options: CreateOptions = {}): CreateOptions {
+        if (![true, false].includes(options?.differentiateStringsAndNumbers)){
+            options.differentiateStringsAndNumbers = CONFIG.create.differentiateStringsAndNumbers;
+        }
         Reflect.defineMetadata('initialized', true, options);
         return options;
-    }
-
-
-    private static getOption(name: string, options: CreateOptions): void {
-
     }
 
 }

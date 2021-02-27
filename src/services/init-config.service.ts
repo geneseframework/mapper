@@ -2,7 +2,6 @@ import { CONFIG } from '../const/config.const';
 import { Config } from '../models/config.model';
 import { requireJsonFile } from '../utils/file-system.util';
 import { GLOBAL } from '../const/global.const';
-import * as chalk from 'chalk';
 
 export class InitConfigService {
 
@@ -10,7 +9,6 @@ export class InitConfigService {
     static async initConfig(): Promise<void> {
         const jsonConfig: Config = await this.getJsonConfig();
         this.setConfig(jsonConfig);
-        console.log(chalk.magentaBright('CONFIGGGGG'), CONFIG);
     }
 
 
@@ -26,15 +24,5 @@ export class InitConfigService {
                 CONFIG.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create.differentiateStringsAndNumbers !== false;
             }
         }
-    // CONFIG.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create?.hasOwnProperty('differentiateStringsAndNumbers') ? jsonConfigObject.mapper.create.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
-    //     const config: Config = {
-    //         create: {}
-    //     };
-    //     if (!jsonConfigObject.mapper.create) {
-    //         config.create = CONFIG.create;
-    //     } else {
-    //         config.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create.hasOwnProperty('differentiateStringsAndNumbers') ? jsonConfigObject.mapper.create.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
-    //     }
-    //     return undefined;
     }
 }

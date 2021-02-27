@@ -112,7 +112,7 @@ export class Mapper<T> {
         try {
             await this.init();
             if (!OptionsService.wasInitialized(options)) {
-                options = await OptionsService.initialize(options);
+                options = OptionsService.initialize(options);
             }
             if (IncompatibilityService.areIncompatible(target, data, options)) {
                 return undefined;
