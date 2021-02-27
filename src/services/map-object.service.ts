@@ -2,7 +2,7 @@ import { TargetInfo } from '../types/target-info.type';
 import { isArray } from '../utils/arrays.util';
 import { haveArrayIncompatibility } from '../utils/incompatibility.util';
 import * as chalk from 'chalk';
-import { hasTypeOfObjectButIsNotArray } from '../utils/objects.util';
+import { isObjectButNotArray } from '../utils/objects.util';
 
 export class MapObjectService {
 
@@ -37,7 +37,7 @@ export class MapObjectService {
         if (data === null) {
             return null;
         }
-        return hasTypeOfObjectButIsNotArray(data) ? data : undefined;
+        return isObjectButNotArray(data) ? data : undefined;
     }
 
 }

@@ -35,7 +35,7 @@ export class MapTrivialCasesService {
             return data;
         } else if (TargetService.isTuple(target)) {
             console.log(chalk.redBright('SHOULD NEVER ENTER HERRRE'), target, data);
-            return MapTupleService.create(data, target as Tuple);
+            return MapTupleService.create(data, target as Tuple, options);
         }
         const info: TargetInfo = TargetService.getInfo(target);
         if (TargetService.isObjectOrObjectsArray(target)) {

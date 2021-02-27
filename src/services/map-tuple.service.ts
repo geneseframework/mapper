@@ -14,7 +14,7 @@ import * as chalk from 'chalk';
 export class MapTupleService<T> {
 
 
-    static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
+    static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
         if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
             // TODO : remove this condition : obsolete with incompatibilities tests
             return undefined;
@@ -24,7 +24,7 @@ export class MapTupleService<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
+                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
                 console.log(chalk.magentaBright('MAP TUPLLLLL SERV'), data, mapParameterTuple, mappedElement);
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);

@@ -30,6 +30,7 @@ async function expectMapper(testMapper: TestMapper, logPassed: boolean): Promise
     } else {
         console.log(chalk.redBright('Test failed : '), testMapper.title);
         TESTS.testsFailed++;
+        TESTS.failed.push(testMapper.title);
         log(testMapper, result);
     }
 }

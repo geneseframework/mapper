@@ -7,8 +7,8 @@ export const testMappers: TestMapper[] = [];
 
 testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
-testMappers.push(new TestMapper(`null / string`, 'string',null));
-testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`null / string`, 'string',null)); // TODO: options changed !!!!
+testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined, createOptions: {}}));
 testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', createOptions: {differentiateStringsAndNumbers: false}}));
 
 testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
