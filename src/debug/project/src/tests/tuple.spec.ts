@@ -46,5 +46,13 @@ testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec,
 export type TupleTypeSpec = TupleClassSpec | TupleInterfaceSpec;
 
 testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, ['TupleTypeSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+
+
+// --------------------------------------------   Tuples of tuples   --------------------------------------------------
+
+// TODO
+export type TupleTuplesSpec = ['string', ['string', 'number']];
+
+// testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleTuplesSpec`, 'TupleTuplesSpec',['a', ['b', 2]], {isolate: true}));
