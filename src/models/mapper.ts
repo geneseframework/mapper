@@ -29,10 +29,7 @@ import {
 import { TargetService } from '../services/target.service';
 import { MapTrivialCasesService } from '../services/map-trivial-cases.service';
 import { IncompatibilityService } from '../services/incompatibility.service';
-import * as chalk from 'chalk';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { ClassDeclaration } from 'ts-morph';
-import { CONFIG } from '../const/config.const';
 import { OptionsService } from '../services/options.service';
 
 

@@ -14,10 +14,6 @@ export class MapTupleService<T> {
 
 
     static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
-        if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
-            // TODO : remove this condition : obsolete with incompatibilities tests
-            return undefined;
-        }
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {

@@ -21,16 +21,13 @@ export class IncompatibilityService {
         if (TargetService.areStringAndNumberButNotDifferentiateThem(target, data, options)) {
             return false;
         }
-        if (this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
+        return this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
             || this.targetIsBooleanAndDataNot(target, data)
             || this.targetIsNumberAndDataNot(target, data)
             || this.targetIsConstructorAndDataIsArray(target, data)
-            || this.targetIsArrayAndDataIsIncompatible(target, data, options)) {
-            return true;
-        } else if (this.isClassOrInterfaceIncompatibleWithPrimitive(target) && isArray(data)) {
-            return true;
-        }
-        return false;
+            || this.targetIsTupleAndDataIsIncompatible(target, data)
+            || this.targetIsArrayAndDataIsIncompatible(target, data, options)
+            || this.isNotPrimitiveClassOrInterfaceAndDataIsArray(target, data);
     }
 
 
@@ -59,13 +56,18 @@ export class IncompatibilityService {
     }
 
 
+    private static targetIsTupleAndDataIsIncompatible(target: Target<any>, data: any): boolean {
+        return TargetService.isTuple(target) && (!isArray(data) || data.length !== (target as any[]).length);
+    }
+
+
     private static isIncompatibleWithPrimitive(target: Target<any>, data: PrimitiveElement): boolean {
         if (this.isCompatibleDate(target, data)) {
             return false;
         }
         return this.isPrimitiveConstructorNotCorrespondingToDataType(target, data)
             || this.isPrimitiveNameNotCorrespondingToDataType(target, data)
-            || this.isClassOrInterfaceIncompatibleWithPrimitive(target);
+            || this.isNotPrimitiveClassOrInterface(target);
     }
 
 
@@ -84,7 +86,11 @@ export class IncompatibilityService {
     }
 
 
-    private static isClassOrInterfaceIncompatibleWithPrimitive<T>(target: Target<T>): boolean {
+    private static isNotPrimitiveClassOrInterfaceAndDataIsArray(target: Target<any>, data: PrimitiveElement): boolean {
+        return this.isNotPrimitiveClassOrInterface(target) && isArray(data);
+    }
+
+    private static isNotPrimitiveClassOrInterface<T>(target: Target<T>): boolean {
         if (TargetService.isConstructorNotPrimitive(target)) {
             return true;
         } else {
