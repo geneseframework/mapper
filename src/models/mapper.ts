@@ -1,19 +1,8 @@
 import { TConstructor } from '../types/t-constructor.type';
 import { InitService } from '../services/init.service';
-import { MapInstanceService } from '../services/map-instance.service';
-import { FlagService } from '../services/flag.service';
-import { GLOBAL } from '../const/global.const';
 import { Target } from '../types/target.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
-import { MapTypeService } from '../services/map-type.service';
-import { MapEnumService } from '../services/map-enum.service';
-import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
-import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInterfaceService } from '../services/map-interface.service';
-import { MapTupleService } from '../services/map-tuple.service';
 import { Tuple } from '../types/tuple.type';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { TargetInfo } from '../types/target-info.type';
 import { throwWarning } from '../utils/errors.util';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
@@ -26,11 +15,8 @@ import {
     NotString,
     ObjectNotArray
 } from '../types/not-some-type.type';
-import { TargetService } from '../services/target.service';
-import { MapTrivialCasesService } from '../services/map-trivial-cases.service';
-import { IncompatibilityService } from '../services/incompatibility.service';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { OptionsService } from '../services/options.service';
+import { MainService } from '../services/main.service';
 
 
 export class Mapper<T> {
@@ -107,48 +93,11 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         try {
-            await this.init();
-            if (!OptionsService.wasInitialized(options)) {
-                options = OptionsService.initialize(options);
-            }
-            if (IncompatibilityService.areIncompatible(target, data, options)) {
-                return undefined;
-            } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
-                return MapTrivialCasesService.mapTrivialCase(target, data, options);
-            } else if (TargetService.isTuple(target)) {
-                return MapTupleService.create(data as any[], target as Tuple, options);
-            } else {
-                return this.mapDeclaration(target, data, options);
-            }
+            await InitService.start();
+            return await MainService.map(target, data, options);
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
         }
     }
 
-
-    private static async init<T>(): Promise<void> {
-        if (GLOBAL.isFirstMapper) {
-            await InitService.start();
-            await FlagService.init();
-        }
-    }
-
-
-    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Date | Tuple> {
-        const info: TargetInfo = TargetService.getInfo(target);
-        const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
-        switch (getDeclarationKind(typeDeclaration)) {
-            case TypeDeclarationKind.CLASS_DECLARATION:
-                return MapInstanceService.createInstances<T>(data, info.typeName, options);
-            case TypeDeclarationKind.ENUM_DECLARATION:
-                return MapEnumService.createEnums(data, info.typeName, info.isArray);
-            case TypeDeclarationKind.INTERFACE_DECLARATION:
-                return MapInterfaceService.createInterfaces(data, info.typeName, info.isArray, options);
-            case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                return MapTypeService.createTypes(data, info.typeName, info.isArray, options);
-            default:
-                throwWarning(`Warning : type declaration "${info.typeName}" not found.`);
-                return undefined;
-        }
-    }
 }

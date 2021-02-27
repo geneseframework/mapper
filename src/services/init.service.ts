@@ -1,12 +1,21 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InitConfigService } from './init-config.service';
+import { FlagService } from './flag.service';
 
 const appRoot = require('app-root-path');
 
 export class InitService {
 
-    static async start(): Promise<void> {
+    static async start<T>(): Promise<void> {
+        if (GLOBAL.isFirstMapper) {
+            await this.init();
+            await FlagService.init();
+        }
+    }
+
+
+    private static async init(): Promise<void> {
         if (GLOBAL.isAlreadyInitialized) {
             return;
         }
