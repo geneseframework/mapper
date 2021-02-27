@@ -13,7 +13,6 @@ import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type
 import { isValidDateConstructor } from '../utils/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import * as chalk from 'chalk';
 
 export class IncompatibilityService {
 

@@ -1,6 +1,7 @@
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import { castStringAndNumbers } from '../utils/primitives.util';
 
 export class MapPrimitiveService {
 
@@ -35,7 +36,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
-        return this.haveSameType(data, typeName, options) ? data : undefined;
+        return this.haveSameType(data, typeName, options) ? castStringAndNumbers(typeName, data) : undefined;
     }
 
 
