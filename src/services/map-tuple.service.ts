@@ -13,8 +13,9 @@ import { CreateOptions } from '../interfaces/create-options.interface';
 export class MapTupleService<T> {
 
 
-    static async create(data: any[], mapParameterTuple: Tuple): Promise<Tuple> {
+    static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
         if (!Array.isArray(data) || data?.length !== mapParameterTuple?.length) {
+            // TODO : remove this condition : obsolete with incompatibilities tests
             return undefined;
         }
         const tuple: any[] = [];
@@ -22,8 +23,8 @@ export class MapTupleService<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i]);
-                if (mappedElement) {
+                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
+                if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {
                     return undefined;

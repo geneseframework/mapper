@@ -11,6 +11,9 @@ export async function startTests(logPassed: boolean) {
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.its, logPassed);
+    if (!logPassed) {
+        logFailedTests();
+    }
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
 }
@@ -25,5 +28,12 @@ async function getTests(specFiles: string[]): Promise<void> {
     for (const specFile of specFiles) {
         const file: any = await require(specFile);
         TESTS.its.push(...file?.testMappers);
+    }
+}
+
+
+function logFailedTests(): void {
+    for (const failed of TESTS.failed) {
+        console.log(chalk.redBright('=> '), failed);
     }
 }

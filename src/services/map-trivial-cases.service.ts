@@ -18,6 +18,9 @@ export class MapTrivialCasesService {
 
     static isTrivialCase<T>(target: Target<T>, data: any): boolean {
         const info: TargetInfo = TargetService.getInfo(target);
+        if (TargetService.isTuple(target)) {
+            return false;
+        }
         return isNullOrUndefined(data)
             || TargetService.isObjectOrObjectsArray(target)
             || isPrimitiveOrPrimitivesArray(info.typeName)
@@ -29,7 +32,8 @@ export class MapTrivialCasesService {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
-            return MapTupleService.create(data, target as Tuple);
+            console.log(chalk.redBright('SHOULD NEVER ENTER HERRRE'), target, data);
+            return MapTupleService.create(data, target as Tuple, options);
         }
         const info: TargetInfo = TargetService.getInfo(target);
         if (TargetService.isObjectOrObjectsArray(target)) {
