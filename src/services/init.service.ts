@@ -1,6 +1,5 @@
 import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
-import { CONFIG } from '../const/config.const';
 import { InitConfigService } from './init-config.service';
 
 const appRoot = require('app-root-path');

@@ -22,7 +22,7 @@ export async function ensureDirAndCopy(source: string, target: string): Promise<
 }
 
 
-export async function requireFile(filePath: string): Promise<object> {
+export async function requireJsonFile(filePath: string): Promise<object> {
     try {
         return await fs.pathExists(filePath) ? await fs.readJson(filePath) : undefined;
     } catch (err) {

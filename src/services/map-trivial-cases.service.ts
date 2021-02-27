@@ -19,7 +19,6 @@ export class MapTrivialCasesService {
     static isTrivialCase<T>(target: Target<T>, data: any): boolean {
         const info: TargetInfo = TargetService.getInfo(target);
         if (TargetService.isTuple(target)) {
-            console.log(chalk.blueBright('IS TUPLLLLL'), target, TargetService.isTuple(target));
             return false;
         }
         return isNullOrUndefined(data)
@@ -30,7 +29,6 @@ export class MapTrivialCasesService {
 
 
     static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
-        console.log(chalk.cyanBright('MAP TRIBIALLLL'), target, data);
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {

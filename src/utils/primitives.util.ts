@@ -32,7 +32,6 @@ function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: Primiti
 export function isPrimitiveOrPrimitivesArray(typeNode: TypeNode): boolean
 export function isPrimitiveOrPrimitivesArray(typeName: string): boolean
 export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode): boolean {
-   console.log(chalk.blueBright('IS PRIMMMM ARRR'), typeNameOrNode);
     if (typeof typeNameOrNode === 'string') {
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {

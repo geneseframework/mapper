@@ -1,31 +1,40 @@
 import { CONFIG } from '../const/config.const';
 import { Config } from '../models/config.model';
-import { requireFile } from '../utils/file-system.util';
+import { requireJsonFile } from '../utils/file-system.util';
 import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
-import { Mapper } from '../models/mapper';
 
 export class InitConfigService {
 
 
     static async initConfig(): Promise<void> {
         const jsonConfig: Config = await this.getJsonConfig();
-        Object.assign(CONFIG, jsonConfig);
-        console.log(chalk.greenBright('CONFIGGGGG'), CONFIG);
+        this.setConfig(jsonConfig);
+        console.log(chalk.magentaBright('CONFIGGGGG'), CONFIG);
     }
 
 
-    private static async getJsonConfig(): Promise<Config> {
+    private static async getJsonConfig(): Promise<object> {
         const path: string = `${GLOBAL.projectPath}/geneseconfig.json`;
-        return this.parseConfig(await requireFile(path));
+        return await requireJsonFile(path);
     }
 
 
-    private static async parseConfig(jsonConfigObject: any): Promise<Config> {
-        if (!jsonConfigObject?.mapper) {
-            return undefined;
+    private static setConfig(jsonConfigObject: any): void {
+        if (jsonConfigObject?.mapper) {
+            if (jsonConfigObject.mapper.create?.hasOwnProperty('differentiateStringsAndNumbers')) {
+                CONFIG.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create.differentiateStringsAndNumbers !== false;
+            }
         }
-        return undefined;
-        // return await Mapper.create(Config, jsonConfigObject.mapper);
+    // CONFIG.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create?.hasOwnProperty('differentiateStringsAndNumbers') ? jsonConfigObject.mapper.create.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
+    //     const config: Config = {
+    //         create: {}
+    //     };
+    //     if (!jsonConfigObject.mapper.create) {
+    //         config.create = CONFIG.create;
+    //     } else {
+    //         config.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create.hasOwnProperty('differentiateStringsAndNumbers') ? jsonConfigObject.mapper.create.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
+    //     }
+    //     return undefined;
     }
 }

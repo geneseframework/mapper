@@ -112,17 +112,13 @@ export class Mapper<T> {
         try {
             await this.init();
             if (!OptionsService.wasInitialized(options)) {
-                options = OptionsService.initialize(options);
+                options = await OptionsService.initialize(options);
             }
-            console.log(chalk.redBright('INCOMPPPPP ????'), target, data, options);
             if (IncompatibilityService.areIncompatible(target, data, options)) {
-                console.log(chalk.redBright('INCOMPPPPP'), target, data, options);
                 return undefined;
             } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
-                console.log(chalk.yellowBright('MAP DECLLLLL'), target, data);
                 return MapTrivialCasesService.mapTrivialCase(target, data, options);
             } else if (TargetService.isTuple(target)) {
-                console.log(chalk.greenBright('SHOULD ENTER HERRRE'), target, data);
                 return MapTupleService.create(data as any[], target as Tuple, options);
             } else {
                 return this.mapDeclaration(target, data, options);
@@ -142,12 +138,8 @@ export class Mapper<T> {
 
 
     private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Date | Tuple> {
-        // if (TargetService.isTuple(target)) {
-        //     return MapTupleService.create(data, target as Tuple, options);
-        // }
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
-        console.log(chalk.yellowBright('MAP DECLLLLL'), target, data, info, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return MapInstanceService.createInstances<T>(data, info.typeName, options);

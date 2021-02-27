@@ -1,7 +1,7 @@
 import { CreateOptions } from '../interfaces/create-options.interface';
 import 'reflect-metadata';
-import * as chalk from 'chalk';
 import { isObjectButNotArray } from '../utils/objects.util';
+import { InitConfigService } from './init-config.service';
 
 export class OptionsService {
 
@@ -10,15 +10,18 @@ export class OptionsService {
         if (!isObjectButNotArray(options)) {
             return false;
         }
-        console.log(chalk.magentaBright('WAS INITTTTT ?'), Reflect.hasMetadata('initialized', options));
         return Reflect.hasMetadata('initialized', options);
     }
 
-    static initialize(options: CreateOptions = {}): CreateOptions {
+    static async initialize(options: CreateOptions = {}): Promise<CreateOptions> {
         options.differentiateStringsAndNumbers = options.hasOwnProperty('differentiateStringsAndNumbers') ? options.differentiateStringsAndNumbers : true;
         Reflect.defineMetadata('initialized', true, options);
-        console.log(chalk.magentaBright('WAS INITTTTT !!!'), Reflect.getMetadata('initialized', options), options);
         return options;
+    }
+
+
+    private static getOption(name: string, options: CreateOptions): void {
+
     }
 
 }
