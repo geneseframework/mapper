@@ -47,6 +47,7 @@ export class MainService {
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('ghjg[jgjh]'), isTargetTuple('ghjg[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh, ghhf]'), isTargetTuple('[jgjh, ghhf]'));
         if (isTargetTuple(stringTarget)) {
+            await MapTupleService.create(stringTarget, data, options)
             // console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
         } else if (isTargetArray(stringTarget)) {
             // console.log(chalk.cyanBright('IS ARRAYYYYY '));
@@ -59,7 +60,7 @@ export class MainService {
         } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
             return MapTrivialCasesService.mapTrivialCase(target, data, options);
         } else if (TargetService.isTuple(target)) {
-            return MapTupleService.create(data as any[], target as Tuple, options);
+            // return MapTupleService.create(data as any[], target as Tuple, options);
         } else if (TargetService.isTypeCombination(target)) {
             await MapTypeCombinationService.create(target, data, options);
         } else {

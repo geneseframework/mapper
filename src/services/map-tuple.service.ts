@@ -9,26 +9,51 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { Tuple } from '../types/tuple.type';
 import { Mapper } from '../models/mapper';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import { TargetTuple } from '../types/target-tuple.type';
+import { isTupleOfSameLength } from '../utils/targets.util';
+import { throwWarning } from '../utils/errors.util';
 
 export class MapTupleService<T> {
 
 
-    static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
+    static async create(targetTuple: TargetTuple, data: any, options: CreateOptions): Promise<Tuple> {
+        if (!isTupleOfSameLength(targetTuple, data)) {
+            throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
+            return undefined;
+        }
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
-                if (mappedElement !== undefined) {
-                    tuple.push(mappedElement);
-                } else {
-                    return undefined;
-                }
+                // const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
+                // if (mappedElement !== undefined) {
+                //     tuple.push(mappedElement);
+                // } else {
+                //     return undefined;
+                // }
             }
         }
         return tuple.length > 0 ? tuple : undefined;
     }
+
+
+    // static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
+    //     const tuple: any[] = [];
+    //     for (let i = 0; i < data.length; i++) {
+    //         if (data[i] === null || data[i] === undefined) {
+    //             tuple.push(data[i]);
+    //         } else {
+    //             const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
+    //             if (mappedElement !== undefined) {
+    //                 tuple.push(mappedElement);
+    //             } else {
+    //                 return undefined;
+    //             }
+    //         }
+    //     }
+    //     return tuple.length > 0 ? tuple : undefined;
+    // }
 
 
     static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): void {
