@@ -10,13 +10,14 @@ import { MapTupleService } from './map-tuple.service';
 import { InitService } from './init.service';
 import { TargetInfo } from '../types/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration, isDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceService } from './map-instance.service';
 import { MapEnumService } from './map-enum.service';
 import { MapInterfaceService } from './map-interface.service';
 import { MapTypeService } from './map-type.service';
 import { throwWarning } from '../utils/errors.util';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -35,13 +36,20 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
+        const info: TargetInfo = TargetService.getInfo(target);
+        console.log(chalk.blueBright('INFOOOOO'), info);
         if (IncompatibilityService.areIncompatible(target, data, options)) {
             return undefined;
         } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
             return MapTrivialCasesService.mapTrivialCase(target, data, options);
         } else if (TargetService.isTuple(target)) {
             return MapTupleService.create(data as any[], target as Tuple, options);
+        } else if (TargetService.isTypeCombination(target)) {
+            console.log(chalk.yellowBright('TYPE COMBBINATION'), target, data);
+        // } else if (TargetService.isDeclaration(target)) {
+        //     return this.mapDeclaration(target, data, options);
         } else {
+            // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);
         }
     }

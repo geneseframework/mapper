@@ -18,6 +18,7 @@ import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declara
 import { Key } from '../types/key.type';
 import { isPrimitiveTypeNode } from './primitives.util';
 import { DateDeclaration } from '../models/date-declaration.model';
+import * as chalk from 'chalk';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -69,6 +70,15 @@ export function isDeclaration(typeName: string): boolean {
     || isEnumDeclaration(typeName)
     || isInterfaceDeclaration(typeName)
     || isTypeAliasDeclaration(typeName)
+}
+
+
+export function isTypeCombination(typeName: string): boolean {
+    if (typeName?.includes(' ')) {
+        console.log(chalk.magentaBright('TYPE COMBIIIIII'), typeName);
+        return true;
+    }
+    return undefined;
 }
 
 
