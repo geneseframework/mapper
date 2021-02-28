@@ -1,5 +1,6 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { StringOrStrings } from '../types/string-or-strings.type';
+import { Mapper } from '../../../../models/mapper';
 
 export type EmployerSpec = NgoSpec | NgoSpec[] | CompanySpec;
 export class NgoSpec {
@@ -109,3 +110,11 @@ testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneS
 export type CompanyAloneSpec = CompanySpec;
 testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
+
+
+// ---------------------------------------------   Union types   ----------------------------------------------------------
+
+async function z() {
+    const zzz: string = await Mapper.create('string | number', 'a');
+}
+// testMappers.push(new TestMapper(`'a' / string | number`, 'Stringgg | number', 'a', {isolate: true}));

@@ -1,17 +1,21 @@
 import { Target } from '../types/target.type';
 import { TargetInfo } from '../types/target-info.type';
-import { TConstructor } from '../types/t-constructor.type';
-import { Key } from '../types/key.type';
 import { Tuple } from '../types/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
+import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast-declaration.util';
+import { TargetElementService } from './target-element.service';
 
 export class TargetService {
 
 
-    static isArray<T>(target: Target<T>): boolean {
+    static isCorrect<T>(target: Target<T>): boolean {
+        return TargetElementService.hasCorrectElements(target);
+    }
+
+
+    static isArray(target: Target<any>): boolean {
         return TargetService.getInfo(target)?.isArray;
     }
 
@@ -23,6 +27,16 @@ export class TargetService {
 
     static isArrayButNotTuple<T>(target: any): boolean {
         return Array.isArray(target) && !this.isTuple(target);
+    }
+
+
+    static isDeclaration(target: Target<any>): boolean {
+        return (typeof target === 'string' && isDeclaration(target)) || (typeof target === 'function' && isDeclaration(target.name));
+    }
+
+
+    static isTypeCombination(target: Target<any>): boolean {
+        return typeof target === 'string' && isTypeCombination(target);
     }
 
 

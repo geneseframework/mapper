@@ -2,7 +2,6 @@ import { Target } from '../types/target.type';
 import {
     isPrimitiveConstructor,
     isPrimitiveOrArrayOfPrimitivesValue,
-    isPrimitiveTypeName,
     isPrimitiveValue
 } from '../utils/primitives.util';
 import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
@@ -13,6 +12,7 @@ import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type
 import { isValidDateConstructor } from '../utils/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import { isPrimitiveTypeName } from '../utils/types.util';
 
 /**
  * Checks if the data's format is compatible with the mapping's target
@@ -139,7 +139,7 @@ export class IncompatibilityService {
 
 
     private static isPrimitiveNameNotCorrespondingToDataType(target: Target<any>, data: PrimitiveElement): boolean {
-        return isPrimitiveTypeName(target) && typeof data !== target;
+        return typeof target === 'string' && isPrimitiveTypeName(target) && typeof data !== target;
     }
 
 
