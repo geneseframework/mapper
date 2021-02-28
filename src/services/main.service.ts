@@ -36,6 +36,9 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
+        if (!TargetService.isCorrect(target)) {
+            throwWarning(`Warning: wrong element in target`, target);
+        }
         const info: TargetInfo = TargetService.getInfo(target);
         console.log(chalk.blueBright('INFOOOOO'), info);
         if (IncompatibilityService.areIncompatible(target, data, options)) {
@@ -46,8 +49,6 @@ export class MainService {
             return MapTupleService.create(data as any[], target as Tuple, options);
         } else if (TargetService.isTypeCombination(target)) {
             console.log(chalk.yellowBright('TYPE COMBBINATION'), target, data);
-        // } else if (TargetService.isDeclaration(target)) {
-        //     return this.mapDeclaration(target, data, options);
         } else {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);

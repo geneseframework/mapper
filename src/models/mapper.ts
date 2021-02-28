@@ -1,5 +1,4 @@
 import { TConstructor } from '../types/t-constructor.type';
-import { InitService } from '../services/init.service';
 import { Target } from '../types/target.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
 import { Tuple } from '../types/tuple.type';
@@ -17,6 +16,8 @@ import {
 } from '../types/not-some-type.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { MainService } from '../services/main.service';
+import { UnionType } from '../types/union-type.type';
+import { CombinationType } from '../types/combination-type.type';
 
 /**
  * Maps some data in the target's format.
@@ -89,11 +90,15 @@ export class Mapper<T> {
     static async create<T>(target: Tuple, data: NotArray, options?: CreateOptions): Promise<unknown>
     static async create<T>(target: Tuple, data: any, options?: CreateOptions): Promise<Tuple | undefined>
 
+    // --------------------------------------   Type combinations overloads   ---------------------------------------------
+
+    static async create<T>(target: CombinationType, data: any, options?: CreateOptions): Promise<any>
+
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 
     static async create<T>(target: Target<T>, data: any[], options?: CreateOptions): Promise<T[]>
     static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
-    static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+    static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {
             return await MainService.map(target, data, options);
         } catch (err) {

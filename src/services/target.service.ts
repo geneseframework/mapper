@@ -7,8 +7,15 @@ import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast-declaration.util';
+import { TargetElement } from '../types/target-element.type';
+import { TargetElementService } from './target-element.service';
 
 export class TargetService {
+
+
+    static isCorrect<T>(target: Target<T>): boolean {
+        return TargetElementService.hasCorrectElements(target);
+    }
 
 
     static isArray(target: Target<any>): boolean {
