@@ -52,7 +52,7 @@ export class MapPropertyService<T> {
 
 
     private static async mapInterfaceProperty(target: any, key: string, dataValue: any, propertyType: string, options: CreateOptions): Promise<void> {
-        const newInterface: object = await MapInterfaceService.createInterfaces(dataValue, propertyType, false, options);
+        const newInterface: object = await MapInterfaceService.create(dataValue, propertyType, false, options);
         this.addDefaultValues(target, key, newInterface);
         if (newInterface) {
             target[key] = newInterface;

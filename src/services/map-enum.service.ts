@@ -7,9 +7,9 @@ import { newMappedElement } from '../utils/mapping.util';
 export class MapEnumService {
 
 
-    static async createEnums<T>(data: any[], enumName: string, isArray: boolean): Promise<T[]>
-    static async createEnums<T>(data: any, enumName: string, isArray: boolean): Promise<T>
-    static async createEnums<T>(data: any, enumName: string, isArray: boolean): Promise<T | T[]> {
+    static async create<T>(data: any[], enumName: string, isArray: boolean): Promise<T[]>
+    static async create<T>(data: any, enumName: string, isArray: boolean): Promise<T>
+    static async create<T>(data: any, enumName: string, isArray: boolean): Promise<T | T[]> {
         const enumDeclaration: EnumDeclaration = getTypeDeclaration(enumName) as EnumDeclaration;
         if (Array.isArray(data) && isArray) {
             return await this.createEnumsArray(data, enumDeclaration);

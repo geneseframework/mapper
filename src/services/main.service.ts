@@ -10,7 +10,7 @@ import { MapTupleService } from './map-tuple.service';
 import { InitService } from './init.service';
 import { TargetInfo } from '../types/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { getDeclarationKind, getTypeDeclaration, isDeclaration } from '../utils/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceService } from './map-instance.service';
 import { MapEnumService } from './map-enum.service';
@@ -18,6 +18,7 @@ import { MapInterfaceService } from './map-interface.service';
 import { MapTypeService } from './map-type.service';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
+import { MapTypeCombinationService } from './map-type-combination.service';
 
 export class MainService {
 
@@ -39,8 +40,6 @@ export class MainService {
         if (!TargetService.isCorrect(target)) {
             throwWarning(`Warning: wrong element in target`, target);
         }
-        const info: TargetInfo = TargetService.getInfo(target);
-        // console.log(chalk.blueBright('INFOOOOO'), info);
         if (IncompatibilityService.areIncompatible(target, data, options)) {
             return undefined;
         } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
@@ -48,7 +47,7 @@ export class MainService {
         } else if (TargetService.isTuple(target)) {
             return MapTupleService.create(data as any[], target as Tuple, options);
         } else if (TargetService.isTypeCombination(target)) {
-            // console.log(chalk.yellowBright('TYPE COMBBINATION'), target, data);
+            await MapTypeCombinationService.create(target, data, options);
         } else {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);
@@ -63,18 +62,18 @@ export class MainService {
      * @param options
      * @private
      */
-    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Date | Tuple> {
+    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | PrimitiveElement | Date | Tuple> {
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                return MapInstanceService.createInstances<T>(data, info.typeName, options);
+                return MapInstanceService.create<T>(data, info.typeName, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
-                return MapEnumService.createEnums(data, info.typeName, info.isArray);
+                return MapEnumService.create(data, info.typeName, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                return MapInterfaceService.createInterfaces(data, info.typeName, info.isArray, options);
+                return MapInterfaceService.create(data, info.typeName, info.isArray, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                return MapTypeService.createTypes(data, info.typeName, info.isArray, options);
+                return MapTypeService.create(data, info.typeName, info.isArray, options);
             default:
                 throwWarning(`Warning : type declaration "${info.typeName}" not found.`);
                 return undefined;

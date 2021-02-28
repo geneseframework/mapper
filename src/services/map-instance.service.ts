@@ -12,9 +12,9 @@ import { CreateOptions } from '../interfaces/create-options.interface';
 export class MapInstanceService<T> {
 
 
-    static async createInstances<T>(data: any[], className: string, options: CreateOptions): Promise<T[] | string[] | number[] | boolean[]>
-    static async createInstances<T>(data: any, className: string, options: CreateOptions): Promise<T>
-    static async createInstances<T>(data: any, className: string, options: CreateOptions): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
+    static async create<T>(data: any[], className: string, options: CreateOptions): Promise<T[] | string[] | number[] | boolean[]>
+    static async create<T>(data: any, className: string, options: CreateOptions): Promise<T>
+    static async create<T>(data: any, className: string, options: CreateOptions): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         return Array.isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, options, className) : await this.createInstance<T>(data, className, classDeclaration, options);
     }

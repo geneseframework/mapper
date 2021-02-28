@@ -12,9 +12,9 @@ import * as chalk from 'chalk';
 export class MapInterfaceService {
 
 
-    static async createInterfaces<T>(data: any[], interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T[] | Date[]>
-    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | Date>
-    static async createInterfaces<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | T[] | Date | Date[]> {
+    static async create<T>(data: any[], interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T[] | Date[]>
+    static async create<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | Date>
+    static async create<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | T[] | Date | Date[]> {
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
         if (!interfaceDeclaration) {
             throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);

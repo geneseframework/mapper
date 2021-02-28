@@ -15,7 +15,7 @@ import {
     primitiveLiteralValue
 } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveType } from '../types/primitives.type';
+import { PrimitiveElement, PrimitiveType } from '../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
 import { getApparentType } from '../utils/ast-types.util';
@@ -28,13 +28,14 @@ import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
 import { IncompatibilityService } from './incompatibility.service';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import { Tuple } from '../types/tuple.type';
 
 export class MapTypeService {
 
 
-    static async createTypes<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
-    static async createTypes<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
-    static async createTypes<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
+    static async create<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
+    static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
+    static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
         if (Array.isArray(data) && isArray) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
