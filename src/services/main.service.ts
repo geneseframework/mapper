@@ -19,7 +19,7 @@ import { MapTypeService } from './map-type.service';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
 import { MapTypeCombinationService } from './map-type-combination.service';
-import { isTargetArray, isTargetTuple } from '../utils/targets.util';
+import { isTargetArray, isTargetTuple, tupleLength } from '../utils/targets.util';
 
 export class MainService {
 
@@ -46,9 +46,9 @@ export class MainService {
         console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh]'), isTargetTuple('[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('ghjg[jgjh]'), isTargetTuple('ghjg[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh, ghhf]'), isTargetTuple('[jgjh, ghhf]'));
-        // if (isTargetTuple(stringTarget)) {
-            // console.log(chalk.magentaBright('TUPLE LENGTHHHH'), tupleLength(stringTarget));
-        // }
+        if (isTargetTuple(stringTarget)) {
+            console.log(chalk.magentaBright('TUPLE LENGTHHHH'), tupleLength(stringTarget));
+        }
         if (!TargetService.isCorrect(target)) {
             throwWarning(`Warning: wrong element in target`, target);
         }
