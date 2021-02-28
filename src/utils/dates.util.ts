@@ -13,8 +13,3 @@ export function isValidDateConstructor(d: any): boolean {
 export function isValidDate(d: any): boolean {
     return Object.prototype.toString.call(d) === "[object Date]" ? !isNaN(d.getTime()) : false;
 }
-
-
-export function isDateTypeName(typeName: string): boolean {
-    return typeName === 'date';
-}

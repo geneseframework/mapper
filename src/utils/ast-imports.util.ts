@@ -3,7 +3,7 @@ import { GLOBAL } from '../const/global.const';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getTypeDeclaration } from './ast-declaration.util';
 import { throwWarning } from './errors.util';
-import { isPrimitiveTypeName } from './primitives.util';
+import { isPrimitiveTypeName } from './types.util';
 
 // TODO: Fix case of properties with type which is Union Type
 export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {

@@ -8,11 +8,11 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { isEnumValue } from '../utils/ast-enums.util';
 import { isEmptyArray } from '../utils/arrays.util';
 import { PrimitiveType } from '../types/primitives.type';
-import { isPrimitiveValueWithCorrectType, isPrimitiveTypeName } from '../utils/primitives.util';
+import { isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
 import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
+import { isPrimitiveTypeName } from '../utils/types.util';
 
 export class MapArrayService<T> {
 

@@ -74,11 +74,7 @@ export function isDeclaration(typeName: string): boolean {
 
 
 export function isTypeCombination(typeName: string): boolean {
-    if (typeName?.includes(' ')) {
-        console.log(chalk.magentaBright('TYPE COMBIIIIII'), typeName);
-        return true;
-    }
-    return undefined;
+    return typeName?.includes(' ');
 }
 
 

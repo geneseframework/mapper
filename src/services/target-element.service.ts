@@ -1,9 +1,10 @@
 import { TargetElement } from '../types/target-element.type';
 import { throwWarning } from '../utils/errors.util';
-import { isPrimitiveConstructor, isPrimitiveTypeName } from '../utils/primitives.util';
+import { isPrimitiveConstructor } from '../utils/primitives.util';
 import * as chalk from 'chalk';
-import { isDateTypeName } from '../utils/dates.util';
 import { isDeclaration } from '../utils/ast-declaration.util';
+import { isFunction } from '../utils/any.util';
+import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/types.util';
 
 export class TargetElementService {
 
@@ -38,9 +39,12 @@ export class TargetElementService {
 
 
     private static isCorrectStringTarget(targetElement: string): boolean {
-       return isPrimitiveTypeName(targetElement?.toLowerCase())
-        || isDateTypeName(targetElement?.toLowerCase())
-        || isDeclaration(targetElement)
+        // console.log(chalk.blueBright('IS CORRRRR'), targetElement);
+        return isFunction(targetElement)
+            || isPrimitiveTypeName(targetElement)
+            || isDateTypeName(targetElement)
+            || isDeclaration(targetElement)
+            || isObjectTypeName(targetElement)
     }
 
 

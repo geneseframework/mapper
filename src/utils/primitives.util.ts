@@ -4,6 +4,7 @@ import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/prim
 import { LiteralNode } from '../types/literal-node.type';
 import { isArray } from './arrays.util';
 import { TargetService } from '../services/target.service';
+import { isPrimitiveTypeName } from './types.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -123,11 +124,6 @@ export function typeOfDataCorrespondsToPrimitiveKeyword(data: any, arrayTypeNode
         || (typeof data === 'number' && elementTypeNode?.getKind() === SyntaxKind.NumberKeyword)
         || (typeof data === 'boolean' && elementTypeNode?.getKind() === SyntaxKind.BooleanKeyword)
     );
-}
-
-
-export function isPrimitiveTypeName(type: any): boolean {
-    return typeof type === 'string' && primitiveTypes.includes(type);
 }
 
 

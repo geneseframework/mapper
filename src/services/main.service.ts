@@ -40,7 +40,7 @@ export class MainService {
             throwWarning(`Warning: wrong element in target`, target);
         }
         const info: TargetInfo = TargetService.getInfo(target);
-        console.log(chalk.blueBright('INFOOOOO'), info);
+        // console.log(chalk.blueBright('INFOOOOO'), info);
         if (IncompatibilityService.areIncompatible(target, data, options)) {
             return undefined;
         } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
@@ -48,7 +48,7 @@ export class MainService {
         } else if (TargetService.isTuple(target)) {
             return MapTupleService.create(data as any[], target as Tuple, options);
         } else if (TargetService.isTypeCombination(target)) {
-            console.log(chalk.yellowBright('TYPE COMBBINATION'), target, data);
+            // console.log(chalk.yellowBright('TYPE COMBBINATION'), target, data);
         } else {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);

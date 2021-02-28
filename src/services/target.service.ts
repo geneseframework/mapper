@@ -1,21 +1,16 @@
 import { Target } from '../types/target.type';
 import { TargetInfo } from '../types/target-info.type';
-import { TConstructor } from '../types/t-constructor.type';
-import { Key } from '../types/key.type';
 import { Tuple } from '../types/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast-declaration.util';
-import { TargetElement } from '../types/target-element.type';
 import { TargetElementService } from './target-element.service';
-import * as chalk from 'chalk';
 
 export class TargetService {
 
 
     static isCorrect<T>(target: Target<T>): boolean {
-        console.log(chalk.magentaBright('CORRECT ????'), TargetElementService.hasCorrectElements(target));
         return TargetElementService.hasCorrectElements(target);
     }
 
