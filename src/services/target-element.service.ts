@@ -1,9 +1,9 @@
-import { Target } from '../types/target.type';
 import { TargetElement } from '../types/target-element.type';
-import { isArray } from '../utils/arrays.util';
-import { isFunction } from '../utils/any.util';
 import { throwWarning } from '../utils/errors.util';
-import { isPrimitiveConstructor } from '../utils/primitives.util';
+import { isPrimitiveConstructor, isPrimitiveTypeName } from '../utils/primitives.util';
+import * as chalk from 'chalk';
+import { isDateTypeName } from '../utils/dates.util';
+import { isDeclaration } from '../utils/ast-declaration.util';
 
 export class TargetElementService {
 
@@ -18,17 +18,13 @@ export class TargetElementService {
 
 
     private static getTargetElements(targetElement: any): TargetElement[] | never {
-        const targetElements: TargetElement[] = [];
         if (typeof targetElement === 'string') {
             return this.splitStringTarget(targetElement);
         } else if (typeof targetElement === 'function' || isPrimitiveConstructor(targetElement)) {
             return [targetElement];
         }
         throwWarning(`Warning: unknown target element : `, targetElement);
-        // return targetElements;
     }
-
-    // private static getTargetElementsOfArray(target: any[]): TargetElement<any>[] {
 
 
     private static isCorrect(targetElement: unknown): boolean {
@@ -37,11 +33,18 @@ export class TargetElementService {
 
 
     private static splitStringTarget(target: string): string[] {
-        return [];
+        return this.cleanTarget(target).split(' ')
     }
 
 
     private static isCorrectStringTarget(targetElement: string): boolean {
-        return undefined;
+       return isPrimitiveTypeName(targetElement?.toLowerCase())
+        || isDateTypeName(targetElement?.toLowerCase())
+        || isDeclaration(targetElement)
+    }
+
+
+    private static cleanTarget(target: string): string {
+        return target.replace(/[()\]\[|&]/g, '').replace(/ +/, ' ');
     }
 }
