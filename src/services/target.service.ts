@@ -6,8 +6,23 @@ import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast-declaration.util';
 import { TargetElementService } from './target-element.service';
+import { TConstructor } from '../types/t-constructor.type';
+import { isArray } from '../utils/arrays.util';
+import { isFunction } from '../utils/any.util';
+import * as chalk from 'chalk';
 
 export class TargetService {
+
+    static toString<T>(target: Target<T>): string {
+        if (isArray(target)) {
+            return this.stringifyArray(target);
+        } else if (isFunction(target)) {
+            return target.name;
+        } else {
+            // console.log(chalk.blueBright('TYPE OFFFFFF'), typeof target);
+            return target;
+        }
+    }
 
 
     static isCorrect<T>(target: Target<T>): boolean {
@@ -15,13 +30,29 @@ export class TargetService {
     }
 
 
-    static isArray(target: Target<any>): boolean {
-        return TargetService.getInfo(target)?.isArray;
+    // static isArray(target: Target<any>): target is Array<any> {
+    //     return TargetService.getInfo(target)?.isArray;
+    // }
+
+
+    static isTuple(target: Target<any>): target is Tuple {
+        return Array.isArray(target) && target.length > 1;
     }
 
 
-    static isTuple(target: Target<any>) {
-        return Array.isArray(target) && target.length > 1;
+    // static isTuple(target: Target<any>): target is Tuple
+    // static isTuple(data: any): data is Tuple
+    // static isTuple(element: any): element is Tuple {
+    //     return Array.isArray(element) && element.length > 1;
+    // }
+
+
+    private static stringifyArray(tupleTarget: any[]): string {
+        let stringifiedTarget = '[';
+        for (const target of tupleTarget) {
+            stringifiedTarget = `${this.toString(target)}, `;
+        }
+        return `${stringifiedTarget.slice(0, -2)}]`;
     }
 
 
@@ -87,17 +118,17 @@ export class TargetService {
     }
 
 
-    static isConstructorNotPrimitive<T>(target: Target<T>): boolean {
+    static isConstructorNotPrimitive<T>(target: Target<T>): target is TConstructor<T> {
         return typeof target === 'function' && !isPrimitiveConstructor(target);
     }
 
 
-    static isObjectOrObjectsArray(target: Target<any>): boolean {
+    static isObjectOrObjectsArray(target: Target<any>): target is 'object' | 'object[]' {
         return this.isObject(target) || this.isObjectArray(target);
     }
 
 
-    private static isObject(target: Target<any>): boolean {
+    private static isObject(target: Target<any>): target is 'object' {
         if (target === Object) {
             return true;
         } else {

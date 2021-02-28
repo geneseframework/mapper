@@ -91,7 +91,7 @@ export class IncompatibilityService {
      * @private
      */
     private static targetIsArrayAndDataIsIncompatible(target: Target<any>, data: any, options: CreateOptions): boolean {
-        return TargetService.isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data, options);
+        return isArray(target) && this.isIncompatibleWithTargetArray(target as any[], data, options);
     }
 
 

@@ -46,7 +46,7 @@ export function isEmptyArray(data: any): boolean {
 }
 
 
-export function isArray(data: any): boolean {
+export function isArray(data: any): data is Array<any> {
     return Array.isArray(data);
 }
 

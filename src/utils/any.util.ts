@@ -23,6 +23,6 @@ export function isAnyArray(typeName: string): boolean {
 }
 
 
-export function isFunction(element: any): boolean {
+export function isFunction(element: any): element is Function {
     return typeof element === 'function';
 }

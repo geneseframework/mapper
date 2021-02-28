@@ -43,8 +43,8 @@ export function getDeclarationKind(typeDeclaration: TypeDeclaration): TypeDeclar
 
 
 export function getTypeDeclaration(typeName: string): TypeDeclaration {
-    const declarationEnum: TypeDeclarationKind = declarationKind(typeName);
-    switch (declarationEnum) {
+    const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
+    switch (typeDeclarationKind) {
         case TypeDeclarationKind.CLASS_DECLARATION:
             return getDeclaration(typeName, getDescendantClasses);
         case TypeDeclarationKind.ENUM_DECLARATION:

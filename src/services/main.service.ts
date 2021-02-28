@@ -37,6 +37,8 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
+        const stringTarget: string = TargetService.toString(target);
+        console.log(chalk.magentaBright('STRING TARGTTTTTT'), stringTarget);
         if (!TargetService.isCorrect(target)) {
             throwWarning(`Warning: wrong element in target`, target);
         }
@@ -52,7 +54,30 @@ export class MainService {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);
         }
+        // return undefined;
     }
+
+    // static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+    //     await InitService.start();
+    //     if (!OptionsService.wasInitialized(options)) {
+    //         options = OptionsService.initialize(options);
+    //     }
+    //     if (!TargetService.isCorrect(target)) {
+    //         throwWarning(`Warning: wrong element in target`, target);
+    //     }
+    //     if (IncompatibilityService.areIncompatible(target, data, options)) {
+    //         return undefined;
+    //     } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
+    //         return MapTrivialCasesService.mapTrivialCase(target, data, options);
+    //     } else if (TargetService.isTuple(target)) {
+    //         return MapTupleService.create(data as any[], target as Tuple, options);
+    //     } else if (TargetService.isTypeCombination(target)) {
+    //         await MapTypeCombinationService.create(target, data, options);
+    //     } else {
+    //         // throwWarning(`Warning: type of target not found :`, target)
+    //         return this.mapDeclaration(target, data, options);
+    //     }
+    // }
 
 
     /**
