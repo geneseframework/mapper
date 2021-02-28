@@ -19,7 +19,6 @@ export class TargetService {
         } else if (isFunction(target)) {
             return target.name;
         } else {
-            // console.log(chalk.blueBright('TYPE OFFFFFF'), typeof target);
             return target;
         }
     }
@@ -28,11 +27,6 @@ export class TargetService {
     static isCorrect<T>(target: Target<T>): boolean {
         return TargetElementService.hasCorrectElements(target);
     }
-
-
-    // static isArray(target: Target<any>): target is Array<any> {
-    //     return TargetService.getInfo(target)?.isArray;
-    // }
 
 
     static isTuple(target: Target<any>): target is Tuple {
