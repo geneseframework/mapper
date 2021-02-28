@@ -35,7 +35,7 @@ export class MainService {
      */
     static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
         await InitService.start();
-        console.log(chalk.yellowBright('STRING TARGTTTTTT'));
+        // console.log(chalk.yellowBright('STRING TARGTTTTTT'));
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
@@ -43,11 +43,13 @@ export class MainService {
         // console.log(chalk.magentaBright('STRING TARGTTTTTT'), stringTarget);
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetTuple('[jgjh]'));
-        console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh]'), isTargetTuple('[jgjh]'));
+        // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh]'), isTargetTuple('[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('ghjg[jgjh]'), isTargetTuple('ghjg[jgjh]'));
         // console.log(chalk.magentaBright('IS TARGTTTTTT ARR'), isTargetArray('[jgjh, ghhf]'), isTargetTuple('[jgjh, ghhf]'));
         if (isTargetTuple(stringTarget)) {
-            console.log(chalk.magentaBright('TUPLE LENGTHHHH'), tupleLength(stringTarget));
+            // console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
+        } else if (isTargetArray(stringTarget)) {
+            // console.log(chalk.cyanBright('IS ARRAYYYYY '));
         }
         if (!TargetService.isCorrect(target)) {
             throwWarning(`Warning: wrong element in target`, target);

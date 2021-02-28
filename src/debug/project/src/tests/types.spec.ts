@@ -118,4 +118,4 @@ async function z() {
     const zzz: string = await Mapper.create('string | number', 'a');
 }
 // testMappers.push(new TestMapper(`'a' / string | number`, 'String | number', 'a', {isolate: true}));
-testMappers.push(new TestMapper(`'a' / string | number`, '[String, number]', 'a', {isolate: true}));
+// testMappers.push(new TestMapper(`'a' / string | number`, '[String, number]', 'a', {isolate: true}));
