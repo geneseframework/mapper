@@ -40,7 +40,7 @@ export class IncompatibilityService {
 
 
     /**
-     * Returns true if data is a primitive and target is incompatible with primitives, false if not
+     * Returns true if data is a primitive and if target is incompatible with primitives, false if not
      * @param target
      * @param data
      * @private
