@@ -6,9 +6,12 @@ import { flat } from '../utils/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
 
-export class FlagService {
+export class InstanceGeneratorService {
 
-    static async init(): Promise<void> {
+    /**
+     * Starts the creation of the Instance Generator file
+     */
+    static async start(): Promise<void> {
         GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
         this.setInstanceGenerators();
         await this.createInstanceGeneratorFile();
@@ -16,6 +19,10 @@ export class FlagService {
     }
 
 
+    /**
+     * Adds instance generator for each exported class of the Project of the user
+     * @private
+     */
     private static setInstanceGenerators(): void {
         const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
         const classNames: string[] = []
@@ -28,11 +35,20 @@ export class FlagService {
     }
 
 
+    /**
+     * Returns true if a class may be instantiated (no private constructor and not abstract)
+     * @param classDeclaration
+     * @private
+     */
     private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
         return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
     }
 
 
+    /**
+     * Creates the Instance Generator file
+     * @private
+     */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
         GLOBAL.instanceGeneratorSourceFile = GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true});
@@ -41,6 +57,10 @@ export class FlagService {
     }
 
 
+    /**
+     * Sets the code of the Instance Generator file, without the generators themselves
+     * @private
+     */
     private static getInstanceGeneratorCode(): string {
         return `const generateInstance = async function(instanceGenerator) {\n` +
             `${tab}try {\n` +
@@ -56,7 +76,10 @@ export class FlagService {
     }
 
 
-
+    /**
+     * Sets the generators for each exported class and saves the file.
+     * @private
+     */
     private static async setGlobalGenerateInstance(): Promise<void> {
         const switchStatement: SwitchStatement = GLOBAL.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
         let switchCode = `switch (instanceGenerator.id) {\n`;
@@ -78,11 +101,21 @@ export class FlagService {
     }
 
 
+    /**
+     * Returns the code of a line importing on runtime the file corresponding to a given class
+     * @param instanceGenerator
+     * @private
+     */
     private static importsCode(instanceGenerator: InstanceGenerator<any>): string {
         return `const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
     }
 
 
+    /**
+     * Returns the code of the switch case corresponding to a given instance generator
+     * @param instanceGenerator
+     * @private
+     */
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `case '${instanceGenerator.id}':\n` +
         `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
@@ -91,6 +124,13 @@ export class FlagService {
     }
 
 
+    /**
+     * Returns the code corresponding to the parameters of the constructor of a given class
+     * Each parameter is replaced by "undefined"
+     * => Each instance will be created with the default values of the corresponding class
+     * @param instanceGenerator
+     * @private
+     */
     private static undefinedArguments(instanceGenerator: InstanceGenerator<any>): string {
         let code: string = '(';
         if (instanceGenerator.numberOfConstructorArguments > 0) {
