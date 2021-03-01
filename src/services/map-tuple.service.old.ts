@@ -19,7 +19,7 @@ export class MapTupleServiceOld<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
+                const mappedElement: any = await Mapper.createOld(mapParameterTuple[i], data[i], options); // TODO: Error ?
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {
