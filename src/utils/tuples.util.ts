@@ -4,6 +4,7 @@ import { Tuple } from '../types/tuples/tuple.type';
 import { isStartingContainer, StartingContainer } from '../types/tuples/starting-container.type';
 import { Containerized } from '../types/tuples/container.type';
 import { throwWarning } from './errors.util';
+import * as chalk from 'chalk';
 
 
 export function isTuple(typeName: string): typeName is Tuple {
@@ -37,9 +38,14 @@ function getContainerizedElements(text: Containerized): string[] {
 }
 
 
-function getElements(text: string): string[] {
+export function getElements(text: string): string[] {
+    if (!text || text.length === 0) {
+        return [];
+    }
     const cleanedText: string = removeLeftCommasAndSpaces(text);
+    console.log(chalk.magentaBright('GET ELTTTTS'), cleanedText, isStartingContainer(cleanedText));
     let firstElement: string = isStartingContainer(cleanedText) ? getFirstContainerizedElement(cleanedText) : getBasicElement(cleanedText);
+    console.log(chalk.cyanBright('GET NEXT POSSS'), firstElement, getNextElementPosition(cleanedText, firstElement));
     const nextElementPosition: number = getNextElementPosition(cleanedText, firstElement);
     const otherElements: string = cleanedText.slice(nextElementPosition);
     return [firstElement].concat(getElements(otherElements));
@@ -47,7 +53,7 @@ function getElements(text: string): string[] {
 
 
 function removeLeftCommasAndSpaces(text: string): string {
-    return text.replace(/^(,| )/g, '');
+    return text.replace(/^(,| )/g, '').replace(/(,| )$/g, '');
 }
 
 
@@ -65,7 +71,7 @@ function getNextElementPosition(text: string, firstElement: string): number {
 function getFirstContainerizedElement(text: StartingContainer): Containerized {
     const openingChar: string = text[0];
     const closingChar: string = openingChar === '(' ? ')' : ']';
-    let nbParenthesis = 1;
+    let nbParenthesis = 0;
     let element = '';
     for (let i = 0; i < text.length; i++) {
         if (text[i] === openingChar) {
@@ -76,7 +82,8 @@ function getFirstContainerizedElement(text: StartingContainer): Containerized {
         }
         element = `${element}${text[i]}`;
         if (nbParenthesis === 0) {
-            return element as Containerized;
+            console.log(chalk.blueBright('ELTTTT'), element);
+            return element.slice(1, -1) as Containerized;
         }
     }
     if (nbParenthesis > 0) {

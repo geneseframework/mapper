@@ -10,7 +10,8 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     await InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.its, logPassed, old);
+    await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
+    // await expect(TESTS.its, logPassed, old);
     if (!logPassed) {
         logFailedTests();
     }
@@ -27,7 +28,8 @@ function isSpecFile(path: string): boolean {
 async function getTests(specFiles: string[]): Promise<void> {
     for (const specFile of specFiles) {
         const file: any = await require(specFile);
-        TESTS.its.push(...file?.testMappers);
+        TESTS.its.push(...file?.its);
+        TESTS.testMappers.push(...file?.testMappers);
     }
 }
 

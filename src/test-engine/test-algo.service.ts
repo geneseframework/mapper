@@ -3,26 +3,32 @@ import * as chalk from 'chalk';
 import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
 import { isSameObject } from '../utils/is-same-object.util';
+import { isTestIt, TestType } from './test-type.type';
+import { isArray } from '../utils/arrays.util';
 
-export async function expect(testMappers: TestMapper[], logPassed: boolean, old: boolean): Promise<void>
-export async function expect(testMapper: TestMapper, logPassed: boolean, old: boolean): Promise<void>
-export async function expect(testMappers: TestMapper | TestMapper[], logPassed: boolean, old: boolean): Promise<void> {
-    if (Array.isArray(testMappers)) {
-        for (const testMapper of includedTestMappers(testMappers)) {
-            await expectMapper(testMapper, logPassed, old);
+export async function expect(testTypes: TestType[], logPassed: boolean, old: boolean): Promise<void>
+export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>
+export async function expect(testTypes: TestType | TestType[], logPassed: boolean, old: boolean): Promise<void> {
+    if (isArray(testTypes)) {
+        for (const testMapper of includedTestTypes(testTypes)) {
+            await checkTest(testMapper, logPassed, old);
         }
     } else {
-        await expectMapper(testMappers, logPassed, old);
+        await checkTest(testTypes, logPassed, old);
     }
 }
 
 
-async function expectMapper(testMapper: TestMapper, logPassed: boolean, old: boolean): Promise<void> {
+async function checkTest(testMapper: TestType, logPassed: boolean, old: boolean): Promise<void> {
     let result;
-    if (old) {
-        result = await Mapper.createOld(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+    if (isTestIt(testMapper)) {
+        result = testMapper.response;
     } else {
-        result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+        if (old) {
+            result = await Mapper.createOld(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+        } else {
+            result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+        }
     }
     if (isExpectedResult(testMapper, result) ) {
         if (logPassed) {
@@ -41,27 +47,22 @@ async function expectMapper(testMapper: TestMapper, logPassed: boolean, old: boo
 }
 
 
-function includedTestMappers(testMappers: TestMapper[]): TestMapper[] {
-    const includedMappers: TestMapper[] = testMappers.filter(t => t.options?.isolate === true);
-    return includedMappers.length > 0 ? includedMappers : testMappers;
+function includedTestTypes(testTypes: TestType[]): TestType[] {
+    const includedMappers: TestType[] = testTypes.filter(t => t.options?.isolate === true);
+    return includedMappers.length > 0 ? includedMappers : testTypes;
 }
 
 
-function isExpectedResult(testMapper: TestMapper, result: any): boolean {
-    const shouldFail: boolean = testMapper.options?.shouldFail;
-    const objectToCompare: any = testMapper.options?.hasOwnProperty('expectedValue') ? testMapper.options.expectedValue : testMapper?.data;
-    if (isSameObject(result, objectToCompare)) {
-        return !shouldFail;
-    } else {
-        return shouldFail;
-    }
+function isExpectedResult(testType: TestType, result: any): boolean {
+    const objectToCompare: any = testType.options?.hasOwnProperty('expectedValue') ? testType.options.expectedValue : testType?.data;
+    return isSameObject(result, objectToCompare);
 }
 
 
-function log(testMapper: TestMapper, result: any): void {
-    console.log(chalk.blueBright('data : '), testMapper.data);
+function log(testType: TestType, result: any): void {
+    console.log(chalk.blueBright('data : '), testType.data);
     console.log(chalk.blueBright('response : '), result);
-    if (testMapper.options?.hasOwnProperty('expectedValue')) {
-        console.log(chalk.blueBright('expected value : '), testMapper.options.expectedValue);
+    if (testType.options?.hasOwnProperty('expectedValue')) {
+        console.log(chalk.blueBright('expected value : '), testType.options.expectedValue);
     }
 }

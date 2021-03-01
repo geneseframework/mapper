@@ -42,7 +42,7 @@ function getNotExportedDeclarations(typeName: string): TypeDeclaration {
 
 
 /**
- * Returns the path of the import of a property with its apparent type
+ * Returns the path of the import of a property with testMappers apparent type
  * @param apparentType
  * @private
  */
