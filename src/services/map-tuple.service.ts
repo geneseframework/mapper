@@ -6,19 +6,20 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { Tuple } from '../types/tuples/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 import { Mapper } from '../models/mapper';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { TargetTuple } from '../types/target/target-tuple.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { findTupleElement, isTupleOfSameLength } from '../utils/targets.util';
 import { throwIncompatibility, throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
+import { tupleLength } from '../utils/tuples.util';
 
 export class MapTupleService<T> {
 
 
-    static async create(targetTuple: TargetTuple, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.yellowBright('TUPLE DATA IIIII'),targetTuple, data);
+    static async create(targetTuple: Tuple, data: any, options: CreateOptions): Promise<any[]> {
+        console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
         if (!isTupleOfSameLength(targetTuple, data)) {
             throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
@@ -43,7 +44,7 @@ export class MapTupleService<T> {
     }
 
 
-    static async createOld(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
+    static async createOld(data: any[], mapParameterTuple: TupleOld, options: CreateOptions): Promise<TupleOld> {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {
