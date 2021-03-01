@@ -3,7 +3,7 @@ import * as chalk from 'chalk';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { castStringAndNumbers } from '../utils/primitives.util';
 import { StringString } from '../types/tuples/string-string.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { AnyAny } from '../types/tuples/any-any.type';
 import { data, isTupleStringString } from '../utils/tuples.util';
 import { PrimitiveAny } from '../types/tuples/primitive-any.type';

@@ -1,7 +1,7 @@
 import { TConstructor } from '../types/t-constructor.type';
 import { Target } from '../types/target/target.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
@@ -15,10 +15,9 @@ import {
     ObjectNotArray
 } from '../types/not-some-type.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { MainServiceOld } from '../services/main.service.old';
+import { MainService } from '../services/main.service';
 import { UnionType } from '../types/union-type.type';
 import { CombinationType } from '../types/combination-type.type';
-import { MainService } from '../services/main.service';
 
 /**
  * Maps some data in the target's format.
@@ -87,9 +86,9 @@ export class Mapper<T> {
 
     // -------------------------------------------   Tuples overloads   ---------------------------------------------------
 
-    static async create<T>(target: TupleOld, data: any[], options?: CreateOptions): Promise<TupleOld>
-    static async create<T>(target: TupleOld, data: NotArray, options?: CreateOptions): Promise<unknown>
-    static async create<T>(target: TupleOld, data: any, options?: CreateOptions): Promise<TupleOld | undefined>
+    static async create<T>(target: Tuple, data: any[], options?: CreateOptions): Promise<Tuple>
+    static async create<T>(target: Tuple, data: NotArray, options?: CreateOptions): Promise<unknown>
+    static async create<T>(target: Tuple, data: any, options?: CreateOptions): Promise<Tuple | undefined>
 
     // --------------------------------------   Type combinations overloads   ---------------------------------------------
 
@@ -98,19 +97,10 @@ export class Mapper<T> {
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 
     static async create<T>(target: Target<T>, data: any[], options?: CreateOptions): Promise<T[]>
-    static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]>
+    static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {
             return await MainService.map(target, data, options);
-        } catch (err) {
-            throwWarning('Mapping failed : an unknown error occurred.', err)
-        }
-    }
-
-
-    static async createOld<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
-        try {
-            return await MainServiceOld.map(target, data, options);
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
         }

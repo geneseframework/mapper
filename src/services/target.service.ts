@@ -1,6 +1,6 @@
 import { Target } from '../types/target/target.type';
 import { TargetInfo } from '../types/target/target-info.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
@@ -29,14 +29,14 @@ export class TargetService {
     }
 
 
-    static isTuple(target: Target<any>): target is TupleOld {
+    static isTuple(target: Target<any>): target is Tuple {
         return Array.isArray(target) && target.length > 1;
     }
 
 
-    // static isTuple(target: Target<any>): target is TupleOld
-    // static isTuple(data: any): data is TupleOld
-    // static isTuple(element: any): element is TupleOld {
+    // static isTuple(target: Target<any>): target is Tuple
+    // static isTuple(data: any): data is Tuple
+    // static isTuple(element: any): element is Tuple {
     //     return Array.isArray(element) && element.length > 1;
     // }
 

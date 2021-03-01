@@ -1,1 +1,3 @@
-export type Tuple = `[${string}, ${string}]`;
+import { Target } from '../target/target.type';
+
+export type Tuple = Target<any>[];

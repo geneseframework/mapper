@@ -6,20 +6,20 @@ import { InstanceGenerator } from '../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { Mapper } from '../models/mapper';
 import { CreateOptions } from '../interfaces/create-options.interface';
 
 export class MapTupleServiceOld<T> {
 
 
-    static async create(data: any[], mapParameterTuple: TupleOld, options: CreateOptions): Promise<TupleOld> {
+    static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.createOld(mapParameterTuple[i], data[i], options); // TODO: Error ?
+                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {
