@@ -4,7 +4,7 @@ import { isNullOrUndefined } from '../utils/any.util';
 import { isPrimitiveOrPrimitivesArray } from '../utils/primitives.util';
 import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
-import { Tuple } from '../types/tuples/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
@@ -28,12 +28,12 @@ export class MapTrivialCasesService {
     }
 
 
-    static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | Promise<Tuple> | Date | Date[] | object | object[] {
+    static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | Promise<TupleOld> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
             console.log(chalk.redBright('SHOULD NEVER ENTER HERRRE'), target, data);
-            return MapTupleServiceOld.create(data, target as Tuple, options);
+            return MapTupleServiceOld.create(data, target as TupleOld, options);
         }
         const info: TargetInfo = TargetService.getInfo(target);
         if (TargetService.isObjectOrObjectsArray(target)) {

@@ -1,7 +1,7 @@
 import { Target } from '../types/target/target.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
-import { Tuple } from '../types/tuples/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { IncompatibilityService } from './incompatibility.service';
 import { MapTrivialCasesService } from './map-trivial-cases.service';
@@ -31,7 +31,7 @@ export class MainServiceOld {
      * @param data
      * @param options
      */
-    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]> {
+    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
@@ -44,7 +44,7 @@ export class MainServiceOld {
         } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
             return MapTrivialCasesService.mapTrivialCase(target, data, options);
         } else if (TargetService.isTuple(target)) {
-            return MapTupleServiceOld.create(data as any[], target as Tuple, options);
+            return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
         } else if (TargetService.isTypeCombination(target)) {
             await MapTypeCombinationService.create(target, data, options);
         } else {
@@ -61,7 +61,7 @@ export class MainServiceOld {
      * @param options
      * @private
      */
-    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | PrimitiveElement | Date | Tuple> {
+    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | PrimitiveElement | Date | TupleOld> {
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {

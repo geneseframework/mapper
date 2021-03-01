@@ -28,7 +28,7 @@ import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
 import { IncompatibilityService } from './incompatibility.service';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { Tuple } from '../types/tuples/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 
 export class MapTypeService {
 
