@@ -37,7 +37,7 @@ export interface TupleInterfaceSpec {
 }
 
 testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, ['TupleInterfaceSpec', 'TupleInterfaceSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, ['TupleInterfaceSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, ['TupleInterfaceSpec', 'string'],[{name: 'Léa'}, 'Blue'], {isolate: true}));
 
 
 // --------------------------------------------   Tuples of types   --------------------------------------------------
