@@ -15,7 +15,7 @@ import {
     ObjectNotArray
 } from '../types/not-some-type.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { MainService } from '../services/main.service';
+import { MainServiceOld } from '../services/main.service.old';
 import { UnionType } from '../types/union-type.type';
 import { CombinationType } from '../types/combination-type.type';
 
@@ -100,7 +100,7 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | Tuple | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {
-            return await MainService.map(target, data, options);
+            return await MainServiceOld.map(target, data, options);
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
         }
