@@ -2,7 +2,7 @@ import { StringString } from '../types/tuples/string-string.type';
 import { AnyAny } from '../types/tuples/any-any.type';
 import { Tuple } from '../types/tuples/tuple.type';
 import { isStartingContainer, StartingContainer } from '../types/tuples/starting-container.type';
-import { Containerized } from '../types/tuples/container.type';
+import { Containerized, isContainerized } from '../types/tuples/container.type';
 import { throwWarning } from './errors.util';
 import * as chalk from 'chalk';
 
@@ -42,18 +42,27 @@ export function getElements(text: string): string[] {
     if (!text || text.length === 0) {
         return [];
     }
-    const cleanedText: string = removeLeftCommasAndSpaces(text);
-    console.log(chalk.magentaBright('GET ELTTTTS'), cleanedText, isStartingContainer(cleanedText));
-    let firstElement: string = isStartingContainer(cleanedText) ? getFirstContainerizedElement(cleanedText) : getBasicElement(cleanedText);
-    console.log(chalk.cyanBright('GET NEXT POSSS'), firstElement, getNextElementPosition(cleanedText, firstElement));
-    const nextElementPosition: number = getNextElementPosition(cleanedText, firstElement);
-    const otherElements: string = cleanedText.slice(nextElementPosition);
-    return [firstElement].concat(getElements(otherElements));
+    const cleanedText: string = cleanExtremities(text);
+    const elements = isContainerized(cleanedText) ? cleanedText.slice(1, -1) : cleanedText;
+    console.log(chalk.magentaBright('GET ELTTTTS'), text, elements, isStartingContainer(elements));
+    let firstElement: string = isStartingContainer(elements) ? getFirstContainerizedElement(elements) : getBasicElement(elements);
+    console.log(chalk.cyanBright('GET NEXT POSSS'), firstElement, getNextElementPosition(elements, firstElement));
+    const nextElements: string = getNextElements(elements, firstElement);
+    return [firstElement].concat(getElements(nextElements));
 }
 
 
-function removeLeftCommasAndSpaces(text: string): string {
+function cleanExtremities(text: string): string {
     return text.replace(/^(,| )/g, '').replace(/(,| )$/g, '');
+}
+
+
+function getNextElements(text: string, firstElement: string): string {
+    const nextElementPosition: number = getNextElementPosition(text, firstElement);
+    const otherElements: string = text.slice(nextElementPosition);
+    console.log(chalk.blueBright('GET NXTTTTTT'), text, firstElement, nextElementPosition, otherElements);
+    return otherElements;
+
 }
 
 
@@ -63,7 +72,7 @@ function getBasicElement(text: string): string {
 
 
 function getNextElementPosition(text: string, firstElement: string): number {
-    const otherElements: string = removeLeftCommasAndSpaces(text.slice(firstElement.length));
+    const otherElements: string = cleanExtremities(text.slice(firstElement.length));
     return text.length - otherElements.length;
 }
 
