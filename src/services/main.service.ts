@@ -15,11 +15,11 @@ import { MapInterfaceService } from './map-interface.service';
 import { MapTypeService } from './map-type.service';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
-import { isTargetArray, isTargetTuple } from '../utils/targets.util';
+import { isTargetArray } from '../utils/targets.util';
 import { isPrimitiveTypeName } from '../utils/types.util';
 import { MapPrimitiveService } from './map-primitive.service';
 import { MapTupleService } from './map-tuple.service';
-import { tupleLength } from '../utils/tuples.util';
+import { isTuple, tupleLength } from '../utils/tuples.util';
 
 export class MainService {
 
@@ -39,8 +39,8 @@ export class MainService {
             options = OptionsService.initialize(options);
         }
         const stringTarget: string = TargetService.toString(target);
-        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
-        if (isTargetTuple(stringTarget)) {
+        // console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
+        if (isTuple(stringTarget)) {
             console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
             return await MapTupleService.create(stringTarget, data, options)
         } else if (isTargetArray(stringTarget)) {
@@ -49,7 +49,7 @@ export class MainService {
             return MapPrimitiveService.create([stringTarget, data], options);
 
         }
-        console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
+        // console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
         return undefined;
     }
 

@@ -19,7 +19,7 @@ export class TargetService {
         } else if (isFunction(target)) {
             return target.name;
         } else {
-            return target;
+            return target?.toLowerCase();
         }
     }
 

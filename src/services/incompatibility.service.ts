@@ -107,7 +107,7 @@ export class IncompatibilityService {
 
 
     /**
-     * Returns true if data is a primitive and target is incompatible with its type, false if not
+     * Returns true if data is a primitive and target is incompatible with testMappers type, false if not
      * @param target
      * @param data
      * @private

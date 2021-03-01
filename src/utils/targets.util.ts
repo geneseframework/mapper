@@ -1,16 +1,11 @@
-import { TargetArray } from '../types/target/target-array.type';
+import { Bracketed } from '../types/tuples/brackets.type';
 import { Tuple } from '../types/tuples/tuple.type';
 import * as chalk from 'chalk';
 import { isArray } from './arrays.util';
 import { tupleLength } from './tuples.util';
 
-export function isTargetArray(target: string): target is TargetArray {
+export function isTargetArray(target: string): target is Bracketed {
     return /^\[.*\]$/g.test(target);
-}
-
-
-export function isTargetTuple(target: string): target is Tuple {
-    return /^\[.*, .*\]$/g.test(target);
 }
 
 
