@@ -53,13 +53,14 @@ function includedTestTypes(testTypes: TestType[]): TestType[] {
 
 
 function isExpectedResult(testType: TestType, result: any): boolean {
+    console.log(chalk.redBright('?????'), testType, isTestIt(testType), result);
     const objectToCompare: any = isTestIt(testType) ? testType.expected : testType.options.expectedValue;
     return isSameObject(result, objectToCompare);
 }
 
 
 function log(testType: TestType, result: any): void {
-    console.log(chalk.blueBright('data : '), testType.data);
+    console.log(chalk.blueBright('expected : '), isTestIt(testType) ? testType.expected : testType.data);
     console.log(chalk.blueBright('response : '), result);
     if (testType.options?.hasOwnProperty('expectedValue')) {
         console.log(chalk.blueBright('expected value : '), testType.options.expectedValue);

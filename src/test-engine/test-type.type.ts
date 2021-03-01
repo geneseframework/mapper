@@ -5,5 +5,5 @@ export type TestType = TestIt | TestMapper;
 
 
 export function isTestIt(testType: TestType): testType is TestIt {
-    return testType.hasOwnProperty('response');
+    return testType.hasOwnProperty('expected');
 }

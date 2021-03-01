@@ -39,7 +39,8 @@ function getContainerizedElements(text: Containerized): string[] {
 
 
 export function getElements(text: string): string[] {
-    if (!text || text.length === 0) {
+    console.log(chalk.blueBright('GET LTTTTS'), text);
+    if (!text || typeof text !== 'string' || text.length === 0) {
         return [];
     }
     const cleanedText: string = cleanExtremities(text);
