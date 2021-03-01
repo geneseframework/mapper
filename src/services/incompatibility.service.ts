@@ -1,4 +1,4 @@
-import { Target } from '../types/target.type';
+import { Target } from '../types/target/target.type';
 import {
     isPrimitiveConstructor,
     isPrimitiveOrArrayOfPrimitivesValue,
@@ -6,7 +6,7 @@ import {
 } from '../utils/primitives.util';
 import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
 import { isArray } from '../utils/arrays.util';
-import { Tuple } from '../types/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 import { TargetService } from './target.service';
 import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type';
 import { isValidDateConstructor } from '../utils/dates.util';
@@ -96,7 +96,7 @@ export class IncompatibilityService {
 
 
     /**
-     * Returns true if target is a Tuple and if data is incompatible with Tuples, false if not
+     * Returns true if target is a TupleOld and if data is incompatible with Tuples, false if not
      * @param target
      * @param data
      * @private
@@ -167,7 +167,7 @@ export class IncompatibilityService {
     }
 
 
-    private static isIncompatibleWithTuple(target: Tuple, data: any, options: CreateOptions): boolean {
+    private static isIncompatibleWithTuple(target: TupleOld, data: any, options: CreateOptions): boolean {
         if (!isArray(data) || data?.length !== target.length) {
             return false;
         } else {

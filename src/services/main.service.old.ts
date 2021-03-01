@@ -3,7 +3,10 @@ import { CreateOptions } from '../interfaces/create-options.interface';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
+import { IncompatibilityService } from './incompatibility.service';
+import { MapTrivialCasesService } from './map-trivial-cases.service';
 import { TargetService } from './target.service';
+import { MapTupleServiceOld } from './map-tuple.service.old';
 import { InitService } from './init.service';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
@@ -14,14 +17,9 @@ import { MapEnumService } from './map-enum.service';
 import { MapInterfaceService } from './map-interface.service';
 import { MapTypeService } from './map-type.service';
 import { throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
-import { isTargetArray, isTargetTuple } from '../utils/targets.util';
-import { isPrimitiveTypeName } from '../utils/types.util';
-import { MapPrimitiveService } from './map-primitive.service';
-import { MapTupleService } from './map-tuple.service';
-import { tupleLength } from '../utils/tuples.util';
+import { MapTypeCombinationService } from './map-type-combination.service';
 
-export class MainService {
+export class MainServiceOld {
 
     /**
      * Returns the data formatted with the target's model
@@ -38,42 +36,22 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        const stringTarget: string = TargetService.toString(target);
-        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
-        if (isTargetTuple(stringTarget)) {
-            console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
-            return await MapTupleService.create(stringTarget, data, options)
-        } else if (isTargetArray(stringTarget)) {
-            // console.log(chalk.cyanBright('IS ARRAYYYYY '));
-        } else if (isPrimitiveTypeName(stringTarget)) {
-            return MapPrimitiveService.create([stringTarget, data], options);
-
+        if (!TargetService.isCorrect(target)) {
+            throwWarning(`Warning: wrong element in target`, target);
         }
-        console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
-        return undefined;
+        if (IncompatibilityService.areIncompatible(target, data, options)) {
+            return undefined;
+        } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
+            return MapTrivialCasesService.mapTrivialCase(target, data, options);
+        } else if (TargetService.isTuple(target)) {
+            return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
+        } else if (TargetService.isTypeCombination(target)) {
+            await MapTypeCombinationService.create(target, data, options);
+        } else {
+            // throwWarning(`Warning: type of target not found :`, target)
+            return this.mapDeclaration(target, data, options);
+        }
     }
-
-    // static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-    //     await InitService.start();
-    //     if (!OptionsService.wasInitialized(options)) {
-    //         options = OptionsService.initialize(options);
-    //     }
-    //     if (!TargetService.isCorrect(target)) {
-    //         throwWarning(`Warning: wrong element in target`, target);
-    //     }
-    //     if (IncompatibilityService.areIncompatible(target, data, options)) {
-    //         return undefined;
-    //     } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
-    //         return MapTrivialCasesService.mapTrivialCase(target, data, options);
-    //     } else if (TargetService.isTuple(target)) {
-    //         return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
-    //     } else if (TargetService.isTypeCombination(target)) {
-    //         await MapTypeCombinationService.create(target, data, options);
-    //     } else {
-    //         // throwWarning(`Warning: type of target not found :`, target)
-    //         return this.mapDeclaration(target, data, options);
-    //     }
-    // }
 
 
     /**

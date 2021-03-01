@@ -1,5 +1,5 @@
 import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
-import { MapTupleService } from './map-tuple.service';
+import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../utils/ast-imports.util';
 import { PropertyKind } from '../enums/property-kind.enum';
@@ -28,7 +28,7 @@ export class MapPropertyService<T> {
                 await MapArrayService.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.TUPLE:
-                MapTupleService.map(target, key, dataValue, propertyType, apparentType, options);
+                MapTupleServiceOld.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.INTERFACE:
                 await this.mapInterfaceProperty(target, key, dataValue, propertyType, options);

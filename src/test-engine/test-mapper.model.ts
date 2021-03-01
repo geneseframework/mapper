@@ -1,5 +1,5 @@
 import { TestMapperOptions } from './test-mapper-options.interface';
-import { Target } from '../types/target.type';
+import { Target } from '../types/target/target.type';
 
 export class TestMapper {
 

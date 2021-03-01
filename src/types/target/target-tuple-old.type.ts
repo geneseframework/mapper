@@ -1,3 +1,3 @@
 import { Target } from './target.type';
 
-export type Tuple = Target<any>[];
+export type TupleOld = Target<any>[];

@@ -8,39 +8,22 @@ import { AnyAny } from '../types/tuples/any-any.type';
 import { data, isTupleStringString } from '../utils/tuples.util';
 import { PrimitiveAny } from '../types/tuples/primitive-any.type';
 
-export class MapPrimitiveService {
+export class MapPrimitiveServiceOld {
 
 
-    static create(targetData: StringString, options: CreateOptions): string
-    static create(targetData: PrimitiveAny, options: CreateOptions): PrimitiveElement
-    static create(targetData: PrimitiveAny, options: CreateOptions): PrimitiveElement {
-        if (isTupleStringString(targetData)) {
-            return data(targetData);
+    static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
+    static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement
+    static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
+        if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
+            return undefined;
         }
-        // if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
-        //     return undefined;
-        // }
-        // if (Array.isArray(data)) {
-        //     return this.createArrayElements(data, typeName, options);
-        // } else {
-        //     return this.createElement(data, typeName, options);
-        // }
-        return undefined;
+        if (Array.isArray(data)) {
+            return this.createArrayElements(data, typeName, options);
+        } else {
+            return this.createElement(data, typeName, options);
+        }
     }
 
-// static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
-//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement
-//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | undefined {
-//         if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
-//             return undefined;
-//         }
-//         if (Array.isArray(data)) {
-//             return this.createArrayElements(data, typeName, options);
-//         } else {
-//             return this.createElement(data, typeName, options);
-//         }
-//     }
-//
 
     private static createArrayElements(data: any[], typeName: PrimitiveType, options: CreateOptions): ArrayOfPrimitiveElements {
         const primitiveElementsArray = [];

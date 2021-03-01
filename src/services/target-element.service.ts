@@ -1,4 +1,4 @@
-import { TargetElement } from '../types/target-element.type';
+import { TargetElement } from '../types/target/target-element.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import * as chalk from 'chalk';

@@ -7,7 +7,7 @@ import {
     TypeReferenceNode,
     UnionTypeNode
 } from 'ts-morph';
-import { MapPrimitiveService } from './map-primitive.service';
+import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import {
     isPrimitiveTypeNode,
     isPrimitiveOrPrimitivesArray,
@@ -28,7 +28,7 @@ import { isNullOrUndefined } from '../utils/any.util';
 import { Key } from '../types/key.type';
 import { IncompatibilityService } from './incompatibility.service';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { Tuple } from '../types/tuple.type';
+import { TupleOld } from '../types/target/target-tuple-old.type';
 
 export class MapTypeService {
 
@@ -121,7 +121,7 @@ export class MapTypeService {
 
     private static mapLiteralType(target: any, key: Key, dataValue: any, literalType: LiteralTypeNode, options: CreateOptions): void {
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
-            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false, options);
+            target[key] = MapPrimitiveServiceOld.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false, options);
             return;
         }
     }
@@ -138,7 +138,7 @@ export class MapTypeService {
 
     private static async mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode, options: CreateOptions): Promise<void> {
         if (isPrimitiveOrPrimitivesArray(arrayTypeNode.getText())) {
-            target[key] = MapPrimitiveService.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true, options);
+            target[key] = MapPrimitiveServiceOld.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true, options);
             return;
         }
         await MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode), options);
@@ -146,7 +146,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: Key, dataValue: any, primitiveKeyword: TypeNode, options: CreateOptions): void {
-        target[key] = MapPrimitiveService.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false, options);
+        target[key] = MapPrimitiveServiceOld.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false, options);
     }
 
 }
