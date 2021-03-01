@@ -11,7 +11,6 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
-    // await expect(TESTS.its, logPassed, old);
     if (!logPassed) {
         logFailedTests();
     }

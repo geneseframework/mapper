@@ -39,7 +39,7 @@ export class MainService {
             options = OptionsService.initialize(options);
         }
         const stringTarget: string = TargetService.toString(target);
-        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
+        // console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
         if (isTuple(stringTarget)) {
             console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
             return await MapTupleService.create(stringTarget, data, options)
@@ -49,7 +49,7 @@ export class MainService {
             return MapPrimitiveService.create([stringTarget, data], options);
 
         }
-        console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
+        // console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
         return undefined;
     }
 

@@ -1,6 +1,5 @@
 import { Mapper } from '../models/mapper';
 import * as chalk from 'chalk';
-import { TestMapper } from './test-mapper.model';
 import { TESTS } from './tests.const';
 import { isSameObject } from '../utils/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
@@ -10,7 +9,6 @@ export async function expect(testTypes: TestType[], logPassed: boolean, old: boo
 export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>
 export async function expect(testTypes: TestType | TestType[], logPassed: boolean, old: boolean): Promise<void> {
     if (isArray(testTypes)) {
-        console.log(chalk.redBright('hereeeee'));
         for (const testMapper of includedTestTypes(testTypes)) {
             await checkTest(testMapper, logPassed, old);
         }
@@ -50,7 +48,6 @@ async function checkTest(testType: TestType, logPassed: boolean, old: boolean): 
 
 function includedTestTypes(testTypes: TestType[]): TestType[] {
     const includedMappers: TestType[] = testTypes.filter(t => t.options?.isolate === true);
-    console.log(chalk.yellowBright('INCLUDEDDDDD'), includedMappers);
     return includedMappers.length > 0 ? includedMappers : testTypes;
 }
 
