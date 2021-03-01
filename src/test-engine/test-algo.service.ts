@@ -10,6 +10,7 @@ export async function expect(testTypes: TestType[], logPassed: boolean, old: boo
 export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>
 export async function expect(testTypes: TestType | TestType[], logPassed: boolean, old: boolean): Promise<void> {
     if (isArray(testTypes)) {
+        console.log(chalk.redBright('hereeeee'));
         for (const testMapper of includedTestTypes(testTypes)) {
             await checkTest(testMapper, logPassed, old);
         }
@@ -19,42 +20,43 @@ export async function expect(testTypes: TestType | TestType[], logPassed: boolea
 }
 
 
-async function checkTest(testMapper: TestType, logPassed: boolean, old: boolean): Promise<void> {
+async function checkTest(testType: TestType, logPassed: boolean, old: boolean): Promise<void> {
     let result;
-    if (isTestIt(testMapper)) {
-        result = testMapper.response;
+    if (isTestIt(testType)) {
+        result = testType.method(testType.data);
     } else {
         if (old) {
-            result = await Mapper.createOld(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+            result = await Mapper.createOld(testType.mapParameter, testType.data, testType.options?.createOptions);
         } else {
-            result = await Mapper.create(testMapper.mapParameter, testMapper.data, testMapper.options?.createOptions);
+            result = await Mapper.create(testType.mapParameter, testType.data, testType.options?.createOptions);
         }
     }
-    if (isExpectedResult(testMapper, result) ) {
+    if (isExpectedResult(testType, result) ) {
         if (logPassed) {
-            console.log(chalk.greenBright('Test passed : '), testMapper.title);
+            console.log(chalk.greenBright('Test passed : '), testType.title);
         }
         TESTS.testsPassed++;
-        if (testMapper.options?.log) {
-           log(testMapper, result);
+        if (testType.options?.log) {
+           log(testType, result);
         }
     } else {
-        console.log(chalk.redBright('Test failed : '), testMapper.title);
+        console.log(chalk.redBright('Test failed : '), testType.title);
         TESTS.testsFailed++;
-        TESTS.failed.push(testMapper.title);
-        log(testMapper, result);
+        TESTS.failed.push(testType.title);
+        log(testType, result);
     }
 }
 
 
 function includedTestTypes(testTypes: TestType[]): TestType[] {
     const includedMappers: TestType[] = testTypes.filter(t => t.options?.isolate === true);
+    console.log(chalk.yellowBright('INCLUDEDDDDD'), includedMappers);
     return includedMappers.length > 0 ? includedMappers : testTypes;
 }
 
 
 function isExpectedResult(testType: TestType, result: any): boolean {
-    const objectToCompare: any = testType.options?.hasOwnProperty('expectedValue') ? testType.options.expectedValue : testType?.data;
+    const objectToCompare: any = isTestIt(testType) ? testType.expected : testType.options.expectedValue;
     return isSameObject(result, objectToCompare);
 }
 

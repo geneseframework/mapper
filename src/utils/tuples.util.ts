@@ -3,7 +3,7 @@ import { AnyAny } from '../types/tuples/any-any.type';
 import { Tuple } from '../types/tuples/tuple.type';
 import { isStartingContainer, StartingContainer } from '../types/tuples/starting-container.type';
 import { Containerized, isContainerized } from '../types/tuples/container.type';
-import { throwWarning } from './errors.util';
+import { throwError, throwWarning } from './errors.util';
 import * as chalk from 'chalk';
 
 
@@ -52,12 +52,35 @@ export function getElements(text: string): string[] {
 }
 
 
+function getNextElements(text: string, firstElement: string): string {
+    const nextElementPosition: number = getNextElementPosition(text, firstElement);
+    const otherElements: string = text.slice(nextElementPosition);
+    console.log(chalk.greenBright('GET NXTTTTTT'), text, firstElement, nextElementPosition, otherElements);
+    return otherElements;
+
+}
+
+
 function cleanExtremities(text: string): string {
     return text.replace(/^(,| )/g, '').replace(/(,| )$/g, '');
 }
 
 
-function getNextElements(text: string, firstElement: string): string {
+export function getFlattenElements(text: string): string[] {
+    if (!text || text.length === 0) {
+        return [];
+    }
+    const cleanedText: string = cleanExtremities(text);
+    const elements = isContainerized(cleanedText) ? cleanedText.slice(1, -1) : cleanedText;
+    console.log(chalk.magentaBright('GET ELTTTTS'), text, elements, isStartingContainer(elements));
+    let firstElement: string = isStartingContainer(elements) ? getFirstContainerizedElement(elements) : getBasicElement(elements);
+    console.log(chalk.cyanBright('GET NEXT POSSS'), firstElement, getNextElementPosition(elements, firstElement));
+    const nextElements: string = getNextFlattenElements(elements, firstElement);
+    return [firstElement].concat(getElements(nextElements));
+}
+
+
+function getNextFlattenElements(text: string, firstElement: string): string {
     const nextElementPosition: number = getNextElementPosition(text, firstElement);
     const otherElements: string = text.slice(nextElementPosition);
     console.log(chalk.blueBright('GET NXTTTTTT'), text, firstElement, nextElementPosition, otherElements);
@@ -96,8 +119,7 @@ function getFirstContainerizedElement(text: StartingContainer): Containerized {
         }
     }
     if (nbParenthesis > 0) {
-        throwWarning('Warning: wrong number of brackets or parenthesis for ', text);
-        return undefined;
+        throwError('Error: wrong number of brackets or parenthesis for ', text);
     } else {
         return element as Containerized;
     }

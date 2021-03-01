@@ -5,14 +5,16 @@ import { futimes } from 'fs';
 export class TestIt {
 
     data: any;
+    expected: any;
     title: string;
-    response: any;
+    method: Function;
     options?: TestMapperOptions;
 
-    constructor(title: string, response: any, data: any, options?: TestMapperOptions) {
+    constructor(title: string, method: Function, data: any, expected: any, options?: TestMapperOptions) {
         this.data = data;
+        this.expected = expected;
         this.title= title;
-        this.response = response;
+        this.method = method;
         this.options = options;
     }
 
