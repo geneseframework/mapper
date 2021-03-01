@@ -1,4 +1,4 @@
-import { TargetInfo } from '../types/target-info.type';
+import { TargetInfo } from '../types/target/target-info.type';
 import { isArray } from '../utils/arrays.util';
 import { haveArrayIncompatibility } from '../utils/incompatibility.util';
 import * as chalk from 'chalk';

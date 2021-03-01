@@ -1,6 +1,6 @@
-import { Target } from '../types/target.type';
-import { TargetInfo } from '../types/target-info.type';
-import { Tuple } from '../types/tuple.type';
+import { Target } from '../types/target/target.type';
+import { TargetInfo } from '../types/target/target-info.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
@@ -44,7 +44,7 @@ export class TargetService {
     private static stringifyArray(tupleTarget: any[]): string {
         let stringifiedTarget = '[';
         for (const target of tupleTarget) {
-            stringifiedTarget = `${this.toString(target)}, `;
+            stringifiedTarget = `${stringifiedTarget}${this.toString(target)}, `;
         }
         return `${stringifiedTarget.slice(0, -2)}]`;
     }

@@ -1,13 +1,13 @@
-import { Target } from '../types/target.type';
-import { TargetInfo } from '../types/target-info.type';
+import { Target } from '../types/target/target.type';
+import { TargetInfo } from '../types/target/target-info.type';
 import { isNullOrUndefined } from '../utils/any.util';
 import { isPrimitiveOrPrimitivesArray } from '../utils/primitives.util';
 import { isDateOrDatesArrayType } from '../utils/dates.util';
 import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
-import { Tuple } from '../types/tuple.type';
-import { MapTupleService } from './map-tuple.service';
+import { Tuple } from '../types/tuples/tuple.type';
+import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
-import { MapPrimitiveService } from './map-primitive.service';
+import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import { MapDateService } from './map-date.service';
 import { TargetService } from './target.service';
 import * as chalk from 'chalk';
@@ -33,13 +33,13 @@ export class MapTrivialCasesService {
             return data;
         } else if (TargetService.isTuple(target)) {
             console.log(chalk.redBright('SHOULD NEVER ENTER HERRRE'), target, data);
-            return MapTupleService.create(data, target as Tuple, options);
+            return MapTupleServiceOld.create(data, target as Tuple, options);
         }
         const info: TargetInfo = TargetService.getInfo(target);
         if (TargetService.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
-            return MapPrimitiveService.create(data, info.typeName as PrimitiveType, info.isArray, options);
+            return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveType, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {
             return MapDateService.createDates(data, info.isArray);
         }

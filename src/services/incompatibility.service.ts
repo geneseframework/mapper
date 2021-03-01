@@ -1,4 +1,4 @@
-import { Target } from '../types/target.type';
+import { Target } from '../types/target/target.type';
 import {
     isPrimitiveConstructor,
     isPrimitiveOrArrayOfPrimitivesValue,
@@ -6,7 +6,7 @@ import {
 } from '../utils/primitives.util';
 import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
 import { isArray } from '../utils/arrays.util';
-import { Tuple } from '../types/tuple.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { TargetService } from './target.service';
 import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type';
 import { isValidDateConstructor } from '../utils/dates.util';

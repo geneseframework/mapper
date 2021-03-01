@@ -9,41 +9,11 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { Tuple } from '../types/tuples/tuple.type';
 import { Mapper } from '../models/mapper';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { TargetTuple } from '../types/target/target-tuple.type';
-import { findTupleElement, isTupleOfSameLength } from '../utils/targets.util';
-import { throwIncompatibility, throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
 
-export class MapTupleService<T> {
+export class MapTupleServiceOld<T> {
 
 
-    static async create(targetTuple: TargetTuple, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.yellowBright('TUPLE DATA IIIII'),targetTuple, data);
-        if (!isTupleOfSameLength(targetTuple, data)) {
-            throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
-            return undefined;
-        }
-        const tuple: any[] = [];
-        for (let i = 0; i < data.length; i++) {
-            console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
-            if (data[i] === null || data[i] === undefined) {
-                tuple.push(data[i]);
-            } else {
-                console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
-                const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
-                if (mappedElement !== undefined) {
-                    tuple.push(mappedElement);
-                } else {
-                    throwIncompatibility(targetTuple, data);
-                    return undefined;
-                }
-            }
-        }
-        return tuple;
-    }
-
-
-    static async createOld(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
+    static async create(data: any[], mapParameterTuple: Tuple, options: CreateOptions): Promise<Tuple> {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {

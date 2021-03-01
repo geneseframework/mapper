@@ -1,20 +1,15 @@
-import { TargetArray } from '../types/target-array.type';
-import { TargetTuple } from '../types/target-tuple.type';
+import { TargetArray } from '../types/target/target-array.type';
+import { TargetTuple } from '../types/target/target-tuple.type';
 import * as chalk from 'chalk';
 import { isArray } from './arrays.util';
 
-// export function isTargetArray(target: string): boolean {
-//     return typeof target === 'string' && /^\[.*\]$/g.test(target);
-// }
-//
 export function isTargetArray(target: string): target is TargetArray {
-    return typeof target === 'string' && /^\[.*\]$/g.test(target);
+    return /^\[.*\]$/g.test(target);
 }
 
 
 export function isTargetTuple(target: string): target is TargetTuple {
-    // return typeof target === 'string';
-    return typeof target === 'string' && /^\[.*, .*\]$/g.test(target);
+    return /^\[.*, .*\]$/g.test(target);
 }
 
 
@@ -28,3 +23,10 @@ export function tupleLength(targetTuple: TargetTuple): number {
 export function isTupleOfSameLength(targetTuple: TargetTuple, data: any[]): boolean {
     return isArray(data) && data.length === tupleLength(targetTuple);
 }
+
+
+export function findTupleElement(targetTuple: TargetTuple, index: number): string {
+    return targetTuple.slice(1, -1).split(', ')[index];
+}
+
+

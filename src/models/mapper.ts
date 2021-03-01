@@ -1,7 +1,7 @@
 import { TConstructor } from '../types/t-constructor.type';
-import { Target } from '../types/target.type';
+import { Target } from '../types/target/target.type';
 import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
-import { Tuple } from '../types/tuple.type';
+import { Tuple } from '../types/tuples/tuple.type';
 import { throwWarning } from '../utils/errors.util';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
 import {
