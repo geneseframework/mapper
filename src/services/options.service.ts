@@ -1,6 +1,6 @@
 import { CreateOptions } from '../interfaces/create-options.interface';
 import 'reflect-metadata';
-import { isObjectButNotArray } from '../utils/objects.util';
+import { isObjectButNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
 
 export class OptionsService {

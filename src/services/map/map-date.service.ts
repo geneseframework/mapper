@@ -1,4 +1,4 @@
-import { isValidDateConstructor } from '../../utils/dates.util';
+import { isValidDateConstructor } from '../../utils/native/dates.util';
 import * as chalk from 'chalk';
 import { IncompatibilityService } from '../incompatibility.service';
 

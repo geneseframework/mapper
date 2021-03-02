@@ -1,18 +1,18 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
-import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast-imports.util';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { isEnumValue } from '../../utils/ast-enums.util';
-import { isEmptyArray } from '../../utils/arrays.util';
-import { PrimitiveType } from '../../types/primitives.type';
-import { isPrimitiveValueWithCorrectType } from '../../utils/primitives.util';
-import { isNullOrUndefined } from '../../utils/any.util';
+import { isEnumValue } from '../../utils/ast/ast-enums.util';
+import { isEmptyArray } from '../../utils/native/arrays.util';
+import { PrimitiveTypeName } from '../../types/primitives.type';
+import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { isPrimitiveTypeName } from '../../utils/types.util';
+import { isPrimitiveTypeName } from '../../utils/native/types.util';
+import { isPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 
 export class MapArrayService<T> {
 
@@ -58,7 +58,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveWithCorrectValue(typeName: string, element: any, options: CreateOptions): boolean {
-        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
+        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveTypeName, options.differentiateStringsAndNumbers);
     }
 
 

@@ -2,7 +2,7 @@ import { ClassDeclaration, HeritageClause, Identifier, PropertyDeclaration, Type
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { getImportTypeDeclaration } from './ast-imports.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
+import { TypeDeclaration } from '../../types/type-declaration.type';
 
 
 // TODO : Heritage ?

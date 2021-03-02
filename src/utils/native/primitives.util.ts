@@ -1,18 +1,17 @@
 import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
-import { PRIMITIVE_KEYWORDS, PrimitiveType, primitiveTypes } from '../types/primitives.type';
-import { LiteralNode } from '../types/literal-node.type';
-import { isArray } from './arrays.util';
-import { TargetService } from '../services/target.service';
+import { PRIMITIVE_KEYWORDS, Primitive, PrimitiveTypeName } from '../../types/primitives.type';
+import { LiteralNode } from '../../types/literal-node.type';
+import { TargetService } from '../../services/target.service';
 import { isPrimitiveTypeName } from './types.util';
 
-export function isPrimitiveOrArrayOfPrimitivesValue(value: any): boolean {
+export function isPrimitiveOrArrayOfPrimitivesValue(value: any): value is Primitive | Primitive[] {
     const values: any[] = Array.isArray(value) ? value : [value];
-    return values.every(e => isPrimitiveValue(e));
+    return values.every(e => isNonNullOrPrimitiveValue(e));
 }
 
 
-export function isPrimitiveValue(value: any): boolean {
+export function isNonNullOrPrimitiveValue(value: any): value is Primitive {
     if (value === undefined || value === null) {
         return false;
     }
@@ -20,12 +19,12 @@ export function isPrimitiveValue(value: any): boolean {
 }
 
 
-export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
-    return isPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(value, typeName, differentiateStringsAndNumbers));
+export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveTypeName, differentiateStringsAndNumbers = true): boolean {
+    return isNonNullOrPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(value, typeName, differentiateStringsAndNumbers));
 }
 
 
-function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
+function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveTypeName, differentiateStringsAndNumbers = true): boolean {
     return !differentiateStringsAndNumbers && ((typeName === 'string' && typeof value === 'number') || (typeName === 'number' && typeof value === 'string'));
 }
 
@@ -87,7 +86,7 @@ export function primitiveLiteralValue(literalTypeNode: LiteralTypeNode): string 
 }
 
 
-export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveType {
+export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveTypeName {
     switch (literalTypeNode?.getLiteral()?.getKind()) {
         case SyntaxKind.StringLiteral:
             return 'string';
@@ -124,11 +123,6 @@ export function typeOfDataCorrespondsToPrimitiveKeyword(data: any, arrayTypeNode
         || (typeof data === 'number' && elementTypeNode?.getKind() === SyntaxKind.NumberKeyword)
         || (typeof data === 'boolean' && elementTypeNode?.getKind() === SyntaxKind.BooleanKeyword)
     );
-}
-
-
-export function isPrimitiveConstructor(type: any): boolean {
-    return [String, Number, Boolean].includes(type);
 }
 
 

@@ -1,16 +1,14 @@
-import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../../utils/primitives.util';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapArrayService } from './map-array.service';
-import { getImportTypeDeclaration } from '../../utils/ast-imports.util';
+import { getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
-import { PrimitiveType } from '../../types/primitives.type';
+import { PrimitiveTypeName } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
-import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
+import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 
 export class MapPropertyService<T> {
 
@@ -19,7 +17,7 @@ export class MapPropertyService<T> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
-            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
+            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveTypeName, options);
             return;
         }
         // console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
@@ -44,7 +42,7 @@ export class MapPropertyService<T> {
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
+    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveTypeName, options: CreateOptions): void {
         if (isPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
             target[key] = dataValue;
         }

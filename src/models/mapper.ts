@@ -1,6 +1,6 @@
 import { TConstructor } from '../types/t-constructor.type';
 import { Target } from '../types/target/target.type';
-import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { throwWarning } from '../utils/errors.util';
 import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
@@ -98,7 +98,7 @@ export class Mapper<T> {
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 
     static async create<T>(target: Target<T>, data: any[], options?: CreateOptions): Promise<T[]>
-    static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]>
+    static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {
             return await MainService.map(target, data, options);

@@ -1,8 +1,8 @@
 import { ClassDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
-import { getTypeDeclaration } from '../../utils/ast-declaration.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';

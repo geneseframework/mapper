@@ -1,8 +1,8 @@
 import { TargetInfo } from '../../types/target/target-info.type';
-import { isArray } from '../../utils/arrays.util';
+import { isArray } from '../../utils/native/arrays.util';
 import { haveArrayIncompatibility } from '../../utils/incompatibility.util';
 import * as chalk from 'chalk';
-import { isObjectButNotArray } from '../../utils/objects.util';
+import { isObjectButNotArray } from '../../utils/native/objects.util';
 
 export class MapObjectService {
 

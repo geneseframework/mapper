@@ -1,5 +1,5 @@
-import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { GLOBAL } from '../const/global.const';
+import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
+import { GLOBAL } from '../../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
@@ -11,14 +11,14 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { throwWarning } from './errors.util';
-import { flat } from './arrays.util';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { Key } from '../types/key.type';
-import { isPrimitiveTypeNode } from './primitives.util';
-import { DateDeclaration } from '../models/date-declaration.model';
+import { TypeDeclaration } from '../../types/type-declaration.type';
+import { throwWarning } from '../errors.util';
+import { flat } from '../native/arrays.util';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { Key } from '../../types/key.type';
+import { DateDeclaration } from '../../models/date-declaration.model';
 import * as chalk from 'chalk';
+import { isPrimitiveTypeNode } from '../native/primitives.util';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);

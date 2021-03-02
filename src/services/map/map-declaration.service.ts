@@ -2,10 +2,10 @@ import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDecla
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { MapTypeService } from './map-type.service';
-import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../../types/type-declaration.type';
-import { getDeclarationKind } from '../../utils/ast-declaration.util';
+import { getDeclarationKind } from '../../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { Key } from '../../types/key.type';

@@ -1,5 +1,5 @@
 import { TestIt } from '../../../../test-engine/test-it.model';
-import { getElements, getFlattenElements } from '../../../../utils/tuples.util';
+import { getElements, getFlattenElements } from '../../../../utils/native/tuples.util';
 
 export const its: TestIt[] = [];
 

@@ -1,10 +1,5 @@
 import * as chalk from 'chalk';
-import { PrimitiveType, primitiveTypes } from '../types/primitives.type';
-
-
-export function isPrimitiveConstructor(target: any): boolean {
-    return [String, Number, Boolean, Date].includes(target);
-}
+import { PrimitiveTypeName, primitiveTypes } from '../../types/primitives.type';
 
 
 export function isUnionType(typeName: string): boolean {
@@ -18,7 +13,7 @@ export function isObjectTypeName(typeName: string): boolean {
 }
 
 
-export function isPrimitiveTypeName(typeName: string): typeName is PrimitiveType {
+export function isPrimitiveTypeName(typeName: string): typeName is PrimitiveTypeName {
     return primitiveTypes.includes(typeName?.toLowerCase());
 }
 

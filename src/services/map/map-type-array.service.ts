@@ -1,22 +1,18 @@
 import { ArrayTypeNode, ClassDeclaration, LiteralTypeNode, SyntaxKind, TypeNode, TypeReferenceNode } from 'ts-morph';
-import {
-    isArrayOfPrimitiveTypeNodes,
-    isLiteralKeyword,
-    isLiteralPrimitive,
-    isPrimitiveOrArrayOfPrimitivesValue,
-    primitiveLiteralValue,
-    typeOfDataCorrespondsToPrimitiveKeyword
-} from '../../utils/primitives.util';
-import { PrimitiveElement } from '../../types/primitives.type';
-import { getTypeReferenceTypeDeclaration } from '../../utils/ast-class.util';
-import { isArray, partialClone } from '../../utils/arrays.util';
+import { Primitive } from '../../types/primitives.type';
+import { getTypeReferenceTypeDeclaration } from '../../utils/ast/ast-class.util';
+import { isArray, partialClone } from '../../utils/native/arrays.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapTypeService } from './map-type.service';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
-import * as chalk from 'chalk';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../interfaces/create-options.interface';
+import {
+    isArrayOfPrimitiveTypeNodes, isLiteralKeyword, isLiteralPrimitive,
+    isPrimitiveOrArrayOfPrimitivesValue, primitiveLiteralValue,
+    typeOfDataCorrespondsToPrimitiveKeyword
+} from '../../utils/native/primitives.util';
 
 export class MapTypeArrayService {
 
@@ -83,7 +79,7 @@ export class MapTypeArrayService {
             }
             return;
         } else {
-            const primitiveElements: PrimitiveElement[] = [];
+            const primitiveElements: Primitive[] = [];
             for (const element of dataValue) {
                 if (typeOfDataCorrespondsToPrimitiveKeyword(element, typeNode as ArrayTypeNode)) {
                     primitiveElements.push(element);

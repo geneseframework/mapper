@@ -1,6 +1,6 @@
 import { InterfaceDeclaration } from 'ts-morph';
-import { getTypeDeclaration } from '../../utils/ast-declaration.util';
-import { implementsRequiredProperties } from '../../utils/ast-interfaces.util';
+import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
+import { implementsRequiredProperties } from '../../utils/ast/ast-interfaces.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { throwWarning } from '../../utils/errors.util';
 import { DateDeclaration } from '../../models/date-declaration.model';

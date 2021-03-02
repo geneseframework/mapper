@@ -1,5 +1,5 @@
 import {
-    ArrayTypeNode, ClassDeclaration,
+    ArrayTypeNode,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -8,27 +8,26 @@ import {
     UnionTypeNode
 } from 'ts-morph';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
-import {
-    isPrimitiveTypeNode,
-    isPrimitiveOrPrimitivesArray,
-    literalPrimitiveToPrimitiveType,
-    primitiveLiteralValue
-} from '../../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveElement, PrimitiveType } from '../../types/primitives.type';
+import { PrimitiveTypeName } from '../../types/primitives.type';
 import { MapArrayService } from './map-array.service';
-import { getTypeReferenceTypeDeclaration } from '../../utils/ast-class.util';
-import { getApparentType } from '../../utils/ast-types.util';
-import { getTypeDeclaration } from '../../utils/ast-declaration.util';
+import { getTypeReferenceTypeDeclaration } from '../../utils/ast/ast-class.util';
+import { getApparentType } from '../../utils/ast/ast-types.util';
+import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
 import { newMappedElement } from '../../utils/mapping.util';
 import { MapTypeArrayService } from './map-type-array.service';
-import { isNullOrUndefined } from '../../utils/any.util';
+import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { TupleOld } from '../../types/target/target-tuple-old.type';
+import {
+    isPrimitiveOrPrimitivesArray,
+    isPrimitiveTypeNode,
+    literalPrimitiveToPrimitiveType,
+    primitiveLiteralValue
+} from '../../utils/native/primitives.util';
 
 export class MapTypeService {
 
@@ -138,7 +137,7 @@ export class MapTypeService {
 
     private static async mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode, options: CreateOptions): Promise<void> {
         if (isPrimitiveOrPrimitivesArray(arrayTypeNode.getText())) {
-            target[key] = MapPrimitiveServiceOld.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true, options);
+            target[key] = MapPrimitiveServiceOld.create(dataValue, arrayTypeNode.getText() as PrimitiveTypeName, true, options);
             return;
         }
         await MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode), options);
@@ -146,7 +145,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: Key, dataValue: any, primitiveKeyword: TypeNode, options: CreateOptions): void {
-        target[key] = MapPrimitiveServiceOld.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false, options);
+        target[key] = MapPrimitiveServiceOld.create(dataValue, primitiveKeyword.getText() as PrimitiveTypeName, false, options);
     }
 
 }

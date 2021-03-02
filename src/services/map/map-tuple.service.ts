@@ -1,10 +1,9 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { isPrimitiveTypeNode, isPrimitiveValue } from '../../utils/primitives.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast-imports.util';
-import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { Mapper } from '../../models/mapper';
@@ -13,7 +12,8 @@ import { Tuple } from '../../types/tuples/tuple.type';
 import { findTupleElement, isTupleOfSameLength } from '../../utils/targets.util';
 import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { tupleLength } from '../../utils/tuples.util';
+import { tupleLength } from '../../utils/native/tuples.util';
+import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 
 export class MapTupleService<T> {
 
@@ -92,7 +92,7 @@ export class MapTupleService<T> {
                 MapInstanceOrInterfaceService.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
-            if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {
+            if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {
                 return dataValue;
             }
         }

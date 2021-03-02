@@ -1,14 +1,14 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { isPrimitiveTypeNode, isPrimitiveValue } from '../../utils/primitives.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast-imports.util';
-import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../interfaces/create-options.interface';
+import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 
 export class MapTupleServiceOld<T> {
 
@@ -61,7 +61,7 @@ export class MapTupleServiceOld<T> {
                 MapInstanceOrInterfaceService.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
-            if (importArrayDeclaration instanceof EnumDeclaration && isPrimitiveValue(dataValue)) {
+            if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {
                 return dataValue;
             }
         }

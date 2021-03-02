@@ -1,9 +1,8 @@
 import { Target } from '../../types/target/target.type';
 import { TargetInfo } from '../../types/target/target-info.type';
-import { isNullOrUndefined } from '../../utils/any.util';
-import { isPrimitiveOrPrimitivesArray } from '../../utils/primitives.util';
-import { isDateOrDatesArrayType } from '../../utils/dates.util';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../../types/primitives.type';
+import { isNullOrUndefined } from '../../utils/native/any.util';
+import { isDateOrDatesArrayType } from '../../utils/native/dates.util';
+import { ArrayOfPrimitiveElements, Primitive, PrimitiveTypeName } from '../../types/primitives.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
@@ -12,6 +11,7 @@ import { MapDateService } from './map-date.service';
 import { TargetService } from '../target.service';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../../interfaces/create-options.interface';
+import { isPrimitiveOrPrimitivesArray } from '../../utils/native/primitives.util';
 
 export class MapTrivialCasesService {
 
@@ -28,7 +28,7 @@ export class MapTrivialCasesService {
     }
 
 
-    static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): PrimitiveElement | ArrayOfPrimitiveElements | Promise<TupleOld> | Date | Date[] | object | object[] {
+    static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): Primitive | ArrayOfPrimitiveElements | Promise<TupleOld> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (TargetService.isTuple(target)) {
@@ -39,7 +39,7 @@ export class MapTrivialCasesService {
         if (TargetService.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
-            return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveType, info.isArray, options);
+            return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveTypeName, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {
             return MapDateService.createDates(data, info.isArray);
         }

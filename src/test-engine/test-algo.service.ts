@@ -1,9 +1,9 @@
 import { Mapper } from '../models/mapper';
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
-import { isSameObject } from '../utils/is-same-object.util';
+import { isSameObject } from '../utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
-import { isArray } from '../utils/arrays.util';
+import { isArray } from '../utils/native/arrays.util';
 
 export async function expect(testTypes: TestType[], logPassed: boolean, old: boolean): Promise<void>
 export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>

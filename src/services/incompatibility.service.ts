@@ -1,18 +1,17 @@
 import { Target } from '../types/target/target.type';
-import {
-    isPrimitiveConstructor,
-    isPrimitiveOrArrayOfPrimitivesValue,
-    isPrimitiveValue
-} from '../utils/primitives.util';
-import { isClassOrInterfaceDeclaration } from '../utils/ast-declaration.util';
-import { isArray } from '../utils/arrays.util';
+import { isClassOrInterfaceDeclaration } from '../utils/ast/ast-declaration.util';
+import { isArray } from '../utils/native/arrays.util';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { TargetService } from './target.service';
-import { PrimitiveConstructor, PrimitiveElement } from '../types/primitives.type';
-import { isValidDateConstructor } from '../utils/dates.util';
+import { PrimitiveConstructor, Primitive, isPrimitiveConstructor } from '../types/primitives.type';
+import { isValidDateConstructor } from '../utils/native/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { isPrimitiveTypeName } from '../utils/types.util';
+import { isPrimitiveTypeName } from '../utils/native/types.util';
+import {
+    isNonNullOrPrimitiveValue,
+    isPrimitiveOrArrayOfPrimitivesValue
+} from '../utils/native/primitives.util';
 
 /**
  * Checks if the data's format is compatible with the mapping's target
@@ -40,13 +39,13 @@ export class IncompatibilityService {
 
 
     /**
-     * Returns true if data is a primitive and if target is incompatible with primitives, false if not
+     * Returns true if data is a primitive and if target is incompatible with native, false if not
      * @param target
      * @param data
      * @private
      */
     private static dataIsPrimitiveAndTargetIsIncompatible(target: Target<any>, data: any): boolean {
-        return isPrimitiveValue(data) && this.isIncompatibleWithPrimitive(target, data);
+        return isNonNullOrPrimitiveValue(data) && this.isIncompatibleWithPrimitive(target, data);
     }
 
 
@@ -112,7 +111,7 @@ export class IncompatibilityService {
      * @param data
      * @private
      */
-    private static isIncompatibleWithPrimitive(target: Target<any>, data: PrimitiveElement): boolean {
+    private static isIncompatibleWithPrimitive(target: Target<any>, data: Primitive): boolean {
         if (this.isCompatibleDate(target, data)) {
             return false;
         }
@@ -128,22 +127,22 @@ export class IncompatibilityService {
      * @param data
      * @private
      */
-    private static isCompatibleDate(target: Target<any>, data: PrimitiveElement): boolean {
+    private static isCompatibleDate(target: Target<any>, data: Primitive): boolean {
         return TargetService.isDate(target) && isValidDateConstructor(data);
     }
 
 
-    private static isPrimitiveConstructorNotCorrespondingToDataType(target: Target<any>, data: PrimitiveElement): boolean {
+    private static isPrimitiveConstructorNotCorrespondingToDataType(target: Target<any>, data: Primitive): boolean {
         return isPrimitiveConstructor(target) && typeof data !== (target as PrimitiveConstructor).name.toLowerCase();
     }
 
 
-    private static isPrimitiveNameNotCorrespondingToDataType(target: Target<any>, data: PrimitiveElement): boolean {
+    private static isPrimitiveNameNotCorrespondingToDataType(target: Target<any>, data: Primitive): boolean {
         return typeof target === 'string' && isPrimitiveTypeName(target) && typeof data !== target;
     }
 
 
-    private static isNotPrimitiveClassOrInterfaceAndDataIsArray(target: Target<any>, data: PrimitiveElement): boolean {
+    private static isNotPrimitiveClassOrInterfaceAndDataIsArray(target: Target<any>, data: Primitive): boolean {
         return this.isNotPrimitiveClassOrInterface(target) && isArray(data);
     }
 
