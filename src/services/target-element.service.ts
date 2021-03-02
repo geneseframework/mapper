@@ -1,10 +1,9 @@
 import { TargetElement } from '../types/target/target-element.type';
 import { throwWarning } from '../utils/errors.util';
-import { isPrimitiveConstructor } from '../utils/primitives.util';
-import * as chalk from 'chalk';
-import { isDeclaration } from '../utils/ast-declaration.util';
-import { isFunction } from '../utils/any.util';
-import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/types.util';
+import { isDeclaration } from '../utils/ast/ast-declaration.util';
+import { isFunction } from '../utils/native/any.util';
+import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
+import { isPrimitiveConstructor } from '../types/primitives.type';
 
 export class TargetElementService {
 

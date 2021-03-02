@@ -1,3 +1,3 @@
-import { PrimitiveType } from '../primitives.type';
+import { PrimitiveTypeName } from '../primitives.type';
 
-export type PrimitiveAny = [PrimitiveType, any];
+export type PrimitiveAny = [PrimitiveTypeName, any];

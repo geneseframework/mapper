@@ -2,14 +2,13 @@ import { Target } from '../types/target/target.type';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { throwWarning } from '../utils/errors.util';
-import { isPrimitiveConstructor } from '../utils/primitives.util';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast-declaration.util';
+import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast/ast-declaration.util';
 import { TargetElementService } from './target-element.service';
 import { TConstructor } from '../types/t-constructor.type';
-import { isArray } from '../utils/arrays.util';
-import { isFunction } from '../utils/any.util';
-import * as chalk from 'chalk';
+import { isArray } from '../utils/native/arrays.util';
+import { isFunction } from '../utils/native/any.util';
+import { isPrimitiveConstructor } from '../types/primitives.type';
 
 export class TargetService {
 

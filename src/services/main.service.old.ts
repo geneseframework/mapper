@@ -1,23 +1,23 @@
 import { Target } from '../types/target/target.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
-import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { IncompatibilityService } from './incompatibility.service';
-import { MapTrivialCasesService } from './map-trivial-cases.service';
+import { MapTrivialCasesService } from './map/map-trivial-cases.service';
 import { TargetService } from './target.service';
-import { MapTupleServiceOld } from './map-tuple.service.old';
-import { InitService } from './init.service';
+import { MapTupleServiceOld } from './map/map-tuple.service.old';
+import { InitService } from './init/init.service';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration } from '../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInstanceService } from './map-instance.service';
-import { MapEnumService } from './map-enum.service';
-import { MapInterfaceService } from './map-interface.service';
-import { MapTypeService } from './map-type.service';
+import { MapInstanceService } from './map/map-instance.service';
+import { MapEnumService } from './map/map-enum.service';
+import { MapInterfaceService } from './map/map-interface.service';
+import { MapTypeService } from './map/map-type.service';
 import { throwWarning } from '../utils/errors.util';
-import { MapTypeCombinationService } from './map-type-combination.service';
+import { MapTypeCombinationService } from './map/map-type-combination.service';
 
 export class MainServiceOld {
 
@@ -31,7 +31,7 @@ export class MainServiceOld {
      * @param data
      * @param options
      */
-    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | PrimitiveElement | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
@@ -61,7 +61,7 @@ export class MainServiceOld {
      * @param options
      * @private
      */
-    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | PrimitiveElement | Date | TupleOld> {
+    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | TupleOld> {
         const info: TargetInfo = TargetService.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {

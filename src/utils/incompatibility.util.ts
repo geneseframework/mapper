@@ -1,6 +1,6 @@
-import { isArray } from './arrays.util';
-import { isPrimitiveValue } from './primitives.util';
+import { isArray } from './native/arrays.util';
 import * as chalk from 'chalk';
+import { isNonNullOrPrimitiveValue } from './native/primitives.util';
 
 
 export function haveArrayIncompatibility(first: any, lastIsArray: boolean): boolean
@@ -20,5 +20,5 @@ export function haveIncompatibleTypes(first: any, last: any): boolean {
 
 
 export function primitiveIncompatibility(first: any, last: any): boolean {
-    return (isPrimitiveValue(first) || isPrimitiveValue(last)) && typeof first !== typeof last;
+    return (isNonNullOrPrimitiveValue(first) || isNonNullOrPrimitiveValue(last)) && typeof first !== typeof last;
 }
