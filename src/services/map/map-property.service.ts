@@ -9,6 +9,7 @@ import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
+import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
 
@@ -20,7 +21,7 @@ export class MapPropertyService<T> {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;
         }
-        // console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
+        console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
                 await MapArrayService.map(target, key, dataValue, propertyType, apparentType, options);

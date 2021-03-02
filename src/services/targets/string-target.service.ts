@@ -9,6 +9,7 @@ import * as chalk from 'chalk';
 import { isContainerized, isNotEmptyContainer } from '../../types/target/string/containerized.type';
 import { isUnion, splitUnion } from '../../types/target/string/union.type';
 import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
+import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 
 export class StringTargetService {
 
@@ -42,6 +43,7 @@ export class StringTargetService {
             || this.isCorrectArray(cleanedText)
             || this.isCorrectUnion(cleanedText)
             || this.isCorrectIntersection(cleanedText)
+            || this.isExportedDeclaration(cleanedText)
     }
 
 
@@ -80,24 +82,14 @@ export class StringTargetService {
     }
 
 
-    private static isExportedClass(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isExportedDeclaration(text: string): boolean {
+        return hasDeclaration(text);
     }
 
 
     private static cleanExtremities(text: string): string {
         return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
     }
-
-
-
-    // static hasCorrectElements(text: string): boolean {
-    //     if (Array.isArray(text)) {
-    //         return text.every(e => this.hasCorrectElements(e));
-    //     } else {
-    //         return this.getTargetElements(text).every(t => this.isCorrect(t));
-    //     }
-    // }
 
 
     private static getTargetElements(targetElement: any): TargetElement[] | never {

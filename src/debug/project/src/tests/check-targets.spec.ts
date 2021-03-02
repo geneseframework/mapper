@@ -38,7 +38,8 @@ its.push(new TestIt(`isCorrectTarget(string[])`, StringTargetService.isCorrectTa
 its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string | number`, true, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(string | number | boolean)`, StringTargetService.isCorrectTarget, `string | number | boolean`, true, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(string || number)`, StringTargetService.isCorrectTarget, `string || number`, false, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string & number`, true, {isolate: true}));
+its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string & number`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(CheckClassSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec`, true, {isolate: true}));
 
 
 // ---------------------------------   getElements   -----------------------------------------
