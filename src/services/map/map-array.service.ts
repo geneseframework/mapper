@@ -7,7 +7,7 @@ import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isEmptyArray } from '../../utils/native/arrays.util';
-import { PrimitiveTypeName } from '../../types/primitives.type';
+import { PrimitiveType } from '../../types/primitives.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
@@ -58,7 +58,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveWithCorrectValue(typeName: string, element: any, options: CreateOptions): boolean {
-        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveTypeName, options.differentiateStringsAndNumbers);
+        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
     }
 
 

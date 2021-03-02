@@ -2,13 +2,13 @@ import { Target } from '../../types/target/target.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isDateOrDatesArrayType } from '../../utils/native/dates.util';
-import { ArrayOfPrimitiveElements, Primitive, PrimitiveTypeName } from '../../types/primitives.type';
+import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import { MapDateService } from './map-date.service';
-import { TargetService } from '../target.service';
+import { TargetServiceOld } from '../targets/target.service.old';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isPrimitiveOrPrimitivesArray } from '../../utils/native/primitives.util';
@@ -17,12 +17,12 @@ export class MapTrivialCasesService {
 
 
     static isTrivialCase<T>(target: Target<T>, data: any): boolean {
-        const info: TargetInfo = TargetService.getInfo(target);
-        if (TargetService.isTuple(target)) {
+        const info: TargetInfo = TargetServiceOld.getInfo(target);
+        if (TargetServiceOld.isTuple(target)) {
             return false;
         }
         return isNullOrUndefined(data)
-            || TargetService.isObjectOrObjectsArray(target)
+            || TargetServiceOld.isObjectOrObjectsArray(target)
             || isPrimitiveOrPrimitivesArray(info.typeName)
             || isDateOrDatesArrayType(info.typeName);
     }
@@ -31,15 +31,15 @@ export class MapTrivialCasesService {
     static mapTrivialCase(target: Target<any>, data: any, options: CreateOptions): Primitive | ArrayOfPrimitiveElements | Promise<TupleOld> | Date | Date[] | object | object[] {
         if (isNullOrUndefined(data)) {
             return data;
-        } else if (TargetService.isTuple(target)) {
+        } else if (TargetServiceOld.isTuple(target)) {
             console.log(chalk.redBright('SHOULD NEVER ENTER HERRRE'), target, data);
             return MapTupleServiceOld.create(data, target as TupleOld, options);
         }
-        const info: TargetInfo = TargetService.getInfo(target);
-        if (TargetService.isObjectOrObjectsArray(target)) {
+        const info: TargetInfo = TargetServiceOld.getInfo(target);
+        if (TargetServiceOld.isObjectOrObjectsArray(target)) {
             return MapObjectService.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
-            return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveTypeName, info.isArray, options);
+            return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveType, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {
             return MapDateService.createDates(data, info.isArray);
         }

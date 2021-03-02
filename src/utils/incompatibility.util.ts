@@ -14,7 +14,6 @@ export function haveArrayIncompatibility(first: any, last: any): boolean {
 
 
 export function haveIncompatibleTypes(first: any, last: any): boolean {
-    console.log(chalk.magentaBright('INCOMPATBILE TYPES ????'), first, last);
     return primitiveIncompatibility(first, last);
 }
 

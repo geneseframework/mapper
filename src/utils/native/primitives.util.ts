@@ -1,8 +1,8 @@
 import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
-import { PRIMITIVE_KEYWORDS, Primitive, PrimitiveTypeName } from '../../types/primitives.type';
+import { PRIMITIVE_KEYWORDS, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { LiteralNode } from '../../types/literal-node.type';
-import { TargetService } from '../../services/target.service';
+import { TargetServiceOld } from '../../services/targets/target.service.old';
 import { isPrimitiveTypeName } from './types.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): value is Primitive | Primitive[] {
@@ -19,12 +19,12 @@ export function isNonNullOrPrimitiveValue(value: any): value is Primitive {
 }
 
 
-export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveTypeName, differentiateStringsAndNumbers = true): boolean {
+export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
     return isNonNullOrPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(value, typeName, differentiateStringsAndNumbers));
 }
 
 
-function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveTypeName, differentiateStringsAndNumbers = true): boolean {
+function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
     return !differentiateStringsAndNumbers && ((typeName === 'string' && typeof value === 'number') || (typeName === 'number' && typeof value === 'string'));
 }
 
@@ -36,7 +36,7 @@ export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode):
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
-    } else if (TargetService.isArrayButNotTuple(typeNameOrNode)) {
+    } else if (TargetServiceOld.isArrayButNotTuple(typeNameOrNode)) {
         return false;
     } else {
         return isPrimitiveTypeNode(typeNameOrNode);
@@ -86,7 +86,7 @@ export function primitiveLiteralValue(literalTypeNode: LiteralTypeNode): string 
 }
 
 
-export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveTypeName {
+export function literalPrimitiveToPrimitiveType(literalTypeNode: LiteralTypeNode): PrimitiveType {
     switch (literalTypeNode?.getLiteral()?.getKind()) {
         case SyntaxKind.StringLiteral:
             return 'string';

@@ -1,5 +1,5 @@
-import { Bracketed } from '../types/tuples/brackets.type';
-import { Tuple } from '../types/tuples/tuple.type';
+import { Bracketed } from '../types/target/string/bracketed.type';
+import { Tuple } from '../types/target/string/tuple.type';
 import * as chalk from 'chalk';
 import { isArray } from './native/arrays.util';
 import { tupleLength } from './native/tuples.util';

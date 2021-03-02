@@ -21,8 +21,3 @@ export function isAny(typeName: string): boolean {
 export function isAnyArray(typeName: string): boolean {
     return typeName === 'any[]';
 }
-
-
-export function isFunction(element: any): element is Function {
-    return typeof element === 'function';
-}

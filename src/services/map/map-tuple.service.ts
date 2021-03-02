@@ -8,7 +8,7 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { Tuple } from '../../types/tuples/tuple.type';
+import { Tuple } from '../../types/target/string/tuple.type';
 import { findTupleElement, isTupleOfSameLength } from '../../utils/targets.util';
 import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';

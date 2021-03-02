@@ -1,5 +1,11 @@
-// TODO
 import { throwError } from '../../utils/errors.util';
+import { isPrimitiveConstructor, isPrimitiveConstructorArray } from '../../types/primitives.type';
+import { isNumber } from '../../utils/native/numbers.util';
+import { isBoolean } from '../../utils/native/booleans.util';
+import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
+import { TargetService } from '../targets/target.service';
+import { StringTargetService } from '../targets/string-target.service';
+import { isArray } from '../../utils/native/arrays.util';
 
 export class InitCheckTargetsService {
 
@@ -10,6 +16,7 @@ export class InitCheckTargetsService {
     }
 
 
+    // TODO
     private static async getTargets(): Promise<any[]> {
         return [];
     }
@@ -24,7 +31,27 @@ export class InitCheckTargetsService {
     }
 
 
+    /**
+     * CAUTION: some cases are not covered and may cause errors :
+     *  - functions which are not constructors
+     * Don't use targets which are on one of these cases.
+     * @param target
+     */
     static hasCorrectFormat(target: any): boolean {
-        return true;
+        // console.log(chalk.magentaBright('IS CORRECT ????'), isExportedClassConstructorArray(target));
+        return isNumber(target)
+            || isBoolean(target)
+            || isPrimitiveConstructor(target)
+            // || isPrimitiveConstructorArray(target)
+            || isExportedClassConstructor(target)
+            || this.isCorrectArray(target)
+            // || isExportedClassConstructorArray(target)
+            || StringTargetService.isCorrectTarget(target);
     }
+
+
+    private static isCorrectArray(targets: any): targets is any[] {
+        return isArray(targets) && targets.every(t => this.hasCorrectFormat(t));
+    }
+
 }
