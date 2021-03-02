@@ -31,8 +31,9 @@ its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.has
 
 its.push(new TestIt(`hasCorrectElements(string)`, StringTargetService.isCorrectTarget, 'string', true, {isolate: false}));
 its.push(new TestIt(`hasCorrectElements(String)`, StringTargetService.isCorrectTarget, 'String', true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements('string')`, StringTargetService.isCorrectTarget, `'string'`, true, {isolate: true}));
-its.push(new TestIt(`hasCorrectElements("a")`, StringTargetService.isCorrectTarget, `"a"`, true, {isolate: true}));
+its.push(new TestIt(`hasCorrectElements('string')`, StringTargetService.isCorrectTarget, `'string'`, true, {isolate: false}));
+its.push(new TestIt(`hasCorrectElements("a")`, StringTargetService.isCorrectTarget, `"a"`, true, {isolate: false}));
+its.push(new TestIt(`hasCorrectElements(string[])`, StringTargetService.isCorrectTarget, `string[]`, true, {isolate: true}));
 
 
 // ---------------------------------   getElements   -----------------------------------------

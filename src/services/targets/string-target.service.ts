@@ -50,7 +50,17 @@ export class StringTargetService {
     }
 
 
-    private static isCorrectString(text: string): boolean {
+    private static isCorrectCombination(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isCorrectExtends(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isCorrectConditional(text: string): boolean {
         return isPrimitiveType(text)
     }
 
