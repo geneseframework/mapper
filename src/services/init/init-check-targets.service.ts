@@ -7,6 +7,8 @@ import { isFunctionWhichIsNotExportedClass } from '../../utils/native/functions.
 import { isNumber } from '../../utils/native/numbers.util';
 import { isBoolean } from '../../utils/native/booleans.util';
 import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
+import { isString } from '../../utils/native/strings.util';
+import { TargetService } from '../target.service';
 
 export class InitCheckTargetsService {
 
@@ -38,24 +40,14 @@ export class InitCheckTargetsService {
      * @param target
      */
     static hasCorrectFormat(target: any): boolean {
-        return InitCheckTargetsService.isACorrectCase(target) && !InitCheckTargetsService.isAWrongCase(target);
-    }
-
-
-    private static isACorrectCase(target: any): boolean {
-        console.log(chalk.magentaBright('IS CORRECT ????'), isExportedClassConstructorArray(target));
+        // console.log(chalk.magentaBright('IS CORRECT ????'), isExportedClassConstructorArray(target));
         return isNumber(target)
-        || isBoolean(target)
-        || isPrimitiveConstructor(target)
-        || isPrimitiveConstructorArray(target)
-        || isExportedClassConstructor(target)
-        || isExportedClassConstructorArray(target)
+            || isBoolean(target)
+            || isPrimitiveConstructor(target)
+            || isPrimitiveConstructorArray(target)
+            || isExportedClassConstructor(target)
+            || isExportedClassConstructorArray(target)
+            || TargetService.isCorrectStringTarget(target);
     }
 
-
-    // TODO
-    private static isAWrongCase(target: any): boolean {
-        return false;
-        // return isFunctionWhichIsNotExportedClass(target)
-    }
 }

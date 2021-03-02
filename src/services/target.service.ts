@@ -7,8 +7,9 @@ import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from 
 import { TargetElementService } from './target-element.service';
 import { TConstructor } from '../types/t-constructor.type';
 import { isArray } from '../utils/native/arrays.util';
-import { isFunction } from '../utils/native/any.util';
 import { isPrimitiveConstructor } from '../types/primitives.type';
+import { isFunction } from '../utils/native/functions.util';
+import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
 
 export class TargetService {
 
@@ -20,6 +21,11 @@ export class TargetService {
         } else {
             return target?.toLowerCase();
         }
+    }
+
+
+    static isCorrectStringTarget(target: string): boolean {
+        return TargetElementService.isCorrectStringTarget(target);
     }
 
 

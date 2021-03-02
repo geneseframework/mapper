@@ -11,7 +11,7 @@ class ClassSpec {
 function notConstructor() {
     return;
 }
-
+git add
 // --------------------------------------------   Check target   ----------------------------------------------------------
 
 its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, 2, true, {isolate: false}));
@@ -22,7 +22,7 @@ its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCor
 its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCorrectFormat, [String, Number], true, {isolate: false}));
 its.push(new TestIt(`hasCorrectFormat(ClassSpec)`, InitCheckTargetsService.hasCorrectFormat, ClassSpec, true, {isolate: false}));
 its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec], true, {isolate: false}));
-its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec, ClassSpec], true, {isolate: true}));
+its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec, ClassSpec], true, {isolate: false}));
 
 
 
