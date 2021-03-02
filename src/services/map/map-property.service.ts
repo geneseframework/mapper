@@ -8,7 +8,7 @@ import { PrimitiveType } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
+import { isPrimitiveTypeNode, isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import * as chalk from 'chalk';
 
 export class MapPropertyService<T> {
@@ -44,7 +44,7 @@ export class MapPropertyService<T> {
 
 
     private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
-        if (isPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
+        if (isNonNullPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
             target[key] = dataValue;
         }
     }

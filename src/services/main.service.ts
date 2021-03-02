@@ -22,6 +22,7 @@ import { MapTupleService } from './map/map-tuple.service';
 import { isTuple, tupleLength } from '../utils/native/tuples.util';
 import { TargetService } from './targets/target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
+import { isNullOrUndefined } from '../utils/native/any.util';
 
 export class MainService {
 
@@ -35,20 +36,27 @@ export class MainService {
      * @param data
      * @param options
      */
-    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        const stringTarget: string = TargetService.toString(target);
-        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget, isTuple(stringTarget));
-        if (isBracketed(stringTarget)) {
-            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
-            return await MapTupleService.create(stringTarget, data, options)
-        } else if (isTargetArray(stringTarget)) {
+        return await this.mapString(TargetService.toString(target), data, options);
+    }
+
+
+    static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, target, isTuple(target));
+        if (isNullOrUndefined(data)) {
+            return data;
+        } else if (isBracketed(target)) {
+            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
+            return await MapTupleService.create(target, data, options)
+        } else if (isTargetArray(target)) {
             // console.log(chalk.cyanBright('IS ARRAYYYYY '));
-        } else if (isPrimitiveTypeName(stringTarget)) {
-            return MapPrimitiveService.create([stringTarget, data], options);
+        } else if (isPrimitiveTypeName(target)) {
+            console.log(chalk.greenBright('IS PRIMMMM ', target, data));
+            return MapPrimitiveService.create([target, data], options);
 
         }
         // console.log(chalk.redBright('END OF MAINNNN'), stringTarget);

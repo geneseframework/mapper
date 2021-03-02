@@ -2,14 +2,17 @@ import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { StringString } from '../../types/target/string/string-string.type';
 import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
-import { castStringAndNumbers } from '../../utils/native/primitives.util';
+import {
+    castStringAndNumbers,
+    isNonNullPrimitiveValueWithCorrectType,
+    isPrimitiveValueWithCorrectType
+} from '../../utils/native/primitives.util';
 
 export class MapPrimitiveService {
 
 
-    static create(targetData: StringString, options: CreateOptions): string
-    static create(targetData: PrimitiveAny, options: CreateOptions): Primitive
     static create([target, data]: PrimitiveAny, options: CreateOptions): Primitive {
+        return isPrimitiveValueWithCorrectType(target, data, options.differentiateStringsAndNumbers) ? data : undefined;
         // if (isTupleStringString(targetData)) {
         //     return data(targetData);
         // }
@@ -21,7 +24,7 @@ export class MapPrimitiveService {
         // } else {
         //     return this.createElement(data, typeName, options);
         // }
-        return undefined;
+        // return undefined;
     }
 
 // static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements

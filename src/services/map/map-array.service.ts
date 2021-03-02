@@ -12,7 +12,7 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
-import { isPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
+import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 
 export class MapArrayService<T> {
 
@@ -58,7 +58,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveWithCorrectValue(typeName: string, element: any, options: CreateOptions): boolean {
-        return isPrimitiveTypeName(typeName) && isPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
+        return isPrimitiveTypeName(typeName) && isNonNullPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
     }
 
 
