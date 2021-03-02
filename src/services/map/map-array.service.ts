@@ -6,15 +6,49 @@ import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util'
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
-import { isEmptyArray } from '../../utils/native/arrays.util';
+import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
+import { Bracketed } from '../../types/target/string/bracketed.type';
+import { findTupleElement, isTupleOfSameLength } from '../../utils/targets.util';
+import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
+import { Mapper } from '../../models/mapper';
+import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
+import * as chalk from 'chalk';
 
 export class MapArrayService<T> {
+
+
+    static async create(target: ArrayType, data: any, options: CreateOptions): Promise<any[]> {
+        console.log(chalk.magentaBright('ARRAY DATA IIIII'),target, data, isArray(data));
+        if (!isArray(data)) {
+            // throwWarning(`Warning: "${target}" is an Array and data is not : `, data);
+            return undefined;
+        }
+        const arr: any[] = [];
+        for (const element of data) {
+            // console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
+            if (element === null || element === undefined) {
+                arr.push(element);
+            } else {
+                // console.log(chalk.magentaBright('TUPLE ELT IIIII'), typeOfArray(target));
+                const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
+                // console.log(chalk.greenBright('TUPLE ELT IIIII'), mappedElement);
+                if (mappedElement !== undefined) {
+                    arr.push(mappedElement);
+                } else {
+                    throwIncompatibility(target, data);
+                    return undefined;
+                }
+            }
+        }
+        // console.log(chalk.green('ARRRRRR'), arr);
+        return arr;
+    }
 
 
     static async map(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {

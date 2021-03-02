@@ -2,9 +2,10 @@ import { TestMapper } from '../../../../test-engine/test-mapper.model';
 
 export const testMappers: TestMapper[] = [];
 
+
 // --------------------------------------------------   Strings   ---------------------------------------------------------
 
-testMappers.push(new TestMapper(`'blue' / string`, 'string','blue', {isolate: true}));
+testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null));
 testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined}));
@@ -12,7 +13,9 @@ testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2,
 
 testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 
+
 // --------------------------------------------------   Numbers   ---------------------------------------------------------
+
 
 testMappers.push(new TestMapper(`2 / number`, 'number',2));
 testMappers.push(new TestMapper(`'2' / number / undefined`, 'number','2', {expectedValue: undefined}));
@@ -37,18 +40,18 @@ testMappers.push(new TestMapper(`2 / boolean / undefined`, 'boolean','blue', {ex
 // --------------------------------------------------   Strings   ---------------------------------------------------------
 
 
-testMappers.push(new TestMapper(`['blue'] / string[]`, 'string[]',['blue']));
-testMappers.push(new TestMapper(`['blue', 'white'] / string[]`, 'string[]',['blue', 'white']));
-testMappers.push(new TestMapper(`['blue', 2] / string[] / ['blue']`, 'string[]',['blue', 2], {expectedValue: ['blue']}));
-testMappers.push(new TestMapper(`undefined / string[]`, 'string[]',undefined));
-testMappers.push(new TestMapper(`'blue' / string[] / undefined`, 'string[]','blue', {expectedValue: undefined}));
-testMappers.push(new TestMapper(`[2] / string[] / []`, 'string[]',[2], {expectedValue: []}));
-testMappers.push(new TestMapper(`[2] / string[] && !differentiate / ['2']`, 'string[]',[2], {expectedValue: ['2'], createOptions: {differentiateStringsAndNumbers: false}}));
-testMappers.push(new TestMapper(`[] / string[] / []`, 'string[]',[]));
-testMappers.push(new TestMapper(`[{}] / string[] / [{}]`, 'string[]',[{}], {expectedValue: []}));
-testMappers.push(new TestMapper(`[{}] / string[] / [['a']]`, 'string[]',[['a']], {expectedValue: []}));
-testMappers.push(new TestMapper(`[undefined] / string[] / [undefined]`, 'string[]',[undefined], {expectedValue: [undefined]}));
-testMappers.push(new TestMapper(`[null] / string[] / [null]`, 'string[]',[null], {expectedValue: [null]}));
+testMappers.push(new TestMapper(`['blue'] / string[]`, 'string[]',['blue'], {isolate: true}));
+// testMappers.push(new TestMapper(`['blue', 'white'] / string[]`, 'string[]',['blue', 'white'], {isolate: true}));
+// testMappers.push(new TestMapper(`['blue', 2] / string[] / ['blue']`, 'string[]',['blue', 2], {expectedValue: ['blue'], isolate: true}));
+// testMappers.push(new TestMapper(`undefined / string[]`, 'string[]',undefined));
+// testMappers.push(new TestMapper(`'blue' / string[] / undefined`, 'string[]','blue', {expectedValue: undefined, isolate: true}));
+// testMappers.push(new TestMapper(`[2] / string[] / []`, 'string[]',[2], {expectedValue: [], isolate: true}));
+// testMappers.push(new TestMapper(`[2] / string[] && !differentiate / ['2']`, 'string[]',[2], {expectedValue: ['2'], isolate: true, createOptions: {differentiateStringsAndNumbers: false}}));
+// testMappers.push(new TestMapper(`[] / string[] / []`, 'string[]',[]));
+// testMappers.push(new TestMapper(`[{}] / string[] / [{}]`, 'string[]',[{}], {expectedValue: [], isolate: true}));
+// testMappers.push(new TestMapper(`[{}] / string[] / [['a']]`, 'string[]',[['a']], {expectedValue: [], isolate: true}));
+// testMappers.push(new TestMapper(`[undefined] / string[] / [undefined]`, 'string[]',[undefined], {expectedValue: [undefined], isolate: true}));
+// testMappers.push(new TestMapper(`[null] / string[] / [null]`, 'string[]',[null], {expectedValue: [null], isolate: true}));
 
 testMappers.push(new TestMapper(`['blue'] / [String]`, [String],['blue']));
 testMappers.push(new TestMapper(`['blue', 'white'] / [String]`, [String],['blue', 'white']));

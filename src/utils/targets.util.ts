@@ -5,9 +5,10 @@ import { isArray } from './native/arrays.util';
 import { tupleLength } from './native/tuples.util';
 import { Target } from '../types/target/target.type';
 import { isString } from './native/strings.util';
+import { ArrayType } from '../types/target/string/array-type.type';
 
-export function isTargetArray(target: string): target is Bracketed {
-    return /^\[.*\]$/g.test(target);
+export function isTargetArray(target: string): target is ArrayType {
+    return /^\w.*\[\]$/g.test(target);
 }
 
 

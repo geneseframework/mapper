@@ -12,7 +12,9 @@ export class MapPrimitiveService {
 
 
     static create([target, data]: PrimitiveAny, options: CreateOptions): Primitive {
-        return isPrimitiveValueWithCorrectType(target, data, options.differentiateStringsAndNumbers) ? data : undefined;
+        // if (isPrimitiveValueWithCorrectType(target, data, options.differentiateStringsAndNumbers)) {
+        //     return castStringAndNumbers()
+        // } data : undefined;
         // if (isTupleStringString(targetData)) {
         //     return data(targetData);
         // }
@@ -22,7 +24,7 @@ export class MapPrimitiveService {
         // if (Array.isArray(data)) {
         //     return this.createArrayElements(data, typeName, options);
         // } else {
-        //     return this.createElement(data, typeName, options);
+            return this.createElement(data, target, options);
         // }
         // return undefined;
     }

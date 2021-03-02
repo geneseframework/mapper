@@ -23,6 +23,7 @@ import { isTuple, tupleLength } from '../utils/native/tuples.util';
 import { TargetService } from './targets/target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
 import { isNullOrUndefined } from '../utils/native/any.util';
+import { MapArrayService } from './map/map-array.service';
 
 export class MainService {
 
@@ -46,20 +47,21 @@ export class MainService {
 
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        // console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, target, isTuple(target));
+        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, data);
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
-            // console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
+            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
             return await MapTupleService.create(target, data, options)
         } else if (isTargetArray(target)) {
-            // console.log(chalk.cyanBright('IS ARRAYYYYY '));
+            console.log(chalk.cyanBright('IS ARRAYYYYY '));
+            return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            // console.log(chalk.greenBright('IS PRIMMMM ', target, data));
+            console.log(chalk.greenBright('IS PRIMMMM ', target, data));
             return MapPrimitiveService.create([target, data], options);
 
         }
-        // console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
+        console.log(chalk.redBright('END OF MAINNNN'), target);
         return undefined;
     }
 
