@@ -7,7 +7,7 @@ import { TargetServiceOld } from './targets/target.service.old';
 import { InitService } from './init/init.service';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
-import { getDeclarationKind, getTypeDeclaration } from '../utils/ast/ast-declaration.util';
+import { getDeclarationKind, getTypeDeclaration, hasDeclaration } from '../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceService } from './map/map-instance.service';
 import { MapEnumService } from './map/map-enum.service';
@@ -52,14 +52,13 @@ export class MainService {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
-            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            console.log(chalk.greenBright('IS PRIMMMM ', target, data));
             return MapPrimitiveService.create([target, data], options);
-
+        } else if (hasDeclaration(target)) {
+            return this.mapDeclaration(target, data, options);
         }
         console.log(chalk.redBright('END OF MAINNNN'), target);
         return undefined;
@@ -95,7 +94,7 @@ export class MainService {
      * @param options
      * @private
      */
-    private static async mapDeclaration<T>(target: Target<T>, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | TupleOld> {
+    private static async mapDeclaration<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | TupleOld> {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
