@@ -1,8 +1,8 @@
-import { StringString } from '../../types/tuples/string-string.type';
-import { AnyAny } from '../../types/tuples/any-any.type';
-import { Tuple } from '../../types/tuples/tuple.type';
-import { isStartingContainer, StartingContainer } from '../../types/tuples/starting-container.type';
-import { Containerized, isContainerized } from '../../types/tuples/container.type';
+import { StringString } from '../../types/target/string/string-string.type';
+import { AnyAny } from '../../types/target/string/any-any.type';
+import { Tuple } from '../../types/target/string/tuple.type';
+import { isStartingContainer, StartingContainer } from '../../types/target/string/starting-container.type';
+import { Containerized, isContainerized } from '../../types/target/string/containerized.type';
 import { throwError, throwWarning } from '../errors.util';
 import * as chalk from 'chalk';
 import { isString } from './strings.util';

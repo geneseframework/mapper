@@ -1,7 +1,7 @@
-import { ArrayOfPrimitiveElements, Primitive, PrimitiveTypeName } from '../../types/primitives.type';
+import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { StringString } from '../../types/tuples/string-string.type';
-import { PrimitiveAny } from '../../types/tuples/primitive-any.type';
+import { StringString } from '../../types/target/string/string-string.type';
+import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
 import { castStringAndNumbers } from '../../utils/native/primitives.util';
 
 export class MapPrimitiveService {
@@ -24,9 +24,9 @@ export class MapPrimitiveService {
         return undefined;
     }
 
-// static create(data: any[], typeName: PrimitiveTypeName, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
-//     static create(data: any, typeName: PrimitiveTypeName, isArray: boolean, options: CreateOptions): Primitive
-//     static create(data: any, typeName: PrimitiveTypeName, isArray: boolean, options: CreateOptions): Primitive | ArrayOfPrimitiveElements | undefined {
+// static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
+//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): Primitive
+//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): Primitive | ArrayOfPrimitiveElements | undefined {
 //         if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
 //             return undefined;
 //         }
@@ -38,7 +38,7 @@ export class MapPrimitiveService {
 //     }
 //
 
-    private static createArrayElements(data: any[], typeName: PrimitiveTypeName, options: CreateOptions): ArrayOfPrimitiveElements {
+    private static createArrayElements(data: any[], typeName: PrimitiveType, options: CreateOptions): ArrayOfPrimitiveElements {
         const primitiveElementsArray = [];
         for (const element of data) {
             const primitiveElement: Primitive = this.createElement(element, typeName, options);
@@ -50,7 +50,7 @@ export class MapPrimitiveService {
     }
 
 
-    private static createElement(data: any, typeName: PrimitiveTypeName, options: CreateOptions): Primitive {
+    private static createElement(data: any, typeName: PrimitiveType, options: CreateOptions): Primitive {
         if (data === null) {
             return null;
         }
@@ -58,7 +58,7 @@ export class MapPrimitiveService {
     }
 
 
-    private static haveSameType(data: any, typeName: PrimitiveTypeName, options: CreateOptions): boolean {
+    private static haveSameType(data: any, typeName: PrimitiveType, options: CreateOptions): boolean {
         return typeof data === typeName?.toLowerCase()
             || (typeof data === 'string' && typeName?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
             || (typeof data === 'number' && typeName?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);

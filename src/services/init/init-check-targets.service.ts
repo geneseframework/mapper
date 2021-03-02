@@ -5,6 +5,7 @@ import { isBoolean } from '../../utils/native/booleans.util';
 import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
 import { TargetService } from '../targets/target.service';
 import { StringTargetService } from '../targets/string-target.service';
+import { isArray } from '../../utils/native/arrays.util';
 
 export class InitCheckTargetsService {
 
@@ -41,10 +42,16 @@ export class InitCheckTargetsService {
         return isNumber(target)
             || isBoolean(target)
             || isPrimitiveConstructor(target)
-            || isPrimitiveConstructorArray(target)
+            // || isPrimitiveConstructorArray(target)
             || isExportedClassConstructor(target)
-            || isExportedClassConstructorArray(target)
+            || this.isCorrectArray(target)
+            // || isExportedClassConstructorArray(target)
             || StringTargetService.isCorrectTarget(target);
+    }
+
+
+    private static isCorrectArray(targets: any): targets is any[] {
+        return isArray(targets) && targets.every(t => this.hasCorrectFormat(t));
     }
 
 }

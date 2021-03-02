@@ -1,4 +1,4 @@
-import { Bracketed, isBracketed } from './brackets.type';
+import { Bracketed, isBracketed } from './bracketed.type';
 import { isParenthesized, Parenthesized } from './parenthesis.type';
 
 export type Containerized = Bracketed | Parenthesized;

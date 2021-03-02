@@ -1,8 +1,9 @@
 import { TargetElement } from '../../types/target/target-element.type';
 import { throwWarning } from '../../utils/errors.util';
-import { isPrimitiveConstructor } from '../../types/primitives.type';
+import { isPrimitiveConstructor, isPrimitiveType } from '../../types/primitives.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
+import { isQuoted } from '../../types/target/string/quoted.type';
 
 export class StringTargetService {
 
@@ -11,7 +12,7 @@ export class StringTargetService {
         if (isNullOrUndefined(target) || !isString(target)) {
             return false;
         }
-        const normalizedTarget: string = this.normalize(target);
+        const normalizedTarget: string = StringTargetService.normalize(target);
         return StringTargetService.hasCorrectElements(normalizedTarget);
     }
 
@@ -23,9 +24,38 @@ export class StringTargetService {
     }
 
 
-    static hasCorrectElements(text: string): boolean {
-        return true;
+    private static hasCorrectElements(text: string): boolean {
+        return isPrimitiveType(text)
+            || isQuoted(text)
     }
+
+
+    // private static isCorrectArray(text: string): boolean {
+    //     return isPrimitiveType(text)
+    // }
+
+
+    private static isCorrectArray(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isCorrectTuple(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isCorrectObject(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isCorrectString(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+
     // static hasCorrectElements(text: string): boolean {
     //     if (Array.isArray(text)) {
     //         return text.every(e => this.hasCorrectElements(e));

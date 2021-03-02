@@ -4,7 +4,7 @@ import { getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
-import { PrimitiveTypeName } from '../../types/primitives.type';
+import { PrimitiveType } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../interfaces/create-options.interface';
@@ -17,7 +17,7 @@ export class MapPropertyService<T> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
         if (isPrimitiveTypeNode(propertyType)) {
-            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveTypeName, options);
+            this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;
         }
         // console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
@@ -42,7 +42,7 @@ export class MapPropertyService<T> {
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveTypeName, options: CreateOptions): void {
+    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
         if (isPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
             target[key] = dataValue;
         }

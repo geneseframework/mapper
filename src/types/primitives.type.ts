@@ -3,6 +3,7 @@ import { isString } from '../utils/native/strings.util';
 import { isNumber } from '../utils/native/numbers.util';
 import { isBoolean } from '../utils/native/booleans.util';
 import { isArray } from '../utils/native/arrays.util';
+import * as chalk from 'chalk';
 
 export const primitiveTypes = ['string', 'number', 'boolean'];
 
@@ -16,7 +17,11 @@ export function isPrimitive(value: any): value is Primitive {
 export type ArrayOfPrimitiveElements = string[] | number[] | boolean[];
 
 
-export type PrimitiveTypeName = 'string' | 'number' | 'boolean';
+export type PrimitiveType = 'string' | 'number' | 'boolean';
+export function isPrimitiveType(value: any): value is PrimitiveType {
+    // console.log(chalk.blueBright('IS PRIMMMMMM'), value, primitiveTypes.includes(value));
+    return primitiveTypes.includes(value);
+}
 
 
 export type PrimitiveConstructor = StringConstructor | NumberConstructor | BooleanConstructor;
