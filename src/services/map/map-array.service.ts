@@ -31,22 +31,19 @@ export class MapArrayService<T> {
         }
         const arr: any[] = [];
         for (const element of data) {
-            // console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
+            console.log(chalk.cyanBright('TUPLE DATA IIIII'), element);
             if (element === null || element === undefined) {
                 arr.push(element);
             } else {
-                // console.log(chalk.magentaBright('TUPLE ELT IIIII'), typeOfArray(target));
+                console.log(chalk.magentaBright('TUPLE ELT IIIII'), typeOfArray(target));
                 const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
-                // console.log(chalk.greenBright('TUPLE ELT IIIII'), mappedElement);
+                console.log(chalk.greenBright('TUPLE ELT IIIII'), mappedElement);
                 if (mappedElement !== undefined) {
                     arr.push(mappedElement);
-                } else {
-                    throwIncompatibility(target, data);
-                    return undefined;
                 }
             }
         }
-        // console.log(chalk.green('ARRRRRR'), arr);
+        console.log(chalk.green('ARRRRRR'), arr);
         return arr;
     }
 

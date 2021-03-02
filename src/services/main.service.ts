@@ -37,6 +37,7 @@ export class MainService {
      * @param data
      * @param options
      */
+    // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
@@ -54,7 +55,6 @@ export class MainService {
             console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
             return await MapTupleService.create(target, data, options)
         } else if (isTargetArray(target)) {
-            console.log(chalk.cyanBright('IS ARRAYYYYY '));
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
             console.log(chalk.greenBright('IS PRIMMMM ', target, data));

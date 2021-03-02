@@ -31,8 +31,9 @@ export class MapTupleService<T> {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                // console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
+                console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
                 const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
+                console.log(chalk.cyanBright('MAPPED ELTTTT'), mappedElement);
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {

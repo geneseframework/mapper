@@ -2,8 +2,8 @@ import { TestMapper} from '../../../../test-engine/test-mapper.model';
 
 export const testMappers: TestMapper[] = [];
 
-// ----------------------------------------------   Tuples of native   ------------------------------------------------
 
+// ----------------------------------------------   Tuples of native   ------------------------------------------------
 
 
 // testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue'], {isolate: true}));
@@ -17,6 +17,22 @@ testMappers.push(new TestMapper(`'a' / ['string', 'string'] / undefined`, ['stri
 testMappers.push(new TestMapper(`[true, false] / ['boolean', 'boolean']`, ['boolean', 'boolean'],[true, false]));
 testMappers.push(new TestMapper(`[true, 'false'] / ['boolean', 'boolean']`, ['boolean', 'boolean'],[true, 'false'], {expectedValue: undefined}));
 
+
+testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue']));
+testMappers.push(new TestMapper(`[2] / ['string'] / []`, ['string'],[2], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[2] / ['string'] && !differentiate / ['2']`, ['string'],[2], {expectedValue: ['2'], createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`'blue' / ['string'] / undefined`, ['string'],'blue', {expectedValue: undefined}));
+
+
+testMappers.push(new TestMapper(`['blue'] / [String]`, [String],['blue']));
+testMappers.push(new TestMapper(`['blue', 'white'] / [String]`, [String],['blue', 'white'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[] / [String]`, [String],[], {expectedValue: undefined}));
+
+
+testMappers.push(new TestMapper(`[2] / ['number']`, ['number'],[2]));
+testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {expectedValue: [2], createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`['a'] / ['number'] / [NaN]`, ['number'],['a'], {expectedValue: undefined}));
 
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 

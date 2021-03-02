@@ -7,6 +7,7 @@ import {
     isNonNullPrimitiveValueWithCorrectType,
     isPrimitiveValueWithCorrectType
 } from '../../utils/native/primitives.util';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
@@ -59,6 +60,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
+        console.log(chalk.blueBright('CREATE ELTTTTTTT'), data, typeName, options, this.haveSameType(data, typeName, options));
         return this.haveSameType(data, typeName, options) ? castStringAndNumbers(typeName, data) : undefined;
     }
 
