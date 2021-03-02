@@ -53,7 +53,6 @@ function includedTestTypes(testTypes: TestType[]): TestType[] {
 
 
 function isExpectedResult(testType: TestType, result: any): boolean {
-    console.log(chalk.redBright('?????'), testType, isTestIt(testType), result);
     const objectToCompare: any = isTestIt(testType) ? testType.expected : testType.options.expectedValue;
     return isSameObject(result, objectToCompare);
 }

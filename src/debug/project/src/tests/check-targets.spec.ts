@@ -8,10 +8,21 @@ class ClassSpec {
     name: string;
 }
 
+function notConstructor() {
+    return;
+}
+
 // --------------------------------------------   Check target   ----------------------------------------------------------
 
-its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, String, true, {isolate: true}));
-its.push(new TestIt(`hasCorrectFormat(ClassSpec)`, InitCheckTargetsService.hasCorrectFormat, ClassSpec, true, {isolate: true}));
+its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, 2, true, {isolate: false}));
+its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, false, true, {isolate: false}));
+its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, String, true, {isolate: false}));
+// its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, notConstructor, false, {isolate: true})); // TODO : implement isFunctionWhichIsNotExportedClass()
+its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCorrectFormat, [String], true, {isolate: true}));
+its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCorrectFormat, [String, Number], true, {isolate: true}));
+// its.push(new TestIt(`hasCorrectFormat(ClassSpec)`, InitCheckTargetsService.hasCorrectFormat, ClassSpec, true, {isolate: true}));
+// its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec], true, {isolate: true}));
+// its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec, ClassSpec], false, {isolate: true}));
 
 
 
