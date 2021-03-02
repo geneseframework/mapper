@@ -17,12 +17,9 @@ export class TargetService {
         if (isArray(target)) {
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
-            console.log(chalk.red('NOTTTTT'), );
             return target?.name;
         } else {
-            console.log(chalk.magentaBright('ARGHHHH'), );
             return StringTargetService.normalize(target);
-            // return target?.toLowerCase();
         }
     }
 

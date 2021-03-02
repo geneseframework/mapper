@@ -49,24 +49,24 @@ export function tupleLength(tuple: Bracketed): number {
 }
 
 
-function getContainerizedElements(text: Containerized): string[] {
+export function getContainerizedElements(text: Containerized): string[] {
     const insideContainer = text.slice(1, -1).trim();
     return insideContainer.length === 0 ? [] : getElements(insideContainer);
 }
 
 
 export function getElements(text: string): string[] {
-    // console.log(chalk.blueBright('GET ELTTTTMMMMS'), text);
+    console.log(chalk.blueBright('GET ELTTTTMMMMS'), text);
     if (trim(text).length === 0) {
     // if (!text || !isString(text) || text.length === 0) {
         return [];
     }
     const elements: string = trim(text);
     // console.log(chalk.magentaBright('GET ELTTTTMMMMS'), text);
-    // if (isContainerized(elements)) {
-    //     return [elements];
-    // } else if (isUnion(elements)) {
-    if (isUnion(elements)) {
+    if (isContainerized(elements)) {
+        return [elements];
+    } else if (isUnion(elements)) {
+    // if (isUnion(elements)) {
         const [first, last] = splitUnion(elements);
         return [first, ...getElements(last)];
     } else if (isIntersection(elements)) {
@@ -74,6 +74,7 @@ export function getElements(text: string): string[] {
         return [first, ...getElements(last)];
     } else if (hasCommas(elements)) {
         const [first, last] = splitCommas(elements);
+        console.log(chalk.magentaBright('FIRST LASTTTTTT'), first, last);
         return [first, ...getElements(last)];
     } else {
         return [elements]

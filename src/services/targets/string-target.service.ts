@@ -12,7 +12,7 @@ import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 export class StringTargetService {
 
 
-    static isCorrectTarget(target: string): boolean {
+    static isCorrectStringTarget(target: string): boolean {
         if (isNullOrUndefined(target) || !isString(target)) {
             return false;
         }

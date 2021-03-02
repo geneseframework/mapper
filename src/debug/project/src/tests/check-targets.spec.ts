@@ -1,5 +1,5 @@
 import { TestIt } from '../../../../test-engine/test-it.model';
-import { getElements, getFlattenElements } from '../../../../utils/native/tuples.util';
+import { getContainerizedElements, getElements, getFlattenElements } from '../../../../utils/native/tuples.util';
 import { InitCheckTargetsService } from '../../../../services/init/init-check-targets.service';
 import { StringTargetService } from '../../../../services/targets/string-target.service';
 
@@ -35,29 +35,36 @@ its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.has
 // ---------------------------------   StringTargetService.hasCorrectElements   -----------------------------------------
 
 
-its.push(new TestIt(`isCorrectTarget(string)`, StringTargetService.isCorrectTarget, 'string', true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(String)`, StringTargetService.isCorrectTarget, 'String', true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget('string')`, StringTargetService.isCorrectTarget, `'string'`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget("a")`, StringTargetService.isCorrectTarget, `"a"`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string[])`, StringTargetService.isCorrectTarget, `[string]`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string[])`, StringTargetService.isCorrectTarget, `string[]`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string | number`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string | number | boolean)`, StringTargetService.isCorrectTarget, `string | number | boolean`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string || number)`, StringTargetService.isCorrectTarget, `string || number`, false, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string & number`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(CheckClassSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(WrongCheckClassSpec)`, StringTargetService.isCorrectTarget, `WrongCheckClassSpec`, false, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(NotExportedCheckClassSpec)`, StringTargetService.isCorrectTarget, `NotExportedCheckClassSpec`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec | CheckTypeSpec`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectStringTarget(string)`, StringTargetService.isCorrectStringTarget, 'string', true));
+its.push(new TestIt(`isCorrectStringTarget(String)`, StringTargetService.isCorrectStringTarget, 'String', true));
+its.push(new TestIt(`isCorrectStringTarget('string')`, StringTargetService.isCorrectStringTarget, `'string'`, true));
+its.push(new TestIt(`isCorrectStringTarget("a")`, StringTargetService.isCorrectStringTarget, `"a"`, true));
+its.push(new TestIt(`isCorrectStringTarget(string[])`, StringTargetService.isCorrectStringTarget, `[string]`, true));
+its.push(new TestIt(`isCorrectStringTarget(string[])`, StringTargetService.isCorrectStringTarget, `string[]`, true));
+its.push(new TestIt(`isCorrectStringTarget(string | number)`, StringTargetService.isCorrectStringTarget, `string | number`, true));
+its.push(new TestIt(`isCorrectStringTarget(string | number | boolean)`, StringTargetService.isCorrectStringTarget, `string | number | boolean`, true));
+its.push(new TestIt(`isCorrectStringTarget(string || number)`, StringTargetService.isCorrectStringTarget, `string || number`, false));
+its.push(new TestIt(`isCorrectStringTarget(string | number)`, StringTargetService.isCorrectStringTarget, `string & number`, true));
+its.push(new TestIt(`isCorrectStringTarget(CheckClassSpec)`, StringTargetService.isCorrectStringTarget, `CheckClassSpec`, true));
+its.push(new TestIt(`isCorrectStringTarget(WrongCheckClassSpec)`, StringTargetService.isCorrectStringTarget, `WrongCheckClassSpec`, false));
+its.push(new TestIt(`isCorrectStringTarget(NotExportedCheckClassSpec)`, StringTargetService.isCorrectStringTarget, `NotExportedCheckClassSpec`, true));
+its.push(new TestIt(`isCorrectStringTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectStringTarget, `CheckClassSpec | CheckTypeSpec`, true));
+its.push(new TestIt(`isCorrectStringTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectStringTarget, `['a']`, true));
 
 
-// ---------------------------------   getElements   -----------------------------------------
+// ----------------------------------------------   getElements   ---------------------------------------------------------
 
 
-its.push(new TestIt(`getElements(['a'])`, getElements, `['a']`, [`'a'`], {isolate: false}));
-// its.push(new TestIt(`getElements(['a', ['b', 'c']])`, getElements, [`'a', ['b', 'c']`], [`'a'`, `['b', 'c']`], {isolate: true, log: true}));
+its.push(new TestIt(`getElements(['a'])`, getElements, `['a']`, [`['a']`]));
 
 
-its.push(new TestIt(`getFlattenElements(['a'])`, getFlattenElements, [`'a'`], [`'a'`], {isolate: false}));
-its.push(new TestIt(`getFlattenElements(['abc', 'def'])`, getFlattenElements, [`'abc'`, `'def'`], [`'abc'`, `'def'`], {isolate: false}));
-its.push(new TestIt(`getFlattenElements(['a', ['b', 'c']])`, getFlattenElements, ['a', ['b', 'c']], [`'a'`, `'b'`, `'c'`], {isolate: false}));
+// ---------------------------------------   getContainerizedElements   ---------------------------------------------------
+
+
+its.push(new TestIt(`getContainerizedElements(['a'])`, getContainerizedElements, `['a']`, [`'a'`], {isolate: true}));
+its.push(new TestIt(`getContainerizedElements(['a', ['b', 'c']])`, getContainerizedElements, `['a', ['b', 'c']]`, [`'a'`, `['b', 'c']`], {isolate: true, log: true}));
+
+
+// its.push(new TestIt(`getFlattenElements(['a'])`, getFlattenElements, [`'a'`], [`'a'`], {isolate: false}));
+// its.push(new TestIt(`getFlattenElements(['abc', 'def'])`, getFlattenElements, [`'abc'`, `'def'`], [`'abc'`, `'def'`], {isolate: false}));
+// its.push(new TestIt(`getFlattenElements(['a', ['b', 'c']])`, getFlattenElements, ['a', ['b', 'c']], [`'a'`, `'b'`, `'c'`], {isolate: false}));

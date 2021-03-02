@@ -37,15 +37,12 @@ export class InitCheckTargetsService {
      * @param target
      */
     static hasCorrectFormat(target: any): boolean {
-        // console.log(chalk.magentaBright('IS CORRECT ????'), isExportedClassConstructorArray(target));
         return isNumber(target)
             || isBoolean(target)
             || isPrimitiveConstructor(target)
-            // || isPrimitiveConstructorArray(target)
             || isExportedClassConstructor(target)
             || this.isCorrectArray(target)
-            // || isExportedClassConstructorArray(target)
-            || StringTargetService.isCorrectTarget(target);
+            || StringTargetService.isCorrectStringTarget(target);
     }
 
 
