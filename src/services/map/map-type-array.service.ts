@@ -6,17 +6,17 @@ import {
     isPrimitiveOrArrayOfPrimitivesValue,
     primitiveLiteralValue,
     typeOfDataCorrespondsToPrimitiveKeyword
-} from '../utils/primitives.util';
-import { PrimitiveElement } from '../types/primitives.type';
-import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
-import { isArray, partialClone } from '../utils/arrays.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
+} from '../../utils/primitives.util';
+import { PrimitiveElement } from '../../types/primitives.type';
+import { getTypeReferenceTypeDeclaration } from '../../utils/ast-class.util';
+import { isArray, partialClone } from '../../utils/arrays.util';
+import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapTypeService } from './map-type.service';
-import { Key } from '../types/key.type';
-import { throwWarning } from '../utils/errors.util';
+import { Key } from '../../types/key.type';
+import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { Mapper } from '../models/mapper';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { Mapper } from '../../models/mapper';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapTypeArrayService {
 

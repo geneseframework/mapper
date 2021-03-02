@@ -1,18 +1,18 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
-import { InstanceGenerator } from '../models/instance-generator.model';
+import { GLOBAL } from '../../const/global.const';
+import { InstanceGenerator } from '../../models/instance-generator.model';
 import { MapTypeService } from './map-type.service';
-import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
 import { MapEnumService } from './map-enum.service';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { getDeclarationKind } from '../utils/ast-declaration.util';
-import { TypeDeclarationKind } from '../enums/type-declaration.kind';
+import { TypeDeclaration } from '../../types/type-declaration.type';
+import { getDeclarationKind } from '../../utils/ast-declaration.util';
+import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { Key } from '../types/key.type';
-import { throwWarning } from '../utils/errors.util';
+import { Key } from '../../types/key.type';
+import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapDeclarationService<T> {
 

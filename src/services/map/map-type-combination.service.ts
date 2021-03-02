@@ -1,5 +1,5 @@
-import { CreateOptions } from '../interfaces/create-options.interface';
-import { Target } from '../types/target/target.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
+import { Target } from '../../types/target/target.type';
 import * as chalk from 'chalk';
 
 export class MapTypeCombinationService {

@@ -1,13 +1,13 @@
 import { ClassDeclaration } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
-import { InstanceGenerator } from '../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
+import { GLOBAL } from '../../const/global.const';
+import { InstanceGenerator } from '../../models/instance-generator.model';
+import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { getTypeDeclaration } from '../../utils/ast-declaration.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { throwWarning } from '../utils/errors.util';
+import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapInstanceService<T> {
 

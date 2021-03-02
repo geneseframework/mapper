@@ -1,17 +1,17 @@
-import { Target } from '../types/target/target.type';
-import { TargetInfo } from '../types/target/target-info.type';
-import { isNullOrUndefined } from '../utils/any.util';
-import { isPrimitiveOrPrimitivesArray } from '../utils/primitives.util';
-import { isDateOrDatesArrayType } from '../utils/dates.util';
-import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../types/primitives.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { Target } from '../../types/target/target.type';
+import { TargetInfo } from '../../types/target/target-info.type';
+import { isNullOrUndefined } from '../../utils/any.util';
+import { isPrimitiveOrPrimitivesArray } from '../../utils/primitives.util';
+import { isDateOrDatesArrayType } from '../../utils/dates.util';
+import { ArrayOfPrimitiveElements, PrimitiveElement, PrimitiveType } from '../../types/primitives.type';
+import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import { MapDateService } from './map-date.service';
-import { TargetService } from './target.service';
+import { TargetService } from '../target.service';
 import * as chalk from 'chalk';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapTrivialCasesService {
 

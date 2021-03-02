@@ -9,16 +9,16 @@ import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInstanceService } from './map-instance.service';
-import { MapEnumService } from './map-enum.service';
-import { MapInterfaceService } from './map-interface.service';
-import { MapTypeService } from './map-type.service';
+import { MapInstanceService } from './map/map-instance.service';
+import { MapEnumService } from './map/map-enum.service';
+import { MapInterfaceService } from './map/map-interface.service';
+import { MapTypeService } from './map/map-type.service';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
 import { isTargetArray } from '../utils/targets.util';
 import { isPrimitiveTypeName } from '../utils/types.util';
-import { MapPrimitiveService } from './map-primitive.service';
-import { MapTupleService } from './map-tuple.service';
+import { MapPrimitiveService } from './map/map-primitive.service';
+import { MapTupleService } from './map/map-tuple.service';
 import { isTuple, tupleLength } from '../utils/tuples.util';
 
 export class MainService {

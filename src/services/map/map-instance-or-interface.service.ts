@@ -1,21 +1,21 @@
 import { ClassDeclaration, InterfaceDeclaration, SyntaxKind, Type } from 'ts-morph';
-import { getAllClassProperties } from '../utils/ast-class.util';
-import { getApparentType } from '../utils/ast-types.util';
-import { PropertyKind } from '../enums/property-kind.enum';
+import { getAllClassProperties } from '../../utils/ast-class.util';
+import { getApparentType } from '../../utils/ast-types.util';
+import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
-import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { MapInterfaceService } from './map-interface.service';
-import { getAllInterfaceProperties } from '../utils/ast-interfaces.util';
+import { getAllInterfaceProperties } from '../../utils/ast-interfaces.util';
 import { MapInstanceService } from './map-instance.service';
 import * as chalk from 'chalk';
-import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../utils/any.util';
-import { isArray } from '../utils/arrays.util';
-import { indexSignatureWithSameType } from '../utils/ast-declaration.util';
-import { PropertyInfos } from '../types/property-infos.type';
-import { DateDeclaration } from '../models/date-declaration.model';
-import { IncompatibilityService } from './incompatibility.service';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../../utils/any.util';
+import { isArray } from '../../utils/arrays.util';
+import { indexSignatureWithSameType } from '../../utils/ast-declaration.util';
+import { PropertyInfos } from '../../types/property-infos.type';
+import { DateDeclaration } from '../../models/date-declaration.model';
+import { IncompatibilityService } from '../incompatibility.service';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapInstanceOrInterfaceService<T> {
 

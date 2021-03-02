@@ -1,12 +1,12 @@
 import { InterfaceDeclaration } from 'ts-morph';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
-import { implementsRequiredProperties } from '../utils/ast-interfaces.util';
+import { getTypeDeclaration } from '../../utils/ast-declaration.util';
+import { implementsRequiredProperties } from '../../utils/ast-interfaces.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { throwWarning } from '../utils/errors.util';
-import { DateDeclaration } from '../models/date-declaration.model';
+import { throwWarning } from '../../utils/errors.util';
+import { DateDeclaration } from '../../models/date-declaration.model';
 import { MapDateService } from './map-date.service';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 import * as chalk from 'chalk';
 
 export class MapInterfaceService {

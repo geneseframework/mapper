@@ -1,6 +1,6 @@
-import { isValidDateConstructor } from '../utils/dates.util';
+import { isValidDateConstructor } from '../../utils/dates.util';
 import * as chalk from 'chalk';
-import { IncompatibilityService } from './incompatibility.service';
+import { IncompatibilityService } from '../incompatibility.service';
 
 export class MapDateService {
 

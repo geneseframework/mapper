@@ -1,8 +1,8 @@
 import { EnumDeclaration } from 'ts-morph';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
-import { isEnumValue } from '../utils/ast-enums.util';
-import { Key } from '../types/key.type';
-import { newMappedElement } from '../utils/mapping.util';
+import { getTypeDeclaration } from '../../utils/ast-declaration.util';
+import { isEnumValue } from '../../utils/ast-enums.util';
+import { Key } from '../../types/key.type';
+import { newMappedElement } from '../../utils/mapping.util';
 
 export class MapEnumService {
 

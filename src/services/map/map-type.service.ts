@@ -13,22 +13,22 @@ import {
     isPrimitiveOrPrimitivesArray,
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
-} from '../utils/primitives.util';
+} from '../../utils/primitives.util';
 import * as chalk from 'chalk';
-import { PrimitiveElement, PrimitiveType } from '../types/primitives.type';
+import { PrimitiveElement, PrimitiveType } from '../../types/primitives.type';
 import { MapArrayService } from './map-array.service';
-import { getTypeReferenceTypeDeclaration } from '../utils/ast-class.util';
-import { getApparentType } from '../utils/ast-types.util';
-import { getTypeDeclaration } from '../utils/ast-declaration.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
+import { getTypeReferenceTypeDeclaration } from '../../utils/ast-class.util';
+import { getApparentType } from '../../utils/ast-types.util';
+import { getTypeDeclaration } from '../../utils/ast-declaration.util';
+import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
-import { newMappedElement } from '../utils/mapping.util';
+import { newMappedElement } from '../../utils/mapping.util';
 import { MapTypeArrayService } from './map-type-array.service';
-import { isNullOrUndefined } from '../utils/any.util';
-import { Key } from '../types/key.type';
-import { IncompatibilityService } from './incompatibility.service';
-import { CreateOptions } from '../interfaces/create-options.interface';
-import { TupleOld } from '../types/target/target-tuple-old.type';
+import { isNullOrUndefined } from '../../utils/any.util';
+import { Key } from '../../types/key.type';
+import { IncompatibilityService } from '../incompatibility.service';
+import { CreateOptions } from '../../interfaces/create-options.interface';
+import { TupleOld } from '../../types/target/target-tuple-old.type';
 
 export class MapTypeService {
 

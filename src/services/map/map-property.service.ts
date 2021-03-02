@@ -1,16 +1,16 @@
-import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
+import { isPrimitiveTypeNode, isPrimitiveValueWithCorrectType } from '../../utils/primitives.util';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapArrayService } from './map-array.service';
-import { getImportTypeDeclaration } from '../utils/ast-imports.util';
-import { PropertyKind } from '../enums/property-kind.enum';
+import { getImportTypeDeclaration } from '../../utils/ast-imports.util';
+import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
 import { MapInterfaceService } from './map-interface.service';
-import { PrimitiveType } from '../types/primitives.type';
-import { PropertyInfos } from '../types/property-infos.type';
-import { throwWarning } from '../utils/errors.util';
+import { PrimitiveType } from '../../types/primitives.type';
+import { PropertyInfos } from '../../types/property-infos.type';
+import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
 export class MapPropertyService<T> {
 

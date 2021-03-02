@@ -1,56 +1,25 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { isPrimitiveTypeNode, isPrimitiveValue } from '../utils/primitives.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
-import { GLOBAL } from '../const/global.const';
-import { InstanceGenerator } from '../models/instance-generator.model';
-import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
-import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
+import { isPrimitiveTypeNode, isPrimitiveValue } from '../../utils/primitives.util';
+import { TypeDeclaration } from '../../types/type-declaration.type';
+import { GLOBAL } from '../../const/global.const';
+import { InstanceGenerator } from '../../models/instance-generator.model';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast-imports.util';
+import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { TupleOld } from '../types/target/target-tuple-old.type';
-import { Mapper } from '../models/mapper';
-import { CreateOptions } from '../interfaces/create-options.interface';
-import { Tuple } from '../types/tuples/tuple.type';
-import { findTupleElement, isTupleOfSameLength } from '../utils/targets.util';
-import { throwIncompatibility, throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
-import { tupleLength } from '../utils/tuples.util';
+import { TupleOld } from '../../types/target/target-tuple-old.type';
+import { Mapper } from '../../models/mapper';
+import { CreateOptions } from '../../interfaces/create-options.interface';
 
-export class MapTupleService<T> {
+export class MapTupleServiceOld<T> {
 
 
-    static async create(targetTuple: Tuple, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
-        if (!isTupleOfSameLength(targetTuple, data)) {
-            throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
-            return undefined;
-        }
-        const tuple: any[] = [];
-        for (let i = 0; i < data.length; i++) {
-            console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
-            if (data[i] === null || data[i] === undefined) {
-                tuple.push(data[i]);
-            } else {
-                console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
-                const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
-                if (mappedElement !== undefined) {
-                    tuple.push(mappedElement);
-                } else {
-                    throwIncompatibility(targetTuple, data);
-                    return undefined;
-                }
-            }
-        }
-        return tuple;
-    }
-
-
-    static async createOld(data: any[], mapParameterTuple: TupleOld, options: CreateOptions): Promise<TupleOld> {
+    static async create(data: any[], mapParameterTuple: TupleOld, options: CreateOptions): Promise<TupleOld> {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
+                const mappedElement: any = await Mapper.createOld(mapParameterTuple[i], data[i], options); // TODO: Error ?
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {

@@ -1,18 +1,18 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
-import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../utils/ast-imports.util';
-import { InstanceGenerator } from '../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../utils/ast-class.util';
-import { TypeDeclaration } from '../types/type-declaration.type';
+import { GLOBAL } from '../../const/global.const';
+import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast-imports.util';
+import { InstanceGenerator } from '../../models/instance-generator.model';
+import { getNumberOfConstructorArguments } from '../../utils/ast-class.util';
+import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { isEnumValue } from '../utils/ast-enums.util';
-import { isEmptyArray } from '../utils/arrays.util';
-import { PrimitiveType } from '../types/primitives.type';
-import { isPrimitiveValueWithCorrectType } from '../utils/primitives.util';
-import { isNullOrUndefined } from '../utils/any.util';
-import { Key } from '../types/key.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
-import { isPrimitiveTypeName } from '../utils/types.util';
+import { isEnumValue } from '../../utils/ast-enums.util';
+import { isEmptyArray } from '../../utils/arrays.util';
+import { PrimitiveType } from '../../types/primitives.type';
+import { isPrimitiveValueWithCorrectType } from '../../utils/primitives.util';
+import { isNullOrUndefined } from '../../utils/any.util';
+import { Key } from '../../types/key.type';
+import { CreateOptions } from '../../interfaces/create-options.interface';
+import { isPrimitiveTypeName } from '../../utils/types.util';
 
 export class MapArrayService<T> {
 
