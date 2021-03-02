@@ -29,12 +29,16 @@ its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.has
 // ---------------------------------   StringTargetService.hasCorrectElements   -----------------------------------------
 
 
-its.push(new TestIt(`hasCorrectElements(string)`, StringTargetService.isCorrectTarget, 'string', true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements(String)`, StringTargetService.isCorrectTarget, 'String', true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements('string')`, StringTargetService.isCorrectTarget, `'string'`, true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements("a")`, StringTargetService.isCorrectTarget, `"a"`, true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements(string[])`, StringTargetService.isCorrectTarget, `[string]`, true, {isolate: false}));
-its.push(new TestIt(`hasCorrectElements(string[])`, StringTargetService.isCorrectTarget, `string[]`, true, {isolate: true}));
+its.push(new TestIt(`isCorrectTarget(string)`, StringTargetService.isCorrectTarget, 'string', true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(String)`, StringTargetService.isCorrectTarget, 'String', true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget('string')`, StringTargetService.isCorrectTarget, `'string'`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget("a")`, StringTargetService.isCorrectTarget, `"a"`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string[])`, StringTargetService.isCorrectTarget, `[string]`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string[])`, StringTargetService.isCorrectTarget, `string[]`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string | number`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string | number | boolean)`, StringTargetService.isCorrectTarget, `string | number | boolean`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string || number)`, StringTargetService.isCorrectTarget, `string || number`, false, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string & number`, true, {isolate: true}));
 
 
 // ---------------------------------   getElements   -----------------------------------------

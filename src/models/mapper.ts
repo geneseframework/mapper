@@ -3,7 +3,7 @@ import { Target } from '../types/target/target.type';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { throwWarning } from '../utils/errors.util';
-import { DateConstructorParameters } from '../types/date-cpnstructor-parameters.type';
+import { DateConstructorParameters } from '../types/date-constructor-parameters.type';
 import {
     NotArray,
     NotBoolean,
@@ -16,8 +16,8 @@ import {
 } from '../types/not-some-type.type';
 import { CreateOptions } from '../interfaces/create-options.interface';
 import { MainServiceOld } from '../services/main.service.old';
-import { UnionType } from '../types/union-type.type';
-import { CombinationType } from '../types/combination-type.type';
+import { Union } from '../types/target/string/union.type';
+import { Combination } from '../types/target/string/combination.type';
 import { MainService } from '../services/main.service';
 
 /**
@@ -93,7 +93,7 @@ export class Mapper<T> {
 
     // --------------------------------------   Type combinations overloads   ---------------------------------------------
 
-    static async create<T>(target: CombinationType, data: any, options?: CreateOptions): Promise<any>
+    static async create<T>(target: Combination, data: any, options?: CreateOptions): Promise<any>
 
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 

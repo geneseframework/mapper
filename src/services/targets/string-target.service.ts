@@ -7,6 +7,8 @@ import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketed } from '../../types/target/string/bracketed.type';
 import * as chalk from 'chalk';
 import { isContainerized, isNotEmptyContainer } from '../../types/target/string/containerized.type';
+import { isUnion, splitUnion } from '../../types/target/string/union.type';
+import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
 
 export class StringTargetService {
 
@@ -27,12 +29,19 @@ export class StringTargetService {
     }
 
 
+    private static haveCorrectElements(texts: string[]): boolean {
+        return texts.every(t => this.hasCorrectElements(t));
+    }
+
+
     private static hasCorrectElements(text: string): boolean {
         const cleanedText: string = this.cleanExtremities(text);
         return isPrimitiveType(cleanedText)
             || isQuoted(cleanedText)
             || this.isCorrectContainer(cleanedText)
             || this.isCorrectArray(cleanedText)
+            || this.isCorrectUnion(cleanedText)
+            || this.isCorrectIntersection(cleanedText)
     }
 
 
@@ -46,13 +55,13 @@ export class StringTargetService {
     }
 
 
-    private static isCorrectObject(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isCorrectUnion(text: string): boolean {
+        return isUnion(text) && this.haveCorrectElements(splitUnion(text));
     }
 
 
-    private static isCorrectCombination(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isCorrectIntersection(text: string): boolean {
+        return isIntersection(text) && this.haveCorrectElements(splitIntersection(text));
     }
 
 
@@ -66,13 +75,17 @@ export class StringTargetService {
     }
 
 
+    private static isCorrectObject(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
     private static isExportedClass(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
     private static cleanExtremities(text: string): string {
-        console.log(chalk.blueBright('CLEA NNNNNN'), text);
         return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
     }
 
