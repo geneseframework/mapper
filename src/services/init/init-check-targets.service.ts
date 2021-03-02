@@ -6,6 +6,7 @@ import * as chalk from 'chalk';
 import { isFunctionWhichIsNotExportedClass } from '../../utils/native/functions.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isBoolean } from '../../utils/native/booleans.util';
+import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
 
 export class InitCheckTargetsService {
 
@@ -37,24 +38,24 @@ export class InitCheckTargetsService {
      * @param target
      */
     static hasCorrectFormat(target: any): boolean {
-        console.log(chalk.yellowBright('IS CORRECT ????'), isPrimitiveConstructorArray(target));
-        console.log(chalk.magentaBright('IS CORRECT ????'), isTConstructorArray(target));
         return InitCheckTargetsService.isACorrectCase(target) && !InitCheckTargetsService.isAWrongCase(target);
     }
 
 
     private static isACorrectCase(target: any): boolean {
-        console.log(chalk.magentaBright('IS CORRECT ????'), isTConstructorArray(target));
+        console.log(chalk.magentaBright('IS CORRECT ????'), isExportedClassConstructorArray(target));
         return isNumber(target)
         || isBoolean(target)
         || isPrimitiveConstructor(target)
         || isPrimitiveConstructorArray(target)
-        // || isTConstructor(target)
-        // || isTConstructorArray(target)
+        || isExportedClassConstructor(target)
+        || isExportedClassConstructorArray(target)
     }
 
 
+    // TODO
     private static isAWrongCase(target: any): boolean {
-        return isFunctionWhichIsNotExportedClass(target)
+        return false;
+        // return isFunctionWhichIsNotExportedClass(target)
     }
 }
