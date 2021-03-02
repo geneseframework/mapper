@@ -6,7 +6,7 @@ import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketed } from '../../types/target/string/bracketed.type';
 import * as chalk from 'chalk';
-import { isContainerized } from '../../types/target/string/containerized.type';
+import { isContainerized, isNotEmptyContainer } from '../../types/target/string/containerized.type';
 
 export class StringTargetService {
 
@@ -32,16 +32,17 @@ export class StringTargetService {
         return isPrimitiveType(cleanedText)
             || isQuoted(cleanedText)
             || this.isCorrectContainer(cleanedText)
+            || this.isCorrectArray(cleanedText)
     }
 
 
     private static isCorrectArray(text: string): boolean {
-        return isPrimitiveType(text)
+        return /^\w*\[\]$/g.test(text) && this.hasCorrectElements(text.slice(0, -2));
     }
 
 
     private static isCorrectContainer(text: string): boolean {
-        return isContainerized(text) && this.hasCorrectElements(text.slice(1, -1))
+        return isNotEmptyContainer(text) && this.hasCorrectElements(text.slice(1, -1))
     }
 
 
@@ -61,6 +62,11 @@ export class StringTargetService {
 
 
     private static isCorrectConditional(text: string): boolean {
+        return isPrimitiveType(text)
+    }
+
+
+    private static isExportedClass(text: string): boolean {
         return isPrimitiveType(text)
     }
 

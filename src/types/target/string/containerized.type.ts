@@ -6,3 +6,7 @@ export type Containerized = Bracketed | Parenthesized;
 export function isContainerized(text: string): text is Containerized {
     return isBracketed(text) || isParenthesized(text);
 }
+
+export function isNotEmptyContainer(text: string): text is Containerized {
+    return isContainerized(text) && text.length > 2;
+}
