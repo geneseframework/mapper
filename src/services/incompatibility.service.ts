@@ -2,7 +2,7 @@ import { Target } from '../types/target/target.type';
 import { isClassOrInterfaceDeclaration } from '../utils/ast/ast-declaration.util';
 import { isArray } from '../utils/native/arrays.util';
 import { TupleOld } from '../types/target/target-tuple-old.type';
-import { TargetService } from './target.service';
+import { TargetServiceOld } from './targets/target.service.old';
 import { PrimitiveConstructor, Primitive, isPrimitiveConstructor } from '../types/primitives.type';
 import { isValidDateConstructor } from '../utils/native/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
@@ -25,7 +25,7 @@ export class IncompatibilityService {
      * @param options
      */
     static areIncompatible(target: Target<any>, data: any, options: CreateOptions): boolean {
-        if (TargetService.areStringAndNumberButNotDifferentiateThem(target, data, options)) {
+        if (TargetServiceOld.areStringAndNumberButNotDifferentiateThem(target, data, options)) {
             return false;
         }
         return this.dataIsPrimitiveAndTargetIsIncompatible(target, data)
@@ -56,7 +56,7 @@ export class IncompatibilityService {
      * @private
      */
     private static targetIsBooleanAndDataNot(target: Target<any>, data: any): boolean {
-        return TargetService.isBoolean(target) && typeof data !== 'boolean';
+        return TargetServiceOld.isBoolean(target) && typeof data !== 'boolean';
     }
 
 
@@ -67,7 +67,7 @@ export class IncompatibilityService {
      * @private
      */
     private static targetIsNumberAndDataNot(target: Target<any>, data: any): boolean {
-        return TargetService.isNumber(target) && typeof data !== 'number' && typeof data !== 'string';
+        return TargetServiceOld.isNumber(target) && typeof data !== 'number' && typeof data !== 'string';
     }
 
 
@@ -101,7 +101,7 @@ export class IncompatibilityService {
      * @private
      */
     private static targetIsTupleAndDataIsIncompatible(target: Target<any>, data: any): boolean {
-        return TargetService.isTuple(target) && (!isArray(data) || data.length !== (target as any[]).length);
+        return TargetServiceOld.isTuple(target) && (!isArray(data) || data.length !== (target as any[]).length);
     }
 
 
@@ -128,7 +128,7 @@ export class IncompatibilityService {
      * @private
      */
     private static isCompatibleDate(target: Target<any>, data: Primitive): boolean {
-        return TargetService.isDate(target) && isValidDateConstructor(data);
+        return TargetServiceOld.isDate(target) && isValidDateConstructor(data);
     }
 
 
@@ -147,7 +147,7 @@ export class IncompatibilityService {
     }
 
     private static isNotPrimitiveClassOrInterface<T>(target: Target<T>): boolean {
-        if (TargetService.isConstructorNotPrimitive(target)) {
+        if (TargetServiceOld.isConstructorNotPrimitive(target)) {
             return true;
         } else {
             return typeof target === 'string' && isClassOrInterfaceDeclaration(target);
@@ -156,7 +156,7 @@ export class IncompatibilityService {
 
 
     private static isIncompatibleWithTargetArray(target: any[], data: any, options: CreateOptions): boolean {
-        if (TargetService.isTuple(target)) {
+        if (TargetServiceOld.isTuple(target)) {
             return this.isIncompatibleWithTuple(target, data, options);
         } else if (!isArray(data)) {
             return true;

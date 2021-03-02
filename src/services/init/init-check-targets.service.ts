@@ -1,14 +1,10 @@
-// TODO
 import { throwError } from '../../utils/errors.util';
 import { isPrimitiveConstructor, isPrimitiveConstructorArray } from '../../types/primitives.type';
-import { isTConstructor, isTConstructorArray } from '../../types/t-constructor.type';
-import * as chalk from 'chalk';
-import { isFunctionWhichIsNotExportedClass } from '../../utils/native/functions.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isBoolean } from '../../utils/native/booleans.util';
 import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
-import { isString } from '../../utils/native/strings.util';
-import { TargetService } from '../target.service';
+import { TargetService } from '../targets/target.service';
+import { StringTargetService } from '../targets/string-target.service';
 
 export class InitCheckTargetsService {
 
@@ -19,6 +15,7 @@ export class InitCheckTargetsService {
     }
 
 
+    // TODO
     private static async getTargets(): Promise<any[]> {
         return [];
     }
@@ -47,7 +44,7 @@ export class InitCheckTargetsService {
             || isPrimitiveConstructorArray(target)
             || isExportedClassConstructor(target)
             || isExportedClassConstructorArray(target)
-            || TargetService.isCorrectStringTarget(target);
+            || StringTargetService.isCorrectTarget(target);
     }
 
 }

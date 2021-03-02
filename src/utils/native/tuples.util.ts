@@ -5,6 +5,7 @@ import { isStartingContainer, StartingContainer } from '../../types/tuples/start
 import { Containerized, isContainerized } from '../../types/tuples/container.type';
 import { throwError, throwWarning } from '../errors.util';
 import * as chalk from 'chalk';
+import { isString } from './strings.util';
 
 
 export function isTuple(typeName: string): typeName is Tuple {
@@ -63,7 +64,8 @@ function getNextElements(text: string, firstElement: string): string {
 
 
 function cleanExtremities(text: string): string {
-    return text.replace(/^(,| )/g, '').replace(/(,| )$/g, '');
+    console.log(chalk.blueBright('CLEA NNNNNN'), text);
+    return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
 }
 
 

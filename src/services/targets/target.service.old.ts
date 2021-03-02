@@ -1,17 +1,16 @@
-import { Target } from '../types/target/target.type';
-import { TargetInfo } from '../types/target/target-info.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
-import { throwWarning } from '../utils/errors.util';
-import { CreateOptions } from '../interfaces/create-options.interface';
-import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../utils/ast/ast-declaration.util';
-import { TargetElementService } from './target-element.service';
-import { TConstructor } from '../types/t-constructor.type';
-import { isArray } from '../utils/native/arrays.util';
-import { isPrimitiveConstructor } from '../types/primitives.type';
-import { isFunction } from '../utils/native/functions.util';
-import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
+import { Target } from '../../types/target/target.type';
+import { TargetInfo } from '../../types/target/target-info.type';
+import { TupleOld } from '../../types/target/target-tuple-old.type';
+import { throwWarning } from '../../utils/errors.util';
+import { CreateOptions } from '../../interfaces/create-options.interface';
+import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../../utils/ast/ast-declaration.util';
+import { TConstructor } from '../../types/t-constructor.type';
+import { isArray } from '../../utils/native/arrays.util';
+import { isPrimitiveConstructor } from '../../types/primitives.type';
+import { isFunction } from '../../utils/native/functions.util';
+import { TargetElementServiceOld } from './target-element.service.old';
 
-export class TargetService {
+export class TargetServiceOld {
 
     static toString<T>(target: Target<T>): string {
         if (isArray(target)) {
@@ -25,12 +24,12 @@ export class TargetService {
 
 
     static isCorrectStringTarget(target: string): boolean {
-        return TargetElementService.isCorrectStringTarget(target);
+        return TargetElementServiceOld.hasCorrectElements(target);
     }
 
 
     static isCorrect<T>(target: Target<T>): boolean {
-        return TargetElementService.hasCorrectElements(target);
+        return TargetElementServiceOld.hasCorrectElements(target);
     }
 
 

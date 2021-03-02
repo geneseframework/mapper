@@ -1,10 +1,11 @@
 import { TestIt } from '../../../../test-engine/test-it.model';
 import { getElements, getFlattenElements } from '../../../../utils/native/tuples.util';
 import { InitCheckTargetsService } from '../../../../services/init/init-check-targets.service';
+import { StringTargetService } from '../../../../services/targets/string-target.service';
 
 export const its: TestIt[] = [];
 
-class ClassSpec {
+export class CheckClassSpec {
     name: string;
 }
 
@@ -12,7 +13,7 @@ function notConstructor() {
     return;
 }
 
-// --------------------------------------------   Check target   ----------------------------------------------------------
+// ---------------------------------   InitCheckTargetsService.hasCorrectFormat   -----------------------------------------
 
 its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, 2, true, {isolate: false}));
 its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, false, true, {isolate: false}));
@@ -20,10 +21,18 @@ its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorre
 // its.push(new TestIt(`hasCorrectFormat(String)`, InitCheckTargetsService.hasCorrectFormat, notConstructor, false, {isolate: true})); // TODO : implement isFunctionWhichIsNotExportedClass()
 its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCorrectFormat, [String], true, {isolate: false}));
 its.push(new TestIt(`hasCorrectFormat([String])`, InitCheckTargetsService.hasCorrectFormat, [String, Number], true, {isolate: false}));
-its.push(new TestIt(`hasCorrectFormat(ClassSpec)`, InitCheckTargetsService.hasCorrectFormat, ClassSpec, true, {isolate: false}));
-its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec], true, {isolate: false}));
-its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [ClassSpec, ClassSpec], true, {isolate: false}));
+its.push(new TestIt(`hasCorrectFormat(ClassSpec)`, InitCheckTargetsService.hasCorrectFormat, CheckClassSpec, true, {isolate: false}));
+its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [CheckClassSpec], true, {isolate: false}));
+its.push(new TestIt(`hasCorrectFormat([ClassSpec])`, InitCheckTargetsService.hasCorrectFormat, [CheckClassSpec, CheckClassSpec], true, {isolate: false}));
 
+
+// ---------------------------------   StringTargetService.hasCorrectElements   -----------------------------------------
+
+
+its.push(new TestIt(`hasCorrectElements('String')`, StringTargetService.hasCorrectElements, 'String', true, {isolate: true}));
+
+
+// ---------------------------------   getElements   -----------------------------------------
 
 
 its.push(new TestIt(`getElements(['a'])`, getElements, `['a']`, [`'a'`], {isolate: false}));

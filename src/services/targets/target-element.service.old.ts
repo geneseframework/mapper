@@ -1,11 +1,11 @@
-import { TargetElement } from '../types/target/target-element.type';
-import { throwWarning } from '../utils/errors.util';
-import { isDeclaration } from '../utils/ast/ast-declaration.util';
-import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
-import { isPrimitiveConstructor } from '../types/primitives.type';
-import { isFunction } from '../utils/native/functions.util';
+import { TargetElement } from '../../types/target/target-element.type';
+import { throwWarning } from '../../utils/errors.util';
+import { isDeclaration } from '../../utils/ast/ast-declaration.util';
+import { isDateTypeName, isObjectTypeName, isPrimitiveTypeName } from '../../utils/native/types.util';
+import { isPrimitiveConstructor } from '../../types/primitives.type';
+import { isFunction } from '../../utils/native/functions.util';
 
-export class TargetElementService {
+export class TargetElementServiceOld {
 
 
     static hasCorrectElements(target: any): boolean {
