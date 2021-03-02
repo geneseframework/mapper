@@ -10,11 +10,23 @@ import { Bracketed } from '../../types/target/string/bracketed.type';
 import { isUnion, splitUnion } from '../../types/target/string/union.type';
 import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
 import { hasCommas, splitCommas } from '../../types/target/string/commas.type';
+import { isArray } from './arrays.util';
 
 
 export function isTuple(typeName: string): typeName is Tuple {
     return /^\[.*, .*\]$/g.test(typeName);
 }
+
+
+export function isTupleOfSameLength(targetTuple: Bracketed, data: any[]): boolean {
+    return isArray(data) && data.length === tupleLength(targetTuple);
+}
+
+
+export function findTupleElement(targetTuple: Bracketed, index: number): string {
+    return targetTuple.slice(1, -1).split(', ')[index];
+}
+
 
 export function isTupleStringString(targetData: [string, any]): targetData is StringString {
     return targetData[0] === 'string' && typeof targetData[1] === 'string';

@@ -15,15 +15,15 @@ import { MapInterfaceService } from './map/map-interface.service';
 import { MapTypeService } from './map/map-type.service';
 import { throwWarning } from '../utils/errors.util';
 import * as chalk from 'chalk';
-import { isTargetArray } from '../utils/targets.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
-import { isTuple, tupleLength } from '../utils/native/tuples.util';
+import { tupleLength } from '../utils/native/tuples.util';
 import { TargetService } from './targets/target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
 import { isNullOrUndefined } from '../utils/native/any.util';
 import { MapArrayService } from './map/map-array.service';
+import { isArrayType } from '../types/target/string/array-type.type';
 
 export class MainService {
 
@@ -54,7 +54,7 @@ export class MainService {
         } else if (isBracketed(target)) {
             console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
             return await MapTupleService.create(target, data, options)
-        } else if (isTargetArray(target)) {
+        } else if (isArrayType(target)) {
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
             console.log(chalk.greenBright('IS PRIMMMM ', target, data));
