@@ -9,6 +9,12 @@ export class CheckClassSpec {
     name: string;
 }
 
+class NotExportedCheckClassSpec {
+    name: string;
+}
+
+export type CheckTypeSpec = string | number;
+
 function notConstructor() {
     return;
 }
@@ -39,7 +45,10 @@ its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCo
 its.push(new TestIt(`isCorrectTarget(string | number | boolean)`, StringTargetService.isCorrectTarget, `string | number | boolean`, true, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(string || number)`, StringTargetService.isCorrectTarget, `string || number`, false, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCorrectTarget, `string & number`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(CheckClassSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec`, true, {isolate: true}));
+its.push(new TestIt(`isCorrectTarget(CheckClassSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(WrongCheckClassSpec)`, StringTargetService.isCorrectTarget, `WrongCheckClassSpec`, false, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(NotExportedCheckClassSpec)`, StringTargetService.isCorrectTarget, `NotExportedCheckClassSpec`, true, {isolate: false}));
+its.push(new TestIt(`isCorrectTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec | CheckTypeSpec`, true, {isolate: true}));
 
 
 // ---------------------------------   getElements   -----------------------------------------

@@ -4,9 +4,7 @@ import { isPrimitiveConstructor, isPrimitiveType } from '../../types/primitives.
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
-import { isBracketed } from '../../types/target/string/bracketed.type';
-import * as chalk from 'chalk';
-import { isContainerized, isNotEmptyContainer } from '../../types/target/string/containerized.type';
+import { isNotEmptyContainer } from '../../types/target/string/containerized.type';
 import { isUnion, splitUnion } from '../../types/target/string/union.type';
 import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
@@ -43,7 +41,7 @@ export class StringTargetService {
             || this.isCorrectArray(cleanedText)
             || this.isCorrectUnion(cleanedText)
             || this.isCorrectIntersection(cleanedText)
-            || this.isExportedDeclaration(cleanedText)
+            || this.isDeclaration(cleanedText)
     }
 
 
@@ -67,22 +65,25 @@ export class StringTargetService {
     }
 
 
+    // TODO
     private static isCorrectExtends(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
+    // TODO
     private static isCorrectConditional(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
+    // TODO
     private static isCorrectObject(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
-    private static isExportedDeclaration(text: string): boolean {
+    private static isDeclaration(text: string): boolean {
         return hasDeclaration(text);
     }
 
@@ -99,11 +100,6 @@ export class StringTargetService {
             return [targetElement];
         }
         throwWarning(`Warning: unknown target element : `, targetElement);
-    }
-
-
-    private static isCorrect(targetElement: unknown): boolean {
-        return isPrimitiveConstructor(targetElement) || this.hasCorrectElements(targetElement as string);
     }
 
 
