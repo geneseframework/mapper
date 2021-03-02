@@ -4,7 +4,7 @@ export const testMappers: TestMapper[] = [];
 
 // --------------------------------------------------   Strings   ---------------------------------------------------------
 
-testMappers.push(new TestMapper(`'blue' / string`, 'string','blue'));
+testMappers.push(new TestMapper(`'blue' / string`, 'string','blue', {isolate: true}));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null));
 testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined}));

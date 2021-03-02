@@ -43,8 +43,8 @@ export interface TupleInterfaceSpec {
     name: string;
 }
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, ['TupleInterfaceSpec', 'TupleInterfaceSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, ['TupleInterfaceSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `['TupleInterfaceSpec', 'TupleInterfaceSpec']`,[{name: 'Léa'}, {name: 'Léo'}]));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, `['TupleInterfaceSpec', 'string']`,[{name: 'Léa'}, 'Blue']));
 
 
 // --------------------------------------------   Tuples of types   --------------------------------------------------
@@ -52,9 +52,9 @@ testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec,
 
 export type TupleTypeSpec = TupleClassSpec | TupleInterfaceSpec;
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, ['TupleTypeSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, {name: 'Léo'}]));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, `['TupleTypeSpec', 'string']`,[{name: 'Léa'}, 'Blue']));
 
 
 // ------------------------------------------------------------------------------------------------------------------------

@@ -20,18 +20,18 @@ export class MapTupleService<T> {
 
 
     static async create(targetTuple: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
+        // console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
         if (!isTupleOfSameLength(targetTuple, data)) {
             throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
         }
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
-            console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
+            // console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
-                console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
+                // console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
                 const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);

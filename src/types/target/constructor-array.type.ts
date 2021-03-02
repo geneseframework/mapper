@@ -1,4 +1,4 @@
 import { TConstructor } from '../t-constructor.type';
-import { PrimitiveConstructor } from '../primitives.type';
+import { PrimitiveConstructor, PrimitiveType } from '../primitives.type';
 
-export type ConstructorArray = (TConstructor<any> | PrimitiveConstructor)[];
+export type ConstructorArray = (TConstructor<any> | PrimitiveConstructor | PrimitiveType)[];
