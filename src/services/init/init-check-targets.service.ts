@@ -1,9 +1,12 @@
 // TODO
+import { throwError } from '../../utils/errors.util';
+
 export class InitCheckTargetsService {
 
 
     static async start(): Promise<void> {
         const targets: any[] = await this.getTargets();
+        this.checkFormats(targets);
     }
 
 
@@ -14,12 +17,14 @@ export class InitCheckTargetsService {
 
     private static checkFormats(targets: any[]): void {
         for (const target of targets) {
-            this.checkFormat(target);
+            if (!this.hasCorrectFormat(target)) {
+                throwError('Error: target has wrong format : ', target);
+            }
         }
     }
 
 
-    private static checkFormat(target: any): void {
-
+    static hasCorrectFormat(target: any): boolean {
+        return true;
     }
 }
