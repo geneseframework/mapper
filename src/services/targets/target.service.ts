@@ -9,6 +9,7 @@ import { isArray } from '../../utils/native/arrays.util';
 import { isPrimitiveConstructor } from '../../types/primitives.type';
 import { isFunction } from '../../utils/native/functions.util';
 import { StringTargetService } from './string-target.service';
+import * as chalk from 'chalk';
 
 export class TargetService {
 
@@ -16,14 +17,17 @@ export class TargetService {
         if (isArray(target)) {
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
-            return target.name;
+            console.log(chalk.red('NOTTTTT'), );
+            return target?.name;
         } else {
-            return target?.toLowerCase();
+            console.log(chalk.magentaBright('ARGHHHH'), );
+            return StringTargetService.normalize(target);
+            // return target?.toLowerCase();
         }
     }
 
 
-    static isTuple(target: Target<any>): target is TupleOld {
+    static isTuple(target: Target<any>): boolean {
         return Array.isArray(target) && target.length > 1;
     }
 

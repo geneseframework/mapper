@@ -20,6 +20,10 @@ import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { isTuple, tupleLength } from '../utils/native/tuples.util';
+import { TargetService } from './targets/target.service';
+import { isBracketed } from '../types/target/string/bracketed.type';
+import { isNullOrUndefined } from '../utils/native/any.util';
+import { MapArrayService } from './map/map-array.service';
 
 export class MainService {
 
@@ -33,23 +37,31 @@ export class MainService {
      * @param data
      * @param options
      */
-    static async map<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    // TODO : isArray Option
+    static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        const stringTarget: string = TargetServiceOld.toString(target);
-        // console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
-        if (isTuple(stringTarget)) {
-            console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
-            return await MapTupleService.create(stringTarget, data, options)
-        } else if (isTargetArray(stringTarget)) {
-            // console.log(chalk.cyanBright('IS ARRAYYYYY '));
-        } else if (isPrimitiveTypeName(stringTarget)) {
-            return MapPrimitiveService.create([stringTarget, data], options);
+        return await this.mapString(TargetService.toString(target), data, options);
+    }
+
+
+    static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, data);
+        if (isNullOrUndefined(data)) {
+            return data;
+        } else if (isBracketed(target)) {
+            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(target));
+            return await MapTupleService.create(target, data, options)
+        } else if (isTargetArray(target)) {
+            return await MapArrayService.create(target, data, options);
+        } else if (isPrimitiveTypeName(target)) {
+            console.log(chalk.greenBright('IS PRIMMMM ', target, data));
+            return MapPrimitiveService.create([target, data], options);
 
         }
-        // console.log(chalk.redBright('END OF MAINNNN'), stringTarget);
+        console.log(chalk.redBright('END OF MAINNNN'), target);
         return undefined;
     }
 

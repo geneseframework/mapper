@@ -2,14 +2,20 @@ import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { StringString } from '../../types/target/string/string-string.type';
 import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
-import { castStringAndNumbers } from '../../utils/native/primitives.util';
+import {
+    castStringAndNumbers,
+    isNonNullPrimitiveValueWithCorrectType,
+    isPrimitiveValueWithCorrectType
+} from '../../utils/native/primitives.util';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
 
-    static create(targetData: StringString, options: CreateOptions): string
-    static create(targetData: PrimitiveAny, options: CreateOptions): Primitive
     static create([target, data]: PrimitiveAny, options: CreateOptions): Primitive {
+        // if (isPrimitiveValueWithCorrectType(target, data, options.differentiateStringsAndNumbers)) {
+        //     return castStringAndNumbers()
+        // } data : undefined;
         // if (isTupleStringString(targetData)) {
         //     return data(targetData);
         // }
@@ -19,9 +25,9 @@ export class MapPrimitiveService {
         // if (Array.isArray(data)) {
         //     return this.createArrayElements(data, typeName, options);
         // } else {
-        //     return this.createElement(data, typeName, options);
+            return this.createElement(data, target, options);
         // }
-        return undefined;
+        // return undefined;
     }
 
 // static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
@@ -54,6 +60,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
+        console.log(chalk.blueBright('CREATE ELTTTTTTT'), data, typeName, options, this.haveSameType(data, typeName, options));
         return this.haveSameType(data, typeName, options) ? castStringAndNumbers(typeName, data) : undefined;
     }
 

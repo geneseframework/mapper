@@ -59,7 +59,11 @@ function isExpectedResult(testType: TestType, result: any): boolean {
 
 
 function log(testType: TestType, result: any): void {
-    console.log(chalk.blueBright('expected : '), isTestIt(testType) ? testType.expected : testType.data);
+    if (isTestIt(testType)) {
+        console.log(chalk.blueBright('expected : '), testType.expected);
+    } else {
+        console.log(chalk.blueBright('data : '), testType.data);
+    }
     console.log(chalk.blueBright('response : '), result);
     if (testType.options?.hasOwnProperty('expectedValue')) {
         console.log(chalk.blueBright('expected value : '), testType.options.expectedValue);

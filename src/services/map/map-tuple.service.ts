@@ -14,24 +14,26 @@ import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
 import { tupleLength } from '../../utils/native/tuples.util';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
+import { Bracketed } from '../../types/target/string/bracketed.type';
 
 export class MapTupleService<T> {
 
 
-    static async create(targetTuple: Tuple, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
+    static async create(targetTuple: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
+        // console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
         if (!isTupleOfSameLength(targetTuple, data)) {
             throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
         }
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
-            console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
+            // console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
             if (data[i] === null || data[i] === undefined) {
                 tuple.push(data[i]);
             } else {
                 console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
                 const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
+                console.log(chalk.cyanBright('MAPPED ELTTTT'), mappedElement);
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {

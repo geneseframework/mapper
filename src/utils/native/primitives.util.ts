@@ -19,12 +19,17 @@ export function isNonNullOrPrimitiveValue(value: any): value is Primitive {
 }
 
 
-export function isPrimitiveValueWithCorrectType(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
-    return isNonNullOrPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(value, typeName, differentiateStringsAndNumbers));
+export function isNonNullPrimitiveValueWithCorrectType(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
+    return isNonNullOrPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers));
 }
 
 
-function areStringsOrNumbersWithoutDifferentiation(value: any, typeName: PrimitiveType, differentiateStringsAndNumbers = true): boolean {
+export function isPrimitiveValueWithCorrectType(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
+    return typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers);
+}
+
+
+function areStringsOrNumbersWithoutDifferentiation(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
     return !differentiateStringsAndNumbers && ((typeName === 'string' && typeof value === 'number') || (typeName === 'number' && typeof value === 'string'));
 }
 

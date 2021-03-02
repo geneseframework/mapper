@@ -10,3 +10,8 @@ export function isContainerized(text: string): text is Containerized {
 export function isNotEmptyContainer(text: string): text is Containerized {
     return isContainerized(text) && text.length > 2;
 }
+
+
+export function content(container: Containerized): string {
+    return container.slice(1, -1);
+}

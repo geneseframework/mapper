@@ -78,6 +78,11 @@ export function isTypeCombination(typeName: string): boolean {
 }
 
 
+export function hasDeclaration(typeName: string): boolean {
+    return !!declarationKind(typeName);
+}
+
+
 function declarationKind(typeName: string): TypeDeclarationKind {
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
@@ -99,36 +104,36 @@ export function isClassOrInterfaceDeclaration(typeName: string): boolean {
 
 
 export function isClassDeclaration(typeName: string): boolean {
-    return hasDeclaration(typeName, getDescendantClasses);
+    return hasDeclarationType(typeName, getDescendantClasses);
 }
 
 
 export function isEnumDeclaration(typeName: string): boolean {
-    return hasDeclaration(typeName, getDescendantEnums);
+    return hasDeclarationType(typeName, getDescendantEnums);
 }
 
 
 export function isInterfaceDeclaration(typeName: string): boolean {
-    return hasDeclaration(typeName, getDescendantInterfaces);
+    return hasDeclarationType(typeName, getDescendantInterfaces);
 }
 
 
 export function isTypeAliasDeclaration(typeName: string): boolean {
-    return hasDeclaration(typeName, getDescendantTypeAliases);
+    return hasDeclarationType(typeName, getDescendantTypeAliases);
 }
 
 
-function hasDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
+function hasDeclarationType(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+    return hasDeclarationTypeInProject(typeName, getTDeclaration) || hasDeclarationTypeOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
 }
 
 
-function hasDeclarationInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+function hasDeclarationTypeInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
     return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
 }
 
 
-function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
     const declarations: ImportDeclaration[] = getImportDeclarations(typeName);
     if (declarations.length === 0) {
         return false;

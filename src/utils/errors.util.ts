@@ -11,5 +11,5 @@ export function throwWarning(message = 'Warning', value: any = ''): any {
 }
 
 export function throwIncompatibility(target: string, data: any = ''): any {
-    console.log(chalk.yellowBright(`Warning: target "${target} incompatible with data :`), data);
+    console.log(chalk.yellowBright(`Warning: target "${target}" incompatible with data :`), data);
 }

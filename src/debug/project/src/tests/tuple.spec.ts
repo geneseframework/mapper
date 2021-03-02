@@ -2,10 +2,11 @@ import { TestMapper} from '../../../../test-engine/test-mapper.model';
 
 export const testMappers: TestMapper[] = [];
 
+
 // ----------------------------------------------   Tuples of native   ------------------------------------------------
 
 
-
+// testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue'], {isolate: true}));
 testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],['blue', 'white'], {isolate: false}));
 testMappers.push(new TestMapper(`['blue', 3] / ['string', 'number']`, ['string', 'number'],['blue', 3]));
 testMappers.push(new TestMapper(`['blue', 3] / ['number', 'string']`, ['number', 'string'],['blue', 3], {expectedValue: undefined}));
@@ -16,6 +17,28 @@ testMappers.push(new TestMapper(`'a' / ['string', 'string'] / undefined`, ['stri
 testMappers.push(new TestMapper(`[true, false] / ['boolean', 'boolean']`, ['boolean', 'boolean'],[true, false]));
 testMappers.push(new TestMapper(`[true, 'false'] / ['boolean', 'boolean']`, ['boolean', 'boolean'],[true, 'false'], {expectedValue: undefined}));
 
+
+testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue']));
+testMappers.push(new TestMapper(`[2] / ['string'] / []`, ['string'],[2], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[2] / ['string'] && !differentiate / ['2']`, ['string'],[2], {expectedValue: ['2'], createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`'blue' / ['string'] / undefined`, ['string'],'blue', {expectedValue: undefined}));
+
+
+testMappers.push(new TestMapper(`['blue'] / [String]`, [String],['blue']));
+testMappers.push(new TestMapper(`['blue', 'white'] / [String]`, [String],['blue', 'white'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[] / [String]`, [String],[], {expectedValue: undefined}));
+
+
+testMappers.push(new TestMapper(`[2] / ['number']`, ['number'],[2]));
+testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {expectedValue: [2], createOptions: {differentiateStringsAndNumbers: false}}));
+testMappers.push(new TestMapper(`['a'] / ['number'] / [NaN]`, ['number'],['a'], {expectedValue: undefined}));
+
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],['true'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[true]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[false]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[null]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[undefined]));
 
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 
@@ -42,8 +65,8 @@ export interface TupleInterfaceSpec {
     name: string;
 }
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, ['TupleInterfaceSpec', 'TupleInterfaceSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, ['TupleInterfaceSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `['TupleInterfaceSpec', 'TupleInterfaceSpec']`,[{name: 'Léa'}, {name: 'Léo'}]));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, `['TupleInterfaceSpec', 'string']`,[{name: 'Léa'}, 'Blue']));
 
 
 // --------------------------------------------   Tuples of types   --------------------------------------------------
@@ -51,9 +74,9 @@ testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec,
 
 export type TupleTypeSpec = TupleClassSpec | TupleInterfaceSpec;
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, {name: 'Léo'}]));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, ['TupleTypeSpec', 'TupleTypeSpec'],[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, ['TupleTypeSpec', 'string'],[{name: 'Léa'}, 'Blue']));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, {name: 'Léo'}]));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, 'a'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, `['TupleTypeSpec', 'string']`,[{name: 'Léa'}, 'Blue']));
 
 
 // ------------------------------------------------------------------------------------------------------------------------

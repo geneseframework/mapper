@@ -4,9 +4,10 @@ import { isPrimitiveConstructor, isPrimitiveType } from '../../types/primitives.
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
-import { isBracketed } from '../../types/target/string/bracketed.type';
-import * as chalk from 'chalk';
-import { isContainerized, isNotEmptyContainer } from '../../types/target/string/containerized.type';
+import { isNotEmptyContainer } from '../../types/target/string/containerized.type';
+import { isUnion, splitUnion } from '../../types/target/string/union.type';
+import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
+import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 
 export class StringTargetService {
 
@@ -20,10 +21,15 @@ export class StringTargetService {
     }
 
 
-    private static normalize(target: string): string {
+    static normalize(target: string): string {
         return this.cleanExtremities(target).replace(/^String$/g, 'string')
             .replace(/^Number$/g, 'number')
             .replace(/^Boolean$/g, 'boolean');
+    }
+
+
+    private static haveCorrectElements(texts: string[]): boolean {
+        return texts.every(t => this.hasCorrectElements(t));
     }
 
 
@@ -33,6 +39,9 @@ export class StringTargetService {
             || isQuoted(cleanedText)
             || this.isCorrectContainer(cleanedText)
             || this.isCorrectArray(cleanedText)
+            || this.isCorrectUnion(cleanedText)
+            || this.isCorrectIntersection(cleanedText)
+            || this.isDeclaration(cleanedText)
     }
 
 
@@ -46,45 +55,42 @@ export class StringTargetService {
     }
 
 
-    private static isCorrectObject(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isCorrectUnion(text: string): boolean {
+        return isUnion(text) && this.haveCorrectElements(splitUnion(text));
     }
 
 
-    private static isCorrectCombination(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isCorrectIntersection(text: string): boolean {
+        return isIntersection(text) && this.haveCorrectElements(splitIntersection(text));
     }
 
 
+    // TODO
     private static isCorrectExtends(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
+    // TODO
     private static isCorrectConditional(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
-    private static isExportedClass(text: string): boolean {
+    // TODO
+    private static isCorrectObject(text: string): boolean {
         return isPrimitiveType(text)
     }
 
 
-    private static cleanExtremities(text: string): string {
-        console.log(chalk.blueBright('CLEA NNNNNN'), text);
-        return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
+    private static isDeclaration(text: string): boolean {
+        return hasDeclaration(text);
     }
 
 
-
-    // static hasCorrectElements(text: string): boolean {
-    //     if (Array.isArray(text)) {
-    //         return text.every(e => this.hasCorrectElements(e));
-    //     } else {
-    //         return this.getTargetElements(text).every(t => this.isCorrect(t));
-    //     }
-    // }
+    private static cleanExtremities(text: string): string {
+        return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
+    }
 
 
     private static getTargetElements(targetElement: any): TargetElement[] | never {
@@ -94,11 +100,6 @@ export class StringTargetService {
             return [targetElement];
         }
         throwWarning(`Warning: unknown target element : `, targetElement);
-    }
-
-
-    private static isCorrect(targetElement: unknown): boolean {
-        return isPrimitiveConstructor(targetElement) || this.hasCorrectElements(targetElement as string);
     }
 
 
