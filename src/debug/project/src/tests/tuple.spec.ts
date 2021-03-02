@@ -34,6 +34,12 @@ testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {e
 testMappers.push(new TestMapper(`['2'] / ['number'] / [2]`, ['number'],['2'], {expectedValue: [2], createOptions: {differentiateStringsAndNumbers: false}}));
 testMappers.push(new TestMapper(`['a'] / ['number'] / [NaN]`, ['number'],['a'], {expectedValue: undefined}));
 
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],['true'], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[true]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[false]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[null]));
+testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[undefined]));
+
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 
 

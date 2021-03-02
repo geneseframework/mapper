@@ -67,4 +67,3 @@ testMappers.push(new TestMapper(`['2'] / [Number] && !differentiate / [2]`, [Num
 
 testMappers.push(new TestMapper(`[true] / boolean[]`, 'boolean[]',[true]));
 testMappers.push(new TestMapper(`['true'] / boolean[] / [true]`, 'boolean[]',['true'], {expectedValue: []}));
-testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],['true'], {expectedValue: []}));
