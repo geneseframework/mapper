@@ -4,6 +4,9 @@ import { isPrimitiveConstructor, isPrimitiveType } from '../../types/primitives.
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
+import { isBracketed } from '../../types/target/string/bracketed.type';
+import * as chalk from 'chalk';
+import { isContainerized } from '../../types/target/string/containerized.type';
 
 export class StringTargetService {
 
@@ -18,21 +21,18 @@ export class StringTargetService {
 
 
     private static normalize(target: string): string {
-        return target.replace(/^String$/g, 'string')
+        return this.cleanExtremities(target).replace(/^String$/g, 'string')
             .replace(/^Number$/g, 'number')
             .replace(/^Boolean$/g, 'boolean');
     }
 
 
     private static hasCorrectElements(text: string): boolean {
-        return isPrimitiveType(text)
-            || isQuoted(text)
+        const cleanedText: string = this.cleanExtremities(text);
+        return isPrimitiveType(cleanedText)
+            || isQuoted(cleanedText)
+            || this.isCorrectContainer(cleanedText)
     }
-
-
-    // private static isCorrectArray(text: string): boolean {
-    //     return isPrimitiveType(text)
-    // }
 
 
     private static isCorrectArray(text: string): boolean {
@@ -40,8 +40,8 @@ export class StringTargetService {
     }
 
 
-    private static isCorrectTuple(text: string): boolean {
-        return isPrimitiveType(text)
+    private static isCorrectContainer(text: string): boolean {
+        return isContainerized(text) && this.hasCorrectElements(text.slice(1, -1))
     }
 
 
@@ -62,6 +62,12 @@ export class StringTargetService {
 
     private static isCorrectConditional(text: string): boolean {
         return isPrimitiveType(text)
+    }
+
+
+    private static cleanExtremities(text: string): string {
+        console.log(chalk.blueBright('CLEA NNNNNN'), text);
+        return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
     }
 
 

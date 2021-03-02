@@ -63,6 +63,7 @@ function getNextElements(text: string, firstElement: string): string {
 }
 
 
+// TODO: remove
 function cleanExtremities(text: string): string {
     console.log(chalk.blueBright('CLEA NNNNNN'), text);
     return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
