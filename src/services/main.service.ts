@@ -4,7 +4,7 @@ import { ArrayOfPrimitiveElements, PrimitiveElement } from '../types/primitives.
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { TargetService } from './target.service';
-import { InitService } from './init.service';
+import { InitService } from './init/init.service';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';

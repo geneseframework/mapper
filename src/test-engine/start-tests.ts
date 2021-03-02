@@ -2,7 +2,7 @@ import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
 import { GLOBAL } from '../const/global.const';
-import { InitService } from '../services/init.service';
+import { InitService } from '../services/init/init.service';
 
 GLOBAL.debug = true;
 

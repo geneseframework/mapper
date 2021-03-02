@@ -1,7 +1,8 @@
 import { Project } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
+import { GLOBAL } from '../../const/global.const';
 import { InitConfigService } from './init-config.service';
-import { InstanceGeneratorService } from './instance-generator.service';
+import { InstanceGeneratorService } from '../instance-generator.service';
+import { InitCheckTargetsService } from './init-check-targets.service';
 
 const appRoot = require('app-root-path');
 
@@ -29,7 +30,8 @@ export class InitService {
         GLOBAL.debug ? this.createDebugProject() : this.createProject();
         GLOBAL.isAlreadyInitialized = true;
         this.setGlobalNodeModulePath();
-        await InitConfigService.initConfig();
+        await InitConfigService.start();
+        await InitCheckTargetsService.start();
     }
 
 

@@ -1,12 +1,12 @@
-import { CONFIG } from '../const/config.const';
-import { Config } from '../models/config.model';
-import { requireJsonFile } from '../utils/file-system.util';
-import { GLOBAL } from '../const/global.const';
+import { CONFIG } from '../../const/config.const';
+import { Config } from '../../models/config.model';
+import { requireJsonFile } from '../../utils/file-system.util';
+import { GLOBAL } from '../../const/global.const';
 
 export class InitConfigService {
 
 
-    static async initConfig(): Promise<void> {
+    static async start(): Promise<void> {
         const jsonConfig: Config = await this.getJsonConfig();
         this.setConfig(jsonConfig);
     }

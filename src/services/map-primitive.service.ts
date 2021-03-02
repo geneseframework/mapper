@@ -13,7 +13,7 @@ export class MapPrimitiveService {
 
     static create(targetData: StringString, options: CreateOptions): string
     static create(targetData: PrimitiveAny, options: CreateOptions): PrimitiveElement
-    static create(targetData: PrimitiveAny, options: CreateOptions): PrimitiveElement {
+    static create([target, data]: PrimitiveAny, options: CreateOptions): PrimitiveElement {
         if (isTupleStringString(targetData)) {
             return data(targetData);
         }

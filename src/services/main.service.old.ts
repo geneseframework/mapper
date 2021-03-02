@@ -7,7 +7,7 @@ import { IncompatibilityService } from './incompatibility.service';
 import { MapTrivialCasesService } from './map-trivial-cases.service';
 import { TargetService } from './target.service';
 import { MapTupleServiceOld } from './map-tuple.service.old';
-import { InitService } from './init.service';
+import { InitService } from './init/init.service';
 import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast-declaration.util';
