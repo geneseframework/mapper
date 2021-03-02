@@ -1,9 +1,8 @@
 import { throwError } from '../../utils/errors.util';
-import { isPrimitiveConstructor, isPrimitiveConstructorArray } from '../../types/primitives.type';
+import { isPrimitiveConstructor } from '../../types/primitives.type';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isBoolean } from '../../utils/native/booleans.util';
-import { isExportedClassConstructor, isExportedClassConstructorArray } from '../../utils/ast/ast-class.util';
-import { TargetService } from '../targets/target.service';
+import { isExportedClassConstructor } from '../../utils/ast/ast-class.util';
 import { StringTargetService } from '../targets/string-target.service';
 import { isArray } from '../../utils/native/arrays.util';
 

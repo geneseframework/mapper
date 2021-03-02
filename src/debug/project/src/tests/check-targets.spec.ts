@@ -48,7 +48,7 @@ its.push(new TestIt(`isCorrectTarget(string | number)`, StringTargetService.isCo
 its.push(new TestIt(`isCorrectTarget(CheckClassSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec`, true, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(WrongCheckClassSpec)`, StringTargetService.isCorrectTarget, `WrongCheckClassSpec`, false, {isolate: false}));
 its.push(new TestIt(`isCorrectTarget(NotExportedCheckClassSpec)`, StringTargetService.isCorrectTarget, `NotExportedCheckClassSpec`, true, {isolate: false}));
-its.push(new TestIt(`isCorrectTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec | CheckTypeSpec`, true, {isolate: true}));
+its.push(new TestIt(`isCorrectTarget(CheckClassSpec | CheckTypeSpec)`, StringTargetService.isCorrectTarget, `CheckClassSpec | CheckTypeSpec`, true, {isolate: false}));
 
 
 // ---------------------------------   getElements   -----------------------------------------

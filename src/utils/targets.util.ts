@@ -11,12 +11,12 @@ export function isTargetArray(target: string): target is Bracketed {
 }
 
 
-export function isTupleOfSameLength(targetTuple: Tuple, data: any[]): boolean {
+export function isTupleOfSameLength(targetTuple: Bracketed, data: any[]): boolean {
     return isArray(data) && data.length === tupleLength(targetTuple);
 }
 
 
-export function findTupleElement(targetTuple: Tuple, index: number): string {
+export function findTupleElement(targetTuple: Bracketed, index: number): string {
     return targetTuple.slice(1, -1).split(', ')[index];
 }
 

@@ -21,7 +21,7 @@ export class StringTargetService {
     }
 
 
-    private static normalize(target: string): string {
+    static normalize(target: string): string {
         return this.cleanExtremities(target).replace(/^String$/g, 'string')
             .replace(/^Number$/g, 'number')
             .replace(/^Boolean$/g, 'boolean');

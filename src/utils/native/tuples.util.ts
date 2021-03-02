@@ -2,10 +2,14 @@ import { StringString } from '../../types/target/string/string-string.type';
 import { AnyAny } from '../../types/target/string/any-any.type';
 import { Tuple } from '../../types/target/string/tuple.type';
 import { isStartingContainer, StartingContainer } from '../../types/target/string/starting-container.type';
-import { Containerized, isContainerized } from '../../types/target/string/containerized.type';
+import { Containerized, content, isContainerized } from '../../types/target/string/containerized.type';
 import { throwError, throwWarning } from '../errors.util';
 import * as chalk from 'chalk';
 import { isString } from './strings.util';
+import { Bracketed } from '../../types/target/string/bracketed.type';
+import { isUnion, splitUnion } from '../../types/target/string/union.type';
+import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
+import { hasCommas, splitCommas } from '../../types/target/string/commas.type';
 
 
 export function isTuple(typeName: string): typeName is Tuple {
@@ -27,8 +31,8 @@ export function data(tuple: AnyAny): any {
 }
 
 
-export function tupleLength(tuple: Tuple): number {
-    return getElements(tuple).length;
+export function tupleLength(tuple: Bracketed): number {
+    return getElements(content(tuple)).length;
     // return getContainerizedElements(tuple as unknown as Bracketed).length;
 }
 
@@ -40,17 +44,28 @@ function getContainerizedElements(text: Containerized): string[] {
 
 
 export function getElements(text: string): string[] {
-    console.log(chalk.blueBright('GET LTTTTS'), text);
-    if (!text || typeof text !== 'string' || text.length === 0) {
+    // console.log(chalk.blueBright('GET ELTTTTMMMMS'), text);
+    if (trim(text).length === 0) {
+    // if (!text || !isString(text) || text.length === 0) {
         return [];
     }
-    const cleanedText: string = cleanExtremities(text);
-    const elements = isContainerized(cleanedText) ? cleanedText.slice(1, -1) : cleanedText;
-    console.log(chalk.magentaBright('GET ELTTTTS'), text, elements, isStartingContainer(elements));
-    let firstElement: string = isStartingContainer(elements) ? getFirstContainerizedElement(elements) : getBasicElement(elements);
-    console.log(chalk.cyanBright('GET NEXT POSSS'), firstElement, getNextElementPosition(elements, firstElement));
-    const nextElements: string = getNextElements(elements, firstElement);
-    return [firstElement].concat(getElements(nextElements));
+    const elements: string = trim(text);
+    // console.log(chalk.magentaBright('GET ELTTTTMMMMS'), text);
+    // if (isContainerized(elements)) {
+    //     return [elements];
+    // } else if (isUnion(elements)) {
+    if (isUnion(elements)) {
+        const [first, last] = splitUnion(elements);
+        return [first, ...getElements(last)];
+    } else if (isIntersection(elements)) {
+        const [first, last] = splitIntersection(elements);
+        return [first, ...getElements(last)];
+    } else if (hasCommas(elements)) {
+        const [first, last] = splitCommas(elements);
+        return [first, ...getElements(last)];
+    } else {
+        return [elements]
+    }
 }
 
 
@@ -64,8 +79,7 @@ function getNextElements(text: string, firstElement: string): string {
 
 
 // TODO: remove
-function cleanExtremities(text: string): string {
-    console.log(chalk.blueBright('CLEA NNNNNN'), text);
+function trim(text: string): string {
     return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
 }
 
@@ -74,7 +88,7 @@ export function getFlattenElements(text: string): string[] {
     if (!text || text.length === 0) {
         return [];
     }
-    const cleanedText: string = cleanExtremities(text);
+    const cleanedText: string = trim(text);
     const elements = isContainerized(cleanedText) ? cleanedText.slice(1, -1) : cleanedText;
     console.log(chalk.magentaBright('GET ELTTTTS'), text, elements, isStartingContainer(elements));
     let firstElement: string = isStartingContainer(elements) ? getFirstContainerizedElement(elements) : getBasicElement(elements);
@@ -99,7 +113,7 @@ function getBasicElement(text: string): string {
 
 
 function getNextElementPosition(text: string, firstElement: string): number {
-    const otherElements: string = cleanExtremities(text.slice(firstElement.length));
+    const otherElements: string = trim(text.slice(firstElement.length));
     return text.length - otherElements.length;
 }
 

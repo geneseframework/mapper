@@ -19,6 +19,7 @@ import { MainServiceOld } from '../services/main.service.old';
 import { Union } from '../types/target/string/union.type';
 import { Combination } from '../types/target/string/combination.type';
 import { MainService } from '../services/main.service';
+import { ConstructorArray } from '../types/target/constructor-array.type';
 
 /**
  * Maps some data in the target's format.
@@ -87,9 +88,9 @@ export class Mapper<T> {
 
     // -------------------------------------------   Tuples overloads   ---------------------------------------------------
 
-    static async create<T>(target: TupleOld, data: any[], options?: CreateOptions): Promise<TupleOld>
-    static async create<T>(target: TupleOld, data: NotArray, options?: CreateOptions): Promise<unknown>
-    static async create<T>(target: TupleOld, data: any, options?: CreateOptions): Promise<TupleOld | undefined>
+    static async create<T>(target: ConstructorArray, data: any[], options?: CreateOptions): Promise<any[]>
+    static async create<T>(target: ConstructorArray, data: NotArray, options?: CreateOptions): Promise<unknown>
+    static async create<T>(target: ConstructorArray, data: any, options?: CreateOptions): Promise<any>
 
     // --------------------------------------   Type combinations overloads   ---------------------------------------------
 
@@ -97,7 +98,8 @@ export class Mapper<T> {
 
     // --------------------------------------------   Other overloads   ---------------------------------------------------
 
-    static async create<T>(target: Target<T>, data: any[], options?: CreateOptions): Promise<T[]>
+    static async create<T>(target: string, data: any[], options?: CreateOptions): Promise<T[]>
+    static async create<T>(target: string, data: any, options?: CreateOptions): Promise<T>
     static async create<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]>
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {

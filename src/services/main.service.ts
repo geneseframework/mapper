@@ -20,6 +20,8 @@ import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { isTuple, tupleLength } from '../utils/native/tuples.util';
+import { TargetService } from './targets/target.service';
+import { isBracketed } from '../types/target/string/bracketed.type';
 
 export class MainService {
 
@@ -38,10 +40,10 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        const stringTarget: string = TargetServiceOld.toString(target);
-        // console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget);
-        if (isTuple(stringTarget)) {
-            console.log(chalk.magentaBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
+        const stringTarget: string = TargetService.toString(target);
+        console.log(chalk.yellowBright('STRING TARGTTTTTT'), target, stringTarget, isTuple(stringTarget));
+        if (isBracketed(stringTarget)) {
+            console.log(chalk.yellowBright('IS TUPLE OF LENGTHHHH'), tupleLength(stringTarget));
             return await MapTupleService.create(stringTarget, data, options)
         } else if (isTargetArray(stringTarget)) {
             // console.log(chalk.cyanBright('IS ARRAYYYYY '));

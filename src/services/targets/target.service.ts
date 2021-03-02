@@ -16,14 +16,15 @@ export class TargetService {
         if (isArray(target)) {
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
-            return target.name;
+            return target?.name;
         } else {
-            return target?.toLowerCase();
+            return StringTargetService.normalize(target);
+            // return target?.toLowerCase();
         }
     }
 
 
-    static isTuple(target: Target<any>): target is TupleOld {
+    static isTuple(target: Target<any>): boolean {
         return Array.isArray(target) && target.length > 1;
     }
 

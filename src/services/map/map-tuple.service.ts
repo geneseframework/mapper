@@ -14,11 +14,12 @@ import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
 import { tupleLength } from '../../utils/native/tuples.util';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
+import { Bracketed } from '../../types/target/string/bracketed.type';
 
 export class MapTupleService<T> {
 
 
-    static async create(targetTuple: Tuple, data: any, options: CreateOptions): Promise<any[]> {
+    static async create(targetTuple: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
         console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
         if (!isTupleOfSameLength(targetTuple, data)) {
             throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
