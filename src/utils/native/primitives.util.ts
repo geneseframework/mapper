@@ -24,11 +24,6 @@ export function isNonNullPrimitiveValueWithCorrectType(typeName: PrimitiveType, 
 }
 
 
-export function isPrimitiveValueWithCorrectType(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
-    return typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers);
-}
-
-
 function areStringsOrNumbersWithoutDifferentiation(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
     return !differentiateStringsAndNumbers && ((typeName === 'string' && typeof value === 'number') || (typeName === 'number' && typeof value === 'string'));
 }

@@ -40,26 +40,19 @@ export class MainService {
 
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data);
+        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target));
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
-            // console.log(chalk.red('HEEEERE'), target, data);
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
-            // console.log(chalk.green('HEEEERE'), target, data);
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            // console.log(chalk.greenBright('HEEEERE'), target, data);
             return MapPrimitiveService.create([target, data], options);
         } else if (hasDeclaration(target)) {
-            // console.log(chalk.red('HEEEERE'), target, data);
             return await MapDeclarationService.create(target, data, options);
         } else {
             return await MapComplexService.create(target, data, options);
-            // // TODO: change in throwError
-            // throwWarning(`Warning: type of target not found :`, target)
-            // return undefined;
         }
     }
 

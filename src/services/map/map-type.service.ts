@@ -93,7 +93,7 @@ export class MapTypeService {
             target[key] = dataValue;
             return;
         }
-        // console.log(chalk.blueBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode.getKindName(), options);
+        console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode.getKindName(), options);
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 await this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode, options);
@@ -127,7 +127,7 @@ export class MapTypeService {
      * @param options
      * @private
      */
-    private static async mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode, options: CreateOptions): Promise<void> {
+    static async mapUnionType(target: any, key: Key, dataValue: any, unionTypeNode: UnionTypeNode, options: CreateOptions): Promise<void> {
         await MapTypeArrayService.mapTypeNodesArray(target, key, dataValue, unionTypeNode.getTypeNodes(), [], options);
     }
 

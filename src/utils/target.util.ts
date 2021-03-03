@@ -32,10 +32,10 @@ export function getElements(text: string): string[] {
 
 
 export function getElementsWithSeparator(text: string): ElementAndSeparator[] {
-    if (trim(text).length === 0) {
+    if (trimTarget(text).length === 0) {
         return [];
     }
-    const cleanedText: string = trim(text);
+    const cleanedText: string = trimTarget(text);
     if (isContainerized(cleanedText)) {
         return [[cleanedText, undefined]];
     } else if (hasSeparators(cleanedText)) {
@@ -85,6 +85,8 @@ function getSplitElements(elements: HasSeparators, separator: Separator): Elemen
 // }
 
 
-function trim(text: string): string {
-    return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
+export function trimTarget(text: string): string {
+    const toRemoveAtTheBeginning: RegExp = /^[?, &|:]+/g;
+    const toRemoveAtTheEnd: RegExp = /[?, &|:]+$/g;
+    return isString(text) ? text.replace(toRemoveAtTheBeginning, '').replace(toRemoveAtTheEnd, '') : '';
 }
