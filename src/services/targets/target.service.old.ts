@@ -33,7 +33,7 @@ export class TargetServiceOld {
     }
 
 
-    static isTuple(target: Target<any>): target is TupleOld {
+    static isTuple(target: Target<any>): boolean {
         return Array.isArray(target) && target.length > 1;
     }
 

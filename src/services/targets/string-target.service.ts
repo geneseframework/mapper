@@ -1,6 +1,4 @@
-import { TargetElement } from '../../types/target/target-element.type';
-import { throwWarning } from '../../utils/errors.util';
-import { isPrimitiveConstructor, isPrimitiveType } from '../../types/primitives.type';
+import { isPrimitiveType } from '../../types/primitives.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -12,7 +10,7 @@ import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 export class StringTargetService {
 
 
-    static isCorrectTarget(target: string): boolean {
+    static isCorrectStringTarget(target: string): boolean {
         if (isNullOrUndefined(target) || !isString(target)) {
             return false;
         }
@@ -90,25 +88,5 @@ export class StringTargetService {
 
     private static cleanExtremities(text: string): string {
         return isString(text) ? text.replace(/^(,| )/g, '').replace(/(,| )$/g, '') : '';
-    }
-
-
-    private static getTargetElements(targetElement: any): TargetElement[] | never {
-        if (typeof targetElement === 'string') {
-            return this.splitStringTarget(targetElement);
-        } else if (typeof targetElement === 'function' || isPrimitiveConstructor(targetElement)) {
-            return [targetElement];
-        }
-        throwWarning(`Warning: unknown target element : `, targetElement);
-    }
-
-
-    private static splitStringTarget(target: string): string[] {
-        return this.cleanTarget(target).split(' ')
-    }
-
-
-    private static cleanTarget(target: string): string {
-        return target.replace(/[()\]\[|&]/g, '').replace(/ +/, ' ');
     }
 }

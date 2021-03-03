@@ -43,7 +43,7 @@ testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[unde
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 
 
-testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],[null, undefined], {isolate: false}));
+testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],[null, undefined]));
 
 
 // ----------------------------------------------   Tuples of classes   ---------------------------------------------------

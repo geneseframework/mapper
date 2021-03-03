@@ -3,20 +3,20 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
-import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 
-export class MapInstanceService<T> {
+export class MapInstanceServiceOld<T> {
 
 
     static async create<T>(data: any[], className: string, options: CreateOptions): Promise<T[] | string[] | number[] | boolean[]>
     static async create<T>(data: any, className: string, options: CreateOptions): Promise<T>
     static async create<T>(data: any, className: string, options: CreateOptions): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        return Array.isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, options, className) : await this.createInstance<T>(data, className, classDeclaration, options);
+        return Array.isArray(data) ? await MapInstanceOrInterfaceServiceOld.createArray(data, classDeclaration, options, className) : await this.createInstance<T>(data, className, classDeclaration, options);
     }
 
 
@@ -27,7 +27,7 @@ export class MapInstanceService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(className, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(instance, data, classDeclaration, options);
+        await MapInstanceOrInterfaceServiceOld.map(instance, data, classDeclaration, options);
         return instance;
     }
 }
