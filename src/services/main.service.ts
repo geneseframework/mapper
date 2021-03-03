@@ -53,6 +53,7 @@ export class MainService {
             console.log(chalk.greenBright('HEEEERE'), target, data);
             return MapPrimitiveService.create([target, data], options);
         } else if (hasDeclaration(target)) {
+            console.log(chalk.red('HEEEERE'), target, data);
             return await MapDeclarationService.create(target, data, options);
         } else {
             return await MapComplexService.create(target, data, options);

@@ -1,5 +1,5 @@
 import { TestIt } from '../../../../test-engine/test-it.model';
-import { getContainerizedElements, getElements } from '../../../../utils/native/tuples.util';
+import { getContainerizedElements, getElements } from '../../../../utils/target.util';
 import { InitCheckTargetsService } from '../../../../services/init/init-check-targets.service';
 import { StringTargetService } from '../../../../services/targets/string-target.service';
 

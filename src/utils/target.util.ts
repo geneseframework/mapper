@@ -1,26 +1,19 @@
-import { Tuple } from '../../types/target/string/tuple.type';
-import { Containerized, content, isContainerized } from '../../types/target/string/containerized.type';
-import * as chalk from 'chalk';
-import { isString } from './strings.util';
-import { Bracketed } from '../../types/target/string/bracketed.type';
-import { isUnion, splitUnion } from '../../types/target/string/union.type';
-import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
-import { hasCommas, splitCommas } from '../../types/target/string/commas.type';
-import { isArray } from './arrays.util';
+import { Containerized, content, isContainerized } from '../types/target/string/containerized.type';
+import { isString } from './native/strings.util';
+import { Bracketed } from '../types/target/string/bracketed.type';
+import { isUnion, splitUnion } from '../types/target/string/union.type';
+import { isIntersection, splitIntersection } from '../types/target/string/intersection.type';
+import { hasCommas, splitCommas } from '../types/target/string/commas.type';
+import { isArray } from './native/arrays.util';
 
 
-export function isTuple(typeName: string): typeName is Tuple {
-    return /^\[.*, .*\]$/g.test(typeName);
+export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {
+    return isArray(data) && data.length === bracketedLength(text);
 }
 
 
-export function isTupleOfSameLength(targetTuple: Bracketed, data: any[]): boolean {
-    return isArray(data) && data.length === tupleLength(targetTuple);
-}
-
-
-export function tupleLength(tuple: Bracketed): number {
-    return getElements(content(tuple)).length;
+export function bracketedLength(text: Bracketed): number {
+    return getElements(content(text)).length;
 }
 
 

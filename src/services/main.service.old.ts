@@ -46,7 +46,7 @@ export class MainServiceOld {
         } else if (TargetServiceOld.isTuple(target)) {
             return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
         } else if (TargetServiceOld.isTypeCombination(target)) {
-            await MapComplexService.create(target, data, options);
+            await MapComplexService.create(target as string, data, options);
         } else {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);
