@@ -28,36 +28,22 @@ import {
     literalPrimitiveToPrimitiveType,
     primitiveLiteralValue
 } from '../../utils/native/primitives.util';
-import { isBracketed } from '../../types/target/string/bracketed.type';
 
-export class MapTypeService {
+export class MapTypeServiceOld {
 
 
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        console.log(chalk.blueBright('MPPPPP TPP'), target, data);
-        const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
-        if (Array.isArray(data) && isBracketed(target)) {
+    static async create<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
+    static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
+    static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
+        const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
+        if (Array.isArray(data) && isArray) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
-        } else if (!Array.isArray(data) && !isBracketed(target)) {
+        } else if (!Array.isArray(data) && !isArray) {
             return this.createType(data, typeAliasDeclaration, options);
         } else {
             return undefined;
         }
     }
-
-
-    // static async create<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
-    //     const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
-    //     if (Array.isArray(data) && isArray) {
-    //         return this.createTypesArray(data, typeAliasDeclaration, options);
-    //     } else if (!Array.isArray(data) && !isArray) {
-    //         return this.createType(data, typeAliasDeclaration, options);
-    //     } else {
-    //         return undefined;
-    //     }
-    // }
 
 
     private static async createTypesArray<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<T[]> {
@@ -81,7 +67,7 @@ export class MapTypeService {
 
 
     static async map(target: any, key: Key, dataValue: any, typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<void> {
-        await MapTypeService.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode(), options);
+        await MapTypeServiceOld.mapTypeNode(target, key, dataValue, typeAliasDeclaration.getTypeNode(), options);
     }
 
 

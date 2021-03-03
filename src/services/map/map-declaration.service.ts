@@ -1,7 +1,7 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { MapTypeService } from './map-type.service';
+import { MapTypeServiceOld } from './map-type.service.old';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../../types/type-declaration.type';
@@ -20,6 +20,7 @@ import { TargetInfo } from '../../types/target/target-info.type';
 import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
 import { MapInterfaceService } from './map-interface.service';
+import { MapTypeService } from './map-type.service';
 
 export class MapDeclarationService<T> {
 
@@ -42,7 +43,8 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create(data, target, info.isArray, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                return MapTypeService.create(data, target, info.isArray, options);
+                return await MapTypeService.create<T>(target, data, options);
+                // return MapTypeService.create(data, target, info.isArray, options);
             default:
                 throwWarning(`Warning : type declaration "${target}" not found.`);
                 return undefined;
@@ -62,7 +64,7 @@ export class MapDeclarationService<T> {
                 await MapInstanceOrInterfaceServiceOld.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration, options);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
+                await MapTypeServiceOld.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
                 break;
             default:
                 throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);

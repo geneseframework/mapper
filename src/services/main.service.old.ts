@@ -15,7 +15,7 @@ import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceServiceOld } from './map/map-instance.service.old';
 import { MapEnumService } from './map/map-enum.service';
 import { MapInterfaceService } from './map/map-interface.service';
-import { MapTypeService } from './map/map-type.service';
+import { MapTypeServiceOld } from './map/map-type.service.old';
 import { throwWarning } from '../utils/errors.util';
 import { MapComplexService } from './map/map-complex.service';
 
@@ -72,7 +72,7 @@ export class MainServiceOld {
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create(data, info.typeName, info.isArray, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                return MapTypeService.create(data, info.typeName, info.isArray, options);
+                return MapTypeServiceOld.create(data, info.typeName, info.isArray, options);
             default:
                 throwWarning(`Warning : type declaration "${info.typeName}" not found.`);
                 return undefined;
