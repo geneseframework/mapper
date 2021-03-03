@@ -5,6 +5,9 @@ import { isUnion, splitUnion } from '../types/target/string/union.type';
 import { isIntersection, splitIntersection } from '../types/target/string/intersection.type';
 import { hasCommas, splitCommas } from '../types/target/string/commas.type';
 import { isArray } from './native/arrays.util';
+import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
+import { Separator } from '../types/target/string/separator.type';
+import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {
@@ -24,25 +27,62 @@ export function getContainerizedElements(text: Containerized): string[] {
 
 
 export function getElements(text: string): string[] {
+    return getElementsWithSeparator(text).map(e => e[0]);
+}
+
+
+export function getElementsWithSeparator(text: string): ElementAndSeparator[] {
     if (trim(text).length === 0) {
         return [];
     }
-    const elements: string = trim(text);
-    if (isContainerized(elements)) {
-        return [elements];
-    } else if (isUnion(elements)) {
-        const [first, last] = splitUnion(elements);
-        return [first, ...getElements(last)];
-    } else if (isIntersection(elements)) {
-        const [first, last] = splitIntersection(elements);
-        return [first, ...getElements(last)];
-    } else if (hasCommas(elements)) {
-        const [first, last] = splitCommas(elements);
-        return [first, ...getElements(last)];
+    const cleanedText: string = trim(text);
+    if (isContainerized(cleanedText)) {
+        return [[cleanedText, undefined]];
+    } else if (hasSeparators(cleanedText)) {
+        return getElementsOfComplexText(cleanedText);
     } else {
-        return [elements]
+        return [[cleanedText, undefined]]
     }
 }
+
+
+function getElementsOfComplexText(text: string): ElementAndSeparator[] {
+    if (isUnion(text)) {
+        return getSplitElements(text, '|');
+    } else if (isIntersection(text)) {
+        return getSplitElements(text, '&');
+    } else if (hasCommas(text)) {
+        return getSplitElements(text, ',');
+    }
+}
+
+
+function getSplitElements(elements: HasSeparators, separator: Separator): ElementAndSeparator[] {
+    const [first, last] = splitSeparator(elements);
+    return [[first, separator], ...getElementsWithSeparator(last)];
+}
+
+
+// export function getElements(text: string): string[] {
+//     if (trim(text).length === 0) {
+//         return [];
+//     }
+//     const elements: string = trim(text);
+//     if (isContainerized(elements)) {
+//         return [elements];
+//     } else if (isUnion(elements)) {
+//         const [first, last] = splitUnion(elements);
+//         return [first, ...getElements(last)];
+//     } else if (isIntersection(elements)) {
+//         const [first, last] = splitIntersection(elements);
+//         return [first, ...getElements(last)];
+//     } else if (hasCommas(elements)) {
+//         const [first, last] = splitCommas(elements);
+//         return [first, ...getElements(last)];
+//     } else {
+//         return [elements]
+//     }
+// }
 
 
 function trim(text: string): string {
