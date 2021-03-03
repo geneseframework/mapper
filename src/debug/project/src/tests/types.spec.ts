@@ -39,10 +39,7 @@ testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'G
 
 
 export type CompanyAloneSpec = CompanyClassSpec;
-export class CompanyClassSpec {
-    name: string;
-    employees: number;
-}
+
 testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
@@ -55,3 +52,26 @@ async function z() {
 }
 // testMappers.push(new TestMapper(`'a' / string | number`, 'String | number', 'a', {isolate: true}));
 // testMappers.push(new TestMapper(`'a' / string | number`, '[String, number]', 'a', {isolate: true}));
+
+
+// -----------------------------------   Union of two Classes, and one Class[]   ------------------------------------------
+
+
+export type EmployerTypeSpec = NgoClassSpec | NgoClassSpec[] | CompanyClassSpec;
+export class NgoClassSpec {
+    name: string;
+    volunteers: number;
+}
+export class CompanyClassSpec {
+    name: string;
+    employees: number;
+}
+export class PersonSpec {
+    employer: EmployerTypeSpec
+}
+
+
+testMappers.push(new TestMapper(`{name: 'Greenpeace', volunteers: 3000} / Employer`, 'EmployerSpec',{name: 'Greenpeace', volunteers: 3000}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / Employer`, 'EmployerSpec',{name: 'Total', employees: 30000}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));

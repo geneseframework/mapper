@@ -44,16 +44,16 @@ export class MainService {
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
-            console.log(chalk.red('HEEEERE'), target, data);
+            // console.log(chalk.red('HEEEERE'), target, data);
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
-            console.log(chalk.green('HEEEERE'), target, data);
+            // console.log(chalk.green('HEEEERE'), target, data);
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            console.log(chalk.greenBright('HEEEERE'), target, data);
+            // console.log(chalk.greenBright('HEEEERE'), target, data);
             return MapPrimitiveService.create([target, data], options);
         } else if (hasDeclaration(target)) {
-            console.log(chalk.red('HEEEERE'), target, data);
+            // console.log(chalk.red('HEEEERE'), target, data);
             return await MapDeclarationService.create(target, data, options);
         } else {
             return await MapComplexService.create(target, data, options);

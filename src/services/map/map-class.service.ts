@@ -4,7 +4,6 @@ import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { throwWarning } from '../../utils/errors.util';
-import * as chalk from 'chalk';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
@@ -14,17 +13,8 @@ export class MapClassService<T> {
 
     static async create<T>(className: string, data: any, options: CreateOptions): Promise<T> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        console.log(chalk.magentaBright('MAP CLASSSSSSS'), className, classDeclaration?.getName());
         return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance<T>(className, data, classDeclaration, options);
     }
-
-
-    // static async create<T>(data: any[], className: string, options: CreateOptions): Promise<T[] | string[] | number[] | boolean[]>
-    // static async create<T>(data: any, className: string, options: CreateOptions): Promise<T>
-    // static async create<T>(data: any, className: string, options: CreateOptions): Promise<T |T[] | string | string[] | number | number[] | boolean | boolean[]> {
-    //     const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-    //     return Array.isArray(data) ? await MapInstanceOrInterfaceServiceOld.createArray(data, classDeclaration, options, className) : await this.createInstance<T>(data, className, classDeclaration, options);
-    // }
 
 
     static async createInstance<T>(target: string, data: any, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<T> {
