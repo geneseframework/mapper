@@ -40,7 +40,7 @@ export class MainService {
 
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target));
+        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target));
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
