@@ -20,13 +20,7 @@ export function isNonNullOrPrimitiveValue(value: any): value is Primitive {
 
 
 export function isNonNullPrimitiveValueWithCorrectType(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
-    console.log(chalk.yellowBright('NON ULLL OR PRIM ?????'), isNonNullOrPrimitiveValue(value), typeName, typeof value, areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers));
     return isNonNullOrPrimitiveValue(value) && (typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers));
-}
-
-
-export function isPrimitiveValueWithCorrectType(typeName: PrimitiveType, value: any, differentiateStringsAndNumbers = true): boolean {
-    return typeName === typeof value || areStringsOrNumbersWithoutDifferentiation(typeName, value, differentiateStringsAndNumbers);
 }
 
 

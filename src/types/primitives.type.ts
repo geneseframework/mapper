@@ -19,7 +19,6 @@ export type ArrayOfPrimitiveElements = string[] | number[] | boolean[];
 
 export type PrimitiveType = 'string' | 'number' | 'boolean';
 export function isPrimitiveType(value: any): value is PrimitiveType {
-    // console.log(chalk.blueBright('IS PRIMMMMMM'), value, primitiveTypes.includes(value));
     return primitiveTypes.includes(value);
 }
 

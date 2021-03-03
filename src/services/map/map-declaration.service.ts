@@ -53,6 +53,7 @@ export class MapDeclarationService<T> {
 
 
     static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration, options: CreateOptions): Promise<void> {
+        console.log(chalk.blueBright('MAPPPPP KEY'), target, key, dataValue, propertyType, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration, options);
@@ -64,7 +65,7 @@ export class MapDeclarationService<T> {
                 await MapInstanceOrInterfaceServiceOld.map(target[key], dataValue, typeDeclaration as InterfaceDeclaration, options);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                await MapTypeServiceOld.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
+                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
                 break;
             default:
                 throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);

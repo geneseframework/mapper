@@ -1,11 +1,4 @@
-import * as chalk from 'chalk';
 import { PrimitiveType, primitiveTypes } from '../../types/primitives.type';
-
-
-export function isUnionType(typeName: string): boolean {
-    console.log(chalk.blueBright('IS UTTTTT'), typeName?.includes(' | '));
-    return typeName?.includes(' | ');
-}
 
 
 export function isObjectTypeName(typeName: string): boolean {

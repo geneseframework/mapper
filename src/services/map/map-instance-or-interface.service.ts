@@ -40,7 +40,7 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
-        console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, classOrInterfaceDeclaration?.getName());
+        // console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, classOrInterfaceDeclaration?.getName());
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
@@ -58,7 +58,7 @@ export class MapInstanceOrInterfaceService<T> {
             return;
         }
         const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
-        console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos, options, IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options));
+        // console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos, options, IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options));
         if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options)) {
             // TODO: return undefined ?
             return;
