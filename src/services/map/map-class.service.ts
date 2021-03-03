@@ -10,6 +10,7 @@ import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-decl
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isArray } from '../../utils/native/arrays.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 
 export class MapClassService<T> {
 
@@ -17,7 +18,7 @@ export class MapClassService<T> {
     static async create<T>(className: string, data: any, options: CreateOptions): Promise<T> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
         console.log(chalk.magentaBright('MAP CLASSSSSSS'), className, classDeclaration?.getName());
-        return isArray(data) ? undefined : await this.createInstance<T>(className, data, classDeclaration, options);
+        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance<T>(className, data, classDeclaration, options);
     }
 
 

@@ -1,13 +1,13 @@
 import { CreateOptions } from '../interfaces/create-options.interface';
 import 'reflect-metadata';
-import { isObjectButNotArray } from '../utils/native/objects.util';
+import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
 
 export class OptionsService {
 
 
     static wasInitialized(options: CreateOptions): boolean {
-        if (!isObjectButNotArray(options)) {
+        if (!isObjectWhichIsNotArray(options)) {
             return false;
         }
         return Reflect.hasMetadata('initialized', options);
