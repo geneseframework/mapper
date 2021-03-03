@@ -1,9 +1,9 @@
 import { Containerized, content, isContainerized } from '../types/target/string/containerized.type';
 import { isString } from './native/strings.util';
 import { Bracketed } from '../types/target/string/bracketed.type';
-import { isUnion, splitUnion } from '../types/target/string/union.type';
-import { isIntersection, splitIntersection } from '../types/target/string/intersection.type';
-import { hasCommas, splitCommas } from '../types/target/string/commas.type';
+import { isUnion } from '../types/target/string/union.type';
+import { isIntersection } from '../types/target/string/intersection.type';
+import { hasCommas } from '../types/target/string/commas.type';
 import { isArray } from './native/arrays.util';
 import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
 import { Separator } from '../types/target/string/separator.type';
