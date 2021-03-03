@@ -20,17 +20,10 @@ testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / Pers
 testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / PersonCatSpec / {cat: {name: 'Cibi'}, firstName: 'Léa'}`, PersonCatSpec, {cat: {name: 'Cibi', otherProperty: 'a'}, firstName: 'Léa'}, {expectedValue: {cat: {name: 'Cibi'}, firstName: 'Léa'}}));
 testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: new PersonCatSpec()}));
-testMappers.push(new TestMapper(`'a' / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`'a' / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa'} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}));
 testMappers.push(new TestMapper(`[new CatSpec()] / PersonCatSpec / [new CatSpec()]`, PersonCatSpec, [new CatSpec()], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[new PersonCatSpec()] / PersonCatSpec / [new PersonCatSpec()]`, PersonCatSpec, [new PersonCatSpec()], {expectedValue: undefined}));
-
-testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatSpec] / undefined`, [PersonCatSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
-testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatSpec]`, [PersonCatSpec], [{cat: null, firstName: 'Léa'}]));
-testMappers.push(new TestMapper(`['a'] / [PersonCatSpec] / []`, [PersonCatSpec], ['a'], {expectedValue: []}));
-testMappers.push(new TestMapper(`[] / [PersonCatSpec]`, [PersonCatSpec], [], {expectedValue: []}));
-testMappers.push(new TestMapper(`new PersonCatSpec() / [PersonCatSpec]`, [PersonCatSpec], new PersonCatSpec(), {expectedValue: undefined}));
-testMappers.push(new TestMapper(`{} / [PersonCatSpec]`, [PersonCatSpec], {}, {expectedValue: undefined}));
 
 
 // --------------------------------------   Not differentiate string and numbers   ----------------------------------------

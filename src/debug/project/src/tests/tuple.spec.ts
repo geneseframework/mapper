@@ -1,4 +1,5 @@
 import { TestMapper} from '../../../../test-engine/test-mapper.model';
+import { PersonCatSpec } from './classes.spec';
 
 export const testMappers: TestMapper[] = [];
 
@@ -58,6 +59,22 @@ testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleClassS
 testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleClassSpec, 'string']`, [TupleClassSpec, 'string'],[{name: 'Léa'}, 'Blue'], {isolate: false}));
 testMappers.push(new TestMapper(`['a', 'Blue'] / [TupleClassSpec, 'string'] / undefined`, [TupleClassSpec, 'string'],['a', 'Blue'], {expectedValue: [undefined], isolate: false}));
 
+
+export class CatTupleSpec {
+    name: string;
+}
+export class PersonCatTupleSpec {
+    age: number;
+    cat: CatTupleSpec;
+    firstName: string;
+}
+
+testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatTupleSpec] / undefined`, [PersonCatTupleSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatTupleSpec]`, [PersonCatTupleSpec], [{cat: null, firstName: 'Léa'}]));
+testMappers.push(new TestMapper(`['a'] / [PersonCatTupleSpec] / []`, [PersonCatTupleSpec], ['a'], {expectedValue: [undefined]}));
+testMappers.push(new TestMapper(`[] / [PersonCatTupleSpec]`, [PersonCatTupleSpec], [], {expectedValue: undefined}));
+testMappers.push(new TestMapper(`new PersonCatTupleSpec() / [PersonCatTupleSpec]`, [PersonCatTupleSpec], new PersonCatTupleSpec(), {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{} / [PersonCatTupleSpec]`, [PersonCatTupleSpec], {}, {expectedValue: undefined}));
 
 // --------------------------------------------   Tuples of interfaces   --------------------------------------------------
 

@@ -3,12 +3,9 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { isArray } from '../../utils/native/arrays.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 
