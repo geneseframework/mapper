@@ -79,7 +79,7 @@ export class MapArrayService<T> {
 
 
     private static isPrimitiveWithCorrectValue(typeName: string, element: any, options: CreateOptions): boolean {
-        return isPrimitiveTypeName(typeName) && isNonNullPrimitiveValueWithCorrectType(element, typeName as PrimitiveType, options.differentiateStringsAndNumbers);
+        return isPrimitiveTypeName(typeName) && isNonNullPrimitiveValueWithCorrectType(typeName as PrimitiveType, element, options.differentiateStringsAndNumbers);
     }
 
 

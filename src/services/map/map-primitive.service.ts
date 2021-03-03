@@ -1,12 +1,7 @@
 import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { StringString } from '../../types/target/string/string-string.type';
 import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
-import {
-    castStringAndNumbers,
-    isNonNullPrimitiveValueWithCorrectType,
-    isPrimitiveValueWithCorrectType
-} from '../../utils/native/primitives.util';
+import { castStringAndNumbers } from '../../utils/native/primitives.util';
 import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
@@ -30,19 +25,6 @@ export class MapPrimitiveService {
         // return undefined;
     }
 
-// static create(data: any[], typeName: PrimitiveType, isArray: boolean, options: CreateOptions): ArrayOfPrimitiveElements
-//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): Primitive
-//     static create(data: any, typeName: PrimitiveType, isArray: boolean, options: CreateOptions): Primitive | ArrayOfPrimitiveElements | undefined {
-//         if (!this.targetAndDataAreBothArrayOrNot(data, isArray)) {
-//             return undefined;
-//         }
-//         if (Array.isArray(data)) {
-//             return this.createArrayElements(data, typeName, options);
-//         } else {
-//             return this.createElement(data, typeName, options);
-//         }
-//     }
-//
 
     private static createArrayElements(data: any[], typeName: PrimitiveType, options: CreateOptions): ArrayOfPrimitiveElements {
         const primitiveElementsArray = [];

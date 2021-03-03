@@ -17,11 +17,11 @@ export class MapPropertyService<T> {
     static async map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos, options: CreateOptions): Promise<void> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
+        console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;
         }
-        console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         switch (propertyInfos.propertyKind) {
             case PropertyKind.ARRAY:
                 await MapArrayService.map(target, key, dataValue, propertyType, apparentType, options);
@@ -43,8 +43,10 @@ export class MapPropertyService<T> {
     }
 
 
-    private static mapPrimitiveType(target: any, key: string, dataValue: any, typeName: PrimitiveType, options: CreateOptions): void {
-        if (isNonNullPrimitiveValueWithCorrectType(dataValue, typeName, options.differentiateStringsAndNumbers)) {
+    private static mapPrimitiveType(target: any, key: string, dataValue: any, primitiveType: PrimitiveType, options: CreateOptions): void {
+        console.log(chalk.cyanBright('MAP PRIMMMMM'), target, key, dataValue, primitiveType);
+        if (isNonNullPrimitiveValueWithCorrectType(primitiveType, dataValue, options.differentiateStringsAndNumbers)) {
+            console.log(chalk.greenBright('MAP PRIMMMMM KEY'), target[key], dataValue);
             target[key] = dataValue;
         }
     }
