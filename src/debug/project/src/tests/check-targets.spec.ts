@@ -62,9 +62,9 @@ its.push(new TestIt(`getElements(['a'])`, getElements, `['a']`, [`['a']`]));
 
 
 its.push(new TestIt(`getContainerizedElements(['a'])`, getContainerizedElements, `['a']`, [`'a'`]));
-its.push(new TestIt(`getContainerizedElements([string, string])`, getContainerizedElements, `[string, string]`, [`string`, `string`], {isolate: true}));
-its.push(new TestIt(`getContainerizedElements([string, [string, string]])`, getContainerizedElements, `[string, [string, string]]`, [`string`, `[string, string]`], {isolate: true}));
-its.push(new TestIt(`getContainerizedElements(['a', ['b', 'c']])`, getContainerizedElements, `['a', ['b', 'c']]`, [`'a'`, `['b', 'c']`], {isolate: true}));
+its.push(new TestIt(`getContainerizedElements([string, string])`, getContainerizedElements, `[string, string]`, [`string`, `string`]));
+its.push(new TestIt(`getContainerizedElements([string, [string, string]])`, getContainerizedElements, `[string, [string, string]]`, [`string`, `[string, string]`]));
+its.push(new TestIt(`getContainerizedElements(['a', ['b', 'c']])`, getContainerizedElements, `['a', ['b', 'c']]`, [`'a'`, `['b', 'c']`]));
 
 
 // its.push(new TestIt(`getFlattenElements(['a'])`, getFlattenElements, [`'a'`], [`'a'`]));
