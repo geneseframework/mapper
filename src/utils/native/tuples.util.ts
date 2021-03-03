@@ -19,11 +19,6 @@ export function isTupleOfSameLength(targetTuple: Bracketed, data: any[]): boolea
 }
 
 
-export function findTupleElement(targetTuple: Bracketed, index: number): string {
-    return targetTuple.slice(1, -1).split(', ')[index];
-}
-
-
 export function tupleLength(tuple: Bracketed): number {
     return getElements(content(tuple)).length;
 }

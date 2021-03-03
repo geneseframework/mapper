@@ -7,18 +7,20 @@ import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util'
 import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../interfaces/create-options.interface';
-import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
+import { throwWarning } from '../../utils/errors.util';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 import { Bracketed } from '../../types/target/string/bracketed.type';
-import { findTupleElement, isTupleOfSameLength } from '../../utils/native/tuples.util';
+import { getContainerizedElements, isTupleOfSameLength } from '../../utils/native/tuples.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
+import * as chalk from 'chalk';
 
 export class MapTupleService<T> {
 
 
-    static async create(targetTuple: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
-        if (!isTupleOfSameLength(targetTuple, data)) {
-            throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
+    static async create(target: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
+        console.log(chalk.cyanBright('MAPPPPP TUPLE'), target, data);
+        if (!isTupleOfSameLength(target, data)) {
+            throwWarning(`Warning: "${target}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
         }
         const tuple: any[] = [];
@@ -26,7 +28,11 @@ export class MapTupleService<T> {
             if (isNullOrUndefined(data[i])) {
                 tuple.push(data[i]);
             } else {
-                tuple.push(await Mapper.create(findTupleElement(targetTuple, i), data[i], options));
+                console.log(chalk.magentaBright('LOOOOOP TUPLE'), getContainerizedElements(target)[i], data[i]);
+                const zzz = await Mapper.create(getContainerizedElements(target)[i], data[i], options);
+                console.log(chalk.yellowBright('LOOOOOP TUPLE zzz'), zzz);
+                tuple.push(zzz);
+                // tuple.push(await Mapper.create(findTupleElement(target, i), data[i], options));
                 // const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
                 // if (mappedElement !== undefined) {
                 //     tuple.push(mappedElement);

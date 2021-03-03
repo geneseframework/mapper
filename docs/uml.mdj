@@ -5695,7 +5695,7 @@
 			"_parent": {
 				"$ref": "AAAAAAFF+h6SjaM2Hec="
 			},
-			"name": "Activity1",
+			"name": "MAIN PROCESS",
 			"ownedElements": [
 				{
 					"_type": "UMLActivityDiagram",
@@ -5703,7 +5703,7 @@
 					"_parent": {
 						"$ref": "AAAAAAF36GO4iihk/SE="
 					},
-					"name": "ActivityDiagram1",
+					"name": "MAIN PROCESS",
 					"ownedViews": [
 						{
 							"_type": "UMLActionView",
@@ -5763,9 +5763,9 @@
 											"font": "Arial;13;0",
 											"left": 960,
 											"top": 1346,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -5981,9 +5981,9 @@
 											"font": "Arial;13;0",
 											"left": -388,
 											"top": 978,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -6089,9 +6089,9 @@
 											"font": "Arial;13;0",
 											"left": -158,
 											"top": 1298,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -6197,9 +6197,9 @@
 											"font": "Arial;13;0",
 											"left": 242,
 											"top": 1010,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -6603,9 +6603,9 @@
 											"font": "Arial;13;0",
 											"left": -880,
 											"top": 1344,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -6831,9 +6831,9 @@
 											"font": "Arial;13;0",
 											"left": 608,
 											"top": 496,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -7490,9 +7490,9 @@
 											"font": "Arial;13;0",
 											"left": -80,
 											"top": -48,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -7780,9 +7780,9 @@
 											"font": "Arial;13;0",
 											"left": 688,
 											"top": 512,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -8857,9 +8857,9 @@
 											"font": "Arial;13;0",
 											"left": 368,
 											"top": 976,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -9302,9 +9302,9 @@
 											"font": "Arial;13;0",
 											"left": 1280,
 											"top": 48,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -9514,9 +9514,9 @@
 											"font": "Arial;13;0",
 											"left": -80,
 											"top": -592,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -9836,9 +9836,9 @@
 											"font": "Arial;13;0",
 											"left": 240,
 											"top": 352,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -10199,7 +10199,7 @@
 							},
 							"font": "Arial;13;0",
 							"left": 768,
-							"top": 440,
+							"top": 448,
 							"width": 26.6181640625,
 							"height": 25,
 							"text": "No"
@@ -10211,7 +10211,7 @@
 								"$ref": "AAAAAAF36GO4iihlaKE="
 							},
 							"font": "Arial;13;0",
-							"left": 600,
+							"left": 592,
 							"top": 488,
 							"width": 33,
 							"height": 25,
@@ -10673,9 +10673,9 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -176,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -11372,9 +11372,9 @@
 											"font": "Arial;13;0",
 											"left": -2000,
 											"top": -432,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
@@ -11552,9 +11552,9 @@
 											"font": "Arial;13;0",
 											"left": 48,
 											"top": 128,
-											"width": 86.6708984375,
+											"width": 137.95361328125,
 											"height": 13,
-											"text": "(from Activity1)"
+											"text": "(from MAIN PROCESS)"
 										},
 										{
 											"_type": "LabelView",
