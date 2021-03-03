@@ -16,6 +16,8 @@ import { MapArrayService } from './map/map-array.service';
 import { isArrayType } from '../types/target/string/array-type.type';
 import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
+import { isQuoted } from '../types/target/string/quoted.type';
+import { MapQuotedService } from './map/map-quoted.service';
 
 export class MainService {
 
@@ -35,12 +37,13 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
+        console.log(chalk.yellowBright('FIRSTTTT'), target, data, isPrimitiveTypeName(target as string), isQuoted(target as string));
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target));
+        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {
@@ -49,6 +52,8 @@ export class MainService {
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
             return MapPrimitiveService.create([target, data], options);
+        } else if (isQuoted(target)) {
+            return await MapQuotedService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else {

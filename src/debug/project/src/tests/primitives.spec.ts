@@ -3,7 +3,14 @@ import { TestMapper } from '../../../../test-engine/test-mapper.model';
 export const testMappers: TestMapper[] = [];
 
 
+// ----------------------------------------------   Strings Literals   ----------------------------------------------------
+
+
+testMappers.push(new TestMapper(`'blue' / 'blue'`,`'blue'`, 'blue', {isolate: true}));
+
+
 // --------------------------------------------------   Strings   ---------------------------------------------------------
+
 
 testMappers.push(new TestMapper(`'blue' / string`, 'string','blue', {isolate: false}));
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
