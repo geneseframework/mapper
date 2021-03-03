@@ -12,12 +12,12 @@ import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInstanceService } from './map/map-instance.service';
+import { MapInstanceServiceOld } from './map/map-instance.service.old';
 import { MapEnumService } from './map/map-enum.service';
 import { MapInterfaceService } from './map/map-interface.service';
 import { MapTypeService } from './map/map-type.service';
 import { throwWarning } from '../utils/errors.util';
-import { MapTypeCombinationService } from './map/map-type-combination.service';
+import { MapComplexService } from './map/map-complex.service';
 
 export class MainServiceOld {
 
@@ -46,7 +46,7 @@ export class MainServiceOld {
         } else if (TargetServiceOld.isTuple(target)) {
             return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
         } else if (TargetServiceOld.isTypeCombination(target)) {
-            await MapTypeCombinationService.create(target, data, options);
+            await MapComplexService.create(target, data, options);
         } else {
             // throwWarning(`Warning: type of target not found :`, target)
             return this.mapDeclaration(target, data, options);
@@ -66,7 +66,7 @@ export class MainServiceOld {
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                return MapInstanceService.create<T>(data, info.typeName, options);
+                return MapInstanceServiceOld.create<T>(data, info.typeName, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(data, info.typeName, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:

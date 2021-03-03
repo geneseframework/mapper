@@ -50,7 +50,6 @@ export function getElements(text: string): string[] {
         return [first, ...getElements(last)];
     } else if (hasCommas(elements)) {
         const [first, last] = splitCommas(elements);
-        console.log(chalk.magentaBright('FIRST LASTTTTTT'), first, last);
         return [first, ...getElements(last)];
     } else {
         return [elements]

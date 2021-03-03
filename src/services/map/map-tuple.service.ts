@@ -4,34 +4,29 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
-import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { TupleOld } from '../../types/target/target-tuple-old.type';
+import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 import { throwIncompatibility, throwWarning } from '../../utils/errors.util';
-import * as chalk from 'chalk';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { findTupleElement, isTupleOfSameLength } from '../../utils/native/tuples.util';
+import { isNullOrUndefined } from '../../utils/native/any.util';
 
 export class MapTupleService<T> {
 
 
     static async create(targetTuple: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
-        // console.log(chalk.magentaBright('TUPLE DATA IIIII'),targetTuple, data, tupleLength(targetTuple), data?.length);
         if (!isTupleOfSameLength(targetTuple, data)) {
             throwWarning(`Warning: "${targetTuple}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
         }
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
-            // console.log(chalk.cyanBright('TUPLE DATA IIIII'), data[i]);
-            if (data[i] === null || data[i] === undefined) {
+            if (isNullOrUndefined(data[i])) {
                 tuple.push(data[i]);
             } else {
-                console.log(chalk.magentaBright('TUPLE ELT IIIII'), findTupleElement(targetTuple, i));
                 const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
-                console.log(chalk.cyanBright('MAPPED ELTTTT'), mappedElement);
                 if (mappedElement !== undefined) {
                     tuple.push(mappedElement);
                 } else {
@@ -41,24 +36,6 @@ export class MapTupleService<T> {
             }
         }
         return tuple;
-    }
-
-
-    static async createOld(data: any[], mapParameterTuple: TupleOld, options: CreateOptions): Promise<TupleOld> {
-        const tuple: any[] = [];
-        for (let i = 0; i < data.length; i++) {
-            if (data[i] === null || data[i] === undefined) {
-                tuple.push(data[i]);
-            } else {
-                const mappedElement: any = await Mapper.create(mapParameterTuple[i], data[i], options); // TODO: Error ?
-                if (mappedElement !== undefined) {
-                    tuple.push(mappedElement);
-                } else {
-                    return undefined;
-                }
-            }
-        }
-        return tuple.length > 0 ? tuple : undefined;
     }
 
 
@@ -89,7 +66,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceService.map(instance, dataValue, importArrayDeclaration, options);
+                MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {

@@ -2,6 +2,6 @@
 // export type LatinUpperCaseLetter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U'| 'V' | 'W' | 'X' | 'Y' | 'Z';
 //
 // export type LatinLetter = LatinLowerCaseLetter | LatinUpperCaseLetter;
-// export type Word<LatinLetter> = LatinLetter | [LatinLetter, ...LatinLetter];
+// export type Word<LatinLetter> = LatinLetter | `${LatinLetter}`];
 //
 // const word: Word = 'rzerez';

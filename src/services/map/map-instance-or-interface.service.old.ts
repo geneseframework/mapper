@@ -17,10 +17,10 @@ import { DateDeclaration } from '../../models/date-declaration.model';
 import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../interfaces/create-options.interface';
 
-export class MapInstanceOrInterfaceService<T> {
+export class MapInstanceOrInterfaceServiceOld<T> {
 
 
-    // static async createArray<T>(data: any[], dateDeclaration: DateDeclaration, options: CreateOptions): Promise<Date[]>
+    static async createArray<T>(data: any[], dateDeclaration: DateDeclaration, options: CreateOptions): Promise<Date[]>
     static async createArray<T>(data: any[], interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T[]>
     static async createArray<T>(data: any[], classDeclaration: ClassDeclaration, options: CreateOptions, className: string): Promise<T[] | string[] | number[] | boolean[]>
     static async createArray<T>(data: any[], classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions, classOrInterfaceName?: string): Promise<T[] | string[] | number[] | boolean[] | Date | Date[]> {
