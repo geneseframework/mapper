@@ -83,8 +83,8 @@ export interface TupleInterfaceSpec {
     name: string;
 }
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `['TupleInterfaceSpec', 'TupleInterfaceSpec']`,[{name: 'Léa'}, {name: 'Léo'}], {isolate: false}));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, `['TupleInterfaceSpec', 'string']`,[{name: 'Léa'}, 'Blue'], {isolate: false}));
+// testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `['TupleInterfaceSpec', 'TupleInterfaceSpec']`,[{name: 'Léa'}, {name: 'Léo'}], {isolate: false}));
+// testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, 'string']`, `['TupleInterfaceSpec', 'string']`,[{name: 'Léa'}, 'Blue'], {isolate: false}));
 
 
 // --------------------------------------------   Tuples of types   --------------------------------------------------
@@ -92,9 +92,9 @@ testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec,
 
 export type TupleTypeSpec = TupleClassSpec | TupleInterfaceSpec;
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, {name: 'Léo'}], {isolate: false}));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, 'a'], {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, `['TupleTypeSpec', 'string']`,[{name: 'Léa'}, 'Blue'], {isolate: false}));
+// testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / ['TupleTypeSpec', 'TupleTypeSpec']`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, {name: 'Léo'}], {isolate: false}));
+// testMappers.push(new TestMapper(`[{name: 'Léa'}, 'a'] / ['TupleTypeSpec', 'TupleTypeSpec'] / undefined`, `['TupleTypeSpec', 'TupleTypeSpec']`,[{name: 'Léa'}, 'a'], {expectedValue: undefined, isolate: false}));
+// testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / ['TupleTypeSpec', 'string']`, `['TupleTypeSpec', 'string']`,[{name: 'Léa'}, 'Blue'], {isolate: false}));
 
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -113,9 +113,9 @@ testMappers.push(new TestMapper(`['a', ['b', 'c']] / ['string', ['string', 'stri
 
 export type TupleStringTupleStringStringSpec = ['string', ['string', 'string']];
 
-testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringStringSpec`, 'TupleStringTupleStringStringSpec',['a', ['b', 'c']], {isolate: false}));
-testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec / ['a', ['b', undefined]`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {expectedValue: ['a', ['b', undefined]], isolate: false}));
-testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec & !diff`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {isolate: false, createOptions: {differentiateStringsAndNumbers: false}}));
+// testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringStringSpec`, 'TupleStringTupleStringStringSpec',['a', ['b', 'c']], {isolate: false}));
+// testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec / ['a', ['b', undefined]`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {expectedValue: ['a', ['b', undefined]], isolate: false}));
+// testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec & !diff`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {isolate: false, createOptions: {differentiateStringsAndNumbers: false}}));
 
 
 // ------------------------------------   Tuples TupleStringTupleStringNumberSpec   ---------------------------------------------
@@ -123,6 +123,6 @@ testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringS
 
 export type TupleStringTupleStringNumberSpec = ['string', ['string', 'number']];
 
-testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringNumberSpec`, 'TupleStringTupleStringNumberSpec',['a', ['b', 2]], {isolate: false}));
-testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringNumberSpec / ['a', ['b', undefined]]`, 'TupleStringTupleStringNumberSpec',['a', ['b', 'c']], {expectedValue: ['a', ['b', undefined]], isolate: false}));
-testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringNumberSpec / ['a', ['b', NaN]]`, 'TupleStringTupleStringNumberSpec',['a', ['b', 'c']], {expectedValue: ['a', ['b', NaN]], isolate: false, createOptions: {differentiateStringsAndNumbers: false}}));
+// testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringNumberSpec`, 'TupleStringTupleStringNumberSpec',['a', ['b', 2]], {isolate: false}));
+// testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringNumberSpec / ['a', ['b', undefined]]`, 'TupleStringTupleStringNumberSpec',['a', ['b', 'c']], {expectedValue: ['a', ['b', undefined]], isolate: false}));
+// testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringNumberSpec / ['a', ['b', NaN]]`, 'TupleStringTupleStringNumberSpec',['a', ['b', 'c']], {expectedValue: ['a', ['b', NaN]], isolate: false, createOptions: {differentiateStringsAndNumbers: false}}));

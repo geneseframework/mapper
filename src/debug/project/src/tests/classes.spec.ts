@@ -33,7 +33,7 @@ const personWithCorrectTypes = new PersonCatSpec();
 personWithCorrectTypes.age = 49;
 personWithCorrectTypes.firstName = 'Léo';
 
-testMappers.push(new TestMapper(`personWithCorrectTypes / PersonCatSpec`, PersonCatSpec, personWithCorrectTypes));
+testMappers.push(new TestMapper(`personWithCorrectTypes / PersonCatSpec`, PersonCatSpec, personWithCorrectTypes, {isolate: false}));
 testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / PersonCatSpec`, PersonCatSpec, {age: 49, firstName: 'Léo'}));
 
 const age: string | number = '49';
