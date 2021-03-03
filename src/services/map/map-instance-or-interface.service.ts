@@ -40,6 +40,7 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
+        console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, classOrInterfaceDeclaration?.getName());
         for (const key of Object.keys(data)) {
             if (keyExistsButIsNullOrUndefined(data, key)) {
                 target[key] = data[key];

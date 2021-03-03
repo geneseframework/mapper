@@ -18,7 +18,7 @@ import { Primitive } from '../../types/primitives.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TargetServiceOld } from '../targets/target.service.old';
-import { MapInstanceService } from './map-instance.service';
+import { MapClassService } from './map-class.service';
 import { MapInterfaceService } from './map-interface.service';
 
 export class MapDeclarationService<T> {
@@ -36,7 +36,7 @@ export class MapDeclarationService<T> {
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                return await MapInstanceService.create<T>(target, data, options);
+                return await MapClassService.create<T>(target, data, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(data, target, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:

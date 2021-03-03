@@ -14,7 +14,6 @@ import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';
-import * as chalk from 'chalk';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapArrayService<T> {

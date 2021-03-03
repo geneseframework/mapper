@@ -11,14 +11,13 @@ import { CreateOptions } from '../../interfaces/create-options.interface';
 import { isArray } from '../../utils/native/arrays.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
-export class MapInstanceService<T> {
+export class MapClassService<T> {
 
 
     static async create<T>(className: string, data: any, options: CreateOptions): Promise<T> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        // const zzz: T[] | string[] | number[] | boolean[] = await MapInstanceOrInterfaceService.createArray(data, classDeclaration, options);
-        // return isArray(data) ? await MapInstanceOrInterfaceService.createArray(data, classDeclaration, options) : await this.createInstance<T>(className, data, classDeclaration, options);
-        return undefined
+        console.log(chalk.magentaBright('MAP CLASSSSSSS'), className, classDeclaration?.getName());
+        return isArray(data) ? undefined : await this.createInstance<T>(className, data, classDeclaration, options);
     }
 
 
@@ -37,7 +36,7 @@ export class MapInstanceService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceServiceOld.map(instance, data, classDeclaration, options);
+        await MapInstanceOrInterfaceService.map(instance, data, classDeclaration, options);
         return instance;
     }
 }
