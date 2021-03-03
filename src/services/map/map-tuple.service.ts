@@ -26,13 +26,14 @@ export class MapTupleService<T> {
             if (isNullOrUndefined(data[i])) {
                 tuple.push(data[i]);
             } else {
-                const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
-                if (mappedElement !== undefined) {
-                    tuple.push(mappedElement);
-                } else {
-                    throwIncompatibility(targetTuple, data);
-                    return undefined;
-                }
+                tuple.push(await Mapper.create(findTupleElement(targetTuple, i), data[i], options));
+                // const mappedElement: any = await Mapper.create(findTupleElement(targetTuple, i), data[i], options);
+                // if (mappedElement !== undefined) {
+                //     tuple.push(mappedElement);
+                // } else {
+                //     throwIncompatibility(targetTuple, data);
+                //     return undefined;
+                // }
             }
         }
         return tuple;
