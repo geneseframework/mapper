@@ -16,7 +16,7 @@ testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneS
 
 
 testMappers.push(new TestMapper(`'Blue' / string | number`, 'string | number', 'Blue', {isolate: false}));
-// testMappers.push(new TestMapper(`3 / string | number`, 'string | number', 3, {isolate: true}));
+testMappers.push(new TestMapper(`3 / string | number`, 'string | number', 3, {isolate: false}));
 
 
 
