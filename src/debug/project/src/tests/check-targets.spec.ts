@@ -20,36 +20,37 @@ function notConstructor() {
 
 // ---------------------------------   CheckTargetsService.hasCorrectFormat   -----------------------------------------
 
-its.push(new TestIt(`checkTargetFormat(2)`, CheckTargetsService.hasCorrectFormat, 2, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(false)`, CheckTargetsService.hasCorrectFormat, false, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(String)`, CheckTargetsService.hasCorrectFormat, String, true, {isolate: true}));
+
+its.push(new TestIt(`checkTargetFormat(2)`, CheckTargetsService.hasCorrectFormat, 2, true));
+its.push(new TestIt(`checkTargetFormat(false)`, CheckTargetsService.hasCorrectFormat, false, true));
+its.push(new TestIt(`checkTargetFormat(String)`, CheckTargetsService.hasCorrectFormat, String, true));
 // its.push(new TestIt(`checkTargetFormat(String)`, CheckTargetsService.hasCorrectFormat, notConstructor, false)); // TODO : implement isFunctionWhichIsNotExportedClass()
-its.push(new TestIt(`checkTargetFormat([String])`, CheckTargetsService.hasCorrectFormat, [String], true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat([String, Number])`, CheckTargetsService.hasCorrectFormat, [String, Number], true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(ClassSpec)`, CheckTargetsService.hasCorrectFormat, CheckClassSpec, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat([ClassSpec])`, CheckTargetsService.hasCorrectFormat, [CheckClassSpec], true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat([ClassSpec])`, CheckTargetsService.hasCorrectFormat, [CheckClassSpec, CheckClassSpec], true, {isolate: true}));
+its.push(new TestIt(`checkTargetFormat([String])`, CheckTargetsService.hasCorrectFormat, [String], true));
+its.push(new TestIt(`checkTargetFormat([String, Number])`, CheckTargetsService.hasCorrectFormat, [String, Number], true));
+its.push(new TestIt(`checkTargetFormat(ClassSpec)`, CheckTargetsService.hasCorrectFormat, CheckClassSpec, true));
+its.push(new TestIt(`checkTargetFormat([ClassSpec])`, CheckTargetsService.hasCorrectFormat, [CheckClassSpec], true));
+its.push(new TestIt(`checkTargetFormat([ClassSpec])`, CheckTargetsService.hasCorrectFormat, [CheckClassSpec, CheckClassSpec], true));
 
 
 // ---------------------------------   StringTargetService.hasCorrectElements   -----------------------------------------
 
 
-its.push(new TestIt(`checkTargetFormat(string)`, CheckTargetsService.hasCorrectFormat, 'string', true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(String)`, CheckTargetsService.hasCorrectFormat, 'String', true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat('string')`, CheckTargetsService.hasCorrectFormat, `'string'`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat("a")`, CheckTargetsService.hasCorrectFormat, `"a"`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(string[])`, CheckTargetsService.hasCorrectFormat, `[string]`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(string[])`, CheckTargetsService.hasCorrectFormat, `string[]`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(string | number)`, CheckTargetsService.hasCorrectFormat, `string | number`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(string | number | boolean)`, CheckTargetsService.hasCorrectFormat, `string | number | boolean`, true, {isolate: true}));
+its.push(new TestIt(`checkTargetFormat(string)`, CheckTargetsService.hasCorrectFormat, 'string', true));
+its.push(new TestIt(`checkTargetFormat(String)`, CheckTargetsService.hasCorrectFormat, 'String', true));
+its.push(new TestIt(`checkTargetFormat('string')`, CheckTargetsService.hasCorrectFormat, `'string'`, true));
+its.push(new TestIt(`checkTargetFormat("a")`, CheckTargetsService.hasCorrectFormat, `"a"`, true));
+its.push(new TestIt(`checkTargetFormat(string[])`, CheckTargetsService.hasCorrectFormat, `[string]`, true));
+its.push(new TestIt(`checkTargetFormat(string[])`, CheckTargetsService.hasCorrectFormat, `string[]`, true));
+its.push(new TestIt(`checkTargetFormat(string | number)`, CheckTargetsService.hasCorrectFormat, `string | number`, true));
+its.push(new TestIt(`checkTargetFormat(string | number | boolean)`, CheckTargetsService.hasCorrectFormat, `string | number | boolean`, true));
 // TODO: fix
-// its.push(new TestIt(`checkTargetFormat(string || number)`, CheckTargetsService.hasCorrectFormat, `string || number`, false, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(string | number)`, CheckTargetsService.hasCorrectFormat, `string & number`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(CheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec`, true, {isolate: true}));
+// its.push(new TestIt(`checkTargetFormat(string || number)`, CheckTargetsService.hasCorrectFormat, `string || number`, false));
+its.push(new TestIt(`checkTargetFormat(string | number)`, CheckTargetsService.hasCorrectFormat, `string & number`, true));
+its.push(new TestIt(`checkTargetFormat(CheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec`, true));
 its.push(new TestIt(`checkTargetFormat(WrongCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `WrongCheckClassSpec`, false));
-its.push(new TestIt(`checkTargetFormat(NotExportedCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `NotExportedCheckClassSpec`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec | CheckTypeSpec`, true, {isolate: true}));
-its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `['a']`, true, {isolate: true}));
+its.push(new TestIt(`checkTargetFormat(NotExportedCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `NotExportedCheckClassSpec`, true));
+its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec | CheckTypeSpec`, true));
+its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `['a']`, true));
 
 
 // ----------------------------------------------   getElements   ---------------------------------------------------------

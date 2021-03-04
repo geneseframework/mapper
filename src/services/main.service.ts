@@ -38,7 +38,6 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        console.log(chalk.yellowBright('FIRSTTTT'), target, data, isPrimitiveTypeName(target as string), isQuoted(target as string));
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
