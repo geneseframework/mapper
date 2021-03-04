@@ -18,21 +18,16 @@ export class CheckTargetsService {
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
             CheckTargetsService.throwTarget(target);
-            // const message = `target "${target}" has wrong format : `;
-            // CONFIG.create.throwTarget.error === true ? throwError(message, target) : throwWarning(message, target);
         }
     }
 
 
     static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
-        console.log(chalk.blueBright('oppttttttt'), options);
-        console.log(chalk.blueBright('VONFIGGGGGG'), CONFIG);
         const opt: CreateOptions = options ?? CONFIG.create;
-        console.log(chalk.greenBright('VONFIGGGGGG'), opt);
+        // console.log(chalk.greenBright('VONFIGGGGGG'), opt);
         if (opt.throwTarget.error) {
             throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
         } else if (opt.throwTarget.setToUndefined) {
-            console.log(chalk.redBright('NOOOOOOO'));
             throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set to "undefined" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
             return undefined;
         } else {

@@ -26,7 +26,7 @@ export class OptionsService {
         createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : CONFIG.create.throwTarget.error;
         createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
         Reflect.defineMetadata('initialized', true, createOptions);
-        console.log(chalk.blueBright('OPTTTTTT'), options);
+        // console.log(chalk.blueBright('OPTTTTTT'), options);
         return createOptions;
     }
 

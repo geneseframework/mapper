@@ -20,12 +20,10 @@ export class MapComplexService {
         if (isParenthesized(target)) {
 
         } else if (isUnion(target)) {
-            console.log(chalk.cyanBright('UNIONNNN'), first, others);
             const mapped: any = await MainService.mapString(first, data, options);
-            console.log(chalk.cyanBright('UNIONNNN mappedddddddddd'), mapped);
+            console.log(chalk.cyanBright('UNIONNNN mappedddddddddd'), first, others, mapped);
             return mapped ?? await MainService.mapString(others, data, options);
         } else {
-            console.log(chalk.cyanBright('THROWWWWWW'), CheckTargetsService.throwTarget(target, data, options));
             return CheckTargetsService.throwTarget(target, data, options);
         }
     }
