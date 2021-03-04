@@ -4,6 +4,7 @@ import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
 import { isBoolean } from '../utils/native/booleans.util';
 import * as chalk from 'chalk';
+import { clone } from '../utils/native/clone.util';
 
 export class OptionsService {
 
@@ -17,14 +18,13 @@ export class OptionsService {
 
 
     static initialize(options: CreateOptions): CreateOptions {
-        const createOptions = new CreateOptions();
+        const createOptions = clone(CONFIG.create);
         if (!options) {
             return createOptions;
         }
         createOptions.differentiateStringsAndNumbers = isBoolean(options?.differentiateStringsAndNumbers) ? options.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
         createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : CONFIG.create.throwTarget.error;
         createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
-        // createOptions.throwTarget = [ThrowOption.ERROR, ThrowOption.WARNING].includes(options?.throwTarget) ? options.throwTarget : CONFIG.create.throwTarget;
         Reflect.defineMetadata('initialized', true, createOptions);
         console.log(chalk.blueBright('OPTTTTTT'), options);
         return createOptions;
