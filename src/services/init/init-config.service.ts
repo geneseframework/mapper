@@ -4,6 +4,7 @@ import { requireJsonFile } from '../../utils/file-system.util';
 import { GLOBAL } from '../../const/global.const';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../../models/create-options.model';
+import { isBoolean } from '../../utils/native/booleans.util';
 
 export class InitConfigService {
 
@@ -21,17 +22,17 @@ export class InitConfigService {
 
 
     private static setConfig(jsonConfigObject: any): void {
-        if (jsonConfigObject?.mapper?.create) {
-            for (const key of Object.keys(CONFIG)) {
-                this.setCreateOption(jsonConfigObject, key);
-            }
+        if (!jsonConfigObject?.mapper?.create) {
+            return;
         }
-    }
-
-
-    private static setCreateOption(jsonConfigObject: any, optionName: string): void {
-        if (jsonConfigObject.mapper.create?.hasOwnProperty(optionName)) {
-            CONFIG.create[optionName] = jsonConfigObject.mapper.create[optionName];
+        if (jsonConfigObject.mapper.create.differentiateStringsAndNumbers === false) {
+            CONFIG.create.differentiateStringsAndNumbers = false;
+        }
+        if (jsonConfigObject.mapper.create.throwTarget?.error === true) {
+            CONFIG.create.throwTarget.error = true;
+        }
+        if (jsonConfigObject.mapper.create.throwTarget?.setToUndefined === true) {
+            CONFIG.create.throwTarget.setToUndefined = true;
         }
     }
 }

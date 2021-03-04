@@ -1,7 +1,7 @@
-import { ThrowOption } from '../enums/throw-option.enum';
+import { ThrowTargetError } from './throw-target-error.model';
 
 export class CreateOptions {
     differentiateStringsAndNumbers ?= true;
     isArray ?= false;
-    throw?: ThrowOption = ThrowOption.WARNING;
+    throwTarget?: ThrowTargetError = new ThrowTargetError();
 }

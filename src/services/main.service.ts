@@ -19,6 +19,7 @@ import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
+import { CONFIG } from '../const/config.const';
 
 export class MainService {
 
@@ -38,6 +39,7 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
+        console.log(chalk.greenBright('OPTTTT ?????'), target, data, CONFIG);
         return await this.mapString(TargetService.toString(target), data, options);
     }
 

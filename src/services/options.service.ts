@@ -2,8 +2,8 @@ import { CreateOptions } from '../models/create-options.model';
 import 'reflect-metadata';
 import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
-import { ThrowOption } from '../enums/throw-option.enum';
 import { isBoolean } from '../utils/native/booleans.util';
+import * as chalk from 'chalk';
 
 export class OptionsService {
 
@@ -22,8 +22,11 @@ export class OptionsService {
             return createOptions;
         }
         createOptions.differentiateStringsAndNumbers = isBoolean(options?.differentiateStringsAndNumbers) ? options.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
-        createOptions.throw = [ThrowOption.ERROR, ThrowOption.WARNING].includes(options?.throw) ? options.throw : CONFIG.create.throw;
+        createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : CONFIG.create.throwTarget.error;
+        createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
+        // createOptions.throwTarget = [ThrowOption.ERROR, ThrowOption.WARNING].includes(options?.throwTarget) ? options.throwTarget : CONFIG.create.throwTarget;
         Reflect.defineMetadata('initialized', true, createOptions);
+        console.log(chalk.blueBright('OPTTTTTT'), options);
         return createOptions;
     }
 

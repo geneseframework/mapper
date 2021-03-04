@@ -1,7 +1,6 @@
-import { throwWarningOrError } from '../../utils/errors.util';
+import { throwError, throwWarning } from '../../utils/errors.util';
 import { isPrimitiveType } from '../../types/primitives.type';
 import { CONFIG } from '../../const/config.const';
-import { ThrowOption } from '../../enums/throw-option.enum';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -10,13 +9,30 @@ import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
+import { CreateOptions } from '../../models/create-options.model';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            throwWarningOrError('Error: target has wrong format : ', target, CONFIG.create.throw === ThrowOption.ERROR);
+            CheckTargetsService.throwTarget(target);
+            // const message = `target "${target}" has wrong format : `;
+            // CONFIG.create.throwTarget.error === true ? throwError(message, target) : throwWarning(message, target);
+        }
+    }
+
+
+    static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
+        const opt: CreateOptions = options ?? CONFIG.create;
+        if (opt.throwTarget.error) {
+            throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
+        } else if (opt.throwTarget.setToUndefined) {
+            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set to "undefined" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
+            return data;
+        } else {
+            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
+            return undefined;
         }
     }
 
