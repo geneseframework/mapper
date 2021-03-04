@@ -12,7 +12,7 @@ import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { Target } from '../../types/target/target.type';
 import { Primitive } from '../../types/primitives.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';

@@ -2,7 +2,9 @@ import { Project } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InitConfigService } from './init-config.service';
 import { InstanceGeneratorService } from '../instance-generator.service';
-import { InitCheckTargetsService } from './init-check-targets.service';
+import { CheckTargetsService } from './check-targets.service';
+import { Target } from '../../types/target/target.type';
+import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 
@@ -11,7 +13,7 @@ export class InitService {
     /**
      * Starts the initialization and the creation of the Instance Generator file
      */
-    static async start<T>(): Promise<void> {
+    static async start(): Promise<void> {
         if (GLOBAL.isFirstMapper) {
             await this.init();
             await InstanceGeneratorService.start();
@@ -31,7 +33,6 @@ export class InitService {
         GLOBAL.isAlreadyInitialized = true;
         this.setGlobalNodeModulePath();
         await InitConfigService.start();
-        await InitCheckTargetsService.start();
     }
 
 

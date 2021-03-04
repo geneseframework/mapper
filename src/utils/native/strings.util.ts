@@ -4,7 +4,7 @@ export function isString(value: any): value is string {
 }
 
 
-export function trimOne(text: string): string {
+export function removeBorders(text: string): string {
     return text.slice(1, -1);
 }
 

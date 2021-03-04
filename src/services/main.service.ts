@@ -1,5 +1,5 @@
 import { Target } from '../types/target/target.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
@@ -18,6 +18,7 @@ import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
+import { CheckTargetsService } from './init/check-targets.service';
 
 export class MainService {
 
@@ -44,6 +45,7 @@ export class MainService {
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        await CheckTargetsService.start(target);
         if (isNullOrUndefined(data)) {
             return data;
         } else if (isBracketed(target)) {

@@ -1,13 +1,16 @@
 import * as chalk from 'chalk';
 
+export function throwWarningOrError(message = '', value: any = '', error = false): void | never {
+    error ? throwError(message, value) : throwWarning(message, value);
+}
 
-export function throwError(message = 'Error', value: any = ''): any {
-    console.log(chalk.redBright(message), value);
+export function throwError(message = '', value: any = ''): never {
+    console.log(chalk.redBright(`Error : ${message}`), value);
     throw Error(value);
 }
 
-export function throwWarning(message = 'Warning', value: any = ''): any {
-    console.log(chalk.yellowBright(message), value);
+export function throwWarning(message = '', value: any = ''): void {
+    console.log(chalk.yellowBright(`Warning : ${message}`), value);
 }
 
 export function throwIncompatibility(target: string, data: any = ''): any {

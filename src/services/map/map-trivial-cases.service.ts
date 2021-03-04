@@ -10,7 +10,7 @@ import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import { MapDateService } from './map-date.service';
 import { TargetServiceOld } from '../targets/target.service.old';
 import * as chalk from 'chalk';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isPrimitiveOrPrimitivesArray } from '../../utils/native/primitives.util';
 
 export class MapTrivialCasesService {

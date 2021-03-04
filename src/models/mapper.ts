@@ -14,7 +14,7 @@ import {
     NotString,
     ObjectNotArray
 } from '../types/not-some-type.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from './create-options.model';
 import { MainServiceOld } from '../services/main.service.old';
 import { Union } from '../types/target/string/union.type';
 import { Combination } from '../types/target/string/combination.type';

@@ -7,7 +7,7 @@ import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.se
 import { throwWarning } from '../../utils/errors.util';
 import * as chalk from 'chalk';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 
 export class MapInstanceServiceOld<T> {
 

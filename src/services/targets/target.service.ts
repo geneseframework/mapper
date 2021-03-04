@@ -2,14 +2,15 @@ import { Target } from '../../types/target/target.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../../utils/ast/ast-declaration.util';
 import { TConstructor } from '../../types/t-constructor.type';
 import { isArray } from '../../utils/native/arrays.util';
-import { isPrimitiveConstructor } from '../../types/primitives.type';
+import { isPrimitive, isPrimitiveConstructor, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { isFunction } from '../../utils/native/functions.util';
 import { StringTargetService } from './string-target.service';
 import * as chalk from 'chalk';
+import { isPrimitiveOrArrayOfPrimitivesValue } from '../../utils/native/primitives.util';
 
 export class TargetService {
 
@@ -18,6 +19,8 @@ export class TargetService {
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
             return target?.name;
+        } else if (isPrimitive(target)) {
+            return this.stringifyPrimitive(target);
         } else {
             return StringTargetService.normalize(target);
         }
@@ -35,6 +38,11 @@ export class TargetService {
             stringifiedTarget = `${stringifiedTarget}${this.toString(target)}, `;
         }
         return `${stringifiedTarget.slice(0, -2)}]`;
+    }
+
+
+    private static stringifyPrimitive(target: Primitive): string {
+        return `'${target}'`;
     }
 
 

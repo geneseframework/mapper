@@ -1,4 +1,4 @@
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
 import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { isUnion } from '../../types/target/string/union.type';

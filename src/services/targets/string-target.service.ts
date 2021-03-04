@@ -6,6 +6,7 @@ import { isNotEmptyContainer } from '../../types/target/string/containerized.typ
 import { isUnion, splitUnion } from '../../types/target/string/union.type';
 import { isIntersection, splitIntersection } from '../../types/target/string/intersection.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
+import * as chalk from 'chalk';
 
 export class StringTargetService {
 
@@ -15,6 +16,7 @@ export class StringTargetService {
             return false;
         }
         const normalizedTarget: string = StringTargetService.normalize(target);
+        console.log(chalk.red('CORRECT ELTTTTS ?'), StringTargetService.hasCorrectElements(normalizedTarget));
         return StringTargetService.hasCorrectElements(normalizedTarget);
     }
 

@@ -10,7 +10,7 @@ import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';

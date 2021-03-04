@@ -6,7 +6,7 @@ import { TargetServiceOld } from './targets/target.service.old';
 import { PrimitiveConstructor, Primitive, isPrimitiveConstructor } from '../types/primitives.type';
 import { isValidDateConstructor } from '../utils/native/dates.util';
 import { SyntaxKind, TypeNode } from 'ts-morph';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../models/create-options.model';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import {
     isNonNullOrPrimitiveValue,

@@ -21,7 +21,7 @@ import { MapTypeArrayService } from './map-type-array.service';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { IncompatibilityService } from '../incompatibility.service';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import {
     isPrimitiveOrPrimitivesArray,
     isPrimitiveTypeNode,

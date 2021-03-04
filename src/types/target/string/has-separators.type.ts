@@ -6,6 +6,7 @@ import { Interrogation } from './interrogation.type';
 
 export type HasSeparators = Union | Intersection | Commas | Interrogation | SemiColumn;
 
+
 export function hasSeparators(text: string): text is HasSeparators {
     return /.+[,|&?:].+/g.test(text);
 }

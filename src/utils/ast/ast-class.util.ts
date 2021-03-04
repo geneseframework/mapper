@@ -3,17 +3,13 @@ import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { getImportTypeDeclaration } from './ast-imports.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
-import { TConstructor } from '../../types/t-constructor.type';
-import { isArray } from '../native/arrays.util';
+import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 
-export function isExportedClassConstructorArray(functions: Function[]): functions is TConstructor<any>[] {
-    return isArray(functions) && functions.every(f => isExportedClassConstructor(f));
-}
-
-
-// TODO
-export function isExportedClassConstructor(f: Function): f is TConstructor<any> {
+export function isExportedClassConstructor(target: string): boolean {
+    if (isArrayType(target)) {
+        return isExportedClassConstructor(typeOfArray(target));
+    }
     return true;
 }
 

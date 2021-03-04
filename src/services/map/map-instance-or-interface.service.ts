@@ -15,7 +15,7 @@ import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util
 import { PropertyInfos } from '../../types/property-infos.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { IncompatibilityService } from '../incompatibility.service';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 
 export class MapInstanceOrInterfaceService<T> {
 

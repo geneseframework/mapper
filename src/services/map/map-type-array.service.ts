@@ -7,7 +7,7 @@ import { MapTypeServiceOld } from './map-type.service.old';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { Mapper } from '../../models/mapper';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import {
     isArrayOfPrimitiveTypeNodes, isLiteralKeyword, isLiteralPrimitive,
     isPrimitiveOrArrayOfPrimitivesValue, primitiveLiteralValue,

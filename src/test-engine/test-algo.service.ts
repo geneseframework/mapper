@@ -21,7 +21,7 @@ export async function expect(testTypes: TestType | TestType[], logPassed: boolea
 async function checkTest(testType: TestType, logPassed: boolean, old: boolean): Promise<void> {
     let result;
     if (isTestIt(testType)) {
-        result = testType.method(testType.data);
+        result = await testType.method(testType.data);
     } else {
         if (old) {
             result = await Mapper.createOld(testType.mapParameter, testType.data, testType.options?.createOptions);

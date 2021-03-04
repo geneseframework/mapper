@@ -2,7 +2,7 @@ import { Target } from '../../types/target/target.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../../utils/ast/ast-declaration.util';
 import { TConstructor } from '../../types/t-constructor.type';
 import { isArray } from '../../utils/native/arrays.util';

@@ -2,6 +2,8 @@ import { CONFIG } from '../../const/config.const';
 import { Config } from '../../models/config.model';
 import { requireJsonFile } from '../../utils/file-system.util';
 import { GLOBAL } from '../../const/global.const';
+import * as chalk from 'chalk';
+import { CreateOptions } from '../../models/create-options.model';
 
 export class InitConfigService {
 
@@ -19,10 +21,17 @@ export class InitConfigService {
 
 
     private static setConfig(jsonConfigObject: any): void {
-        if (jsonConfigObject?.mapper) {
-            if (jsonConfigObject.mapper.create?.hasOwnProperty('differentiateStringsAndNumbers')) {
-                CONFIG.create.differentiateStringsAndNumbers = jsonConfigObject.mapper.create.differentiateStringsAndNumbers !== false;
+        if (jsonConfigObject?.mapper?.create) {
+            for (const key of Object.keys(CONFIG)) {
+                this.setCreateOption(jsonConfigObject, key);
             }
+        }
+    }
+
+
+    private static setCreateOption(jsonConfigObject: any, optionName: string): void {
+        if (jsonConfigObject.mapper.create?.hasOwnProperty(optionName)) {
+            CONFIG.create[optionName] = jsonConfigObject.mapper.create[optionName];
         }
     }
 }

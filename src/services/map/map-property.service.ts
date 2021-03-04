@@ -7,7 +7,7 @@ import { MapInterfaceService } from './map-interface.service';
 import { PrimitiveType } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isPrimitiveTypeNode, isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import * as chalk from 'chalk';
 

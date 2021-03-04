@@ -1,7 +1,8 @@
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../models/create-options.model';
 import 'reflect-metadata';
 import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
+import { ThrowOption } from '../enums/throw-option.enum';
 
 export class OptionsService {
 
@@ -13,12 +14,18 @@ export class OptionsService {
         return Reflect.hasMetadata('initialized', options);
     }
 
-    static initialize(options: CreateOptions = {}): CreateOptions {
-        if (![true, false].includes(options?.differentiateStringsAndNumbers)){
-            options.differentiateStringsAndNumbers = CONFIG.create.differentiateStringsAndNumbers;
+
+    static initialize(options: CreateOptions): CreateOptions {
+        const createOptions = new CreateOptions();
+        if (!options) {
+            return createOptions;
         }
-        Reflect.defineMetadata('initialized', true, options);
-        return options;
+        if (![true, false].includes(options?.differentiateStringsAndNumbers)){
+            createOptions.differentiateStringsAndNumbers = CONFIG.create.differentiateStringsAndNumbers;
+        }
+        createOptions.throw = [ThrowOption.ERROR, ThrowOption.WARNING].includes(options?.throw) ? options.throw : CONFIG.create.throw;
+        Reflect.defineMetadata('initialized', true, createOptions);
+        return createOptions;
     }
 
 }

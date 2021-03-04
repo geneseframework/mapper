@@ -4,7 +4,7 @@ import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 

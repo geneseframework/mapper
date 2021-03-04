@@ -1,5 +1,5 @@
 import { Target } from '../types/target/target.type';
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';

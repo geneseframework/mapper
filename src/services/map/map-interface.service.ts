@@ -6,7 +6,7 @@ import { throwWarning } from '../../utils/errors.util';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { MapDateService } from './map-date.service';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
 
 export class MapInterfaceService {

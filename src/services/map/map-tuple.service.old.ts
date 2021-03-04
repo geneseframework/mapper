@@ -7,7 +7,7 @@ import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util'
 import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { Mapper } from '../../models/mapper';
-import { CreateOptions } from '../../interfaces/create-options.interface';
+import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 
 export class MapTupleServiceOld<T> {

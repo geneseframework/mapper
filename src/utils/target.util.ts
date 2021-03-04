@@ -1,5 +1,5 @@
 import { Containerized, isContainerized } from '../types/target/string/containerized.type';
-import { isString, trimOne } from './native/strings.util';
+import { isString, removeBorders } from './native/strings.util';
 import { Bracketed } from '../types/target/string/bracketed.type';
 import { isUnion } from '../types/target/string/union.type';
 import { isIntersection } from '../types/target/string/intersection.type';
@@ -16,7 +16,7 @@ export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {
 
 
 export function bracketedLength(text: Bracketed): number {
-    return getElements(trimOne(text)).length;
+    return getElements(removeBorders(text)).length;
 }
 
 
