@@ -1,19 +1,16 @@
 import { Target } from '../../types/target/target.type';
 import { TargetInfo } from '../../types/target/target-info.type';
-import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { isClassOrInterfaceDeclaration, isDeclaration, isTypeCombination } from '../../utils/ast/ast-declaration.util';
 import { TConstructor } from '../../types/t-constructor.type';
 import { isArray } from '../../utils/native/arrays.util';
-import { isPrimitive, isPrimitiveConstructor, Primitive, PrimitiveType } from '../../types/primitives.type';
+import { isPrimitiveConstructor, Primitive } from '../../types/primitives.type';
 import { isFunction } from '../../utils/native/functions.util';
-import { StringTargetService } from './string-target.service';
-import * as chalk from 'chalk';
-import { isPrimitiveOrArrayOfPrimitivesValue } from '../../utils/native/primitives.util';
 import { isBoolean } from '../../utils/native/booleans.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isString } from '../../utils/native/strings.util';
+import { trimTarget } from '../../utils/target.util';
 
 export class TargetService {
 
@@ -25,7 +22,7 @@ export class TargetService {
         } else if (isBoolean(target) || isNumber(target)) {
             return this.stringifyPrimitive(target);
         } else {
-            return StringTargetService.normalize(target);
+            return this.normalize(target);
         }
     }
 
@@ -51,6 +48,30 @@ export class TargetService {
 
     static isArrayButNotTuple<T>(target: any): boolean {
         return Array.isArray(target) && !this.isTuple(target);
+    }
+
+
+    static normalize(target: string): string {
+        if (['String', 'Number', 'Boolean'].includes(target)) {
+            return target.toLowerCase();
+        }
+        target = trimTarget(target);
+        const regExps: RegExp[] = this.primitiveRegexps();
+        for (const regex of regExps) {
+            const matches: string[] = target.match(regex) ?? [];
+            for (const match of matches) {
+                target = target.replace(match, match.toLowerCase());
+            }
+        }
+        return target;
+    }
+
+
+    private static primitiveRegexps(): RegExp[] {
+        const stringRegex: RegExp = /([[ (,|&?:])String([,|&?:) \]])/g;
+        const numberRegex: RegExp = /([[ (,|&?:])Number([,|&?:) \]])/g;
+        const booleanRegex: RegExp = /([[ (,|&?:])Boolean([,|&?:) \]])/g;
+        return [stringRegex, numberRegex, booleanRegex];
     }
 
 

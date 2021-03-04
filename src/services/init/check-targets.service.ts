@@ -9,7 +9,6 @@ import { isContainerized } from '../../types/target/string/containerized.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { trimTarget } from '../../utils/target.util';
 import { TargetService } from '../targets/target.service';
 
 export class CheckTargetsService {
@@ -35,32 +34,8 @@ export class CheckTargetsService {
         if (isNullOrUndefined(target)) {
             return false;
         }
-        const normalizedTarget: string = CheckTargetsService.normalize(target);
+        const normalizedTarget: string = TargetService.normalize(target);
         return await CheckTargetsService.hasCorrectElements(normalizedTarget);
-    }
-
-
-    static normalize(target: string): string {
-        if (['String', 'Number', 'Boolean'].includes(target)) {
-            return target.toLowerCase();
-        }
-        target = trimTarget(target);
-        const regExps: RegExp[] = CheckTargetsService.primitiveRegexps();
-        for (const regex of regExps) {
-            const matches: string[] = target.match(regex) ?? [];
-            for (const match of matches) {
-                target = target.replace(match, match.toLowerCase());
-            }
-        }
-        return target;
-    }
-
-
-    private static primitiveRegexps(): RegExp[] {
-        const stringRegex: RegExp = /([[ (,|&?:])String([,|&?:) \]])/g;
-        const numberRegex: RegExp = /([[ (,|&?:])Number([,|&?:) \]])/g;
-        const booleanRegex: RegExp = /([[ (,|&?:])Boolean([,|&?:) \]])/g;
-        return [stringRegex, numberRegex, booleanRegex];
     }
 
 
