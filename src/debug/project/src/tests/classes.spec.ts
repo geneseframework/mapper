@@ -229,13 +229,32 @@ testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOr
 // ---------------------------------------------   Null or Literal   ------------------------------------------------------
 
 
-export class NullOrLiteralSpec {
-    nullProp: null;
-    nb: 4;
-    str: 'a';
-    bool: false;
+export class NullSpec {
+    prop: null;
 }
+testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec, {prop: 1}, {expectedValue: {prop: null}, isolate: false}));
 
+
+export class NumberLiteralSpec {
+    prop: 4;
+}
+testMappers.push(new TestMapper(`{prop: 'a'} / NumberLiteralSpec / {prop: 4}`, NumberLiteralSpec, {prop: 'a'}, {expectedValue: {prop: 4}, isolate: false}));
+
+
+export class StringLiteralSpec {
+    prop: 'a';
+}
+testMappers.push(new TestMapper(`{prop: 4} / StringLiteralSpec / {prop: 'a'}`, StringLiteralSpec, {prop: 4}, {expectedValue: {prop: 'a'}, isolate: true}));// err
+
+export class BooleanLiteralSpec {
+    prop: false;
+}
+testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: false}));
+
+// TODO -----------------------------------
+export class ObjectLiteralSpec {
+    prop: {str: 'a'}
+}
 
 // ---------------------------------------------   Null or Literal   ------------------------------------------------------
 
@@ -247,7 +266,7 @@ export class TestSpeccccc {
     nb: 4;
 }
 
-testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str', classs: {age: 2}, hum: 'a', nb: 3}, {isolate: true, log: true}));
+testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str', classs: {age: 2}, hum: 'a', nb: 3}, {isolate: false, log: true}));
 
 
 

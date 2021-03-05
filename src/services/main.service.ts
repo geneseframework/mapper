@@ -20,7 +20,11 @@ import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
 import { CONFIG } from '../const/config.const';
-import { isNullOrLiteral, isStringAsNullOrLiteral } from '../types/literal.type';
+import {
+    isNullOrUndefinedOrLiteral,
+    isStringAsNullOrLiteral,
+    isStringAsNullOrUndefinedOrLiteral
+} from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 
 export class MainService {

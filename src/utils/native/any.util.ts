@@ -12,7 +12,7 @@ export function isNullOrUndefined(value: any): value is null | undefined {
 
 
 export function isAnyOrAnyArray(typeName: string): boolean {
-    return isAny(typeName) || isAnyArray(typeName);
+    return isAny(typeName) || isAnyArray(typeName) || typeName === 'undefined';
 }
 
 

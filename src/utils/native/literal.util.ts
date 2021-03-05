@@ -1,3 +1,3 @@
-// export function isLiteral(value: any): value is NullOrLiteral {
+// export function isLiteral(value: any): value is NullOrUndefinedOrLiteral {
 //
 // }
