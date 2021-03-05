@@ -39,13 +39,13 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        console.log(chalk.greenBright('OPTTTT ?????'), target, data, CONFIG);
+        // console.log(chalk.greenBright('OPTTTT ?????'), target, data, options);
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
 
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data)) {
             return data;
@@ -63,6 +63,5 @@ export class MainService {
             return await MapComplexService.create(target, data, options);
         }
     }
-
 
 }

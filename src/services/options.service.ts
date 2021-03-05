@@ -24,7 +24,7 @@ export class OptionsService {
         }
         createOptions.differentiateStringsAndNumbers = isBoolean(options?.differentiateStringsAndNumbers) ? options.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
         createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : CONFIG.create.throwTarget.error;
-        createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
+        createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setToUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
         Reflect.defineMetadata('initialized', true, createOptions);
         // console.log(chalk.blueBright('OPTTTTTT'), options);
         return createOptions;
