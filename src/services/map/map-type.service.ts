@@ -29,16 +29,19 @@ import {
     primitiveLiteralValue
 } from '../../utils/native/primitives.util';
 import { isBracketed } from '../../types/target/string/bracketed.type';
+import { isString } from '../../utils/native/strings.util';
+import { isArray } from '../../utils/native/arrays.util';
 
 export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        // console.log(chalk.blueBright('MPPPPP TPP'), target, data);
+        // console.log(chalk.magentaBright('MPPPPP TPP'), target, data, isString(target));
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
-        if (Array.isArray(data) && isBracketed(target)) {
+        if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
-        } else if (!Array.isArray(data) && !isBracketed(target)) {
+        } else if (!isBracketed(target)) {
+        // } else if (!isArray(data) && !isBracketed(target)) {
             return this.createType(data, typeAliasDeclaration, options);
         } else {
             return undefined;

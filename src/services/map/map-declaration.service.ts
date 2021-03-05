@@ -19,8 +19,9 @@ import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
-import { MapInterfaceService } from './map-interface.service';
+import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { MapTypeService } from './map-type.service';
+import { MapInterfaceService } from './map-interface.service';
 
 export class MapDeclarationService<T> {
 
@@ -32,7 +33,7 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | TupleOld> {
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[]> {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
@@ -41,10 +42,9 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(data, target, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                return MapInterfaceService.create(data, target, info.isArray, options);
+                return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 return await MapTypeService.create<T>(target, data, options);
-                // return MapTypeService.create(data, target, info.isArray, options);
             default:
                 throwWarning(`Warning : type declaration "${target}" not found.`);
                 return undefined;

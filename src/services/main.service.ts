@@ -20,6 +20,7 @@ import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 

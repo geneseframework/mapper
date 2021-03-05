@@ -5,7 +5,7 @@ import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { MapInterfaceService } from './map-interface.service';
+import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { MapInstanceServiceOld } from './map-instance.service.old';
 import * as chalk from 'chalk';
@@ -30,7 +30,7 @@ export class MapInstanceOrInterfaceService<T> {
         const instancesArray: T[] | Date[] = [];
         const elementsWhichCouldBeAnInstance: object[] = data.filter(d => this.couldBeAnInstanceOrInterface(d));
         for (const element of elementsWhichCouldBeAnInstance) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration, options) ;
+            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceServiceOld.createInterface(data, classOrInterfaceDeclaration, options) ;
             instancesArray.push(instance);
         }
         return instancesArray;
@@ -43,7 +43,7 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-        // console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, classOrInterfaceDeclaration?.getName());
+        // console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, declaration?.getName());
         for (const key of Object.keys(data)) {
             if (keyExistsAndIsNullOrUndefined(data, key)) {
                 instance[key] = data[key];
@@ -61,10 +61,9 @@ export class MapInstanceOrInterfaceService<T> {
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
             return;
         }
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT 0000'), property.getName(), dataValue, key, declaration?.getKindName());
-        const keyTarget: string = this.getKeyTarget(property);
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT1'), property.getName(), keyTarget, keyTarget === `'undefined'`);
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT 22222'), property.getStructure());
+        const keyTarget: string = this.getKeyTarget(dataValue, key, property, declaration);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT1'), property?.getName(), keyTarget);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT 22222'), property?.getStructure());
         if (keyTarget === 'undefined' || keyTarget === undefined) {
             instance[key] = dataValue;
         } else if (isQuoted(keyTarget)) {
@@ -75,8 +74,13 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    private static getKeyTarget(property: PropertyDeclarationOrSignature): string {
-        return property.getStructure().type as string;
+    private static getKeyTargetWithIndexSignature(dataValue: any, key: string, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): string {
+        return indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+    }
+
+
+    private static getKeyTarget(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
+        return property ? property.getStructure().type as string : this.getKeyTargetWithIndexSignature(dataValue, key, declaration);
     }
 
 

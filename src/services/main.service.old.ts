@@ -14,7 +14,7 @@ import { getDeclarationKind, getTypeDeclaration } from '../utils/ast/ast-declara
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
 import { MapInstanceServiceOld } from './map/map-instance.service.old';
 import { MapEnumService } from './map/map-enum.service';
-import { MapInterfaceService } from './map/map-interface.service';
+import { MapInterfaceServiceOld } from './map/map-interface.service.old';
 import { MapTypeServiceOld } from './map/map-type.service.old';
 import { throwWarning } from '../utils/errors.util';
 import { MapComplexService } from './map/map-complex.service';
@@ -70,7 +70,7 @@ export class MainServiceOld {
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(data, info.typeName, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                return MapInterfaceService.create(data, info.typeName, info.isArray, options);
+                return MapInterfaceServiceOld.create(data, info.typeName, info.isArray, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 return MapTypeServiceOld.create(data, info.typeName, info.isArray, options);
             default:
