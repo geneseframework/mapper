@@ -24,6 +24,7 @@ import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapObjectService } from './map/map-object.service';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
+import { MapLiteralObjectService } from './map/map-literal-object.service';
 
 export class MainService {
 
@@ -70,7 +71,7 @@ export class MainService {
         } else if (isDateType(target)) {
             return MapDateService.create(data);
         } else if (isObjectLiteralType(target)) {
-            return MapObjectService.createLiteral(data);
+            return MapLiteralObjectService.create(data);
         } else if (isCurveBracketed(target)) {
             return await MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
