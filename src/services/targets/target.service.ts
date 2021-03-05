@@ -11,11 +11,14 @@ import { isBoolean } from '../../utils/native/booleans.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isString } from '../../utils/native/strings.util';
 import { trimTarget } from '../../utils/target.util';
+import { isNullOrUndefined } from '../../utils/native/any.util';
 
 export class TargetService {
 
     static toString<T>(target: Target<T>): string {
-        if (isArray(target)) {
+        if (isNullOrUndefined(target)) {
+            return target;
+        } else if (isArray(target)) {
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
             return target?.name;

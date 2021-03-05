@@ -11,9 +11,9 @@ import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 export class MapClassService<T> {
 
 
-    static async create<T>(className: string, data: any, options: CreateOptions): Promise<T> {
-        const classDeclaration: ClassDeclaration = getTypeDeclaration(className) as ClassDeclaration;
-        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance<T>(className, data, classDeclaration, options);
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T> {
+        const classDeclaration: ClassDeclaration = getTypeDeclaration(target) as ClassDeclaration;
+        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance<T>(target, data, classDeclaration, options);
     }
 
 
@@ -24,7 +24,7 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(instance, data, classDeclaration, options);
+        await MapInstanceOrInterfaceService.map(target, data, options, instance, classDeclaration);
         return instance;
     }
 }

@@ -20,6 +20,8 @@ import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
 import { CONFIG } from '../const/config.const';
+import { isNullOrLiteral, isStringAsNullOrLiteral } from '../types/literal.type';
+import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 
 export class MainService {
 
@@ -40,15 +42,22 @@ export class MainService {
             options = OptionsService.initialize(options);
         }
         // console.log(chalk.greenBright('OPTTTT ?????'), target, data, options);
+        return await this.mapToString(target, data, options);
+    }
+
+
+    static async mapToString<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
 
-    static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
+        } else if (isStringAsNullOrLiteral(target)) {
+            return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {

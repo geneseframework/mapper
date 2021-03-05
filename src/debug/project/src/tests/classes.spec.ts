@@ -226,11 +226,28 @@ testMappers.push(new TestMapper(`{age: '2'} / StringOrNumberClassSpec`, StringOr
 testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: [2]}, {isolate: false}));
 
 
-export class TestSpeccccc {
-    prop: string;
+// ---------------------------------------------   Null or Literal   ------------------------------------------------------
+
+
+export class NullOrLiteralSpec {
+    nullProp: null;
+    nb: 4;
+    str: 'a';
+    bool: false;
 }
 
-testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str'}, {isolate: true}));
+
+// ---------------------------------------------   Null or Literal   ------------------------------------------------------
+
+
+export class TestSpeccccc {
+    prop: string;
+    classs: StringOrNumberClassSpec
+    hum;
+    nb: 4;
+}
+
+testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str', classs: {age: 2}, hum: 'a', nb: 3}, {isolate: true, log: true}));
 
 
 
