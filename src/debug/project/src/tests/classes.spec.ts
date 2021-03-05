@@ -232,36 +232,36 @@ testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOr
 export class NullSpec {
     prop: null;
 }
-testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec, {prop: 1}, {expectedValue: {prop: null}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec, {prop: 1}, {expectedValue: {prop: null}, isolate: false}));
 
 
 export class UndefinedSpec {
     prop: undefined;
 }
-testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: false}));
 
 
 export class UnknownSpec {
     prop: unknown;
 }
-testMappers.push(new TestMapper(`{prop: 1} / UnknownSpec / {prop: 1}`, UnknownSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 1} / UnknownSpec / {prop: 1}`, UnknownSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: false}));
 
 
 export class NumberLiteralSpec {
     prop: 4;
 }
-testMappers.push(new TestMapper(`{prop: 'a'} / NumberLiteralSpec / {prop: 4}`, NumberLiteralSpec, {prop: 'a'}, {expectedValue: {prop: 4}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'a'} / NumberLiteralSpec / {prop: 4}`, NumberLiteralSpec, {prop: 'a'}, {expectedValue: {prop: 4}, isolate: false}));
 
 
 export class StringLiteralSpec {
     prop: 'a';
 }
-testMappers.push(new TestMapper(`{prop: 4} / StringLiteralSpec / {prop: 'a'}`, StringLiteralSpec, {prop: 4}, {expectedValue: {prop: 'a'}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 4} / StringLiteralSpec / {prop: 'a'}`, StringLiteralSpec, {prop: 4}, {expectedValue: {prop: 'a'}, isolate: false}));
 
 export class BooleanLiteralSpec {
     prop: false;
 }
-testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: false}));
 
 // TODO -----------------------------------
 export class ObjectLiteralSpec {
