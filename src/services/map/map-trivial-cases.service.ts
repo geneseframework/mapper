@@ -5,7 +5,7 @@ import { isDateOrDatesArrayType } from '../../utils/native/dates.util';
 import { ArrayOfPrimitiveElements, Primitive, PrimitiveType } from '../../types/primitives.type';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
-import { MapObjectService } from './map-object.service';
+import { MapObjectServiceOld } from './map-object.service.old';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import { MapDateServiceOld } from './map-date.service.old';
 import { TargetServiceOld } from '../targets/target.service.old';
@@ -37,7 +37,7 @@ export class MapTrivialCasesService {
         }
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         if (TargetServiceOld.isObjectOrObjectsArray(target)) {
-            return MapObjectService.create(data, info);
+            return MapObjectServiceOld.create(data, info);
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
             return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveType, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {

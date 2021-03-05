@@ -56,7 +56,7 @@ export class TargetService {
 
 
     static normalize(target: string): string {
-        if (['String', 'Number', 'Boolean'].includes(target)) {
+        if (['String', 'Number', 'Boolean', 'Object'].includes(target)) {
             return target.toLowerCase();
         }
         target = trimTarget(target);

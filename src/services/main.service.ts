@@ -24,6 +24,8 @@ import * as chalk from 'chalk';
 import { isDateType } from '../utils/native/dates.util';
 import { MapDateServiceOld } from './map/map-date.service.old';
 import { MapDateService } from './map/map-date.service';
+import { isObjectLiteralType } from '../utils/native/objects.util';
+import { MapObjectService } from './map/map-object.service';
 
 export class MainService {
 
@@ -54,7 +56,7 @@ export class MainService {
 
 
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -70,6 +72,8 @@ export class MainService {
             return await MapQuotedService.create(target, data, options);
         } else if (isDateType(target)) {
             return MapDateService.create(data);
+        } else if (isObjectLiteralType(target)) {
+            return MapObjectService.create(data);
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else {

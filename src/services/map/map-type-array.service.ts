@@ -106,7 +106,6 @@ export class MapTypeArrayService {
         } else if (typeNodes.length > 1) {
             await this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties, options);
         } else if (target?.hasOwnProperty('rootKey')) {
-            throwWarning('type probably incompatible with data = ', dataValue);
             return undefined;
         } else {
             throwWarning(`unknown primitive literal type : \nKey: key\nDataValue: ${dataValue}\nTypeNode: ${typeNode.getKindName()}\nTarget: `, target);
