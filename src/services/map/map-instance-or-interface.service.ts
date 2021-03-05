@@ -1,20 +1,12 @@
-import { ClassDeclaration, InterfaceDeclaration, SyntaxKind, Type } from 'ts-morph';
+import { ClassDeclaration, InterfaceDeclaration } from 'ts-morph';
 import { getAllClassProperties } from '../../utils/ast/ast-class.util';
-import { getApparentType } from '../../utils/ast/ast-types.util';
-import { PropertyKind } from '../../enums/property-kind.enum';
-import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { MapInstanceServiceOld } from './map-instance.service.old';
-import * as chalk from 'chalk';
-import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsAndIsNullOrUndefined } from '../../utils/native/any.util';
-import { isArray } from '../../utils/native/arrays.util';
+import { isNullOrUndefined } from '../../utils/native/any.util';
 import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util';
-import { PropertyInfos } from '../../types/property-infos.type';
-import { DateDeclaration } from '../../models/date-declaration.model';
-import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -45,12 +37,17 @@ export class MapInstanceOrInterfaceService<T> {
     static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         // console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, declaration?.getName());
         for (const key of Object.keys(data)) {
-            if (keyExistsAndIsNullOrUndefined(data, key)) {
+            if (this.keyExistsInInstanceAndDataIsNullOrUndefined(instance, data, key)) { // TODO : verify what happens when key not exists in target
                 instance[key] = data[key];
             } else {
                 await this.mapDataKey(data[key], options, key, instance, declaration);
             }
         }
+    }
+
+
+    private static keyExistsInInstanceAndDataIsNullOrUndefined(instance: any, data: any, key: string): boolean {
+        return instance?.hasOwnProperty(key) && isNullOrUndefined(data[key]);
     }
 
 

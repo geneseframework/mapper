@@ -49,9 +49,9 @@ export class MapTypeService {
     }
 
 
-    // static async create<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
+    // static async createLiteral<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
+    // static async createLiteral<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
+    // static async createLiteral<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
     //     const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
     //     if (Array.isArray(data) && isArray) {
     //         return this.createTypesArray(data, typeAliasDeclaration, options);

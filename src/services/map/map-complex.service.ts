@@ -5,11 +5,12 @@ import { isUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
 import { getElements, trimTarget } from '../../utils/target.util';
 import { CheckTargetsService } from '../init/check-targets.service';
+import { isString } from '../../utils/native/strings.util';
 
 export class MapComplexService {
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
-        console.log(chalk.yellowBright('TYPE COMPLEXXXXX'), target, data, options);
+        console.log(chalk.yellowBright('TYPE COMPLEXXXXX'), target, data, options, isString(target));
         const elements: string[] = getElements(target);
         // console.log(chalk.cyanBright('TYPE ELTTTTTTS'), elements);
         const first: string = elements[0].trim();

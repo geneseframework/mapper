@@ -1,14 +1,18 @@
-import { TargetInfo } from '../../types/target/target-info.type';
 import { isArray } from '../../utils/native/arrays.util';
-import { haveArrayIncompatibility } from '../../utils/incompatibility.util';
-import * as chalk from 'chalk';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
+import { CreateOptions } from '../../models/create-options.model';
+import * as chalk from 'chalk';
 
 export class MapObjectService {
 
 
-    static create(data: object): object {
-        // console.log(chalk.blueBright('MAP OBJJJJJ'), data);
+    static async create(target: string, data: any, options?: CreateOptions): Promise<object> {
+        console.log(chalk.blueBright('MAP OBJJJJJ'), target, data);
+        return undefined;
+    }
+
+
+    static createLiteral(data: object): object {
         if  (isArray(data)) {
             return this.createArrayObjects(data as object[]);
         } else {

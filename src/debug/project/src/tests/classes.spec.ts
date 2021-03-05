@@ -369,4 +369,4 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 export class ObjectLiteralSpec {
     prop: {str: string}
 }
-// testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralSpec / {prop: 4}`, ObjectLiteralSpec, {prop: {str: 'a'}}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralSpec / {prop: 4}`, ObjectLiteralSpec, {prop: {str: 'a'}}, {isolate: false}));
