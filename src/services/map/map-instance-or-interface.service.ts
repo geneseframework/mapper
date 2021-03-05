@@ -55,16 +55,15 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-        // console.log(chalk.yellowBright('GET KEY TARGETTTTT 0000'), dataValue, key, declaration?.getStructure());
+        console.log(chalk.yellowBright('GET KEY TARGETTTTT 0000'), dataValue, key, declaration?.getStructure());
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
             return;
         }
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT 0000'), property.getName(), dataValue, key, declaration?.getKindName());
-        const keyTarget: string = this.getKeyTarget(property);
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT1'), property.getName(), keyTarget, keyTarget === `'undefined'`);
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT 22222'), property.getStructure());
+        const keyTarget: string = this.getKeyTarget(dataValue, key, property, declaration);
+        console.log(chalk.blueBright('GET KEY TARGETTTTT1'), property?.getName(), keyTarget, keyTarget === `'undefined'`);
+        console.log(chalk.blueBright('GET KEY TARGETTTTT 22222'), property?.getStructure());
         if (keyTarget === 'undefined' || keyTarget === undefined) {
             instance[key] = dataValue;
         } else if (isQuoted(keyTarget)) {
@@ -75,8 +74,13 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    private static getKeyTarget(property: PropertyDeclarationOrSignature): string {
-        return property.getStructure().type as string;
+    private static getKeyTargetWithIndexSignature(dataValue: any, key: string, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): string {
+        return indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+    }
+
+
+    private static getKeyTarget(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
+        return property ? property.getStructure().type as string : this.getKeyTargetWithIndexSignature(dataValue, key, declaration);
     }
 
 
