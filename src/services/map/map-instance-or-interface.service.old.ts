@@ -9,7 +9,7 @@ import { MapInterfaceService } from './map-interface.service';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { MapInstanceServiceOld } from './map-instance.service.old';
 import * as chalk from 'chalk';
-import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsButIsNullOrUndefined } from '../../utils/native/any.util';
+import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsAndIsNullOrUndefined } from '../../utils/native/any.util';
 import { isArray } from '../../utils/native/arrays.util';
 import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util';
 import { PropertyInfos } from '../../types/property-infos.type';
@@ -41,7 +41,7 @@ export class MapInstanceOrInterfaceServiceOld<T> {
 
     static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
         for (const key of Object.keys(data)) {
-            if (keyExistsButIsNullOrUndefined(data, key)) {
+            if (keyExistsAndIsNullOrUndefined(data, key)) {
                 target[key] = data[key];
             } else {
                 await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration, options);

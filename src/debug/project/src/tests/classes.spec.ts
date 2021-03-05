@@ -221,9 +221,16 @@ export class StringOrNumberClassSpec {
     age: string | number;
 }
 
-testMappers.push(new TestMapper(`{age: 2} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: 2}, {isolate: true}));
+testMappers.push(new TestMapper(`{age: 2} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: 2}, {isolate: false}));
 testMappers.push(new TestMapper(`{age: '2'} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: '2'}, {isolate: false}));
 testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: [2]}, {isolate: false}));
+
+
+export class TestSpeccccc {
+    prop: string;
+}
+
+testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str'}, {isolate: true}));
 
 
 

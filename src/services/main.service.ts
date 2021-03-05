@@ -11,7 +11,7 @@ import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './targets/target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
-import { isNullOrUndefined } from '../utils/native/any.util';
+import { isAny, isNullOrUndefined } from '../utils/native/any.util';
 import { MapArrayService } from './map/map-array.service';
 import { isArrayType } from '../types/target/string/array-type.type';
 import { MapComplexService } from './map/map-complex.service';
@@ -47,7 +47,7 @@ export class MainService {
     static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
         // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
-        if (isNullOrUndefined(data)) {
+        if (isNullOrUndefined(data) || isAny(target)) {
             return data;
         } else if (isBracketed(target)) {
             return await MapTupleService.create(target, data, options)
