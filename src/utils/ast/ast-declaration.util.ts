@@ -129,7 +129,7 @@ function hasDeclarationType(typeName: string, getTDeclaration: (sourceFile: Sour
 
 
 function hasDeclarationTypeInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
-    return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+    return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
 
@@ -148,7 +148,7 @@ function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sour
             return false;
         }
     }
-    return !!GLOBAL.projectWithNodeModules.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+    return !!GLOBAL.projectWithNodeModules.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
 

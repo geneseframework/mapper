@@ -11,12 +11,14 @@ import { isArrayType, typeOfArray } from '../../types/target/string/array-type.t
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
+import { isStringAsTrivialType } from '../../types/literal.type';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
+            // console.log(chalk.cyanBright('CHECK TTTTTTT'), target, isString(target));
             CheckTargetsService.throwTarget(target);
         }
     }
@@ -24,7 +26,6 @@ export class CheckTargetsService {
 
     static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
         const opt: CreateOptions = options ?? CONFIG.create;
-        // console.log(chalk.greenBright('VONFIGGGGGG'), opt);
         if (opt.throwTarget.error) {
             throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
         } else if (opt.throwTarget.setToUndefined) {
@@ -44,11 +45,11 @@ export class CheckTargetsService {
      * @param target
      */
     static async hasCorrectFormat(target: string): Promise<boolean> {
+        if (isNullOrUndefined(target)) {
+            return true;
+        }
         if (!isString(target)) {
             target = TargetService.toString(target);
-        }
-        if (isNullOrUndefined(target)) {
-            return false;
         }
         const normalizedTarget: string = TargetService.normalize(target);
         return await CheckTargetsService.hasCorrectElements(normalizedTarget);
@@ -63,6 +64,7 @@ export class CheckTargetsService {
     private static async hasCorrectElements(text: string): Promise<boolean> {
         return isPrimitiveType(text)
             || isQuoted(text)
+            || isStringAsTrivialType(text)
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
             || await this.isCorrectComplexType(text)

@@ -16,6 +16,9 @@ import { PropertyInfos } from '../../types/property-infos.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../models/create-options.model';
+import { MainService } from '../main.service';
+import { isQuoted } from '../../types/target/string/quoted.type';
+import { removeBorders } from '../../utils/native/strings.util';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -39,80 +42,46 @@ export class MapInstanceOrInterfaceService<T> {
     }
 
 
-    static async map<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
+    static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         // console.log(chalk.cyanBright('MAP INSTTTTT'), target, data, classOrInterfaceDeclaration?.getName());
         for (const key of Object.keys(data)) {
             if (keyExistsAndIsNullOrUndefined(data, key)) {
-                target[key] = data[key];
+                instance[key] = data[key];
             } else {
-                await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration, options);
+                await this.mapDataKey(data[key], options, key, instance, declaration);
             }
         }
     }
 
 
-    private static async mapDataKey<T>(target: any, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
-        const properties: PropertyDeclarationOrSignature[] = classOrInterfaceDeclaration instanceof ClassDeclaration ? getAllClassProperties(classOrInterfaceDeclaration) : getAllInterfaceProperties(classOrInterfaceDeclaration);
+    private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+        // console.log(chalk.yellowBright('GET KEY TARGETTTTT 0000'), dataValue, key, declaration?.getStructure());
+        const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, classOrInterfaceDeclaration)) {
+        if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
             return;
         }
-        const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, classOrInterfaceDeclaration);
-        // console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos, options, IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options));
-        if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options)) {
-            // TODO: return undefined ?
-            return;
-        }
-        if (isAnyOrAnyArray(propertyInfos.propertyType)) {
-            this.mapAny(target, key, dataValue, propertyInfos.propertyType);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT 0000'), property.getName(), dataValue, key, declaration?.getKindName());
+        const keyTarget: string = this.getKeyTarget(property);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT1'), property.getName(), keyTarget, keyTarget === `'undefined'`);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT 22222'), property.getStructure());
+        if (keyTarget === 'undefined' || keyTarget === undefined) {
+            instance[key] = dataValue;
+        } else if (isQuoted(keyTarget)) {
+                instance[key] = removeBorders(keyTarget);
         } else {
-            await MapPropertyService.map(target, key, dataValue, propertyInfos, options);
+            instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
         }
+    }
+
+
+    private static getKeyTarget(property: PropertyDeclarationOrSignature): string {
+        return property.getStructure().type as string;
     }
 
 
     private static keyIsIncompatibleWithDeclarationType(property: PropertyDeclarationOrSignature, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): boolean {
         return !property && !indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
-    }
-
-
-    private static getPropertyInfos(property: PropertyDeclarationOrSignature): PropertyInfos {
-        const propertyStructureType: string = property.getStructure().type as string ?? 'any';
-        const apparentType = getApparentType(property).toLowerCase();
-        const propertyType = propertyStructureType ?? apparentType;
-        return new PropertyInfos(apparentType, propertyType, this.getPropertyKind(property));
-    }
-
-
-    private static getPropertyInfosWithIndexSignature(key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): PropertyInfos {
-        const propertyName: string = indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
-        return new PropertyInfos(undefined, propertyName, PropertyKind.PROPERTY_DECLARATION);
-    }
-
-
-    private static mapAny(target: any, key: string, dataValue: any, typeName: string): void {
-        if (isAny(typeName) || (isAnyArray(typeName) && isArray(dataValue))) {
-            target[key] = dataValue;
-        }
-    }
-
-
-    static getPropertyKind(property: PropertyDeclarationOrSignature): PropertyKind {
-        const propertyType: Type = property.getType();
-        if (propertyType.isArray()) {
-            return PropertyKind.ARRAY;
-        } else if (propertyType.isTuple()) {
-            return PropertyKind.TUPLE;
-        } else if (propertyType.isInterface()) {
-            return PropertyKind.INTERFACE
-        } else if (property.getKind() === SyntaxKind.PropertyDeclaration) {
-            return PropertyKind.PROPERTY_DECLARATION;
-        } else if (property.getKind() === SyntaxKind.PropertySignature) {
-            return PropertyKind.PROPERTY_SIGNATURE;
-        } else {
-            console.log(chalk.redBright('Unknown property kind :'), property.getKindName());
-            return undefined;
-        }
     }
 
 }

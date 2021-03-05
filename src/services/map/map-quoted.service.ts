@@ -8,7 +8,7 @@ export class MapQuotedService {
 
 
     static async create<T>(target: Quoted, data: any, options: CreateOptions): Promise<any> {
-        console.log(chalk.magentaBright('QUOTTTTTT'), target, data);
+        // console.log(chalk.magentaBright('QUOTTTTTT'), target, data);
         if (isString(data) || (isNumber(data) && options.differentiateStringsAndNumbers === false)) {
             return removeBorders(target) === data.toString() ? data.toString() : undefined;
         }
