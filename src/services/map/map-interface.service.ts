@@ -19,38 +19,7 @@ export class MapInterfaceService {
         const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(target) as InterfaceDeclaration;
         // console.log(chalk.cyanBright('CREATE INTERFFFFFF DECLLLLL'), interfaceDeclaration?.getStructure());
         return !isObjectWhichIsNotArray(data) ? undefined : await this.createInterface<T>(target, data, interfaceDeclaration, options);
-        // if (!interfaceDeclaration) {
-        //     throwWarning(`Warning: interface declaration not found for "${target}". The value "${data}" was replaced by "undefined".`);
-        //     return undefined;
-        // } else if (interfaceDeclaration instanceof DateDeclaration) {
-        //     return MapDateService.createDate(data);
-        // } else if (Array.isArray(data) && isArray) {
-        //     return await MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration, options);
-        // } else if (!Array.isArray(data) && !isArray) {
-        //     return await this.createInterface(data, interfaceDeclaration, options);
-        // }  else {
-        //     return undefined;
-        // }
     }
-
-
-    // static async create<T>(data: any[], interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T[] | Date[]>
-    // static async create<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | Date>
-    // static async create<T>(data: any, interfaceName: string, isArray: boolean, options: CreateOptions): Promise<T | T[] | Date | Date[]> {
-    //     const interfaceDeclaration: InterfaceDeclaration = getTypeDeclaration(interfaceName) as InterfaceDeclaration;
-    //     if (!interfaceDeclaration) {
-    //         throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);
-    //         return undefined;
-    //     } else if (interfaceDeclaration instanceof DateDeclaration) {
-    //         return MapDateService.createDate(data);
-    //     } else if (Array.isArray(data) && isArray) {
-    //         return await MapInstanceOrInterfaceService.createArray(data, interfaceDeclaration, options);
-    //     } else if (!Array.isArray(data) && !isArray) {
-    //         return await this.createInterface(data, interfaceDeclaration, options);
-    //     }  else {
-    //         return undefined;
-    //     }
-    // }
 
 
     static async createInterface<T>(target: string, data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {

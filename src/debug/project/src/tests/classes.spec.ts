@@ -201,7 +201,8 @@ export class CDefaultsSpec {
     }
 }
 
-testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {person: {}}, {expectedValue: new CDefaultsSpec(), isolate: false}));
+testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {}, {expectedValue: new CDefaultsSpec()}));
+testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {person: {}}));
 
 
 // ------------------------------------------------------------------------------------------------------------------------
