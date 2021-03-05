@@ -4,20 +4,21 @@ export const testMappers: TestMapper[] = [];
 
 // --------------------------------------------   Objects (not arrays)   --------------------------------------------------
 
-testMappers.push(new TestMapper(`{color: 'blue'} / object`, 'object',{color: 'blue'}, {isolate: true}));
-testMappers.push(new TestMapper(`{color: 'blue'} / 'Object'`, 'Object',{color: 'blue'}, {isolate: true}));
-testMappers.push(new TestMapper(`{color: null} / 'Object'`, 'Object',{color: null}, {isolate: true}));
-testMappers.push(new TestMapper(`{color: undefined} / 'Object'`, 'Object',{color: undefined}, {isolate: true}));
-testMappers.push(new TestMapper(`'blue' / object / undefined`, 'object','blue', {expectedValue: undefined, isolate: true}));
-testMappers.push(new TestMapper(`[{color: 'blue'}] / object / undefined`, 'object',[{color: 'blue'}], {isolate: true}));
-testMappers.push(new TestMapper(`null / object / null`, 'object',null, {isolate: true}));
-testMappers.push(new TestMapper(`undefined / object / undefined`, 'object',undefined, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`{color: 'blue'} / object`, 'object',{color: 'blue'}, {isolate: false}));
+testMappers.push(new TestMapper(`{color: 'blue'} / 'Object'`, 'Object',{color: 'blue'}, {isolate: false}));
+testMappers.push(new TestMapper(`{color: null} / 'Object'`, 'Object',{color: null}, {isolate: false}));
+testMappers.push(new TestMapper(`{color: undefined} / 'Object'`, 'Object',{color: undefined}, {isolate: false}));
+testMappers.push(new TestMapper(`'blue' / object / undefined`, 'object','blue', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`[{color: 'blue'}] / object / undefined`, 'object',[{color: 'blue'}], {isolate: false}));
+testMappers.push(new TestMapper(`null / object / null`, 'object',null, {isolate: false}));
+testMappers.push(new TestMapper(`undefined / object / undefined`, 'object',undefined, {expectedValue: undefined, isolate: false}));
 
 
 // --------------------------------------------   ObjectConstructor   --------------------------------------------------
 
 
-testMappers.push(new TestMapper(`{color: 'blue'} / ObjectConstructor`, Object,{color: 'blue'}, {isolate: true}));
+testMappers.push(new TestMapper(`{color: 'blue'} / ObjectConstructor`, Object,{color: 'blue'}, {isolate: false}));
+
 
 // ---------------------------------------------   Arrays of objects   ----------------------------------------------------
 

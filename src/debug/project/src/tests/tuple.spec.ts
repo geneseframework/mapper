@@ -40,6 +40,8 @@ testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[fals
 testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[null], {isolate: false}));
 testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[undefined], {isolate: false}));
 
+testMappers.push(new TestMapper(`[{color: 'blue'}] / [ObjectConstructor]`, [Object],[{color: 'blue'}], {isolate: false}));
+testMappers.push(new TestMapper(`[{color: 'blue'}] / [ObjectConstructor]`, [Object],[2], {expectedValue: [undefined], isolate: false}));
 
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 
@@ -120,7 +122,7 @@ testMappers.push(new TestMapper(`['a', ['b', 'c']] / ['string', ['string', 'stri
 
 export type TupleStringTupleStringStringSpec = ['string', ['string', 'string']];
 
-// testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringStringSpec`, 'TupleStringTupleStringStringSpec',['a', ['b', 'c']], {isolate: true}));
+// testMappers.push(new TestMapper(`['a', ['b', 'c']] / TupleStringTupleStringStringSpec`, 'TupleStringTupleStringStringSpec',['a', ['b', 'c']], {isolate: false}));
 // testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec / ['a', ['b', undefined]`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {expectedValue: ['a', ['b', undefined]], isolate: false}));
 // testMappers.push(new TestMapper(`['a', ['b', 2]] / TupleStringTupleStringStringSpec & !diff`, 'TupleStringTupleStringStringSpec',['a', ['b', 2]], {isolate: false, createOptions: {differentiateStringsAndNumbers: false}}));
 
