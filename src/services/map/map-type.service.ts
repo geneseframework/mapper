@@ -36,7 +36,7 @@ export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        console.log(chalk.magentaBright('MPPPPP TPP'), target, data, isString(target));
+        // console.log(chalk.magentaBright('MPPPPP TPP'), target, data, isString(target));
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
