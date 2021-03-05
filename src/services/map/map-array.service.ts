@@ -15,7 +15,6 @@ import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { removeBrackets } from '../../types/target/string/bracketed.type';
 
 export class MapArrayService<T> {
 

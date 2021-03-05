@@ -1,1 +1,1 @@
-export type NewProperty = [name: string, type: string, defaultValue: any];
+export type Property = [name: string, type: string, defaultValue: any];

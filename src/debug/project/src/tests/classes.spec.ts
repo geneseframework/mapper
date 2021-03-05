@@ -366,7 +366,13 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 // ------------------------------------------   Property with Type object   -----------------------------------------------
 
 
-export class ObjectLiteralSpec {
+export class ObjectLiteralStringSpec {
     prop: {str: string}
 }
-testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralSpec / {prop: 4}`, ObjectLiteralSpec, {prop: {str: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralStringSpec / {prop: 4}`, ObjectLiteralStringSpec, {prop: {str: 'a'}}, {isolate: true}));
+
+
+export class ObjectLiteralStringNumberSpec {
+    prop: {str: string, nb: number}
+}
+testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralStringNumberSpec / {prop: 4}`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: true}));

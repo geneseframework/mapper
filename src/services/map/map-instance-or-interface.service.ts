@@ -10,7 +10,7 @@ import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
-import { removeBorders } from '../../utils/native/strings.util';
+import { removeBorders } from '../../types/target/string/containerized.type';
 
 export class MapInstanceOrInterfaceService<T> {
 
