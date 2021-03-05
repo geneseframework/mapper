@@ -5,7 +5,7 @@ import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
 import { hasDeclaration } from '../utils/ast/ast-declaration.util';
-import { isPrimitiveTypeName } from '../utils/native/types.util';
+import { isDateTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './targets/target.service';
@@ -21,6 +21,9 @@ import { CheckTargetsService } from './init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import * as chalk from 'chalk';
+import { isDateType } from '../utils/native/dates.util';
+import { MapDateServiceOld } from './map/map-date.service.old';
+import { MapDateService } from './map/map-date.service';
 
 export class MainService {
 
@@ -35,7 +38,7 @@ export class MainService {
      * @param options
      */
     // TODO : isArray Option
-    static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
@@ -45,12 +48,12 @@ export class MainService {
     }
 
 
-    static async mapToString<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    static async mapToString<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
 
-    private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
+    private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
@@ -64,7 +67,9 @@ export class MainService {
         } else if (isPrimitiveTypeName(target)) {
             return MapPrimitiveService.create([target, data], options);
         } else if (isQuoted(target)) {
-            return await MapQuotedService.create(target, data, options)
+            return await MapQuotedService.create(target, data, options);
+        } else if (isDateType(target)) {
+            return MapDateService.create(data);
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else {

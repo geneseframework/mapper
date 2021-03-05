@@ -111,7 +111,7 @@ export class TargetService {
         } else if (Array.isArray(target)) {
             return 'Tuple';
         }
-        throwWarning(`Warning: typeName not found for : `, target);
+        throwWarning(`typeName not found for : `, target);
         return undefined;
     }
 

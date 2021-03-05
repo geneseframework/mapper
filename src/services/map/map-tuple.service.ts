@@ -18,7 +18,7 @@ export class MapTupleService<T> {
 
     static async create(target: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
         if (!isArrayOfSameLength(target, data)) {
-            throwWarning(`Warning: "${target}" is a Tuple and data is incompatible with it : `, data);
+            throwWarning(`"${target}" is a Tuple and data is incompatible with it : `, data);
             return undefined;
         }
         const tuple: any[] = [];

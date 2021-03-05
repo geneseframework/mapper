@@ -58,7 +58,7 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
             if (typeScriptDeclaration) {
                 return typeScriptDeclaration;
             } else {
-                throwWarning(`Warning: impossible to find declaration corresponding to "${typeName}".`);
+                throwWarning(`impossible to find declaration corresponding to "${typeName}".`);
                 return undefined;
             }
     }
@@ -138,7 +138,7 @@ function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sour
     if (declarations.length === 0) {
         return false;
     } else if (declarations.length > 1) {
-        throwWarning(`Warning: ${typeName} is declared in multiple files.`)
+        throwWarning(`${typeName} is declared in multiple files.`)
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
         if (getTDeclaration(importSourceFile)?.length > 0) {
@@ -207,7 +207,7 @@ export function indexSignatureWithSameType(key: Key, value: any, declaration: Cl
     } else if (indexSignatures.length === 1) {
         return indexSignatureName(key, value, indexSignatures[0]);
     } else {
-        throwWarning(`Warning: ${declaration?.getName()} has multiple index signatures.`);
+        throwWarning(`${declaration?.getName()} has multiple index signatures.`);
         return undefined;
     }
 }

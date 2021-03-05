@@ -7,7 +7,7 @@ import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { MapTupleServiceOld } from './map-tuple.service.old';
 import { MapObjectService } from './map-object.service';
 import { MapPrimitiveServiceOld } from './map-primitive.service.old';
-import { MapDateService } from './map-date.service';
+import { MapDateServiceOld } from './map-date.service.old';
 import { TargetServiceOld } from '../targets/target.service.old';
 import * as chalk from 'chalk';
 import { CreateOptions } from '../../models/create-options.model';
@@ -41,7 +41,7 @@ export class MapTrivialCasesService {
         } else if (isPrimitiveOrPrimitivesArray(info.typeName)) {
             return MapPrimitiveServiceOld.create(data, info.typeName as PrimitiveType, info.isArray, options);
         } else if (isDateOrDatesArrayType(info.typeName)) {
-            return MapDateService.createDates(data, info.isArray);
+            return MapDateServiceOld.createDates(data, info.isArray);
         }
     }
 

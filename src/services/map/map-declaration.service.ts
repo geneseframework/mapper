@@ -1,7 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { MapTypeServiceOld } from './map-type.service.old';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../../types/type-declaration.type';
@@ -10,16 +9,11 @@ import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
-import * as chalk from 'chalk';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../../models/create-options.model';
-import { Target } from '../../types/target/target.type';
 import { Primitive } from '../../types/primitives.type';
-import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
-import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 

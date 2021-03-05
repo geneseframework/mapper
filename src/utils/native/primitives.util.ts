@@ -4,6 +4,7 @@ import { PRIMITIVE_KEYWORDS, Primitive, PrimitiveType } from '../../types/primit
 import { LiteralNode } from '../../types/literal-node.type';
 import { TargetServiceOld } from '../../services/targets/target.service.old';
 import { isPrimitiveTypeName } from './types.util';
+import { throwWarning } from '../errors.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): value is Primitive | Primitive[] {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -110,7 +111,7 @@ export function literalValue(literalTypeNode: LiteralTypeNode): string {
         case SyntaxKind.StringLiteral:
             return literal.getText().slice(1, -1);
         default:
-            console.log(chalk.yellowBright('Warning: unknown Literal value type : '), literal?.getKindName(), literal?.getText());
+            throwWarning('unknown Literal value type : ', `${literal?.getKindName()} / ${literal?.getText()}`);
             return undefined;
     }
 }

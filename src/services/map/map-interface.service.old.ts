@@ -4,10 +4,8 @@ import { implementsRequiredProperties } from '../../utils/ast/ast-interfaces.uti
 import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { throwWarning } from '../../utils/errors.util';
 import { DateDeclaration } from '../../models/date-declaration.model';
-import { MapDateService } from './map-date.service';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { MapDateServiceOld } from './map-date.service.old';
 import { CreateOptions } from '../../models/create-options.model';
-import * as chalk from 'chalk';
 
 export class MapInterfaceServiceOld {
 
@@ -20,7 +18,7 @@ export class MapInterfaceServiceOld {
             throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);
             return undefined;
         } else if (interfaceDeclaration instanceof DateDeclaration) {
-            return MapDateService.createDate(data);
+            return MapDateServiceOld.createDate(data);
         } else if (Array.isArray(data) && isArray) {
             return await MapInstanceOrInterfaceServiceOld.createArray(data, interfaceDeclaration, options);
         } else if (!Array.isArray(data) && !isArray) {
