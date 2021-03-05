@@ -17,6 +17,8 @@ import { DateDeclaration } from '../../models/date-declaration.model';
 import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
+import { isQuoted } from '../../types/target/string/quoted.type';
+import { removeBorders } from '../../utils/native/strings.util';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -56,9 +58,15 @@ export class MapInstanceOrInterfaceService<T> {
     private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        const keyTarget: string = this.getKeyTarget(property);
-        instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
-        console.log(chalk.greenBright('INST KEYYYYY'), instance[key]);
+        const keyTarget: string = this.getKeyTarget(property);;
+        const propertyStructureType: string = property.getStructure().type as string
+        if (isQuoted(propertyStructureType)) {
+            instance[key] = removeBorders(propertyStructureType);
+            console.log(chalk.greenBright('is quoted yes !!!!!'), dataValue, instance[key]);
+        } else {
+            instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
+            console.log(chalk.greenBright('INST KEYYYYY'), instance[key], property.getStructure());
+        }
         // if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
         //     return;
         // }
