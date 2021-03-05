@@ -226,13 +226,25 @@ testMappers.push(new TestMapper(`{age: '2'} / StringOrNumberClassSpec`, StringOr
 testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: [2]}, {isolate: false}));
 
 
-// ---------------------------------------------   Null or Literal   ------------------------------------------------------
+// ----------------------------------------------   Null or Literal   ------------------------------------------------------
 
 
 export class NullSpec {
     prop: null;
 }
 testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec, {prop: 1}, {expectedValue: {prop: null}, isolate: true}));
+
+
+export class UndefinedSpec {
+    prop: undefined;
+}
+testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: true}));
+
+
+export class UnknownSpec {
+    prop: unknown;
+}
+testMappers.push(new TestMapper(`{prop: 1} / UnknownSpec / {prop: 1}`, UnknownSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: true}));
 
 
 export class NumberLiteralSpec {
@@ -255,19 +267,6 @@ testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`
 export class ObjectLiteralSpec {
     prop: {str: 'a'}
 }
-
-// ---------------------------------------------   Null or Literal   ------------------------------------------------------
-
-
-export class TestSpeccccc {
-    prop: string;
-    classs: StringOrNumberClassSpec
-    hum;
-    nb: 4;
-}
-
-testMappers.push(new TestMapper(`zzz / TestSpeccccc`, TestSpeccccc, {prop: 'str', classs: {age: 2}, hum: 'a', nb: 3}, {isolate: false, log: true}));
-
 
 
 // ----------------------------------   Property typed with type: string[] or string ---------------------------------------

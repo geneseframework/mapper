@@ -62,35 +62,17 @@ export class MapInstanceOrInterfaceService<T> {
         const propertyStructureType: string = property.getStructure().type as string
         if (isQuoted(propertyStructureType)) {
             instance[key] = removeBorders(propertyStructureType);
-            console.log(chalk.greenBright('is quoted yes !!!!!'), dataValue, instance[key]);
         } else {
             instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
-            console.log(chalk.greenBright('INST KEYYYYY'), instance[key], property.getStructure());
+            // console.log(chalk.greenBright('INST KEYYYYY'), instance[key], property.getStructure());
         }
-        // if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
-        //     return;
-        // }
-        // const propertyInfos: PropertyInfos = property ? this.getPropertyInfos(property) : this.getPropertyInfosWithIndexSignature(key, dataValue, declaration);
-        // console.log(chalk.magentaBright('MAP DATA KKKKK'), target, key, dataValue, propertyInfos, options, IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options));
-        // if (IncompatibilityService.areIncompatible(propertyInfos.propertyType, dataValue, options)) {
-        //     // TODO: return undefined ?
-        //     return;
-        // }
-        // if (isAnyOrAnyArray(propertyInfos.propertyType)) {
-        //     this.mapAny(target, key, dataValue, propertyInfos.propertyType);
-        // } else {
-        //     await MapPropertyService.map(target, key, dataValue, propertyInfos, options);
-        // }
     }
 
 
     private static getKeyTarget(property: PropertyDeclarationOrSignature): string {
         const propertyStructureType: string = property.getStructure().type as string;
-        // const propertyStructureType: string = property.getStructure().type as string ?? 'any';
         const apparentType = getApparentType(property).toLowerCase();
-        const propertyType = propertyStructureType ?? apparentType;
-        console.log(chalk.blueBright('GET KEY TARGETTTTT'), property.getName(), propertyStructureType, apparentType);
-        // console.log(chalk.magentaBright('GET KEY TARGETTTTT'), property.getStructure());
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT'), property.getName(), propertyStructureType, apparentType);
         return propertyStructureType;
     }
 

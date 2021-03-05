@@ -11,7 +11,7 @@ import { isArrayType, typeOfArray } from '../../types/target/string/array-type.t
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
-import { isLiteral, isNullOrUndefinedOrLiteral, isStringAsNullOrUndefinedOrLiteral } from '../../types/literal.type';
+import { isStringAsNullOrUndefinedOrLiteral } from '../../types/literal.type';
 
 export class CheckTargetsService {
 
@@ -45,16 +45,13 @@ export class CheckTargetsService {
      * @param target
      */
     static async hasCorrectFormat(target: string): Promise<boolean> {
-        console.log(chalk.magentaBright('CORRRECTTT ?????'), target);
         if (isNullOrUndefined(target)) {
-            console.log(chalk.magentaBright('NULLL OR UNDDDDD !!!!!'), target);
             return true;
         }
         if (!isString(target)) {
             target = TargetService.toString(target);
         }
         const normalizedTarget: string = TargetService.normalize(target);
-        console.log(chalk.magentaBright('normalizedTarget !!!!!'), normalizedTarget);
         return await CheckTargetsService.hasCorrectElements(normalizedTarget);
     }
 
@@ -65,7 +62,6 @@ export class CheckTargetsService {
 
 
     private static async hasCorrectElements(text: string): Promise<boolean> {
-        console.log(chalk.redBright('????? NULLL OR LIT'), text, isStringAsNullOrUndefinedOrLiteral(text));
         return isPrimitiveType(text)
             || isQuoted(text)
             || isStringAsNullOrUndefinedOrLiteral(text)

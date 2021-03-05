@@ -1,11 +1,9 @@
-import * as chalk from 'chalk';
-import { isNull, NullOrLiteral, NullOrUndefinedOrLiteral } from '../../types/literal.type';
+import { NullOrLiteral } from '../../types/literal.type';
 
 export class MapNullOrLiteralService {
 
 
     static async create(target: string): Promise<NullOrLiteral> {
-        console.log(chalk.magentaBright('NullOrLiteralllll'), target);
         if (target === 'null') {
             return null;
         } else if (target === 'true') {
