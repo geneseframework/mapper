@@ -18,7 +18,7 @@ export class CheckTargetsService {
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            console.log(chalk.cyanBright('CHECK TTTTTTT'), target, isString(target));
+            // console.log(chalk.cyanBright('CHECK TTTTTTT'), target, isString(target));
             CheckTargetsService.throwTarget(target);
         }
     }

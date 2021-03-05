@@ -34,7 +34,7 @@ export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        console.log(chalk.blueBright('MPPPPP TPP'), target, data);
+        // console.log(chalk.blueBright('MPPPPP TPP'), target, data);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         if (Array.isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
@@ -93,7 +93,7 @@ export class MapTypeService {
             target[key] = dataValue;
             return;
         }
-        console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode.getKindName(), options);
+        // console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode.getKindName(), options);
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 await this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode, options);

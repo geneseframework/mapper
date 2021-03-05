@@ -16,7 +16,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
-        console.log(chalk.blueBright('CREATE ELTTTTT'), data, typeName, options, this.haveSameType(data, typeName, options));
+        // console.log(chalk.blueBright('CREATE ELTTTTT'), data, typeName, options, this.haveSameType(data, typeName, options));
         return this.haveSameType(data, typeName, options) ? castStringAndNumbers(typeName, data) : undefined;
     }
 

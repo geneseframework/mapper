@@ -58,11 +58,12 @@ export class MapInstanceOrInterfaceService<T> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         const keyTarget: string = this.getKeyTarget(property);
-        // console.log(chalk.blueBright('GET KEY TARGETTTTT'), propertyStructureType, propertyStructureType === `'undefined'`);
-        if (isQuoted(keyTarget)) {
-            instance[key] = removeBorders(keyTarget);
-        } else if (keyTarget === 'undefined') {
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT'), property.getName(), keyTarget, keyTarget === `'undefined'`);
+        // console.log(chalk.blueBright('GET KEY TARGETTTTT'), property.getStructure());
+        if (keyTarget === 'undefined' || keyTarget === undefined) {
             instance[key] = dataValue;
+        } else if (isQuoted(keyTarget)) {
+                instance[key] = removeBorders(keyTarget);
         } else {
             instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
         }
