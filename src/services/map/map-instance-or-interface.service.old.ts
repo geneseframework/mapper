@@ -5,7 +5,7 @@ import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { MapInterfaceService } from './map-interface.service';
+import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { MapInstanceServiceOld } from './map-instance.service.old';
 import * as chalk from 'chalk';
@@ -27,7 +27,7 @@ export class MapInstanceOrInterfaceServiceOld<T> {
         const instancesArray: T[] | Date[] = [];
         const elementsWhichCouldBeAnInstance: object[] = data.filter(d => this.couldBeAnInstanceOrInterface(d));
         for (const element of elementsWhichCouldBeAnInstance) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceService.createInterface(data, classOrInterfaceDeclaration, options) ;
+            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceServiceOld.createInterface(data, classOrInterfaceDeclaration, options) ;
             instancesArray.push(instance);
         }
         return instancesArray;

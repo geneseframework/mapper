@@ -12,8 +12,8 @@ export interface AnimalSpec {
     nickName?: string;
 }
 
-testMappers.push(new TestMapper(`{name: 'Biela'} / PreySpec`, 'AnimalSpec', {name: 'Biela'}));
-testMappers.push(new TestMapper(`{name: 'Biela', nickName: 'Kitty'} / PreySpec`, 'AnimalSpec', {name: 'Biela', nickName: 'Kitty'}));
+testMappers.push(new TestMapper(`{name: 'Biela'} / PreySpec`, 'AnimalSpec', {name: 'Biela'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Biela', nickName: 'Kitty'} / PreySpec`, 'AnimalSpec', {name: 'Biela', nickName: 'Kitty'}, {isolate: false}));
 testMappers.push(new TestMapper(`{nickName: 'Kitty'} / PreySpec / undefined`, 'AnimalSpec', {nickName: 'Kitty' }, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{unknownProperty: 'Biela'} / PreySpec / undefined`, 'AnimalSpec', {unknownProperty: 'Biela' }, {expectedValue: undefined}));
 

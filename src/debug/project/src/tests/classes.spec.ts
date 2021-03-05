@@ -49,7 +49,7 @@ export class IndexableSpec {
     [key: string]: string;
 }
 
-testMappers.push(new TestMapper(` {a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}, {isolate: true}));
+testMappers.push(new TestMapper(` {a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}));
 testMappers.push(new TestMapper(` {a: 'c', b: 3} / IndexableSpec / {a: 'c'}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c'}}));
 
 
@@ -197,10 +197,11 @@ export interface IDefaultsSpec {
 }
 export class CDefaultsSpec {
     person: IDefaultsSpec = {
-        name: 'Léa'}
+        name: 'Léa'
+    }
 }
 
-testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {person: {}}, {expectedValue: new CDefaultsSpec()}));
+testMappers.push(new TestMapper(`{person: {}} / CDefaultsSpec / new CDefaultsSpec()`, CDefaultsSpec, {person: {}}, {expectedValue: new CDefaultsSpec(), isolate: false}));
 
 
 // ------------------------------------------------------------------------------------------------------------------------
