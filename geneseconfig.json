@@ -1,7 +1,11 @@
 {
     "mapper": {
         "create": {
-            "differentiateStringsAndNumbers": true
+            "differentiateStringsAndNumbers": true,
+            "throwTarget": {
+                "error": false,
+                "setToUndefined": false
+            }
         }
     }
 }

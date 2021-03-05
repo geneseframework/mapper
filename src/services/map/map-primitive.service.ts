@@ -2,6 +2,7 @@ import { Primitive, PrimitiveType } from '../../types/primitives.type';
 import { CreateOptions } from '../../models/create-options.model';
 import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
 import { castStringAndNumbers } from '../../utils/native/primitives.util';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
@@ -15,6 +16,7 @@ export class MapPrimitiveService {
         if (data === null) {
             return null;
         }
+        console.log(chalk.blueBright('CREATE ELTTTTT'), data, typeName, options, this.haveSameType(data, typeName, options));
         return this.haveSameType(data, typeName, options) ? castStringAndNumbers(typeName, data) : undefined;
     }
 

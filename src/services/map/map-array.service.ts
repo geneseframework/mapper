@@ -8,13 +8,14 @@ import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.se
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
-import { isNullOrUndefined } from '../../utils/native/any.util';
+import { isAny, isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
 import { CreateOptions } from '../../models/create-options.model';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
+import { removeBrackets } from '../../types/target/string/bracketed.type';
 
 export class MapArrayService<T> {
 
@@ -22,19 +23,22 @@ export class MapArrayService<T> {
     static async create(target: ArrayType, data: any, options: CreateOptions): Promise<any[]> {
         if (!isArray(data)) {
             return undefined;
-        }
-        const arr: any[] = [];
-        for (const element of data) {
-            if (element === null || element === undefined) {
-                arr.push(element);
-            } else {
-                const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
-                if (mappedElement !== undefined) {
-                    arr.push(mappedElement);
+        } else if (isAny(typeOfArray(target))) {
+            return data;
+        } else {
+            const arr: any[] = [];
+            for (const element of data) {
+                if (element === null || element === undefined) {
+                    arr.push(element);
+                } else {
+                    const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
+                    if (mappedElement !== undefined) {
+                        arr.push(mappedElement);
+                    }
                 }
             }
+            return arr;
         }
-        return arr;
     }
 
 

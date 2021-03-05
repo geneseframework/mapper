@@ -1,5 +1,5 @@
-export function keyExistsButIsNullOrUndefined(target: any, key: string): boolean {
-    return target?.hasOwnProperty(key) && isNullOrUndefined(target[key]);
+export function keyExistsAndIsNullOrUndefined(obj: any, key: string): boolean {
+    return obj?.hasOwnProperty(key) && isNullOrUndefined(obj[key]);
 }
 
 
@@ -14,7 +14,7 @@ export function isAnyOrAnyArray(typeName: string): boolean {
 
 
 export function isAny(typeName: string): boolean {
-    return typeName === 'any';
+    return typeName === 'any' || typeName === undefined;
 }
 
 

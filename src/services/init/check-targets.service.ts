@@ -1,7 +1,6 @@
-import { throwWarningOrError } from '../../utils/errors.util';
+import { throwError, throwWarning } from '../../utils/errors.util';
 import { isPrimitiveType } from '../../types/primitives.type';
 import { CONFIG } from '../../const/config.const';
-import { ThrowOption } from '../../enums/throw-option.enum';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -9,15 +8,31 @@ import { isContainerized } from '../../types/target/string/containerized.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { trimTarget } from '../../utils/target.util';
 import { TargetService } from '../targets/target.service';
+import { CreateOptions } from '../../models/create-options.model';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            throwWarningOrError('Error: target has wrong format : ', target, CONFIG.create.throw === ThrowOption.ERROR);
+            CheckTargetsService.throwTarget(target);
+        }
+    }
+
+
+    static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
+        const opt: CreateOptions = options ?? CONFIG.create;
+        // console.log(chalk.greenBright('VONFIGGGGGG'), opt);
+        if (opt.throwTarget.error) {
+            throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
+        } else if (opt.throwTarget.setToUndefined) {
+            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set to "undefined" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
+            return undefined;
+        } else {
+            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
+            return data;
         }
     }
 
@@ -35,32 +50,8 @@ export class CheckTargetsService {
         if (isNullOrUndefined(target)) {
             return false;
         }
-        const normalizedTarget: string = CheckTargetsService.normalize(target);
+        const normalizedTarget: string = TargetService.normalize(target);
         return await CheckTargetsService.hasCorrectElements(normalizedTarget);
-    }
-
-
-    static normalize(target: string): string {
-        if (['String', 'Number', 'Boolean'].includes(target)) {
-            return target.toLowerCase();
-        }
-        target = trimTarget(target);
-        const regExps: RegExp[] = CheckTargetsService.primitiveRegexps();
-        for (const regex of regExps) {
-            const matches: string[] = target.match(regex) ?? [];
-            for (const match of matches) {
-                target = target.replace(match, match.toLowerCase());
-            }
-        }
-        return target;
-    }
-
-
-    private static primitiveRegexps(): RegExp[] {
-        const stringRegex: RegExp = /([[ (,|&?:])String([,|&?:) \]])/g;
-        const numberRegex: RegExp = /([[ (,|&?:])Number([,|&?:) \]])/g;
-        const booleanRegex: RegExp = /([[ (,|&?:])Boolean([,|&?:) \]])/g;
-        return [stringRegex, numberRegex, booleanRegex];
     }
 
 

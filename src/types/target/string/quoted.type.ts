@@ -1,5 +1,11 @@
+import { removeBorders } from '../../../utils/native/strings.util';
+
 export type Quoted = `'${string}'` | `"${string}"`;
 
 export function isQuoted(text: string): text is Quoted {
-    return /'.*'/.test(text) || /".*"/.test(text);
+    return isSurroundedBy(text, `'`) || isSurroundedBy(text, `"`);
+}
+
+function isSurroundedBy(text: string, boundary: string): boolean {
+    return text[0] === boundary && text[text.length - 1] === boundary && !removeBorders(text).includes(boundary);
 }
