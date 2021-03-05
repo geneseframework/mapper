@@ -2,7 +2,6 @@ import { Primitive, PrimitiveType } from '../../types/primitives.type';
 import { CreateOptions } from '../../models/create-options.model';
 import { PrimitiveAny } from '../../types/target/string/primitive-any.type';
 import { castStringAndNumbers } from '../../utils/native/primitives.util';
-import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 

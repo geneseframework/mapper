@@ -4,7 +4,7 @@ import { implementsRequiredProperties } from '../../utils/ast/ast-interfaces.uti
 import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { throwWarning } from '../../utils/errors.util';
 import { DateDeclaration } from '../../models/date-declaration.model';
-import { MapDateService } from './map-date.service';
+import { MapDateServiceOld } from './map-date.service.old';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';

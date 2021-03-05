@@ -254,15 +254,12 @@ export class StringLiteralSpec {
 }
 testMappers.push(new TestMapper(`{prop: 4} / StringLiteralSpec / {prop: 'a'}`, StringLiteralSpec, {prop: 4}, {expectedValue: {prop: 'a'}, isolate: false}));
 
+
 export class BooleanLiteralSpec {
     prop: false;
 }
 testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: false}));
 
-// TODO -----------------------------------
-export class ObjectLiteralSpec {
-    prop: {str: 'a'}
-}
 
 
 // ----------------------------------   Property typed with type: string[] or string ---------------------------------------
@@ -345,7 +342,6 @@ testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWi
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: catSpec}));
 
 
-
 // ------------------------------   Property with Type which is Union of Classes and Class[]   ----------------------------
 
 
@@ -365,3 +361,12 @@ export class PersonSpec {
 testMappers.push(new TestMapper(`{employer: { name: 'Total', employees: 30000}} / PersonSpec`, PersonSpec,{employer: { name: 'Total', employees: 30000}}));
 testMappers.push(new TestMapper(`{employer: [{ name: 'Total', employees: 30000}]} / PersonSpec`, PersonSpec,{employer: [{ name: 'Total', employees: 30000}]}, {expectedValue: {employer: undefined}}));
 testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 3000}} / PersonSpec`, PersonSpec,{employer: [{ name: 'Greenpeace', volunteers: 3000}]}));
+
+
+// ------------------------------------------   Property with Type object   -----------------------------------------------
+
+
+export class ObjectLiteralSpec {
+    prop: {str: string}
+}
+// testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralSpec / {prop: 4}`, ObjectLiteralSpec, {prop: {str: 'a'}}, {isolate: true}));

@@ -13,6 +13,7 @@ import { isString } from '../../utils/native/strings.util';
 import { trimTarget } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isNull } from '../../types/literal.type';
+import * as chalk from 'chalk';
 
 export class TargetService {
 
@@ -20,9 +21,11 @@ export class TargetService {
         if (isNull(target)) {
             return 'null';
         } else if (isArray(target)) {
+            // console.log(chalk.blueBright('ARRRR'), target);
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
-            return target?.name;
+            // console.log(chalk.yellowBright('fffffff'), target.name);
+            return this.normalize(target.name);
         } else if (isBoolean(target) || isNumber(target)) {
             return this.stringifyPrimitive(target);
         } else {
@@ -32,7 +35,7 @@ export class TargetService {
 
 
     static isTuple(target: Target<any>): boolean {
-        return Array.isArray(target) && target.length > 1;
+        return isArray(target) && target.length > 1;
     }
 
 
@@ -56,7 +59,7 @@ export class TargetService {
 
 
     static normalize(target: string): string {
-        if (['String', 'Number', 'Boolean'].includes(target)) {
+        if (['String', 'Number', 'Boolean', 'Object'].includes(target)) {
             return target.toLowerCase();
         }
         target = trimTarget(target);
@@ -111,7 +114,7 @@ export class TargetService {
         } else if (Array.isArray(target)) {
             return 'Tuple';
         }
-        throwWarning(`Warning: typeName not found for : `, target);
+        throwWarning(`typeName not found for : `, target);
         return undefined;
     }
 

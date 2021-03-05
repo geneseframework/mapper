@@ -41,5 +41,6 @@ export function isStringAsTrivialType(text: string): boolean {
         || !isNaN(Number(text))
         || text === 'true'
         || text === 'false'
+        || text === 'object'
         || text === 'any';
 }

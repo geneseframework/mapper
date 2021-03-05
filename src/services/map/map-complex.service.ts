@@ -9,7 +9,7 @@ import { CheckTargetsService } from '../init/check-targets.service';
 export class MapComplexService {
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
-        // console.log(chalk.yellowBright('TYPE COMPLEXXXXX'), target, data, options);
+        console.log(chalk.yellowBright('TYPE COMPLEXXXXX'), target, data, options);
         const elements: string[] = getElements(target);
         // console.log(chalk.cyanBright('TYPE ELTTTTTTS'), elements);
         const first: string = elements[0].trim();

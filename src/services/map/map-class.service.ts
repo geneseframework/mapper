@@ -19,7 +19,7 @@ export class MapClassService<T> {
 
     static async createInstance<T>(target: string, data: any, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<T> {
         if (classDeclaration.isAbstract()) {
-            throwWarning(`Warning: "${target}" is abstract and can't be instantiated.`);
+            throwWarning(`"${target}" is abstract and can't be instantiated.`);
             return undefined;
         }
         const instanceGenerator = new InstanceGenerator<T>(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
