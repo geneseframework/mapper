@@ -34,7 +34,6 @@ export class MapDeclarationService<T> {
      * @private
      */
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[]> {
-    // static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | TupleOld> {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
@@ -46,7 +45,6 @@ export class MapDeclarationService<T> {
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 return await MapTypeService.create<T>(target, data, options);
-                // return MapTypeService.create(data, target, info.isArray, options);
             default:
                 throwWarning(`Warning : type declaration "${target}" not found.`);
                 return undefined;

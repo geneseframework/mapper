@@ -20,6 +20,7 @@ import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -50,7 +51,7 @@ export class MainService {
 
 
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | TupleOld | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -65,6 +66,7 @@ export class MainService {
         } else if (isQuoted(target)) {
             return await MapQuotedService.create(target, data, options)
         } else if (hasDeclaration(target)) {
+            console.log(chalk.greenBright('HEEREeeeee'), target, data, isPrimitiveTypeName(target), isQuoted(target));
             return await MapDeclarationService.create(target, data, options);
         } else {
             return await MapComplexService.create(target, data, options);
