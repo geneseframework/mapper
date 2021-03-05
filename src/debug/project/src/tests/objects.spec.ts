@@ -22,11 +22,11 @@ testMappers.push(new TestMapper(`{color: 'blue'} / ObjectConstructor`, Object,{c
 
 // ---------------------------------------------   Arrays of objects   ----------------------------------------------------
 
-// testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[{color: 'blue'}]));
-// testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[{}]));
-// testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[[{}]], {expectedValue: [], isolate: false}));
-//
-// testMappers.push(new TestMapper(`[{color: 'blue'}] / [Object]`, [Object],[{color: 'blue'}]));
-// testMappers.push(new TestMapper(`'a' / [Object]`, [Object],'a', {expectedValue: undefined, isolate: false}));
-// testMappers.push(new TestMapper(`['a'] / [Object]`, [Object],['a'], {expectedValue: [], isolate: false}));
-// testMappers.push(new TestMapper(`['a'] / [Object]`, [Object],{element: ['a']}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{color: 'blue'} / object[]`, 'object[]',[{color: 'blue'}], {isolate: false}));
+testMappers.push(new TestMapper(`[{}] / object[]`, 'object[]',[{}], {isolate: false}));
+testMappers.push(new TestMapper(`[[{}]] / object[]`, 'object[]',[[{}]], {isolate: false}));
+
+testMappers.push(new TestMapper(`[{color: 'blue'}] / [Object]`, [Object],[{color: 'blue'}], {isolate: false}));
+testMappers.push(new TestMapper(`'a' / [Object]`, [Object],'a', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`['a'] / [Object]`, [Object],['a'], {expectedValue: [undefined], isolate: false}));
+testMappers.push(new TestMapper(`{element: ['a']} / [Object]`, [Object],{element: ['a']}, {expectedValue: undefined, isolate: false}));

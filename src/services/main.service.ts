@@ -56,7 +56,7 @@ export class MainService {
 
 
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
