@@ -1,4 +1,4 @@
-import { TestMapper} from '../../../../test-engine/test-mapper.model';
+import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Chalk } from 'chalk';
 
 export const testMappers: TestMapper[] = [];
@@ -36,7 +36,7 @@ export class ClassWithAnySpec {
 }
 
 testMappers.push(new TestMapper(` {a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, {a: 2, b: ['b'], c: 'c'}));
-testMappers.push(new TestMapper(` {a: undefined, b: 'b'} / ClassWithAnySpec / {a: undefined}`, ClassWithAnySpec, {a: undefined, b: 'b'}, {expectedValue: {a: undefined}}));
+testMappers.push(new TestMapper(` {a: undefined, b: 'b'} / ClassWithAnySpec / {a: undefined, b: undefined}`, ClassWithAnySpec, {a: undefined}, {expectedValue: {a: undefined}}));
 testMappers.push(new TestMapper(` {a: [2], b: [null]} / ClassWithAnySpec`, ClassWithAnySpec, {a: [2], b: [null]}));
 testMappers.push(new TestMapper(` {d: 3} / ClassWithAnySpec`, ClassWithAnySpec, {d: 3}, {expectedValue: {}}));
 
@@ -49,8 +49,8 @@ export class IndexableSpec {
     [key: string]: string;
 }
 
-testMappers.push(new TestMapper(` {a: 'a', b: 'b'} / IndexableSpec`, IndexableSpec, {a: 'a', b: 'b'}));
-testMappers.push(new TestMapper(` {a: 'a', b: 3} / IndexableSpec / {a: 'a'}`, IndexableSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}}));
+testMappers.push(new TestMapper(` {a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}));
+testMappers.push(new TestMapper(` {a: 'c', b: 3} / IndexableSpec / {a: 'c'}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c'}}));
 
 
 // ------------------------------------------------   Indexable number   --------------------------------------------------

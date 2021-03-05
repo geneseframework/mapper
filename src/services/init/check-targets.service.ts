@@ -11,7 +11,7 @@ import { isArrayType, typeOfArray } from '../../types/target/string/array-type.t
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
-import { isStringAsNullOrUndefinedOrLiteral } from '../../types/literal.type';
+import { isStringAsTrivialType } from '../../types/literal.type';
 
 export class CheckTargetsService {
 
@@ -64,7 +64,7 @@ export class CheckTargetsService {
     private static async hasCorrectElements(text: string): Promise<boolean> {
         return isPrimitiveType(text)
             || isQuoted(text)
-            || isStringAsNullOrUndefinedOrLiteral(text)
+            || isStringAsTrivialType(text)
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
             || await this.isCorrectComplexType(text)

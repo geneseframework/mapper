@@ -35,6 +35,11 @@ export function isStringAsNullOrLiteral(text: string): boolean {
 }
 
 
-export function isStringAsNullOrUndefinedOrLiteral(text: string): boolean {
-    return text === 'null' || text === 'undefined' || !isNaN(Number(text)) || text === 'true' || text === 'false';
+export function isStringAsTrivialType(text: string): boolean {
+    return text === 'null'
+        || text === 'undefined'
+        || !isNaN(Number(text))
+        || text === 'true'
+        || text === 'false'
+        || text === 'any';
 }

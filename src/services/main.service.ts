@@ -5,7 +5,6 @@ import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
 import { hasDeclaration } from '../utils/ast/ast-declaration.util';
-import * as chalk from 'chalk';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -19,12 +18,7 @@ import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
-import { CONFIG } from '../const/config.const';
-import {
-    isNullOrUndefinedOrLiteral,
-    isStringAsNullOrLiteral,
-    isStringAsNullOrUndefinedOrLiteral
-} from '../types/literal.type';
+import { isStringAsNullOrLiteral } from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 
 export class MainService {
