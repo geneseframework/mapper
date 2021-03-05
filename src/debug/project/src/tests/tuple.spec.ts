@@ -40,10 +40,18 @@ testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[fals
 testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[null], {isolate: false}));
 testMappers.push(new TestMapper(`['true'] / [Boolean] / [true]`, [Boolean],[undefined], {isolate: false}));
 
+
 // ----------------------------------------------   Null or undefined   ------------------------------------------------
 
 
 testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],[null, undefined], {isolate: false}));
+
+
+// ----------------------------------------------   Tuples with Dates   ------------------------------------------------
+
+
+testMappers.push(new TestMapper(`['2021-02-19T17:36:53.999Z', 'white'] / [DateConstructor, 'string']`, [Date, 'string'],['2021-02-19T17:36:53.999Z', 'white'], {expectedValue: [new Date('2021-02-19T17:36:53.999Z'), 'white'], isolate: false}));
+testMappers.push(new TestMapper(`['2021-02-19T17:36:53.999Z', 'white'] / [Date, 'string']`, ['Date', 'string'],['2021-02-19T17:36:53.999Z', 'white'], {expectedValue: [new Date('2021-02-19T17:36:53.999Z'), 'white'], isolate: false}));
 
 
 // ----------------------------------------------   Tuples of classes   ---------------------------------------------------
