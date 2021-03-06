@@ -3,17 +3,17 @@ import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { Key } from '../../types/key.type';
 import { newMappedElement } from '../../utils/mapping.util';
+import { isArray } from '../../utils/native/arrays.util';
+import { isBracketed } from '../../types/target/string/bracketed.type';
 
 export class MapEnumService {
 
 
-    static async create<T>(data: any[], enumName: string, isArray: boolean): Promise<T[]>
-    static async create<T>(data: any, enumName: string, isArray: boolean): Promise<T>
-    static async create<T>(data: any, enumName: string, isArray: boolean): Promise<T | T[]> {
-        const enumDeclaration: EnumDeclaration = getTypeDeclaration(enumName) as EnumDeclaration;
-        if (Array.isArray(data) && isArray) {
+    static async create<T>(target: string, data: any): Promise<T | T[]> {
+        const enumDeclaration: EnumDeclaration = getTypeDeclaration(target) as EnumDeclaration;
+        if (isArray(data) && isBracketed(target)) {
             return await this.createEnumsArray(data, enumDeclaration);
-        } else if (!Array.isArray(data) && !isArray) {
+        } else if (!isArray(data) && !isBracketed(target)) {
             return await this.createEnum(data, enumDeclaration);
         } else {
             return undefined;

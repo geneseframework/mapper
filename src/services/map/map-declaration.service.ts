@@ -27,14 +27,15 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create<T>(target, data, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
-                return MapEnumService.create(data, target, info.isArray);
+                return MapEnumService.create(target, data, options);
+                // return MapEnumService.create(data, target, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
