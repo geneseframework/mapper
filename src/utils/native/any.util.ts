@@ -1,5 +1,3 @@
-import * as chalk from 'chalk';
-
 export function keyExistsInInstanceAndDataIsNullOrUndefinedOld(obj: any, key: string): boolean {
     return obj?.hasOwnProperty(key) && isNullOrUndefined(obj[key]);
 }

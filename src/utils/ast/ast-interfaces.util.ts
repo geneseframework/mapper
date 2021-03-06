@@ -9,7 +9,6 @@ import {
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { getAllClassProperties } from './ast-class.util';
 import { includes } from '../native/arrays.util';
-import * as chalk from 'chalk';
 
 
 export function getAllInterfaceProperties(interfaceDeclaration: InterfaceDeclaration): (PropertySignature | PropertyDeclaration)[] {

@@ -29,7 +29,6 @@ import {
     primitiveLiteralValue
 } from '../../utils/native/primitives.util';
 import { isBracketed } from '../../types/target/string/bracketed.type';
-import { isString } from '../../utils/native/strings.util';
 import { isArray } from '../../utils/native/arrays.util';
 
 export class MapTypeService {

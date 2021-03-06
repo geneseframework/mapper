@@ -1,6 +1,6 @@
 import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
-import { PRIMITIVE_KEYWORDS, Primitive, PrimitiveType } from '../../types/primitives.type';
+import { Primitive, PRIMITIVE_KEYWORDS, PrimitiveType } from '../../types/primitives.type';
 import { LiteralNode } from '../../types/literal-node.type';
 import { TargetServiceOld } from '../../services/targets/target.service.old';
 import { isPrimitiveTypeName } from './types.util';

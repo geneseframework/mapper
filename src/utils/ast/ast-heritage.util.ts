@@ -1,4 +1,4 @@
-import { ClassDeclaration, HeritageClause, Node } from 'ts-morph';
+import { ClassDeclaration, HeritageClause } from 'ts-morph';
 import { flat } from '../native/arrays.util';
 
 

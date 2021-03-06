@@ -3,7 +3,6 @@ import { isString } from '../utils/native/strings.util';
 import { isNumber } from '../utils/native/numbers.util';
 import { isBoolean } from '../utils/native/booleans.util';
 import { isArray } from '../utils/native/arrays.util';
-import * as chalk from 'chalk';
 
 export const primitiveTypes = ['string', 'number', 'boolean'];
 

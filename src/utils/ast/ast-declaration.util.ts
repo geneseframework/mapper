@@ -17,7 +17,6 @@ import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { Key } from '../../types/key.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
-import * as chalk from 'chalk';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
 
 

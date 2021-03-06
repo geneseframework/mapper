@@ -1,4 +1,3 @@
-import { TConstructor } from './t-constructor.type';
 import { Primitive } from './primitives.type';
 
 export type ObjectNotArray = { [k: string]: number | string };

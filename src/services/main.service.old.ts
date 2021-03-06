@@ -4,7 +4,6 @@ import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { IncompatibilityService } from './incompatibility.service';
-import { MapTrivialCasesService } from './map/map-trivial-cases.service';
 import { TargetServiceOld } from './targets/target.service.old';
 import { MapTupleServiceOld } from './map/map-tuple.service.old';
 import { InitService } from './init/init.service';
@@ -41,8 +40,8 @@ export class MainServiceOld {
         }
         if (IncompatibilityService.areIncompatible(target, data, options)) {
             return undefined;
-        } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
-            return MapTrivialCasesService.mapTrivialCase(target, data, options);
+        // } else if (MapTrivialCasesService.isTrivialCase(target, data)) {
+        //     return MapTrivialCasesService.mapTrivialCase(target, data, options);
         } else if (TargetServiceOld.isTuple(target)) {
             return MapTupleServiceOld.create(data as any[], target as TupleOld, options);
         } else if (TargetServiceOld.isTypeCombination(target)) {

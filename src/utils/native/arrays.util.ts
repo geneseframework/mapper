@@ -1,5 +1,3 @@
-import * as chalk from 'chalk';
-
 export function flat(array: any[]): any[] {
     if(!array || array.length === 0) {
         return [];
