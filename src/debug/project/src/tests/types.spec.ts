@@ -38,9 +38,13 @@ testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'G
 // ---------------------------------------   Type defined by a Class   ----------------------------------------------------
 
 
-export type CompanyAloneSpec = CompanyClassSpec;
+export class CompanyAloneClassSpec {
+    name: string;
+    employees: number;
+}
+export type CompanyAloneSpec = CompanyAloneClassSpec;
 
-// testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
@@ -51,7 +55,7 @@ export type UnionTypeNumberLiteralSpec = 0 | 1 | 2;
 
 testMappers.push(new TestMapper(`0 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumberLiteralSpec', 0, {isolate: false}));
 testMappers.push(new TestMapper(`2 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumberLiteralSpec', 2, {isolate: false}));
-testMappers.push(new TestMapper(`'a' / UnionTypeNumberLiteralSpec / undefined`, 'UnionTypeNumberLiteralSpec', 'a', {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`'a' / UnionTypeNumberLiteralSpec / undefined`, 'UnionTypeNumberLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
 // TODO: fix
 // testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: 2, createOptions: {differentiateStringsAndNumbers: false}, isolate: true}));
 

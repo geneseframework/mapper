@@ -42,7 +42,7 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                // console.log(chalk.cyanBright('MAP DECLLLLLL TYPEEEEEE'), target, data, typeDeclaration.getName());
+                console.log(chalk.cyanBright('MAP DECLLLLLL TYPEEEEEE'), target, data, typeDeclaration.getName());
                 // return await MainService.mapString<T>(target, data, options);
                 return await MapTypeService.create<T>(target, data, options);
             default:

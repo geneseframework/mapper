@@ -11,7 +11,7 @@ import * as chalk from 'chalk';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../../utils/ast/ast-class.util';
 import { getApparentType } from '../../utils/ast/ast-types.util';
-import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
+import { getTypeDeclaration, hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { MapDeclarationService } from './map-declaration.service';
 import { newMappedElement } from '../../utils/mapping.util';
@@ -31,21 +31,23 @@ import { isArray } from '../../utils/native/arrays.util';
 import { MapPrimitiveService } from './map-primitive.service';
 import { hasSeparators } from '../../types/target/string/has-separators.type';
 import { MapComplexService } from './map-complex.service';
+import { Primitive } from '../../types/primitives.type';
 
 export class MapTypeService {
 
 
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
         // console.log(chalk.redBright('HAS SEPPPPPP ????'), target, data);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         const structureType: string = typeAliasDeclaration.getStructure().type as string;
         // console.log(chalk.magentaBright('MAP TTYYYYYYYYP ????'), typeAliasDeclaration.getStructure(), hasSeparators(structureType));
-
         if (hasSeparators(structureType)) {
-            // console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
             return MapComplexService.create(structureType, data, options);
         } else if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
+        } else if (hasDeclaration(structureType)) {
+            // console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
+            return await MapDeclarationService.create(structureType, data, options);
         } else if (!isBracketed(target)) {
             return this.createType(data, typeAliasDeclaration, options);
         } else {
