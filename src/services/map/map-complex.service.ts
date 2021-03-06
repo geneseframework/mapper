@@ -20,10 +20,16 @@ export class MapComplexService {
         } else if (isUnion(target)) {
             if (isStringAsNullOrLiteral(first)) {
                 console.log(chalk.cyanBright('IS STR AS LITTTT'), first, others, data, MapNullOrLiteralService.create(first)?.toString());
-                if (first.toString() === data) {
+                // TODO: check if the behavior is correct for strings and numbers
+                if (first === data?.toString()) {
                     return data;
+                } else if (isStringAsNullOrLiteral(others)) {
+                    return others === data?.toString() ? data : undefined;
+                    // return others === data?.toString() ? data : await MainService.mapToString(others, data, options);
+                    // return (isStringAsNullOrLiteral(others) && others === data?.toString()) ? data : undefined;
                 } else {
-                    return (isStringAsNullOrLiteral(others) && others.toString() === data) ? data : undefined;
+                    console.log(chalk.red('TODO : IS STR AS LITTTT'), first, others, data, MapNullOrLiteralService.create(first)?.toString());
+                    return await MainService.mapToString(others, data, options);
                 }
             }
             const mapped: any = await MainService.mapToString(first, data, options);
