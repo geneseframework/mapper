@@ -9,12 +9,11 @@ import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
-import { TargetInfo } from '../../types/target/target-info.type';
-import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapDeclarationService<T> {
 
@@ -27,8 +26,8 @@ export class MapDeclarationService<T> {
      * @private
      */
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
-        const info: TargetInfo = TargetServiceOld.getInfo(target);
-        const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
+        const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
+        const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create<T>(target, data, options);
