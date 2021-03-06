@@ -9,6 +9,7 @@ import { ElementAndSeparator } from '../types/target/string/element-and-separato
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
 import { getContent, removeBorders } from '../types/target/string/containerized.type';
+import * as chalk from 'chalk';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {
@@ -23,7 +24,8 @@ export function bracketedLength(text: Bracketed): number {
 
 export function getContainerizedElements(text: BracketedOrParenthesized): string[] {
     const insideContainer = text.slice(1, -1).trim();
-    return getContent(text) ? [] : getElements(insideContainer);
+    // console.log(chalk.blueBright('CNTRRRRR ?????'), text, insideContainer, getContent(text), getElements(insideContainer));
+    return getContent(text) ? getElements(insideContainer) : [];
 }
 
 
