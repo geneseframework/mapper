@@ -14,7 +14,6 @@ export class MapInstanceOrInterfaceService<T> {
 
 
     static async map<T>(data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-        // static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         for (const key of Object.keys(data)) {
             if (this.keyExistsInInstanceAndDataIsNullOrUndefined(instance, data, key)) { // TODO : verify what happens when key not exists in target
                 instance[key] = data[key];
@@ -23,17 +22,6 @@ export class MapInstanceOrInterfaceService<T> {
             }
         }
     }
-
-    // static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-    //     // static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-    //     for (const key of Object.keys(data)) {
-    //         if (this.keyExistsInInstanceAndDataIsNullOrUndefined(instance, data, key)) { // TODO : verify what happens when key not exists in target
-    //             instance[key] = data[key];
-    //         } else {
-    //             await this.mapDataKey(data[key], options, key, instance, declaration);
-    //         }
-    //     }
-    // }
 
 
     private static keyExistsInInstanceAndDataIsNullOrUndefined(instance: any, data: any, key: string): boolean {

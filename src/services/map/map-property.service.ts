@@ -25,7 +25,7 @@ export class MapPropertyService<T> {
                 await MapArrayService.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.TUPLE:
-                MapTupleService.map(target, key, dataValue, propertyType, apparentType, options);
+                await MapTupleService.map(target, key, dataValue, propertyType, apparentType, options);
                 return;
             case PropertyKind.INTERFACE:
                 await this.mapInterfaceProperty(target, key, dataValue, propertyType, options);

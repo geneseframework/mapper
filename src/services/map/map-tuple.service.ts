@@ -31,7 +31,7 @@ export class MapTupleService<T> {
     }
 
 
-    static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): void {
+    static async map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): Promise<void> {
         const tupleTypeArray: string[] = this.toArray(stringifiedTupleTypeArray);
         const apparentTupleTypeArray: string[] = this.toArray(stringifiedApparentTypeArray);
         if (!Array.isArray(dataValue) || tupleTypeArray.length !== dataValue?.length) {
@@ -39,7 +39,7 @@ export class MapTupleService<T> {
         }
         const value: any[] = [];
         for (let i = 0; i < dataValue.length; i++) {
-            const mappedElement: any = this.mapTupleElement(dataValue[i], tupleTypeArray[i], apparentTupleTypeArray[i], options);
+            const mappedElement: any = await this.mapTupleElement(dataValue[i], tupleTypeArray[i], apparentTupleTypeArray[i], options);
             if (mappedElement) {
                 value.push(mappedElement);
             }
@@ -48,7 +48,7 @@ export class MapTupleService<T> {
     }
 
 
-    private static mapTupleElement(dataValue: any, tupleType: string, apparentTupleType: string, options: CreateOptions): any {
+    private static async mapTupleElement(dataValue: any, tupleType: string, apparentTupleType: string, options: CreateOptions): Promise<any> {
         if (isPrimitiveTypeNode(apparentTupleType)) {
             if (typeof dataValue === apparentTupleType) {
                 return dataValue;
@@ -58,7 +58,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
+                await MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {
