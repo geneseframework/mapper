@@ -4,6 +4,7 @@ import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
 import { Property } from '../../types/target/new-property.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 
+// TODO: implement
 export class MapObjectService {
 
 

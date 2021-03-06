@@ -13,7 +13,7 @@ import { removeBorders } from '../../types/target/string/containerized.type';
 export class MapInstanceOrInterfaceService<T> {
 
 
-    static async map<T>(target: string, data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+    static async map<T>(data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         for (const key of Object.keys(data)) {
             if (this.keyExistsInInstanceAndDataIsNullOrUndefined(instance, data, key)) { // TODO : verify what happens when key not exists in target
                 instance[key] = data[key];
@@ -32,7 +32,6 @@ export class MapInstanceOrInterfaceService<T> {
     private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        // console.log(chalk.magentaBright('MAP DATA KKKKK'), dataValue, key, instance);
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
             return;
         }
@@ -40,11 +39,9 @@ export class MapInstanceOrInterfaceService<T> {
         if (keyTarget === 'undefined' || keyTarget === undefined) {
             instance[key] = dataValue;
         } else if (isQuoted(keyTarget)) {
-                instance[key] = removeBorders(keyTarget);
+            instance[key] = removeBorders(keyTarget);
         } else {
-            // console.log(chalk.yellowBright('MAP DATA KKKKK TGTTTT'), keyTarget, dataValue);
             instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
-            // console.log(chalk.yellowBright('MAP DATA KKKKK TGTTTT'), instance[key]);
         }
     }
 

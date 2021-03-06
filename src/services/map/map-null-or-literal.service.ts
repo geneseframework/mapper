@@ -1,4 +1,4 @@
-import { NullOrLiteral } from '../../types/literal.type';
+import { NullOrLiteral } from '../../types/null-or-literal.type';
 
 export class MapNullOrLiteralService {
 

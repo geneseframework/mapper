@@ -2,9 +2,9 @@ import { ArrayTypeNode, LiteralTypeNode, SyntaxKind, TypeNode } from 'ts-morph';
 import * as chalk from 'chalk';
 import { Primitive, PRIMITIVE_KEYWORDS, PrimitiveType } from '../../types/primitives.type';
 import { LiteralNode } from '../../types/literal-node.type';
-import { TargetServiceOld } from '../../services/targets/target.service.old';
 import { isPrimitiveTypeName } from './types.util';
 import { throwWarning } from '../errors.util';
+import { isArray } from './arrays.util';
 
 export function isPrimitiveOrArrayOfPrimitivesValue(value: any): value is Primitive | Primitive[] {
     const values: any[] = Array.isArray(value) ? value : [value];
@@ -37,7 +37,7 @@ export function isPrimitiveOrPrimitivesArray(typeNameOrNode: string | TypeNode):
         return isPrimitiveTypeNode(typeNameOrNode) || isArrayOfPrimitiveTypeNodes(typeNameOrNode);
     } else if (typeNameOrNode instanceof ArrayTypeNode) {
         return isPrimitiveTypeNode(typeNameOrNode.getElementTypeNode());
-    } else if (TargetServiceOld.isArrayButNotTuple(typeNameOrNode)) {
+    } else if (isArray(typeNameOrNode) && typeNameOrNode.length < 2) {
         return false;
     } else {
         return isPrimitiveTypeNode(typeNameOrNode);

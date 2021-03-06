@@ -9,13 +9,11 @@ import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
-import { Primitive } from '../../types/primitives.type';
-import { TargetInfo } from '../../types/target/target-info.type';
-import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapDeclarationService<T> {
 
@@ -27,14 +25,14 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
-        const info: TargetInfo = TargetServiceOld.getInfo(target);
-        const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
+        const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
+        const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create<T>(target, data, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
-                return MapEnumService.create(data, target, info.isArray);
+                return MapEnumService.create(target, data);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
@@ -55,7 +53,7 @@ export class MapDeclarationService<T> {
                 await MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                await MapInstanceOrInterfaceService.map(target, key, dataValue, options, typeDeclaration as InterfaceDeclaration);
+                await MapInstanceOrInterfaceService.map(key, dataValue, options, typeDeclaration as InterfaceDeclaration);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
@@ -70,7 +68,7 @@ export class MapDeclarationService<T> {
     private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(target, key, dataValue, options, classDeclaration);
+        await MapInstanceOrInterfaceService.map(key, dataValue, options, classDeclaration);
     }
 
 }

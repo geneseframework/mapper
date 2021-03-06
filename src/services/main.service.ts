@@ -17,7 +17,7 @@ import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
-import { isStringAsNullOrLiteral } from '../types/literal.type';
+import { isStringAsNullOrLiteral } from '../types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
@@ -54,7 +54,6 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('MAP STRRRR'), target, data, isStringAsNullOrLiteral(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

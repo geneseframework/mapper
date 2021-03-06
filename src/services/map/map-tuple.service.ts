@@ -4,13 +4,13 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapTupleService<T> {
 
@@ -31,7 +31,7 @@ export class MapTupleService<T> {
     }
 
 
-    static map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): void {
+    static async map(target: any, key: string, dataValue: any, stringifiedTupleTypeArray: string, stringifiedApparentTypeArray: string, options: CreateOptions): Promise<void> {
         const tupleTypeArray: string[] = this.toArray(stringifiedTupleTypeArray);
         const apparentTupleTypeArray: string[] = this.toArray(stringifiedApparentTypeArray);
         if (!Array.isArray(dataValue) || tupleTypeArray.length !== dataValue?.length) {
@@ -39,7 +39,7 @@ export class MapTupleService<T> {
         }
         const value: any[] = [];
         for (let i = 0; i < dataValue.length; i++) {
-            const mappedElement: any = this.mapTupleElement(dataValue[i], tupleTypeArray[i], apparentTupleTypeArray[i], options);
+            const mappedElement: any = await this.mapTupleElement(dataValue[i], tupleTypeArray[i], apparentTupleTypeArray[i], options);
             if (mappedElement) {
                 value.push(mappedElement);
             }
@@ -48,7 +48,7 @@ export class MapTupleService<T> {
     }
 
 
-    private static mapTupleElement(dataValue: any, tupleType: string, apparentTupleType: string, options: CreateOptions): any {
+    private static async mapTupleElement(dataValue: any, tupleType: string, apparentTupleType: string, options: CreateOptions): Promise<any> {
         if (isPrimitiveTypeNode(apparentTupleType)) {
             if (typeof dataValue === apparentTupleType) {
                 return dataValue;
@@ -58,7 +58,7 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
+                await MapInstanceOrInterfaceService.map(dataValue, options, instance, importArrayDeclaration);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {

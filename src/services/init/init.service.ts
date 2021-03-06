@@ -2,9 +2,6 @@ import { Project } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InitConfigService } from './init-config.service';
 import { InstanceGeneratorService } from '../instance-generator.service';
-import { CheckTargetsService } from './check-targets.service';
-import { Target } from '../../types/target/target.type';
-import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 

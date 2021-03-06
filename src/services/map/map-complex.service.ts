@@ -4,7 +4,7 @@ import { isUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
 import { getElements, trimTarget } from '../../utils/target.util';
 import { CheckTargetsService } from '../init/check-targets.service';
-import { isStringAsNullOrLiteral } from '../../types/literal.type';
+import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
 
 export class MapComplexService {

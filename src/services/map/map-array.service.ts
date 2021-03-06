@@ -60,7 +60,7 @@ export class MapArrayService<T> {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                await MapInstanceOrInterfaceService.map(target, element, options, instance, typeDeclaration);
+                await MapInstanceOrInterfaceService.map(element, options, instance, typeDeclaration);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName, options)) {
                 this.push(target, key, element);

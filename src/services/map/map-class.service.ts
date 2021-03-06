@@ -7,7 +7,6 @@ import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
-import * as chalk from 'chalk';
 
 export class MapClassService<T> {
 
@@ -25,8 +24,7 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        // console.log(chalk.cyanBright('MAP CLASSSSSS'), target, data, instance, classDeclaration.getName());
-        await MapInstanceOrInterfaceService.map(target, data, options, instance, classDeclaration);
+        await MapInstanceOrInterfaceService.map(data, options, instance, classDeclaration);
         return instance;
     }
 }

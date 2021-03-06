@@ -64,19 +64,6 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
 }
 
 
-export function isDeclaration(typeName: string): boolean {
-    return isClassDeclaration(typeName)
-    || isEnumDeclaration(typeName)
-    || isInterfaceDeclaration(typeName)
-    || isTypeAliasDeclaration(typeName)
-}
-
-
-export function isTypeCombination(typeName: string): boolean {
-    return typeName?.includes(' ');
-}
-
-
 export function hasDeclaration(typeName: string): boolean {
     return !!declarationKind(typeName);
 }
@@ -94,11 +81,6 @@ function declarationKind(typeName: string): TypeDeclarationKind {
     } else {
         return undefined;
     }
-}
-
-
-export function isClassOrInterfaceDeclaration(typeName: string): boolean {
-    return isClassDeclaration(typeName) || isInterfaceDeclaration(typeName);
 }
 
 

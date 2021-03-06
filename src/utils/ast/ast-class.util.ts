@@ -6,12 +6,6 @@ import { TypeDeclaration } from '../../types/type-declaration.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 
-export function isExportedClassConstructor(target: string): boolean {
-    if (isArrayType(target)) {
-        return isExportedClassConstructor(typeOfArray(target));
-    }
-    return true;
-}
 
 
 // TODO : Heritage ?
