@@ -78,6 +78,7 @@ export class MapTypeService {
 
 
     static async mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode, options: CreateOptions): Promise<void> {
+        console.log(chalk.cyanBright('MAP TYP NODDDDD'), target, key, dataValue);
         if (isNullOrUndefined(dataValue)) {
             target[key] = dataValue;
             return;

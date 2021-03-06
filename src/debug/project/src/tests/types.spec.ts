@@ -44,7 +44,7 @@ export class CompanyAloneClassSpec {
 }
 export type CompanyAloneSpec = CompanyAloneClassSpec;
 
-testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
