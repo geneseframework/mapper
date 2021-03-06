@@ -2,13 +2,13 @@ import { MapArrayService } from './map-array.service';
 import { getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapDeclarationService } from './map-declaration.service';
-import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { PrimitiveType } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullPrimitiveValueWithCorrectType, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 import { MapTupleService } from './map-tuple.service';
+import { MapInterfaceService } from './map-interface.service';
 
 export class MapPropertyService<T> {
 
@@ -49,7 +49,7 @@ export class MapPropertyService<T> {
 
 
     private static async mapInterfaceProperty(target: any, key: string, dataValue: any, propertyType: string, options: CreateOptions): Promise<void> {
-        const newInterface: object = await MapInterfaceServiceOld.create(dataValue, propertyType, false, options);
+        const newInterface: object = await MapInterfaceService.create(dataValue, propertyType, options);
         this.addDefaultValues(target, key, newInterface);
         if (newInterface) {
             target[key] = newInterface;
