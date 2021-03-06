@@ -57,7 +57,8 @@ testMappers.push(new TestMapper(`0 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumb
 testMappers.push(new TestMapper(`2 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumberLiteralSpec', 2, {isolate: false}));
 testMappers.push(new TestMapper(`'a' / UnionTypeNumberLiteralSpec / undefined`, 'UnionTypeNumberLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
 // TODO: fix
-// testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: 2, createOptions: {differentiateStringsAndNumbers: false}, isolate: true}));
+testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: true}, isolate: false}));
+testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: 2, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
 
 
 // -------------------------------------   Union types string | number   --------------------------------------------------

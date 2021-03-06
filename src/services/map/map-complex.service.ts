@@ -7,6 +7,9 @@ import { CheckTargetsService } from '../init/check-targets.service';
 import * as chalk from 'chalk';
 import { isLiteral, isStringAsNullOrLiteral } from '../../types/literal.type';
 import { MapNullOrLiteralService } from './map-null-or-literal.service';
+import { isPrimitive, Primitive } from '../../types/primitives.type';
+import { MapPrimitiveService } from './map-primitive.service';
+import { isString } from '../../utils/native/strings.util';
 
 export class MapComplexService {
 
@@ -21,10 +24,15 @@ export class MapComplexService {
             if (isStringAsNullOrLiteral(first)) {
                 console.log(chalk.cyanBright('IS STR AS LITTTT'), first, others, data, MapNullOrLiteralService.create(first)?.toString());
                 // TODO: check if the behavior is correct for strings and numbers
+                // if (isPrimitive(data)) {
+                //     const firstWithInitialType: Primitive = !isNaN(Number(first)) ? Number(first) : first;
+                //     return MapPrimitiveService.create(firstWithInitialType, data, options);
                 if (first === data?.toString()) {
-                    return data;
+                    console.log(chalk.red('????'), options.differentiateStringsAndNumbers, isString(data), data);
+                    return options.differentiateStringsAndNumbers && isString(data) ? undefined : data;
                 } else if (isStringAsNullOrLiteral(others)) {
-                    return others === data?.toString() ? data : undefined;
+                    return options.differentiateStringsAndNumbers && isString(data) ? undefined : data;
+                    // return others === data?.toString() ? data : undefined;
                     // return others === data?.toString() ? data : await MainService.mapToString(others, data, options);
                     // return (isStringAsNullOrLiteral(others) && others === data?.toString()) ? data : undefined;
                 } else {
