@@ -70,9 +70,9 @@ export class MapTypeService {
 
 
     private static async mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<T> {
-        console.log(chalk.blueBright('MAP DATAAAAA'), dataValue, typeAliasDeclaration.getKindName());
+        // console.log(chalk.blueBright('MAP DATAAAAA'), dataValue, typeAliasDeclaration.getKindName());
         const zzz = await newMappedElement(this.map, dataValue, typeAliasDeclaration, options);
-        console.log(chalk.blueBright('MAP DATAAAAA zzz'), zzz);
+        // console.log(chalk.blueBright('MAP DATAAAAA zzz'), zzz);
         return zzz as any;
     }
 

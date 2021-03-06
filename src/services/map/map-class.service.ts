@@ -25,7 +25,7 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator<T>(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         const instance: T = await GLOBAL.generateInstance(instanceGenerator);
-        console.log(chalk.cyanBright('MAP CLASSSSSS'), target, data, instance, classDeclaration.getName());
+        // console.log(chalk.cyanBright('MAP CLASSSSSS'), target, data, instance, classDeclaration.getName());
         await MapInstanceOrInterfaceService.map(target, data, options, instance, classDeclaration);
         return instance;
     }

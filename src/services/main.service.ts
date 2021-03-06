@@ -52,8 +52,9 @@ export class MainService {
     }
 
 
+    // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('MAP STRRRR'), target, data);
+        // console.log(chalk.greenBright('MAP STRRRR'), target, data);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
