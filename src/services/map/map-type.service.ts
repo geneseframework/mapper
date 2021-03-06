@@ -37,16 +37,13 @@ export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
-        // console.log(chalk.redBright('HAS SEPPPPPP ????'), target, data);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         const structureType: string = typeAliasDeclaration.getStructure().type as string;
-        // console.log(chalk.magentaBright('MAP TTYYYYYYYYP ????'), typeAliasDeclaration.getStructure(), hasSeparators(structureType));
         if (hasSeparators(structureType)) {
             return MapComplexService.create(structureType, data, options);
         } else if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
         } else if (hasDeclaration(structureType)) {
-            // console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
             return await MapDeclarationService.create(structureType, data, options);
         } else if (!isBracketed(target)) {
             return this.createType(data, typeAliasDeclaration, options);
@@ -72,10 +69,7 @@ export class MapTypeService {
 
 
     private static async mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<T> {
-        // console.log(chalk.blueBright('MAP DATAAAAA'), dataValue, typeAliasDeclaration.getKindName());
-        const zzz = await newMappedElement(this.map, dataValue, typeAliasDeclaration, options);
-        // console.log(chalk.blueBright('MAP DATAAAAA zzz'), zzz);
-        return zzz as any;
+        return await newMappedElement(this.map, dataValue, typeAliasDeclaration, options);
     }
 
 

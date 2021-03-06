@@ -10,7 +10,6 @@ import { hasSeparators, splitSeparator } from '../../types/target/string/has-sep
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
-import * as chalk from 'chalk';
 import { isStringAsTrivialType } from '../../types/literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 
