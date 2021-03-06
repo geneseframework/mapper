@@ -49,11 +49,6 @@ export function isArray(data: any): data is Array<any> {
 }
 
 
-export function areArrays(first: any, last: any): boolean {
-    return isArray(first) && isArray(last);
-}
-
-
 export function areNoyArrays(first: any, last: any): boolean {
     return !isArray(first) || !isArray(last);
 }
