@@ -4,7 +4,6 @@ export function keyExistsInInstanceAndDataIsNullOrUndefinedOld(obj: any, key: st
 
 
 export function isNullOrUndefined(value: any): value is null | undefined {
-    // console.log(chalk.redBright('NULLL OR UNDDDDDD'), value);
     return value === undefined || value === null;
 }
 
