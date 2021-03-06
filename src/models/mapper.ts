@@ -15,8 +15,6 @@ import {
     ObjectNotArray
 } from '../types/not-some-type.type';
 import { CreateOptions } from './create-options.model';
-import { MainServiceOld } from '../services/main.service.old';
-import { Union } from '../types/target/string/union.type';
 import { Combination } from '../types/target/string/combination.type';
 import { MainService } from '../services/main.service';
 import { ConstructorArray } from '../types/target/constructor-array.type';
@@ -104,15 +102,6 @@ export class Mapper<T> {
     static async create<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
         try {
             return await MainService.map(target, data, options);
-        } catch (err) {
-            throwWarning('Mapping failed : an unknown error occurred.', err)
-        }
-    }
-
-
-    static async createOld<T>(target: Target<T>, data: unknown, options?: CreateOptions): Promise<any> {
-        try {
-            return await MainServiceOld.map(target, data, options);
         } catch (err) {
             throwWarning('Mapping failed : an unknown error occurred.', err)
         }

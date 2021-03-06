@@ -35,31 +35,15 @@ export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        // console.log(chalk.magentaBright('MPPPPP TPP'), target, data, isString(target));
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
         } else if (!isBracketed(target)) {
-        // } else if (!isArray(data) && !isBracketed(target)) {
             return this.createType(data, typeAliasDeclaration, options);
         } else {
             return undefined;
         }
     }
-
-
-    // static async create<T>(data: any[], typeName: string, isArray: boolean, options: CreateOptions): Promise<T[]>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T>
-    // static async create<T>(data: any, typeName: string, isArray: boolean, options: CreateOptions): Promise<T | T[]> {
-    //     const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(typeName) as TypeAliasDeclaration;
-    //     if (Array.isArray(data) && isArray) {
-    //         return this.createTypesArray(data, typeAliasDeclaration, options);
-    //     } else if (!Array.isArray(data) && !isArray) {
-    //         return this.createType(data, typeAliasDeclaration, options);
-    //     } else {
-    //         return undefined;
-    //     }
-    // }
 
 
     private static async createTypesArray<T>(data: any[], typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<T[]> {
@@ -95,7 +79,6 @@ export class MapTypeService {
             target[key] = dataValue;
             return;
         }
-        // console.log(chalk.cyanBright('MAP TYPE NODDDDD'), target, key, dataValue, typeNode.getKindName(), options);
         switch (typeNode.getKind()) {
             case SyntaxKind.UnionType:
                 await this.mapUnionType(target, key, dataValue, typeNode as UnionTypeNode, options);

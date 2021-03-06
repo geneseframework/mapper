@@ -8,8 +8,7 @@ import { PrimitiveType } from '../../types/primitives.type';
 import { PropertyInfos } from '../../types/property-infos.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
-import { isPrimitiveTypeNode, isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
-import * as chalk from 'chalk';
+import { isNonNullPrimitiveValueWithCorrectType, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 
 export class MapPropertyService<T> {
 
@@ -17,7 +16,6 @@ export class MapPropertyService<T> {
     static async map<T>(target: any, key: string, dataValue: any, propertyInfos: PropertyInfos, options: CreateOptions): Promise<void> {
         const apparentType: string = propertyInfos.apparentType;
         const propertyType: string = propertyInfos.propertyType;
-        // console.log(chalk.blueBright('MAP PROPPPP'), target, key, dataValue, propertyInfos);
         if (isPrimitiveTypeNode(propertyType)) {
             this.mapPrimitiveType(target, key, dataValue, propertyType as PrimitiveType, options);
             return;

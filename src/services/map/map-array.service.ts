@@ -15,6 +15,7 @@ import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapArrayService<T> {
 
@@ -60,6 +61,7 @@ export class MapArrayService<T> {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
+                // await MapInstanceOrInterfaceService.map(instance, element, typeDeclaration, options);
                 await MapInstanceOrInterfaceServiceOld.map(instance, element, typeDeclaration, options);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName, options)) {

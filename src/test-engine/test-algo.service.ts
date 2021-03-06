@@ -23,11 +23,7 @@ async function checkTest(testType: TestType, logPassed: boolean, old: boolean): 
     if (isTestIt(testType)) {
         result = await testType.method(testType.data);
     } else {
-        if (old) {
-            result = await Mapper.createOld(testType.mapParameter, testType.data, testType.options?.createOptions);
-        } else {
-            result = await Mapper.create(testType.mapParameter, testType.data, testType.options?.createOptions);
-        }
+        result = await Mapper.create(testType.mapParameter, testType.data, testType.options?.createOptions);
     }
     if (isExpectedResult(testType, result) ) {
         if (logPassed) {
@@ -35,7 +31,7 @@ async function checkTest(testType: TestType, logPassed: boolean, old: boolean): 
         }
         TESTS.testsPassed++;
         if (testType.options?.log) {
-           log(testType, result);
+            log(testType, result);
         }
     } else {
         console.log(chalk.redBright('Test failed : '), testType.title);
