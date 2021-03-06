@@ -344,7 +344,7 @@ testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, C
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
 testMappers.push(new TestMapper(`new ClassWithUnionTypeSpec() / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
 testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new NameSpec()}));
-testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}, {isolate: false})); // TODO
+testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}));
 
 
 // ------------------------------   Property with Type which is Union of Classes and Class[]   ----------------------------

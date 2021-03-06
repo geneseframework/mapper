@@ -36,13 +36,13 @@ export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
-        console.log(chalk.redBright('HAS SEPPPPPP ????'), target, data);
+        // console.log(chalk.redBright('HAS SEPPPPPP ????'), target, data);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         const structureType: string = typeAliasDeclaration.getStructure().type as string;
-        console.log(chalk.magentaBright('MAP TTYYYYYYYYP ????'), typeAliasDeclaration.getStructure(), hasSeparators(structureType));
+        // console.log(chalk.magentaBright('MAP TTYYYYYYYYP ????'), typeAliasDeclaration.getStructure(), hasSeparators(structureType));
 
         if (hasSeparators(structureType)) {
-            console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
+            // console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
             return MapComplexService.create(structureType, data, options);
         } else if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
