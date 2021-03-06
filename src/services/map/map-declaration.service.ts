@@ -55,7 +55,7 @@ export class MapDeclarationService<T> {
                 await MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
                 break;
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                await MapInstanceOrInterfaceService.map(target, key, dataValue, options, typeDeclaration as InterfaceDeclaration);
+                await MapInstanceOrInterfaceService.map(key, dataValue, options, typeDeclaration as InterfaceDeclaration);
                 break;
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
@@ -70,7 +70,7 @@ export class MapDeclarationService<T> {
     private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(target, key, dataValue, options, classDeclaration);
+        await MapInstanceOrInterfaceService.map(key, dataValue, options, classDeclaration);
     }
 
 }

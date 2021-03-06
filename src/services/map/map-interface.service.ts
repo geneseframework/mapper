@@ -16,7 +16,7 @@ export class MapInterfaceService {
 
     static async createInterface<T>(target: string, data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {
         const tInterface = {};
-        await MapInstanceOrInterfaceService.map(target, data, options, tInterface, interfaceDeclaration);
+        await MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceDeclaration);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 
