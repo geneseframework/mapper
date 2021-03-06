@@ -1,8 +1,5 @@
 
 
-export function isDateType(typeName: string): typeName is 'Date' {
-    return typeName === 'Date';
-}
 
 export function isDateTypeName(typeName: string): boolean {
     return ['date', 'Date'].includes(typeName);

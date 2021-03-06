@@ -21,7 +21,6 @@ export class MapArrayService<T> {
 
 
     static async create(target: ArrayType, data: any, options: CreateOptions): Promise<any[]> {
-        // console.log(chalk.greenBright('TYPEOF ARRRRRR'), typeOfArray(target));
         if (!isArray(data)) {
             return undefined;
         } else if (isAny(typeOfArray(target))) {
@@ -32,7 +31,6 @@ export class MapArrayService<T> {
                 if (element === null || element === undefined) {
                     arr.push(element);
                 } else {
-                    // console.log(chalk.cyanBright('TYPEOF ARRRRRR'), typeOfArray(target));
                     const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
                     if (mappedElement !== undefined) {
                         arr.push(mappedElement);
