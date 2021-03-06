@@ -1,24 +1,31 @@
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from '../models/create-options.model';
 import 'reflect-metadata';
-import { isObjectButNotArray } from '../utils/objects.util';
+import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
+import { isBoolean } from '../utils/native/booleans.util';
+import { clone } from '../utils/native/clone.util';
 
 export class OptionsService {
 
 
     static wasInitialized(options: CreateOptions): boolean {
-        if (!isObjectButNotArray(options)) {
+        if (!isObjectWhichIsNotArray(options)) {
             return false;
         }
         return Reflect.hasMetadata('initialized', options);
     }
 
-    static initialize(options: CreateOptions = {}): CreateOptions {
-        if (![true, false].includes(options?.differentiateStringsAndNumbers)){
-            options.differentiateStringsAndNumbers = CONFIG.create.differentiateStringsAndNumbers;
+
+    static initialize(options: CreateOptions): CreateOptions {
+        const createOptions = clone(CONFIG.create);
+        if (!options) {
+            return createOptions;
         }
-        Reflect.defineMetadata('initialized', true, options);
-        return options;
+        createOptions.differentiateStringsAndNumbers = isBoolean(options?.differentiateStringsAndNumbers) ? options.differentiateStringsAndNumbers : CONFIG.create.differentiateStringsAndNumbers;
+        createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : CONFIG.create.throwTarget.error;
+        createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setToUndefined') ? options.throwTarget.setToUndefined : CONFIG.create.throwTarget.setToUndefined;
+        Reflect.defineMetadata('initialized', true, createOptions);
+        return createOptions;
     }
 
 }

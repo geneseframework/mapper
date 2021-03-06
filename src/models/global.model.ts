@@ -24,7 +24,6 @@ export class Global {
 
 
     get instanceGeneratorPath(): string {
-        // return `${GLOBAL.nodeModulePath}/dist/instance-generator.js`;
         return `${GLOBAL.nodeModulePath}/dist/instance-generator.ts`;
     }
 

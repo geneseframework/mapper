@@ -1,7 +1,5 @@
-import { CreateOptions } from '../interfaces/create-options.interface';
+import { CreateOptions } from './create-options.model';
 
 export class Config {
-    create?: CreateOptions = {
-        differentiateStringsAndNumbers: true
-    };
+    create?: CreateOptions = new CreateOptions();
 }
