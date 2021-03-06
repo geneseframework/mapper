@@ -4,13 +4,13 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapTupleService<T> {
 
@@ -58,7 +58,8 @@ export class MapTupleService<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                await MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
+                await MapInstanceOrInterfaceService.map(dataValue, options, instance, importArrayDeclaration);
+                // await MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {
