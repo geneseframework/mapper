@@ -1,6 +1,8 @@
 import { Primitive } from '../../types/primitives.type';
 import { CreateOptions } from '../../models/create-options.model';
 import { castStringAndNumbers } from '../../utils/native/primitives.util';
+import { isString } from '../../utils/native/strings.util';
+import { isNumber } from '../../utils/native/numbers.util';
 
 export class MapPrimitiveService {
 
@@ -15,8 +17,8 @@ export class MapPrimitiveService {
 
     private static haveSameType(target: string, data: any, options: CreateOptions): boolean {
         return typeof data === target?.toLowerCase()
-            || (typeof data === 'string' && target?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
-            || (typeof data === 'number' && target?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);
+            || (isString(data) && target?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
+            || (isNumber(data) && target?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);
     }
 
 }

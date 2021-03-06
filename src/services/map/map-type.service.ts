@@ -7,9 +7,7 @@ import {
     TypeReferenceNode,
     UnionTypeNode
 } from 'ts-morph';
-import { MapPrimitiveServiceOld } from './map-primitive.service.old';
 import * as chalk from 'chalk';
-import { PrimitiveType } from '../../types/primitives.type';
 import { MapArrayService } from './map-array.service';
 import { getTypeReferenceTypeDeclaration } from '../../utils/ast/ast-class.util';
 import { getApparentType } from '../../utils/ast/ast-types.util';
@@ -137,7 +135,7 @@ export class MapTypeService {
 
     private static async mapArrayType(target: any, key: Key, dataValue: any, arrayTypeNode: ArrayTypeNode, options: CreateOptions): Promise<void> {
         if (isPrimitiveOrPrimitivesArray(arrayTypeNode.getText())) {
-            target[key] = MapPrimitiveServiceOld.create(dataValue, arrayTypeNode.getText() as PrimitiveType, true, options);
+            target[key] = MapPrimitiveService.create(arrayTypeNode.getText(), dataValue, options);
             return;
         }
         await MapArrayService.map(target, key, dataValue, arrayTypeNode.getText(), getApparentType(arrayTypeNode), options);
@@ -145,7 +143,7 @@ export class MapTypeService {
 
 
     private static mapPrimitiveKeywordType(target: any, key: Key, dataValue: any, primitiveKeyword: TypeNode, options: CreateOptions): void {
-        target[key] = MapPrimitiveServiceOld.create(dataValue, primitiveKeyword.getText() as PrimitiveType, false, options);
+        target[key] = MapPrimitiveService.create(primitiveKeyword.getText(), dataValue, options);
     }
 
 }

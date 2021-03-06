@@ -3,16 +3,19 @@ import { Primitive } from '../../types/primitives.type';
 import { getTypeReferenceTypeDeclaration } from '../../utils/ast/ast-class.util';
 import { isArray, partialClone } from '../../utils/native/arrays.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
-import { MapTypeServiceOld } from './map-type.service.old';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
 import {
-    isArrayOfPrimitiveTypeNodes, isLiteralKeyword, isLiteralPrimitive,
-    isPrimitiveOrArrayOfPrimitivesValue, primitiveLiteralValue,
+    isArrayOfPrimitiveTypeNodes,
+    isLiteralKeyword,
+    isLiteralPrimitive,
+    isPrimitiveOrArrayOfPrimitivesValue,
+    primitiveLiteralValue,
     typeOfDataCorrespondsToPrimitiveKeyword
 } from '../../utils/native/primitives.util';
+import { MapTypeService } from './map-type.service';
 
 export class MapTypeArrayService {
 
@@ -57,7 +60,7 @@ export class MapTypeArrayService {
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
             if (this.isKeyType(dataKey, typeNode, undefined)) {
-                await MapTypeServiceOld.mapTypeNode(target, key, dataValue, typeNode, options);
+                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
             } else {
                 await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
             }
@@ -98,7 +101,7 @@ export class MapTypeArrayService {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
             if (this.isKeyType(key, typeNode, dataValue)) {
-                await MapTypeServiceOld.mapTypeNode(target, key, dataValue, typeNode, options);
+                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
             } else {
                 await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
             }
