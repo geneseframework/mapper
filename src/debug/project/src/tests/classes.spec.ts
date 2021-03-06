@@ -323,23 +323,28 @@ export class LevelClassSpec {
     level: LevelSpec
 }
 
-testMappers.push(new TestMapper(`{level: 1} / LevelClassSpec`, LevelClassSpec, {level: 1}));
+testMappers.push(new TestMapper(`{level: 1} / LevelClassSpec`, LevelClassSpec, {level: 1}, {isolate: false}));
 
 
 // --------------------------------------   Property with Type which is Union Type   --------------------------------------
+
+
+export class NameSpec {
+    name: string;
+}
+const nameSpec = new NameSpec();
+nameSpec.name = 'Biela';
 
 export type UnionTypeClassAndStringSpec = CatSpec | string;
 export class ClassWithUnionTypeSpec {
     union: UnionTypeClassAndStringSpec;
 }
-const catSpec = new CatSpec();
-catSpec.name = 'Biela';
 
 testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: undefined}));
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new CatSpec()}));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: catSpec}));
+testMappers.push(new TestMapper(`new ClassWithUnionTypeSpec() / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
+testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new NameSpec()}));
+testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}));
 
 
 // ------------------------------   Property with Type which is Union of Classes and Class[]   ----------------------------
@@ -358,15 +363,22 @@ export class PersonSpec {
     employer: EmployerSpec
 }
 
-testMappers.push(new TestMapper(`{employer: { name: 'Total', employees: 30000}} / PersonSpec`, PersonSpec,{employer: { name: 'Total', employees: 30000}}));
-testMappers.push(new TestMapper(`{employer: [{ name: 'Total', employees: 30000}]} / PersonSpec`, PersonSpec,{employer: [{ name: 'Total', employees: 30000}]}, {expectedValue: {employer: undefined}}));
+// TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
+// testMappers.push(new TestMapper(`{employer: { name: 'Total', employees: 30000}} / PersonSpec`, PersonSpec,{employer: { name: 'Total', employees: 30000}}, {isolate: true}));
+// testMappers.push(new TestMapper(`{employer: [{ name: 'Total', employees: 30000}]} / PersonSpec`, PersonSpec,{employer: [{ name: 'Total', employees: 30000}]}, {expectedValue: {employer: undefined}}));
 testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 3000}} / PersonSpec`, PersonSpec,{employer: [{ name: 'Greenpeace', volunteers: 3000}]}));
 
 
 // ------------------------------------------   Property with Type object   -----------------------------------------------
 
 
-export class ObjectLiteralSpec {
+export class ObjectLiteralStringSpec {
     prop: {str: string}
 }
-// testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralSpec / {prop: 4}`, ObjectLiteralSpec, {prop: {str: 'a'}}, {isolate: true}));
+// testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralStringSpec / {prop: 4}`, ObjectLiteralStringSpec, {prop: {str: 'a'}}, {isolate: true}));
+
+
+export class ObjectLiteralStringNumberSpec {
+    prop: {str: string, nb: number}
+}
+// testMappers.push(new TestMapper(`{prop: 'a'} / ObjectLiteralStringNumberSpec / {prop: 4}`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: true}));

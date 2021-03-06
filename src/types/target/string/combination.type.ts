@@ -1,4 +1,4 @@
-import { isUnion, Union } from './union.type';
-import { Intersection, isIntersection } from './intersection.type';
+import { Union } from './union.type';
+import { Intersection } from './intersection.type';
 
 export type Combination = Union | Intersection;

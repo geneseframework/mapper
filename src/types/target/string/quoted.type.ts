@@ -1,4 +1,4 @@
-import { removeBorders } from '../../../utils/native/strings.util';
+import { removeBorders } from './containerized.type';
 
 export type Quoted = `'${string}'` | `"${string}"`;
 

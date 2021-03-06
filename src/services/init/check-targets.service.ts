@@ -4,7 +4,7 @@ import { CONFIG } from '../../const/config.const';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
-import { isContainerized } from '../../types/target/string/containerized.type';
+import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
@@ -12,6 +12,7 @@ import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
 import { isStringAsTrivialType } from '../../types/literal.type';
+import { removeBorders } from '../../types/target/string/containerized.type';
 
 export class CheckTargetsService {
 
@@ -78,7 +79,7 @@ export class CheckTargetsService {
 
 
     private static async isCorrectContainer(text: string): Promise<boolean> {
-        return isContainerized(text) && await this.hasCorrectElements(text.slice(1, -1))
+        return isBracketedOrParenthesized(text) && await this.hasCorrectElements(removeBorders(text))
     }
 
 

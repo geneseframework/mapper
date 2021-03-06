@@ -1,19 +1,11 @@
-import { TargetInfo } from '../../types/target/target-info.type';
 import { isArray } from '../../utils/native/arrays.util';
-import { haveArrayIncompatibility } from '../../utils/incompatibility.util';
-import * as chalk from 'chalk';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 
-export class MapObjectServiceOld {
+export class MapLiteralObjectService {
 
 
-    static create(data: object[], info: TargetInfo): object[]
-    static create(data: object, info: TargetInfo): object
-    static create(data: object, info: TargetInfo): object | object[] | undefined {
-        // console.log(chalk.blueBright('MAP OBJJJJJ'), data, info, haveArrayIncompatibility(data, info?.isArray));
-        if (haveArrayIncompatibility(data, info?.isArray)) {
-            return undefined;
-        } else if (isArray(data)) {
+    static create(data: object): object {
+        if (isArray(data)) {
             return this.createArrayObjects(data as object[]);
         } else {
             return this.createObject(data);

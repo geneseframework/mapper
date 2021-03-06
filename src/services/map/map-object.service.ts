@@ -1,39 +1,35 @@
-import { TargetInfo } from '../../types/target/target-info.type';
-import { isArray } from '../../utils/native/arrays.util';
-import { haveArrayIncompatibility } from '../../utils/incompatibility.util';
+import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
-import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
+import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
+import { Property } from '../../types/target/new-property.type';
+import { removeBorders } from '../../types/target/string/containerized.type';
 
 export class MapObjectService {
 
 
-    static create(data: object): object {
-        // console.log(chalk.blueBright('MAP OBJJJJJ'), data);
-        if  (isArray(data)) {
-            return this.createArrayObjects(data as object[]);
-        } else {
-            return this.createObject(data);
-        }
+    static async create(target: CurveBracketed, data: any, options?: CreateOptions): Promise<object> {
+        // console.log(chalk.cyanBright('MAP OBJJJJJ'), target, data);
+        return this.createNewInstance(target);
     }
 
 
-    private static createArrayObjects(data: object[]): object[] {
-        const objectsArray = [];
-        for (const element of data) {
-            const objectElement: object = this.createObject(element);
-            if (objectElement || element === undefined || element === null) {
-                objectsArray.push(objectElement);
-            }
-        }
-        return objectsArray;
+    private static createNewInstance(target: CurveBracketed): object {
+        const newInstance = {};
+        const nextProperty: Property = this.getNextProperty(removeBorders(target)); // TODO
+        return newInstance;
     }
 
 
-    private static createObject(data: object): object {
-        if (data === null) {
-            return null;
+    private static getNextProperty(target: string): any {
+        // const property
+        const nextPropertyName: string = target.match(/^\w+:/g)?.[0]?.slice(0, -1);
+        // console.log(chalk.magentaBright('get nxttttttt'), target, nextPropertyName);
+        if (nextPropertyName) {
+            const rest: string = target.slice(nextPropertyName.length + 1).trimLeft();
+            const firstChar: string = rest[0];
+            // console.log(chalk.yellowBright('RESTTTTT'), rest);
         }
-        return isObjectWhichIsNotArray(data) ? data : undefined;
     }
+
 
 }

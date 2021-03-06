@@ -4,7 +4,6 @@ import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
@@ -15,7 +14,7 @@ import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { removeBrackets } from '../../types/target/string/bracketed.type';
+import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 
 export class MapArrayService<T> {
 
@@ -61,7 +60,7 @@ export class MapArrayService<T> {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                await MapInstanceOrInterfaceServiceOld.map(instance, element, typeDeclaration, options);
+                await MapInstanceOrInterfaceService.map(target, element, options, instance, typeDeclaration);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName, options)) {
                 this.push(target, key, element);

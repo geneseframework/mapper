@@ -1,11 +1,10 @@
 import { Target } from '../types/target/target.type';
 import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
-import { TupleOld } from '../types/target/target-tuple-old.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
 import { hasDeclaration } from '../utils/ast/ast-declaration.util';
-import { isDateTypeName, isPrimitiveTypeName } from '../utils/native/types.util';
+import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './targets/target.service';
@@ -20,12 +19,11 @@ import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
-import * as chalk from 'chalk';
-import { isDateType } from '../utils/native/dates.util';
-import { MapDateServiceOld } from './map/map-date.service.old';
+import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
-import { MapObjectService } from './map/map-object.service';
+import { MapLiteralObjectService } from './map/map-literal-object.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -45,7 +43,6 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        // console.log(chalk.greenBright('OPTTTT ?????'), target, data, options);
         return await this.mapToString(target, data, options);
     }
 
@@ -55,11 +52,14 @@ export class MainService {
     }
 
 
+    // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('STRING TARGTTTTTT'), target, data, isPrimitiveTypeName(target), isQuoted(target));
+        // console.log(chalk.greenBright('MAP STRRRR'), target, data, isStringAsNullOrLiteral(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
+        } else if (isDateTypeName(target)) {
+            return MapDateService.create(data);
         } else if (isStringAsNullOrLiteral(target)) {
             return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
@@ -67,13 +67,13 @@ export class MainService {
         } else if (isArrayType(target)) {
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            return MapPrimitiveService.create([target, data], options);
+            return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
             return await MapQuotedService.create(target, data, options);
-        } else if (isDateType(target)) {
-            return MapDateService.create(data);
         } else if (isObjectLiteralType(target)) {
-            return MapObjectService.create(data);
+            return MapLiteralObjectService.create(data);
+        // } else if (isCurveBracketed(target)) {
+        //     return await MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else {

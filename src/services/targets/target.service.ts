@@ -11,9 +11,7 @@ import { isBoolean } from '../../utils/native/booleans.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { isString } from '../../utils/native/strings.util';
 import { trimTarget } from '../../utils/target.util';
-import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isNull } from '../../types/literal.type';
-import * as chalk from 'chalk';
 
 export class TargetService {
 
@@ -21,10 +19,8 @@ export class TargetService {
         if (isNull(target)) {
             return 'null';
         } else if (isArray(target)) {
-            // console.log(chalk.blueBright('ARRRR'), target);
             return this.stringifyArray(target);
         } else if (isFunction(target)) {
-            // console.log(chalk.yellowBright('fffffff'), target.name);
             return this.normalize(target.name);
         } else if (isBoolean(target) || isNumber(target)) {
             return this.stringifyPrimitive(target);

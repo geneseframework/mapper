@@ -1,5 +1,8 @@
-import { Containerized, isContainerized } from '../types/target/string/containerized.type';
-import { isString, removeBorders } from './native/strings.util';
+import {
+    BracketedOrParenthesized,
+    isBracketedOrParenthesized
+} from '../types/target/string/bracketed-or-penthesized.type';
+import { isString } from './native/strings.util';
 import { Bracketed } from '../types/target/string/bracketed.type';
 import { isUnion } from '../types/target/string/union.type';
 import { isIntersection } from '../types/target/string/intersection.type';
@@ -8,6 +11,7 @@ import { isArray } from './native/arrays.util';
 import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
+import { getContent, removeBorders } from '../types/target/string/containerized.type';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {
@@ -20,9 +24,9 @@ export function bracketedLength(text: Bracketed): number {
 }
 
 
-export function getContainerizedElements(text: Containerized): string[] {
+export function getContainerizedElements(text: BracketedOrParenthesized): string[] {
     const insideContainer = text.slice(1, -1).trim();
-    return insideContainer.length === 0 ? [] : getElements(insideContainer);
+    return getContent(text) ? getElements(insideContainer) : [];
 }
 
 
@@ -36,7 +40,7 @@ export function getElementsWithSeparator(text: string): ElementAndSeparator[] {
         return [];
     }
     const cleanedText: string = trimTarget(text);
-    if (isContainerized(cleanedText)) {
+    if (isBracketedOrParenthesized(cleanedText)) {
         return [[cleanedText, undefined]];
     } else if (hasSeparators(cleanedText)) {
         return getElementsOfComplexText(cleanedText);
@@ -61,28 +65,6 @@ function getSplitElements(elements: HasSeparators, separator: Separator): Elemen
     const [first, last] = splitSeparator(elements);
     return [[first, separator], ...getElementsWithSeparator(last)];
 }
-
-
-// export function getElements(text: string): string[] {
-//     if (trim(text).length === 0) {
-//         return [];
-//     }
-//     const elements: string = trim(text);
-//     if (isContainerized(elements)) {
-//         return [elements];
-//     } else if (isUnion(elements)) {
-//         const [first, last] = splitUnion(elements);
-//         return [first, ...getElements(last)];
-//     } else if (isIntersection(elements)) {
-//         const [first, last] = splitIntersection(elements);
-//         return [first, ...getElements(last)];
-//     } else if (hasCommas(elements)) {
-//         const [first, last] = splitCommas(elements);
-//         return [first, ...getElements(last)];
-//     } else {
-//         return [elements]
-//     }
-// }
 
 
 export function trimTarget(text: string): string {

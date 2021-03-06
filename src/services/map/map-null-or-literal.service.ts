@@ -3,7 +3,7 @@ import { NullOrLiteral } from '../../types/literal.type';
 export class MapNullOrLiteralService {
 
 
-    static async create(target: string): Promise<NullOrLiteral> {
+    static create(target: string): NullOrLiteral {
         if (target === 'null') {
             return null;
         } else if (target === 'true') {
