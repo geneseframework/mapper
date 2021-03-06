@@ -11,7 +11,6 @@ import { TargetInfo } from '../types/target/target-info.type';
 import { TypeDeclaration } from '../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../enums/type-declaration.kind';
-import { MapInstanceServiceOld } from './map/map-instance.service.old';
 import { MapEnumService } from './map/map-enum.service';
 import { MapInterfaceServiceOld } from './map/map-interface.service.old';
 import { MapTypeServiceOld } from './map/map-type.service.old';
@@ -64,8 +63,8 @@ export class MainServiceOld {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
         switch (getDeclarationKind(typeDeclaration)) {
-            case TypeDeclarationKind.CLASS_DECLARATION:
-                return MapInstanceServiceOld.create<T>(data, info.typeName, options);
+            // case TypeDeclarationKind.CLASS_DECLARATION:
+            //     return MapInstanceServiceOld.create<T>(data, info.typeName, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(data, info.typeName, info.isArray);
             case TypeDeclarationKind.INTERFACE_DECLARATION:

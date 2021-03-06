@@ -1,10 +1,7 @@
 import { InterfaceDeclaration } from 'ts-morph';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { implementsRequiredProperties } from '../../utils/ast/ast-interfaces.util';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { throwWarning } from '../../utils/errors.util';
-import { DateDeclaration } from '../../models/date-declaration.model';
-import { MapDateServiceOld } from './map-date.service.old';
 import { CreateOptions } from '../../models/create-options.model';
 
 export class MapInterfaceServiceOld {
@@ -17,10 +14,10 @@ export class MapInterfaceServiceOld {
         if (!interfaceDeclaration) {
             throwWarning(`Warning: interface declaration not found for "${interfaceName}". The value "${data}" was replaced by "undefined".`);
             return undefined;
-        } else if (interfaceDeclaration instanceof DateDeclaration) {
-            return MapDateServiceOld.createDate(data);
-        } else if (Array.isArray(data) && isArray) {
-            return await MapInstanceOrInterfaceServiceOld.createArray(data, interfaceDeclaration, options);
+        // } else if (interfaceDeclaration instanceof DateDeclaration) {
+        //     return MapDateServiceOld.createDate(data);
+        // } else if (Array.isArray(data) && isArray) {
+        //     return await MapInstanceOrInterfaceServiceOld.createArray(data, interfaceDeclaration, options);
         } else if (!Array.isArray(data) && !isArray) {
             return await this.createInterface(data, interfaceDeclaration, options);
         }  else {
@@ -31,7 +28,7 @@ export class MapInterfaceServiceOld {
 
     static async createInterface<T>(data: any, interfaceDeclaration: InterfaceDeclaration, options: CreateOptions): Promise<T | Date> {
         const tInterface = {};
-        await MapInstanceOrInterfaceServiceOld.map(tInterface, data, interfaceDeclaration, options);
+        // await MapInstanceOrInterfaceServiceOld.map(tInterface, data, interfaceDeclaration, options);
         return implementsRequiredProperties(tInterface, interfaceDeclaration) ? tInterface as T : undefined;
     }
 

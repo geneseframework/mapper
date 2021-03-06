@@ -5,11 +5,14 @@ import { PropertyKind } from '../../enums/property-kind.enum';
 import { MapPropertyService } from './map-property.service';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { MapInterfaceServiceOld } from './map-interface.service.old';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
-import { MapInstanceServiceOld } from './map-instance.service.old';
 import * as chalk from 'chalk';
-import { isAny, isAnyArray, isAnyOrAnyArray, keyExistsInInstanceAndDataIsNullOrUndefinedOld } from '../../utils/native/any.util';
+import {
+    isAny,
+    isAnyArray,
+    isAnyOrAnyArray,
+    keyExistsInInstanceAndDataIsNullOrUndefinedOld
+} from '../../utils/native/any.util';
 import { isArray } from '../../utils/native/arrays.util';
 import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util';
 import { PropertyInfos } from '../../types/property-infos.type';
@@ -27,8 +30,8 @@ export class MapInstanceOrInterfaceServiceOld<T> {
         const instancesArray: T[] | Date[] = [];
         const elementsWhichCouldBeAnInstance: object[] = data.filter(d => this.couldBeAnInstanceOrInterface(d));
         for (const element of elementsWhichCouldBeAnInstance) {
-            const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceServiceOld.createInterface(data, classOrInterfaceDeclaration, options) ;
-            instancesArray.push(instance);
+            // const instance: any = classOrInterfaceDeclaration instanceof ClassDeclaration ? await MapInstanceServiceOld.createInstance(element, classOrInterfaceName, classOrInterfaceDeclaration, options) : await MapInterfaceServiceOld.createInterface(data, classOrInterfaceDeclaration, options) ;
+            // instancesArray.push(instance);
         }
         return instancesArray;
     }

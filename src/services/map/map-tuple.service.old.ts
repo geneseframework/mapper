@@ -4,7 +4,6 @@ import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
-import { MapInstanceOrInterfaceServiceOld } from './map-instance-or-interface.service.old';
 import { TupleOld } from '../../types/target/target-tuple-old.type';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
@@ -58,7 +57,7 @@ export class MapTupleServiceOld<T> {
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
+                // MapInstanceOrInterfaceServiceOld.map(instance, dataValue, importArrayDeclaration, options);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {
