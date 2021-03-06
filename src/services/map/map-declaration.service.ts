@@ -9,7 +9,6 @@ import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
-import { Primitive } from '../../types/primitives.type';
 import { TargetInfo } from '../../types/target/target-info.type';
 import { TargetServiceOld } from '../targets/target.service.old';
 import { MapClassService } from './map-class.service';
@@ -34,8 +33,7 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create<T>(target, data, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
-                return MapEnumService.create(target, data, options);
-                // return MapEnumService.create(data, target, info.isArray);
+                return MapEnumService.create(target, data);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:

@@ -18,7 +18,6 @@ import { newMappedElement } from '../../utils/mapping.util';
 import { MapTypeArrayService } from './map-type-array.service';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { Key } from '../../types/key.type';
-import { IncompatibilityService } from '../incompatibility.service';
 import { CreateOptions } from '../../models/create-options.model';
 import {
     isPrimitiveOrPrimitivesArray,
@@ -79,9 +78,6 @@ export class MapTypeService {
 
 
     static async mapTypeNode(target: any, key: Key, dataValue: any, typeNode: TypeNode, options: CreateOptions): Promise<void> {
-        if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeNode)) {
-            return;
-        }
         if (isNullOrUndefined(dataValue)) {
             target[key] = dataValue;
             return;
@@ -133,9 +129,6 @@ export class MapTypeService {
 
 
     private static async mapTypeReference(target: any, key: Key, dataValue: any, typeReferenceNode: TypeReferenceNode, options: CreateOptions): Promise<void> {
-        if (IncompatibilityService.isIncompatibleWithTypeNode(dataValue, typeReferenceNode)) {
-            return undefined;
-        }
         const typeDeclaration: TypeDeclaration = getTypeReferenceTypeDeclaration(typeReferenceNode);
         await MapDeclarationService.map(target, key, dataValue, typeDeclaration?.getName(), typeDeclaration, options);
     }
