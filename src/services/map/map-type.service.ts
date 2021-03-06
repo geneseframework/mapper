@@ -30,6 +30,7 @@ import {
 } from '../../utils/native/primitives.util';
 import { isBracketed } from '../../types/target/string/bracketed.type';
 import { isArray } from '../../utils/native/arrays.util';
+import { MapPrimitiveService } from './map-primitive.service';
 
 export class MapTypeService {
 
@@ -119,7 +120,7 @@ export class MapTypeService {
 
     private static mapLiteralType(target: any, key: Key, dataValue: any, literalType: LiteralTypeNode, options: CreateOptions): void {
         if (isPrimitiveTypeNode(literalType) && primitiveLiteralValue(literalType) === dataValue) {
-            target[key] = MapPrimitiveServiceOld.create(dataValue, literalPrimitiveToPrimitiveType(literalType), false, options);
+            target[key] = MapPrimitiveService.create(dataValue, literalPrimitiveToPrimitiveType(literalType), options);
             return;
         }
     }

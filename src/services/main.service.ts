@@ -64,7 +64,7 @@ export class MainService {
         } else if (isArrayType(target)) {
             return await MapArrayService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
-            return MapPrimitiveService.create([target, data], options);
+            return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
             return await MapQuotedService.create(target, data, options);
         } else if (isObjectLiteralType(target)) {
