@@ -23,6 +23,7 @@ import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapLiteralObjectService } from './map/map-literal-object.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -52,6 +53,7 @@ export class MainService {
 
 
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+        console.log(chalk.greenBright('MAP STRRRR'), target, data);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

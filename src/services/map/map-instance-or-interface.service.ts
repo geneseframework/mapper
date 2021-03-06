@@ -3,12 +3,13 @@ import { getAllClassProperties } from '../../utils/ast/ast-class.util';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
-import { isNullOrUndefined } from '../../utils/native/any.util';
+import { isNullOrUndefined, keyExistsInInstanceAndDataIsNullOrUndefinedOld } from '../../utils/native/any.util';
 import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
+import * as chalk from 'chalk';
 
 export class MapInstanceOrInterfaceService<T> {
 
@@ -23,6 +24,16 @@ export class MapInstanceOrInterfaceService<T> {
         }
     }
 
+    // static async mapOld<T>(target: T, data: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration, options: CreateOptions): Promise<void> {
+    //     for (const key of Object.keys(data)) {
+    //         if (keyExistsInInstanceAndDataIsNullOrUndefinedOld(data, key)) {
+    //             target[key] = data[key];
+    //         } else {
+    //             await this.mapDataKey(target, key, data[key], classOrInterfaceDeclaration, options);
+    //         }
+    //     }
+    // }
+
 
     private static keyExistsInInstanceAndDataIsNullOrUndefined(instance: any, data: any, key: string): boolean {
         return instance?.hasOwnProperty(key) && isNullOrUndefined(data[key]);
@@ -32,6 +43,7 @@ export class MapInstanceOrInterfaceService<T> {
     private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
+        console.log(chalk.magentaBright('MAP DATA KKKKK'), dataValue, key, instance);
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
             return;
         }
@@ -41,7 +53,9 @@ export class MapInstanceOrInterfaceService<T> {
         } else if (isQuoted(keyTarget)) {
                 instance[key] = removeBorders(keyTarget);
         } else {
+            console.log(chalk.yellowBright('MAP DATA KKKKK TGTTTT'), keyTarget, dataValue);
             instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
+            console.log(chalk.yellowBright('MAP DATA KKKKK TGTTTT'), instance[key]);
         }
     }
 

@@ -17,6 +17,8 @@ import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import * as chalk from 'chalk';
+import { MainService } from '../main.service';
 
 export class MapDeclarationService<T> {
 
@@ -31,6 +33,7 @@ export class MapDeclarationService<T> {
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[]> {
         const info: TargetInfo = TargetServiceOld.getInfo(target);
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(info.typeName);
+        console.log(chalk.cyanBright('MAP DECLLLLLL'), target, data, typeDeclaration.getName());
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create<T>(target, data, options);
@@ -39,6 +42,8 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.INTERFACE_DECLARATION:
                 return MapInterfaceService.create<T>(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
+                console.log(chalk.cyanBright('MAP DECLLLLLL TYPEEEEEE'), target, data, typeDeclaration.getName());
+                // return await MainService.mapString<T>(target, data, options);
                 return await MapTypeService.create<T>(target, data, options);
             default:
                 throwWarning(`Warning : type declaration "${target}" not found.`);
@@ -71,8 +76,8 @@ export class MapDeclarationService<T> {
     private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<void> {
         const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
         target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        // await MapInstanceOrInterfaceService.map(target, key, dataValue, options, classDeclaration);
-        await MapInstanceOrInterfaceServiceOld.map(target[key], dataValue, classDeclaration, options);
+        await MapInstanceOrInterfaceService.map(target, key, dataValue, options, classDeclaration);
+        // await MapInstanceOrInterfaceServiceOld.map(target[key], dataValue, classDeclaration, options);
     }
 
 }

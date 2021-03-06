@@ -328,18 +328,23 @@ testMappers.push(new TestMapper(`{level: 1} / LevelClassSpec`, LevelClassSpec, {
 
 // --------------------------------------   Property with Type which is Union Type   --------------------------------------
 
+
+export class NameSpec {
+    name: string;
+}
+const nameSpec = new NameSpec();
+nameSpec.name = 'Biela';
+
 export type UnionTypeClassAndStringSpec = CatSpec | string;
 export class ClassWithUnionTypeSpec {
     union: UnionTypeClassAndStringSpec;
 }
-const catSpec = new CatSpec();
-catSpec.name = 'Biela';
 
 testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: undefined}));
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new CatSpec()}));
-testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: catSpec}));
+testMappers.push(new TestMapper(`new ClassWithUnionTypeSpec() / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
+testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new NameSpec()}));
+testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}, {isolate: false})); // TODO
 
 
 // ------------------------------   Property with Type which is Union of Classes and Class[]   ----------------------------

@@ -44,17 +44,31 @@ testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAlon
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
+// -------------------------------------   Union types string | number   --------------------------------------------------
 
-// ---------------------------------------------   Union types   ----------------------------------------------------------
 
-async function z() {
-    const zzz: string = await Mapper.create('string | number', 'a');
+export type UnionTypeSpec = string | number;
+
+testMappers.push(new TestMapper(`'a' / UnionTypeSpec`, 'UnionTypeSpec', 'a', {isolate: false}));
+testMappers.push(new TestMapper(`2 / UnionTypeSpec`, 'UnionTypeSpec', 2, {isolate: false}));
+testMappers.push(new TestMapper(`{} / UnionTypeSpec`, 'UnionTypeSpec', {}, {expectedValue: undefined, isolate: false}));
+
+
+
+// --------------------------------------   Union types Class | string   --------------------------------------------------
+
+export class ClassStringSpec {
+    str: string
 }
-// testMappers.push(new TestMapper(`'a' / string | number`, 'String | number', 'a', {isolate: true}));
-// testMappers.push(new TestMapper(`'a' / string | number`, '[String, number]', 'a', {isolate: true}));
+export type UnionClassStringOrNumberSpec = ClassStringSpec | number;
+
+testMappers.push(new TestMapper(`'a' / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', 'a', {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`2 / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', 2, {isolate: false}));
+testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 'a'}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
 
 
-// -----------------------------------   Union of two Classes, and one Class[]   ------------------------------------------
+// ---------------------------------   Union of two Classes, and one Class[]   --------------------------------------------
 
 
 export type EmployerTypeSpec = NgoClassSpec | NgoClassSpec[] | CompanyClassSpec;

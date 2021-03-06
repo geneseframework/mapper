@@ -29,13 +29,22 @@ import {
 import { isBracketed } from '../../types/target/string/bracketed.type';
 import { isArray } from '../../utils/native/arrays.util';
 import { MapPrimitiveService } from './map-primitive.service';
+import { hasSeparators } from '../../types/target/string/has-separators.type';
+import { MapComplexService } from './map-complex.service';
 
 export class MapTypeService {
 
 
     static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[]> {
+        console.log(chalk.redBright('HAS SEPPPPPP ????'), target, data);
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
-        if (isArray(data) && isBracketed(target)) {
+        const structureType: string = typeAliasDeclaration.getStructure().type as string;
+        console.log(chalk.magentaBright('MAP TTYYYYYYYYP ????'), typeAliasDeclaration.getStructure(), hasSeparators(structureType));
+
+        if (hasSeparators(structureType)) {
+            console.log(chalk.redBright('HAS SEPPPPPP'), target, data);
+            return MapComplexService.create(structureType, data, options);
+        } else if (isArray(data) && isBracketed(target)) {
             return this.createTypesArray(data, typeAliasDeclaration, options);
         } else if (!isBracketed(target)) {
             return this.createType(data, typeAliasDeclaration, options);
@@ -61,7 +70,10 @@ export class MapTypeService {
 
 
     private static async mapData<T>(dataValue: any, typeAliasDeclaration: TypeAliasDeclaration, options: CreateOptions): Promise<T> {
-        return await newMappedElement(this.map, dataValue, typeAliasDeclaration, options);
+        console.log(chalk.blueBright('MAP DATAAAAA'), dataValue, typeAliasDeclaration.getKindName());
+        const zzz = await newMappedElement(this.map, dataValue, typeAliasDeclaration, options);
+        console.log(chalk.blueBright('MAP DATAAAAA zzz'), zzz);
+        return zzz as any;
     }
 
 
