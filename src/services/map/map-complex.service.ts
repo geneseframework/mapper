@@ -19,7 +19,12 @@ export class MapComplexService {
 
         } else if (isUnion(target)) {
             if (isStringAsNullOrLiteral(first)) {
-                return MapNullOrLiteralService.create(first)?.toString() === first ? data : await MainService.mapToString(others, data, options);
+                console.log(chalk.cyanBright('IS STR AS LITTTT'), first, others, data, MapNullOrLiteralService.create(first)?.toString());
+                if (first.toString() === data) {
+                    return data;
+                } else {
+                    return (isStringAsNullOrLiteral(others) && others.toString() === data) ? data : undefined;
+                }
             }
             const mapped: any = await MainService.mapToString(first, data, options);
             console.log(chalk.cyanBright('IS UNIONNNNN'), mapped);
