@@ -32,19 +32,18 @@ export class MapInstanceOrInterfaceService {
     private static async mapDataKey<T>(data: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
-        const keyTarget: string = this.getKeyTarget(data, key, property, declaration);
-        if (keyTarget === 'undefined' || keyTarget === undefined) {
+        const targetKeyType: string = this.getTargetKeyType(data, key, property, declaration);
+        if (targetKeyType === 'undefined' || targetKeyType === undefined) {
             instance[key] = data;
-        } else if (isQuoted(keyTarget)) {
-            instance[key] = removeBorders(keyTarget);
+        } else if (isQuoted(targetKeyType)) {
+            instance[key] = removeBorders(targetKeyType);
         } else {
-            instance[key] = await MainService.mapToString(keyTarget, data, options);
+            instance[key] = await MainService.mapToString(targetKeyType, data, options);
         }
     }
 
 
-    private static getKeyTarget(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
+    private static getTargetKeyType(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
         return property ? property.getStructure().type as string : indexSignatureWithSameType(key, dataValue, declaration);
     }
 

@@ -32,7 +32,7 @@ export class MapDeclarationService<T> {
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
                 return await MapTypeService.create(target, data, options);
             default:
-                throwWarning(`Warning : type declaration "${target}" not found.`);
+                throwWarning(`type declaration "${target}" not found.`);
                 return undefined;
         }
     }

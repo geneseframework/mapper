@@ -9,7 +9,7 @@ import { isBracketed } from '../../types/target/string/bracketed.type';
 export class MapEnumService {
 
 
-    // TODO: check if we need options
+    // TODO: check if we need options & create diagram
     static async create<T>(target: string, data: any): Promise<T | T[]> {
         const enumDeclaration: EnumDeclaration = getTypeDeclaration(target) as EnumDeclaration;
         if (isArray(data) && isBracketed(target)) {

@@ -4,7 +4,7 @@ import { ColorSupport } from 'chalk';
 export const testMappers: TestMapper[] = [];
 
 
-// ---------------------------------------------   Without default values   -----------------------------------------------
+// ---------------------------------------------   With optional property   -----------------------------------------------
 
 
 export interface AnimalSpec {
@@ -17,6 +17,8 @@ testMappers.push(new TestMapper(`{name: 'Biela', nickName: 'Kitty'} / PreySpec`,
 testMappers.push(new TestMapper(`{nickName: 'Kitty'} / PreySpec / undefined`, 'AnimalSpec', {nickName: 'Kitty' }, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{unknownProperty: 'Biela'} / PreySpec / undefined`, 'AnimalSpec', {unknownProperty: 'Biela' }, {expectedValue: undefined, isolate: false}));
 
+
+// ------------------------------------------   With property which has Type   --------------------------------------------
 
 
 export class AnimalOwner {
