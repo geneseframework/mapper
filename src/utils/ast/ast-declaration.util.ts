@@ -18,6 +18,7 @@ import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-decl
 import { Key } from '../../types/key.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
+import { Property } from '../../types/target/property.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -207,4 +208,19 @@ function indexSignatureName(key: Key, value: any, indexSignature: IndexSignature
         return returnType;
     }
     return undefined;
+}
+
+
+export function isProperty(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
+    return hasIndexableType(declaration) || properties(declaration).map(p => p[0]).includes(propertyName);
+}
+
+
+export function properties(declaration: ClassOrInterfaceDeclaration): Property[] {
+    return declaration?.getStructure().properties.map(p => [p.name, p.type , p.initializer] as Property);
+}
+
+
+function hasIndexableType(declaration: ClassOrInterfaceDeclaration): boolean {
+    return declaration.getDescendantsOfKind(SyntaxKind.IndexSignature).length > 0;
 }

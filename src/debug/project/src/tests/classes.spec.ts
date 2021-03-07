@@ -24,6 +24,8 @@ export class ClassWithPrimitivesSpec {
 testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 1 / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, {str: 'str', num: 2, bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false]}));
 testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 2 / ClassWithPrimitivesSpec / {bool: null}`, ClassWithPrimitivesSpec, {str: 3, num: 'num', bool: null}, {expectedValue: {str: undefined, num: undefined, bool: null}}));
 testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 3 / ClassWithPrimitivesSpec / {strs:[null], nums: [undefined], bools: [undefined]}`, ClassWithPrimitivesSpec, {strs: [1, null], nums: ['2', undefined], bools: ['a', undefined]}, {expectedValue: {strs:[undefined, null], nums: [undefined, undefined], bools: [undefined, undefined]}}));
+testMappers.push(new TestMapper(`'a' / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec,  'a', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{otherProp: 2} / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec,  {otherProp: 2}, {expectedValue: {}, isolate: false}));
 
 
 // -----------------------------------------------------   any   ----------------------------------------------------------
@@ -35,7 +37,7 @@ export class ClassWithAnySpec {
     c;
 }
 
-testMappers.push(new TestMapper(` {a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, {a: 2, b: ['b'], c: 'c'}));
+testMappers.push(new TestMapper(` {a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, {a: 2, b: ['b'], c: 'c'}, {isolate: false}));
 testMappers.push(new TestMapper(` {a: undefined, b: 'b'} / ClassWithAnySpec / {a: undefined, b: undefined}`, ClassWithAnySpec, {a: undefined}, {expectedValue: {a: undefined}}));
 testMappers.push(new TestMapper(` {a: [2], b: [null]} / ClassWithAnySpec`, ClassWithAnySpec, {a: [2], b: [null]}));
 testMappers.push(new TestMapper(` {d: 3} / ClassWithAnySpec`, ClassWithAnySpec, {d: 3}, {expectedValue: {}}));
@@ -49,7 +51,7 @@ export class IndexableSpec {
     [key: string]: string;
 }
 
-testMappers.push(new TestMapper(` {a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}));
+testMappers.push(new TestMapper(` {a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}, {isolate: false}));
 testMappers.push(new TestMapper(` {a: 'c', b: 3} / IndexableSpec / {a: 'c'}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c'}}));
 
 

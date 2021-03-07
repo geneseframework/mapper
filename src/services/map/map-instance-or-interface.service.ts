@@ -4,35 +4,35 @@ import { PropertyDeclarationOrSignature } from '../../types/property-declaration
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { indexSignatureWithSameType } from '../../utils/ast/ast-declaration.util';
+import { indexSignatureWithSameType, isProperty } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
+import * as chalk from 'chalk';
 
-export class MapInstanceOrInterfaceService<T> {
+export class MapInstanceOrInterfaceService {
 
 
-    static async map<T>(data: any, options: CreateOptions, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+    static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         for (const key of Object.keys(data)) {
-            if (this.keyExistsInInstanceAndDataIsNullOrUndefined(instance, data, key)) { // TODO : verify what happens when key not exists in target
-                instance[key] = data[key];
-            } else {
-                await this.mapDataKey(data[key], options, key, instance, declaration);
+            if (isProperty(key, declaration as ClassDeclaration)) {
+                if (isNullOrUndefined(data[key])) {
+                    instance[key] = data[key];
+                } else {
+                    await this.mapDataKey(data[key], options, key, instance, declaration);
+                }
             }
         }
-    }
-
-
-    private static keyExistsInInstanceAndDataIsNullOrUndefined(instance: any, data: any, key: string): boolean {
-        return instance?.hasOwnProperty(key) && isNullOrUndefined(data[key]);
     }
 
 
     private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
+        // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
         if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
+            // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
             return;
         }
         const keyTarget: string = this.getKeyTarget(dataValue, key, property, declaration);
