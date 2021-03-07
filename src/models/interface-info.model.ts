@@ -5,8 +5,8 @@ export class InterfaceInfo extends DeclarationInfo {
 
     properties: Property[] = [];
 
-    constructor() {
-        super();
+    constructor(filePath: string) {
+        super(filePath, 'Interface');
     }
 
 }

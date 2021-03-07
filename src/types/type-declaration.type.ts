@@ -2,3 +2,4 @@ import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDecla
 import { DateDeclaration } from '../models/date-declaration.model';
 
 export type TypeDeclaration =  ClassDeclaration | EnumDeclaration | InterfaceDeclaration | TypeAliasDeclaration | DateDeclaration;
+

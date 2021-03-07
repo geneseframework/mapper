@@ -2,6 +2,7 @@ import { Project } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InitConfigService } from './init-config.service';
 import { InstanceGeneratorService } from '../instance-generator.service';
+import { DeclarationInfoService } from './declaration-info.service';
 
 const appRoot = require('app-root-path');
 
@@ -14,6 +15,7 @@ export class InitService {
         // GLOBAL.logDuration('START OF INIT PROCESS');
         if (GLOBAL.isFirstMapper) {
             await this.init();
+            await DeclarationInfoService.init();
             await InstanceGeneratorService.start();
         }
         // GLOBAL.logDuration('END OF INIT PROCESS');

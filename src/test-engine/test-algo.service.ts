@@ -40,7 +40,7 @@ async function checkTest(testType: TestType, logPassed: boolean, old: boolean): 
     } else {
         console.log(chalk.redBright('Test failed : '), testType.title);
         if (isTooLong(duration)) {
-            console.log(chalk.redBright('Too long time : '), testType.title);
+            console.log(chalk.redBright(`Too long time (${duration} ms)`), testType.title);
         }
         TESTS.testsFailed++;
         TESTS.failed.push(`${testType.title} (${duration} ms)`);

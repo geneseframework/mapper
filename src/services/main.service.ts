@@ -60,7 +60,7 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data, options);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data, options);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

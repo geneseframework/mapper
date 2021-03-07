@@ -5,6 +5,7 @@ import { tab, tabs } from '../utils/native/strings.util';
 import { flat } from '../utils/native/arrays.util';
 import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
+import { ClassInfo } from '../models/class-info.model';
 
 export class InstanceGeneratorService {
 
@@ -13,9 +14,22 @@ export class InstanceGeneratorService {
      */
     static async start(): Promise<void> {
         GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
-        this.setInstanceGenerators();
+        // this.setInstanceGenerators();
         await this.createInstanceGeneratorFile();
         GLOBAL.log('Types mapped', '', !GLOBAL.debug);
+    }
+
+
+    static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
+        if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
+            GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+            alreadyDone.push(classDeclaration.getName());
+        }
+    }
+
+
+    static shouldCreateInstanceGenerator(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
+        return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
     }
 
 

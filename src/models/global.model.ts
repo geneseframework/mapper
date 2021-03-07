@@ -2,11 +2,13 @@ import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
+import { DeclarationInfo } from './declaration-info.model';
 
 
 export class Global {
 
     debug = false;
+    declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;

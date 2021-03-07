@@ -10,8 +10,11 @@ export class ClassInfo extends DeclarationInfo {
     numberOfConstructorArguments: number = undefined;
     properties: Property[] = [];
 
-    constructor() {
-        super();
+
+    constructor(filePath: string, numberOfConstructorArguments: number, properties: Property[]) {
+        super(filePath, 'Class');
+        this.numberOfConstructorArguments = numberOfConstructorArguments;
+        this.properties = properties;
     }
 
 }
