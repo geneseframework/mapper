@@ -3,7 +3,7 @@ import { GLOBAL } from '../../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { Declaration } from '../../types/type-declaration.type';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
@@ -53,7 +53,7 @@ export class MapArrayService<T> {
 
     private static async mapArray(target: any, key: StringOrNumber, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
         const typeName: string = propertyType.slice(0, -2);
-        const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
+        const typeDeclaration: Declaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
             if (typeDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), numberOfConstructorArgs(typeDeclaration));
@@ -69,12 +69,12 @@ export class MapArrayService<T> {
     }
 
 
-    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string, options: CreateOptions): boolean {
+    private static isPrimitiveOrEnumWithCorrectValue(declaration: Declaration, element: any, typeName: string, options: CreateOptions): boolean {
         return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element, options) || isNullOrUndefined(element);
     }
 
 
-    private static isEnumWithCorrectValue(declaration: TypeDeclaration, element: any): boolean {
+    private static isEnumWithCorrectValue(declaration: Declaration, element: any): boolean {
         return declaration instanceof EnumDeclaration && isEnumValue(declaration, element);
     }
 

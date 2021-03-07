@@ -1,5 +1,5 @@
 import { MapEnumService } from './map-enum.service';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { Declaration } from '../../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { throwWarning } from '../../utils/errors.util';
@@ -21,7 +21,7 @@ export class MapDeclarationService<T> {
      */
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
-        const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
+        const typeDeclaration: Declaration = getTypeDeclaration(typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
                 return await MapClassService.create(target, data, options);

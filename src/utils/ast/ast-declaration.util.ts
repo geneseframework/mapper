@@ -11,7 +11,7 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { Declaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -29,7 +29,7 @@ const getDescendantInterfaces = (sourceFile: SourceFile) => sourceFile.getDescen
 const getDescendantTypeAliases = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.TypeAliasDeclaration);
 
 
-export function getDeclarationKind(typeDeclaration: TypeDeclaration): TypeDeclarationKind {
+export function getDeclarationKind(typeDeclaration: Declaration): TypeDeclarationKind {
     if (!typeDeclaration) {
         return undefined;
     } else if (typeDeclaration instanceof ClassDeclaration) {
@@ -44,7 +44,7 @@ export function getDeclarationKind(typeDeclaration: TypeDeclaration): TypeDeclar
 }
 
 
-export function getTypeDeclaration(typeName: string): TypeDeclaration {
+export function getTypeDeclaration(typeName: string): Declaration {
     const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
     switch (typeDeclarationKind) {
         case TypeDeclarationKind.CLASS_DECLARATION:
@@ -56,7 +56,7 @@ export function getTypeDeclaration(typeName: string): TypeDeclaration {
         case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
-            const typeScriptDeclaration: TypeDeclaration = getTypeScriptDeclaration(typeName);
+            const typeScriptDeclaration: Declaration = getTypeScriptDeclaration(typeName);
             if (typeScriptDeclaration) {
                 return typeScriptDeclaration;
             } else {
@@ -116,26 +116,37 @@ export function isEnumDeclaration(typeName: string): boolean {
 
 export function isInterfaceDeclaration(typeName: string): boolean {
     GLOBAL.logDuration('IS INTERFACEEEE ?', 'blueBright');
-    return hasDeclarationType(typeName, getDescendantInterfaces);
+    return GLOBAL.interfaceNames.includes(typeName);
 }
+
+// export function isInterfaceDeclaration(typeName: string): boolean {
+//     GLOBAL.logDuration('IS INTERFACEEEE ?', 'blueBright');
+//     return hasDeclarationType(typeName, getDescendantInterfaces);
+// }
 
 
 export function isTypeAliasDeclaration(typeName: string): boolean {
-    return hasDeclarationType(typeName, getDescendantTypeAliases);
+    GLOBAL.logDuration('IS TYPEEEEEE ?', 'cyanBright');
+    return GLOBAL.typeNames.includes(typeName);
 }
 
+// export function isTypeAliasDeclaration(typeName: string): boolean {
+//     return hasDeclarationType(typeName, getDescendantTypeAliases);
+// }
 
-function hasDeclarationType(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+
+function hasDeclarationType(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
     return hasDeclarationTypeInProject(typeName, getTDeclaration) || hasDeclarationTypeOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
 }
 
 
-function hasDeclarationTypeInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+function hasDeclarationTypeInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
     return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
-
-function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): boolean {
+// TODO: SEARCH Mapper.create and set declarationInfos including out of project
+// TODO: Create a specific file for that ?
+function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
     const declarations: ImportDeclaration[] = getImportDeclarations(typeName);
     if (declarations.length === 0) {
         return false;
@@ -180,7 +191,7 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 }
 
 
-function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): TypeDeclaration {
+function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): Declaration {
     if (hasDeclarationInTypeScript(typeName)) {
         return getTypeScriptDeclaration(typeName);
     }
@@ -189,12 +200,12 @@ function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFi
 }
 
 
-function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => TypeDeclaration[]): SourceFile {
+function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): SourceFile {
     return GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
 }
 
 
-function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
+function getTypeScriptDeclaration(typeName: string): Declaration {
     if (typeName === 'Date') {
         return new DateDeclaration();
     }

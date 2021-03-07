@@ -1,5 +1,5 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { Declaration } from '../../types/type-declaration.type';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
@@ -54,7 +54,7 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentTupleType, tupleType);
+            const importArrayDeclaration: Declaration = getImportTypeDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
                 const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), numberOfConstructorArgs(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
