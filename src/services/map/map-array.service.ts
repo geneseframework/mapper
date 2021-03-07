@@ -8,7 +8,7 @@ import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
 import { isAny, isNullOrUndefined } from '../../utils/native/any.util';
-import { Key } from '../../types/key.type';
+import { StringOrNumber } from '../../types/string-or-number.type';
 import { CreateOptions } from '../../models/create-options.model';
 import { isPrimitiveTypeName } from '../../utils/native/types.util';
 import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primitives.util';
@@ -39,7 +39,7 @@ export class MapArrayService<T> {
     }
 
 
-    static async map(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
+    static async map(target: any, key: StringOrNumber, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
         if (!Array.isArray(dataValue)) {
             return;
         } else if (isEmptyArray(dataValue)) {
@@ -51,7 +51,7 @@ export class MapArrayService<T> {
     }
 
 
-    private static async mapArray(target: any, key: Key, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
+    private static async mapArray(target: any, key: StringOrNumber, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
         const typeName: string = propertyType.slice(0, -2);
         const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
@@ -84,7 +84,7 @@ export class MapArrayService<T> {
     }
 
 
-    private static push(target: any, key: Key, element: any): void {
+    private static push(target: any, key: StringOrNumber, element: any): void {
         target[key] = target[key] ?? [] as any[];
         target[key].push(element);
     }

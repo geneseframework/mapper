@@ -1,7 +1,7 @@
 import { EnumDeclaration } from 'ts-morph';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
-import { Key } from '../../types/key.type';
+import { StringOrNumber } from '../../types/string-or-number.type';
 import { newMappedElement } from '../../utils/mapping.util';
 import { isArray } from '../../utils/native/arrays.util';
 import { isBracketed } from '../../types/target/string/bracketed.type';
@@ -37,7 +37,7 @@ export class MapEnumService {
     }
 
 
-    static async map(target: any, key: Key, dataValue: any, declaration: EnumDeclaration): Promise<void> {
+    static async map(target: any, key: StringOrNumber, dataValue: any, declaration: EnumDeclaration): Promise<void> {
         if (isEnumValue(declaration, dataValue)) {
             target[key] = dataValue;
         }

@@ -1,11 +1,7 @@
-import { ClassDeclaration, HeritageClause, Identifier, PropertyDeclaration, TypeReferenceNode } from 'ts-morph';
+import { ClassDeclaration, HeritageClause, PropertyDeclaration } from 'ts-morph';
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
-import { getImportTypeDeclaration } from './ast-imports.util';
-import { TypeDeclaration } from '../../types/type-declaration.type';
-import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-
-
+import { Property } from '../../types/target/property.type';
 
 
 // TODO : Heritage ?
@@ -35,13 +31,3 @@ export function getAllClassProperties(classDeclaration: ClassDeclaration): Prope
     }
     return propertyDeclarations;
 }
-
-
-export function getTypeReferenceTypeDeclaration(typeReference: TypeReferenceNode): TypeDeclaration {
-    const identifier: Identifier = typeReference.getFirstDescendantByKind(SyntaxKind.Identifier);
-    const apparentType: string = identifier.getSymbol().getDeclaredType().getApparentType().getText();
-    const split: string[] = apparentType.split('.');
-    const typeName: string = split[split.length - 1];
-    return getImportTypeDeclaration(apparentType, typeName);
-}
-

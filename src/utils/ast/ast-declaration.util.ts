@@ -15,9 +15,12 @@ import { TypeDeclaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { Key } from '../../types/key.type';
+import { StringOrNumber } from '../../types/string-or-number.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
+import { Property } from '../../types/target/property.type';
+import * as chalk from 'chalk';
+import { IndexableType } from '../../types/indexable-type.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -181,7 +184,7 @@ function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
 }
 
 
-export function indexSignatureWithSameType(key: Key, value: any, declaration: ClassOrInterfaceDeclaration): string {
+export function indexSignatureWithSameType(key: StringOrNumber, value: any, declaration: ClassOrInterfaceDeclaration): string {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
         return undefined;
@@ -194,7 +197,7 @@ export function indexSignatureWithSameType(key: Key, value: any, declaration: Cl
 }
 
 
-function indexSignatureName(key: Key, value: any, indexSignature: IndexSignatureDeclaration): string {
+function indexSignatureName(key: StringOrNumber, value: any, indexSignature: IndexSignatureDeclaration): string {
     const indexStructure: IndexSignatureDeclarationStructure = indexSignature?.getStructure();
     if (indexStructure.keyType !== typeof key) {
         return undefined;
@@ -207,4 +210,14 @@ function indexSignatureName(key: Key, value: any, indexSignature: IndexSignature
         return returnType;
     }
     return undefined;
+}
+
+
+export function isProperty(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
+    return properties(declaration).map(p => p[0]).includes(propertyName);
+}
+
+
+export function properties(declaration: ClassOrInterfaceDeclaration): Property[] {
+    return declaration?.getStructure().properties.map(p => [p.name, p.type , p.initializer] as Property);
 }

@@ -4,6 +4,11 @@ export function isString(value: any): value is string {
 }
 
 
+export function isNumericString(text: string): boolean {
+    return !isNaN(Number(text));
+}
+
+
 export const tab = '    ';
 
 export function tabs(numberOfTabs: number): string {

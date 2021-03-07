@@ -19,18 +19,18 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
+    static async create(target: string, data: any, options: CreateOptions): Promise<any> {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
         switch (getDeclarationKind(typeDeclaration)) {
             case TypeDeclarationKind.CLASS_DECLARATION:
-                return await MapClassService.create<T>(target, data, options);
+                return await MapClassService.create(target, data, options);
             case TypeDeclarationKind.ENUM_DECLARATION:
                 return MapEnumService.create(target, data);
             case TypeDeclarationKind.INTERFACE_DECLARATION:
-                return MapInterfaceService.create<T>(target, data, options);
+                return MapInterfaceService.create(target, data, options);
             case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                return await MapTypeService.create<T>(target, data, options);
+                return await MapTypeService.create(target, data, options);
             default:
                 throwWarning(`Warning : type declaration "${target}" not found.`);
                 return undefined;

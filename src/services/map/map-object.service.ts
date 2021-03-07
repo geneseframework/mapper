@@ -1,7 +1,7 @@
 import { CreateOptions } from '../../models/create-options.model';
 import * as chalk from 'chalk';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
-import { Property } from '../../types/target/new-property.type';
+import { Property } from '../../types/target/property.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 
 // TODO: implement
