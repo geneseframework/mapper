@@ -212,7 +212,7 @@ function indexSignatureName(key: Key, value: any, indexSignature: IndexSignature
 
 
 export function isProperty(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
-    return hasIndexableType(declaration) || properties(declaration).map(p => p[0]).includes(propertyName);
+    return properties(declaration).map(p => p[0]).includes(propertyName);
 }
 
 
@@ -221,6 +221,24 @@ export function properties(declaration: ClassOrInterfaceDeclaration): Property[]
 }
 
 
-function hasIndexableType(declaration: ClassOrInterfaceDeclaration): boolean {
+export function hasIndexableType(declaration: ClassOrInterfaceDeclaration): boolean {
     return declaration.getDescendantsOfKind(SyntaxKind.IndexSignature).length > 0;
+}
+
+
+export function indexType(declaration: ClassOrInterfaceDeclaration): string {
+    const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
+    if (indexSignatures.length === 0) {
+        return undefined;
+    } else if (indexSignatures.length === 1) {
+        return indexTypeName(indexSignatures[0]);
+    } else {
+        throwWarning(`${declaration?.getName()} has multiple index signatures.`);
+        return undefined;
+    }
+}
+
+
+function indexTypeName(indexSignature: IndexSignatureDeclaration): string {
+    return indexSignature?.getStructure()?.returnType as string;
 }

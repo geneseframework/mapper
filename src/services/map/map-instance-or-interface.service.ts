@@ -4,7 +4,12 @@ import { PropertyDeclarationOrSignature } from '../../types/property-declaration
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { indexSignatureWithSameType, isProperty } from '../../utils/ast/ast-declaration.util';
+import {
+    hasIndexableType,
+    indexSignatureWithSameType,
+    indexType,
+    isProperty
+} from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -22,26 +27,29 @@ export class MapInstanceOrInterfaceService {
                 } else {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
+            } else if (hasIndexableType(declaration)) {
+                // console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, indexType(declaration));
+                instance[key] = await MainService.map(indexType(declaration), data[key], options);
             }
         }
     }
 
 
-    private static async mapDataKey<T>(dataValue: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+    private static async mapDataKey<T>(data: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
-        if (this.keyIsIncompatibleWithDeclarationType(property, key, dataValue, declaration)) {
-            // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
+        if (this.keyIsIncompatibleWithDeclarationType(property, key, data, declaration)) {
+            console.log(chalk.redBright('MAP DATA KKKK'), data, key, property?.getName());
             return;
         }
-        const keyTarget: string = this.getKeyTarget(dataValue, key, property, declaration);
+        const keyTarget: string = this.getKeyTarget(data, key, property, declaration);
         if (keyTarget === 'undefined' || keyTarget === undefined) {
-            instance[key] = dataValue;
+            instance[key] = data;
         } else if (isQuoted(keyTarget)) {
             instance[key] = removeBorders(keyTarget);
         } else {
-            instance[key] = await MainService.mapToString(keyTarget, dataValue, options);
+            instance[key] = await MainService.mapToString(keyTarget, data, options);
         }
     }
 
