@@ -153,7 +153,7 @@ testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / per
 // --------------------------------------------------   External Module   -------------------------------------------------
 
 
-testMappers.push(new TestMapper(`{color: 'White'} / Chalk / undefined`, 'Chalk', {color: 'White'}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{color: 'White'} / Chalk / undefined`, 'Chalk', {color: 'White'}, {expectedValue: undefined, isolate: true}));
 
 
 // -----------------------------------------------------   Heritage   -----------------------------------------------------

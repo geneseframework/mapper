@@ -78,6 +78,7 @@ function declarationKind(typeName: string): TypeDeclarationKind {
     } else if (isEnumDeclaration(typeName)) {
         return TypeDeclarationKind.ENUM_DECLARATION;
     } else if (isInterfaceDeclaration(typeName)) {
+        GLOBAL.logDuration(`DECL KINDDDDD ${typeName}`, 'yellowBright');
         return TypeDeclarationKind.INTERFACE_DECLARATION;
     } else if (isTypeAliasDeclaration(typeName)) {
         return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;

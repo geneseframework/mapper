@@ -23,7 +23,7 @@ export class MapInstanceOrInterfaceService {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = await MainService.map(getIndexableType(declaration)?.returnType, data[key], options);
+                instance[key] = await MainService.mapToString(getIndexableType(declaration)?.returnType, data[key], options);
             }
         }
     }

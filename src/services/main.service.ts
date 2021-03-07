@@ -24,6 +24,7 @@ import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapLiteralObjectService } from './map/map-literal-object.service';
 import * as chalk from 'chalk';
+import { GLOBAL } from '../const/global.const';
 
 export class MainService {
 
@@ -39,11 +40,15 @@ export class MainService {
      */
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+        GLOBAL.start = Date.now();
+        GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        return await this.mapToString(target, data, options);
+        const zzz = await this.mapToString(target, data, options);
+        // GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
+        return zzz;
     }
 
 
@@ -54,6 +59,8 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+        GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
+        console.log(chalk.greenBright('MAP STRRRRR'), target, data, options);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -74,6 +81,7 @@ export class MainService {
         // } else if (isCurveBracketed(target)) {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
+            GLOBAL.logDuration(`HEEERE ${target}`, 'blueBright');
             return await MapDeclarationService.create(target, data, options);
         } else {
             return await MapComplexService.create(target, data, options);

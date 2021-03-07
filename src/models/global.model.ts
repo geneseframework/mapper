@@ -55,8 +55,8 @@ export class Global {
         }
     }
 
-    logDuration(message: string): void {
-        console.log(chalk.blueBright(`${message} : TIME `), Date.now() - this.start);
+    logDuration(message: string, color: 'blueBright' | 'yellowBright' | 'magentaBright' = 'blueBright'): void {
+        console.log(chalk[color](`${message} : TIME `), Date.now() - this.start);
     }
 
 }

@@ -11,10 +11,12 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
+        // GLOBAL.logDuration('START OF INIT PROCESS');
         if (GLOBAL.isFirstMapper) {
             await this.init();
             await InstanceGeneratorService.start();
         }
+        // GLOBAL.logDuration('END OF INIT PROCESS');
     }
 
 
