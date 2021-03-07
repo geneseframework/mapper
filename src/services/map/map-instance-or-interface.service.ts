@@ -9,34 +9,21 @@ import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
-import * as chalk from 'chalk';
-import {
-    hasIndexableType,
-    hasNumericKey,
-    getIndexableType,
-    keyHasSameTypeThanIndexable
-} from '../../utils/native/indexable-type.util';
-import { IndexableType } from '../../types/indexable-type.type';
-import { isNumericString } from '../../utils/native/strings.util';
+import { getIndexableType, hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
 
 export class MapInstanceOrInterfaceService {
 
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-        // console.log(chalk.magentaBright('MAP DATA KKKK'), data, Object.keys(data));
         for (const key of Object.keys(data)) {
-            // console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, typeof key, getIndexableType(declaration), keyHasSameTypeThanIndexable(key, getIndexableType(declaration)));
             if (isProperty(key, declaration as ClassDeclaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
-            } else if (hasIndexableType(declaration) && keyHasSameTypeThanIndexable(key, getIndexableType(declaration))) {
-                // const indexableT: IndexableType = getIndexableType(declaration);
-                // if (hasNumericKey(indexableT) && isNumericString(key)) {
-                    instance[key] = await MainService.map(getIndexableType(declaration)?.returnType, data[key], options);
-                // }
+            } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
+                instance[key] = await MainService.map(getIndexableType(declaration)?.returnType, data[key], options);
             }
         }
     }
@@ -46,10 +33,6 @@ export class MapInstanceOrInterfaceService {
         const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
         const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
         // console.log(chalk.magentaBright('MAP DATA KKKK'), property?.getName());
-        if (this.keyIsIncompatibleWithDeclarationType(property, key, data, declaration)) {
-            console.log(chalk.redBright('MAP DATA KKKK'), data, key, property?.getName());
-            return;
-        }
         const keyTarget: string = this.getKeyTarget(data, key, property, declaration);
         if (keyTarget === 'undefined' || keyTarget === undefined) {
             instance[key] = data;
@@ -61,18 +44,8 @@ export class MapInstanceOrInterfaceService {
     }
 
 
-    private static getKeyTargetWithIndexSignature(dataValue: any, key: string, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): string {
-        return indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
-    }
-
-
     private static getKeyTarget(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
-        return property ? property.getStructure().type as string : this.getKeyTargetWithIndexSignature(dataValue, key, declaration);
-    }
-
-
-    private static keyIsIncompatibleWithDeclarationType(property: PropertyDeclarationOrSignature, key: string, dataValue: any, classOrInterfaceDeclaration: ClassOrInterfaceDeclaration): boolean {
-        return !property && !indexSignatureWithSameType(key, dataValue, classOrInterfaceDeclaration);
+        return property ? property.getStructure().type as string : indexSignatureWithSameType(key, dataValue, declaration);
     }
 
 }

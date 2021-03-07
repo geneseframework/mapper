@@ -1,14 +1,15 @@
 import { IndexableType } from '../../types/indexable-type.type';
 import { IndexSignatureDeclaration, SyntaxKind } from 'ts-morph';
-import * as chalk from 'chalk';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { throwWarning } from '../errors.util';
 import { StringOrNumber } from '../../types/string-or-number.type';
-import { isNumericString, isString } from './strings.util';
+import { isNumericString } from './strings.util';
 import { areBothTrueOrFalse } from './any.util';
 
 
-
+export function hasIndexableTypeAndKeyOfSameType(declaration: ClassOrInterfaceDeclaration, key: StringOrNumber): boolean {
+    return hasIndexableType(declaration) && keyHasSameTypeThanIndexable(key, getIndexableType(declaration));
+}
 
 export function hasIndexableType(declaration: ClassOrInterfaceDeclaration): boolean {
     return declaration.getDescendantsOfKind(SyntaxKind.IndexSignature).length > 0;
@@ -33,13 +34,11 @@ function getIndexableKey(indexSignature: IndexSignatureDeclaration): IndexableTy
 
 
 function keyReturnType(indexSignature: IndexSignatureDeclaration): string {
-    // console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
     return indexSignature?.getStructure()?.returnType as string;
 }
 
 
 function keyType(indexSignature: IndexSignatureDeclaration): 'string' | 'number' {
-    // console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
     return indexSignature?.getStructure()?.keyType as 'string' | 'number';
 }
 
