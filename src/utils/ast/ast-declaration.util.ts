@@ -19,6 +19,8 @@ import { Key } from '../../types/key.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
+import * as chalk from 'chalk';
+import { IndexableType } from '../../types/indexable-type.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -226,12 +228,12 @@ export function hasIndexableType(declaration: ClassOrInterfaceDeclaration): bool
 }
 
 
-export function indexType(declaration: ClassOrInterfaceDeclaration): string {
+export function indexableType(declaration: ClassOrInterfaceDeclaration): IndexableType {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
         return undefined;
     } else if (indexSignatures.length === 1) {
-        return indexTypeName(indexSignatures[0]);
+        return getIndexableKey(indexSignatures[0]);
     } else {
         throwWarning(`${declaration?.getName()} has multiple index signatures.`);
         return undefined;
@@ -239,6 +241,18 @@ export function indexType(declaration: ClassOrInterfaceDeclaration): string {
 }
 
 
-function indexTypeName(indexSignature: IndexSignatureDeclaration): string {
+function getIndexableKey(indexSignature: IndexSignatureDeclaration): IndexableType {
+    return [keyName(indexSignature), keyType(indexSignature)];
+}
+
+
+function keyName(indexSignature: IndexSignatureDeclaration): string {
+    console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
+    return indexSignature?.getStructure()?.returnType as string;
+}
+
+
+function keyType(indexSignature: IndexSignatureDeclaration): string {
+    console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
     return indexSignature?.getStructure()?.returnType as string;
 }

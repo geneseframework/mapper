@@ -63,8 +63,9 @@ export class IndexableNumberSpec {
     [key: number]: string;
 }
 
-// testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {expectedValue: {a: 'a'}}));
-// testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}}));
+testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {isolate: false}));
+testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}, isolate: true}));
+testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
 
 
 // --------------------------------------------------   Default values   --------------------------------------------------

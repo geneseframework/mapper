@@ -7,7 +7,7 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 import {
     hasIndexableType,
     indexSignatureWithSameType,
-    indexType,
+    indexableType,
     isProperty
 } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
@@ -28,8 +28,8 @@ export class MapInstanceOrInterfaceService {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableType(declaration)) {
-                // console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, indexType(declaration));
-                instance[key] = await MainService.map(indexType(declaration), data[key], options);
+                console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, indexableType(declaration));
+                instance[key] = await MainService.map(indexableType(declaration)[0], data[key], options);
             }
         }
     }
