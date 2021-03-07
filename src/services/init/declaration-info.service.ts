@@ -21,7 +21,7 @@ export class DeclarationInfoService {
         const alreadyDone: string[] = []
         for (const classDeclaration of classDeclarations) {
             InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
-            const classInfo: ClassInfo = new ClassInfo(sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), properties(classDeclaration));
+            const classInfo: ClassInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), properties(classDeclaration));
             GLOBAL.declarationInfos.push(classInfo);
         }
 

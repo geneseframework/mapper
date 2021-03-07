@@ -73,6 +73,7 @@ export function hasDeclaration(typeName: string): boolean {
 
 
 function declarationKind(typeName: string): TypeDeclarationKind {
+    GLOBAL.logDuration(`BEFORE DECL KINDDDDD ${typeName}`, 'magentaBright');
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
@@ -89,16 +90,26 @@ function declarationKind(typeName: string): TypeDeclarationKind {
 
 
 export function isClassDeclaration(typeName: string): boolean {
-    return hasDeclarationType(typeName, getDescendantClasses);
+    const classNames: string[] = GLOBAL.declarationInfos.map(d => d.name);
+    console.log(chalk.greenBright('IS CLASSSS ????'));
+        // return hasDeclarationType(typeName, getDescendantClasses);
+    return classNames.includes(typeName);
 }
 
 
+// export function isClassDeclaration(typeName: string): boolean {
+//     return hasDeclarationType(typeName, getDescendantClasses);
+// }
+
+
 export function isEnumDeclaration(typeName: string): boolean {
+    GLOBAL.logDuration('IS ENUMMMM ?', 'cyanBright');
     return hasDeclarationType(typeName, getDescendantEnums);
 }
 
 
 export function isInterfaceDeclaration(typeName: string): boolean {
+    GLOBAL.logDuration('IS INTERFACEEEE ?', 'blueBright');
     return hasDeclarationType(typeName, getDescendantInterfaces);
 }
 

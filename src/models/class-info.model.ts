@@ -11,8 +11,8 @@ export class ClassInfo extends DeclarationInfo {
     properties: Property[] = [];
 
 
-    constructor(filePath: string, numberOfConstructorArguments: number, properties: Property[]) {
-        super(filePath, 'Class');
+    constructor(name: string, filePath: string, numberOfConstructorArguments: number, properties: Property[]) {
+        super(name, filePath, 'Class');
         this.numberOfConstructorArguments = numberOfConstructorArguments;
         this.properties = properties;
     }
