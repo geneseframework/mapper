@@ -20,13 +20,28 @@ export class Global {
     start: number = undefined;
 
 
+    get classNames(): string[] {
+        return this.declarationInfos.filter(d => d.kind === 'Class').map(d => d.name);
+    }
+
+
     get configFilePath(): string {
         return `${GLOBAL.projectPath}/tsconfig.json`;
     }
 
 
+    get enumNames(): string[] {
+        return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
+    }
+
+
     get instanceGeneratorPath(): string {
         return `${GLOBAL.nodeModulePath}/dist/instance-generator.ts`;
+    }
+
+
+    get interfaceNames(): string[] {
+        return this.declarationInfos.filter(d => d.kind === 'Interface').map(d => d.name);
     }
 
 
@@ -40,6 +55,11 @@ export class Global {
             this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
         }
         return this._projectWithNodeModules;
+    }
+
+
+    get typeNames(): string[] {
+        return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
     }
 
 
