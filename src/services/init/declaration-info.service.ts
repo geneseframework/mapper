@@ -2,16 +2,17 @@ import { ClassInfo } from '../../models/class-info.model';
 import { ClassDeclaration } from 'ts-morph';
 import { flat } from '../../utils/native/arrays.util';
 import { GLOBAL } from '../../const/global.const';
-import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { InstanceGeneratorService } from '../instance-generator.service';
+import { Property } from '../../types/target/property.type';
+import { properties } from '../../utils/ast/ast-declaration.util';
+import { sourceFilePath } from '../../utils/ast/ast-sourcefile.util';
 
 export class DeclarationInfoService {
 
 
     static async init(): Promise<void> {
         await this.setClassInfos();
-        // const classInfo: ClassInfo = new ClassInfo()
     }
 
 
@@ -20,8 +21,15 @@ export class DeclarationInfoService {
         const alreadyDone: string[] = []
         for (const classDeclaration of classDeclarations) {
             InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
+            const classInfo: ClassInfo = new ClassInfo(sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), properties(classDeclaration));
+            GLOBAL.declarationInfos.push(classInfo);
         }
 
     }
+
+
+    // private static getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
+    //
+    // }
 
 }

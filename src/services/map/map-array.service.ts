@@ -2,7 +2,7 @@ import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
@@ -56,7 +56,7 @@ export class MapArrayService<T> {
         const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
             if (typeDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), numberOfConstructorArgs(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
                 await MapInstanceOrInterfaceService.map(element, options, instance, typeDeclaration);
                 this.push(target, key, instance);

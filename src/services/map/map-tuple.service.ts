@@ -3,7 +3,7 @@ import { TypeDeclaration } from '../../types/type-declaration.type';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
@@ -56,7 +56,7 @@ export class MapTupleService<T> {
         } else {
             const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
+                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), numberOfConstructorArgs(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
                 await MapInstanceOrInterfaceService.map(dataValue, options, instance, importArrayDeclaration);
                 return instance;

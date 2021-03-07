@@ -1,7 +1,7 @@
 import { ClassDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
@@ -23,7 +23,7 @@ export class MapClassService<T> {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);
             return undefined;
         }
-        const instanceGenerator = new InstanceGenerator(target, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
+        const instanceGenerator = new InstanceGenerator(target, classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration));
         const instance: object = await GLOBAL.generateInstance(instanceGenerator) as object;
         await MapInstanceOrInterfaceService.map(data, options, instance, classDeclaration);
         return instance;

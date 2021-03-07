@@ -3,7 +3,7 @@ import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/native/strings.util';
 import { flat } from '../utils/native/arrays.util';
-import { getNumberOfConstructorArguments, hasPrivateConstructor } from '../utils/ast/ast-class.util';
+import { numberOfConstructorArgs, hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
 import { ClassInfo } from '../models/class-info.model';
 
@@ -13,16 +13,13 @@ export class InstanceGeneratorService {
      * Starts the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        GLOBAL.log('Init mapping...', '', !GLOBAL.debug);
-        // this.setInstanceGenerators();
         await this.createInstanceGeneratorFile();
-        GLOBAL.log('Types mapped', '', !GLOBAL.debug);
     }
 
 
     static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
-            GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
+            GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }
@@ -30,22 +27,6 @@ export class InstanceGeneratorService {
 
     static shouldCreateInstanceGenerator(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
         return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
-    }
-
-
-    /**
-     * Adds instance generator for each exported class of the Project of the user
-     * @private
-     */
-    private static setInstanceGenerators(): void {
-        const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
-        const classNames: string[] = []
-        for (const classDeclaration of classDeclarations) {
-            if (this.mayBeInstantiated(classDeclaration) && !classNames.includes(classDeclaration.getName())) {
-                GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration)));
-                classNames.push(classDeclaration.getName());
-            }
-        }
     }
 
 

@@ -1,11 +1,10 @@
 import { ClassDeclaration, HeritageClause, PropertyDeclaration } from 'ts-morph';
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
-import { Property } from '../../types/target/property.type';
 
 
 // TODO : Heritage ?
-export function getNumberOfConstructorArguments(classDeclaration: ClassDeclaration): number {
+export function numberOfConstructorArgs(classDeclaration: ClassDeclaration): number {
     const constructorDeclarations = classDeclaration.getConstructors();
     if (!constructorDeclarations || constructorDeclarations.length === 0) {
         return 0;

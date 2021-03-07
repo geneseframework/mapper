@@ -222,3 +222,4 @@ export function isProperty(propertyName: string, declaration: ClassOrInterfaceDe
 export function properties(declaration: ClassOrInterfaceDeclaration): Property[] {
     return declaration?.getStructure().properties.map(p => [p.name, p.type , p.initializer] as Property);
 }
+
