@@ -4,32 +4,39 @@ import { PropertyDeclarationOrSignature } from '../../types/property-declaration
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import {
-    hasIndexableType,
-    indexSignatureWithSameType,
-    indexableType,
-    isProperty
-} from '../../utils/ast/ast-declaration.util';
+import { indexSignatureWithSameType, isProperty } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 import * as chalk from 'chalk';
+import {
+    hasIndexableType,
+    hasNumericKey,
+    getIndexableType,
+    keyHasSameTypeThanIndexable
+} from '../../utils/native/indexable-type.util';
+import { IndexableType } from '../../types/indexable-type.type';
+import { isNumericString } from '../../utils/native/strings.util';
 
 export class MapInstanceOrInterfaceService {
 
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+        // console.log(chalk.magentaBright('MAP DATA KKKK'), data, Object.keys(data));
         for (const key of Object.keys(data)) {
+            // console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, typeof key, getIndexableType(declaration), keyHasSameTypeThanIndexable(key, getIndexableType(declaration)));
             if (isProperty(key, declaration as ClassDeclaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
-            } else if (hasIndexableType(declaration)) {
-                console.log(chalk.cyanBright('MAP DATA KKKK'), data, key, indexableType(declaration));
-                instance[key] = await MainService.map(indexableType(declaration)[0], data[key], options);
+            } else if (hasIndexableType(declaration) && keyHasSameTypeThanIndexable(key, getIndexableType(declaration))) {
+                // const indexableT: IndexableType = getIndexableType(declaration);
+                // if (hasNumericKey(indexableT) && isNumericString(key)) {
+                    instance[key] = await MainService.map(getIndexableType(declaration)?.returnType, data[key], options);
+                // }
             }
         }
     }

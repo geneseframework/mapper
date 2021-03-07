@@ -1,1 +1,4 @@
-export type IndexableType = [name: string, type: string];
+export type IndexableType = {
+    returnType: string,
+    type: 'string' | 'number'
+};

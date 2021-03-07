@@ -52,7 +52,7 @@ export class IndexableSpec {
 }
 
 testMappers.push(new TestMapper(`{a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}, {isolate: false}));
-testMappers.push(new TestMapper(`{a: 'c', b: 3} / IndexableSpec / {a: 'c'}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c', b: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{a: 'c', b: 3} / IndexableSpec / {a: 'c', b: undefined}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c', b: undefined}, isolate: false}));
 
 
 // ------------------------------------------------   Indexable number   --------------------------------------------------
@@ -64,8 +64,8 @@ export class IndexableNumberSpec {
 }
 
 testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {isolate: false}));
-testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}, isolate: true}));
-testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
+testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}, isolate: false}));
+testMappers.push(new TestMapper(`{a: 'a', 0: 3, 1: 'b'} / IndexableNumberSpec / {a: 'a', 0: undefined, 1: 'b'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
 
 
 // --------------------------------------------------   Default values   --------------------------------------------------

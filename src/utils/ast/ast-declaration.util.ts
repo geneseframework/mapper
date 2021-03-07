@@ -15,7 +15,7 @@ import { TypeDeclaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { Key } from '../../types/key.type';
+import { StringOrNumber } from '../../types/string-or-number.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
@@ -184,7 +184,7 @@ function getTypeScriptDeclaration(typeName: string): TypeDeclaration {
 }
 
 
-export function indexSignatureWithSameType(key: Key, value: any, declaration: ClassOrInterfaceDeclaration): string {
+export function indexSignatureWithSameType(key: StringOrNumber, value: any, declaration: ClassOrInterfaceDeclaration): string {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
         return undefined;
@@ -197,7 +197,7 @@ export function indexSignatureWithSameType(key: Key, value: any, declaration: Cl
 }
 
 
-function indexSignatureName(key: Key, value: any, indexSignature: IndexSignatureDeclaration): string {
+function indexSignatureName(key: StringOrNumber, value: any, indexSignature: IndexSignatureDeclaration): string {
     const indexStructure: IndexSignatureDeclarationStructure = indexSignature?.getStructure();
     if (indexStructure.keyType !== typeof key) {
         return undefined;
@@ -220,39 +220,4 @@ export function isProperty(propertyName: string, declaration: ClassOrInterfaceDe
 
 export function properties(declaration: ClassOrInterfaceDeclaration): Property[] {
     return declaration?.getStructure().properties.map(p => [p.name, p.type , p.initializer] as Property);
-}
-
-
-export function hasIndexableType(declaration: ClassOrInterfaceDeclaration): boolean {
-    return declaration.getDescendantsOfKind(SyntaxKind.IndexSignature).length > 0;
-}
-
-
-export function indexableType(declaration: ClassOrInterfaceDeclaration): IndexableType {
-    const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
-    if (indexSignatures.length === 0) {
-        return undefined;
-    } else if (indexSignatures.length === 1) {
-        return getIndexableKey(indexSignatures[0]);
-    } else {
-        throwWarning(`${declaration?.getName()} has multiple index signatures.`);
-        return undefined;
-    }
-}
-
-
-function getIndexableKey(indexSignature: IndexSignatureDeclaration): IndexableType {
-    return [keyName(indexSignature), keyType(indexSignature)];
-}
-
-
-function keyName(indexSignature: IndexSignatureDeclaration): string {
-    console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
-    return indexSignature?.getStructure()?.returnType as string;
-}
-
-
-function keyType(indexSignature: IndexSignatureDeclaration): string {
-    console.log(chalk.blueBright('KEY STRUCTTTT'), indexSignature?.getStructure());
-    return indexSignature?.getStructure()?.returnType as string;
 }
