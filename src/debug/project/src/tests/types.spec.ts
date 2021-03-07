@@ -120,6 +120,7 @@ testMappers.push(new TestMapper(`['a', 2] / UnionTypeStringOrStringsSpec / ['a',
 
 // --------------------------------------   Union types Class | string   --------------------------------------------------
 
+
 export class ClassStringSpec {
     str: string
 }

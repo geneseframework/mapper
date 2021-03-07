@@ -11,7 +11,7 @@ import * as chalk from 'chalk';
 export class MapComplexService {
 
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
-        console.log(chalk.yellowBright('CPXXXXX'), target, data, options);
+        // console.log(chalk.yellowBright('CPXXXXX'), target, data, options);
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimTarget(target.slice(first.length));

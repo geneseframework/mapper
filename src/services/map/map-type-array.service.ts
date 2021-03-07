@@ -59,11 +59,11 @@ export class MapTypeArrayService {
         }
         for (const dataKey of Object.keys(dataValue)) {
             typeProperties.push(dataKey);
-            if (this.isKeyType(dataKey, typeNode, undefined)) {
-                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
-            } else {
+            // if (this.isKeyType(dataKey, typeNode, undefined)) {
+            //     await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
+            // } else {
                 await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
-            }
+            // }
         }
     }
 
@@ -100,11 +100,7 @@ export class MapTypeArrayService {
         if (isLiteralKeyword(typeNode) || (!isLiteralKeyword(typeNode) && dataValue?.toString() === primitiveLiteralValue(typeNode as LiteralTypeNode))) {
             target[key] = dataValue;
         } else if (isLiteralPrimitive(typeNode)) {
-            if (this.isKeyType(key, typeNode, dataValue)) {
-                await MapTypeService.mapTypeNode(target, key, dataValue, typeNode, options);
-            } else {
                 await this.mapKeyType(target, key, typeNodes, typeProperties, dataValue, options);
-            }
             return;
         } else if (typeNodes.length > 1) {
             await this.mapTypeNodesArray(target, key, dataValue, typeNodes.slice(1), typeProperties, options);

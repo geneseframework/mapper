@@ -1,18 +1,12 @@
-import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { GLOBAL } from '../../const/global.const';
-import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
 import { MapEnumService } from './map-enum.service';
 import { TypeDeclaration } from '../../types/type-declaration.type';
 import { getDeclarationKind, getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
 import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
-import { Key } from '../../types/key.type';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
-import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapDeclarationService<T> {
@@ -41,34 +35,6 @@ export class MapDeclarationService<T> {
                 throwWarning(`Warning : type declaration "${target}" not found.`);
                 return undefined;
         }
-    }
-
-
-    static async map(target: any, key: Key, dataValue: any, propertyType: string, typeDeclaration: TypeDeclaration, options: CreateOptions): Promise<void> {
-        switch (getDeclarationKind(typeDeclaration)) {
-            case TypeDeclarationKind.CLASS_DECLARATION:
-                await this.mapClassType(target, key, dataValue, propertyType, typeDeclaration as ClassDeclaration, options);
-                break;
-            case TypeDeclarationKind.ENUM_DECLARATION:
-                await MapEnumService.map(target, key, dataValue, typeDeclaration as EnumDeclaration);
-                break;
-            case TypeDeclarationKind.INTERFACE_DECLARATION:
-                await MapInstanceOrInterfaceService.map(key, dataValue, options, typeDeclaration as InterfaceDeclaration);
-                break;
-            case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
-                await MapTypeService.map(target, key, dataValue, typeDeclaration as TypeAliasDeclaration, options);
-                break;
-            default:
-                throwWarning(`Unknown TypeDeclaration kind\nTarget : ${target}\nKey: ${key}\nData : ${dataValue}\nTypeDeclaration : ${typeDeclaration?.getName()}`);
-                return;
-        }
-    }
-
-
-    private static async mapClassType(target: any, key: Key, dataValue: any, propertyType: string, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<void> {
-        const instanceGenerator = new InstanceGenerator<any>(propertyType, classDeclaration.getSourceFile().getFilePath(), getNumberOfConstructorArguments(classDeclaration));
-        target[key] = await GLOBAL.generateInstance(instanceGenerator);
-        await MapInstanceOrInterfaceService.map(key, dataValue, options, classDeclaration);
     }
 
 }
