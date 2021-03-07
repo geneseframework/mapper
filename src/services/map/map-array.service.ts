@@ -31,9 +31,7 @@ export class MapArrayService<T> {
                     arr.push(element);
                 } else {
                     const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
-                    if (mappedElement !== undefined) {
-                        arr.push(mappedElement);
-                    }
+                    arr.push(mappedElement);
                 }
             }
             return arr;

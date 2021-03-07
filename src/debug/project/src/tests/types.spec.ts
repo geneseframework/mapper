@@ -1,5 +1,4 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
-import { Mapper } from '../../../../models/mapper';
 
 export const testMappers: TestMapper[] = [];
 
@@ -8,8 +7,8 @@ export const testMappers: TestMapper[] = [];
 
 
 export type StringAloneSpec = string;
-testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue'));
-testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue', {isolate: false}));
+testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined, isolate: false}));
 
 
 // -------------------------------------------   string | number   --------------------------------------------------------
@@ -35,7 +34,43 @@ testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Bl
 testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', {expectedValue: undefined}));
 
 
-// ---------------------------------------   Type defined by a Class   ----------------------------------------------------
+// ---------------------------------------   Type defined by another type   -----------------------------------------------
+
+
+export type ParentTypeSpec = string;
+export type ChildTypeSpec = ParentTypeSpec;
+
+testMappers.push(new TestMapper(`'a' / ChildTypeSpecSpec`, 'ChildTypeSpec', 'a', {isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / undefined`, 'ChildTypeSpec', 3, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / '3'`, 'ChildTypeSpec', 3, {expectedValue: '3', createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+
+
+// ---------------------------------------   Type defined by other types   -----------------------------------------------
+
+
+export type Parent1TypeSpec = string;
+export type Parent2TypeSpec = number;
+export type ChildParentsTypeSpec = Parent1TypeSpec | Parent2TypeSpec;
+
+testMappers.push(new TestMapper(`'a' / ChildParentsTypeSpec`, 'ChildParentsTypeSpec', 'a', {isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildParentsTypeSpec`, 'ChildParentsTypeSpec', 3, {isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildParentsTypeSpec / '3'`, 'ChildParentsTypeSpec', 3, {expectedValue: '3', createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+testMappers.push(new TestMapper(`{} / ChildParentsTypeSpec / undefined`, 'ChildParentsTypeSpec', {}, {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+
+
+// ---------------------------------------   Type defined by other types   -----------------------------------------------
+
+
+export type ParentNumberOrBooleanSpec = number | boolean;
+export type ChildParentNumberOrBooleanAndStringSpec = ParentNumberOrBooleanSpec | string;
+
+testMappers.push(new TestMapper(`'a' / ChildParentNumberOrBooleanAndStringSpec`, 'ChildParentNumberOrBooleanAndStringSpec', 'a', {isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildParentNumberOrBooleanAndStringSpec`, 'ChildParentNumberOrBooleanAndStringSpec', 3, {isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildParentNumberOrBooleanAndStringSpec / '3'`, 'ChildParentNumberOrBooleanAndStringSpec', 3, {isolate: false}));
+testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / undefined`, 'ChildParentNumberOrBooleanAndStringSpec', {}, {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+
+
+// -----------------------------------------   Type defined by a Class   --------------------------------------------------
 
 
 export class CompanyAloneClassSpec {
@@ -71,8 +106,20 @@ testMappers.push(new TestMapper(`2 / UnionTypeSpec`, 'UnionTypeSpec', 2, {isolat
 testMappers.push(new TestMapper(`{} / UnionTypeSpec`, 'UnionTypeSpec', {}, {expectedValue: undefined, isolate: false}));
 
 
+// ------------------------------------   Union types string | string[]   -------------------------------------------------
+
+
+export type UnionTypeStringOrStringsSpec = string | string[];
+
+testMappers.push(new TestMapper(`'a' / UnionTypeStringOrStringsSpec`, 'UnionTypeStringOrStringsSpec', 'a', {isolate: false}));
+testMappers.push(new TestMapper(`['a', 'b'] / UnionTypeStringOrStringsSpec`, 'UnionTypeStringOrStringsSpec', ['a', 'b'], {isolate: false}));
+testMappers.push(new TestMapper(`2 / UnionTypeStringOrStringsSpec / undefined`, 'UnionTypeStringOrStringsSpec', 2, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`['a', 2] / UnionTypeStringOrStringsSpec / ['a', undefined]`, 'UnionTypeStringOrStringsSpec', ['a', 2], {expectedValue: ['a', undefined], isolate: false}));
+
+
 
 // --------------------------------------   Union types Class | string   --------------------------------------------------
+
 
 export class ClassStringSpec {
     str: string

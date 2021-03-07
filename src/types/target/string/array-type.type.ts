@@ -1,8 +1,16 @@
+import { hasSeparators } from './has-separators.type';
+
 export type ArrayType = `${string}[]`;
+export type EndsWithEmptyBrackets = ArrayType;
 
 
-export function isArrayType(target: string): target is ArrayType {
-    return /^\w.*\[\]$/g.test(target);
+export function isArrayType(text: string): text is ArrayType {
+    return endsWithEmptyBrackets(text) && !hasSeparators(typeOfArray(text));
+}
+
+
+function endsWithEmptyBrackets(text: string): text is EndsWithEmptyBrackets {
+    return /^\w.*\[\]$/g.test(text);
 }
 
 export function typeOfArray(text: ArrayType): string {
