@@ -72,7 +72,7 @@ export class MainService {
         } else if (isObjectLiteralType(target)) {
             return MapLiteralObjectService.create(data);
         // } else if (isCurveBracketed(target)) {
-        //     return await MapObjectService.create(target, data, options)
+        //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else {

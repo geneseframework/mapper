@@ -1,5 +1,6 @@
 import { TestMapper } from '../../../../test-engine/test-mapper.model';
 import { Mapper } from '../../../../models/mapper';
+import * as stream from 'stream';
 
 export const testMappers: TestMapper[] = [];
 
@@ -8,8 +9,8 @@ export const testMappers: TestMapper[] = [];
 
 
 export type StringAloneSpec = string;
-testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue'));
-testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue', {isolate: true}));
+testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined, isolate: true}));
 
 
 // -------------------------------------------   string | number   --------------------------------------------------------
@@ -35,6 +36,17 @@ testMappers.push(new TestMapper(`'Blue' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Bl
 testMappers.push(new TestMapper(`'Green' / ColorsTypeSpec`, 'ColorsTypeSpec', 'Green', {expectedValue: undefined}));
 
 
+// ---------------------------------------   Type defined another type   ----------------------------------------------------
+
+
+export type ParentTypeSpec = string;
+export type ChildTypeSpecSpec = ParentTypeSpec;
+
+testMappers.push(new TestMapper(`'a' / ChildTypeSpecSpec`, 'ChildTypeSpecSpec', 'a', {isolate: true}));
+testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / undefined`, 'ChildTypeSpecSpec', 3, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / '3'`, 'ChildTypeSpecSpec', 3, {expectedValue: '3', createOptions: {differentiateStringsAndNumbers: false}, isolate: true}));
+
+
 // ---------------------------------------   Type defined by a Class   ----------------------------------------------------
 
 
@@ -44,7 +56,7 @@ export class CompanyAloneClassSpec {
 }
 export type CompanyAloneSpec = CompanyAloneClassSpec;
 
-testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: false}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 

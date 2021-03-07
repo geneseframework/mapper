@@ -1,5 +1,5 @@
 import {
-    ArrayTypeNode,
+    ArrayTypeNode, ClassDeclaration,
     LiteralTypeNode,
     SyntaxKind,
     TypeAliasDeclaration,
@@ -31,11 +31,22 @@ import { MapPrimitiveService } from './map-primitive.service';
 import { hasSeparators } from '../../types/target/string/has-separators.type';
 import { MapComplexService } from './map-complex.service';
 import { Primitive } from '../../types/primitives.type';
+import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
+import { MainService } from '../main.service';
 
 export class MapTypeService {
 
 
-    static async create<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
+    static async create<T>(target: string, data: any, options: CreateOptions): Promise<any> {
+        const typeDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
+        console.log(chalk.magentaBright('TPPPPPP SRV'), typeDeclaration.getStructure());
+        return await MainService.mapToString(typeDeclaration.getStructure().type as string, data, options);
+        // return undefined;
+        // return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance<T>(target, data, typeDeclaration, options);
+    }
+
+
+    static async createOld<T>(target: string, data: any, options: CreateOptions): Promise<T | T[] | Primitive | Date | Date[] | (T | Date)[]> {
         const typeAliasDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         const structureType: string = typeAliasDeclaration.getStructure().type as string;
         if (hasSeparators(structureType)) {
