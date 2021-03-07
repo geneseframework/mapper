@@ -14,8 +14,6 @@ export class MapClassService<T> {
 
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
         const classDeclaration: ClassDeclaration = getTypeDeclaration(target) as ClassDeclaration;
-        // console.log(chalk.blueBright('CLASSSSSSS'), target, data, Object.keys(true));
-        // console.log(chalk.cyanBright('CLASSSSSSS'), classDeclaration.getStructure());
         return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance(target, data, classDeclaration, options);
     }
 

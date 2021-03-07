@@ -6,12 +6,10 @@ import { getElements, trimTarget } from '../../utils/target.util';
 import { CheckTargetsService } from '../init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
-import * as chalk from 'chalk';
 
 export class MapComplexService {
 
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
-        // console.log(chalk.yellowBright('CPXXXXX'), target, data, options);
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimTarget(target.slice(first.length));
