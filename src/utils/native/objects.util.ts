@@ -9,11 +9,6 @@ export function isObjectWhichIsNotArray(data: any): data is object {
 }
 
 
-export function keyExists(obj: object, key: string | number): boolean {
-    return obj?.hasOwnProperty(key);
-}
-
-
 export function isObjectLiteralType(text: string): text is 'object' {
     return ['object', 'Object'].includes(text);
 }
