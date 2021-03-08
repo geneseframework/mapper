@@ -2,12 +2,12 @@ import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
-import { DeclarationInfo } from './declarations/declaration-info.model';
 import { ClassInfo } from './declarations/class-info.model';
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { EnumInfo } from './declarations/enum-info.model';
 import { InterfaceInfo } from './declarations/interface-info.model';
 import { TypeInfo } from './declarations/type-info.model';
+import { DeclarationInfo } from './declarations/declaration-info.model';
 
 
 export class Global {
@@ -50,6 +50,11 @@ export class Global {
     }
 
 
+    isAlreadyDeclared(target: string): boolean {
+        return !!this.declarationInfos.find(d => d.name === target);
+    }
+
+
     get classNames(): string[] {
         return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
     }
@@ -61,7 +66,7 @@ export class Global {
 
 
     get enumNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'EnumDeclaration').map(d => d.name);
     }
 
 
@@ -71,7 +76,7 @@ export class Global {
 
 
     get interfaceNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'Interface').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'InterfaceDeclaration').map(d => d.name);
     }
 
 
@@ -89,7 +94,7 @@ export class Global {
 
 
     get typeNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'TypeAliasDeclaration').map(d => d.name);
     }
 
 

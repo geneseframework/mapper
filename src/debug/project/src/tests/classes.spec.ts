@@ -118,11 +118,11 @@ testMappers.push(new TestMapper(` undefined / ValuesOnConstructor / {a: 'z', b: 
 
 
 // ------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------   Properties of type Class or Interface  ---------------------------------------
+// ---------------------------------------   Properties of type ClassDeclaration or InterfaceDeclaration  ---------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
 
-// ----------------------------------------   Class with property of type Class   -----------------------------------------
+// ----------------------------------------   ClassDeclaration with property of type ClassDeclaration   -----------------------------------------
 
 export class CatSpec {
     name: string;
@@ -205,7 +205,7 @@ testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / {color: undefined
 testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));
 
 
-// --------------------------------------   Default value on Interface property   -----------------------------------------
+// --------------------------------------   Default value on InterfaceDeclaration property   -----------------------------------------
 
 export interface IDefaultsSpec {
     name?: string
@@ -290,7 +290,7 @@ testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / PaintStringsOrStrin
 testMappers.push(new TestMapper(`{colors: ['Blue', 'White']} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, {colors: ['Blue', 'White']}));
 
 
-// ----------------------------   Class with property typed with type: string or string[] ---------------------------------
+// ----------------------------   ClassDeclaration with property typed with type: string or string[] ---------------------------------
 
 
 export type StringOrStringsSpec = string | string[];
@@ -316,7 +316,7 @@ testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / AgeNumbersOrNumberS
 testMappers.push(new TestMapper(`{ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, {ages: [4, 6]}));
 
 
-// ----------------------------   Class with property typed with type: number or number[] ---------------------------------
+// ----------------------------   ClassDeclaration with property typed with type: number or number[] ---------------------------------
 
 
 export type NumberOrNumbersSpec = number | number[];
@@ -330,7 +330,7 @@ testMappers.push(new TestMapper(`{ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNu
 testMappers.push(new TestMapper(`{ages: ['a', 6]} / AgeNumberOrNumbersSpec / {ages: [undefined, 6]}`, AgeNumberOrNumbersSpec, {ages: ['a', 6]}, {expectedValue: {ages: [undefined, 6]}}));
 
 
-// -----------------------------   Class with property typed with type literal 1 | 2 | 3   --------------------------------
+// -----------------------------   ClassDeclaration with property typed with type literal 1 | 2 | 3   --------------------------------
 
 
 export type LevelSpec = 1 | 2 | 3;
@@ -362,7 +362,7 @@ testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpe
 testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}));
 
 
-// ------------------------------   Property with Type which is Union of Classes and Class[]   ----------------------------
+// ------------------------------   Property with Type which is Union of Classes and ClassDeclaration[]   ----------------------------
 
 
 export type EmployerSpec = NgoSpec | NgoSpec[] | CompanySpec;

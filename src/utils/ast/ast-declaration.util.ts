@@ -6,10 +6,10 @@ import {
     ImportDeclaration,
     IndexSignatureDeclaration,
     IndexSignatureDeclarationStructure,
-    InterfaceDeclaration,
+    InterfaceDeclaration, Node,
     SourceFile,
     SyntaxKind,
-    TypeAliasDeclaration, TypeNode
+    TypeAliasDeclaration, TypeNode, TypeReferenceNode
 } from 'ts-morph';
 import { Declaration, DeclarationOrDate } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
@@ -21,10 +21,13 @@ import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
 import * as chalk from 'chalk';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
-import { DeclarationInfoService } from '../../services/init/declaration-info.service';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { CheckTargetsService } from '../../services/init/check-targets.service';
+import { DeclarationInfoService } from '../../services/init/declaration-info.service';
+import { isPrimitiveType } from '../../types/primitives.type';
+import { isQuoted } from '../../types/target/string/quoted.type';
+import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -37,13 +40,13 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
     if (!typeDeclaration) {
         return undefined;
     } else if (typeDeclaration instanceof ClassDeclaration) {
-        return 'Class';
+        return 'ClassDeclaration';
     } else if (typeDeclaration instanceof EnumDeclaration) {
-        return 'Enum';
+        return 'EnumDeclaration';
     } else if (typeDeclaration instanceof InterfaceDeclaration) {
-        return 'Interface';
+        return 'InterfaceDeclaration';
     } else if (typeDeclaration instanceof TypeAliasDeclaration) {
-        return 'TypeAlias';
+        return 'TypeAliasDeclaration';
     }
 }
 
@@ -130,25 +133,27 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
 }
 
 
-function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSourceFile: SourceFile): Declaration {
-    let declaration: Declaration = getSourceFileDeclaration(target, importSourceFile, 'ClassDeclaration');
+function addDeclarationInfoToGlobalDeclarationInfos(target: string, sourceFile: SourceFile): Declaration {
+    console.log(chalk.blueBright('ADDD DECLLLLLL ????'), sourceFile.getBaseName());
+    let declaration: Declaration = getSourceFileDeclaration(target, sourceFile, 'ClassDeclaration');
     if (declaration) {
         DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, GLOBAL.classNames);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'InterfaceDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'InterfaceDeclaration');
     if (declaration) {
         DeclarationInfoService.addInterfaceInfo(declaration as InterfaceDeclaration);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'EnumDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'EnumDeclaration');
     if (declaration) {
         DeclarationInfoService.addEnumInfo(declaration as EnumDeclaration);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'TypeAliasDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'TypeAliasDeclaration');
     if (declaration) {
         DeclarationInfoService.addTypeInfo(declaration as TypeAliasDeclaration);
+        console.log(chalk.blueBright('ADDD DECLLLLLL ????'), declaration?.getKindName());
         return declaration;
     }
 }
@@ -156,12 +161,12 @@ function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSource
 
 async function addRecursivelyDeclarationInfo(declaration: Declaration): Promise<void> {
     switch (getDeclarationKind(declaration)) {
-        case 'Class':
-        case 'Interface':
+        case 'ClassDeclaration':
+        case 'InterfaceDeclaration':
             await addDeclarationInfoForEachProperty(declaration as ClassOrInterfaceDeclaration);
-        case 'Enum':
+        case 'EnumDeclaration':
         // TODO
-        case 'TypeAlias':
+        case 'TypeAliasDeclaration':
             await addDeclarationInfoForType(declaration as TypeAliasDeclaration);
     }
 }
@@ -176,11 +181,37 @@ async function addDeclarationInfoForEachProperty(declaration: ClassOrInterfaceDe
 
 async function addDeclarationInfoForProperty(property: PropertyDeclarationOrSignature): Promise<void> {
     const propertyType: string = property.getStructure().type as string;
-    if (propertyType === 'Level') {
+    if (isTypeReferenceNotAlreadyAdded(property)) {
+    // if (propertyType === 'Level') {
         console.log(chalk.cyanBright('ADD DECL FOR PROPPPP'), property.getStructure(), property.getTypeNode().getKindName());
-        console.log(chalk.magentaBright('ALL SRCFFFFFFFF'), property.getStructure(), property.getTypeNode().getKindName());
+        console.log(chalk.magentaBright('DECLLLLL ????'), property.getType().getAliasSymbol()?.getDeclarations()?.[0]?.getSourceFile()?.getBaseName());
+        console.log(chalk.greenBright('DECLLLLL ????'), property.getSourceFile().getBaseName());
+        // await CheckTargetsService.start(propertyType);
+        GLOBAL.project.addSourceFileAtPath(property.getSourceFile().getFilePath());
+        const declaration: Declaration = addDeclarationInfoToGlobalDeclarationInfos(propertyType, property.getSourceFile());
+        if (!declaration) {
+
+        }
     }
-    await CheckTargetsService.start(propertyType);
+}
+
+
+function isTypeReferenceNotAlreadyAdded(property: PropertyDeclarationOrSignature): boolean {
+    const propertyType: string = property.getStructure().type as string;
+    return isTypeReference(property) && !GLOBAL.isAlreadyDeclared(propertyType);
+}
+
+
+function isTypeReference(property: PropertyDeclarationOrSignature): boolean {
+    return property.getTypeNode().getKind() === SyntaxKind.TypeReference;
+}
+
+
+
+function isTrivialType(text: string): boolean {
+    return isPrimitiveType(text)
+        || isQuoted(text)
+        || isStringAsTrivialType(text);
 }
 
 
@@ -192,7 +223,7 @@ async function addDeclarationInfoForType(type: TypeAliasDeclaration): Promise<vo
 }
 
 
-function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: 'ClassDeclaration' | 'InterfaceDeclaration' | 'EnumDeclaration' | 'TypeAliasDeclaration'): Declaration {
+function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKind): Declaration {
     return sourceFile.getDescendantsOfKind(SyntaxKind[kind]).find(e => (e as Declaration).getName() === name) as Declaration;
 }
 
