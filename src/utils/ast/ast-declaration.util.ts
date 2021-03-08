@@ -20,10 +20,7 @@ import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
 import * as chalk from 'chalk';
-import { IndexableType } from '../../types/indexable-type.type';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
-import { DeclarationInfo } from '../../models/declarations/declaration-info.model';
-import { ClassInfo } from '../../models/declarations/class-info.model';
 import { DeclarationInfoService } from '../../services/init/declaration-info.service';
 
 
@@ -49,7 +46,6 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
 
 
 export function getTypeDeclaration(typeName: string): DeclarationOrDate {
-    console.log(chalk.magentaBright('GET TTTT DECL'), typeName);
     const typeDeclarationKind: TypeDeclarationKindEnum = declarationKind(typeName);
     switch (typeDeclarationKind) {
         case TypeDeclarationKindEnum.CLASS_DECLARATION:
@@ -142,9 +138,8 @@ function hasDeclarationInProject(typeName: string, getTDeclaration: (sourceFile:
     return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
-// TODO
+
 export function isDeclaredOutOfProjectAddItToGlobal(target: string): boolean {
-    console.log(chalk.blueBright('IS DECLARED OOPPPPPPP ???'), target);
     const declarations: ImportDeclaration[] = getImportDeclarations(target);
     if (declarations.length === 0) {
         return false;
@@ -160,7 +155,6 @@ export function isDeclaredOutOfProjectAddItToGlobal(target: string): boolean {
 
 
 function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSourceFile: SourceFile): void {
-    console.log(chalk.blueBright('IS OOPPPPPPP !!!!'), target, importSourceFile?.getBaseName());
     let declaration: Declaration = getSourceFileDeclaration(target, importSourceFile, 'ClassDeclaration');
     if (declaration) {
         DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, GLOBAL.classNames);
@@ -181,9 +175,6 @@ function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSource
         DeclarationInfoService.addTypeInfo(declaration as TypeAliasDeclaration);
         return;
     }
-    // const declarations: Declaration[] = importSourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration || SyntaxKind.InterfaceDeclaration || SyntaxKind.EnumDeclaration || SyntaxKind.TypeAliasDeclaration);
-    // console.log(chalk.greenBright('IS OOPPPPPPP DECLAAAAAsssss'), declarations.map(d => d.getName()));
-    console.log(chalk.cyanBright('IS OOPPPPPPP DECLAAAAA'), declaration.getKindName());
 }
 
 
@@ -295,14 +286,9 @@ export function isProperty(propertyName: string, declaration: ClassOrInterfaceIn
 }
 
 
-export function isPropertyOld(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
-    return getProperties(declaration).map(p => p[0]).includes(propertyName);
-}
-
-
 export function getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
     return declaration?.getStructure().properties.map(p => {
-        return {name: p.name, type: p.type, initializer: p.initializer} as Property;
+        return {name: p.name, type: p.type, initializer: p.initializer, isRequired: !p.hasQuestionToken} as Property;
     });
 }
 

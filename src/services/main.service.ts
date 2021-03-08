@@ -54,7 +54,7 @@ export class MainService {
             options = OptionsService.initialize(options);
         }
         const zzz = await this.mapToString(target, data, options);
-        GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
+        // GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         return zzz;
     }
 
@@ -67,7 +67,7 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -88,7 +88,6 @@ export class MainService {
         // } else if (isCurveBracketed(target)) {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
-            GLOBAL.logDuration(`HAS DECLLLLLLLar ${target}`, 'blueBright');
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);

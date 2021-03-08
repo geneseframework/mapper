@@ -4,7 +4,6 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
-import * as chalk from 'chalk';
 
 export class MapInterfaceService {
 
@@ -16,8 +15,6 @@ export class MapInterfaceService {
 
     static async createInterface<T>(target: string, data: any, options: CreateOptions): Promise<T | Date> {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
-        console.log(chalk.magentaBright('GLOBBBB DECLLLLL'), GLOBAL.declarationInfos.find(d => d.name === 'ColorSupport'));
-        console.log(chalk.magentaBright('CREATE INTERFFFFF'), target, interfaceInfo);
         const tInterface = {};
         await MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
         return implementsRequiredProperties(tInterface, interfaceInfo) ? tInterface as T : undefined;
