@@ -1,19 +1,19 @@
 import { MapEnumService } from './map-enum.service';
-import { TypeDeclaration } from '../../types/type-declaration.type';
-import { getDeclarationKind, getTypeDeclaration } from '../../utils/ast/ast-declaration.util';
-import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
 import { throwWarning } from '../../utils/errors.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
+import { DeclarationInfo } from '../../models/declarations/declaration-info.model';
+import { GLOBAL } from '../../const/global.const';
+import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 
 export class MapDeclarationService<T> {
 
 
     /**
-     * Returns mapped data when target is a Declaration node.
+     * Returns mapped data when target is a DeclarationOrDate node.
      * @param target
      * @param data
      * @param options
@@ -21,20 +21,29 @@ export class MapDeclarationService<T> {
      */
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
-        const typeDeclaration: TypeDeclaration = getTypeDeclaration(typeName);
-        switch (getDeclarationKind(typeDeclaration)) {
-            case TypeDeclarationKind.CLASS_DECLARATION:
+        const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
+        switch (typeDeclarationKind) {
+            case 'Class':
                 return await MapClassService.create(target, data, options);
-            case TypeDeclarationKind.ENUM_DECLARATION:
+            case 'Enum':
                 return MapEnumService.create(target, data);
-            case TypeDeclarationKind.INTERFACE_DECLARATION:
+            case 'Interface':
                 return MapInterfaceService.create(target, data, options);
-            case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
+            case 'TypeAlias':
                 return await MapTypeService.create(target, data, options);
             default:
                 throwWarning(`type declaration "${target}" not found.`);
                 return undefined;
         }
+    }
+
+
+    private static getTypeDeclarationKind(target: string): TypeDeclarationKind {
+        const declarationInfos: DeclarationInfo[] = GLOBAL.declarationInfos.filter(d => d.name === target);
+        if (declarationInfos.length > 1) {
+            throwWarning(`different elements "${target}" are declared in your project. Please use different names.`);
+        }
+        return declarationInfos[0]?.kind;
     }
 
 }

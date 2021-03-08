@@ -9,12 +9,12 @@ export const testMappers: TestMapper[] = [];
 
 export interface AnimalSpec {
     name: string;
-    nickName?: string;
+    otherName?: string;
 }
 
 testMappers.push(new TestMapper(`{name: 'Biela'} / PreySpec`, 'AnimalSpec', {name: 'Biela'}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Biela', nickName: 'Kitty'} / PreySpec`, 'AnimalSpec', {name: 'Biela', nickName: 'Kitty'}, {isolate: false}));
-testMappers.push(new TestMapper(`{nickName: 'Kitty'} / PreySpec / undefined`, 'AnimalSpec', {nickName: 'Kitty' }, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{name: 'Biela', otherName: 'Kitty'} / PreySpec`, 'AnimalSpec', {name: 'Biela', otherName: 'Kitty'}, {isolate: false}));
+testMappers.push(new TestMapper(`{otherName: 'Kitty'} / PreySpec / undefined`, 'AnimalSpec', {otherName: 'Kitty' }, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{unknownProperty: 'Biela'} / PreySpec / undefined`, 'AnimalSpec', {unknownProperty: 'Biela' }, {expectedValue: undefined, isolate: false}));
 
 

@@ -1,9 +1,9 @@
 import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { DeclarationOrDate } from '../../types/type-declaration.type';
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { Mapper } from '../../models/mapper';
 import { CreateOptions } from '../../models/create-options.model';
 import { isNonNullOrPrimitiveValue, isPrimitiveTypeNode } from '../../utils/native/primitives.util';
@@ -11,6 +11,7 @@ import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { ClassInfo } from '../../models/declarations/class-info.model';
 
 export class MapTupleService<T> {
 
@@ -54,11 +55,12 @@ export class MapTupleService<T> {
                 return dataValue;
             }
         } else {
-            const importArrayDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentTupleType, tupleType);
+            const importArrayDeclaration: DeclarationOrDate = getImportTypeDeclaration(apparentTupleType, tupleType);
             if (importArrayDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), getNumberOfConstructorArguments(importArrayDeclaration));
+                const classInfo: ClassInfo = GLOBAL.getClassInfo(tupleType);
+                const instanceGenerator = new InstanceGenerator(tupleType, getApparentTypeImportDeclarationPath(apparentTupleType), numberOfConstructorArgs(importArrayDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                await MapInstanceOrInterfaceService.map(dataValue, options, instance, importArrayDeclaration);
+                await MapInstanceOrInterfaceService.map(dataValue, options, instance, classInfo);
                 return instance;
             }
             if (importArrayDeclaration instanceof EnumDeclaration && isNonNullOrPrimitiveValue(dataValue)) {

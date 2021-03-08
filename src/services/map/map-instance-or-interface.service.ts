@@ -1,38 +1,36 @@
-import { ClassDeclaration } from 'ts-morph';
-import { getAllClassProperties } from '../../utils/ast/ast-class.util';
-import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { getAllInterfaceProperties } from '../../utils/ast/ast-interfaces.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { indexSignatureWithSameType, isProperty } from '../../utils/ast/ast-declaration.util';
+import { isProperty } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
-import { getIndexableType, hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
+import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
+import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
+import { Property } from '../../types/target/property.type';
+import * as chalk from 'chalk';
 
 export class MapInstanceOrInterfaceService {
 
 
-    static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceDeclaration): Promise<void> {
+    static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
         for (const key of Object.keys(data)) {
-            if (isProperty(key, declaration as ClassDeclaration)) {
+            if (isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = await MainService.map(getIndexableType(declaration)?.returnType, data[key], options);
+                instance[key] = await MainService.mapToString(declaration.indexableType.returnType, data[key], options);
             }
         }
     }
 
 
-    private static async mapDataKey<T>(data: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceDeclaration): Promise<void> {
-        const properties: PropertyDeclarationOrSignature[] = declaration instanceof ClassDeclaration ? getAllClassProperties(declaration) : getAllInterfaceProperties(declaration);
-        const property: PropertyDeclarationOrSignature = properties.find(p => p.getName() === key);
-        const targetKeyType: string = this.getTargetKeyType(data, key, property, declaration);
+    private static async mapDataKey<T>(data: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceInfo): Promise<void> {
+        const property: Property = declaration.properties.find(p => p.name === key);
+        const targetKeyType: string = property.type;
+        // console.log(chalk.magentaBright('MAP DATA KKKKKKKK'), data, key, declaration);
         if (targetKeyType === 'undefined' || targetKeyType === undefined) {
             instance[key] = data;
         } else if (isQuoted(targetKeyType)) {
@@ -40,11 +38,6 @@ export class MapInstanceOrInterfaceService {
         } else {
             instance[key] = await MainService.mapToString(targetKeyType, data, options);
         }
-    }
-
-
-    private static getTargetKeyType(dataValue: any, key: string, property: PropertyDeclarationOrSignature, declaration: ClassOrInterfaceDeclaration): string {
-        return property ? property.getStructure().type as string : indexSignatureWithSameType(key, dataValue, declaration);
     }
 
 }

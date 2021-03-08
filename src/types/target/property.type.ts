@@ -1,1 +1,6 @@
-export type Property = [name: string, type: string, initializer: any];
+export type Property = {
+    initializer: any,
+    isRequired: boolean,
+    name: string,
+    type: string,
+}

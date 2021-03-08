@@ -2,8 +2,8 @@ import { ClassDeclaration, EnumDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
 import { getApparentTypeImportDeclarationPath, getImportTypeDeclaration } from '../../utils/ast/ast-imports.util';
 import { InstanceGenerator } from '../../models/instance-generator.model';
-import { getNumberOfConstructorArguments } from '../../utils/ast/ast-class.util';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
+import { DeclarationOrDate } from '../../types/type-declaration.type';
 import { isEnumValue } from '../../utils/ast/ast-enums.util';
 import { isArray, isEmptyArray } from '../../utils/native/arrays.util';
 import { PrimitiveType } from '../../types/primitives.type';
@@ -15,6 +15,7 @@ import { isNonNullPrimitiveValueWithCorrectType } from '../../utils/native/primi
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
+import { ClassInfo } from '../../models/declarations/class-info.model';
 
 export class MapArrayService<T> {
 
@@ -53,12 +54,13 @@ export class MapArrayService<T> {
 
     private static async mapArray(target: any, key: StringOrNumber, dataValue: any, propertyType: string, apparentType: string, options: CreateOptions): Promise<void> {
         const typeName: string = propertyType.slice(0, -2);
-        const typeDeclaration: TypeDeclaration = getImportTypeDeclaration(apparentType, typeName);
+        const typeDeclaration: DeclarationOrDate = getImportTypeDeclaration(apparentType, typeName);
         for (const element of dataValue) {
             if (typeDeclaration instanceof ClassDeclaration) {
-                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), getNumberOfConstructorArguments(typeDeclaration));
+                const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
+                const instanceGenerator = new InstanceGenerator(typeName, getApparentTypeImportDeclarationPath(apparentType), numberOfConstructorArgs(typeDeclaration));
                 const instance = GLOBAL.generateInstance(instanceGenerator);
-                await MapInstanceOrInterfaceService.map(element, options, instance, typeDeclaration);
+                await MapInstanceOrInterfaceService.map(element, options, instance, classInfo);
                 this.push(target, key, instance);
             } else if (this.isPrimitiveOrEnumWithCorrectValue(typeDeclaration, element, typeName, options)) {
                 this.push(target, key, element);
@@ -69,12 +71,12 @@ export class MapArrayService<T> {
     }
 
 
-    private static isPrimitiveOrEnumWithCorrectValue(declaration: TypeDeclaration, element: any, typeName: string, options: CreateOptions): boolean {
+    private static isPrimitiveOrEnumWithCorrectValue(declaration: DeclarationOrDate, element: any, typeName: string, options: CreateOptions): boolean {
         return this.isEnumWithCorrectValue(declaration, element) || this.isPrimitiveWithCorrectValue(typeName, element, options) || isNullOrUndefined(element);
     }
 
 
-    private static isEnumWithCorrectValue(declaration: TypeDeclaration, element: any): boolean {
+    private static isEnumWithCorrectValue(declaration: DeclarationOrDate, element: any): boolean {
         return declaration instanceof EnumDeclaration && isEnumValue(declaration, element);
     }
 

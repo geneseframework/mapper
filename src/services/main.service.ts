@@ -3,7 +3,11 @@ import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
-import { hasDeclaration } from '../utils/ast/ast-declaration.util';
+import {
+    hasDeclaration,
+    isDeclaredOutOfProjectAddItToGlobal,
+    isInterfaceDeclaration
+} from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -23,6 +27,10 @@ import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapLiteralObjectService } from './map/map-literal-object.service';
+import { GLOBAL } from '../const/global.const';
+import { hasSeparators } from '../types/target/string/has-separators.type';
+import { throwTarget } from '../utils/errors.util';
+import { MapOutOfProjectService } from './map/map-out-of-project.service';
 import * as chalk from 'chalk';
 
 export class MainService {
@@ -39,11 +47,15 @@ export class MainService {
      */
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+        GLOBAL.start = Date.now();
+        // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        return await this.mapToString(target, data, options);
+        const zzz = await this.mapToString(target, data, options);
+        // GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
+        return zzz;
     }
 
 
@@ -54,6 +66,8 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+        // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
+        console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -75,8 +89,14 @@ export class MainService {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
-        } else {
+        } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
+        } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
+            return await MapOutOfProjectService.create(target, data, options);
+        } else {
+            // console.log(chalk.redBright('NOT FOUNDDDD'), target);
+            return await MapComplexService.create(target, data, options);
+            // return throwTarget(target, data, options);
         }
     }
 

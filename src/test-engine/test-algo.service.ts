@@ -5,6 +5,8 @@ import { isSameObject } from '../utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
 import { isArray } from '../utils/native/arrays.util';
 
+const MAX_DURATION = 50;
+
 export async function expect(testTypes: TestType[], logPassed: boolean, old: boolean): Promise<void>
 export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>
 export async function expect(testTypes: TestType | TestType[], logPassed: boolean, old: boolean): Promise<void> {
@@ -20,25 +22,41 @@ export async function expect(testTypes: TestType | TestType[], logPassed: boolea
 
 async function checkTest(testType: TestType, logPassed: boolean, old: boolean): Promise<void> {
     let result;
+    const start = Date.now();
     if (isTestIt(testType)) {
         result = await testType.method(testType.data);
     } else {
         result = await Mapper.create(testType.mapParameter, testType.data, testType.options?.createOptions);
     }
-    if (isExpectedResult(testType, result) ) {
+    const duration: number = Date.now() - start;
+    if ((isExpectedResult(testType, result) && !isTooLong(duration)) || shouldFail(testType)) {
         if (logPassed) {
-            console.log(chalk.greenBright('Test passed : '), testType.title);
+            console.log(chalk.greenBright(`Test passed (${duration} ms) : `), testType.title);
         }
         TESTS.testsPassed++;
         if (testType.options?.log) {
             log(testType, result);
         }
     } else {
-        console.log(chalk.redBright('Test failed : '), testType.title);
+        if (isTooLong(duration)) {
+            console.log(chalk.redBright(`Test failed (too long time : ${duration} ms)`), testType.title);
+        } else {
+            console.log(chalk.redBright('Test failed : '), testType.title);
+        }
         TESTS.testsFailed++;
-        TESTS.failed.push(testType.title);
+        TESTS.failed.push(`${testType.title} (${duration} ms)`);
         log(testType, result);
     }
+}
+
+
+function isTooLong(duration: number): boolean {
+    return duration > MAX_DURATION;
+}
+
+
+function shouldFail(testType: TestType): boolean {
+    return testType.options?.shouldFail;
 }
 
 

@@ -6,6 +6,7 @@ import { getElements, trimTarget } from '../../utils/target.util';
 import { CheckTargetsService } from '../init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
+import { throwTarget } from '../../utils/errors.util';
 
 export class MapComplexService {
 
@@ -29,7 +30,7 @@ export class MapComplexService {
             // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
             return mapped || await MainService.mapToString(others, data, options);
         } else {
-            return CheckTargetsService.throwTarget(target, data, options);
+            return throwTarget(target, data, options);
         }
     }
 }

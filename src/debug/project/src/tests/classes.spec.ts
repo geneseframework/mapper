@@ -9,6 +9,18 @@ export const testMappers: TestMapper[] = [];
 // ------------------------------------------------------------------------------------------------------------------------
 
 
+// --------------------------------------------   One primitive property   ------------------------------------------------
+
+
+export class OnePrimitiveClassSpec {
+    prop: string;
+}
+
+testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: false}));
+testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
+
+
+
 // --------------------------------------------------   Primitives   ------------------------------------------------------
 
 
@@ -153,7 +165,7 @@ testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / per
 // --------------------------------------------------   External Module   -------------------------------------------------
 
 
-testMappers.push(new TestMapper(`{color: 'White'} / Chalk / undefined`, 'Chalk', {color: 'White'}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{color: 'White'} / Chalk / undefined`, 'Chalk', {color: 'White'}, {expectedValue: undefined, shouldFail: true, isolate: false}));
 
 
 // -----------------------------------------------------   Heritage   -----------------------------------------------------

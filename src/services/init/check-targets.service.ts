@@ -1,38 +1,26 @@
-import { throwError, throwWarning } from '../../utils/errors.util';
+import { throwError, throwTarget, throwWarning } from '../../utils/errors.util';
 import { isPrimitiveType } from '../../types/primitives.type';
 import { CONFIG } from '../../const/config.const';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
+import { hasDeclaration, isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            CheckTargetsService.throwTarget(target);
-        }
-    }
-
-
-    static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
-        const opt: CreateOptions = options ?? CONFIG.create;
-        if (opt.throwTarget.error) {
-            throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
-        } else if (opt.throwTarget.setToUndefined) {
-            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set to "undefined" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
-            return undefined;
-        } else {
-            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
-            return data;
+            console.log(chalk.blueBright('WRONGGGGG'), target);
+            throwTarget(target);
         }
     }
 
@@ -67,8 +55,9 @@ export class CheckTargetsService {
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
             || await this.isCorrectComplexType(text)
-            || await this.isDeclaration(text)
             || this.isCorrectObject(text) // TODO
+            || await this.isDeclaration(text)
+            || await this.isDeclaredOutOfProject(text)
     }
 
 
@@ -107,6 +96,11 @@ export class CheckTargetsService {
 
     private static async isDeclaration(text: string): Promise<boolean> {
         return hasDeclaration(text);
+    }
+
+
+    private static async isDeclaredOutOfProject(text: string): Promise<boolean> {
+        return await isDeclaredOutOfProjectAddItToGlobal(text);
     }
 
 }

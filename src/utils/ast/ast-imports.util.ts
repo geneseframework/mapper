@@ -1,12 +1,12 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, SourceFile, TypeAliasDeclaration } from 'ts-morph';
 import { GLOBAL } from '../../const/global.const';
-import { TypeDeclaration } from '../../types/type-declaration.type';
+import { DeclarationOrDate } from '../../types/type-declaration.type';
 import { getTypeDeclaration } from './ast-declaration.util';
 import { throwWarning } from '../errors.util';
 import { isPrimitiveTypeName } from '../native/types.util';
 
-// TODO: Fix case of properties with type which is Union Type
-export function getImportTypeDeclaration(apparentType: string, typeName: string): TypeDeclaration {
+// TODO: Fix case of _properties with type which is Union Type
+export function getImportTypeDeclaration(apparentType: string, typeName: string): DeclarationOrDate {
     if (isPrimitiveTypeName(typeName)) {
         return undefined;
     }
@@ -36,7 +36,7 @@ export function getImportTypeDeclaration(apparentType: string, typeName: string)
 }
 
 
-function getNotExportedDeclarations(typeName: string): TypeDeclaration {
+function getNotExportedDeclarations(typeName: string): DeclarationOrDate {
     return getTypeDeclaration(typeName);
 }
 
