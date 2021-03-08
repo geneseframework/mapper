@@ -138,10 +138,10 @@ function hasDeclarationInProject(typeName: string, getTDeclaration: (sourceFile:
     return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
-
+// TODO
 export function isDeclaredOutOfProject(target: string): boolean {
-    console.log(chalk.blueBright('IS DECLARED OOPPPPPPP ???'), target);
-    return true;
+    // console.log(chalk.blueBright('IS DECLARED OOPPPPPPP ???'), target);
+    return undefined;
 }
 
 

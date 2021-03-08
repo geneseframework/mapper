@@ -71,7 +71,10 @@ export class DeclarationInfoService {
         const declarationOrSignatures: PropertyDeclarationOrSignature[] = getAllProperties(declaration);
         const properties: Property[] = [];
         for (const declarationOrSignature of declarationOrSignatures) {
-            const property: Property = {name: declarationOrSignature.getName(), initializer: declarationOrSignature.getInitializer(), type: declarationOrSignature.getStructure().type as string};
+            const property: Property = {
+                name: declarationOrSignature.getName(),
+                initializer: declarationOrSignature.getInitializer(),
+                type: declarationOrSignature.getStructure().type as string};
             properties.push(property);
         }
         return properties;

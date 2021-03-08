@@ -84,7 +84,6 @@ export class MainService {
         // } else if (isCurveBracketed(target)) {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
-            console.log(chalk.blueBright('HAS DECLLLLLL'), target);
             // GLOBAL.logDuration(`HAS DECLLLLLLLar ${target}`, 'blueBright');
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
@@ -92,7 +91,9 @@ export class MainService {
         } else if (isDeclaredOutOfProject(target)) {
             return await MapOutOfProjectService.create(target, data, options);
         } else {
-            return throwTarget(target, data, options);
+            // console.log(chalk.redBright('NOT FOUNDDDD'), target);
+            return await MapComplexService.create(target, data, options);
+            // return throwTarget(target, data, options);
         }
     }
 
