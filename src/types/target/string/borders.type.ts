@@ -1,4 +1,5 @@
 import { Containerized } from './containerized.type';
+import * as chalk from 'chalk';
 
 export type LeftBorder = '{' | '[' | '(' | '<';
 export function isLeftBorder(text: string): text is LeftBorder {
@@ -65,15 +66,16 @@ export function getContainerFromLeft(text: HasLeftBorder): Containerized {
 export function getContainerFromRight(text: HasRightBorder): Containerized {
     const rightBorder: RightBorder = text[text.length - 1] as RightBorder;
     let nest = 0;
-    for (let i = text.length; i > -1; i--) {
-        if (text[i] === rightBorder) {
+    for (let i = 0; i < text.length; i++) {
+        const position = text.length - 1 - i;
+        if (text.charAt(position) === rightBorder) {
             nest++;
         }
-        if (text[i] === getLeftBorder(rightBorder)) {
+        if (text.charAt(position) === getLeftBorder(rightBorder)) {
             nest--;
         }
         if (nest === 0) {
-            return text.slice(i) as Containerized;
+            return text.slice(position) as Containerized;
         }
     }
     return undefined;

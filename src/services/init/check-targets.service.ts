@@ -12,6 +12,7 @@ import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
 import { hasGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
@@ -66,6 +67,7 @@ export class CheckTargetsService {
 
 
     private static async hasCorrectGeneric(text: string): Promise<boolean> {
+        // console.log(chalk.redBright('CORRECT GGGGG'), typeOfGeneric(text as any));
         return hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text));
     }
 

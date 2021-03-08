@@ -8,5 +8,4 @@ export class MapGenericService {
         return await MainService.mapToString(typeOfGeneric(target), data, options);
     }
 
-
 }

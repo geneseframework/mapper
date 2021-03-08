@@ -1,6 +1,7 @@
 import { hasSeparators } from './has-separators.type';
 import { getContainerFromRight, HasRightBorder } from './borders.type';
 import { removeBorders } from './containerized.type';
+import * as chalk from 'chalk';
 
 export type Generic = `${string}<${string}>`;
 export type EndsWithTag = Generic;
@@ -17,7 +18,7 @@ function endsWithTag(text: string): text is EndsWithTag {
 
 
 export function typeOfGeneric(text: Generic): string {
-    return text.slice(0, -tagOfGeneric(text).length);
+    return text.slice(0, -tagOfGeneric(text).length -2);
 }
 
 

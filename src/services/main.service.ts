@@ -71,7 +71,6 @@ export class MainService {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
         console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
         await CheckTargetsService.start(target);
-        console.log(chalk.greenBright('MAP STRRRRR 222222'), target, data, isInterfaceDeclaration(target));
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
         } else if (isDateTypeName(target)) {
