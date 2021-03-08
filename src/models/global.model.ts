@@ -22,6 +22,11 @@ export class Global {
     start: number = undefined;
 
 
+    addDeclarationInfo(declarationInfo: DeclarationInfo): void {
+        this.declarationInfos.push(declarationInfo);
+    }
+
+
     getClassInfo(target: string): ClassInfo {
         return this.declarationInfos.find(d => isClassInfo(d) && d.name === target) as ClassInfo;
     }

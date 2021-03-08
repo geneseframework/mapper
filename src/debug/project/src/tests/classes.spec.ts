@@ -255,7 +255,7 @@ testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, Undefin
 export class UnknownSpec {
     prop: unknown;
 }
-testMappers.push(new TestMapper(`{prop: 1} / UnknownSpec / {prop: 1}`, UnknownSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: true}));
+testMappers.push(new TestMapper(`{prop: 1} / UnknownSpec / {prop: 1}`, UnknownSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: false}));
 
 
 export class NumberLiteralSpec {

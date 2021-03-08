@@ -3,7 +3,7 @@ import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
-import { hasDeclaration, isDeclaredOutOfProject } from '../utils/ast/ast-declaration.util';
+import { hasDeclaration, isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -88,7 +88,7 @@ export class MainService {
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
-        } else if (isDeclaredOutOfProject(target)) {
+        } else if (isDeclaredOutOfProjectAddItToGlobal(target)) {
             return await MapOutOfProjectService.create(target, data, options);
         } else {
             // console.log(chalk.redBright('NOT FOUNDDDD'), target);
