@@ -1,0 +1,26 @@
+import { hasSeparators } from './has-separators.type';
+import { getContainerFromRight, HasRightBorder } from './borders.type';
+import { removeBorders } from './containerized.type';
+
+export type Generic = `${string}<${string}>`;
+export type EndsWithTag = Generic;
+
+
+export function hasGeneric(text: string): text is Generic {
+    return endsWithTag(text) && !hasSeparators(typeOfGeneric(text));
+}
+
+
+function endsWithTag(text: string): text is EndsWithTag {
+    return /^\w.*<\w.*>$/g.test(text);
+}
+
+
+export function typeOfGeneric(text: Generic): string {
+    return text.slice(0, -tagOfGeneric(text).length);
+}
+
+
+export function tagOfGeneric(text: Generic): string {
+    return removeBorders(getContainerFromRight(text as unknown as HasRightBorder));
+}

@@ -11,6 +11,7 @@ import { TargetService } from '../targets/target.service';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
+import { hasGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
 
 export class CheckTargetsService {
 
@@ -51,6 +52,7 @@ export class CheckTargetsService {
             || isStringAsTrivialType(text)
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
+            || await this.hasCorrectGeneric(text)
             || await this.isCorrectComplexType(text)
             || this.isCorrectObject(text) // TODO
             || await this.isDeclaration(text)
@@ -60,6 +62,11 @@ export class CheckTargetsService {
 
     private static async isCorrectArrayType(text: string): Promise<boolean> {
         return isArrayType(text) && await this.hasCorrectElements(typeOfArray(text));
+    }
+
+
+    private static async hasCorrectGeneric(text: string): Promise<boolean> {
+        return hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text));
     }
 
 
