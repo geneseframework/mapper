@@ -18,5 +18,6 @@ export function isStringAsTrivialType(text: string): boolean {
         || text === 'true'
         || text === 'false'
         || text === 'object'
+        || text === 'Date'
         || text === 'any';
 }
