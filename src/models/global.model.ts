@@ -4,7 +4,10 @@ import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
 import { DeclarationInfo } from './declarations/declaration-info.model';
 import { ClassInfo } from './declarations/class-info.model';
-import { isClassInfo } from '../utils/declaration-info.util';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
+import { EnumInfo } from './declarations/enum-info.model';
+import { InterfaceInfo } from './declarations/interface-info.model';
+import { TypeInfo } from './declarations/type-info.model';
 
 
 export class Global {
@@ -29,6 +32,21 @@ export class Global {
 
     getClassInfo(target: string): ClassInfo {
         return this.declarationInfos.find(d => isClassInfo(d) && d.name === target) as ClassInfo;
+    }
+
+
+    getEnumInfo(target: string): EnumInfo {
+        return this.declarationInfos.find(d => isEnumInfo(d) && d.name === target) as EnumInfo;
+    }
+
+
+    getInterfaceInfo(target: string): InterfaceInfo {
+        return this.declarationInfos.find(d => isInterfaceInfo(d) && d.name === target) as InterfaceInfo;
+    }
+
+
+    getTypeInfo(target: string): TypeInfo {
+        return this.declarationInfos.find(d => isTypeInfo(d) && d.name === target) as TypeInfo;
     }
 
 

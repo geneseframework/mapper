@@ -13,7 +13,7 @@ export class MapInstanceOrInterfaceService {
 
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
-        // console.log(chalk.cyanBright('MAP I OR CCCCCC'), data, instance, declaration);
+        console.log(chalk.cyanBright('MAP I OR CCCCCC'), data, instance, declaration);
         for (const key of Object.keys(data)) {
             if (isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {

@@ -1,4 +1,4 @@
-import { TypeDeclarationKind } from '../../enums/type-declaration.kind';
+import { TypeDeclarationKindEnum } from '../../enums/type-declaration-kind.enum';
 import { GLOBAL } from '../../const/global.const';
 import {
     ClassDeclaration,
@@ -33,31 +33,32 @@ const getDescendantInterfaces = (sourceFile: SourceFile) => sourceFile.getDescen
 const getDescendantTypeAliases = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.TypeAliasDeclaration);
 
 
-export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
+export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKindEnum {
     if (!typeDeclaration) {
         return undefined;
     } else if (typeDeclaration instanceof ClassDeclaration) {
-        return TypeDeclarationKind.CLASS_DECLARATION;
+        return TypeDeclarationKindEnum.CLASS_DECLARATION;
     } else if (typeDeclaration instanceof EnumDeclaration) {
-        return TypeDeclarationKind.ENUM_DECLARATION;
+        return TypeDeclarationKindEnum.ENUM_DECLARATION;
     } else if (typeDeclaration instanceof InterfaceDeclaration) {
-        return TypeDeclarationKind.INTERFACE_DECLARATION;
+        return TypeDeclarationKindEnum.INTERFACE_DECLARATION;
     } else if (typeDeclaration instanceof TypeAliasDeclaration) {
-        return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;
+        return TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION;
     }
 }
 
 
 export function getTypeDeclaration(typeName: string): DeclarationOrDate {
-    const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
+    console.log(chalk.magentaBright('GET TTTT DECL'), typeName);
+    const typeDeclarationKind: TypeDeclarationKindEnum = declarationKind(typeName);
     switch (typeDeclarationKind) {
-        case TypeDeclarationKind.CLASS_DECLARATION:
+        case TypeDeclarationKindEnum.CLASS_DECLARATION:
             return getDeclaration(typeName, getDescendantClasses);
-        case TypeDeclarationKind.ENUM_DECLARATION:
+        case TypeDeclarationKindEnum.ENUM_DECLARATION:
             return getDeclaration(typeName, getDescendantEnums);
-        case TypeDeclarationKind.INTERFACE_DECLARATION:
+        case TypeDeclarationKindEnum.INTERFACE_DECLARATION:
             return getDeclaration(typeName, getDescendantInterfaces);
-        case TypeDeclarationKind.TYPE_ALIAS_DECLARATION:
+        case TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION:
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
             const typeScriptDeclaration: DeclarationOrDate = getTypeScriptDeclaration(typeName);
@@ -76,18 +77,18 @@ export function hasDeclaration(typeName: string): boolean {
 }
 
 
-function declarationKind(typeName: string): TypeDeclarationKind {
+function declarationKind(typeName: string): TypeDeclarationKindEnum {
     // console.log(chalk.redBright('DECL KINDDDDD'), GLOBAL.declarationInfos.length, isClassDeclaration(typeName));
     // GLOBAL.logDuration(`BEFORE DECL KINDDDDD ${typeName}`, 'magentaBright');
     if (isClassDeclaration(typeName)) {
-        return TypeDeclarationKind.CLASS_DECLARATION;
+        return TypeDeclarationKindEnum.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
-        return TypeDeclarationKind.ENUM_DECLARATION;
+        return TypeDeclarationKindEnum.ENUM_DECLARATION;
     } else if (isInterfaceDeclaration(typeName)) {
         // GLOBAL.logDuration(`DECL KINDDDDD ${typeName}`, 'yellowBright');
-        return TypeDeclarationKind.INTERFACE_DECLARATION;
+        return TypeDeclarationKindEnum.INTERFACE_DECLARATION;
     } else if (isTypeAliasDeclaration(typeName)) {
-        return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;
+        return TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION;
     } else {
         return undefined;
     }

@@ -3,7 +3,11 @@ import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
-import { hasDeclaration, isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-declaration.util';
+import {
+    hasDeclaration,
+    isDeclaredOutOfProjectAddItToGlobal,
+    isInterfaceDeclaration
+} from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -63,7 +67,7 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -84,7 +88,7 @@ export class MainService {
         // } else if (isCurveBracketed(target)) {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
-            // GLOBAL.logDuration(`HAS DECLLLLLLLar ${target}`, 'blueBright');
+            GLOBAL.logDuration(`HAS DECLLLLLLLar ${target}`, 'blueBright');
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
