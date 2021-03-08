@@ -44,13 +44,13 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
-        GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
+        // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
         const zzz = await this.mapToString(target, data, options);
-        // GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
+        GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         return zzz;
     }
 
@@ -63,7 +63,7 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

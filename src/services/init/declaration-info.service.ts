@@ -11,6 +11,8 @@ import { Property } from '../../types/target/property.type';
 import { EnumInfo } from '../../models/declarations/enum-info.model';
 import { TypeInfo } from '../../models/declarations/type-info.model';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
+import { getIndexableType } from '../../utils/native/indexable-type.util';
+import { InterfaceInfo } from '../../models/declarations/interface-info.model';
 
 export class DeclarationInfoService {
 
@@ -31,7 +33,7 @@ export class DeclarationInfoService {
             const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
             classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
             classInfo.isAbstract = classDeclaration.isAbstract();
-            classInfo.properties = this.getProperties(classDeclaration);
+            classInfo.indexableType = getIndexableType(classDeclaration);
             GLOBAL.declarationInfos.push(classInfo);
         }
     }
@@ -49,8 +51,9 @@ export class DeclarationInfoService {
     private static setInterfaceInfos(): void {
         const interfaceDeclarations: InterfaceDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getInterfaces()));
         for (const interfaceDeclaration of interfaceDeclarations) {
-            // const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration));
-            // GLOBAL.declarationInfos.push(interfaceInfo);
+            const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), this.getProperties(interfaceDeclaration));
+            interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
+            GLOBAL.declarationInfos.push(interfaceInfo);
         }
     }
 

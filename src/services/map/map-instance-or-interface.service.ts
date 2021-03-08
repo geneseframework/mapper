@@ -13,10 +13,9 @@ export class MapInstanceOrInterfaceService {
 
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
-        console.log(chalk.cyanBright('MAP I OR CCCCCC'), data, instance, declaration);
+        // console.log(chalk.cyanBright('MAP I OR CCCCCC'), data, instance, declaration);
         for (const key of Object.keys(data)) {
             if (isProperty(key, declaration)) {
-                console.log(chalk.cyanBright('MAP I OR CCCCCC'), data, declaration);
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
@@ -48,7 +47,7 @@ export class MapInstanceOrInterfaceService {
         const property: Property = declaration.properties.find(p => p.name === key);
         // const targetKeyType: string = this.getTargetKeyType(data, key, property, declaration);
         const targetKeyType: string = property.type;
-        console.log(chalk.magentaBright('MAP DATA KKKKKKKK'), data, key, declaration);
+        // console.log(chalk.magentaBright('MAP DATA KKKKKKKK'), data, key, declaration);
         if (targetKeyType === 'undefined' || targetKeyType === undefined) {
             instance[key] = data;
         } else if (isQuoted(targetKeyType)) {

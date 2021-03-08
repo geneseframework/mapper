@@ -16,7 +16,7 @@ export class OnePrimitiveClassSpec {
     prop: string;
 }
 
-testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: false}));
 testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
 
 

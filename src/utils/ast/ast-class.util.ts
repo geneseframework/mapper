@@ -1,4 +1,4 @@
-import { ClassDeclaration, HeritageClause, PropertyDeclaration, PropertySignature } from 'ts-morph';
+import { ClassDeclaration, HeritageClause, PropertyDeclaration } from 'ts-morph';
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -28,19 +28,6 @@ export function getAllProperties(declaration: ClassOrInterfaceDeclaration): Prop
         const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
         if (parentClassDeclaration) {
             propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
-        }
-    }
-    return propertyDeclarations;
-}
-
-
-export function getAllClassProperties(classDeclaration: ClassDeclaration): PropertyDeclaration[] {
-    const propertyDeclarations: PropertyDeclaration[] = classDeclaration.getProperties();
-    const heritageClause: HeritageClause = classDeclaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
-    if (heritageClause) {
-        const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
-        if (parentClassDeclaration) {
-            propertyDeclarations.push(...getAllClassProperties(parentClassDeclaration));
         }
     }
     return propertyDeclarations;
