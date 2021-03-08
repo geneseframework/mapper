@@ -8,7 +8,7 @@ export const testMappers: TestMapper[] = [];
 
 
 testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / 'Date' / new Date('2021-02-19T17:36:53.999Z')`, 'Date', '2021-02-19T17:36:53.999Z', {expectedValue: new Date('2021-02-19T17:36:53.999Z')}));
-testMappers.push(new TestMapper(`['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z'] / Date[] / [new Date('2021-02-19T17:36:53.999Z'), new Date('2021-02-19T17:36:53.999Z')]`, 'Date[]', ['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z'], {expectedValue: [new Date('2021-02-19T17:36:53.999Z'), new Date('2021-02-19T17:36:53.999Z')]}));
+testMappers.push(new TestMapper(`['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z'] / Date[] / [new Date('2021-02-19T17:36:53.999Z'), new Date('2021-02-19T17:36:53.999Z')]`, 'Date[]', ['2021-02-19T17:36:53.999Z', '2021-02-19T17:36:53.999Z'], {expectedValue: [new Date('2021-02-19T17:36:53.999Z'), new Date('2021-02-19T17:36:53.999Z')], isolate: false}));
 
 testMappers.push(new TestMapper(`2021-02-19T17:36:53.999Z / Date / new Date('2021-02-19T17:36:53.999Z')`, Date, '2021-02-19T17:36:53.999Z', {expectedValue: new Date('2021-02-19T17:36:53.999Z')}));
 testMappers.push(new TestMapper(`{} / Date / undefined`, Date, {}, {expectedValue: undefined}));

@@ -1,25 +1,22 @@
-import { throwError, throwTarget, throwWarning } from '../../utils/errors.util';
+import { throwTarget } from '../../utils/errors.util';
 import { isPrimitiveType } from '../../types/primitives.type';
-import { CONFIG } from '../../const/config.const';
 import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration, isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-declaration.util';
+import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
-import { CreateOptions } from '../../models/create-options.model';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
-import * as chalk from 'chalk';
+import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            console.log(chalk.blueBright('WRONGGGGG'), target);
             throwTarget(target);
         }
     }

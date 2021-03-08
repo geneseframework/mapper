@@ -5,17 +5,17 @@ import { EnumInfo } from '../models/declarations/enum-info.model';
 import { TypeInfo } from '../models/declarations/type-info.model';
 
 export function isClassInfo(declarationInfo: DeclarationInfo): declarationInfo is ClassInfo {
-    return declarationInfo.kind === 'Class';
+    return declarationInfo.kind === 'ClassDeclaration';
 }
 
 export function isEnumInfo(declarationInfo: DeclarationInfo): declarationInfo is EnumInfo {
-    return declarationInfo.kind === 'Enum';
+    return declarationInfo.kind === 'EnumDeclaration';
 }
 
 export function isInterfaceInfo(declarationInfo: DeclarationInfo): declarationInfo is InterfaceInfo {
-    return declarationInfo.kind === 'Interface';
+    return declarationInfo.kind === 'InterfaceDeclaration';
 }
 
 export function isTypeInfo(declarationInfo: DeclarationInfo): declarationInfo is TypeInfo {
-    return declarationInfo.kind === 'TypeAlias';
+    return declarationInfo.kind === 'TypeAliasDeclaration';
 }

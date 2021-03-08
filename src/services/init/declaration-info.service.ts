@@ -84,18 +84,4 @@ export class DeclarationInfoService {
     }
 
 
-    // private static getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
-    //     const declarationOrSignatures: PropertyDeclarationOrSignature[] = getAllProperties(declaration);
-    //     const properties: Property[] = [];
-    //     for (const declarationOrSignature of declarationOrSignatures) {
-    //         const property: Property = {
-    //             name: declarationOrSignature.getName(),
-    //             initializer: declarationOrSignature.getInitializer(),
-    //             type: declarationOrSignature.getStructure().type as string};
-    //         properties.push(property);
-    //     }
-    //     return properties;
-    // }
-
-
 }

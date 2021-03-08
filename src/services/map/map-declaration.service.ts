@@ -23,13 +23,13 @@ export class MapDeclarationService<T> {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
         switch (typeDeclarationKind) {
-            case 'Class':
+            case 'ClassDeclaration':
                 return await MapClassService.create(target, data, options);
-            case 'Enum':
+            case 'EnumDeclaration':
                 return MapEnumService.create(target, data);
-            case 'Interface':
+            case 'InterfaceDeclaration':
                 return MapInterfaceService.create(target, data, options);
-            case 'TypeAlias':
+            case 'TypeAliasDeclaration':
                 return await MapTypeService.create(target, data, options);
             default:
                 throwWarning(`type declaration "${target}" not found.`);

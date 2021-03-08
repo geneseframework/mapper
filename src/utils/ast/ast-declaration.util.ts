@@ -9,9 +9,9 @@ import {
     InterfaceDeclaration,
     SourceFile,
     SyntaxKind,
-    TypeAliasDeclaration, TypeNode
+    TypeAliasDeclaration
 } from 'ts-morph';
-import { Declaration, DeclarationOrDate } from '../../types/type-declaration.type';
+import { DeclarationOrDate } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -19,12 +19,8 @@ import { StringOrNumber } from '../../types/string-or-number.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
 import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
-import * as chalk from 'chalk';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
-import { DeclarationInfoService } from '../../services/init/declaration-info.service';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
-import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { CheckTargetsService } from '../../services/init/check-targets.service';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -37,13 +33,13 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
     if (!typeDeclaration) {
         return undefined;
     } else if (typeDeclaration instanceof ClassDeclaration) {
-        return 'Class';
+        return 'ClassDeclaration';
     } else if (typeDeclaration instanceof EnumDeclaration) {
-        return 'Enum';
+        return 'EnumDeclaration';
     } else if (typeDeclaration instanceof InterfaceDeclaration) {
-        return 'Interface';
+        return 'InterfaceDeclaration';
     } else if (typeDeclaration instanceof TypeAliasDeclaration) {
-        return 'TypeAlias';
+        return 'TypeAliasDeclaration';
     }
 }
 
@@ -77,7 +73,6 @@ export function hasDeclaration(typeName: string): boolean {
 
 
 function declarationKind(typeName: string): TypeDeclarationKindEnum {
-    // console.log(chalk.redBright('DECL KINDDDDD'), GLOBAL.declarationInfos.length, isClassDeclaration(typeName));
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKindEnum.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
@@ -112,112 +107,6 @@ export function isTypeAliasDeclaration(typeName: string): boolean {
 }
 
 
-// TODO: Add imported classes in new instance generator file
-export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promise<boolean> {
-    const declarations: ImportDeclaration[] = getImportDeclarations(target);
-    if (declarations.length === 0) {
-        return false;
-    } else if (declarations.length > 1) {
-        throwWarning(`${target} is declared in multiple files.`);
-        return true;
-    } else {
-        const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
-        const declaration: Declaration = addDeclarationInfoToGlobalDeclarationInfos(target, importSourceFile);
-        await addRecursivelyDeclarationInfo(declaration);
-        console.log(chalk.cyanBright('IS OOOOOP'));
-        return true;
-    }
-}
-
-
-function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSourceFile: SourceFile): Declaration {
-    let declaration: Declaration = getSourceFileDeclaration(target, importSourceFile, 'ClassDeclaration');
-    if (declaration) {
-        DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, GLOBAL.classNames);
-        return declaration;
-    }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'InterfaceDeclaration');
-    if (declaration) {
-        DeclarationInfoService.addInterfaceInfo(declaration as InterfaceDeclaration);
-        return declaration;
-    }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'EnumDeclaration');
-    if (declaration) {
-        DeclarationInfoService.addEnumInfo(declaration as EnumDeclaration);
-        return declaration;
-    }
-    declaration = getSourceFileDeclaration(target, importSourceFile, 'TypeAliasDeclaration');
-    if (declaration) {
-        DeclarationInfoService.addTypeInfo(declaration as TypeAliasDeclaration);
-        return declaration;
-    }
-}
-
-
-async function addRecursivelyDeclarationInfo(declaration: Declaration): Promise<void> {
-    switch (getDeclarationKind(declaration)) {
-        case 'Class':
-        case 'Interface':
-            await addDeclarationInfoForEachProperty(declaration as ClassOrInterfaceDeclaration);
-        case 'Enum':
-        // TODO
-        case 'TypeAlias':
-            await addDeclarationInfoForType(declaration as TypeAliasDeclaration);
-    }
-}
-
-
-async function addDeclarationInfoForEachProperty(declaration: ClassOrInterfaceDeclaration): Promise<void> {
-    for (const property of declaration.getProperties()) {
-        await addDeclarationInfoForProperty(property);
-    }
-}
-
-
-async function addDeclarationInfoForProperty(property: PropertyDeclarationOrSignature): Promise<void> {
-    const propertyType: string = property.getStructure().type as string;
-    if (propertyType === 'Level') {
-        console.log(chalk.cyanBright('ADD DECL FOR PROPPPP'), property.getStructure(), property.getTypeNode().getKindName());
-        console.log(chalk.magentaBright('ALL SRCFFFFFFFF'), property.getStructure(), property.getTypeNode().getKindName());
-    }
-    await CheckTargetsService.start(propertyType);
-}
-
-
-async function addDeclarationInfoForType(type: TypeAliasDeclaration): Promise<void> {
-    const propertyType = type.getStructure();
-    // const propertyType: string = type.getStructure().type as string;
-    // console.log(chalk.magentaBright('ADDD DECL TYPE'), propertyType);
-    // await CheckTargetsService.start(propertyType);
-}
-
-
-function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: 'ClassDeclaration' | 'InterfaceDeclaration' | 'EnumDeclaration' | 'TypeAliasDeclaration'): Declaration {
-    return sourceFile.getDescendantsOfKind(SyntaxKind[kind]).find(e => (e as Declaration).getName() === name) as Declaration;
-}
-
-
-// TODO: SEARCH Mapper.create and set declarationInfos including out of project
-// TODO: Create a specific file for that ?
-export function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => DeclarationOrDate[]): boolean {
-    const declarations: ImportDeclaration[] = getImportDeclarations(typeName);
-    if (declarations.length === 0) {
-        return false;
-    } else if (declarations.length > 1) {
-        throwWarning(`${typeName} is declared in multiple files.`)
-    } else {
-        const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
-        if (getTDeclaration(importSourceFile)?.length > 0) {
-            GLOBAL.project.addSourceFileAtPath(importSourceFile.getFilePath());
-            return true;
-        } else {
-            return false;
-        }
-    }
-    return !!GLOBAL.projectWithNodeModules.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
-}
-
-
 function hasDeclarationInTypeScript(typeName: string): boolean {
     if (typeName === 'Date') {
         return true;
@@ -226,7 +115,7 @@ function hasDeclarationInTypeScript(typeName: string): boolean {
 }
 
 
-function getImportDeclarations(typeName: string): ImportDeclaration[] {
+export function getImportDeclarations(typeName: string): ImportDeclaration[] {
     const declarations: ImportDeclaration[] = flat(GLOBAL.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
     const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
     return groupByImportPath(declarationsWithSameName);
@@ -301,6 +190,7 @@ export function isProperty(propertyName: string, declaration: ClassOrInterfaceIn
 
 
 export function getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
+    // @ts-ignore
     return declaration?.getStructure().properties.map(p => {
         return {name: p.name, type: p.type, initializer: p.initializer, isRequired: !p.hasQuestionToken} as Property;
     });

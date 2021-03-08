@@ -6,7 +6,7 @@ export class EnumInfo extends DeclarationInfo {
 
 
     constructor(name: string, filePath: string) {
-        super(name, filePath, 'Enum');
+        super(name, filePath, 'EnumDeclaration');
     }
 
 }

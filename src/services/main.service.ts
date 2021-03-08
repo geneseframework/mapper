@@ -5,7 +5,6 @@ import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
 import {
     hasDeclaration,
-    isDeclaredOutOfProjectAddItToGlobal,
     isInterfaceDeclaration
 } from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
@@ -32,6 +31,7 @@ import { hasSeparators } from '../types/target/string/has-separators.type';
 import { throwTarget } from '../utils/errors.util';
 import { MapOutOfProjectService } from './map/map-out-of-project.service';
 import * as chalk from 'chalk';
+import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
 
 export class MainService {
 
@@ -67,7 +67,7 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data, isInterfaceDeclaration(target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
