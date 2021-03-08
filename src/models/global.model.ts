@@ -66,7 +66,7 @@ export class Global {
 
 
     get enumNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'EnumDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
     }
 
 
@@ -76,7 +76,7 @@ export class Global {
 
 
     get interfaceNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'InterfaceDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'Interface').map(d => d.name);
     }
 
 
@@ -94,7 +94,7 @@ export class Global {
 
 
     get typeNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'TypeAliasDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
     }
 
 

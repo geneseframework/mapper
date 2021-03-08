@@ -111,7 +111,7 @@ async function checkTyping() {
     const fooDateTypeDateArray: unknown = await Mapper.create([Date], false);
     const fooDateObjectArray: unknown = await Mapper.create([Date], {});
 
-    // -----------------------------------------------   ClassDeclaration   -----------------------------------------------------
+    // -----------------------------------------------   Class   -----------------------------------------------------
 
     const fooClassObject: FooClass = await Mapper.create(FooClass, {});
     const fooClassObjectWithProperty: FooClass = await Mapper.create(FooClass, {property: 'a'});
@@ -120,7 +120,7 @@ async function checkTyping() {
     const fooClassBoolean: unknown = await Mapper.create(FooClass, true);
     const fooClassArray: unknown = await Mapper.create(FooClass, [{}]);
 
-    // ----------------------------------------------   ClassDeclaration[]   ----------------------------------------------------
+    // ----------------------------------------------   Class[]   ----------------------------------------------------
 
     const fooClassArrayOfFooClass: FooClass[] = await Mapper.create([FooClass], [new FooClass()]);
     const fooClassArrayOfObjects: FooClass[] = await Mapper.create([FooClass], [{}]);

@@ -37,22 +37,22 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
 
 
 function addDeclarationInfoToGlobalDeclarationInfos(target: string, sourceFile: SourceFile): Declaration {
-    let declaration: Declaration = getSourceFileDeclaration(target, sourceFile, 'ClassDeclaration');
+    let declaration: Declaration = getSourceFileDeclaration(target, sourceFile, 'Class');
     if (declaration) {
         DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, GLOBAL.classNames);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, sourceFile, 'InterfaceDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'Interface');
     if (declaration) {
         DeclarationInfoService.addInterfaceInfo(declaration as InterfaceDeclaration);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, sourceFile, 'EnumDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'Enum');
     if (declaration) {
         DeclarationInfoService.addEnumInfo(declaration as EnumDeclaration);
         return declaration;
     }
-    declaration = getSourceFileDeclaration(target, sourceFile, 'TypeAliasDeclaration');
+    declaration = getSourceFileDeclaration(target, sourceFile, 'TypeAlias');
     if (declaration) {
         DeclarationInfoService.addTypeInfo(declaration as TypeAliasDeclaration);
         return declaration;
@@ -62,12 +62,12 @@ function addDeclarationInfoToGlobalDeclarationInfos(target: string, sourceFile: 
 
 async function addRecursivelyDeclarationInfo(declaration: Declaration): Promise<void> {
     switch (getDeclarationKind(declaration)) {
-        case 'ClassDeclaration':
-        case 'InterfaceDeclaration':
+        case 'Class':
+        case 'Interface':
             await addDeclarationInfoForEachProperty(declaration as ClassOrInterfaceDeclaration);
-        case 'EnumDeclaration':
+        case 'Enum':
         // TODO
-        case 'TypeAliasDeclaration':
+        case 'TypeAlias':
             await addDeclarationInfoForType(declaration as TypeAliasDeclaration);
     }
 }
@@ -109,6 +109,7 @@ async function addDeclarationInfoForType(type: TypeAliasDeclaration): Promise<vo
 
 
 function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKind): Declaration {
-    return sourceFile.getDescendantsOfKind(SyntaxKind[kind]).find(e => (e as Declaration).getName() === name) as Declaration;
+    const declarationKind = `${kind}Declaration`;
+    return sourceFile.getDescendantsOfKind(SyntaxKind[declarationKind]).find(e => (e as Declaration).getName() === name) as Declaration;
 }
 

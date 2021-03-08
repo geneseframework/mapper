@@ -12,5 +12,5 @@ export function isValidDateConstructor(d: any): d is (string | number | Date) {
 
 
 export function isValidDate(d: any): d is Date {
-    return Object.prototype.toString.call(d) === "[object DateDeclaration]" ? !isNaN(d.getTime()) : false;
+    return Object.prototype.toString.call(d) === "[object Date]" ? !isNaN(d.getTime()) : false;
 }
