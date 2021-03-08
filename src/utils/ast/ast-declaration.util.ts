@@ -190,7 +190,7 @@ async function addDeclarationInfoForProperty(property: PropertyDeclarationOrSign
         GLOBAL.project.addSourceFileAtPath(property.getSourceFile().getFilePath());
         const declaration: Declaration = addDeclarationInfoToGlobalDeclarationInfos(propertyType, property.getSourceFile());
         if (!declaration) {
-
+            // TODO: declarations out of the node_module file
         }
     }
 }
