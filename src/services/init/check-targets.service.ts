@@ -1,4 +1,4 @@
-import { throwError, throwWarning } from '../../utils/errors.util';
+import { throwError, throwTarget, throwWarning } from '../../utils/errors.util';
 import { isPrimitiveType } from '../../types/primitives.type';
 import { CONFIG } from '../../const/config.const';
 import { isNullOrUndefined } from '../../utils/native/any.util';
@@ -18,21 +18,7 @@ export class CheckTargetsService {
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            CheckTargetsService.throwTarget(target);
-        }
-    }
-
-
-    static throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
-        const opt: CreateOptions = options ?? CONFIG.create;
-        if (opt.throwTarget.error) {
-            throwError(`target "${target}" has wrong format and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
-        } else if (opt.throwTarget.setToUndefined) {
-            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set to "undefined" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
-            return undefined;
-        } else {
-            throwWarning(`target "${target}" has wrong format. @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response. You can change this behavior in geneseconfig.json or as option in Mapper.create().`);
-            return data;
+            throwTarget(target);
         }
     }
 

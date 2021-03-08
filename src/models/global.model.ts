@@ -2,7 +2,9 @@ import { Project, SourceFile } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
-import { DeclarationInfo } from './declaration-info.model';
+import { DeclarationInfo } from './declarations/declaration-info.model';
+import { ClassInfo } from './declarations/class-info.model';
+import { isClassInfo } from '../utils/declaration-info.util';
 
 
 export class Global {
@@ -20,8 +22,13 @@ export class Global {
     start: number = undefined;
 
 
+    getClassInfo(target: string): ClassInfo {
+        return this.declarationInfos.find(d => isClassInfo(d) && d.name === target) as ClassInfo;
+    }
+
+
     get classNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'Class').map(d => d.name);
+        return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
     }
 
 

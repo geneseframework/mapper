@@ -1,6 +1,8 @@
-import { ClassDeclaration, HeritageClause, PropertyDeclaration } from 'ts-morph';
+import { ClassDeclaration, HeritageClause, PropertyDeclaration, PropertySignature } from 'ts-morph';
 import { SyntaxKind } from '@ts-morph/common';
 import { getHeritageDeclaration } from './ast-heritage.util';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
+import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 
 
 // TODO : Heritage ?
@@ -16,6 +18,19 @@ export function numberOfConstructorArgs(classDeclaration: ClassDeclaration): num
 
 export function hasPrivateConstructor(classDeclaration: ClassDeclaration): boolean {
     return ['private', 'protected'].includes(classDeclaration?.getConstructors()?.[0]?.getScope());
+}
+
+
+export function getAllProperties(declaration: ClassOrInterfaceDeclaration): PropertyDeclarationOrSignature[] {
+    const propertyDeclarations: PropertyDeclarationOrSignature[] = declaration.getProperties();
+    const heritageClause: HeritageClause = declaration.getHeritageClauseByKind(SyntaxKind.ExtendsKeyword);
+    if (heritageClause) {
+        const parentClassDeclaration: ClassDeclaration = getHeritageDeclaration(heritageClause);
+        if (parentClassDeclaration) {
+            propertyDeclarations.push(...getAllProperties(parentClassDeclaration));
+        }
+    }
+    return propertyDeclarations;
 }
 
 

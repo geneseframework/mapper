@@ -1,4 +1,4 @@
-import { TypeDeclarationKind } from '../types/type-declaration-kind.type';
+import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 
 export abstract class DeclarationInfo {
 

@@ -21,6 +21,7 @@ import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
 import * as chalk from 'chalk';
 import { IndexableType } from '../../types/indexable-type.type';
+import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -73,14 +74,14 @@ export function hasDeclaration(typeName: string): boolean {
 
 
 function declarationKind(typeName: string): TypeDeclarationKind {
-    console.log(chalk.redBright('DECL INFOSSSSS'), GLOBAL.declarationInfos.length);
-    GLOBAL.logDuration(`BEFORE DECL KINDDDDD ${typeName}`, 'magentaBright');
+    // console.log(chalk.redBright('DECL KINDDDDD'), GLOBAL.declarationInfos.length, isClassDeclaration(typeName));
+    // GLOBAL.logDuration(`BEFORE DECL KINDDDDD ${typeName}`, 'magentaBright');
     if (isClassDeclaration(typeName)) {
         return TypeDeclarationKind.CLASS_DECLARATION;
     } else if (isEnumDeclaration(typeName)) {
         return TypeDeclarationKind.ENUM_DECLARATION;
     } else if (isInterfaceDeclaration(typeName)) {
-        GLOBAL.logDuration(`DECL KINDDDDD ${typeName}`, 'yellowBright');
+        // GLOBAL.logDuration(`DECL KINDDDDD ${typeName}`, 'yellowBright');
         return TypeDeclarationKind.INTERFACE_DECLARATION;
     } else if (isTypeAliasDeclaration(typeName)) {
         return TypeDeclarationKind.TYPE_ALIAS_DECLARATION;
@@ -136,17 +137,24 @@ export function isTypeAliasDeclaration(typeName: string): boolean {
 
 
 function hasDeclarationType(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
-    return hasDeclarationTypeInProject(typeName, getTDeclaration) || hasDeclarationTypeOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
+    return hasDeclarationInProject(typeName, getTDeclaration) || hasDeclarationOutOfProject(typeName, getTDeclaration) || hasDeclarationInTypeScript(typeName);
 }
 
 
-function hasDeclarationTypeInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
+function hasDeclarationInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
     return !!GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()?.toLowerCase()).includes(typeName?.toLowerCase()));
 }
 
+
+export function isDeclaredOutOfProject(target: string): boolean {
+    console.log(chalk.blueBright('IS DECLARED OOPPPPPPP ???'), target);
+    return true;
+}
+
+
 // TODO: SEARCH Mapper.create and set declarationInfos including out of project
 // TODO: Create a specific file for that ?
-function hasDeclarationTypeOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
+export function hasDeclarationOutOfProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => Declaration[]): boolean {
     const declarations: ImportDeclaration[] = getImportDeclarations(typeName);
     if (declarations.length === 0) {
         return false;
@@ -242,12 +250,19 @@ function indexSignatureName(key: StringOrNumber, value: any, indexSignature: Ind
 }
 
 
-export function isProperty(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
-    return properties(declaration).map(p => p[0]).includes(propertyName);
+export function isProperty(propertyName: string, declaration: ClassOrInterfaceInfo): boolean {
+    return !!declaration.properties.find(p => p.name === propertyName);
 }
 
 
-export function properties(declaration: ClassOrInterfaceDeclaration): Property[] {
-    return declaration?.getStructure().properties.map(p => [p.name, p.type , p.initializer] as Property);
+export function isPropertyOld(propertyName: string, declaration: ClassOrInterfaceDeclaration): boolean {
+    return getProperties(declaration).map(p => p[0]).includes(propertyName);
+}
+
+
+export function getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
+    return declaration?.getStructure().properties.map(p => {
+        return {name: p.name, type: p.type, initializer: p.initializer} as Property;
+    });
 }
 

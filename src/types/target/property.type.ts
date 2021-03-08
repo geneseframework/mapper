@@ -1,1 +1,5 @@
-export type Property = [name: string, type: string, initializer: any];
+export type Property = {
+    initializer: any,
+    name: string,
+    type: string,
+}

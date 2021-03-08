@@ -8,24 +8,26 @@ import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import * as chalk from 'chalk';
+import { ClassInfo } from '../../models/declarations/class-info.model';
 
 export class MapClassService<T> {
 
 
     static async create(target: string, data: any, options: CreateOptions): Promise<any> {
-        const classDeclaration: ClassDeclaration = getTypeDeclaration(target) as ClassDeclaration;
-        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance(target, data, classDeclaration, options);
+        // const classDeclaration: ClassDeclaration = getTypeDeclaration(target) as ClassDeclaration;
+        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance(target, data, options);
     }
 
 
-    static async createInstance(target: string, data: any, classDeclaration: ClassDeclaration, options: CreateOptions): Promise<any> {
-        if (classDeclaration.isAbstract()) {
+    static async createInstance(target: string, data: any, options: CreateOptions): Promise<any> {
+        const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
+        if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);
             return undefined;
         }
-        const instanceGenerator = new InstanceGenerator(target, classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration));
+        const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
         const instance: object = await GLOBAL.generateInstance(instanceGenerator) as object;
-        await MapInstanceOrInterfaceService.map(data, options, instance, classDeclaration);
+        await MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
         return instance;
     }
 }

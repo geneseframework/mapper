@@ -3,7 +3,7 @@ import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { InitService } from './init/init.service';
-import { hasDeclaration } from '../utils/ast/ast-declaration.util';
+import { hasDeclaration, isDeclaredOutOfProject } from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -23,8 +23,11 @@ import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
 import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapLiteralObjectService } from './map/map-literal-object.service';
-import * as chalk from 'chalk';
 import { GLOBAL } from '../const/global.const';
+import { hasSeparators } from '../types/target/string/has-separators.type';
+import { throwTarget } from '../utils/errors.util';
+import { MapOutOfProjectService } from './map/map-out-of-project.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -59,8 +62,8 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        // console.log(chalk.greenBright('MAP STRRRRR'), target, data, options);
+        // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
+        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -81,10 +84,15 @@ export class MainService {
         // } else if (isCurveBracketed(target)) {
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
-            GLOBAL.logDuration(`HEEERE ${target}`, 'blueBright');
+            console.log(chalk.blueBright('HAS DECLLLLLL'), target);
+            // GLOBAL.logDuration(`HAS DECLLLLLLLar ${target}`, 'blueBright');
             return await MapDeclarationService.create(target, data, options);
-        } else {
+        } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
+        } else if (isDeclaredOutOfProject(target)) {
+            return await MapOutOfProjectService.create(target, data, options);
+        } else {
+            return throwTarget(target, data, options);
         }
     }
 
