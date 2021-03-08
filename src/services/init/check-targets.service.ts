@@ -5,19 +5,21 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
+import { hasDeclaration, isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-declaration.util';
 import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
 import { CreateOptions } from '../../models/create-options.model';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
+            console.log(chalk.blueBright('WRONGGGGG'), target);
             throwTarget(target);
         }
     }
@@ -53,8 +55,9 @@ export class CheckTargetsService {
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
             || await this.isCorrectComplexType(text)
-            || await this.isDeclaration(text)
             || this.isCorrectObject(text) // TODO
+            || await this.isDeclaration(text)
+            || await this.isDeclaredOutOfProject(text)
     }
 
 
@@ -93,6 +96,11 @@ export class CheckTargetsService {
 
     private static async isDeclaration(text: string): Promise<boolean> {
         return hasDeclaration(text);
+    }
+
+
+    private static async isDeclaredOutOfProject(text: string): Promise<boolean> {
+        return await isDeclaredOutOfProjectAddItToGlobal(text);
     }
 
 }

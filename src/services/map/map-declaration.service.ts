@@ -38,25 +38,6 @@ export class MapDeclarationService<T> {
     }
 
 
-    // static async create(target: string, data: any, options: CreateOptions): Promise<any> {
-    //     const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
-    //     const typeDeclaration: DeclarationOrDate = getTypeDeclaration(typeName);
-    //     switch (getDeclarationKind(typeDeclaration)) {
-    //         case TypeDeclarationKindEnum.CLASS_DECLARATION:
-    //             return await MapClassService.create(target, data, options);
-    //         case TypeDeclarationKindEnum.ENUM_DECLARATION:
-    //             return MapEnumService.create(target, data);
-    //         case TypeDeclarationKindEnum.INTERFACE_DECLARATION:
-    //             return MapInterfaceService.create(target, data, options);
-    //         case TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION:
-    //             return await MapTypeService.create(target, data, options);
-    //         default:
-    //             throwWarning(`type declaration "${target}" not found.`);
-    //             return undefined;
-    //     }
-    // }
-
-
     private static getTypeDeclarationKind(target: string): TypeDeclarationKind {
         const declarationInfos: DeclarationInfo[] = GLOBAL.declarationInfos.filter(d => d.name === target);
         if (declarationInfos.length > 1) {
