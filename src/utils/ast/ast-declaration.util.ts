@@ -152,13 +152,13 @@ export function isDeclaredOutOfProjectAddItToGlobal(target: string): boolean {
         return true;
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
-        this.addDeclarationInfoToGlobalDeclarationInfos(target, importSourceFile);
+        addDeclarationInfoToGlobalDeclarationInfos(target, importSourceFile);
         return true;
     }
 }
 
 
-export function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSourceFile: SourceFile): void {
+function addDeclarationInfoToGlobalDeclarationInfos(target: string, importSourceFile: SourceFile): void {
     console.log(chalk.blueBright('IS OOPPPPPPP !!!!'), target, importSourceFile?.getBaseName());
     let declaration: Declaration = getSourceFileDeclaration(target, importSourceFile, 'ClassDeclaration');
     if (declaration) {
