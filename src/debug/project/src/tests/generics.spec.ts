@@ -9,8 +9,9 @@ export const testMappers: TestMapper[] = [];
 export class TClass<T> {
     name: string;
 }
+testMappers.push(new TestMapper(`'blue' / 'blue'`,`'blue'`, 'blue', {isolate: true})); // TODO : remove
 
-testMappers.push(new TestMapper(`{name: 'a'} / TClass<T>`, 'TClass<T>', {name: 'a'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'a'} / TClass<T>`, 'TClass<T>', {name: 'a'}, {isolate: true}));
 testMappers.push(new TestMapper(`'a' / TClass<T> / undefined`, 'TClass<T>', 'a', {expectedValue: undefined, isolate: false}));
 
 

@@ -5,6 +5,7 @@ export abstract class DeclarationInfo {
     filePath: string = undefined;
     kind: TypeDeclarationKind = undefined;
     name: string = undefined;
+    typeParameters: any[] = [];
 
     protected constructor(name: string, filePath: string, kind: TypeDeclarationKind) {
         this.filePath = filePath;

@@ -8,6 +8,7 @@ GLOBAL.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
+    GLOBAL.start = Date.now();
     await InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
