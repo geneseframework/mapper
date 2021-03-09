@@ -13,7 +13,7 @@ import { removeBorders } from '../../types/target/string/containerized.type';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
 import { hasGeneric, tagOfGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
 import * as chalk from 'chalk';
-import { getElements } from '../../utils/target.util';
+import { getElements, trimTarget } from '../../utils/target.util';
 import { GLOBAL } from '../../const/global.const';
 
 export class CheckTargetsService {
@@ -59,7 +59,7 @@ export class CheckTargetsService {
             || this.isCorrectObject(text) // TODO
             || await this.isDeclaration(text)
             || await this.isDeclaredOutOfProject(text);
-        console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
+        // console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
         return zzz;
     }
 
@@ -81,7 +81,7 @@ export class CheckTargetsService {
 
     private static async isCorrectComplexType(text: string): Promise<boolean> {
         const zzz = getElements(text);
-        console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), zzz);
+        // console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), zzz);
         return hasSeparators(text) && await this.haveCorrectElements(zzz);
     }
 
@@ -115,15 +115,15 @@ export class CheckTargetsService {
 
 
     private static async haveCorrectElements(texts: string[]): Promise<boolean> {
-        console.log(chalk.green('BEFORE HAVE CORRRRRR ????'), texts);
+        // console.log(chalk.green('BEFORE HAVE CORRRRRR ????'), texts);
         for (const text of texts) {
             // console.log(chalk.redBright('IS CORRRRRRECT ???'), text);
-            if (!await this.hasCorrectElements(text)) {
-                console.log(chalk.redBright('IS NOT CORRRRRRECT !!!'), text);
+            if (!await this.hasCorrectElements(trimTarget(text))) {
+                // console.log(chalk.redBright('IS NOT CORRRRRRECT !!!'), text);
                 return false;
             }
         }
-        console.log(chalk.green('HAVE CORRRRRR ELTS !!!!'), texts);
+        // console.log(chalk.green('HAVE CORRRRRR ELTS !!!!'), texts);
         return true;
     }
 

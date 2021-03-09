@@ -36,7 +36,7 @@ export function getContainerizedElements(text: BracketedOrParenthesized): string
 
 
 export function getElements(text: string): string[] {
-    console.log(chalk.blueBright('GET ELTTTS'), text);
+    // console.log(chalk.blueBright('GET ELTTTS'), text);
     return getElementsWithSeparator(text).map(e => e[0]);
 }
 
@@ -46,12 +46,10 @@ function getElementsWithSeparator(text: string): ElementAndSeparator[] {
         return [];
     }
     const cleanedText: string = trimTarget(text);
-    console.log(chalk.blueBright('NOT CLEANEDDDDD'), text);
     // console.log(chalk.cyanBright('CLEANEDDDDD'), cleanedText);
     if (isBracketedOrParenthesized(cleanedText)) {
         return [[cleanedText, undefined]];
     } else if (hasSeparators(cleanedText)) {
-        console.log(chalk.whiteBright('HAS SEPPPPP'), text);
         return getElementsOfComplexType(cleanedText);
     } else {
         return [[cleanedText, undefined]]
@@ -67,12 +65,10 @@ function getElementsOfComplexType(text: string): ElementAndSeparator[] {
     } else if (hasCommas(text)) {
         return getSplitElements(text, ',');
     } else if (hasInterrogation(text)) {
-        console.log(chalk.greenBright('IS INTRRRRR'), text);
         return getSplitElements(text, '?');
     } else if (hasSemiColumn(text)) {
         return getSplitElements(text, ':');
     } else if (hasExtends(text)) {
-        console.log(chalk.whiteBright('EXTENDSSSSSS'), text);
         return getSplitElements(text, 'extends');
     } else {
         throwWarning(`impossible to parse the target "${text}"`);
@@ -83,16 +79,15 @@ function getElementsOfComplexType(text: string): ElementAndSeparator[] {
 
 function getSplitElements(elements: HasSeparators, separator: Separator): ElementAndSeparator[] {
     const [first, last] = splitSeparator(elements, separator);
-    console.log(chalk.magentaBright('SPLITTTTT frt'), first, separator);
-    console.log(chalk.magentaBright('SPLITTTTT last'), last);
     return [...getElementsWithSeparator(first), ...getElementsWithSeparator(last)];
-    // return [[first, separator], ...getElementsWithSeparator(last)];
 }
 
 
 export function trimTarget(text: string): string {
-    const toRemoveAtTheBeginning: RegExp = /^([?, &|:] | extends)+/g;
-    const toRemoveAtTheEnd: RegExp = /([?, &|:] | extends)+$/g;
+    const toRemoveAtTheBeginning: RegExp = /^([?, &|:])+/g;
+    const toRemoveAtTheEnd: RegExp = /([?, &|:])+$/g;
+    // const toRemoveAtTheBeginning: RegExp = /^([?, &|:] | extends)+/g;
+    // const toRemoveAtTheEnd: RegExp = /([?, &|:] | extends)+$/g;
     return isString(text) ? text.replace(toRemoveAtTheBeginning, '').replace(toRemoveAtTheEnd, '') : '';
 }
 

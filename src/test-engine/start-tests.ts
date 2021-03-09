@@ -8,13 +8,9 @@ GLOBAL.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
-    GLOBAL.start = Date.now();
     await InitService.start();
-    GLOBAL.logDuration('START TESTSSSS : INIT DONE', 'magentaBright')
-    // console.log(chalk.magentaBright('START TESSSSTS'), GLOBAL.declarationInfos.length, );
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    GLOBAL.logDuration('GOT TESTSSSS', 'magentaBright')
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {
         logFailedTests();

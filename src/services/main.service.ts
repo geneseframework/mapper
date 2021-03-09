@@ -55,10 +55,7 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        const stringifiedTarget: string = TargetService.toString(target);
-        const zzz = await this.mapString<T>(stringifiedTarget, data, options);
-        // GLOBAL.logDuration(`END OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
-        return zzz;
+        return await this.mapToString<T>(target, data, options);
     }
 
 
@@ -70,41 +67,40 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         await CheckTargetsService.start(target);
-        return undefined;
-        // if (isNullOrUndefined(data) || isAny(target)) {
-        //     return data;
-        // } else if (isDateTypeName(target)) {
-        //     return MapDateService.create(data);
-        // } else if (isStringAsNullOrLiteral(target)) {
-        //     return MapNullOrLiteralService.create(target);
-        // } else if (isBracketed(target)) {
-        //     return await MapTupleService.create(target, data, options)
-        // } else if (isArrayType(target)) {
-        //     return await MapArrayService.create(target, data, options);
-        // } else if (hasGeneric(target)) {
-        //     return await MapGenericService.create(target, data, options);
-        // } else if (isPrimitiveTypeName(target)) {
-        //     return MapPrimitiveService.create(target, data, options);
-        // } else if (isQuoted(target)) {
-        //     return await MapQuotedService.create(target, data, options);
-        // } else if (isObjectLiteralType(target)) {
-        //     return MapLiteralObjectService.create(data);
-        // // } else if (isCurveBracketed(target)) {
-        // //     return await MapObjectService.createOld(target, data, options)
-        // } else if (hasDeclaration(target)) {
-        //     return await MapDeclarationService.create(target, data, options);
-        // } else if (hasSeparators(target)) {
-        //     return await MapComplexService.create(target, data, options);
-        // } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
-        //     return await MapOutOfProjectService.create(target, data, options);
-        // } else {
-        //     // TODO : finish to implement
-        //     throwWarning(`type not found : "${target}`);
-        //     return await MapComplexService.create(target, data, options);
-        //     // return throwTarget(target, data, options);
-        // }
+        if (isNullOrUndefined(data) || isAny(target)) {
+            return data;
+        } else if (isDateTypeName(target)) {
+            return MapDateService.create(data);
+        } else if (isStringAsNullOrLiteral(target)) {
+            return MapNullOrLiteralService.create(target);
+        } else if (isBracketed(target)) {
+            return await MapTupleService.create(target, data, options)
+        } else if (isArrayType(target)) {
+            return await MapArrayService.create(target, data, options);
+        } else if (hasGeneric(target)) {
+            return await MapGenericService.create(target, data, options);
+        } else if (isPrimitiveTypeName(target)) {
+            return MapPrimitiveService.create(target, data, options);
+        } else if (isQuoted(target)) {
+            return await MapQuotedService.create(target, data, options);
+        } else if (isObjectLiteralType(target)) {
+            return MapLiteralObjectService.create(data);
+        // } else if (isCurveBracketed(target)) {
+        //     return await MapObjectService.createOld(target, data, options)
+        } else if (hasDeclaration(target)) {
+            return await MapDeclarationService.create(target, data, options);
+        } else if (hasSeparators(target)) {
+            return await MapComplexService.create(target, data, options);
+        } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
+            return await MapOutOfProjectService.create(target, data, options);
+        } else {
+            // TODO : finish to implement
+            throwWarning(`type not found : "${target}`);
+            return await MapComplexService.create(target, data, options);
+            // return throwTarget(target, data, options);
+        }
     }
 
 }
