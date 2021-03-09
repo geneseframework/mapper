@@ -70,10 +70,10 @@ export class CheckTargetsService {
 
 
     private static async isCorrectGeneric(text: string): Promise<boolean> {
-        GLOBAL.logDuration(`BEFORE GENERICCCC ${text}`)
+        // GLOBAL.logDuration(`BEFORE GENERICCCC ${text}`)
         const zzz = hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text));
         // const zzz = hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text)) && await this.hasCorrectElements(tagOfGeneric(text));
-        GLOBAL.logDuration(`AFTER GENERICCCC ${text} ${zzz}`, 'cyanBright')
+        // GLOBAL.logDuration(`AFTER GENERICCCC ${text} ${zzz}`, 'cyanBright')
         return zzz;
     }
 

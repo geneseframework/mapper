@@ -4,12 +4,13 @@ import { flat } from '../../utils/native/arrays.util';
 import { GLOBAL } from '../../const/global.const';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
 import { InstanceGeneratorService } from '../instance-generator.service';
-import { getProperties } from '../../utils/ast/ast-declaration.util';
+import { genericParameters, getProperties } from '../../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../../utils/ast/ast-sourcefile.util';
 import { EnumInfo } from '../../models/declarations/enum-info.model';
 import { TypeInfo } from '../../models/declarations/type-info.model';
 import { getIndexableType } from '../../utils/native/indexable-type.util';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
+import { GenericParameter } from '../../types/target/generic-parameter.type';
 
 export class DeclarationInfoService {
 
@@ -79,7 +80,7 @@ export class DeclarationInfoService {
 
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
-        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration));
+        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
         GLOBAL.addDeclarationInfo(typeInfo);
     }
 
