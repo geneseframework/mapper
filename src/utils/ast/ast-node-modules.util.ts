@@ -11,7 +11,6 @@ import {
 import { Declaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import * as chalk from 'chalk';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { DeclarationInfoService } from '../../services/init/declaration-info.service';
@@ -30,7 +29,6 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
         const declaration: Declaration = addDeclarationInfoToGlobalDeclarationInfos(target, importSourceFile);
         await addRecursivelyDeclarationInfo(declaration);
-        console.log(chalk.cyanBright('IS OOOOOP'));
         return true;
     }
 }

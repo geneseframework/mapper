@@ -41,7 +41,7 @@ export class MapDeclarationService<T> {
     private static getTypeDeclarationKind(target: string): TypeDeclarationKind {
         const declarationInfos: DeclarationInfo[] = GLOBAL.declarationInfos.filter(d => d.name === target);
         if (declarationInfos.length > 1) {
-            throwWarning(`different elements "${target}" are declared in your project. Please use different names.`);
+            throwWarning(`different elements "${target}" are declared in your project.`);
         }
         return declarationInfos[0]?.kind;
     }

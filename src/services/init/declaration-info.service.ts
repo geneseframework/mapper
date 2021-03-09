@@ -23,7 +23,7 @@ export class DeclarationInfoService {
 
 
     private static async setClassInfos(): Promise<void> {
-        const classDeclarations: ClassDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getClasses()));
+        const classDeclarations: ClassDeclaration[] = GLOBAL.project.getSourceFiles().map(s => s.getClasses()).flat();
         const alreadyDone: string[] = []
         for (const classDeclaration of classDeclarations) {
             this.addClassInfo(classDeclaration, alreadyDone);

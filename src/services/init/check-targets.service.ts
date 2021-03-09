@@ -5,7 +5,7 @@ import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
-import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
+import { hasSeparators } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
@@ -13,6 +13,7 @@ import { removeBorders } from '../../types/target/string/containerized.type';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
 import { hasGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
 import * as chalk from 'chalk';
+import { getElements } from '../../utils/target.util';
 
 export class CheckTargetsService {
 
@@ -67,7 +68,6 @@ export class CheckTargetsService {
 
 
     private static async hasCorrectGeneric(text: string): Promise<boolean> {
-        // console.log(chalk.redBright('CORRECT GGGGG'), typeOfGeneric(text as any));
         return hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text));
     }
 
@@ -78,7 +78,9 @@ export class CheckTargetsService {
 
 
     private static async isCorrectComplexType(text: string): Promise<boolean> {
-        return hasSeparators(text) && await this.haveCorrectElements(splitSeparator(text));
+        const zzz = getElements(text);
+        console.log(chalk.yellowBright(' CORRECTTTTT ELTS'), zzz);
+        return hasSeparators(text) && await this.haveCorrectElements(zzz);
     }
 
 

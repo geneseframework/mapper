@@ -3,7 +3,7 @@ export function isNull(value: any): value is null {
 }
 
 
-export type NullOrLiteral = Number | Boolean | Object | null | undefined;
+export type NullOrLiteral = Number | Boolean | Object | null | undefined ;
 
 
 export function isStringAsNullOrLiteral(text: string): boolean {
@@ -19,5 +19,6 @@ export function isStringAsTrivialType(text: string): boolean {
         || text === 'false'
         || text === 'object'
         || text === 'Date'
+        || text === 'unknown'
         || text === 'any';
 }

@@ -41,7 +41,7 @@ export function getLeftBorder(char: RightBorder): LeftBorder {
 }
 
 
-export type HasLeftBorder = `{${string}` |`[{]${string}` |`(${string}` |`<${string}`;
+export type HasLeftBorder = `{${string}` |`[${string}` |`(${string}` |`<${string}`;
 export type HasRightBorder = `${string}}` |`${string}]` |`${string})` |`${string}>`;
 
 
