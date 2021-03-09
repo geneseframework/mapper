@@ -8,7 +8,7 @@ import { GLOBAL } from '../../const/global.const';
 export class MapGenericService {
 
     static async create(target: Generic, data: any, options: CreateOptions): Promise<any> {
-        console.log(chalk.yellowBright('HAS GENERICCCCC'), target, this.resolveGeneric(target));
+        // console.log(chalk.yellowBright('HAS GENERICCCCC'), target, this.resolveGeneric(target));
         return await MainService.mapToString(typeOfGeneric(target), data, options);
     }
 
@@ -16,7 +16,7 @@ export class MapGenericService {
     private static resolveGeneric(target: Generic): string {
         // TODO: check if two targets have same name
         const declarationInfo: DeclarationInfo = GLOBAL.getDeclarationInfo(typeOfGeneric(target));
-        console.log(chalk.cyanBright('RESOLVE GENERICCCCC'), declarationInfo);
+        // console.log(chalk.cyanBright('RESOLVE GENERICCCCC'), declarationInfo);
         return undefined;
     }
 
