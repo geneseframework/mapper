@@ -1,16 +1,8 @@
-import {
-    OptionalKind,
-    Project,
-    SourceFile,
-    TypeAliasDeclaration,
-    TypeAliasDeclarationStructure,
-    TypeParameterDeclarationStructure
-} from 'ts-morph';
+import { Project, SourceFile, TypeAliasDeclarationStructure } from 'ts-morph';
 import * as chalk from 'chalk';
 
 
 type FooType<T> = T extends string ? string : number;
-
 let fooVar: FooType<string>;
 
 
@@ -49,5 +41,16 @@ function getType(varName: string): string {
     return resolveGenericType(getFirstOrderType(varName))
 }
 
-const resolvedType: string = getType('fooVar');
+const resolvedType: string = getType('fooVar'); // ---> = 'string'
 console.log(chalk.greenBright('RESOLVEDDDDD'), resolvedType);
+
+
+
+type BarTypeParent = string;
+type BarType<T> = T extends BarTypeParent ? string : number;
+let barVar: BarType<string>;
+
+
+const resolvedBarType: string = getType('barVar'); // ---> TODO
+console.log(chalk.greenBright('RESOLVEDDDDD'), resolvedBarType);
+
