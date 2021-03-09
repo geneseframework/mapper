@@ -44,12 +44,19 @@ export class CheckTargetsService {
 
 
     private static async haveCorrectElements(texts: string[]): Promise<boolean> {
-        return texts.every(async t => await this.hasCorrectElements(t));
+        console.log(chalk.green('BEFORE HAVE CORRRRRR ????'), texts);
+        for (const text of texts) {
+            if (!await this.hasCorrectElements(text)) {
+                return false;
+            }
+        }
+        console.log(chalk.green('HAVE CORRRRRR ELTS !!!!'), texts);
+        return true;
     }
 
 
     private static async hasCorrectElements(text: string): Promise<boolean> {
-        return isPrimitiveType(text)
+        const zzz = isPrimitiveType(text)
             || isQuoted(text)
             || isStringAsTrivialType(text)
             || await this.isCorrectContainer(text)
@@ -58,7 +65,9 @@ export class CheckTargetsService {
             || await this.isCorrectComplexType(text)
             || this.isCorrectObject(text) // TODO
             || await this.isDeclaration(text)
-            || await this.isDeclaredOutOfProject(text)
+            || await this.isDeclaredOutOfProject(text);
+        console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
+        return zzz;
     }
 
 

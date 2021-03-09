@@ -24,3 +24,13 @@ export class TInterface<T> {
 testMappers.push(new TestMapper(`{name: 'a'} / TInterface<T>`, 'TInterface<T>', {name: 'a'}, {isolate: false}));
 testMappers.push(new TestMapper(`'a' / TInterface<T> / undefined`, 'TInterface<T>', 'a', {expectedValue: undefined, isolate: false}));
 
+
+
+// ---------------------------------------   Type with Generic extends   --------------------------------------------------
+
+
+export type TExtends<T extends string> = T extends string ? string : boolean;
+
+testMappers.push(new TestMapper(`'a' / TExtends<string>`, 'TExtends<string>', 'a', {isolate: true}));
+testMappers.push(new TestMapper(`2 / TExtends<string> / undefined`, 'TExtends<string>', 2, {expectedValue: undefined, isolate: false}));
+

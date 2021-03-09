@@ -17,20 +17,6 @@ export function hasSeparators(text: string): text is HasSeparators {
 export function splitSeparator(text: HasSeparators, separator: Separator): [first: string, others: string] {
     const split: string[] = text.split(separator);
     let first: string = split[0];
-    // if (hasExtends(first)) {
-    //     first = first.split('extends')[0];
-    // }
     const others: string = text.slice(first.length + separator.length);
     return [first, others];
 }
-
-
-// export function splitSeparator(text: HasSeparators): [first: string, others: string] {
-//     const split: string[] = text.split(/[,|&?:]/g);
-//     let first: string = split[0];
-//     if (hasExtends(first)) {
-//         first = first.split('extends')[0];
-//     }
-//     const others: string = text.slice(first.length + 1);
-//     return [first, others];
-// }
