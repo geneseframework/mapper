@@ -12,6 +12,7 @@ import { DeclarationInfo } from './declarations/declaration-info.model';
 
 export class Global {
 
+    checkedTargets: string[] = [];
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
@@ -27,6 +28,11 @@ export class Global {
 
     addDeclarationInfo(declarationInfo: DeclarationInfo): void {
         this.declarationInfos.push(declarationInfo);
+    }
+
+
+    check(target: string): void {
+        this.checkedTargets.push(target);
     }
 
 
@@ -47,6 +53,11 @@ export class Global {
 
     getTypeInfo(target: string): TypeInfo {
         return this.declarationInfos.find(d => isTypeInfo(d) && d.name === target) as TypeInfo;
+    }
+
+
+    wasChecked(target: string): boolean {
+        return this.checkedTargets.includes(target);
     }
 
 

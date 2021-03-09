@@ -95,3 +95,4 @@ export function trimTarget(text: string): string {
     const toRemoveAtTheEnd: RegExp = /([?, &|:] | extends)+$/g;
     return isString(text) ? text.replace(toRemoveAtTheBeginning, '').replace(toRemoveAtTheEnd, '') : '';
 }
+
