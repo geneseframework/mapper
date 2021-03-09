@@ -1,6 +1,7 @@
 import { IndexableType } from '../../types/indexable-type.type';
 import { Property } from '../../types/target/property.type';
 import { DeclarationInfo } from './declaration-info.model';
+import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 
 export class ClassInfo extends DeclarationInfo {
 
@@ -11,8 +12,8 @@ export class ClassInfo extends DeclarationInfo {
     properties: Property[] = [];
 
 
-    constructor(name: string, filePath: string, numberOfConstructorArguments: number, properties: Property[]) {
-        super(name, filePath, 'Class');
+    constructor(name: string, filePath: string, numberOfConstructorArguments: number, properties: Property[], typeParameters: any[] = []) {
+        super(name, filePath, 'Class', typeParameters);
         this.numberOfConstructorArguments = numberOfConstructorArguments;
         this.properties = properties;
     }

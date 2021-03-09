@@ -41,6 +41,11 @@ export class Global {
     }
 
 
+    getDeclarationInfo(target: string): DeclarationInfo {
+        return this.declarationInfos.find(d => d.name === target);
+    }
+
+
     getEnumInfo(target: string): EnumInfo {
         return this.declarationInfos.find(d => isEnumInfo(d) && d.name === target) as EnumInfo;
     }

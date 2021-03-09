@@ -7,8 +7,8 @@ export class InterfaceInfo extends DeclarationInfo {
     indexableType: IndexableType = undefined;
     properties: Property[] = [];
 
-    constructor(name: string, filePath: string, properties: Property[]) {
-        super(name, filePath, 'Interface');
+    constructor(name: string, filePath: string, properties: Property[], typeParameters: any[] = []) {
+        super(name, filePath, 'Interface', typeParameters);
         this.properties = properties;
     }
 

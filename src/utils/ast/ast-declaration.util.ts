@@ -8,7 +8,7 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { DeclarationOrDate } from '../../types/type-declaration.type';
+import { Declaration, DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -16,6 +16,7 @@ import { DateDeclaration } from '../../models/date-declaration.model';
 import { Property } from '../../types/target/property.type';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
+import { GenericParameter } from '../../types/target/generic-parameter.type';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -160,5 +161,10 @@ export function getProperties(declaration: ClassOrInterfaceDeclaration): Propert
     return declaration?.getStructure().properties.map(p => {
         return {name: p.name, type: p.type, initializer: p.initializer, isRequired: !p.hasQuestionToken} as Property;
     });
+}
+
+
+export function genericParameters(declaration: GenericableDeclaration): GenericParameter[] {
+    return declaration.getStructure().typeParameters;
 }
 

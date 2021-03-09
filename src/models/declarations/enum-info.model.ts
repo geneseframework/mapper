@@ -5,8 +5,8 @@ export class EnumInfo extends DeclarationInfo {
     values: any[] = [];
 
 
-    constructor(name: string, filePath: string) {
-        super(name, filePath, 'Enum');
+    constructor(name: string, filePath: string, typeParameters: any[] = []) {
+        super(name, filePath, 'Enum', typeParameters);
     }
 
 }
