@@ -1,1 +1,1 @@
-export type Separator = ',' | '|' | '&' | '?' | ':';
+export type Separator = ',' | '|' | '&' | '?' | ':' | 'extends';

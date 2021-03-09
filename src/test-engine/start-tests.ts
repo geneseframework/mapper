@@ -7,9 +7,8 @@ import { InitService } from '../services/init/init.service';
 GLOBAL.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
-    await InitService.start();
     const start = Date.now();
-    console.log(chalk.magentaBright('DECL INFOSSSSS'), GLOBAL.declarationInfos.length);
+    await InitService.start();
     const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);

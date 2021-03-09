@@ -10,7 +10,7 @@ export function implementsRequiredProperties(data: any, interfaceInfo: Interface
 
 
 
-// export function implementsRequiredProperties(data: any, interfaceDeclaration: InterfaceDeclaration): boolean {
+// export function implementsRequiredProperties(data: any, interfaceDeclaration: Interface): boolean {
 //     const requiredProperties: any[] = interfaceDeclaration.getProperties().filter(p => !p.hasQuestionToken()).map(p => p.getName());
 //     return includes(Object.keys(data), requiredProperties);
 // }

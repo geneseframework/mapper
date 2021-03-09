@@ -5,20 +5,28 @@ import { isString } from '../../utils/native/strings.util';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
 import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
-import { hasSeparators, splitSeparator } from '../../types/target/string/has-separators.type';
+import { hasSeparators } from '../../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { TargetService } from '../targets/target.service';
 import { isStringAsTrivialType } from '../../types/null-or-literal.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
+import { hasGeneric, tagOfGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
+import * as chalk from 'chalk';
+import { getElements, trimTarget } from '../../utils/target.util';
+import { GLOBAL } from '../../const/global.const';
 
 export class CheckTargetsService {
 
 
     static async start(target: string): Promise<void> {
+        if (GLOBAL.wasChecked(target)) {
+            return;
+        }
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
             throwTarget(target);
         }
+        GLOBAL.checkedTargets.push(target);
     }
 
 
@@ -40,26 +48,29 @@ export class CheckTargetsService {
     }
 
 
-    private static async haveCorrectElements(texts: string[]): Promise<boolean> {
-        return texts.every(async t => await this.hasCorrectElements(t));
-    }
-
-
     private static async hasCorrectElements(text: string): Promise<boolean> {
-        return isPrimitiveType(text)
+        const zzz = isPrimitiveType(text)
             || isQuoted(text)
             || isStringAsTrivialType(text)
             || await this.isCorrectContainer(text)
             || await this.isCorrectArrayType(text)
+            || await this.isCorrectGeneric(text)
             || await this.isCorrectComplexType(text)
             || this.isCorrectObject(text) // TODO
             || await this.isDeclaration(text)
-            || await this.isDeclaredOutOfProject(text)
+            || await this.isDeclaredOutOfProject(text);
+        // console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
+        return zzz;
     }
 
 
     private static async isCorrectArrayType(text: string): Promise<boolean> {
         return isArrayType(text) && await this.hasCorrectElements(typeOfArray(text));
+    }
+
+
+    private static async isCorrectGeneric(text: string): Promise<boolean> {
+        return hasGeneric(text) && await this.hasCorrectElements(typeOfGeneric(text)) && await this.hasCorrectElements(tagOfGeneric(text));
     }
 
 
@@ -69,7 +80,9 @@ export class CheckTargetsService {
 
 
     private static async isCorrectComplexType(text: string): Promise<boolean> {
-        return hasSeparators(text) && await this.haveCorrectElements(splitSeparator(text));
+        const zzz = getElements(text);
+        // console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), zzz);
+        return hasSeparators(text) && await this.haveCorrectElements(zzz);
     }
 
 
@@ -98,6 +111,20 @@ export class CheckTargetsService {
 
     private static async isDeclaredOutOfProject(text: string): Promise<boolean> {
         return await isDeclaredOutOfProjectAddItToGlobal(text);
+    }
+
+
+    private static async haveCorrectElements(texts: string[]): Promise<boolean> {
+        // console.log(chalk.green('BEFORE HAVE CORRRRRR ????'), texts);
+        for (const text of texts) {
+            // console.log(chalk.redBright('IS CORRRRRRECT ???'), text);
+            if (!await this.hasCorrectElements(trimTarget(text))) {
+                // console.log(chalk.redBright('IS NOT CORRRRRRECT !!!'), text);
+                return false;
+            }
+        }
+        // console.log(chalk.green('HAVE CORRRRRR ELTS !!!!'), texts);
+        return true;
     }
 
 }

@@ -15,5 +15,5 @@ export class WarningSpec {
     name: NonReadableType<any>;
 }
 
-// testMappers.push(new TestMapper(`'blue' / WarningSpec`, WarningSpec, {name: 'a'}, {expectedValue: undefined, createOptions: {throwTarget: {setToUndefined: true}}, isolate: true}));
+testMappers.push(new TestMapper(`'blue' / WarningSpec`, WarningSpec, {name: 'a'}, {expectedValue: undefined, createOptions: {throwTarget: {setToUndefined: true}}, isolate: false}));
 

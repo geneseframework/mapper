@@ -12,7 +12,7 @@ export class ClassInfo extends DeclarationInfo {
 
 
     constructor(name: string, filePath: string, numberOfConstructorArguments: number, properties: Property[]) {
-        super(name, filePath, 'ClassDeclaration');
+        super(name, filePath, 'Class');
         this.numberOfConstructorArguments = numberOfConstructorArguments;
         this.properties = properties;
     }

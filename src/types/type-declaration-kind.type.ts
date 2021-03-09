@@ -1,2 +1,2 @@
-export type TypeDeclarationKind =  'ClassDeclaration' | 'EnumDeclaration' | 'InterfaceDeclaration' | 'TypeAliasDeclaration' | 'DateDeclaration';
+export type TypeDeclarationKind =  'Class' | 'Enum' | 'Interface' | 'TypeAlias' | 'Date';
 

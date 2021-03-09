@@ -1,11 +1,8 @@
-import { TypeDeclarationKindEnum } from '../../enums/type-declaration-kind.enum';
 import { GLOBAL } from '../../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
     ImportDeclaration,
-    IndexSignatureDeclaration,
-    IndexSignatureDeclarationStructure,
     InterfaceDeclaration,
     SourceFile,
     SyntaxKind,
@@ -15,9 +12,7 @@ import { DeclarationOrDate } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { StringOrNumber } from '../../types/string-or-number.type';
 import { DateDeclaration } from '../../models/date-declaration.model';
-import { isPrimitiveTypeNode } from '../native/primitives.util';
 import { Property } from '../../types/target/property.type';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
@@ -33,27 +28,27 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
     if (!typeDeclaration) {
         return undefined;
     } else if (typeDeclaration instanceof ClassDeclaration) {
-        return 'ClassDeclaration';
+        return 'Class';
     } else if (typeDeclaration instanceof EnumDeclaration) {
-        return 'EnumDeclaration';
+        return 'Enum';
     } else if (typeDeclaration instanceof InterfaceDeclaration) {
-        return 'InterfaceDeclaration';
+        return 'Interface';
     } else if (typeDeclaration instanceof TypeAliasDeclaration) {
-        return 'TypeAliasDeclaration';
+        return 'TypeAlias';
     }
 }
 
 
 export function getTypeDeclaration(typeName: string): DeclarationOrDate {
-    const typeDeclarationKind: TypeDeclarationKindEnum = declarationKind(typeName);
+    const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
     switch (typeDeclarationKind) {
-        case TypeDeclarationKindEnum.CLASS_DECLARATION:
+        case 'Class':
             return getDeclaration(typeName, getDescendantClasses);
-        case TypeDeclarationKindEnum.ENUM_DECLARATION:
+        case 'Enum':
             return getDeclaration(typeName, getDescendantEnums);
-        case TypeDeclarationKindEnum.INTERFACE_DECLARATION:
+        case 'Interface':
             return getDeclaration(typeName, getDescendantInterfaces);
-        case TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION:
+        case 'TypeAlias':
             return getDeclaration(typeName, getDescendantTypeAliases);
         default:
             const typeScriptDeclaration: DeclarationOrDate = getTypeScriptDeclaration(typeName);
@@ -72,15 +67,15 @@ export function hasDeclaration(typeName: string): boolean {
 }
 
 
-function declarationKind(typeName: string): TypeDeclarationKindEnum {
+function declarationKind(typeName: string): TypeDeclarationKind {
     if (isClassDeclaration(typeName)) {
-        return TypeDeclarationKindEnum.CLASS_DECLARATION;
+        return 'Class';
     } else if (isEnumDeclaration(typeName)) {
-        return TypeDeclarationKindEnum.ENUM_DECLARATION;
+        return 'Enum';
     } else if (isInterfaceDeclaration(typeName)) {
-        return TypeDeclarationKindEnum.INTERFACE_DECLARATION;
+        return 'Interface';
     } else if (isTypeAliasDeclaration(typeName)) {
-        return TypeDeclarationKindEnum.TYPE_ALIAS_DECLARATION;
+        return 'TypeAlias';
     } else {
         return undefined;
     }
@@ -150,35 +145,6 @@ function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (s
 function getTypeScriptDeclaration(typeName: string): DeclarationOrDate {
     if (typeName === 'Date') {
         return new DateDeclaration();
-    }
-    return undefined;
-}
-
-
-export function indexSignatureWithSameType(key: StringOrNumber, value: any, declaration: ClassOrInterfaceDeclaration): string {
-    const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
-    if (indexSignatures.length === 0) {
-        return undefined;
-    } else if (indexSignatures.length === 1) {
-        return indexSignatureName(key, value, indexSignatures[0]);
-    } else {
-        throwWarning(`${declaration?.getName()} has multiple index signatures.`);
-        return undefined;
-    }
-}
-
-
-function indexSignatureName(key: StringOrNumber, value: any, indexSignature: IndexSignatureDeclaration): string {
-    const indexStructure: IndexSignatureDeclarationStructure = indexSignature?.getStructure();
-    if (indexStructure.keyType !== typeof key) {
-        return undefined;
-    }
-    const returnType: string = indexStructure.returnType as string;
-    if (isPrimitiveTypeNode(returnType) && returnType === typeof value) {
-        return returnType;
-    }
-    if (!isPrimitiveTypeNode(returnType) && value?.constructor.name === returnType) {
-        return returnType;
     }
     return undefined;
 }

@@ -12,6 +12,7 @@ import { DeclarationInfo } from './declarations/declaration-info.model';
 
 export class Global {
 
+    checkedTargets: string[] = [];
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
@@ -27,6 +28,11 @@ export class Global {
 
     addDeclarationInfo(declarationInfo: DeclarationInfo): void {
         this.declarationInfos.push(declarationInfo);
+    }
+
+
+    check(target: string): void {
+        this.checkedTargets.push(target);
     }
 
 
@@ -50,6 +56,11 @@ export class Global {
     }
 
 
+    wasChecked(target: string): boolean {
+        return this.checkedTargets.includes(target);
+    }
+
+
     isAlreadyDeclared(target: string): boolean {
         return !!this.declarationInfos.find(d => d.name === target);
     }
@@ -66,7 +77,7 @@ export class Global {
 
 
     get enumNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'EnumDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
     }
 
 
@@ -76,7 +87,7 @@ export class Global {
 
 
     get interfaceNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'InterfaceDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'Interface').map(d => d.name);
     }
 
 
@@ -94,7 +105,7 @@ export class Global {
 
 
     get typeNames(): string[] {
-        return this.declarationInfos.filter(d => d.kind === 'TypeAliasDeclaration').map(d => d.name);
+        return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
     }
 
 

@@ -70,7 +70,7 @@ testMappers.push(new TestMapper(`3 / ChildParentNumberOrBooleanAndStringSpec / '
 testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / undefined`, 'ChildParentNumberOrBooleanAndStringSpec', {}, {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
 
 
-// -----------------------------------------   Type defined by a ClassDeclaration   --------------------------------------------------
+// -----------------------------------------   Type defined by a Class   --------------------------------------------------
 
 
 export class CompanyAloneClassSpec {
@@ -118,7 +118,7 @@ testMappers.push(new TestMapper(`['a', 2] / UnionTypeStringOrStringsSpec / ['a',
 
 
 
-// --------------------------------------   Union types ClassDeclaration | string   --------------------------------------------------
+// --------------------------------------   Union types Class | string   --------------------------------------------------
 
 
 export class ClassStringSpec {
@@ -132,7 +132,7 @@ testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'Un
 testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
 
 
-// ---------------------------------   Union of two Classes, and one ClassDeclaration[]   --------------------------------------------
+// ---------------------------------   Union of two Classes, and one Class[]   --------------------------------------------
 
 
 export type EmployerTypeSpec = NgoClassSpec | NgoClassSpec[] | CompanyClassSpec;
