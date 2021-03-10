@@ -80,6 +80,7 @@ export class DeclarationInfoService {
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
+        typeInfo.type = typeDeclaration.getStructure()?.type as string;
         GLOBAL.addDeclarationInfo(typeInfo);
     }
 

@@ -13,8 +13,7 @@ export class MapTypeService {
         const typeDeclaration: TypeAliasDeclaration = getTypeDeclaration(target) as TypeAliasDeclaration;
         // console.log(chalk.blueBright('MAP TYPEEEEE'), typeDeclaration.getStructure());
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
-        // console.log(chalk.cyanBright('MAP TYPEEEEE INFOOOOO'), typeInfo);
-        return await MainService.mapToString(typeDeclaration.getStructure().type as string, data, options);
+        return await MainService.mapToString(typeInfo.type, data, options);
     }
 
 }
