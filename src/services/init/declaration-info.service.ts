@@ -10,7 +10,6 @@ import { EnumInfo } from '../../models/declarations/enum-info.model';
 import { TypeInfo } from '../../models/declarations/type-info.model';
 import { getIndexableType } from '../../utils/native/indexable-type.util';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
-import { GenericParameter } from '../../types/target/generic-parameter.type';
 
 export class DeclarationInfoService {
 

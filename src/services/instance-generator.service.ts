@@ -2,10 +2,8 @@ import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/native/strings.util';
-import { flat } from '../utils/native/arrays.util';
-import { numberOfConstructorArgs, hasPrivateConstructor } from '../utils/ast/ast-class.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
-import { ClassInfo } from '../models/declarations/class-info.model';
 
 export class InstanceGeneratorService {
 
