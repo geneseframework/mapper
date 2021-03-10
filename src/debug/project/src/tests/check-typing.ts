@@ -17,7 +17,7 @@ class BarClass {
 }
 
 /**
- * The compilation should crash if one of the result values has wrong type
+ * The compilation should crash if one of the result initializers has wrong type
  */
 async function checkTyping() {
 

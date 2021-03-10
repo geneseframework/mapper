@@ -10,6 +10,9 @@ import { EnumInfo } from '../../models/declarations/enum-info.model';
 import { TypeInfo } from '../../models/declarations/type-info.model';
 import { getIndexableType } from '../../utils/native/indexable-type.util';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
+import * as chalk from 'chalk';
+import { removeBorders } from '../../types/target/string/containerized.type';
+import { isQuoted } from '../../types/target/string/quoted.type';
 
 export class DeclarationInfoService {
 
@@ -66,6 +69,8 @@ export class DeclarationInfoService {
 
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
         const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
+        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => isQuoted(m.initializer as string) ? removeBorders(m.initializer as string) : m.initializer as string);
+        // console.log(chalk.blueBright('ENU MVALLLLS'), enumInfo.initializers);
         GLOBAL.addDeclarationInfo(enumInfo);
     }
 

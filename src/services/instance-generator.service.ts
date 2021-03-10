@@ -120,7 +120,7 @@ export class InstanceGeneratorService {
     /**
      * Returns the code corresponding to the parameters of the constructor of a given class
      * Each parameter is replaced by "undefined"
-     * => Each instance will be created with the default values of the corresponding class
+     * => Each instance will be created with the default initializers of the corresponding class
      * @param instanceGenerator
      * @private
      */

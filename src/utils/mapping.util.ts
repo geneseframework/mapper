@@ -1,6 +1,6 @@
 
 /**
- * Calls a mapper function asking target and key values and returns the element mapped by this function
+ * Calls a mapper function asking target and key initializers and returns the element mapped by this function
  * @param mapper
  * @param args
  */
