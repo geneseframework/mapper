@@ -1,9 +1,10 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
-import { GLOBAL } from '../const/global.const';
+// import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/native/strings.util';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
+import { INIT } from '../init/init.const';
 
 export class InstanceGeneratorService {
 
@@ -17,7 +18,7 @@ export class InstanceGeneratorService {
 
     static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
-            GLOBAL.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
+            INIT.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }
@@ -44,8 +45,8 @@ export class InstanceGeneratorService {
      */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
-        GLOBAL.instanceGeneratorSourceFile = GLOBAL.project.createSourceFile(GLOBAL.instanceGeneratorPath, code, {overwrite: true});
-        GLOBAL.instanceGeneratorSourceFile.saveSync();
+        INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
+        INIT.instanceGeneratorSourceFile.saveSync();
         await this.setGlobalGenerateInstance();
     }
 
@@ -74,10 +75,10 @@ export class InstanceGeneratorService {
      * @private
      */
     private static async setGlobalGenerateInstance(): Promise<void> {
-        const switchStatement: SwitchStatement = GLOBAL.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
+        const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
         let switchCode = `switch (instanceGenerator.id) {\n`;
         let importsCode = ''
-        for (const instanceGenerator of GLOBAL.instanceGenerators) {
+        for (const instanceGenerator of INIT.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
             importsCode = `${importsCode}${tab}${this.importsCode(instanceGenerator)}`;
         }
@@ -86,11 +87,11 @@ export class InstanceGeneratorService {
             `${tabs(2)}instance = undefined;\n` +
             `}\n`;
         switchStatement.replaceWithText(switchCode);
-        GLOBAL.instanceGeneratorSourceFile.fixMissingImports();
-        GLOBAL.instanceGeneratorSourceFile.saveSync();
-        const mjsPath = GLOBAL.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
-        await ensureDirAndCopy(GLOBAL.instanceGeneratorSourceFile.getFilePath(), mjsPath);
-        GLOBAL.generateInstance = await require(mjsPath).generateInstance;
+        INIT.instanceGeneratorSourceFile.fixMissingImports();
+        INIT.instanceGeneratorSourceFile.saveSync();
+        const mjsPath = INIT.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
+        await ensureDirAndCopy(INIT.instanceGeneratorSourceFile.getFilePath(), mjsPath);
+        INIT.generateInstance = await require(mjsPath).generateInstance;
     }
 
 

@@ -1,7 +1,7 @@
-import { CONFIG } from '../../const/config.const';
-import { Config } from '../../models/config.model';
-import { requireJsonFile } from '../../utils/file-system.util';
-import { GLOBAL } from '../../const/global.const';
+import { CONFIG } from '../const/config.const';
+import { Config } from '../models/config.model';
+import { requireJsonFile } from '../utils/file-system.util';
+import { GLOBAL } from '../const/global.const';
 
 export class InitConfigService {
 

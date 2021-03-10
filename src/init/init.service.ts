@@ -1,8 +1,9 @@
 import { Project } from 'ts-morph';
-import { GLOBAL } from '../../const/global.const';
 import { InitConfigService } from './init-config.service';
-import { InstanceGeneratorService } from '../instance-generator.service';
+import { InstanceGeneratorService } from '../services/instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
+import { INIT } from './init.const';
+import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 
@@ -12,13 +13,14 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        // GLOBAL.logDuration('START OF INIT PROCESS');
-        if (GLOBAL.isFirstMapper) {
+        INIT.logDuration('START OF INIT PROCESS');
+        if (INIT.isFirstMapper) {
             await this.init();
+            console.log(chalk.magentaBright('HEREEEEEEE'));
             await DeclarationInfoService.init();
             await InstanceGeneratorService.start();
         }
-        // GLOBAL.logDuration('END OF INIT PROCESS');
+        INIT.logDuration('END OF INIT PROCESS');
     }
 
 
@@ -27,11 +29,13 @@ export class InitService {
      * @private
      */
     private static async init(): Promise<void> {
-        if (GLOBAL.isAlreadyInitialized) {
-            return;
-        }
-        GLOBAL.debug ? this.createDebugProject() : this.createProject();
-        GLOBAL.isAlreadyInitialized = true;
+        console.log(chalk.greenBright('HEREEEEEEE'), INIT.debug);
+        // if (INIT.isAlreadyInitialized) {
+        //     return;
+        // }
+        INIT.debug ? this.createDebugProject() : this.createProject();
+        console.log(chalk.greenBright('HEREEEEEEE 222'));
+        // INIT.isAlreadyInitialized = true;
         this.setGlobalNodeModulePath();
         await InitConfigService.start();
     }
@@ -42,9 +46,9 @@ export class InitService {
      * @private
      */
     private static createProject(): void {
-        GLOBAL.projectPath = appRoot;
-        GLOBAL.project = new Project({
-            tsConfigFilePath: GLOBAL.configFilePath,
+        INIT.projectPath = appRoot;
+        INIT.project = new Project({
+            tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
         });
     }
@@ -55,20 +59,20 @@ export class InitService {
      * @private
      */
     private static createDebugProject(): void {
-        GLOBAL.projectPath = process.cwd();
-        GLOBAL.project = new Project({
-            tsConfigFilePath: GLOBAL.configFilePath,
+        INIT.projectPath = process.cwd();
+        INIT.project = new Project({
+            tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
         });
-        GLOBAL.project.addSourceFilesAtPaths(`${GLOBAL.projectPath}/src/debug/**/*{.d.ts,.ts}`);
+        INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
     }
 
 
     /**
-     * Sets GLOBAL.nodeModulePath with the path of the @genese/mapper module
+     * Sets INIT.nodeModulePath with the path of the @genese/mapper module
      * @private
      */
     private static setGlobalNodeModulePath(): void {
-        GLOBAL.nodeModulePath = GLOBAL.debug ? GLOBAL.projectPath : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
+        INIT.nodeModulePath = INIT.debug ? INIT.projectPath : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

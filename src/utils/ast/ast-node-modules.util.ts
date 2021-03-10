@@ -13,7 +13,7 @@ import { throwWarning } from '../errors.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { DeclarationInfoService } from '../../services/init/declaration-info.service';
+import { DeclarationInfoService } from '../../init/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
 
 

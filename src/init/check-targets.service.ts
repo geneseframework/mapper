@@ -1,20 +1,20 @@
-import { throwTarget } from '../../utils/errors.util';
-import { isPrimitiveType } from '../../types/primitives.type';
-import { isNullOrUndefined } from '../../utils/native/any.util';
-import { isString } from '../../utils/native/strings.util';
-import { isQuoted } from '../../types/target/string/quoted.type';
-import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
-import { hasSeparators } from '../../types/target/string/has-separators.type';
-import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { TargetService } from '../targets/target.service';
-import { isStringAsTrivialType } from '../../types/null-or-literal.type';
-import { removeBorders } from '../../types/target/string/containerized.type';
-import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
-import { hasGeneric, tagOfGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
+import { throwTarget } from '../utils/errors.util';
+import { isPrimitiveType } from '../types/primitives.type';
+import { isNullOrUndefined } from '../utils/native/any.util';
+import { isString } from '../utils/native/strings.util';
+import { isQuoted } from '../types/target/string/quoted.type';
+import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
+import { hasDeclaration } from '../utils/ast/ast-declaration.util';
+import { hasSeparators } from '../types/target/string/has-separators.type';
+import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
+import { TargetService } from '../services/targets/target.service';
+import { isStringAsTrivialType } from '../types/null-or-literal.type';
+import { removeBorders } from '../types/target/string/containerized.type';
+import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
+import { hasGeneric, tagOfGeneric, typeOfGeneric } from '../types/target/string/generics.type';
 import * as chalk from 'chalk';
-import { getElements, trimTarget } from '../../utils/target.util';
-import { GLOBAL } from '../../const/global.const';
+import { getElements, trimTarget } from '../utils/target.util';
+import { GLOBAL } from '../const/global.const';
 
 export class CheckTargetsService {
 

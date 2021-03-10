@@ -1,18 +1,16 @@
-import { ClassInfo } from '../../models/declarations/class-info.model';
+import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { flat } from '../../utils/native/arrays.util';
-import { GLOBAL } from '../../const/global.const';
-import { hasPrivateConstructor, numberOfConstructorArgs } from '../../utils/ast/ast-class.util';
-import { InstanceGeneratorService } from '../instance-generator.service';
-import { genericParameters, getProperties } from '../../utils/ast/ast-declaration.util';
-import { sourceFilePath } from '../../utils/ast/ast-sourcefile.util';
-import { EnumInfo } from '../../models/declarations/enum-info.model';
-import { TypeInfo } from '../../models/declarations/type-info.model';
-import { getIndexableType } from '../../utils/native/indexable-type.util';
-import { InterfaceInfo } from '../../models/declarations/interface-info.model';
-import * as chalk from 'chalk';
-import { removeBorders } from '../../types/target/string/containerized.type';
-import { isQuoted, removeQuotes } from '../../types/target/string/quoted.type';
+import { flat } from '../utils/native/arrays.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
+import { InstanceGeneratorService } from '../services/instance-generator.service';
+import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
+import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
+import { EnumInfo } from '../models/declarations/enum-info.model';
+import { TypeInfo } from '../models/declarations/type-info.model';
+import { getIndexableType } from '../utils/native/indexable-type.util';
+import { InterfaceInfo } from '../models/declarations/interface-info.model';
+import { removeQuotes } from '../types/target/string/quoted.type';
+import { INIT } from './init.const';
 
 export class DeclarationInfoService {
 
@@ -26,7 +24,7 @@ export class DeclarationInfoService {
 
 
     private static async setClassInfos(): Promise<void> {
-        const classDeclarations: ClassDeclaration[] = GLOBAL.project.getSourceFiles().map(s => s.getClasses()).flat();
+        const classDeclarations: ClassDeclaration[] = INIT.project.getSourceFiles().map(s => s.getClasses()).flat();
         const alreadyDone: string[] = []
         for (const classDeclaration of classDeclarations) {
             this.addClassInfo(classDeclaration, alreadyDone);
@@ -40,12 +38,12 @@ export class DeclarationInfoService {
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
         classInfo.indexableType = getIndexableType(classDeclaration);
-        GLOBAL.addDeclarationInfo(classInfo);
+        INIT.addDeclarationInfo(classInfo);
     }
 
 
     private static setInterfaceInfos(): void {
-        const interfaceDeclarations: InterfaceDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getInterfaces()));
+        const interfaceDeclarations: InterfaceDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
         for (const interfaceDeclaration of interfaceDeclarations) {
             this.addInterfaceInfo(interfaceDeclaration);
         }
@@ -55,12 +53,12 @@ export class DeclarationInfoService {
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
         const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
-        GLOBAL.addDeclarationInfo(interfaceInfo);
+        INIT.addDeclarationInfo(interfaceInfo);
     }
 
 
     private static setEnumInfos(): void {
-        const enumDeclarations: EnumDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getEnums()));
+        const enumDeclarations: EnumDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getEnums()));
         for (const enumDeclaration of enumDeclarations) {
             this.addEnumInfo(enumDeclaration);
         }
@@ -71,12 +69,12 @@ export class DeclarationInfoService {
         const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
         enumInfo.initializers = enumDeclaration.getStructure().members.map(m => removeQuotes(m.initializer as string));
         // console.log(chalk.blueBright('ENU MVALLLLS'), enumInfo.initializers);
-        GLOBAL.addDeclarationInfo(enumInfo);
+        INIT.addDeclarationInfo(enumInfo);
     }
 
 
     private static setTypeInfos(): void {
-        const typeDeclarations: TypeAliasDeclaration[] = flat(GLOBAL.project.getSourceFiles().map(s => s.getTypeAliases()));
+        const typeDeclarations: TypeAliasDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
         for (const typeDeclaration of typeDeclarations) {
             this.addTypeInfo(typeDeclaration);
         }
@@ -86,7 +84,7 @@ export class DeclarationInfoService {
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
         typeInfo.type = typeDeclaration.getStructure()?.type as string;
-        GLOBAL.addDeclarationInfo(typeInfo);
+        INIT.addDeclarationInfo(typeInfo);
     }
 
 

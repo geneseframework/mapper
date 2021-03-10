@@ -1,18 +1,22 @@
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
-import { GLOBAL } from '../const/global.const';
-import { InitService } from '../services/init/init.service';
+// import { GLOBAL } from '../const/global.const';
 import { init } from '../init';
+import { INIT } from '../init/init.const';
 
-GLOBAL.debug = true;
+INIT.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
-    GLOBAL.start = Date.now();
+    // GLOBAL.start = Date.now();
+    console.log(chalk.blueBright('START TESTSSSSSS'));
+    INIT.start = Date.now();
     await init();
-    // await InitService.start();
-    const specFiles: string[] = GLOBAL.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
+    console.log(chalk.cyanBright('FINISHED INITTTTTT'));
+    console.log(chalk.cyanBright('SRCFFFFFF'), INIT.project.getSourceFiles().length);
+    const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
+    console.log(chalk.cyanBright('FINISHED INITTTTTT specfilessss'), specFiles);
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {

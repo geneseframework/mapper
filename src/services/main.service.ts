@@ -15,7 +15,7 @@ import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
-import { CheckTargetsService } from './init/check-targets.service';
+import { CheckTargetsService } from '../init/check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
