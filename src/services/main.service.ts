@@ -2,11 +2,7 @@ import { Target } from '../types/target/target.type';
 import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
-import { InitService } from './init/init.service';
-import {
-    hasDeclaration,
-    isInterfaceDeclaration
-} from '../utils/ast/ast-declaration.util';
+import { hasDeclaration } from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -28,9 +24,8 @@ import { isObjectLiteralType } from '../utils/native/objects.util';
 import { MapLiteralObjectService } from './map/map-literal-object.service';
 import { GLOBAL } from '../const/global.const';
 import { hasSeparators } from '../types/target/string/has-separators.type';
-import { throwTarget, throwWarning } from '../utils/errors.util';
+import { throwWarning } from '../utils/errors.util';
 import { MapOutOfProjectService } from './map/map-out-of-project.service';
-import * as chalk from 'chalk';
 import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
 import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
@@ -51,7 +46,7 @@ export class MainService {
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
-        await InitService.start();
+        // await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }

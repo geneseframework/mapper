@@ -1,5 +1,5 @@
 /**
- * Check if two objects have the same values for every key
+ * Check if two objects have the same initializers for every key
  */
 
 export function isSameObject(obj1: any, obj2: any, differentiateStringsAndNumbers = false): boolean {

@@ -5,7 +5,7 @@ export const testMappers: TestMapper[] = [];
 
 
 // ------------------------------------------------------------------------------------------------------------------------
-// ----------------------------------------   Primitives and default values   ---------------------------------------------
+// ----------------------------------------   Primitives and default initializers   ---------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -80,7 +80,7 @@ testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}
 testMappers.push(new TestMapper(`{a: 'a', 0: 3, 1: 'b'} / IndexableNumberSpec / {a: 'a', 0: undefined, 1: 'b'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
 
 
-// --------------------------------------------------   Default values   --------------------------------------------------
+// --------------------------------------------------   Default initializers   --------------------------------------------------
 
 
 export class ValuesByDefault {
@@ -96,7 +96,7 @@ testMappers.push(new TestMapper(`{} / ValuesByDefault / {a: 'z', b: 2, c: false,
 
 
 
-// --------------------------------------------   Constructor with default values   ---------------------------------------
+// --------------------------------------------   Constructor with default initializers   ---------------------------------------
 
 
 export class ValuesOnConstructor {

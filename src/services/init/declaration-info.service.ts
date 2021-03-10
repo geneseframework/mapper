@@ -10,7 +10,9 @@ import { EnumInfo } from '../../models/declarations/enum-info.model';
 import { TypeInfo } from '../../models/declarations/type-info.model';
 import { getIndexableType } from '../../utils/native/indexable-type.util';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
-import { GenericParameter } from '../../types/target/generic-parameter.type';
+import * as chalk from 'chalk';
+import { removeBorders } from '../../types/target/string/containerized.type';
+import { isQuoted, removeQuotes } from '../../types/target/string/quoted.type';
 
 export class DeclarationInfoService {
 
@@ -67,6 +69,8 @@ export class DeclarationInfoService {
 
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
         const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
+        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => removeQuotes(m.initializer as string));
+        // console.log(chalk.blueBright('ENU MVALLLLS'), enumInfo.initializers);
         GLOBAL.addDeclarationInfo(enumInfo);
     }
 
@@ -81,6 +85,7 @@ export class DeclarationInfoService {
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
+        typeInfo.type = typeDeclaration.getStructure()?.type as string;
         GLOBAL.addDeclarationInfo(typeInfo);
     }
 

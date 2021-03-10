@@ -2,10 +2,8 @@ import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/native/strings.util';
-import { flat } from '../utils/native/arrays.util';
-import { numberOfConstructorArgs, hasPrivateConstructor } from '../utils/ast/ast-class.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
-import { ClassInfo } from '../models/declarations/class-info.model';
 
 export class InstanceGeneratorService {
 
@@ -122,7 +120,7 @@ export class InstanceGeneratorService {
     /**
      * Returns the code corresponding to the parameters of the constructor of a given class
      * Each parameter is replaced by "undefined"
-     * => Each instance will be created with the default values of the corresponding class
+     * => Each instance will be created with the default initializers of the corresponding class
      * @param instanceGenerator
      * @private
      */
