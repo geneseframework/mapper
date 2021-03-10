@@ -14,9 +14,8 @@
         "publish_package": "npm run build && npm publish",
         "republish_package": "npm unpublish -f && npm run build && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
-        "test": "ts-node src/test-engine/start-tests-with-passed.ts",
-        "test-all": "npm t && npm run test-type-checking",
-        "test-fails": "ts-node src/test-engine/start-tests-without-passed.ts",
+        "test": "ts-node -P tsconfig.tests.json ./src/test-engine/start-tests-with-passed.ts",
+        "test-fails": "ts-node -P tsconfig.tests.json  ./src/test-engine/start-tests-without-passed.ts",
         "test-type-checking": "ts-node src/test-engine/test-type-checking.ts"
     },
     "dependencies": {
