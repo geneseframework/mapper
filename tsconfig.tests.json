@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "commonjs",
+        "target": "es5",
         "target": "es5",
         "declaration": true,
         "lib": [
