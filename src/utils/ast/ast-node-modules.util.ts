@@ -18,6 +18,7 @@ import { getDeclarationKind, getImportDeclarations } from './ast-declaration.uti
 
 
 // TODO: Add imported classes in new instance generator file
+// TODO: remove ts-morph from runtime
 export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promise<boolean> {
     const declarations: ImportDeclaration[] = getImportDeclarations(target);
     if (declarations.length === 0) {

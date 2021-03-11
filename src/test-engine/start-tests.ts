@@ -10,13 +10,10 @@ INIT.debug = true;
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
     // GLOBAL.start = Date.now();
-    console.log(chalk.blueBright('START TESTSSSSSS'));
+    console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
     await init();
-    console.log(chalk.cyanBright('FINISHED INITTTTTT'));
-    console.log(chalk.cyanBright('SRCFFFFFF'), INIT.project.getSourceFiles().length);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
-    console.log(chalk.cyanBright('FINISHED INITTTTTT specfilessss'), specFiles);
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {

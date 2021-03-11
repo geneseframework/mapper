@@ -13,14 +13,13 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        INIT.logDuration('START OF INIT PROCESS');
+        // INIT.logDuration('START OF INIT PROCESS');
         if (INIT.isFirstMapper) {
             await this.init();
-            console.log(chalk.magentaBright('HEREEEEEEE'));
             await DeclarationInfoService.init();
             await InstanceGeneratorService.start();
         }
-        INIT.logDuration('END OF INIT PROCESS');
+        // INIT.logDuration('END OF INIT PROCESS');
     }
 
 
@@ -29,12 +28,10 @@ export class InitService {
      * @private
      */
     private static async init(): Promise<void> {
-        console.log(chalk.greenBright('HEREEEEEEE'), INIT.debug);
         // if (INIT.isAlreadyInitialized) {
         //     return;
         // }
         INIT.debug ? this.createDebugProject() : this.createProject();
-        console.log(chalk.greenBright('HEREEEEEEE 222'));
         // INIT.isAlreadyInitialized = true;
         this.setGlobalNodeModulePath();
         await InitConfigService.start();

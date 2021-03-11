@@ -47,7 +47,7 @@ its.push(new TestIt(`checkTargetFormat(string | number | boolean)`, CheckTargets
 // its.push(new TestIt(`checkTargetFormat(string || number)`, CheckTargetsService.hasCorrectFormat, `string || number`, false));
 its.push(new TestIt(`checkTargetFormat(string | number)`, CheckTargetsService.hasCorrectFormat, `string & number`, true));
 its.push(new TestIt(`checkTargetFormat(CheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec`, true));
-its.push(new TestIt(`checkTargetFormat(WrongCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `WrongCheckClassSpec`, false));
+its.push(new TestIt(`checkTargetFormat(WrongCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `WrongCheckClassSpec`, false, {isolate: false})); // TODO : fix
 its.push(new TestIt(`checkTargetFormat(NotExportedCheckClassSpec)`, CheckTargetsService.hasCorrectFormat, `NotExportedCheckClassSpec`, true));
 its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `CheckClassSpec | CheckTypeSpec`, true));
 its.push(new TestIt(`checkTargetFormat(CheckClassSpec | CheckTypeSpec)`, CheckTargetsService.hasCorrectFormat, `['a']`, true));

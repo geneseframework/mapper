@@ -3,13 +3,13 @@ import { CreateOptions } from '../models/create-options.model';
 import { CONFIG } from '../const/config.const';
 
 export function throwError(message = '', value: any = ''): never {
-    console.log(`Error : ${message}`, value);
+    console.log(`Error : ${message}\n`, value);
     // console.log(chalk.redBright(`Error : ${message}`), value);
     throw Error(value);
 }
 
 export function throwWarning(message = '', value: any = ''): void {
-    console.log(`Warning : ${message}`, value);
+    console.log(`Warning : ${message}\n`, value);
     // console.log(chalk.yellowBright(`Warning : ${message}`), value);
 }
 

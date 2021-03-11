@@ -25,10 +25,9 @@ import { MapLiteralObjectService } from './map/map-literal-object.service';
 import { GLOBAL } from '../const/global.const';
 import { hasSeparators } from '../types/target/string/has-separators.type';
 import { throwWarning } from '../utils/errors.util';
-import { MapOutOfProjectService } from './map/map-out-of-project.service';
-import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
 import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
+import { INIT } from '../init/init.const';
 
 export class MainService {
 
@@ -45,6 +44,8 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
+        GLOBAL.declarationInfos = INIT.declarationInfos;
+        GLOBAL.generateInstance = INIT.generateInstance;
         // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         // await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
@@ -88,11 +89,11 @@ export class MainService {
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
-        } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
-            return await MapOutOfProjectService.create(target, data, options);
+        // } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
+        //     return await MapOutOfProjectService.create(target, data, options);
         } else {
             // TODO : finish to implement
-            throwWarning(`type not found : "${target}`);
+            throwWarning(`type not found : "${target}".`);
             return await MapComplexService.create(target, data, options);
             // return throwTarget(target, data, options);
         }
