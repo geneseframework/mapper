@@ -91,7 +91,7 @@ export interface TupleInterfaceSpec {
     name: string;
 }
 
-testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `[TupleInterfaceSpec, TupleInterfaceSpec]`,[{name: 'Léa'}, {name: 'Léo'}]));
+testMappers.push(new TestMapper(`[{name: 'Léa'}, {name: 'Léo'}] / [TupleInterfaceSpec, TupleInterfaceSpec]`, `[TupleInterfaceSpec, TupleInterfaceSpec]`,[{name: 'Léa'}, {name: 'Léo'}], {isolate: false}));
 testMappers.push(new TestMapper(`[{name: 'Léa'}, 'Blue'] / [TupleInterfaceSpec, string]`, `[TupleInterfaceSpec, string]`,[{name: 'Léa'}, 'Blue']));
 
 

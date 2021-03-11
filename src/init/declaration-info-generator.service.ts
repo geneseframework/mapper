@@ -1,15 +1,18 @@
-import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { tab, tabs } from '../utils/native/strings.util';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
 import { INIT } from './init.const';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-import * as chalk from 'chalk';
-import { isClassInfo } from '../utils/declaration-info.util';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { Property } from '../types/target/property.type';
 import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
 import { GLOBAL } from '../const/global.const';
+import { TypeInfo } from '../models/declarations/type-info.model';
+import { addQuotes } from '../types/target/string/quoted.type';
+import { InterfaceInfo } from '../models/declarations/interface-info.model';
+import { EnumInfo } from '../models/declarations/enum-info.model';
 
 export class DeclarationInfoGeneratorService {
 
@@ -22,6 +25,8 @@ export class DeclarationInfoGeneratorService {
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
+        const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
+        await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
         GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
     }
 
@@ -55,10 +60,9 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `import { DeclarationInfo } from '../models/declarations/declaration-info.model';\n\n` +
-            `const declarationInfos = [\n` +
+        return `const declarationInfos = [\n` +
             `${declarationInfosCode}` +
-            `] as DeclarationInfo[];\n` +
+            `];\n` +
             `exports.DECLARATION_INFOS = declarationInfos;`;
     }
 
@@ -75,9 +79,9 @@ export class DeclarationInfoGeneratorService {
     private static getDeclarationInfoCode(declarationInfo: DeclarationInfo): string {
         const typeParametersCode: string = this.getTypeParametersCode(declarationInfo);
         let code = `${tab}{\n` +
-            `${tabs(2)}filePath: \`${declarationInfo.filePath}\`,\n` +
-            `${tabs(2)}kind: \`${declarationInfo.kind}\`,\n` +
-            `${tabs(2)}name: \`${declarationInfo.name}\`,\n` +
+            `${tabs(2)}filePath: ${addQuotes(declarationInfo.filePath)},\n` +
+            `${tabs(2)}kind: ${addQuotes(declarationInfo.kind)},\n` +
+            `${tabs(2)}name: ${addQuotes(declarationInfo.name)},\n` +
             `${tabs(2)}typeParameters: [\n` +
             `${tabs(2)}${typeParametersCode}` +
             `],\n` +
@@ -99,6 +103,12 @@ export class DeclarationInfoGeneratorService {
     private static getSpecificCode(declarationInfo: DeclarationInfo): string {
         if (isClassInfo(declarationInfo)) {
             return this.getSpecificClassCode(declarationInfo);
+        } else if (isInterfaceInfo(declarationInfo)) {
+            return this.getSpecificInterfaceCode(declarationInfo);
+        } else if (isEnumInfo(declarationInfo)) {
+            return this.getSpecificEnumCode(declarationInfo);
+        } else if (isTypeInfo(declarationInfo)) {
+            return this.getSpecificTypeCode(declarationInfo);
         }
         return '';
     }
@@ -106,13 +116,34 @@ export class DeclarationInfoGeneratorService {
 
     private static getSpecificClassCode(classInfo: ClassInfo): string {
         let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
-        `${tabs(2)}indexableType: \`${classInfo.indexableType}\`,\n` +
-        `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
-        `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
-        `${tabs(2)}properties: [\n` +
-        `${this.getSpecificPropertiesCode(classInfo)}` +
-        `${tabs(2)}],\n`;
+            `${this.getIndexableTypeCode(classInfo)}` +
+            `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
+            `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
+            `${tabs(2)}properties: [\n` +
+            `${this.getSpecificPropertiesCode(classInfo)}` +
+            `${tabs(2)}],\n`;
         return code;
+    }
+
+
+    private static getSpecificInterfaceCode(interfaceInfo: InterfaceInfo): string {
+        let code = `${this.getIndexableTypeCode(interfaceInfo)}` +
+            `${tabs(2)}properties: [\n` +
+            `${this.getSpecificPropertiesCode(interfaceInfo)}` +
+            `${tabs(2)}],\n`;
+        return code;
+    }
+
+
+    private static getIndexableTypeCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
+        if (!classOrInterfaceInfo.indexableType) {
+            return '';
+        } else {
+            return `${tabs(2)}indexableType: {\n` +
+                `${tabs(3)}returnType: ${addQuotes(classOrInterfaceInfo.indexableType?.returnType)},\n` +
+                `${tabs(3)}type: ${addQuotes(classOrInterfaceInfo.indexableType?.type)}\n` +
+                `${tabs(2)}},\n`;
+        }
     }
 
 
@@ -127,37 +158,29 @@ export class DeclarationInfoGeneratorService {
 
     private static getSpecificPropertyCode(property: Property): string {
         let code = `${tabs(2)}{\n` +
-            `${tabs(3)}initializer: \`${property.initializer}\`,\n` +
+            `${tabs(3)}initializer: ${addQuotes(property.initializer)},\n` +
             `${tabs(3)}isRequired: ${property.isRequired},\n` +
-            `${tabs(3)}name: \`${property.name}\`,\n` +
-            `${tabs(3)}type: \`${property.type}\`\n` +
+            `${tabs(3)}name: ${addQuotes(property.name)},\n` +
+            `${tabs(3)}type: ${addQuotes(property.type)}\n` +
             `${tabs(2)}}`;
         return code;
     }
 
 
-    /**
-     * Sets the generators for each exported class and saves the file.
-     * @private
-     */
-    private static async setGlobalGenerateInstance(): Promise<void> {
-        const switchStatement: SwitchStatement = INIT.declarationInfoSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        let switchCode = `switch (declarationInfo.id) {\n`;
-        let importsCode = ''
-        for (const declarationInfo of INIT.declarationInfos) {
-            // switchCode = `${switchCode}${tab}${this.switchClause(declarationInfo)}`;
-            // importsCode = `${importsCode}${tab}${this.importsCode(declarationInfo)}`;
+    //TODO : Types with antiquotes
+    private static getSpecificTypeCode(typeInfo: TypeInfo): string {
+        let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
+        return code;
+    }
+
+
+    private static getSpecificEnumCode(enumInfo: EnumInfo): string {
+        let code = `${tabs(2)}initializers: [\n`;
+        for (const initializer of enumInfo.initializers) {
+            code = `${code}${tabs(3)}${addQuotes(initializer)},\n`;
         }
-        switchCode = `${switchCode}${tab}default:\n` +
-            `${tabs(2)}console.log('WARNING: No instance found for declarationInfo id = ', declarationInfo?.id);\n` +
-            `${tabs(2)}instance = undefined;\n` +
-            `}\n`;
-        switchStatement.replaceWithText(switchCode);
-        INIT.declarationInfoSourceFile.fixMissingImports();
-        INIT.declarationInfoSourceFile.saveSync();
-        const mjsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
-        await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), mjsPath);
-        INIT.generateInstance = await require(mjsPath).generateInstance;
+        code = `${code}${tabs(2)}]\n`;
+        return code;
     }
 
 }

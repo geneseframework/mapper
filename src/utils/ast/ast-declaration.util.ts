@@ -17,6 +17,7 @@ import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { GenericParameter } from '../../types/target/generic-parameter.type';
 import { INIT } from '../../init/init.const';
+import * as chalk from 'chalk';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -112,6 +113,7 @@ function getTypeScriptDeclaration(typeName: string): DeclarationOrDate {
 
 
 export function isProperty(propertyName: string, declaration: ClassOrInterfaceInfo): boolean {
+    // console.log(chalk.greenBright('IS PROPPPPPP'), propertyName, declaration);
     return !!declaration.properties.find(p => p.name === propertyName);
 }
 

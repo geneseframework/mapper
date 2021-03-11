@@ -3,7 +3,6 @@ import { InitConfigService } from './init-config.service';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from './init.const';
-import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 
@@ -50,7 +49,7 @@ export class InitService {
      * @private
      */
     private static createDebugProject(): void {
-        INIT.projectPath = process.cwd();
+        INIT.projectPath = `${process.cwd()}/src/debug/project`;
         INIT.project = new Project({
             tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
@@ -64,6 +63,7 @@ export class InitService {
      * @private
      */
     private static setGlobalNodeModulePath(): void {
-        INIT.nodeModulePath = INIT.debug ? INIT.projectPath : `${INIT.projectPath}/node_modules/@genese/mapper`;
+        // INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
+        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

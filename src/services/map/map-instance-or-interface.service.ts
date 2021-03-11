@@ -14,6 +14,7 @@ export class MapInstanceOrInterfaceService {
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
         for (const key of Object.keys(data)) {
+            // console.log(chalk.magentaBright('MAP DATA'), data, instance, declaration, isProperty(key, declaration));
             if (isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
@@ -21,6 +22,7 @@ export class MapInstanceOrInterfaceService {
                     await this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
+                // console.log(chalk.redBright('INDEXABLEEEEE ?'), key);
                 instance[key] = await MainService.mapToString(declaration.indexableType.returnType, data[key], options);
             }
         }
