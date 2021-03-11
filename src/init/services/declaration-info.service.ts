@@ -1,9 +1,9 @@
 import { ClassInfo } from '../../create/models/declarations/class-info.model';
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { flat } from '../../create/utils/native/arrays.util';
-import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
-import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast-class.util';
+import { genericParameters, getProperties } from '../utils/ast-declaration.util';
+import { sourceFilePath } from '../utils/ast-sourcefile.util';
 import { EnumInfo } from '../../create/models/declarations/enum-info.model';
 import { TypeInfo } from '../../create/models/declarations/type-info.model';
 import { getIndexableType } from '../../create/utils/native/indexable-type.util';

@@ -1,6 +1,6 @@
 import { ClassDeclaration } from 'ts-morph';
 import { tab, tabs } from '../../create/utils/native/strings.util';
-import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
+import { hasPrivateConstructor } from '../utils/ast-class.util';
 import { ensureDirAndCopy } from '../../create/utils/file-system.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
@@ -8,7 +8,6 @@ import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../crea
 import { Property } from '../../create/types/target/property.type';
 import { ClassInfo } from '../../create/models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../../create/types/class-or-interface-info.type';
-import { GLOBAL } from '../../create/const/global.const';
 import { TypeInfo } from '../../create/models/declarations/type-info.model';
 import { addQuotes } from '../../create/types/target/string/quoted.type';
 import { InterfaceInfo } from '../../create/models/declarations/interface-info.model';
@@ -25,9 +24,9 @@ export class DeclarationInfoGeneratorService {
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
-        const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
-        await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
-        GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
+        // const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
+        // await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
+        // GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
     }
 
 
@@ -60,10 +59,9 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `const declarationInfos = [\n` +
+        return `export const declarationInfos = [\n` +
             `${declarationInfosCode}` +
-            `];\n` +
-            `exports.DECLARATION_INFOS = declarationInfos;`;
+            `];\n`;
     }
 
 

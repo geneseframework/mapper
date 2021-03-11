@@ -11,11 +11,9 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        if (INIT.isFirstMapper) {
-            await this.init();
-            await DeclarationInfoService.init();
-            await InstanceGeneratorService.start();
-        }
+        await this.init();
+        await DeclarationInfoService.init();
+        await InstanceGeneratorService.start();
     }
 
 

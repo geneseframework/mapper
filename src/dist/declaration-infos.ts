@@ -1,6 +1,4 @@
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-
-const declarationInfos = [
+export const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
         kind: `Class`,
@@ -8,10 +6,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
@@ -42,10 +36,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
@@ -65,10 +55,10 @@ const declarationInfos = [
             initializer: `true`,
             isRequired: true,
             name: `live`,
-            type: ``
+            type: undefined
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `order`,
             type: `Order`
@@ -82,10 +72,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
@@ -111,7 +97,7 @@ const declarationInfos = [
             initializer: `false`,
             isRequired: true,
             name: `hungry`,
-            type: ``
+            type: undefined
         },
         {
             initializer: `undefined`,
@@ -132,7 +118,7 @@ const declarationInfos = [
             type: `Race`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `tattoo`,
             type: `[string, number, Color, Person]`
@@ -146,21 +132,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employees`,
             type: `number`
@@ -174,10 +156,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
@@ -190,21 +168,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `volunteers`,
             type: `number`
@@ -218,15 +192,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: true,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `live`,
             type: `boolean`
@@ -240,10 +210,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 6,
         properties: [
@@ -278,7 +244,7 @@ const declarationInfos = [
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `isHappy`,
             type: `boolean`
@@ -304,15 +270,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -326,15 +288,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -348,15 +306,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `foo`,
             type: `string`
@@ -370,15 +324,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `bar`,
             type: `string`
@@ -392,15 +342,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `string`
@@ -414,45 +360,41 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `str`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `num`,
             type: `number`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `bool`,
             type: `boolean`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `strs`,
             type: `string[]`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `nums`,
             type: `number[]`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `bools`,
             type: `boolean[]`
@@ -466,30 +408,26 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `a`,
             type: `any`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `b`,
             type: `any[]`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `c`,
-            type: ``
+            type: undefined
         },
         ],
     },
@@ -508,7 +446,7 @@ const declarationInfos = [
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `a`,
             type: `string`
@@ -530,7 +468,7 @@ const declarationInfos = [
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `a`,
             type: `string`
@@ -544,10 +482,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
@@ -555,25 +489,25 @@ const declarationInfos = [
             initializer: `'aaa'`,
             isRequired: true,
             name: `a`,
-            type: ``
+            type: undefined
         },
         {
             initializer: `2`,
             isRequired: true,
             name: `b`,
-            type: ``
+            type: undefined
         },
         {
             initializer: `false`,
             isRequired: true,
             name: `c`,
-            type: ``
+            type: undefined
         },
         {
             initializer: `true`,
             isRequired: true,
             name: `d`,
-            type: ``
+            type: undefined
         },
         ],
     },
@@ -584,36 +518,32 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 4,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `a`,
-            type: ``
+            type: undefined
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `b`,
-            type: ``
+            type: undefined
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `c`,
-            type: ``
+            type: undefined
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `d`,
-            type: ``
+            type: undefined
         },
         ],
     },
@@ -624,15 +554,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -646,27 +572,23 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `age`,
             type: `number`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `cat`,
             type: `CatSpec`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `firstName`,
             type: `string`
@@ -680,15 +602,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -702,15 +620,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `color`,
             type: `string`
@@ -724,15 +638,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: true,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: true,
         numberOfConstructorArguments: 1,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -746,15 +656,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `color`,
             type: `string`
@@ -768,10 +674,6 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
@@ -792,15 +694,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `age`,
             type: `string | number`
@@ -814,15 +712,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `null`
@@ -836,15 +730,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `undefined`
@@ -858,15 +748,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `unknown`
@@ -880,15 +766,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `4`
@@ -902,15 +784,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `'a'`
@@ -924,15 +802,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `false`
@@ -946,15 +820,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `colors`,
             type: `StringsOrStringSpec`
@@ -968,15 +838,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `colors`,
             type: `StringOrStringsSpec`
@@ -990,15 +856,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `ages`,
             type: `NumbersOrNumberSpec`
@@ -1012,15 +874,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `ages`,
             type: `NumberOrNumbersSpec`
@@ -1034,15 +892,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `level`,
             type: `LevelSpec`
@@ -1056,15 +910,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -1078,15 +928,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `union`,
             type: `UnionTypeClassAndStringSpec`
@@ -1100,21 +946,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `volunteers`,
             type: `number`
@@ -1128,21 +970,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employees`,
             type: `number`
@@ -1156,15 +994,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employer`,
             type: `EmployerSpec`
@@ -1178,15 +1012,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `{str: string}`
@@ -1200,15 +1030,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `prop`,
             type: `{str: string, nb: number}`
@@ -1222,15 +1048,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `date`,
             type: `Date`
@@ -1244,15 +1066,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `color`,
             type: `ColorSpec`
@@ -1266,15 +1084,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `colors`,
             type: `ColorSpec[]`
@@ -1288,15 +1102,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -1310,15 +1120,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -1332,15 +1138,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `animal`,
             type: `AnimalSpec`
@@ -1354,15 +1156,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -1376,15 +1174,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
@@ -1398,27 +1192,23 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `age`,
             type: `number`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `cat`,
             type: `CatTupleSpec`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `firstName`,
             type: `string`
@@ -1432,21 +1222,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employees`,
             type: `number`
@@ -1460,15 +1246,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `str`,
             type: `string`
@@ -1482,21 +1264,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `volunteers`,
             type: `number`
@@ -1510,21 +1288,17 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `string`
         },
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employees`,
             type: `number`
@@ -1538,15 +1312,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `employer`,
             type: `EmployerTypeSpec`
@@ -1560,15 +1330,11 @@ const declarationInfos = [
         typeParameters: [
         ],
         hasPrivateConstructor: false,
-        indexableType: {
-            returnType: ``,
-            type: ``
-        },
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
         {
-            initializer: ``,
+            initializer: undefined,
             isRequired: true,
             name: `name`,
             type: `NonReadableType<any>`
@@ -1581,6 +1347,11 @@ const declarationInfos = [
         name: `Color`,
         typeParameters: [
         ],
+        initializers: [
+            `White`,
+            `Black`,
+            `Red`,
+        ]
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/enums/mood.enum.ts`,
@@ -1588,6 +1359,11 @@ const declarationInfos = [
         name: `Mood`,
         typeParameters: [
         ],
+        initializers: [
+            `angry`,
+            `happy`,
+            `sad`,
+        ]
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
@@ -1595,12 +1371,25 @@ const declarationInfos = [
         name: `ColorSpec`,
         typeParameters: [
         ],
+        initializers: [
+            `White`,
+            `Black`,
+            `Red`,
+        ]
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/interfaces/prey.interface.ts`,
         kind: `Interface`,
         name: `Prey`,
         typeParameters: [
+        ],
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `animal`,
+            type: `Animal`
+        },
         ],
     },
     {
@@ -1609,6 +1398,14 @@ const declarationInfos = [
         name: `IDefaultsSpec`,
         typeParameters: [
         ],
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: false,
+            name: `name`,
+            type: `string`
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts`,
@@ -1616,12 +1413,34 @@ const declarationInfos = [
         name: `AnimalSpec`,
         typeParameters: [
         ],
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `name`,
+            type: `string`
+        },
+        {
+            initializer: undefined,
+            isRequired: false,
+            name: `otherName`,
+            type: `string`
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Interface`,
         name: `TupleInterfaceSpec`,
         typeParameters: [
+        ],
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `name`,
+            type: `string`
+        },
         ],
     },
     {
@@ -1882,5 +1701,4 @@ const declarationInfos = [
         ],
         type: `string | string[]`,
     },
-] as DeclarationInfo[];
-exports.DECLARATION_INFOS = declarationInfos;
+];

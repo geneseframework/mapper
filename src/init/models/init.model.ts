@@ -10,7 +10,6 @@ export class Init {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
@@ -26,17 +25,12 @@ export class Init {
 
 
     get declarationInfoPath(): string {
-        return `${INIT.nodeModulePath}/dist/declaration-infos.ts`;
+        return `${INIT.nodeModulePath}/src/dist/declaration-infos.ts`;
     }
 
 
     get instanceGeneratorPath(): string {
-        return `${INIT.nodeModulePath}/dist/instance-generator.ts`;
-    }
-
-
-    get isFirstMapper(): boolean {
-        return this.instanceGenerators.length === 0;
+        return `${INIT.nodeModulePath}/src/dist/instance-generator.ts`;
     }
 
 
@@ -58,17 +52,6 @@ export class Init {
         if (!iGenerator) {
             this.instanceGenerators.push(instanceGenerator);
         }
-    }
-
-
-    log(message: string, value: any, predicate: boolean): void {
-        if (predicate) {
-            console.log(chalk.yellowBright(message), value);
-        }
-    }
-
-    logDuration(message: string, color: 'blueBright' | 'yellowBright' | 'magentaBright' | 'cyanBright' | 'greenBright' = 'blueBright'): void {
-        console.log(chalk[color](`${message} : TIME `), Date.now() - this.start);
     }
 
 }

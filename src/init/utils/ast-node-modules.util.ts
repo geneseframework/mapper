@@ -1,4 +1,4 @@
-import { GLOBAL } from '../../../create/const/global.const';
+import { GLOBAL } from '../../create/const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
@@ -8,12 +8,12 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { Declaration } from '../../../create/types/type-declaration.type';
-import { throwWarning } from '../../../create/utils/errors.util';
-import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
-import { TypeDeclarationKind } from '../../../create/types/type-declaration-kind.type';
-import { PropertyDeclarationOrSignature } from '../../../create/types/property-declaration-or-signature.type';
-import { DeclarationInfoService } from '../../services/declaration-info.service';
+import { Declaration } from '../../create/types/type-declaration.type';
+import { throwWarning } from '../../create/utils/errors.util';
+import { ClassOrInterfaceDeclaration } from '../../create/types/class-or-interface-declaration.type';
+import { TypeDeclarationKind } from '../../create/types/type-declaration-kind.type';
+import { PropertyDeclarationOrSignature } from '../../create/types/property-declaration-or-signature.type';
+import { DeclarationInfoService } from '../services/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
 
 
