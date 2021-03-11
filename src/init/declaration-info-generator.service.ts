@@ -5,6 +5,11 @@ import { ensureDirAndCopy } from '../utils/file-system.util';
 import { INIT } from './init.const';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
 import * as chalk from 'chalk';
+import { isClassInfo } from '../utils/declaration-info.util';
+import { IndexableType } from '../types/indexable-type.type';
+import { Property } from '../types/target/property.type';
+import { ClassInfo } from '../models/declarations/class-info.model';
+import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
 
 export class DeclarationInfoGeneratorService {
 
@@ -13,7 +18,7 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     static async createDeclarationInfoFile(): Promise<void> {
-        console.log(chalk.yellowBright('START FILE CREATION DECL INFOOOOOOO'), INIT.declarationInfos);
+        // console.log(chalk.yellowBright('START FILE CREATION DECL INFOOOOOOO'), INIT.declarationInfos);
         const code: string = this.getCode();
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
@@ -69,12 +74,13 @@ export class DeclarationInfoGeneratorService {
     private static getDeclarationInfoCode(declarationInfo: DeclarationInfo): string {
         const typeParametersCode: string = this.getTypeParametersCode(declarationInfo);
         let code = `${tab}{\n` +
-            `${tabs(2)}filePath: '${declarationInfo.filePath}',\n` +
-            `${tabs(2)}kind: '${declarationInfo.kind}',\n` +
-            `${tabs(2)}name: '${declarationInfo.name}',\n` +
+            `${tabs(2)}filePath: \`${declarationInfo.filePath}\`,\n` +
+            `${tabs(2)}kind: \`${declarationInfo.kind}\`,\n` +
+            `${tabs(2)}name: \`${declarationInfo.name}\`,\n` +
             `${tabs(2)}typeParameters: [\n` +
             `${tabs(2)}${typeParametersCode}` +
-            `]\n` +
+            `],\n` +
+            `${this.getSpecificCode(declarationInfo)}` +
             `${tab}},`;
         return code;
     }
@@ -87,6 +93,47 @@ export class DeclarationInfoGeneratorService {
         }
         return code;
     }
+
+
+    private static getSpecificCode(declarationInfo: DeclarationInfo): string {
+        if (isClassInfo(declarationInfo)) {
+            return this.getSpecificClassCode(declarationInfo);
+        }
+        return '';
+    }
+
+
+    private static getSpecificClassCode(classInfo: ClassInfo): string {
+        let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
+        `${tabs(2)}indexableType: \`${classInfo.indexableType}\`,\n` +
+        `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
+        `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
+        `${tabs(2)}properties: [\n` +
+        `${this.getSpecificPropertiesCode(classInfo)}` +
+        `],\n`;
+        return code;
+    }
+
+
+    private static getSpecificPropertiesCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
+        let code = '';
+        for (const property of classOrInterfaceInfo.properties) {
+            code = `${code}${this.getSpecificPropertyCode(property)},\n`;
+        }
+        return code;
+    }
+
+
+    private static getSpecificPropertyCode(property: Property): string {
+        let code = '{\n' +
+            `${tabs(3)}initializer: ${property.initializer},\n` +
+            `${tabs(3)}isRequired: ${property.isRequired},\n` +
+            `${tabs(3)}name: \`${property.name}\`,\n` +
+            `${tabs(3)}type: \`${property.type}\`\n` +
+            `}`;
+        return code;
+    }
+
 
     /**
      * Sets the generators for each exported class and saves the file.
