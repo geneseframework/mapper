@@ -8,11 +8,12 @@ import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
 import { TargetService } from '../services/targets/target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
-import { removeBorders } from '../types/target/string/containerized.type';
+import { isContainerized, removeBorders } from '../types/target/string/containerized.type';
 import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
 import { getElements, trimTarget } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
+import * as chalk from 'chalk';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 
 export class CheckTargetsService {
@@ -111,7 +112,7 @@ export class CheckTargetsService {
 
     private static async isCorrectComplexType(text: string): Promise<boolean> {
         const zzz = getElements(text);
-        // console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), text, zzz);
+        console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), text, zzz);
         return hasSeparators(text) && await this.haveCorrectElements(zzz);
     }
 
@@ -124,7 +125,7 @@ export class CheckTargetsService {
 
 
     private static async isDeclaration(text: string): Promise<boolean> {
-        // console.log(chalk.magentaBright('HAS DECLLLLL ????'), text, hasDeclaration(text));
+        console.log(chalk.magentaBright('HAS DECLLLLL ????'), text, hasDeclaration(text));
         return hasDeclaration(text);
     }
 

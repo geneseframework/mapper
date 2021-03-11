@@ -28,8 +28,6 @@ import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import * as chalk from 'chalk';
-import { INIT } from '../init/init.const';
-// import { DECLARATION_INFOS } from '../dist/declaration-infos';
 
 export class MainService {
 
@@ -46,8 +44,7 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
-        // GLOBAL.declarationInfos = DECLARATION_INFOS;
-        GLOBAL.generateInstance = INIT.generateInstance;
+        // GLOBAL.generateInstance = INIT.generateInstance;
         // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         // await InitService.start();
         if (!OptionsService.wasInitialized(options)) {
@@ -66,8 +63,8 @@ export class MainService {
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
-        // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos);
         await CheckTargetsService.start(target);
+        // console.log(chalk.greenBright('SHOULD BE HEEEEERE'), target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
         } else if (isDateTypeName(target)) {
@@ -75,8 +72,10 @@ export class MainService {
         } else if (isStringAsNullOrLiteral(target)) {
             return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
+            console.log(chalk.greenBright('SHOULD BE HEEEEERE'), target);
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
+            // console.log(chalk.redBright('SHOULD NOT BE HEEEEERE'), target);
             return await MapArrayService.create(target, data, options);
         } else if (hasGeneric(target)) {
             return await MapGenericService.create(target, data, options);
