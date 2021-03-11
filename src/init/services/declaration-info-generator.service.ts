@@ -1,18 +1,18 @@
 import { ClassDeclaration } from 'ts-morph';
-import { tab, tabs } from '../utils/native/strings.util';
+import { tab, tabs } from '../../create/utils/native/strings.util';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
-import { ensureDirAndCopy } from '../utils/file-system.util';
-import { INIT } from './init.const';
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
-import { Property } from '../types/target/property.type';
-import { ClassInfo } from '../models/declarations/class-info.model';
-import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
-import { GLOBAL } from '../const/global.const';
-import { TypeInfo } from '../models/declarations/type-info.model';
-import { addQuotes } from '../types/target/string/quoted.type';
-import { InterfaceInfo } from '../models/declarations/interface-info.model';
-import { EnumInfo } from '../models/declarations/enum-info.model';
+import { ensureDirAndCopy } from '../../create/utils/file-system.util';
+import { INIT } from '../const/init.const';
+import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../create/utils/declaration-info.util';
+import { Property } from '../../create/types/target/property.type';
+import { ClassInfo } from '../../create/models/declarations/class-info.model';
+import { ClassOrInterfaceInfo } from '../../create/types/class-or-interface-info.type';
+import { GLOBAL } from '../../create/const/global.const';
+import { TypeInfo } from '../../create/models/declarations/type-info.model';
+import { addQuotes } from '../../create/types/target/string/quoted.type';
+import { InterfaceInfo } from '../../create/models/declarations/interface-info.model';
+import { EnumInfo } from '../../create/models/declarations/enum-info.model';
 
 export class DeclarationInfoGeneratorService {
 

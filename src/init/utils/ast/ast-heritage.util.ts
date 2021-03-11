@@ -1,5 +1,5 @@
 import { ClassDeclaration, HeritageClause } from 'ts-morph';
-import { flat } from '../native/arrays.util';
+import { flat } from '../../../create/utils/native/arrays.util';
 
 
 export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDeclaration {

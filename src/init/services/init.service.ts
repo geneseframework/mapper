@@ -1,7 +1,7 @@
 import { Project } from 'ts-morph';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
-import { INIT } from './init.const';
+import { INIT } from '../const/init.const';
 
 const appRoot = require('app-root-path');
 

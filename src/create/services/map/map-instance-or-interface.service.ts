@@ -1,5 +1,5 @@
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { isProperty } from '../../utils/ast/ast-declaration.util';
+import { isProperty } from '../../../init/utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';

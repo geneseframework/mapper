@@ -9,7 +9,7 @@ import { DeclarationInfo } from '../../models/declarations/declaration-info.mode
 import { GLOBAL } from '../../const/global.const';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { GenericParameter } from '../../types/target/generic-parameter.type';
-import { genericParameters } from '../../utils/ast/ast-declaration.util';
+import { genericParameters } from '../../../init/utils/ast/ast-declaration.util';
 
 export class MapDeclarationService<T> {
 

@@ -1,4 +1,4 @@
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
+import { DeclarationInfo } from '../create/models/declarations/declaration-info.model';
 
 export const DECLARATION_INFOS = [
     {

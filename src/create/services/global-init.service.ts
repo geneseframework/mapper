@@ -1,4 +1,4 @@
-import { InitConfigService } from '../init/init-config.service';
+import { InitConfigService } from './init-config.service';
 import { GLOBAL } from '../const/global.const';
 
 const appRoot = require('app-root-path');

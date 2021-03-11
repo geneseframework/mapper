@@ -1,4 +1,4 @@
-import { implementsRequiredProperties } from '../../utils/ast/ast-interfaces.util';
+import { implementsRequiredProperties } from '../../../init/utils/ast/ast-interfaces.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';

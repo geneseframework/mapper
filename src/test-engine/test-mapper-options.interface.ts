@@ -1,4 +1,4 @@
-import { CreateOptions } from '../models/create-options.model';
+import { CreateOptions } from '../create/models/create-options.model';
 
 export interface TestMapperOptions {
     createOptions?: CreateOptions;

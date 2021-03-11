@@ -1,6 +1,6 @@
 import { InterfaceDeclaration } from 'ts-morph';
-import { includes } from '../native/arrays.util';
-import { InterfaceInfo } from '../../models/declarations/interface-info.model';
+import { includes } from '../../../create/utils/native/arrays.util';
+import { InterfaceInfo } from '../../../create/models/declarations/interface-info.model';
 
 // TODO : add isRequired to GLOBAL
 export function implementsRequiredProperties(data: any, interfaceInfo: InterfaceInfo): boolean {

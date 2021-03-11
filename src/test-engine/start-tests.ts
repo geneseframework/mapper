@@ -1,9 +1,9 @@
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
-import { INIT } from '../init/init.const';
-import { InitService } from '../init/init.service';
-import { GLOBAL } from '../const/global.const';
+import { INIT } from '../init/const/init.const';
+import { InitService } from '../init/services/init.service';
+import { GLOBAL } from '../create/const/global.const';
 
 INIT.debug = true;
 GLOBAL.debug = true;

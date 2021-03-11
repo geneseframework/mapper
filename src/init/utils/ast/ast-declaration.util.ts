@@ -7,16 +7,16 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
-import { throwWarning } from '../errors.util';
-import { flat } from '../native/arrays.util';
-import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { DateDeclaration } from '../../models/date-declaration.model';
-import { Property } from '../../types/target/property.type';
-import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
-import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
-import { GenericParameter } from '../../types/target/generic-parameter.type';
-import { INIT } from '../../init/init.const';
+import { DeclarationOrDate, GenericableDeclaration } from '../../../create/types/type-declaration.type';
+import { throwWarning } from '../../../create/utils/errors.util';
+import { flat } from '../../../create/utils/native/arrays.util';
+import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
+import { DateDeclaration } from '../../../create/models/date-declaration.model';
+import { Property } from '../../../create/types/target/property.type';
+import { ClassOrInterfaceInfo } from '../../../create/types/class-or-interface-info.type';
+import { TypeDeclarationKind } from '../../../create/types/type-declaration-kind.type';
+import { GenericParameter } from '../../../create/types/target/generic-parameter.type';
+import { INIT } from '../../const/init.const';
 import * as chalk from 'chalk';
 
 
