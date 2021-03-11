@@ -1,7 +1,6 @@
 import { IndexableType } from '../../types/indexable-type.type';
 import { Property } from '../../types/target/property.type';
 import { DeclarationInfo } from './declaration-info.model';
-import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 
 export class ClassInfo extends DeclarationInfo {
 

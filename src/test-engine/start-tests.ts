@@ -1,10 +1,9 @@
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
-// import { GLOBAL } from '../const/global.const';
-import { init } from '../init/init';
 import { INIT } from '../init/init.const';
 import { InitService } from '../init/init.service';
+import { GLOBAL } from '../const/global.const';
 
 INIT.debug = true;
 
@@ -13,6 +12,8 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
     await InitService.start();
+    // GLOBAL.declarationInfos = DECLARATION_INFOS;
+    // console.log(chalk.magentaBright('DECLARATION_INFOSsssss'), DECLARATION_INFOS?.length);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);

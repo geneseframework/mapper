@@ -12,6 +12,7 @@ import { removeQuotes } from '../types/target/string/quoted.type';
 import { INIT } from './init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 import { InstanceGeneratorService } from './instance-generator.service';
+import * as chalk from 'chalk';
 
 export class DeclarationInfoService {
 
@@ -22,6 +23,8 @@ export class DeclarationInfoService {
         this.setInterfaceInfos();
         this.setTypeInfos();
         await DeclarationInfoGeneratorService.createDeclarationInfoFile();
+        const zzz = await require(INIT.declarationInfoPath);
+        console.log(chalk.yellowBright('AWAIT REQUIREEEEEE '), zzz);
     }
 
 
