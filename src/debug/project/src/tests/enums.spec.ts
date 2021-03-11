@@ -26,7 +26,7 @@ testMappers.push(new TestMapper(`{colors: ['White']} / ColorClassSpec`, ColorsCl
 testMappers.push(new TestMapper(`{colors: []} / ColorClassSpec / { colors: []}`, ColorsClassSpec, {colors: []}));
 testMappers.push(new TestMapper(`{colors: ['Blue']} / ColorClassSpec / {colors: [undefined]}`, ColorsClassSpec, {colors: ['Blue']}, {expectedValue: {colors: [undefined]}}));
 testMappers.push(new TestMapper(`{colors: [ColorSpec.WHITE]} / ColorClassSpec`, ColorsClassSpec, {colors: [ColorSpec.WHITE]}));
-testMappers.push(new TestMapper(`{colors: [ColorSpec.WHITE, ColorSpec.BLACK]} / ColorClassSpec`, ColorsClassSpec, {colors: [ColorSpec.WHITE, ColorSpec.BLACK]}));
+testMappers.push(new TestMapper(`{colors: [ColorSpec.WHITE, ColorSpec.BLACK]} / ColorClassSpec`, ColorsClassSpec, {colors: [ColorSpec.WHITE, ColorSpec.BLACK]}, {isolate: false}));
 
 
 testMappers.push(new TestMapper(`'White' / ColorSpec`, 'ColorSpec', 'White'));

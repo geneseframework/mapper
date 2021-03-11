@@ -4,13 +4,15 @@ import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
 import { INIT } from './init.const';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-import { isClassInfo, isTypeInfo } from '../utils/declaration-info.util';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { Property } from '../types/target/property.type';
 import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
 import { GLOBAL } from '../const/global.const';
 import { TypeInfo } from '../models/declarations/type-info.model';
 import { addQuotes } from '../types/target/string/quoted.type';
+import { InterfaceInfo } from '../models/declarations/interface-info.model';
+import { EnumInfo } from '../models/declarations/enum-info.model';
 
 export class DeclarationInfoGeneratorService {
 
@@ -101,6 +103,10 @@ export class DeclarationInfoGeneratorService {
     private static getSpecificCode(declarationInfo: DeclarationInfo): string {
         if (isClassInfo(declarationInfo)) {
             return this.getSpecificClassCode(declarationInfo);
+        } else if (isInterfaceInfo(declarationInfo)) {
+            return this.getSpecificInterfaceCode(declarationInfo);
+        } else if (isEnumInfo(declarationInfo)) {
+            return this.getSpecificEnumCode(declarationInfo);
         } else if (isTypeInfo(declarationInfo)) {
             return this.getSpecificTypeCode(declarationInfo);
         }
@@ -110,16 +116,34 @@ export class DeclarationInfoGeneratorService {
 
     private static getSpecificClassCode(classInfo: ClassInfo): string {
         let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
-        `${tabs(2)}indexableType: {\n` +
-        `${tabs(3)}returnType: ${addQuotes(classInfo.indexableType?.returnType)},\n` +
-        `${tabs(3)}type: ${addQuotes(classInfo.indexableType?.type)}\n` +
-        `${tabs(2)}},\n` +
-        `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
-        `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
-        `${tabs(2)}properties: [\n` +
-        `${this.getSpecificPropertiesCode(classInfo)}` +
-        `${tabs(2)}],\n`;
+            `${this.getIndexableTypeCode(classInfo)}` +
+            `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
+            `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
+            `${tabs(2)}properties: [\n` +
+            `${this.getSpecificPropertiesCode(classInfo)}` +
+            `${tabs(2)}],\n`;
         return code;
+    }
+
+
+    private static getSpecificInterfaceCode(interfaceInfo: InterfaceInfo): string {
+        let code = `${this.getIndexableTypeCode(interfaceInfo)}` +
+            `${tabs(2)}properties: [\n` +
+            `${this.getSpecificPropertiesCode(interfaceInfo)}` +
+            `${tabs(2)}],\n`;
+        return code;
+    }
+
+
+    private static getIndexableTypeCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
+        if (!classOrInterfaceInfo.indexableType) {
+            return '';
+        } else {
+            return `${tabs(2)}indexableType: {\n` +
+                `${tabs(3)}returnType: ${addQuotes(classOrInterfaceInfo.indexableType?.returnType)},\n` +
+                `${tabs(3)}type: ${addQuotes(classOrInterfaceInfo.indexableType?.type)}\n` +
+                `${tabs(2)}},\n`;
+        }
     }
 
 
@@ -146,6 +170,16 @@ export class DeclarationInfoGeneratorService {
     //TODO : Types with antiquotes
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
         let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
+        return code;
+    }
+
+
+    private static getSpecificEnumCode(enumInfo: EnumInfo): string {
+        let code = `${tabs(2)}initializers: [\n`;
+        for (const initializer of enumInfo.initializers) {
+            code = `${code}${tabs(3)}${addQuotes(initializer)},\n`;
+        }
+        code = `${code}${tabs(2)}]\n`;
         return code;
     }
 

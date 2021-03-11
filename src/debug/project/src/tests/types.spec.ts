@@ -8,7 +8,7 @@ export const testMappers: TestMapper[] = [];
 
 export type StringAloneSpec = string;
 testMappers.push(new TestMapper(`'Blue' / StringAloneSpec`, 'StringAloneSpec', 'Blue', {isolate: false}));
-testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`3 / StringAloneSpec / undefined`, 'StringAloneSpec', 3, {expectedValue: undefined, isolate: false}));
 
 
 // -------------------------------------------   string | number   --------------------------------------------------------

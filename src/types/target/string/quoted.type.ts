@@ -24,7 +24,8 @@ export function removeQuotes(text: string): string {
 
 export function addQuotes(text: string): string {
     if (!text) {
-        return '``';
+        return text;
+        // return '``';
     }
     const escapedText = text.replace(/`/g, '\\`');
     return `\`${escapedText}\``;
