@@ -1,4 +1,4 @@
-import { Project, SourceFile } from 'ts-morph';
+import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
 import * as chalk from 'chalk';
@@ -17,18 +17,11 @@ export class Global {
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
-    instanceGeneratorSourceFile: SourceFile = undefined;
-    isAlreadyInitialized: boolean = false;
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
-
-
-    addDeclarationInfo(declarationInfo: DeclarationInfo): void {
-        this.declarationInfos.push(declarationInfo);
-    }
 
 
     check(target: string): void {

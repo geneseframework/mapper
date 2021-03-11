@@ -9,7 +9,6 @@ INIT.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
-    // GLOBAL.start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
     await init();
