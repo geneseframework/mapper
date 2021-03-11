@@ -3,6 +3,7 @@ import { CreateOptions } from '../../models/create-options.model';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
+import * as chalk from 'chalk';
 
 export class MapTupleService<T> {
 

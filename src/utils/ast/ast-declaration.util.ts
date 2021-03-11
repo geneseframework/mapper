@@ -1,4 +1,3 @@
-import { GLOBAL } from '../../const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
@@ -8,7 +7,7 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { Declaration, DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
+import { DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
 import { throwWarning } from '../errors.util';
 import { flat } from '../native/arrays.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -17,6 +16,7 @@ import { Property } from '../../types/target/property.type';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { GenericParameter } from '../../types/target/generic-parameter.type';
+import { INIT } from '../../init/init.const';
 
 
 const getDescendantClasses = (sourceFile: SourceFile) => sourceFile.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
@@ -40,8 +40,8 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
 }
 
 
-export function getTypeDeclaration(typeName: string): DeclarationOrDate {
-    const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
+export function getTypeDeclaration(typeName: string, typeDeclarationKind: TypeDeclarationKind): DeclarationOrDate {
+    // const typeDeclarationKind: TypeDeclarationKind = declarationKind(typeName);
     switch (typeDeclarationKind) {
         case 'Class':
             return getDeclaration(typeName, getDescendantClasses);
@@ -63,46 +63,6 @@ export function getTypeDeclaration(typeName: string): DeclarationOrDate {
 }
 
 
-export function hasDeclaration(typeName: string): boolean {
-    return !!declarationKind(typeName);
-}
-
-
-function declarationKind(typeName: string): TypeDeclarationKind {
-    if (isClassDeclaration(typeName)) {
-        return 'Class';
-    } else if (isEnumDeclaration(typeName)) {
-        return 'Enum';
-    } else if (isInterfaceDeclaration(typeName)) {
-        return 'Interface';
-    } else if (isTypeAliasDeclaration(typeName)) {
-        return 'TypeAlias';
-    } else {
-        return undefined;
-    }
-}
-
-
-export function isClassDeclaration(typeName: string): boolean {
-    return GLOBAL.classNames.includes(typeName);
-}
-
-
-export function isEnumDeclaration(typeName: string): boolean {
-    return GLOBAL.enumNames.includes(typeName);
-}
-
-
-export function isInterfaceDeclaration(typeName: string): boolean {
-    return GLOBAL.interfaceNames.includes(typeName);
-}
-
-
-export function isTypeAliasDeclaration(typeName: string): boolean {
-    return GLOBAL.typeNames.includes(typeName);
-}
-
-
 function hasDeclarationInTypeScript(typeName: string): boolean {
     if (typeName === 'Date') {
         return true;
@@ -112,7 +72,7 @@ function hasDeclarationInTypeScript(typeName: string): boolean {
 
 
 export function getImportDeclarations(typeName: string): ImportDeclaration[] {
-    const declarations: ImportDeclaration[] = flat(GLOBAL.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
+    const declarations: ImportDeclaration[] = flat(INIT.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
     const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
     return groupByImportPath(declarationsWithSameName);
 }
@@ -139,7 +99,7 @@ function getDeclaration(typeName: string, getTDeclaration: (sourceFile: SourceFi
 
 
 function getDeclarationSourceFileInProject(typeName: string, getTDeclaration: (sourceFile: SourceFile) => DeclarationOrDate[]): SourceFile {
-    return GLOBAL.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
+    return INIT.project.getSourceFiles().find(s => getTDeclaration(s).map(c => c.getName()).includes(typeName));
 }
 
 

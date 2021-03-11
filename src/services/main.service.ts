@@ -2,7 +2,6 @@ import { Target } from '../types/target/target.type';
 import { CreateOptions } from '../models/create-options.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
-import { hasDeclaration } from '../utils/ast/ast-declaration.util';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
@@ -27,7 +26,10 @@ import { hasSeparators } from '../types/target/string/has-separators.type';
 import { throwWarning } from '../utils/errors.util';
 import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
+import { hasDeclaration } from '../utils/global.util';
+import * as chalk from 'chalk';
 import { INIT } from '../init/init.const';
+// import { DECLARATION_INFOS } from '../dist/declaration-infos';
 
 export class MainService {
 
@@ -44,7 +46,7 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
-        GLOBAL.declarationInfos = INIT.declarationInfos;
+        // GLOBAL.declarationInfos = DECLARATION_INFOS;
         GLOBAL.generateInstance = INIT.generateInstance;
         // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         // await InitService.start();
@@ -64,6 +66,7 @@ export class MainService {
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

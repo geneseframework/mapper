@@ -4,17 +4,16 @@ import { isNullOrUndefined } from '../utils/native/any.util';
 import { isString } from '../utils/native/strings.util';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration } from '../utils/ast/ast-declaration.util';
 import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
 import { TargetService } from '../services/targets/target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
 import { removeBorders } from '../types/target/string/containerized.type';
-import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
 import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
 import { getElements, trimTarget } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
-import * as chalk from 'chalk';
+import { hasDeclaration } from '../utils/global.util';
+import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 
 export class CheckTargetsService {
 
@@ -37,7 +36,7 @@ export class CheckTargetsService {
      * @param target
      */
     static async hasCorrectFormat(target: string): Promise<boolean> {
-        // console.log(chalk.blueBright('HAS CORRR FORMAT'), target);
+        // console.log(chalk.blueBright('START HAS CORRR FORMAT'), target);
         if (isNullOrUndefined(target)) {
             return true;
         }
@@ -50,19 +49,45 @@ export class CheckTargetsService {
 
 
     private static async hasCorrectElements(text: string): Promise<boolean> {
-        const zzz = isPrimitiveType(text)
+        if (isPrimitiveType(text)
             || isQuoted(text)
-            || isStringAsTrivialType(text)
-            || await this.isCorrectContainer(text)
-            || await this.isCorrectArrayType(text)
-            || await this.isCorrectGeneric(text)
-            || await this.isCorrectComplexType(text)
-            || this.isCorrectObject(text) // TODO
-            || await this.isDeclaration(text)
-            || await this.isDeclaredOutOfProject(text);
-        // console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
-        return zzz;
+            || isStringAsTrivialType(text)) {
+            return true;
+        }
+        if (isBracketedOrParenthesized(text)) {
+            return await this.isCorrectContainer(text);
+        } else if (isArrayType(text)) {
+            return await this.hasCorrectElements(typeOfArray(text));
+        } else if (hasGeneric(text)) {
+            return await this.hasCorrectElements(typeOfGeneric(text));
+        } else if(hasSeparators(trimTarget(text))) {
+            return await this.haveCorrectElements(getElements(text));
+        } else if (isCurveBracketed(text)) {
+            return isPrimitiveType(text); // TODO
+        } else if (hasDeclaration(text)) {
+            return true;
+        } else if (await this.isDeclaredOutOfProject(text)) { // TODO
+            return true;
+        }
+        // console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text);
+        return false;
     }
+
+
+    // private static async hasCorrectElements(text: string): Promise<boolean> {
+    //     const zzz = isPrimitiveType(text)
+    //         || isQuoted(text)
+    //         || isStringAsTrivialType(text)
+    //         || await this.isCorrectContainer(text)
+    //         || await this.isCorrectArrayType(text)
+    //         || await this.isCorrectGeneric(text)
+    //         || await this.isCorrectComplexType(text)
+    //         || this.isCorrectObject(text) // TODO
+    //         || await this.isDeclaration(text)
+    //         || await this.isDeclaredOutOfProject(text);
+    //     console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text, zzz);
+    //     return zzz;
+    // }
 
 
     private static async isCorrectArrayType(text: string): Promise<boolean> {
@@ -86,20 +111,8 @@ export class CheckTargetsService {
 
     private static async isCorrectComplexType(text: string): Promise<boolean> {
         const zzz = getElements(text);
-        // console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), zzz);
+        // console.log(chalk.yellowBright('CPX CORRECTTTTT ELTS'), text, zzz);
         return hasSeparators(text) && await this.haveCorrectElements(zzz);
-    }
-
-
-    // TODO
-    private static isCorrectExtends(text: string): boolean {
-        return isPrimitiveType(text)
-    }
-
-
-    // TODO
-    private static isCorrectConditional(text: string): boolean {
-        return isPrimitiveType(text)
     }
 
 
@@ -111,7 +124,7 @@ export class CheckTargetsService {
 
 
     private static async isDeclaration(text: string): Promise<boolean> {
-        // console.log(chalk.green('HAS DECLLLLL ????'), text);
+        // console.log(chalk.magentaBright('HAS DECLLLLL ????'), text, hasDeclaration(text));
         return hasDeclaration(text);
     }
 

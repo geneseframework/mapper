@@ -5,6 +5,7 @@ import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import { ClassInfo } from '../../models/declarations/class-info.model';
+import * as chalk from 'chalk';
 
 export class MapClassService<T> {
 
@@ -16,11 +17,13 @@ export class MapClassService<T> {
 
     static async createInstance(target: string, data: any, options: CreateOptions): Promise<any> {
         const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
+        // console.log(chalk.cyanBright('CREATE INSTTTTT'), target, data, classInfo);
         if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);
             return undefined;
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
+        // const instance: object = await generateInstance(instanceGenerator) as object;
         const instance: object = await GLOBAL.generateInstance(instanceGenerator) as object;
         await MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
         return instance;

@@ -9,6 +9,7 @@ export class Init {
 
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
+    declarationInfoSourceFile: SourceFile = undefined;
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
@@ -24,8 +25,13 @@ export class Init {
     }
 
 
+    get declarationInfoPath(): string {
+        return `${INIT.nodeModulePath}/src/dist/declaration-infos.ts`;
+    }
+
+
     get instanceGeneratorPath(): string {
-        return `${INIT.nodeModulePath}/dist/instance-generator.ts`;
+        return `${INIT.nodeModulePath}/src/dist/instance-generator.ts`;
     }
 
 

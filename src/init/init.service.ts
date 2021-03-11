@@ -1,6 +1,6 @@
 import { Project } from 'ts-morph';
 import { InitConfigService } from './init-config.service';
-import { InstanceGeneratorService } from '../services/instance-generator.service';
+import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from './init.const';
 import * as chalk from 'chalk';
@@ -13,13 +13,11 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        // INIT.logDuration('START OF INIT PROCESS');
         if (INIT.isFirstMapper) {
             await this.init();
             await DeclarationInfoService.init();
             await InstanceGeneratorService.start();
         }
-        // INIT.logDuration('END OF INIT PROCESS');
     }
 
 
@@ -28,11 +26,7 @@ export class InitService {
      * @private
      */
     private static async init(): Promise<void> {
-        // if (INIT.isAlreadyInitialized) {
-        //     return;
-        // }
         INIT.debug ? this.createDebugProject() : this.createProject();
-        // INIT.isAlreadyInitialized = true;
         this.setGlobalNodeModulePath();
         await InitConfigService.start();
     }
