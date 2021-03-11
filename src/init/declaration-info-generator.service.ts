@@ -1,10 +1,9 @@
-import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { tab, tabs } from '../utils/native/strings.util';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { ensureDirAndCopy } from '../utils/file-system.util';
 import { INIT } from './init.const';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-import * as chalk from 'chalk';
 import { isClassInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { Property } from '../types/target/property.type';
 import { ClassInfo } from '../models/declarations/class-info.model';
@@ -24,6 +23,8 @@ export class DeclarationInfoGeneratorService {
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
+        const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
+        await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
         GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
     }
 
@@ -145,39 +146,7 @@ export class DeclarationInfoGeneratorService {
     //TODO : Types with antiquotes
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
         let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
-        if (typeInfo.type.includes('TestIt')) {
-        // if (typeInfo.type.includes('${')) {
-            console.log(chalk.magentaBright('QUOTESSSSSS'), typeInfo);
-            console.log(chalk.magentaBright('codeeeee'), code);
-            // throw Error('zzzz')
-        }
-        // let code = `${tabs(2)}type: ${typeInfo.type?.toString()},\n`;
         return code;
-    }
-
-
-    /**
-     * Sets the generators for each exported class and saves the file.
-     * @private
-     */
-    private static async setGlobalGenerateInstance(): Promise<void> {
-        const switchStatement: SwitchStatement = INIT.declarationInfoSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        let switchCode = `switch (declarationInfo.id) {\n`;
-        let importsCode = ''
-        for (const declarationInfo of INIT.declarationInfos) {
-            // switchCode = `${switchCode}${tab}${this.switchClause(declarationInfo)}`;
-            // importsCode = `${importsCode}${tab}${this.importsCode(declarationInfo)}`;
-        }
-        switchCode = `${switchCode}${tab}default:\n` +
-            `${tabs(2)}console.log('WARNING: No instance found for declarationInfo id = ', declarationInfo?.id);\n` +
-            `${tabs(2)}instance = undefined;\n` +
-            `}\n`;
-        switchStatement.replaceWithText(switchCode);
-        INIT.declarationInfoSourceFile.fixMissingImports();
-        INIT.declarationInfoSourceFile.saveSync();
-        const mjsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
-        await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), mjsPath);
-        INIT.generateInstance = await require(mjsPath).generateInstance;
     }
 
 }
