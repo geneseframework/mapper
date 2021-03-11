@@ -10,6 +10,7 @@ import { IndexableType } from '../types/indexable-type.type';
 import { Property } from '../types/target/property.type';
 import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
+import { GLOBAL } from '../const/global.const';
 
 export class DeclarationInfoGeneratorService {
 
@@ -20,8 +21,14 @@ export class DeclarationInfoGeneratorService {
     static async createDeclarationInfoFile(): Promise<void> {
         // console.log(chalk.yellowBright('START FILE CREATION DECL INFOOOOOOO'), INIT.declarationInfos);
         const code: string = this.getCode();
+        console.log(chalk.cyanBright('CODE LGTHHHHH'), code?.length);
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
+        INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
+        console.log(chalk.redBright('AWAIT REQUIREEEEEE code'), INIT.project.getSourceFile(INIT.declarationInfoPath).getFullText());
+        const zzz = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
+        console.log(chalk.redBright('AWAIT REQUIREEEEEE AFTER SAVE SYNCCCCC'), zzz);
+        GLOBAL.declarationInfos = zzz;
         // await this.setGlobalGenerateInstance();
     }
 
@@ -56,9 +63,10 @@ export class DeclarationInfoGeneratorService {
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
         return `import { DeclarationInfo } from '../models/declarations/declaration-info.model';\n\n` +
-            `export const DECLARATION_INFOS = [\n` +
+            `const declarationInfos = [\n` +
             `${declarationInfosCode}` +
-            `] as DeclarationInfo[];\n`;
+            `] as DeclarationInfo[];\n` +
+            `exports.DECLARATION_INFOS = declarationInfos;`;
     }
 
 
