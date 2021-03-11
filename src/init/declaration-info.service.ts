@@ -23,8 +23,6 @@ export class DeclarationInfoService {
         this.setInterfaceInfos();
         this.setTypeInfos();
         await DeclarationInfoGeneratorService.createDeclarationInfoFile();
-        const zzz = await require(INIT.declarationInfoPath);
-        console.log(chalk.yellowBright('AWAIT REQUIREEEEEE '), zzz);
     }
 
 

@@ -65,10 +65,9 @@ export class MainService {
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
-        console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos);
         await CheckTargetsService.start(target);
-        // console.log(chalk.greenBright('SHOULD BE HEEEEERE'), target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
         } else if (isDateTypeName(target)) {
@@ -76,10 +75,8 @@ export class MainService {
         } else if (isStringAsNullOrLiteral(target)) {
             return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
-            console.log(chalk.greenBright('SHOULD BE HEEEEERE'), target);
             return await MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
-            // console.log(chalk.redBright('SHOULD NOT BE HEEEEERE'), target);
             return await MapArrayService.create(target, data, options);
         } else if (hasGeneric(target)) {
             return await MapGenericService.create(target, data, options);

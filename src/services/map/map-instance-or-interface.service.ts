@@ -13,7 +13,6 @@ export class MapInstanceOrInterfaceService {
 
 
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
-        console.log(chalk.magentaBright('MAP INST OR INTERFFFFFF'), data, declaration);
         for (const key of Object.keys(data)) {
             if (isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {

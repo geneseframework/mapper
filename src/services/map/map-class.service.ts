@@ -17,7 +17,7 @@ export class MapClassService<T> {
 
     static async createInstance(target: string, data: any, options: CreateOptions): Promise<any> {
         const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
-        console.log(chalk.cyanBright('CREATE INSTTTTT'), target, data, classInfo);
+        // console.log(chalk.cyanBright('CREATE INSTTTTT'), target, data, classInfo);
         if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);
             return undefined;

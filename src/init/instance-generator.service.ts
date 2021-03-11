@@ -1,5 +1,4 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
-// import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from '../models/instance-generator.model';
 import { tab, tabs } from '../utils/native/strings.util';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
