@@ -1,5 +1,5 @@
 import * as chalk from 'chalk';
-import { GLOBAL } from '../const/global.const';
+import { GLOBAL } from '../create/const/global.const';
 
 GLOBAL.debug = true;
 

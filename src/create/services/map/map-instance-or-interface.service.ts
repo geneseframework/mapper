@@ -1,5 +1,4 @@
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { isProperty } from '../../utils/ast/ast-declaration.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
@@ -7,7 +6,6 @@ import { removeBorders } from '../../types/target/string/containerized.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
 import { Property } from '../../types/target/property.type';
-import * as chalk from 'chalk';
 
 export class MapInstanceOrInterfaceService {
 
@@ -15,7 +13,7 @@ export class MapInstanceOrInterfaceService {
     static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
         for (const key of Object.keys(data)) {
             // console.log(chalk.magentaBright('MAP DATA'), data, instance, declaration, isProperty(key, declaration));
-            if (isProperty(key, declaration)) {
+            if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
@@ -40,6 +38,11 @@ export class MapInstanceOrInterfaceService {
         } else {
             instance[key] = await MainService.mapToString(targetKeyType, data, options);
         }
+    }
+
+
+    private static isProperty(propertyName: string, declaration: ClassOrInterfaceInfo): boolean {
+        return !!declaration.properties.find(p => p.name === propertyName);
     }
 
 }

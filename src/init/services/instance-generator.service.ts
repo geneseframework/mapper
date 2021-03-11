@@ -1,9 +1,9 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
-import { InstanceGenerator } from '../models/instance-generator.model';
-import { tab, tabs } from '../utils/native/strings.util';
+import { InstanceGenerator } from '../../create/models/instance-generator.model';
+import { tab, tabs } from '../../create/utils/native/strings.util';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { ensureDirAndCopy } from '../utils/file-system.util';
-import { INIT } from './init.const';
+import { ensureDirAndCopy } from '../../create/utils/file-system.util';
+import { INIT } from '../const/init.const';
 
 export class InstanceGeneratorService {
 

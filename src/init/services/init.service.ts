@@ -1,8 +1,7 @@
 import { Project } from 'ts-morph';
-import { InitConfigService } from './init-config.service';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
-import { INIT } from './init.const';
+import { INIT } from '../const/init.const';
 
 const appRoot = require('app-root-path');
 
@@ -26,8 +25,7 @@ export class InitService {
      */
     private static async init(): Promise<void> {
         INIT.debug ? this.createDebugProject() : this.createProject();
-        this.setGlobalNodeModulePath();
-        await InitConfigService.start();
+        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 
 
@@ -55,15 +53,5 @@ export class InitService {
             skipFileDependencyResolution: true
         });
         INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
-    }
-
-
-    /**
-     * Sets INIT.nodeModulePath with the path of the @genese/mapper module
-     * @private
-     */
-    private static setGlobalNodeModulePath(): void {
-        // INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
-        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

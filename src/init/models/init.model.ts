@@ -1,8 +1,8 @@
 import { Project, SourceFile } from 'ts-morph';
-import { InstanceGenerator } from '../models/instance-generator.model';
+import { InstanceGenerator } from '../../create/models/instance-generator.model';
 import * as chalk from 'chalk';
-import { INIT } from './init.const';
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
+import { INIT } from '../const/init.const';
+import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
 
 
 export class Init {

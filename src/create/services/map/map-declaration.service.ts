@@ -8,8 +8,6 @@ import { isArrayType, typeOfArray } from '../../types/target/string/array-type.t
 import { DeclarationInfo } from '../../models/declarations/declaration-info.model';
 import { GLOBAL } from '../../const/global.const';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
-import { GenericParameter } from '../../types/target/generic-parameter.type';
-import { genericParameters } from '../../utils/ast/ast-declaration.util';
 
 export class MapDeclarationService<T> {
 
