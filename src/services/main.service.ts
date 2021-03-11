@@ -27,8 +27,7 @@ import { throwWarning } from '../utils/errors.util';
 import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
-import * as chalk from 'chalk';
-import { INIT } from '../init/init.const';
+import { GlobalInitService } from './global-init.service';
 
 export class MainService {
 
@@ -45,10 +44,7 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
-        // GLOBAL.declarationInfos = DECLARATION_INFOS;
-        GLOBAL.generateInstance = INIT.generateInstance;
-        // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
-        // await InitService.start();
+        await GlobalInitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
@@ -63,7 +59,6 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // GLOBAL.logDuration(`MAPS ${target}`, 'magentaBright');
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos.find(d => d.name === target));
         await CheckTargetsService.start(target);

@@ -63,7 +63,6 @@ export class InitService {
      * @private
      */
     private static setGlobalNodeModulePath(): void {
-        // INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
         INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

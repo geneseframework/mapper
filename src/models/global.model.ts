@@ -22,6 +22,17 @@ export class Global {
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
+    wasInitialized: boolean = undefined;
+
+
+    get declarationInfosPath(): string {
+        return `${this.nodeModulePath}/dist/declaration-infos.js`;
+    }
+
+
+    get instanceGeneratorPath(): string {
+        return `${this.nodeModulePath}/dist/instance-generator.js`;
+    }
 
 
     check(target: string): void {
@@ -76,11 +87,6 @@ export class Global {
 
     get enumNames(): string[] {
         return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
-    }
-
-
-    get instanceGeneratorPath(): string {
-        return `${GLOBAL.nodeModulePath}/dist/instance-generator.ts`;
     }
 
 

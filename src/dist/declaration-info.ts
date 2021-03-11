@@ -2,49 +2,49 @@ import { DeclarationInfo } from '../models/declarations/declaration-info.model';
 
 export const DECLARATION_INFOS = [
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/check-targets.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/check-targets.service.ts',
         kind: 'Class',
         name: 'CheckTargetsService',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/declaration-info-generator.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/declaration-info-generator.service.ts',
         kind: 'Class',
         name: 'DeclarationInfoGeneratorService',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/declaration-info.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/declaration-info.service.ts',
         kind: 'Class',
         name: 'DeclarationInfoService',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init-config.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/start-config.service.ts',
         kind: 'Class',
         name: 'InitConfigService',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init.model.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/start.model.ts',
         kind: 'Class',
         name: 'Init',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/start.service.ts',
         kind: 'Class',
         name: 'InitService',
         typeParameters: [
         ]
     },
     {
-        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/instance-generator.service.ts',
+        filePath: '/Users/utilisateur/Documents/projets/genese/genesemapper/src/start/instance-generator.service.ts',
         kind: 'Class',
         name: 'InstanceGeneratorService',
         typeParameters: [
@@ -923,7 +923,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'TConstructor',
         typeParameters: [
-        
+
 ]
     },
     {
@@ -959,7 +959,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'FooType',
         typeParameters: [
-        
+
 ]
     },
     {
@@ -981,7 +981,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'BarType',
         typeParameters: [
-        
+
 ]
     },
     {
@@ -1010,7 +1010,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'Target',
         typeParameters: [
-        
+
 ]
     },
     {
@@ -1256,7 +1256,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'TExtends',
         typeParameters: [
-        
+
 ]
     },
     {
@@ -1390,7 +1390,7 @@ export const DECLARATION_INFOS = [
         kind: 'TypeAlias',
         name: 'NonReadableType',
         typeParameters: [
-        
+
 ]
     },
     {
