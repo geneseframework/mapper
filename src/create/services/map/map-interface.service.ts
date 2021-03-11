@@ -1,9 +1,9 @@
-import { implementsRequiredProperties } from '../../../init/utils/ast/ast-interfaces.util';
 import { CreateOptions } from '../../models/create-options.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../models/declarations/interface-info.model';
+import { includes } from '../../utils/native/arrays.util';
 
 export class MapInterfaceService {
 
@@ -17,7 +17,13 @@ export class MapInterfaceService {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
         await MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
-        return implementsRequiredProperties(tInterface, interfaceInfo) ? tInterface as T : undefined;
+        return this.implementsRequiredProperties(tInterface, interfaceInfo) ? tInterface as T : undefined;
+    }
+
+
+    private static implementsRequiredProperties(data: any, interfaceInfo: InterfaceInfo): boolean {
+        const requiredProperties: any[] = interfaceInfo.properties.filter(p => p.isRequired).map(p => p.name);
+        return includes(Object.keys(data), requiredProperties);
     }
 
 }

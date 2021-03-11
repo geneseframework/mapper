@@ -1,6 +1,7 @@
 import { ClassDeclaration, HeritageClause } from 'ts-morph';
 import { flat } from '../../../create/utils/native/arrays.util';
 
+// TODO: check if needed for classes
 
 export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDeclaration {
     return getHeritageDeclarations(heritageClause)?.length > 0 ? getHeritageDeclarations(heritageClause)[0] : undefined;
