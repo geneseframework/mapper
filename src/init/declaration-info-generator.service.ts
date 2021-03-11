@@ -110,7 +110,7 @@ export class DeclarationInfoGeneratorService {
         `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
         `${tabs(2)}properties: [\n` +
         `${this.getSpecificPropertiesCode(classInfo)}` +
-        `],\n`;
+        `${tabs(2)}],\n`;
         return code;
     }
 
@@ -125,12 +125,12 @@ export class DeclarationInfoGeneratorService {
 
 
     private static getSpecificPropertyCode(property: Property): string {
-        let code = '{\n' +
-            `${tabs(3)}initializer: ${property.initializer},\n` +
+        let code = `${tabs(2)}{\n` +
+            `${tabs(3)}initializer: \`${property.initializer}\`,\n` +
             `${tabs(3)}isRequired: ${property.isRequired},\n` +
             `${tabs(3)}name: \`${property.name}\`,\n` +
             `${tabs(3)}type: \`${property.type}\`\n` +
-            `}`;
+            `${tabs(2)}}`;
         return code;
     }
 
