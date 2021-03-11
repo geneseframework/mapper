@@ -1,6 +1,6 @@
 import { TestIt } from '../../../../test-engine/test-it.model';
 import { getContainerizedElements, getElements } from '../../../../utils/target.util';
-import { CheckTargetsService } from '../../../../init/check-targets.service';
+import { CheckTargetsService } from '../../../../services/check-targets.service';
 
 export const its: TestIt[] = [];
 

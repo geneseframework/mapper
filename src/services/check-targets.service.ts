@@ -6,7 +6,7 @@ import { isQuoted } from '../types/target/string/quoted.type';
 import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
 import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
-import { TargetService } from '../services/targets/target.service';
+import { TargetService } from './targets/target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
 import { removeBorders } from '../types/target/string/containerized.type';
 import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';

@@ -3,7 +3,7 @@ import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
 import { getElements, trimTarget } from '../../utils/target.util';
-import { CheckTargetsService } from '../../init/check-targets.service';
+import { CheckTargetsService } from '../check-targets.service';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
 import { throwTarget } from '../../utils/errors.util';

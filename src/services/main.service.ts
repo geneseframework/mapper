@@ -14,7 +14,7 @@ import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../types/target/string/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
-import { CheckTargetsService } from '../init/check-targets.service';
+import { CheckTargetsService } from './check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
@@ -28,6 +28,7 @@ import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -59,7 +60,7 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos.find(d => d.name === target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
