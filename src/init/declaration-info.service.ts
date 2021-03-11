@@ -11,8 +11,6 @@ import { InterfaceInfo } from '../models/declarations/interface-info.model';
 import { removeQuotes } from '../types/target/string/quoted.type';
 import { INIT } from './init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
-import { InstanceGeneratorService } from './instance-generator.service';
-import * as chalk from 'chalk';
 
 export class DeclarationInfoService {
 
@@ -36,7 +34,6 @@ export class DeclarationInfoService {
 
 
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
-        InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
         const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);

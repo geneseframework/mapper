@@ -1,6 +1,8 @@
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
+// import { GLOBAL } from '../const/global.const';
+import { init } from '../init/init';
 import { INIT } from '../init/init.const';
 import { InitService } from '../init/init.service';
 

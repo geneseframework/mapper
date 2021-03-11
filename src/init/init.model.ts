@@ -26,7 +26,7 @@ export class Init {
 
 
     get declarationInfoPath(): string {
-        return `${INIT.nodeModulePath}/src/dist/declaration-infos.ts`;
+        return `${INIT.nodeModulePath}/src/dist/declaration-info.ts`;
     }
 
 
