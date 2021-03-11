@@ -9,7 +9,6 @@ export class MapTupleService<T> {
 
 
     static async create(target: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
-        console.log(chalk.blueBright('MAP TUPLEEEE'), target, data);
         if (!isArrayOfSameLength(target, data)) {
             return undefined;
         }
