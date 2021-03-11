@@ -2,7 +2,6 @@ import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { flat } from '../utils/native/arrays.util';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { InstanceGeneratorService } from '../services/instance-generator.service';
 import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { EnumInfo } from '../models/declarations/enum-info.model';
@@ -11,6 +10,7 @@ import { getIndexableType } from '../utils/native/indexable-type.util';
 import { InterfaceInfo } from '../models/declarations/interface-info.model';
 import { removeQuotes } from '../types/target/string/quoted.type';
 import { INIT } from './init.const';
+import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 
 export class DeclarationInfoService {
 
@@ -20,6 +20,7 @@ export class DeclarationInfoService {
         this.setEnumInfos();
         this.setInterfaceInfos();
         this.setTypeInfos();
+        await DeclarationInfoGeneratorService.createDeclarationInfoFile();
     }
 
 
@@ -33,7 +34,7 @@ export class DeclarationInfoService {
 
 
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
-        InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
+        DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
         const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();

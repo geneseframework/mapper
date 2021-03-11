@@ -28,6 +28,8 @@ import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import * as chalk from 'chalk';
+import { DECLARATION_INFOS } from '../dist/declaration-info';
+import { INIT } from '../init/init.const';
 
 export class MainService {
 
@@ -44,7 +46,8 @@ export class MainService {
     // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
-        // GLOBAL.generateInstance = INIT.generateInstance;
+        GLOBAL.declarationInfos = DECLARATION_INFOS;
+        GLOBAL.generateInstance = INIT.generateInstance;
         // GLOBAL.logDuration(`START OF MAPPING PROCESS FOR ${target}`, 'yellowBright');
         // await InitService.start();
         if (!OptionsService.wasInitialized(options)) {

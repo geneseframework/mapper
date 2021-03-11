@@ -1,6 +1,6 @@
 import { Project } from 'ts-morph';
 import { InitConfigService } from './init-config.service';
-import { InstanceGeneratorService } from '../services/instance-generator.service';
+import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from './init.const';
 import * as chalk from 'chalk';

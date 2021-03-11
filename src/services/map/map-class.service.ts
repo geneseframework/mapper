@@ -21,6 +21,7 @@ export class MapClassService<T> {
             return undefined;
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
+        // const instance: object = await generateInstance(instanceGenerator) as object;
         const instance: object = await GLOBAL.generateInstance(instanceGenerator) as object;
         await MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
         return instance;
