@@ -26,12 +26,12 @@ export class Init {
 
 
     get declarationInfoPath(): string {
-        return `${INIT.nodeModulePath}/src/dist/declaration-infos.ts`;
+        return `${INIT.nodeModulePath}/dist/declaration-infos.ts`;
     }
 
 
     get instanceGeneratorPath(): string {
-        return `${INIT.nodeModulePath}/src/dist/instance-generator.ts`;
+        return `${INIT.nodeModulePath}/dist/instance-generator.ts`;
     }
 
 

@@ -26,6 +26,7 @@ export class InitService {
      * @private
      */
     private static async init(): Promise<void> {
+        console.log(chalk.blueBright('debugggg'), INIT.debug);
         INIT.debug ? this.createDebugProject() : this.createProject();
         this.setGlobalNodeModulePath();
         await InitConfigService.start();
@@ -50,7 +51,7 @@ export class InitService {
      * @private
      */
     private static createDebugProject(): void {
-        INIT.projectPath = process.cwd();
+        INIT.projectPath = `${process.cwd()}/src/debug/project`;
         INIT.project = new Project({
             tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
@@ -64,6 +65,7 @@ export class InitService {
      * @private
      */
     private static setGlobalNodeModulePath(): void {
+        // INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
         INIT.nodeModulePath = INIT.debug ? INIT.projectPath : `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

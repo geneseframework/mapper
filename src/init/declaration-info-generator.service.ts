@@ -5,11 +5,13 @@ import { ensureDirAndCopy } from '../utils/file-system.util';
 import { INIT } from './init.const';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
 import * as chalk from 'chalk';
-import { isClassInfo } from '../utils/declaration-info.util';
+import { isClassInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { Property } from '../types/target/property.type';
 import { ClassInfo } from '../models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../types/class-or-interface-info.type';
 import { GLOBAL } from '../const/global.const';
+import { TypeInfo } from '../models/declarations/type-info.model';
+import { addQuotes } from '../types/target/string/quoted.type';
 
 export class DeclarationInfoGeneratorService {
 
@@ -55,10 +57,9 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `import { DeclarationInfo } from '../models/declarations/declaration-info.model';\n\n` +
-            `const declarationInfos = [\n` +
+        return `const declarationInfos = [\n` +
             `${declarationInfosCode}` +
-            `] as DeclarationInfo[];\n` +
+            `];\n` +
             `exports.DECLARATION_INFOS = declarationInfos;`;
     }
 
@@ -75,9 +76,9 @@ export class DeclarationInfoGeneratorService {
     private static getDeclarationInfoCode(declarationInfo: DeclarationInfo): string {
         const typeParametersCode: string = this.getTypeParametersCode(declarationInfo);
         let code = `${tab}{\n` +
-            `${tabs(2)}filePath: \`${declarationInfo.filePath}\`,\n` +
-            `${tabs(2)}kind: \`${declarationInfo.kind}\`,\n` +
-            `${tabs(2)}name: \`${declarationInfo.name}\`,\n` +
+            `${tabs(2)}filePath: ${addQuotes(declarationInfo.filePath)},\n` +
+            `${tabs(2)}kind: ${addQuotes(declarationInfo.kind)},\n` +
+            `${tabs(2)}name: ${addQuotes(declarationInfo.name)},\n` +
             `${tabs(2)}typeParameters: [\n` +
             `${tabs(2)}${typeParametersCode}` +
             `],\n` +
@@ -99,6 +100,8 @@ export class DeclarationInfoGeneratorService {
     private static getSpecificCode(declarationInfo: DeclarationInfo): string {
         if (isClassInfo(declarationInfo)) {
             return this.getSpecificClassCode(declarationInfo);
+        } else if (isTypeInfo(declarationInfo)) {
+            return this.getSpecificTypeCode(declarationInfo);
         }
         return '';
     }
@@ -106,7 +109,10 @@ export class DeclarationInfoGeneratorService {
 
     private static getSpecificClassCode(classInfo: ClassInfo): string {
         let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
-        `${tabs(2)}indexableType: \`${classInfo.indexableType}\`,\n` +
+        `${tabs(2)}indexableType: {\n` +
+        `${tabs(3)}returnType: ${addQuotes(classInfo.indexableType?.returnType)},\n` +
+        `${tabs(3)}type: ${addQuotes(classInfo.indexableType?.type)}\n` +
+        `${tabs(2)}},\n` +
         `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
         `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
         `${tabs(2)}properties: [\n` +
@@ -127,11 +133,25 @@ export class DeclarationInfoGeneratorService {
 
     private static getSpecificPropertyCode(property: Property): string {
         let code = `${tabs(2)}{\n` +
-            `${tabs(3)}initializer: \`${property.initializer}\`,\n` +
+            `${tabs(3)}initializer: ${addQuotes(property.initializer)},\n` +
             `${tabs(3)}isRequired: ${property.isRequired},\n` +
-            `${tabs(3)}name: \`${property.name}\`,\n` +
-            `${tabs(3)}type: \`${property.type}\`\n` +
+            `${tabs(3)}name: ${addQuotes(property.name)},\n` +
+            `${tabs(3)}type: ${addQuotes(property.type)}\n` +
             `${tabs(2)}}`;
+        return code;
+    }
+
+
+    //TODO : Types with antiquotes
+    private static getSpecificTypeCode(typeInfo: TypeInfo): string {
+        let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
+        if (typeInfo.type.includes('TestIt')) {
+        // if (typeInfo.type.includes('${')) {
+            console.log(chalk.magentaBright('QUOTESSSSSS'), typeInfo);
+            console.log(chalk.magentaBright('codeeeee'), code);
+            // throw Error('zzzz')
+        }
+        // let code = `${tabs(2)}type: ${typeInfo.type?.toString()},\n`;
         return code;
     }
 
