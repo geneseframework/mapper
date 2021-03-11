@@ -12,7 +12,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/declaration-info-generator.service.ts`,
@@ -25,7 +25,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/declaration-info.service.ts`,
@@ -38,7 +38,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init-config.service.ts`,
@@ -51,7 +51,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init.model.ts`,
@@ -64,73 +64,73 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: false,
+        {
+            initializer: `false`,
             isRequired: true,
             name: `debug`,
             type: `undefined`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `declarationInfos`,
             type: `DeclarationInfo[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `declarationInfoSourceFile`,
             type: `SourceFile`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `generateInstance`,
             type: `<T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `instanceGenerators`,
             type: `InstanceGenerator<any>[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `instanceGeneratorSourceFile`,
             type: `SourceFile`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `nodeModulePath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `project`,
             type: `Project`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `projectPath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `_projectWithNodeModules`,
             type: `Project`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `start`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/init.service.ts`,
@@ -143,7 +143,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/init/instance-generator.service.ts`,
@@ -156,7 +156,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/config.model.ts`,
@@ -169,13 +169,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: new CreateOptions(),
+        {
+            initializer: `new CreateOptions()`,
             isRequired: false,
             name: `create`,
             type: `CreateOptions`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/create-options.model.ts`,
@@ -188,25 +188,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: true,
+        {
+            initializer: `true`,
             isRequired: false,
             name: `differentiateStringsAndNumbers`,
             type: `undefined`
-},
-{
-            initializer: false,
+        },
+        {
+            initializer: `false`,
             isRequired: false,
             name: `isArray`,
             type: `undefined`
-},
-{
-            initializer: new ThrowTargetError(),
+        },
+        {
+            initializer: `new ThrowTargetError()`,
             isRequired: false,
             name: `throwTarget`,
             type: `ThrowTargetError`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/date-declaration.model.ts`,
@@ -219,13 +219,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: () => 'DateDeclaration',
+        {
+            initializer: `() => 'DateDeclaration'`,
             isRequired: true,
             name: `getName`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/global.model.ts`,
@@ -238,67 +238,67 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: [],
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `checkedTargets`,
             type: `string[]`
-},
-{
-            initializer: false,
+        },
+        {
+            initializer: `false`,
             isRequired: true,
             name: `debug`,
             type: `undefined`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `declarationInfos`,
             type: `DeclarationInfo[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `generateInstance`,
             type: `<T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `instanceGenerators`,
             type: `InstanceGenerator<any>[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `nodeModulePath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `project`,
             type: `Project`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `projectPath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `_projectWithNodeModules`,
             type: `Project`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `start`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/instance-generator.model.ts`,
@@ -311,25 +311,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `numberOfConstructorArguments`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `typeDeclarationPath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `typeName`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/mapper.ts`,
@@ -342,7 +342,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/throw-target-error.model.ts`,
@@ -355,19 +355,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: false,
+        {
+            initializer: `false`,
             isRequired: false,
             name: `error`,
             type: `undefined`
-},
-{
-            initializer: false,
+        },
+        {
+            initializer: `false`,
             isRequired: false,
             name: `setToUndefined`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/main.service.ts`,
@@ -380,7 +380,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/options.service.ts`,
@@ -393,7 +393,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/test-engine/test-it.model.ts`,
@@ -406,37 +406,37 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 5,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `data`,
             type: `any`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `expected`,
             type: `any`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `title`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `method`,
             type: `Function`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: false,
             name: `options`,
             type: `TestMapperOptions`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/test-engine/test-mapper.model.ts`,
@@ -449,31 +449,31 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 4,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `title`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `mapParameter`,
             type: `Target<any>`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `data`,
             type: `any`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: false,
             name: `options`,
             type: `TestMapperOptions`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/declarations/class-info.model.ts`,
@@ -486,37 +486,37 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 5,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `hasPrivateConstructor`,
             type: `boolean`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `indexableType`,
             type: `IndexableType`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `isAbstract`,
             type: `boolean`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `numberOfConstructorArguments`,
             type: `number`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `properties`,
             type: `Property[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/declarations/declaration-info.model.ts`,
@@ -529,31 +529,31 @@ export const DECLARATION_INFOS = [
         isAbstract: true,
         numberOfConstructorArguments: 4,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `filePath`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `kind`,
             type: `TypeDeclarationKind`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `typeParameters`,
             type: `any[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/declarations/enum-info.model.ts`,
@@ -566,13 +566,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-{
-            initializer: [],
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `initializers`,
             type: `any[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/declarations/interface-info.model.ts`,
@@ -585,19 +585,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 4,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `indexableType`,
             type: `IndexableType`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `properties`,
             type: `Property[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/models/declarations/type-info.model.ts`,
@@ -610,13 +610,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `type`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-array.service.ts`,
@@ -629,7 +629,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-class.service.ts`,
@@ -642,7 +642,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-complex.service.ts`,
@@ -655,7 +655,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-date.service.ts`,
@@ -668,7 +668,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-declaration.service.ts`,
@@ -681,7 +681,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-enum.service.ts`,
@@ -694,7 +694,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-generic.service.ts`,
@@ -707,7 +707,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-instance-or-interface.service.ts`,
@@ -720,7 +720,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-interface.service.ts`,
@@ -733,7 +733,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-literal-object.service.ts`,
@@ -746,7 +746,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-null-or-literal.service.ts`,
@@ -759,7 +759,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-object.service.ts`,
@@ -772,7 +772,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-out-of-project.service.ts`,
@@ -785,7 +785,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-primitive.service.ts`,
@@ -798,7 +798,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-quoted.service.ts`,
@@ -811,7 +811,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-tuple.service.ts`,
@@ -824,7 +824,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/map/map-type.service.ts`,
@@ -837,7 +837,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/services/targets/target.service.ts`,
@@ -850,7 +850,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
@@ -863,25 +863,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `street`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `streetNumber`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `town`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/animal.model.ts`,
@@ -894,31 +894,31 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `age`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `kind`,
             type: `string`
-},
-{
-            initializer: true,
+        },
+        {
+            initializer: `true`,
             isRequired: true,
             name: `live`,
             type: `undefined`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `order`,
             type: `Order`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/cat.model.ts`,
@@ -931,55 +931,55 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-{
-            initializer: [],
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `colors`,
             type: `Color[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `favouritePrey`,
             type: `Prey`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `friend`,
             type: `Person`
-},
-{
-            initializer: false,
+        },
+        {
+            initializer: `false`,
             isRequired: true,
             name: `hungry`,
             type: `undefined`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `mood`,
             type: `Mood`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `race`,
             type: `Race`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `tattoo`,
             type: `[string, number, Color, Person]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/company.model.ts`,
@@ -992,19 +992,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employees`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/main-app-process.ts`,
@@ -1017,7 +1017,7 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-],
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/ngo.model.ts`,
@@ -1030,19 +1030,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `volunteers`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/organism.model.ts`,
@@ -1055,13 +1055,13 @@ export const DECLARATION_INFOS = [
         isAbstract: true,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `live`,
             type: `boolean`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/person.model.ts`,
@@ -1074,55 +1074,55 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 6,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `address`,
             type: `Address`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `cats`,
             type: `Cat[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employer`,
             type: `Employer`
-},
-{
-            initializer: [],
+        },
+        {
+            initializer: `[]`,
             isRequired: true,
             name: `family`,
             type: `Person[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `firstName`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `isHappy`,
             type: `boolean`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `lastName`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `nickNames`,
             type: `StringOrStrings`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-targets.spec.ts`,
@@ -1135,13 +1135,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-targets.spec.ts`,
@@ -1154,13 +1154,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-typing.ts`,
@@ -1173,13 +1173,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `foo`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-typing.ts`,
@@ -1192,13 +1192,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `bar`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1211,13 +1211,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1230,43 +1230,43 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `str`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `num`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `bool`,
             type: `boolean`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `strs`,
             type: `string[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `nums`,
             type: `number[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `bools`,
             type: `boolean[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1279,25 +1279,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `a`,
             type: `any`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `b`,
             type: `any[]`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `c`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1310,13 +1310,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `a`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1329,13 +1329,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `a`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1348,31 +1348,31 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: 'aaa',
+        {
+            initializer: `'aaa'`,
             isRequired: true,
             name: `a`,
             type: `undefined`
-},
-{
-            initializer: 2,
+        },
+        {
+            initializer: `2`,
             isRequired: true,
             name: `b`,
             type: `undefined`
-},
-{
-            initializer: false,
+        },
+        {
+            initializer: `false`,
             isRequired: true,
             name: `c`,
             type: `undefined`
-},
-{
-            initializer: true,
+        },
+        {
+            initializer: `true`,
             isRequired: true,
             name: `d`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1385,31 +1385,31 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 4,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `a`,
             type: `undefined`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `b`,
             type: `undefined`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `c`,
             type: `undefined`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `d`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1422,13 +1422,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1441,25 +1441,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `age`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `cat`,
             type: `CatSpec`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `firstName`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1472,13 +1472,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1491,13 +1491,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `color`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1510,13 +1510,13 @@ export const DECLARATION_INFOS = [
         isAbstract: true,
         numberOfConstructorArguments: 1,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1529,13 +1529,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `color`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1548,15 +1548,15 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: {
+        {
+            initializer: `{
         name: 'Léa'
-    },
+    }`,
             isRequired: true,
             name: `person`,
             type: `IDefaultsSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1569,13 +1569,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `age`,
             type: `string | number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1588,13 +1588,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `null`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1607,13 +1607,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `undefined`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1626,13 +1626,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `unknown`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1645,13 +1645,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `4`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1664,13 +1664,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `'a'`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1683,13 +1683,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `false`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1702,13 +1702,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `colors`,
             type: `StringsOrStringSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1721,13 +1721,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `colors`,
             type: `StringOrStringsSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1740,13 +1740,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `ages`,
             type: `NumbersOrNumberSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1759,13 +1759,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `ages`,
             type: `NumberOrNumbersSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1778,13 +1778,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `level`,
             type: `LevelSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1797,13 +1797,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1816,13 +1816,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `union`,
             type: `UnionTypeClassAndStringSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1835,19 +1835,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `volunteers`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1860,19 +1860,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employees`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1885,13 +1885,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employer`,
             type: `EmployerSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1904,13 +1904,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `{str: string}`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1923,13 +1923,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `prop`,
             type: `{str: string, nb: number}`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts`,
@@ -1942,13 +1942,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `date`,
             type: `Date`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
@@ -1961,13 +1961,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `color`,
             type: `ColorSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
@@ -1980,13 +1980,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `colors`,
             type: `ColorSpec[]`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
@@ -1999,13 +1999,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
@@ -2018,13 +2018,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts`,
@@ -2037,13 +2037,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `animal`,
             type: `AnimalSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -2056,13 +2056,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -2075,13 +2075,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -2094,25 +2094,25 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `age`,
             type: `number`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `cat`,
             type: `CatTupleSpec`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `firstName`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -2125,19 +2125,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employees`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -2150,13 +2150,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `str`,
             type: `string`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -2169,19 +2169,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `volunteers`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -2194,19 +2194,19 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `string`
-},
-{
-            initializer: undefined,
+        },
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employees`,
             type: `number`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -2219,13 +2219,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `employer`,
             type: `EmployerTypeSpec`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/warnings.spec.ts`,
@@ -2238,13 +2238,13 @@ export const DECLARATION_INFOS = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-{
-            initializer: undefined,
+        {
+            initializer: `undefined`,
             isRequired: true,
             name: `name`,
             type: `NonReadableType<any>`
-},
-],
+        },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/enums/colors.enum.ts`,
