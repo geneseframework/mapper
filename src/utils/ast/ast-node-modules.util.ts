@@ -13,11 +13,12 @@ import { throwWarning } from '../errors.util';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { DeclarationInfoService } from '../../services/init/declaration-info.service';
+import { DeclarationInfoService } from '../../init/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
 
 
 // TODO: Add imported classes in new instance generator file
+// TODO: remove ts-morph from runtime
 export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promise<boolean> {
     const declarations: ImportDeclaration[] = getImportDeclarations(target);
     if (declarations.length === 0) {

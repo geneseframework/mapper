@@ -1,20 +1,20 @@
-import { throwTarget } from '../../utils/errors.util';
-import { isPrimitiveType } from '../../types/primitives.type';
-import { isNullOrUndefined } from '../../utils/native/any.util';
-import { isString } from '../../utils/native/strings.util';
-import { isQuoted } from '../../types/target/string/quoted.type';
-import { isBracketedOrParenthesized } from '../../types/target/string/bracketed-or-penthesized.type';
-import { hasDeclaration } from '../../utils/ast/ast-declaration.util';
-import { hasSeparators } from '../../types/target/string/has-separators.type';
-import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { TargetService } from '../targets/target.service';
-import { isStringAsTrivialType } from '../../types/null-or-literal.type';
-import { removeBorders } from '../../types/target/string/containerized.type';
-import { isDeclaredOutOfProjectAddItToGlobal } from '../../utils/ast/ast-node-modules.util';
-import { hasGeneric, tagOfGeneric, typeOfGeneric } from '../../types/target/string/generics.type';
+import { throwTarget } from '../utils/errors.util';
+import { isPrimitiveType } from '../types/primitives.type';
+import { isNullOrUndefined } from '../utils/native/any.util';
+import { isString } from '../utils/native/strings.util';
+import { isQuoted } from '../types/target/string/quoted.type';
+import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
+import { hasDeclaration } from '../utils/ast/ast-declaration.util';
+import { hasSeparators } from '../types/target/string/has-separators.type';
+import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
+import { TargetService } from '../services/targets/target.service';
+import { isStringAsTrivialType } from '../types/null-or-literal.type';
+import { removeBorders } from '../types/target/string/containerized.type';
+import { isDeclaredOutOfProjectAddItToGlobal } from '../utils/ast/ast-node-modules.util';
+import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
+import { getElements, trimTarget } from '../utils/target.util';
+import { GLOBAL } from '../const/global.const';
 import * as chalk from 'chalk';
-import { getElements, trimTarget } from '../../utils/target.util';
-import { GLOBAL } from '../../const/global.const';
 
 export class CheckTargetsService {
 
@@ -37,6 +37,7 @@ export class CheckTargetsService {
      * @param target
      */
     static async hasCorrectFormat(target: string): Promise<boolean> {
+        // console.log(chalk.blueBright('HAS CORRR FORMAT'), target);
         if (isNullOrUndefined(target)) {
             return true;
         }
@@ -104,17 +105,22 @@ export class CheckTargetsService {
 
     // TODO
     private static isCorrectObject(text: string): boolean {
+        // console.log(chalk.green(' CORRRRRR OBJJJJJ ????'), text);
         return isPrimitiveType(text)
     }
 
 
     private static async isDeclaration(text: string): Promise<boolean> {
+        // console.log(chalk.green('HAS DECLLLLL ????'), text);
         return hasDeclaration(text);
     }
 
 
+    // TODO: fix
     private static async isDeclaredOutOfProject(text: string): Promise<boolean> {
-        return await isDeclaredOutOfProjectAddItToGlobal(text);
+        // console.log(chalk.green('IS OOP ????'), text);
+        return false;
+        // return await isDeclaredOutOfProjectAddItToGlobal(text);
     }
 
 

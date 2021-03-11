@@ -6,7 +6,7 @@ export const testMappers: TestMapper[] = [];
 // ----------------------------------------------   Strings Literals   ----------------------------------------------------
 
 
-testMappers.push(new TestMapper(`'blue' / 'blue'`,`'blue'`, 'blue'));
+testMappers.push(new TestMapper(`'blue' / 'blue'`,`'blue'`, 'blue', {isolate: false}));
 testMappers.push(new TestMapper(`'blue' / 'red'`,`'blue'`, 'red', {expectedValue: undefined}));
 
 
