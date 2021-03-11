@@ -29,7 +29,6 @@ import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import * as chalk from 'chalk';
 import { INIT } from '../init/init.const';
-// import { DECLARATION_INFOS } from '../dist/declaration-infos';
 
 export class MainService {
 
