@@ -14,6 +14,7 @@ import { getElements, trimTarget } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
@@ -44,7 +45,9 @@ export class CheckTargetsService {
             target = TargetService.toString(target);
         }
         const normalizedTarget: string = TargetService.normalize(target);
-        return await CheckTargetsService.hasCorrectElements(normalizedTarget);
+        const zzz = await CheckTargetsService.hasCorrectElements(normalizedTarget);
+        // console.log(chalk.greenBright('END HAS CORRR FORMAT'), zzz);
+        return zzz;
     }
 
 
@@ -65,11 +68,12 @@ export class CheckTargetsService {
         } else if (isCurveBracketed(text)) {
             return isPrimitiveType(text); // TODO
         } else if (hasDeclaration(text)) {
+            // console.log(chalk.cyanBright('SHOULD BE HEREEEEE'), text);
             return true;
         } else if (await this.isDeclaredOutOfProject(text)) { // TODO
             return true;
         }
-        // console.log(chalk.cyanBright('HAS CORRR ELTS ?????'), text);
+        // console.log(chalk.cyanBright('NOT HAS CORRR ELTS !!!!!'), text);
         return false;
     }
 

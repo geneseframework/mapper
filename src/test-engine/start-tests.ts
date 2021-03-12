@@ -4,6 +4,7 @@ import { expect } from './test-algo.service';
 import { INIT } from '../init/const/init.const';
 import { InitService } from '../init/services/init.service';
 import { GLOBAL } from '../create/const/global.const';
+import { GlobalInitService } from '../create/services/global-init.service';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -13,6 +14,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
     await InitService.start();
+    await GlobalInitService.start();
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
