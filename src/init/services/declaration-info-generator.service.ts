@@ -21,8 +21,8 @@ export class DeclarationInfoGeneratorService {
      */
     static async createDeclarationInfoFile(): Promise<void> {
         const code: string = this.getCode();
-        console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code);
-        console.log(chalk.magentaBright('INIT.declarationInfoPathhhhhh'), INIT.declarationInfoPath);
+        // console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code);
+        // console.log(chalk.magentaBright('INIT.declarationInfoPathhhhhh'), INIT.declarationInfoPath);
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);

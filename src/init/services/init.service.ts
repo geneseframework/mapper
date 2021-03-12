@@ -12,7 +12,6 @@ export class InitService {
      * Starts the initialization and the creation of the Instance Generator file
      */
     static async start(): Promise<void> {
-        console.log(chalk.blueBright('START INITTTTT'));
         await this.init();
         await DeclarationInfoService.init();
         await InstanceGeneratorService.start();

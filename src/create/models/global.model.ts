@@ -1,4 +1,3 @@
-import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
 import { ClassInfo } from './declarations/class-info.model';
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
@@ -14,8 +13,6 @@ export class Global {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
-    instanceGenerators: InstanceGenerator<any>[] = [];
-    projectPath: string = undefined;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 
@@ -60,11 +57,6 @@ export class Global {
     }
 
 
-    get configFilePath(): string {
-        return `${GLOBAL.projectPath}/tsconfig.json`;
-    }
-
-
     get enumNames(): string[] {
         return this.declarationInfos.filter(d => d.kind === 'Enum').map(d => d.name);
     }
@@ -75,21 +67,8 @@ export class Global {
     }
 
 
-    get isFirstMapper(): boolean {
-        return this.instanceGenerators.length === 0;
-    }
-
-
     get typeNames(): string[] {
         return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
-    }
-
-
-    addInstanceGenerator(instanceGenerator: InstanceGenerator<any>): void {
-        const iGenerator: InstanceGenerator<any> = this.instanceGenerators.find(i => i.id === instanceGenerator.id);
-        if (!iGenerator) {
-            this.instanceGenerators.push(instanceGenerator);
-        }
     }
 
 
