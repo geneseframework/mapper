@@ -3,6 +3,7 @@ import { InstanceGenerator } from '../../create/models/instance-generator.model'
 import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
+import { isClassInfo } from '../../create/utils/declaration-info.util';
 
 
 export class Init {
@@ -10,7 +11,6 @@ export class Init {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
@@ -20,23 +20,23 @@ export class Init {
     start: number = undefined;
 
 
+    get classNames(): string[] {
+        return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
+    }
+
+
     get configFilePath(): string {
         return `${INIT.projectPath}/tsconfig.json`;
     }
 
 
     get declarationInfoPath(): string {
-        return `${INIT.nodeModulePath}/dist/declaration-infos.ts`;
+        return `${INIT.nodeModulePath}/src/dist/declaration-infos.ts`;
     }
 
 
     get instanceGeneratorPath(): string {
-        return `${INIT.nodeModulePath}/dist/instance-generator.ts`;
-    }
-
-
-    get isFirstMapper(): boolean {
-        return this.instanceGenerators.length === 0;
+        return `${INIT.nodeModulePath}/src/dist/instance-generator.ts`;
     }
 
 
@@ -61,14 +61,8 @@ export class Init {
     }
 
 
-    log(message: string, value: any, predicate: boolean): void {
-        if (predicate) {
-            console.log(chalk.yellowBright(message), value);
-        }
-    }
-
-    logDuration(message: string, color: 'blueBright' | 'yellowBright' | 'magentaBright' | 'cyanBright' | 'greenBright' = 'blueBright'): void {
-        console.log(chalk[color](`${message} : TIME `), Date.now() - this.start);
+    isAlreadyDeclared(target: string): boolean {
+        return !!this.declarationInfos.find(d => d.name === target);
     }
 
 }

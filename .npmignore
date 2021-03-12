@@ -1,2 +1,5 @@
+tsconfig.tests.json
 tsconfig.json
 src
+debug
+test-engine

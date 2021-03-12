@@ -1,7 +1,7 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
 import { InstanceGenerator } from '../../create/models/instance-generator.model';
 import { tab, tabs } from '../../create/utils/native/strings.util';
-import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast-class.util';
 import { ensureDirAndCopy } from '../../create/utils/file-system.util';
 import { INIT } from '../const/init.const';
 
@@ -55,7 +55,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static getInstanceGeneratorCode(): string {
-        return `const generateInstance = async function(instanceGenerator) {\n` +
+        return `export const generateInstance = async function(instanceGenerator) {\n` +
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
@@ -64,8 +64,7 @@ export class InstanceGeneratorService {
             `${tab}} catch(err) {\n` +
             `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +
             `${tab}}\n` +
-            `}\n` +
-            `exports.generateInstance = generateInstance;\n`;
+            `}\n`;
     }
 
 
@@ -88,9 +87,9 @@ export class InstanceGeneratorService {
         switchStatement.replaceWithText(switchCode);
         INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
-        const mjsPath = INIT.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
-        await ensureDirAndCopy(INIT.instanceGeneratorSourceFile.getFilePath(), mjsPath);
-        INIT.generateInstance = await require(mjsPath).generateInstance;
+        // const mjsPath = INIT.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
+        // await ensureDirAndCopy(INIT.instanceGeneratorSourceFile.getFilePath(), mjsPath);
+        // INIT.generateInstance = await require(mjsPath).generateInstance;
     }
 
 
