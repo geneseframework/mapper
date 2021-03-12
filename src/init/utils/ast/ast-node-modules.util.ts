@@ -7,14 +7,13 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { Declaration } from '../../../create/types/type-declaration.type';
-import { throwWarning } from '../../../create/utils/errors.util';
-import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
-import { TypeDeclarationKind } from '../../../create/types/type-declaration-kind.type';
-import { PropertyDeclarationOrSignature } from '../../../create/types/property-declaration-or-signature.type';
+import { Declaration } from '../../types/type-declaration.type';
+import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { DeclarationInfoService } from '../../services/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
 import { INIT } from '../../const/init.const';
+import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
+import { TypeDeclarationKindInit } from '../../types/type-declaration-kind-init.type';
 
 
 // TODO: Add imported classes in new instance generator file
@@ -24,7 +23,7 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
     if (declarations.length === 0) {
         return false;
     } else if (declarations.length > 1) {
-        throwWarning(`${target} is declared in multiple files.`);
+        // throwWarning(`${target} is declared in multiple files.`);
         return true;
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
@@ -107,7 +106,7 @@ async function addDeclarationInfoForType(type: TypeAliasDeclaration): Promise<vo
 }
 
 
-function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKind): Declaration {
+function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKindInit): Declaration {
     const declarationKind = `${kind}Declaration`;
     return sourceFile.getDescendantsOfKind(SyntaxKind[declarationKind]).find(e => (e as Declaration).getName() === name) as Declaration;
 }
