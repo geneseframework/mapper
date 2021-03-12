@@ -10,6 +10,7 @@
     "scripts": {
         "build": "tsc",
         "build_and_test": "tsc && ts-node src/test-engine/start-tests.ts",
+        "clear": "ts-node -P src/debug/tsconfig.debug.json ./src/debug/project/clear-debug.ts",
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
