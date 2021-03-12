@@ -15,20 +15,9 @@ export class Global {
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
-    nodeModulePath: string = undefined;
     projectPath: string = undefined;
     start: number = undefined;
     wasInitialized: boolean = undefined;
-
-
-    get declarationInfosPath(): string {
-        return `${this.nodeModulePath}/dist/declaration-infos.js`;
-    }
-
-
-    get instanceGeneratorPath(): string {
-        return `${this.nodeModulePath}/dist/instance-generator.js`;
-    }
 
 
     check(target: string): void {
