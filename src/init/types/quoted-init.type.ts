@@ -26,7 +26,7 @@ export function removeBordersInit(text: string): string {
 }
 
 
-export function addQuotes(text: string): string {
+export function addQuotesInit(text: string): string {
     if (!text) {
         return text;
         // return '``';
