@@ -5,14 +5,14 @@ import {
     InterfaceDeclaration,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { DeclarationOrDate, GenericableDeclaration } from '../../create/types/type-declaration.type';
-import { flat } from '../../create/utils/native/arrays.util';
-import { ClassOrInterfaceDeclaration } from '../../create/types/class-or-interface-declaration.type';
-import { Property } from '../../create/types/target/property.type';
-import { ClassOrInterfaceInfo } from '../../create/types/class-or-interface-info.type';
-import { TypeDeclarationKind } from '../../create/types/type-declaration-kind.type';
-import { GenericParameter } from '../../create/types/target/generic-parameter.type';
-import { INIT } from '../const/init.const';
+import { DeclarationOrDate, GenericableDeclaration } from '../../../create/types/type-declaration.type';
+import { flat } from '../../../create/utils/native/arrays.util';
+import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
+import { Property } from '../../../create/types/target/property.type';
+import { ClassOrInterfaceInfo } from '../../../create/types/class-or-interface-info.type';
+import { TypeDeclarationKind } from '../../../create/types/type-declaration-kind.type';
+import { GenericParameter } from '../../../create/types/target/generic-parameter.type';
+import { INIT } from '../../const/init.const';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {

@@ -1,7 +1,5 @@
 import { ClassDeclaration } from 'ts-morph';
-import { tab, tabs } from '../../create/utils/native/strings.util';
-import { hasPrivateConstructor } from '../utils/ast-class.util';
-import { ensureDirAndCopy } from '../../create/utils/file-system.util';
+import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../create/utils/declaration-info.util';
@@ -12,6 +10,7 @@ import { TypeInfo } from '../../create/models/declarations/type-info.model';
 import { addQuotes } from '../../create/types/target/string/quoted.type';
 import { InterfaceInfo } from '../../create/models/declarations/interface-info.model';
 import { EnumInfo } from '../../create/models/declarations/enum-info.model';
+import { tab, tabs } from '../utils/native/strings.util';
 
 export class DeclarationInfoGeneratorService {
 

@@ -7,14 +7,14 @@ import {
     SyntaxKind,
     TypeAliasDeclaration
 } from 'ts-morph';
-import { Declaration } from '../../create/types/type-declaration.type';
-import { throwWarning } from '../../create/utils/errors.util';
-import { ClassOrInterfaceDeclaration } from '../../create/types/class-or-interface-declaration.type';
-import { TypeDeclarationKind } from '../../create/types/type-declaration-kind.type';
-import { PropertyDeclarationOrSignature } from '../../create/types/property-declaration-or-signature.type';
-import { DeclarationInfoService } from '../services/declaration-info.service';
+import { Declaration } from '../../../create/types/type-declaration.type';
+import { throwWarning } from '../../../create/utils/errors.util';
+import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
+import { TypeDeclarationKind } from '../../../create/types/type-declaration-kind.type';
+import { PropertyDeclarationOrSignature } from '../../../create/types/property-declaration-or-signature.type';
+import { DeclarationInfoService } from '../../services/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
-import { INIT } from '../const/init.const';
+import { INIT } from '../../const/init.const';
 
 
 // TODO: Add imported classes in new instance generator file

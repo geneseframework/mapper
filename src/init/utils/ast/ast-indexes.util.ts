@@ -1,6 +1,6 @@
 import { IndexSignatureDeclaration, IndexSignatureDeclarationStructure, SyntaxKind } from 'ts-morph';
-import { ClassOrInterfaceDeclaration } from '../../create/types/class-or-interface-declaration.type';
-import { IndexableType } from '../../create/types/indexable-type.type';
+import { ClassOrInterfaceDeclaration } from '../../../create/types/class-or-interface-declaration.type';
+import { IndexableType } from '../../../create/types/indexable-type.type';
 
 
 
