@@ -13,7 +13,5 @@
     "include": [
         "src/**/*"
     ],
-    "exclude": [
-        "dist/instance-generator.ts"
-    ]
+    "exclude": []
 }

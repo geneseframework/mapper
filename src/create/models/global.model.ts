@@ -1,7 +1,5 @@
-import { Project } from 'ts-morph';
 import { GLOBAL } from '../const/global.const';
 import { InstanceGenerator } from './instance-generator.model';
-import * as chalk from 'chalk';
 import { ClassInfo } from './declarations/class-info.model';
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
 import { EnumInfo } from './declarations/enum-info.model';
@@ -18,9 +16,7 @@ export class Global {
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
     instanceGenerators: InstanceGenerator<any>[] = [];
     nodeModulePath: string = undefined;
-    project: Project = undefined;
     projectPath: string = undefined;
-    private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 
@@ -70,11 +66,6 @@ export class Global {
     }
 
 
-    isAlreadyDeclared(target: string): boolean {
-        return !!this.declarationInfos.find(d => d.name === target);
-    }
-
-
     get classNames(): string[] {
         return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
     }
@@ -100,14 +91,6 @@ export class Global {
     }
 
 
-    get projectWithNodeModules(): Project {
-        if (!this._projectWithNodeModules) {
-            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
-        }
-        return this._projectWithNodeModules;
-    }
-
-
     get typeNames(): string[] {
         return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
     }
@@ -123,12 +106,12 @@ export class Global {
 
     log(message: string, value: any, predicate: boolean): void {
         if (predicate) {
-            console.log(chalk.yellowBright(message), value);
+            // console.log(chalk.yellowBright(message), value);
         }
     }
 
     logDuration(message: string, color: 'blueBright' | 'yellowBright' | 'magentaBright' | 'cyanBright' | 'greenBright' = 'blueBright'): void {
-        console.log(chalk[color](`${message} : TIME `), Date.now() - this.start);
+        // console.log(chalk[color](`${message} : TIME `), Date.now() - this.start);
     }
 
 }

@@ -6,13 +6,13 @@ import { genericParameters, getProperties } from '../utils/ast-declaration.util'
 import { sourceFilePath } from '../utils/ast-sourcefile.util';
 import { EnumInfo } from '../../create/models/declarations/enum-info.model';
 import { TypeInfo } from '../../create/models/declarations/type-info.model';
-import { getIndexableType } from '../../create/utils/native/indexable-type.util';
 import { InterfaceInfo } from '../../create/models/declarations/interface-info.model';
 import { removeQuotes } from '../../create/types/target/string/quoted.type';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 import { InstanceGeneratorService } from './instance-generator.service';
 import * as chalk from 'chalk';
+import { getIndexableType } from '../utils/ast-indexes.util';
 
 export class DeclarationInfoService {
 

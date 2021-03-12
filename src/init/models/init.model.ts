@@ -3,6 +3,7 @@ import { InstanceGenerator } from '../../create/models/instance-generator.model'
 import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
+import { isClassInfo } from '../../create/utils/declaration-info.util';
 
 
 export class Init {
@@ -17,6 +18,11 @@ export class Init {
     projectPath: string = undefined;
     private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
+
+
+    get classNames(): string[] {
+        return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
+    }
 
 
     get configFilePath(): string {
@@ -52,6 +58,11 @@ export class Init {
         if (!iGenerator) {
             this.instanceGenerators.push(instanceGenerator);
         }
+    }
+
+
+    isAlreadyDeclared(target: string): boolean {
+        return !!this.declarationInfos.find(d => d.name === target);
     }
 
 }

@@ -1,4 +1,3 @@
-import { GLOBAL } from '../../create/const/global.const';
 import {
     ClassDeclaration,
     EnumDeclaration,
@@ -15,6 +14,7 @@ import { TypeDeclarationKind } from '../../create/types/type-declaration-kind.ty
 import { PropertyDeclarationOrSignature } from '../../create/types/property-declaration-or-signature.type';
 import { DeclarationInfoService } from '../services/declaration-info.service';
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
+import { INIT } from '../const/init.const';
 
 
 // TODO: Add imported classes in new instance generator file
@@ -38,7 +38,7 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
 function addDeclarationInfoToGlobalDeclarationInfos(target: string, sourceFile: SourceFile): Declaration {
     let declaration: Declaration = getSourceFileDeclaration(target, sourceFile, 'Class');
     if (declaration) {
-        DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, GLOBAL.classNames);
+        DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, INIT.classNames);
         return declaration;
     }
     declaration = getSourceFileDeclaration(target, sourceFile, 'Interface');
@@ -82,7 +82,7 @@ async function addDeclarationInfoForEachProperty(declaration: ClassOrInterfaceDe
 async function addDeclarationInfoForProperty(property: PropertyDeclarationOrSignature): Promise<void> {
     const propertyType: string = property.getStructure().type as string;
     if (isTypeReferenceNotAlreadyAdded(property)) {
-        GLOBAL.project.addSourceFileAtPath(property.getSourceFile().getFilePath());
+        INIT.project.addSourceFileAtPath(property.getSourceFile().getFilePath());
         const declaration: Declaration = addDeclarationInfoToGlobalDeclarationInfos(propertyType, property.getSourceFile());
         if (!declaration) {
             // TODO: declarations on other node_module file
@@ -93,7 +93,7 @@ async function addDeclarationInfoForProperty(property: PropertyDeclarationOrSign
 
 function isTypeReferenceNotAlreadyAdded(property: PropertyDeclarationOrSignature): boolean {
     const propertyType: string = property.getStructure().type as string;
-    return isTypeReference(property) && !GLOBAL.isAlreadyDeclared(propertyType);
+    return isTypeReference(property) && !INIT.isAlreadyDeclared(propertyType);
 }
 
 
