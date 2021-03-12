@@ -12,7 +12,7 @@ export class GlobalInitService {
     static async start(): Promise<void> {
         if (!GLOBAL.wasInitialized) {
             GLOBAL.projectPath = appRoot;
-            GLOBAL.nodeModulePath = GLOBAL.debug ? process.cwd() : `${GLOBAL.projectPath}/node_modules/@genese/mapper`;
+            GLOBAL.nodeModulePath = GLOBAL.debug ? process.cwd() : `${GLOBAL.projectPath}/node_modules/@genese/creator`;
             GLOBAL.generateInstance = generateInstance;
             GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
             await InitConfigService.start();

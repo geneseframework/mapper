@@ -25,7 +25,7 @@ export class InitService {
      */
     private static async init(): Promise<void> {
         INIT.debug ? this.createDebugProject() : this.createProject();
-        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
+        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/creator`;
     }
 
 
