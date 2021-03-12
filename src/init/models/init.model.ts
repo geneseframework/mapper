@@ -1,17 +1,13 @@
 import { Project, SourceFile } from 'ts-morph';
-import { InstanceGenerator } from '../../create/models/instance-generator.model';
-import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
-import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
-import { isClassInfo } from '../../create/utils/declaration-info.util';
 
 
 export class Init {
 
     debug = false;
-    declarationInfos: DeclarationInfo[] = [];
+    declarationInfos: any[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
-    instanceGenerators: InstanceGenerator<any>[] = [];
+    instanceGenerators: any[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
     project: Project = undefined;
@@ -21,7 +17,7 @@ export class Init {
 
 
     get classNames(): string[] {
-        return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
+        return this.declarationInfos.filter(d => this.isClassInfo(d)).map(d => d.name);
     }
 
 
@@ -48,13 +44,13 @@ export class Init {
     }
 
 
-    addDeclarationInfo(declarationInfo: DeclarationInfo): void {
+    addDeclarationInfo(declarationInfo): void {
         this.declarationInfos.push(declarationInfo);
     }
 
 
-    addInstanceGenerator(instanceGenerator: InstanceGenerator<any>): void {
-        const iGenerator: InstanceGenerator<any> = this.instanceGenerators.find(i => i.id === instanceGenerator.id);
+    addInstanceGenerator(instanceGenerator: any): void {
+        const iGenerator: any = this.instanceGenerators.find(i => i.id === instanceGenerator.id);
         if (!iGenerator) {
             this.instanceGenerators.push(instanceGenerator);
         }
@@ -63,6 +59,11 @@ export class Init {
 
     isAlreadyDeclared(target: string): boolean {
         return !!this.declarationInfos.find(d => d.name === target);
+    }
+
+
+    isClassInfo(declarationInfo): boolean {
+        return declarationInfo.kind === 'Class';
     }
 
 }

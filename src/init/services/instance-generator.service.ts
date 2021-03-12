@@ -1,9 +1,8 @@
 import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
-import { InstanceGenerator } from '../../create/models/instance-generator.model';
-import { tab, tabs } from '../../create/utils/native/strings.util';
-import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast-class.util';
-import { ensureDirAndCopy } from '../../create/utils/file-system.util';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
+import { tab, tabs } from '../utils/native/strings.util';
+import { InstanceGeneratorInit } from '../models/instance-generator-init.model';
 
 export class InstanceGeneratorService {
 
@@ -17,7 +16,7 @@ export class InstanceGeneratorService {
 
     static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
-            INIT.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
+            INIT.addInstanceGenerator(new InstanceGeneratorInit<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }
@@ -98,7 +97,7 @@ export class InstanceGeneratorService {
      * @param instanceGenerator
      * @private
      */
-    private static importsCode(instanceGenerator: InstanceGenerator<any>): string {
+    private static importsCode(instanceGenerator: InstanceGeneratorInit<any>): string {
         return `const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
     }
 
@@ -108,7 +107,7 @@ export class InstanceGeneratorService {
      * @param instanceGenerator
      * @private
      */
-    private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
+    private static switchClause(instanceGenerator: InstanceGeneratorInit<any>): string {
         return `case '${instanceGenerator.id}':\n` +
         `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
         `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
@@ -123,7 +122,7 @@ export class InstanceGeneratorService {
      * @param instanceGenerator
      * @private
      */
-    private static undefinedArguments(instanceGenerator: InstanceGenerator<any>): string {
+    private static undefinedArguments(instanceGenerator: InstanceGeneratorInit<any>): string {
         let code: string = '(';
         if (instanceGenerator.numberOfConstructorArguments > 0) {
             for (let i = 0; i < instanceGenerator.numberOfConstructorArguments; i++) {

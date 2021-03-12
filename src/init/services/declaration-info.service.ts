@@ -1,18 +1,17 @@
-import { ClassInfo } from '../../create/models/declarations/class-info.model';
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
-import { flat } from '../../create/utils/native/arrays.util';
-import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast-class.util';
-import { genericParameters, getProperties } from '../utils/ast-declaration.util';
-import { sourceFilePath } from '../utils/ast-sourcefile.util';
-import { EnumInfo } from '../../create/models/declarations/enum-info.model';
-import { TypeInfo } from '../../create/models/declarations/type-info.model';
-import { InterfaceInfo } from '../../create/models/declarations/interface-info.model';
-import { removeQuotes } from '../../create/types/target/string/quoted.type';
+import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
+import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
+import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 import { InstanceGeneratorService } from './instance-generator.service';
-import * as chalk from 'chalk';
-import { getIndexableType } from '../utils/ast-indexes.util';
+import { getIndexableType } from '../utils/ast/ast-indexes.util';
+import { InterfaceInfoInit } from '../models/declarations/interface-info.model';
+import { EnumInfoInit } from '../models/declarations/enum-info.model';
+import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
+import { TypeInfoInit } from '../models/declarations/type-info.model';
+import { ClassInfoInit } from '../models/declarations/class-info.model';
+import { flatInit } from '../utils/native/arrays.util';
 
 export class DeclarationInfoService {
 
@@ -38,7 +37,7 @@ export class DeclarationInfoService {
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
-        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
+        const classInfo = new ClassInfoInit(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
         classInfo.indexableType = getIndexableType(classDeclaration);
@@ -47,7 +46,7 @@ export class DeclarationInfoService {
 
 
     private static setInterfaceInfos(): void {
-        const interfaceDeclarations: InterfaceDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
+        const interfaceDeclarations: InterfaceDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
         for (const interfaceDeclaration of interfaceDeclarations) {
             this.addInterfaceInfo(interfaceDeclaration);
         }
@@ -55,14 +54,14 @@ export class DeclarationInfoService {
 
 
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
-        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
+        const interfaceInfo = new InterfaceInfoInit(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
         INIT.addDeclarationInfo(interfaceInfo);
     }
 
 
     private static setEnumInfos(): void {
-        const enumDeclarations: EnumDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getEnums()));
+        const enumDeclarations: EnumDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getEnums()));
         for (const enumDeclaration of enumDeclarations) {
             this.addEnumInfo(enumDeclaration);
         }
@@ -70,15 +69,15 @@ export class DeclarationInfoService {
 
 
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
-        const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
-        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => removeQuotes(m.initializer as string));
+        const enumInfo = new EnumInfoInit(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
+        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => this.removeQuotes(m.initializer as string));
         // console.log(chalk.blueBright('ENU MVALLLLS'), enumInfo.initializers);
         INIT.addDeclarationInfo(enumInfo);
     }
 
 
     private static setTypeInfos(): void {
-        const typeDeclarations: TypeAliasDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
+        const typeDeclarations: TypeAliasDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
         for (const typeDeclaration of typeDeclarations) {
             this.addTypeInfo(typeDeclaration);
         }
@@ -86,9 +85,29 @@ export class DeclarationInfoService {
 
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
-        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
+        const typeInfo = new TypeInfoInit(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
         typeInfo.type = typeDeclaration.getStructure()?.type as string;
         INIT.addDeclarationInfo(typeInfo);
+    }
+
+
+    static removeQuotes(text: string): string {
+        return this.isQuoted(text) ? removeBordersInit(text) : text;
+    }
+
+
+    static isQuoted(text: string): text is QuotedInit {
+        return this.isSurroundedBy(text, `'`) || this.isSurroundedBy(text, `"`) || this.isSurroundedBy(text, `\``);
+    }
+
+
+    static isSurroundedBy(text: string, boundary: string): boolean {
+        return text && text.slice(0, 1) === boundary && text.slice(text.length - 1) === boundary && !removeBordersInit(text).includes(boundary);
+    }
+
+
+    static removeBorders(text: string): string {
+        return text.slice(1, -1);
     }
 
 

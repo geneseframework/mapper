@@ -1,5 +1,5 @@
 import { ClassDeclaration, HeritageClause } from 'ts-morph';
-import { flat } from '../../create/utils/native/arrays.util';
+import { flatInit } from '../native/arrays.util';
 
 // TODO: check if needed for classes
 
@@ -9,5 +9,5 @@ export function getHeritageDeclaration(heritageClause: HeritageClause): ClassDec
 
 
 export function getHeritageDeclarations(heritageClause: HeritageClause): ClassDeclaration[] {
-    return flat(heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations() ?? []));
+    return flatInit(heritageClause.getTypeNodes().map(t => t.getType().getSymbol()?.getDeclarations() ?? []));
 }
