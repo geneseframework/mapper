@@ -15,8 +15,8 @@
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "republish_package": "tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
-        "test": "ts-node -P tsconfig.tests.json ./src/test-engine/start-tests-with-passed.ts",
-        "test-fails": "ts-node -P tsconfig.tests.json  ./src/test-engine/start-tests-without-passed.ts",
+        "test": "ts-node -P src/debug/tsconfig.debug.json ./src/test-engine/start-tests-with-passed.ts",
+        "test-fails": "ts-node -P src/debug/tsconfig.debug.json  ./src/test-engine/start-tests-without-passed.ts",
         "test-type-checking": "ts-node src/test-engine/test-type-checking.ts"
     },
     "dependencies": {
