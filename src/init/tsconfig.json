@@ -14,5 +14,6 @@
         "./init.ts",
         "./**/*.ts",
     ],
-    "exclude": []
+    "exclude": [
+    ]
 }
