@@ -34,13 +34,49 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
 }
 
 
+// function clearCode(): void {
+//     const project = new Project();
+//     const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.ts');
+//     console.log(chalk.blueBright('CODEEEEE'), declarationInfosSourceFile.getFullText()?.length);
+//     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
+//     declarationInfosSourceFile.saveSync();
+// }
+
 function clearCode(): void {
     const project = new Project();
+    clearDeclarationInfos(project);
+    // clearGenerateInstance(project);
+}
+
+
+function clearDeclarationInfos(project: Project): void {
     const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.ts');
     console.log(chalk.blueBright('CODEEEEE'), declarationInfosSourceFile.getFullText()?.length);
     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
     declarationInfosSourceFile.saveSync();
 }
+//
+//
+// function clearGenerateInstance(project: Project): void {
+//     const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.ts');
+//     console.log(chalk.blueBright('CODEEEEE'), instanceGeneratorSourceFile.getFullText()?.length);
+//     const code = `export const generateInstance = async function(instanceGenerator) {
+//     try {
+//         let instance;
+//         switch (instanceGenerator.id) {
+//             default:
+//                 console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);
+//                 instance = undefined;
+//         }
+//         return instance;
+//     } catch(err) {
+//         console.log('Impossible to map this instance. Did you exported it ?', err);
+//     }
+// }
+// `
+//     instanceGeneratorSourceFile.replaceWithText(code);
+//     instanceGeneratorSourceFile.saveSync();
+// }
 
 
 function isSpecFile(path: string): boolean {
