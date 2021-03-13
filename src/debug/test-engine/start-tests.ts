@@ -18,7 +18,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     await GlobalInitService.start();
     GLOBAL.declarationInfos = require(INIT.declarationInfoPath).declarationInfos;
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
-    console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos);
+    console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos?.length);
     console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
     // throw Error('zzzz')
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
