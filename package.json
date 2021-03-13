@@ -9,14 +9,17 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
-        "build_and_test": "tsc && ts-node src/test-engine/start-tests.ts",
+        "build_and_test": "tsc && ts-node src/debug/test-engine/start-tests.ts",
+        "clear": "ts-node -P src/debug/tsconfig.debug.json ./src/debug/project/clear-debug.ts",
+        "init_files": "ts-node -P src/debug/tsconfig.debug.json ./src/debug/init.ts",
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
-        "republish_package": "npm unpublish -f && npm run build && npm publish",
+        "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
+        "republish_package": "npm run clear && tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
-        "test": "ts-node -P tsconfig.tests.json ./src/test-engine/start-tests-with-passed.ts",
-        "test-fails": "ts-node -P tsconfig.tests.json  ./src/test-engine/start-tests-without-passed.ts",
-        "test-type-checking": "ts-node src/test-engine/test-type-checking.ts"
+        "test": "npm run init_files && ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-with-passed.ts",
+        "test-fails": "ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-without-passed.ts",
+        "test-type-checking": "ts-node src/debug/test-engine/test-type-checking.ts"
     },
     "dependencies": {
         "@types/node": "^14.14.33",

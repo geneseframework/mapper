@@ -22,16 +22,11 @@ export class DeclarationInfoGeneratorService {
         const code: string = this.getCode();
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
-        INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
-        // const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
-        // await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
-        // GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
     }
 
 
     static createDeclarationInfoIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateDeclarationInfo(classDeclaration, alreadyDone)) {
-            // INIT.addDeclarationInfo(new DeclarationInfo<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }
@@ -58,7 +53,7 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `export const declarationInfos = [\n` +
+        return `export var declarationInfos = [\n` +
             `${declarationInfosCode}` +
             `];\n`;
     }

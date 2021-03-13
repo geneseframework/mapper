@@ -2,18 +2,17 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es5",
-        "target": "es5",
         "declaration": true,
         "lib": [
             "es2019",
             "dom"
         ],
-        "outDir": "./dist"
+        "outDir": "../../dist"
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "../dist/*.ts"
     ],
     "exclude": [
-        "dist/instance-generator.ts"
     ]
 }

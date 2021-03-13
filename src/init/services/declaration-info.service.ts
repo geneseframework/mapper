@@ -12,6 +12,7 @@ import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
 import { TypeInfoInit } from '../models/declarations/type-info.model';
 import { ClassInfoInit } from '../models/declarations/class-info.model';
 import { flatInit } from '../utils/native/arrays.util';
+import * as chalk from 'chalk';
 
 export class DeclarationInfoService {
 

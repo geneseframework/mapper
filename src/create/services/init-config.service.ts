@@ -1,35 +1,20 @@
 import { CONFIG } from '../const/config.const';
-import { Config } from '../models/config.model';
-import { GLOBAL } from '../const/global.const';
+import { geneseConfig } from '../../../geneseconfig';
 
 export class InitConfigService {
 
 
     static async start(): Promise<void> {
-        const jsonConfig: Config = await this.getJsonConfig();
-        this.setConfig(jsonConfig);
-    }
-
-
-    // TODO: fix usage of fs-extra
-    private static async getJsonConfig(): Promise<object> {
-        const path: string = `${GLOBAL.projectPath}/geneseconfig.json`;
-        return undefined;
-        // return await requireJsonFile(path);
-    }
-
-
-    private static setConfig(jsonConfigObject: any): void {
-        if (!jsonConfigObject?.mapper?.create) {
+        if (!geneseConfig?.creator) {
             return;
         }
-        if (jsonConfigObject.mapper.create.differentiateStringsAndNumbers === false) {
+        if (geneseConfig.creator.differentiateStringsAndNumbers === false) {
             CONFIG.create.differentiateStringsAndNumbers = false;
         }
-        if (jsonConfigObject.mapper.create.throwTarget?.error === true) {
+        if (geneseConfig.creator.throwTarget?.error === true) {
             CONFIG.create.throwTarget.error = true;
         }
-        if (jsonConfigObject.mapper.create.throwTarget?.setToUndefined === true) {
+        if (geneseConfig.creator.throwTarget?.setToUndefined === true) {
             CONFIG.create.throwTarget.setToUndefined = true;
         }
     }

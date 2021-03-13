@@ -8,11 +8,11 @@
             "es2019",
             "dom"
         ],
-        "outDir": "../../dist"
+        "outDir": "../../dist/init"
     },
     "include": [
         "./init.ts",
-        "**/*.ts"
+        "./**/*.ts",
     ],
     "exclude": []
 }
