@@ -1,1 +1,1 @@
-export var declarationInfos = [];
+export let declarationInfos = [];
