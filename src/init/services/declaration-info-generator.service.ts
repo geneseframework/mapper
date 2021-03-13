@@ -11,7 +11,6 @@ import { PropertyInit } from '../types/property.type';
 import { TypeInfoInit } from '../models/declarations/type-info.model';
 import { EnumInfoInit } from '../models/declarations/enum-info.model';
 import { ClassOrInterfaceInfoInit } from '../types/class-or-interface-info-init.type';
-import * as chalk from 'chalk';
 
 export class DeclarationInfoGeneratorService {
 
@@ -21,7 +20,6 @@ export class DeclarationInfoGeneratorService {
      */
     static async createDeclarationInfoFile(): Promise<void> {
         const code: string = this.getCode();
-        console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code?.length);
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
     }

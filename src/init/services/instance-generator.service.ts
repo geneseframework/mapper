@@ -1,9 +1,8 @@
-import { ClassDeclaration, SwitchStatement, SyntaxKind } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
 import { InstanceGeneratorInit } from '../models/instance-generator-init.model';
-import * as chalk from 'chalk';
 
 export class InstanceGeneratorService {
 
@@ -44,8 +43,6 @@ export class InstanceGeneratorService {
      */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
-        console.log(chalk.magentaBright('CODEEEEE INST GEN'), code?.length);
-        // await this.setGlobalGenerateInstance();
         INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
         INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
@@ -76,34 +73,15 @@ export class InstanceGeneratorService {
      * @private
      */
     private static switchCode(): string {
-        // const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        // const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
         let switchCode = ''
         for (const instanceGenerator of INIT.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
-            // importsCode = `${importsCode}${tab}${this.importsCode(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tab}default:\n` +
             `${tabs(2)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
             `${tabs(2)}instance = undefined;\n` +
             `}\n`;
-        // switchStatement.replaceWithText(switchCode);
-        // INIT.instanceGeneratorSourceFile.fixMissingImports();
-        // INIT.instanceGeneratorSourceFile.saveSync();
-        // const mjsPath = INIT.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
-        // await ensureDirAndCopy(INIT.instanceGeneratorSourceFile.getFilePath(), mjsPath);
-        // INIT.generateInstance = await require(mjsPath).generateInstance;
         return switchCode;
-    }
-
-
-    /**
-     * Returns the code of a line importing on runtime the file corresponding to a given class
-     * @param instanceGenerator
-     * @private
-     */
-    private static importsCode(instanceGenerator: InstanceGeneratorInit<any>): string {
-        return `const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
     }
 
 

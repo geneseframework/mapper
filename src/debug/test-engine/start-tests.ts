@@ -16,19 +16,9 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
-    // InitService.createDebugProject();
     await InitService.start();
-    // await GlobalInitService.start();
-    // delete require.cache[require.resolve(INIT.declarationInfoPath)];
-    // delete require.cache[require.resolve(INIT.instanceGeneratorPath)];
-    // declarationInfos = require(INIT.declarationInfoPath).declarationInfos;
-    console.log(chalk.yellowBright('DECLA INFOSSS  START'), declarationInfos?.length)
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;
-    console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
-    console.log(chalk.greenBright('GLOBAL DECLLLLL INFOS'), GLOBAL.declarationInfos?.length);
-    // console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
-    console.log(chalk.cyanBright('GLOBAL.generateInstance. lgthhhh'), GLOBAL.generateInstance.toString()?.length);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
@@ -43,14 +33,6 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
 }
 
 
-// function clearCode(): void {
-//     const project = new Project();
-//     const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.ts');
-//     console.log(chalk.blueBright('CODEEEEE'), declarationInfosSourceFile.getFullText()?.length);
-//     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
-//     declarationInfosSourceFile.saveSync();
-// }
-
 function clearCode(): void {
     const project = new Project();
     clearDeclarationInfos(project);
@@ -60,7 +42,6 @@ function clearCode(): void {
 
 function clearDeclarationInfos(project: Project): void {
     const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.ts');
-    console.log(chalk.blueBright('CODEEEEE'), declarationInfosSourceFile.getFullText()?.length);
     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
     declarationInfosSourceFile.saveSync();
 }

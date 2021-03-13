@@ -55,7 +55,6 @@ export class Global {
 
 
     get classNames(): string[] {
-        console.log(chalk.yellowBright('GLOBALLLLLL INFOS LGTH'), GLOBAL.declarationInfos?.length);
         return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
     }
 

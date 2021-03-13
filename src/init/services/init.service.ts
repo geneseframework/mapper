@@ -47,16 +47,12 @@ export class InitService {
      */
     static createDebugProject(): void {
         INIT.projectPath = `${process.cwd()}/src/debug/project`;
-        // console.log(chalk.yellowBright('INIT.configFilePathhhhh'), INIT.configFilePath);
-        // console.log(chalk.yellowBright('INIT.projectPathhgfhghfhgfht'), INIT.projectPath);
         INIT.project = new Project({
             tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
         });
         INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
         const distPath = process.cwd() + '/src/dist';
-        // console.log(chalk.yellowBright('DIST PATHHHHH'), distPath, INIT.project.getSourceFiles().length);
         INIT.project.addSourceFilesAtPaths(`${distPath}/*{.d.ts,.ts}`);
-        // console.log(chalk.yellowBright('INIT.projectPathhgfhghfhgfht'), INIT.projectPath, INIT.project.getSourceFiles().length);
     }
 }
