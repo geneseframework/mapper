@@ -6,7 +6,6 @@ import { InitService } from '../../init/services/init.service';
 import { GLOBAL } from '../../create/const/global.const';
 import { GlobalInitService } from '../../create/services/global-init.service';
 import { Project, SourceFile } from 'ts-morph';
-import { generateInstance } from '../../dist/instance-generator';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -16,16 +15,16 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
     await InitService.start();
-    await GlobalInitService.start();
+    // await GlobalInitService.start();
     GLOBAL.declarationInfos = require(INIT.declarationInfoPath).declarationInfos;
     GLOBAL.generateInstance = require(INIT.instanceGeneratorPath).generateInstance;
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos?.length);
     console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
-    // console.log(chalk.cyanBright('GLOBAL.generateInstance. lgthhhh'), GLOBAL.generateInstance.toString());
+    console.log(chalk.cyanBright('GLOBAL.generateInstance. lgthhhh'), GLOBAL.generateInstance.toString()?.length);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
+    // await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {
         logFailedTests();
     }
@@ -48,7 +47,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
 function clearCode(): void {
     const project = new Project();
     clearDeclarationInfos(project);
-    // clearGenerateInstance(project);
+    clearGenerateInstance(project);
 }
 
 
