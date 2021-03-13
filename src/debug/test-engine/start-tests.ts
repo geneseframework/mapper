@@ -20,6 +20,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos?.length);
     console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
+    // clearCode();
     // throw Error('zzzz')
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
@@ -31,7 +32,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
     console.log(chalk.blueBright('Duration : '), duration, 'ms');
-    // clearCode();
+    clearCode();
 }
 
 
