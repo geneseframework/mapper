@@ -1,4 +1,4 @@
-import { ClassDeclaration, SourceFile } from 'ts-morph';
+import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
@@ -20,36 +20,15 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     static async createDeclarationInfoFile(): Promise<void> {
-        const uuu = require(INIT.declarationInfoPath).declarationInfos;
-        console.log(chalk.redBright('CODE DECLARATION STARTTTTTT uuuu'),  uuu?.length);
         const code: string = this.getCode();
         console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code?.length);
-        const declarationInfosSourceFile: SourceFile = INIT.project.getSourceFile(INIT.declarationInfoPath);
-        console.log(chalk.blueBright('CODEEEEE declarationInfosSourceFile'), declarationInfosSourceFile.getFullText().length);
-        declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
-        declarationInfosSourceFile.saveSync();
-        console.log(chalk.magentaBright('INIT.declarationInfoPathhhhhh'), INIT.declarationInfoPath);
-        const aaa = require(INIT.declarationInfoPath).declarationInfos;
-        console.log(chalk.magentaBright('CODE DECLARATION INFOOOO aaaa'), code.length, aaa?.length);
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
-        INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
-        const zzz = require(INIT.declarationInfoPath).declarationInfos;
-        console.log(chalk.magentaBright('CODE DECLARATION INFOOOO srcfffff zzz'), code.length, zzz?.length);
-        return INIT.declarationInfoSourceFile.save().then(s => {
-            const oooooo = require(INIT.declarationInfoPath).declarationInfos;
-            console.log(chalk.magentaBright('CODE DECLARATION INFOOOO srcfffff oooooo'), code.length, oooooo?.length);
-        })
-        declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
-        declarationInfosSourceFile.saveSync();
-        const bbb = require(INIT.declarationInfoPath).declarationInfos;
-        console.log(chalk.cyanBright('CODE DECLARATION ENDDDDDD'), bbb?.length);
     }
 
 
     static createDeclarationInfoIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateDeclarationInfo(classDeclaration, alreadyDone)) {
-            // INIT.addDeclarationInfo(new DeclarationInfo<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }

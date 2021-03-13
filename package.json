@@ -14,7 +14,7 @@
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
-        "republish_package": "tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
+        "republish_package": "npm run clear && tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-with-passed.ts",
         "test-fails": "ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-without-passed.ts",
