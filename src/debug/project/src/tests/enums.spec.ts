@@ -1,4 +1,4 @@
-import { TestMapper } from '../../../../test-engine/test-mapper.model';
+import { TestMapper } from '../../../test-engine/test-mapper.model';
 
 export enum ColorSpec {
     WHITE = 'White',

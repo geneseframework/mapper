@@ -1,4 +1,4 @@
-import { ClassDeclaration } from 'ts-morph';
+import { ClassDeclaration, SourceFile } from 'ts-morph';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
@@ -20,12 +20,28 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     static async createDeclarationInfoFile(): Promise<void> {
+        const declarationInfosSourceFileBefore: SourceFile = INIT.project.getSourceFile(INIT.declarationInfoPath);
+        console.log(chalk.greenBright('CODEEEEE declarationInfosSourceFile BEFOREEEEE'), declarationInfosSourceFileBefore.getFullText().length);
         const code: string = this.getCode();
-        // console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code);
-        // console.log(chalk.magentaBright('INIT.declarationInfoPathhhhhh'), INIT.declarationInfoPath);
+        console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code);
+        const declarationInfosSourceFile: SourceFile = INIT.project.getSourceFile(INIT.declarationInfoPath);
+        console.log(chalk.blueBright('CODEEEEE declarationInfosSourceFile'), declarationInfosSourceFile.getFullText().length);
+        declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
+        declarationInfosSourceFile.saveSync();
+        console.log(chalk.magentaBright('INIT.declarationInfoPathhhhhh'), INIT.declarationInfoPath);
+        const aaa = require(INIT.declarationInfoPath).declarationInfos;
+        console.log(chalk.magentaBright('CODE DECLARATION INFOOOO aaaa'), code.length, aaa);
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
-        INIT.declarationInfoSourceFile.saveSync();
+        const srfffff = INIT.declarationInfoSourceFile.saveSync();
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
+        const zzz = require(INIT.declarationInfoPath).declarationInfos;
+        console.log(chalk.magentaBright('CODE DECLARATION INFOOOO srcfffff'), code.length, zzz?.length);
+        // throw Error('MMMMMM')
+        // INIT.declarationInfoSourceFile.save().then(s => {
+        //     const bbb = require(INIT.declarationInfoPath).declarationInfos;
+        //     console.log(chalk.redBright('CODE DECLARATION INFOOOO srcfffff'), bbb);
+        //
+        // })
         // const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
         // await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
         // GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
@@ -61,7 +77,7 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `export const declarationInfos = [\n` +
+        return `export var declarationInfos = [\n` +
             `${declarationInfosCode}` +
             `];\n`;
     }

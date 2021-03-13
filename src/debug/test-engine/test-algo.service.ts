@@ -1,9 +1,9 @@
-import { Mapper } from '../create/models/mapper';
+import { Mapper } from '../../create/models/mapper';
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
-import { isSameObject } from '../create/utils/native/is-same-object.util';
+import { isSameObject } from '../../create/utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
-import { isArray } from '../create/utils/native/arrays.util';
+import { isArray } from '../../create/utils/native/arrays.util';
 
 const MAX_DURATION = 50;
 

@@ -1,4 +1,4 @@
-import { TestMapper } from '../../../../test-engine/test-mapper.model';
+import { TestMapper } from '../../../test-engine/test-mapper.model';
 import { ColorSupport } from 'chalk';
 
 export const testMappers: TestMapper[] = [];
