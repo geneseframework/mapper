@@ -3,6 +3,7 @@ import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
 import { InstanceGeneratorInit } from '../models/instance-generator-init.model';
+import * as chalk from 'chalk';
 
 export class InstanceGeneratorService {
 
@@ -43,9 +44,11 @@ export class InstanceGeneratorService {
      */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
+        console.log(chalk.magentaBright('CODEEEEE INST GEN'), code?.length);
+        // await this.setGlobalGenerateInstance();
         INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
+        INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
-        await this.setGlobalGenerateInstance();
     }
 
 
@@ -58,7 +61,8 @@ export class InstanceGeneratorService {
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
-            `}` +
+            `${this.switchCode()}` +
+            // `}` +
             `${tabs(2)}return instance;\n` +
             `${tab}} catch(err) {\n` +
             `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +
@@ -71,24 +75,25 @@ export class InstanceGeneratorService {
      * Sets the generators for each exported class and saves the file.
      * @private
      */
-    private static async setGlobalGenerateInstance(): Promise<void> {
-        const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
-        let switchCode = `switch (instanceGenerator.id) {\n`;
-        let importsCode = ''
+    private static switchCode(): string {
+        // const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
+        // const switchStatement: SwitchStatement = INIT.instanceGeneratorSourceFile.getFirstDescendantByKind(SyntaxKind.SwitchStatement);
+        let switchCode = ''
         for (const instanceGenerator of INIT.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
-            importsCode = `${importsCode}${tab}${this.importsCode(instanceGenerator)}`;
+            // importsCode = `${importsCode}${tab}${this.importsCode(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tab}default:\n` +
             `${tabs(2)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
             `${tabs(2)}instance = undefined;\n` +
             `}\n`;
-        switchStatement.replaceWithText(switchCode);
-        INIT.instanceGeneratorSourceFile.fixMissingImports();
-        INIT.instanceGeneratorSourceFile.saveSync();
+        // switchStatement.replaceWithText(switchCode);
+        // INIT.instanceGeneratorSourceFile.fixMissingImports();
+        // INIT.instanceGeneratorSourceFile.saveSync();
         // const mjsPath = INIT.instanceGeneratorSourceFile.getFilePath().replace('.ts', '.js');
         // await ensureDirAndCopy(INIT.instanceGeneratorSourceFile.getFilePath(), mjsPath);
         // INIT.generateInstance = await require(mjsPath).generateInstance;
+        return switchCode;
     }
 
 

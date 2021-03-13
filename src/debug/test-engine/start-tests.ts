@@ -22,6 +22,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos?.length);
     console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
+    // console.log(chalk.cyanBright('GLOBAL.generateInstance. lgthhhh'), GLOBAL.generateInstance.toString());
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
@@ -47,7 +48,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
 function clearCode(): void {
     const project = new Project();
     clearDeclarationInfos(project);
-    clearGenerateInstance(project);
+    // clearGenerateInstance(project);
 }
 
 
@@ -77,7 +78,7 @@ function clearGenerateInstance(project: Project): void {
 }
 `
     instanceGeneratorSourceFile.replaceWithText(code);
-//     instanceGeneratorSourceFile.saveSync();
+    instanceGeneratorSourceFile.saveSync();
 }
 
 

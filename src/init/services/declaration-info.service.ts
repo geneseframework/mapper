@@ -22,8 +22,7 @@ export class DeclarationInfoService {
         this.setEnumInfos();
         this.setInterfaceInfos();
         this.setTypeInfos();
-        const zzz = await DeclarationInfoGeneratorService.createDeclarationInfoFile();
-        // INIT.declarationInfos = require('../../dist/declaration-infos').declarationInfos;
+        await DeclarationInfoGeneratorService.createDeclarationInfoFile();
     }
 
 
