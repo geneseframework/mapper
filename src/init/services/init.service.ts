@@ -45,7 +45,7 @@ export class InitService {
      * In debug mode, creates a Project based on the @genese/mapper module itself
      * @private
      */
-    private static createDebugProject(): void {
+    static createDebugProject(): void {
         INIT.projectPath = `${process.cwd()}/src/debug/project`;
         // console.log(chalk.yellowBright('INIT.configFilePathhhhh'), INIT.configFilePath);
         // console.log(chalk.yellowBright('INIT.projectPathhgfhghfhgfht'), INIT.projectPath);

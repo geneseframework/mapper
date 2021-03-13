@@ -5,6 +5,8 @@ import { EnumInfo } from './declarations/enum-info.model';
 import { InterfaceInfo } from './declarations/interface-info.model';
 import { TypeInfo } from './declarations/type-info.model';
 import { DeclarationInfo } from './declarations/declaration-info.model';
+import * as chalk from 'chalk';
+import { GLOBAL } from '../const/global.const';
 
 
 export class Global {
@@ -53,6 +55,7 @@ export class Global {
 
 
     get classNames(): string[] {
+        console.log(chalk.yellowBright('GLOBALLLLLL INFOS LGTH'), GLOBAL.declarationInfos?.length);
         return this.declarationInfos.filter(d => isClassInfo(d)).map(d => d.name);
     }
 

@@ -2,10 +2,12 @@ import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { expect } from './test-algo.service';
 import { INIT } from '../../init/const/init.const';
-import { InitService } from '../../init/services/init.service';
 import { GLOBAL } from '../../create/const/global.const';
-import { GlobalInitService } from '../../create/services/global-init.service';
 import { Project, SourceFile } from 'ts-morph';
+import { generateInstance } from '../../dist/instance-generator';
+import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
+import { declarationInfos } from '../../dist/declaration-infos';
+import { InitService } from '../../init/services/init.service';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -14,17 +16,22 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
+    // InitService.createDebugProject();
     await InitService.start();
     // await GlobalInitService.start();
-    GLOBAL.declarationInfos = require(INIT.declarationInfoPath).declarationInfos;
-    GLOBAL.generateInstance = require(INIT.instanceGeneratorPath).generateInstance;
+    // delete require.cache[require.resolve(INIT.declarationInfoPath)];
+    // delete require.cache[require.resolve(INIT.instanceGeneratorPath)];
+    // declarationInfos = require(INIT.declarationInfoPath).declarationInfos;
+    console.log(chalk.yellowBright('DECLA INFOSSS  START'), declarationInfos?.length)
+    GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
+    GLOBAL.generateInstance = generateInstance;
     console.log(chalk.blueBright('GLOBAL DECLLLLL'), INIT.declarationInfoPath);
-    console.log(chalk.blueBright('GLOBAL DECLLLLL'), GLOBAL.declarationInfos?.length);
-    console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
+    console.log(chalk.greenBright('GLOBAL DECLLLLL INFOS'), GLOBAL.declarationInfos?.length);
+    // console.log(chalk.blueBright('GLOBAL DECLLLLL TEXT. lgthhhh'), INIT.project.getSourceFile(INIT.declarationInfoPath)?.getFullText().length);
     console.log(chalk.cyanBright('GLOBAL.generateInstance. lgthhhh'), GLOBAL.generateInstance.toString()?.length);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    // await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
+    await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {
         logFailedTests();
     }

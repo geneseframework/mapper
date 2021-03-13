@@ -4,6 +4,7 @@ import { TESTS } from './tests.const';
 import { isSameObject } from '../../create/utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
 import { isArray } from '../../create/utils/native/arrays.util';
+import { GLOBAL } from '../../create/const/global.const';
 
 const MAX_DURATION = 50;
 
@@ -23,6 +24,7 @@ export async function expect(testTypes: TestType | TestType[], logPassed: boolea
 async function checkTest(testType: TestType, logPassed: boolean, old: boolean): Promise<void> {
     let result;
     const start = Date.now();
+    console.log(chalk.redBright('GLOBALLLLLL INFOS LGTH'), GLOBAL.declarationInfos?.length);
     if (isTestIt(testType)) {
         result = await testType.method(testType.data);
     } else {

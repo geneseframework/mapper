@@ -10,9 +10,9 @@
         "outDir": "../../dist"
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "../dist/*.ts"
     ],
     "exclude": [
-        "dist/instance-generator.ts"
     ]
 }
