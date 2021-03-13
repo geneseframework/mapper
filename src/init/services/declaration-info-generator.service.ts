@@ -20,8 +20,6 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     static async createDeclarationInfoFile(): Promise<void> {
-        const declarationInfosSourceFileBefore: SourceFile = INIT.project.getSourceFile(INIT.declarationInfoPath);
-        console.log(chalk.greenBright('CODEEEEE declarationInfosSourceFile BEFOREEEEE'), declarationInfosSourceFileBefore.getFullText().length);
         const code: string = this.getCode();
         console.log(chalk.cyanBright('CODE DECLARATION INFOOOO'), code);
         const declarationInfosSourceFile: SourceFile = INIT.project.getSourceFile(INIT.declarationInfoPath);
@@ -36,15 +34,6 @@ export class DeclarationInfoGeneratorService {
         INIT.project.addSourceFileAtPath(INIT.declarationInfoPath);
         const zzz = require(INIT.declarationInfoPath).declarationInfos;
         console.log(chalk.magentaBright('CODE DECLARATION INFOOOO srcfffff'), code.length, zzz?.length);
-        // throw Error('MMMMMM')
-        // INIT.declarationInfoSourceFile.save().then(s => {
-        //     const bbb = require(INIT.declarationInfoPath).declarationInfos;
-        //     console.log(chalk.redBright('CODE DECLARATION INFOOOO srcfffff'), bbb);
-        //
-        // })
-        // const jsPath = INIT.declarationInfoSourceFile.getFilePath().replace('.ts', '.js');
-        // await ensureDirAndCopy(INIT.declarationInfoSourceFile.getFilePath(), jsPath);
-        // GLOBAL.declarationInfos = await require(INIT.declarationInfoPath).DECLARATION_INFOS;
     }
 
 
