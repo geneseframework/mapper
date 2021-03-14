@@ -1,6 +1,6 @@
 {
     "name": "@genese/creator",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "author": {
         "name": "Gilles Fabre",
         "url": "https://github.com/gillesfabre34"
@@ -15,7 +15,7 @@
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
-        "republish_package": "npm run clear && tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
+        "republish_package": "tsc && cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "npm run init_files && ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-with-passed.ts",
         "test-fails": "ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-without-passed.ts",
