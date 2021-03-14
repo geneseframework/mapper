@@ -4,6 +4,7 @@ export const geneseConfig = {
         throwTarget: {
             error: false,
             setToUndefined: false
-        }
+        },
+        tsConfigPath: '',
     }
 }
