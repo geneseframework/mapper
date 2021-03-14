@@ -4,10 +4,10 @@ import { expect } from './test-algo.service';
 import { INIT } from '../../init/const/init.const';
 import { GLOBAL } from '../../create/const/global.const';
 import { Project, SourceFile } from 'ts-morph';
-import { generateInstance } from '../../dist/instance-generator';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
-import { declarationInfos } from '../../dist/declaration-infos';
 import { InitService } from '../../init/services/init.service';
+import { declarationInfos } from '../../../generated/declaration-infos';
+import { generateInstance } from '../../../generated/instance-generator';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -41,14 +41,14 @@ function clearCode(): void {
 
 
 function clearDeclarationInfos(project: Project): void {
-    const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.js');
+    const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/generated/declaration-infos.js');
     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
     declarationInfosSourceFile.saveSync();
 }
 
 
 function clearGenerateInstance(project: Project): void {
-    const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.js');
+    const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/generated/instance-generator.js');
     console.log(chalk.blueBright('CODEEEEE'), instanceGeneratorSourceFile.getFullText()?.length);
     const code = `export const generateInstance = async function(instanceGenerator) {
     try {

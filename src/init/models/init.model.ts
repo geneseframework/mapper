@@ -27,12 +27,12 @@ export class Init {
 
 
     get declarationInfoPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/declaration-infos.js` : `${INIT.nodeModulePath}/generated/declaration-infos.js`;
+        return this.debug ? `${INIT.nodeModulePath}/generated/declaration-infos.js` : `${INIT.nodeModulePath}/dist/generated/declaration-infos.js`;
     }
 
 
     get instanceGeneratorPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/instance-generator.js` : `${INIT.nodeModulePath}/generated/instance-generator.js`;
+        return this.debug ? `${INIT.nodeModulePath}/generated/instance-generator.js` : `${INIT.nodeModulePath}/dist/generated/instance-generator.js`;
     }
 
 
