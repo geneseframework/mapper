@@ -5,7 +5,9 @@ import * as chalk from 'chalk';
 
 export class Init {
 
-    appRoot: string = undefined;
+    // appRoot: string = undefined;
+    geneseConfigPath: string = undefined;
+    tsConfigPath: string = undefined;
     debug = false;
     declarationInfos: any[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
@@ -24,15 +26,15 @@ export class Init {
     }
 
 
-    get configFilePath(): string {
-        const path = `${this.projectPath}/geneseconfig.ts`;
-        console.log(chalk.greenBright('PATH CONFIGGGG'), path);
-        const geneseConfig = require(path)?.geneseConfig;
-        console.log(chalk.magentaBright('GENESE CONFIGGGG'), geneseConfig);
-        const zzz = geneseConfig?.creator?.tsConfigPath || `${INIT.projectPath}/tsconfig.json`;
-        console.log(chalk.cyanBright('CONFIG PATHHHHH'), zzz);
-        return zzz;
-    }
+    // get tsConfigPath(): string {
+    //     const path = `${this.projectPath}/geneseconfig.ts`;
+    //     console.log(chalk.greenBright('PATH CONFIGGGG'), path);
+    //     const geneseConfig = require(path)?.geneseConfig;
+    //     console.log(chalk.magentaBright('GENESE CONFIGGGG'), geneseConfig);
+    //     const zzz = geneseConfig?.creator?.tsConfigPath || `${INIT.projectPath}/tsconfig.json`;
+    //     console.log(chalk.cyanBright('CONFIG PATHHHHH'), zzz);
+    //     return zzz;
+    // }
 
 
     get declarationInfoPath(): string {
@@ -47,7 +49,7 @@ export class Init {
 
     get projectWithNodeModules(): Project {
         if (!this._projectWithNodeModules) {
-            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
+            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
         }
         return this._projectWithNodeModules;
     }
