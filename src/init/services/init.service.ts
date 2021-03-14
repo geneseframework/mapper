@@ -49,10 +49,12 @@ export class InitService {
 
     // TODO
     private static async getGeneseConfig(): Promise<object> {
-        const path = '../../../../../../../geneseconfig';
+        const path = INIT.debug ? `${process.cwd()}/geneseconfig.ts` : '../../../../../../../geneseconfig.ts';
+        // import('../../../geneseconfig');
         console.log('BEFORE IMPORTTTTT', path, fs.existsSync(path));
+        console.log('BEFORE IMPORTTTTT', await require(path)?.geneseConfig);
         // @ts-ignore
-        const geneseConfig = fs.existsSync(path) ? fs.readFileSync(path) : undefined;
+        const geneseConfig = fs.existsSync(path) ? await require(path)?.geneseConfig : undefined;
         // const geneseConfig = await import('../../../../../../../geneseconfig');
         console.log('AFTER IMPORTTTTT', geneseConfig);
         return geneseConfig;
