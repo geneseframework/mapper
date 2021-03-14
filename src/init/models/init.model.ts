@@ -1,6 +1,5 @@
 import { Project, SourceFile } from 'ts-morph';
 import { INIT } from '../const/init.const';
-import { geneseConfig } from '../../../geneseconfig';
 import * as chalk from 'chalk';
 
 
@@ -24,6 +23,10 @@ export class Init {
 
 
     get configFilePath(): string {
+        const path = `${this.projectPath}/geneseconfig.ts`;
+        console.log(chalk.greenBright('PATH CONFIGGGG'), path);
+        const geneseConfig = require(path)?.geneseConfig;
+        console.log(chalk.magentaBright('GENESE CONFIGGGG'), geneseConfig);
         const zzz = geneseConfig?.creator?.tsConfigPath || `${INIT.projectPath}/tsconfig.json`;
         console.log(chalk.cyanBright('CONFIG PATHHHHH'), zzz);
         return zzz;

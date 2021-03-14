@@ -5,7 +5,4 @@ src/dist
 debug
 docs
 generated
-geneseconfig.ts
-geneseconfig.d.ts
-geneseconfig.js
 test-engine

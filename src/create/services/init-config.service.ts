@@ -1,5 +1,5 @@
 import { CONFIG } from '../const/config.const';
-import { geneseConfig } from '../../../geneseconfig';
+import { geneseConfig } from '../../debug/project/geneseconfig';
 
 export class InitConfigService {
 
