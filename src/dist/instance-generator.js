@@ -1,4 +1,4 @@
-const generateInstance = async function(instanceGenerator) {
+export const generateInstance = async function(instanceGenerator) {
     try {
         let instance;
         switch (instanceGenerator.id) {
@@ -11,4 +11,3 @@ const generateInstance = async function(instanceGenerator) {
         console.log('Impossible to map this instance. Did you exported it ?', err);
     }
 }
-exports.generateInstance = generateInstance;

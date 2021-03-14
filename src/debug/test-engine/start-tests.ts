@@ -41,14 +41,14 @@ function clearCode(): void {
 
 
 function clearDeclarationInfos(project: Project): void {
-    const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.ts');
+    const declarationInfosSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/declaration-infos.js');
     declarationInfosSourceFile.replaceWithText('export var declarationInfos = [];');
     declarationInfosSourceFile.saveSync();
 }
 
 
 function clearGenerateInstance(project: Project): void {
-    const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.ts');
+    const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.js');
     console.log(chalk.blueBright('CODEEEEE'), instanceGeneratorSourceFile.getFullText()?.length);
     const code = `export const generateInstance = async function(instanceGenerator) {
     try {

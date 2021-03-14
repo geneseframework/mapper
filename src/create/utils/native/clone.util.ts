@@ -1,8 +1,6 @@
 /**
  * clone object with deep copy
  */
-
-
 export function clone(model: any): any {
     if (model) {
         if (Array.isArray(model)) {
