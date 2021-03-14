@@ -37,7 +37,7 @@ export class InitService {
             INIT.geneseConfigPath = INIT.debug ? `${process.cwd()}/geneseconfig.ts` : '../../../../../../../geneseconfig.ts';
             const geneseConfig: object = await this.getGeneseConfig();
             if (!geneseConfig) {
-                throwError('in a browser environment, the file geneseconfig.ts is mandatory and must be at the root of your project.\nPlease refer to the documentation https://www.npmjs.com/package/genese/creator');
+                throwError(' the file geneseconfig.ts is mandatory and must be at the root of your project.\nPlease refer to the documentation https://www.npmjs.com/package/genese/creator');
             } else {
                 INIT.geneseConfig = geneseConfig;
             }
@@ -50,13 +50,7 @@ export class InitService {
 
     // TODO
     private static async getGeneseConfig(): Promise<object> {
-        console.log('BEFORE IMPORTTTTT', INIT.geneseConfigPath, fs.existsSync(INIT.geneseConfigPath));
-        console.log('BEFORE IMPORTTTTT', await require(INIT.geneseConfigPath)?.geneseConfig);
-        // @ts-ignore
-        const geneseConfig = fs.existsSync(INIT.geneseConfigPath) ? await require(INIT.geneseConfigPath)?.geneseConfig : undefined;
-        // const geneseConfig = await import('../../../../../../../geneseconfig');
-        console.log('AFTER IMPORTTTTT', geneseConfig);
-        return geneseConfig;
+        return fs.existsSync(INIT.geneseConfigPath) ? await require(INIT.geneseConfigPath)?.geneseConfig : undefined;
     }
 
 
