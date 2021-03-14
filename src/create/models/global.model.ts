@@ -14,7 +14,8 @@ export class Global {
     checkedTargets: string[] = [];
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
+    geneseConfig: object = undefined;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 

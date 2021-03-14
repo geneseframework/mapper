@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "allowJs": true,
         "module": "esnext",
         "moduleResolution": "node",
         "target": "es5",
@@ -11,9 +12,10 @@
         "outDir": "./dist"
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "generated/*"
     ],
     "exclude": [
-        "src/init"
+        "src/init/**/*"
     ]
 }

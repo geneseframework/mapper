@@ -3,6 +3,7 @@ import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
 import { InstanceGeneratorInit } from '../models/instance-generator-init.model';
+import * as chalk from 'chalk';
 
 export class InstanceGeneratorService {
 
@@ -43,9 +44,13 @@ export class InstanceGeneratorService {
      */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
+        console.log(chalk.yellowBright('INST PATHHHHHHH'), INIT.instanceGeneratorPath);
         INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
-        INIT.instanceGeneratorSourceFile.fixMissingImports();
+
+        console.log(chalk.yellowBright('INST INIT.instanceGeneratorSourceFile'), INIT.instanceGeneratorSourceFile?.getFullText()?.length);
+        // INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
+        console.log(chalk.yellowBright('INST INIT.instanceGeneratorSourceFile 222'), INIT.instanceGeneratorSourceFile?.getFullText()?.length);
     }
 
 

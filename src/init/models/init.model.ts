@@ -1,12 +1,17 @@
 import { Project, SourceFile } from 'ts-morph';
 import { INIT } from '../const/init.const';
+import * as chalk from 'chalk';
 
 
 export class Init {
 
+    // appRoot: string = undefined;
+    geneseConfigPath: string = undefined;
+    tsConfigPath: string = undefined;
     debug = false;
     declarationInfos: any[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
+    geneseConfig: object = undefined;
     instanceGenerators: any[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;
@@ -21,24 +26,30 @@ export class Init {
     }
 
 
-    get configFilePath(): string {
-        return `${INIT.projectPath}/tsconfig.json`;
-    }
+    // get tsConfigPath(): string {
+    //     const path = `${this.projectPath}/geneseconfig.ts`;
+    //     console.log(chalk.greenBright('PATH CONFIGGGG'), path);
+    //     const geneseConfig = require(path)?.geneseConfig;
+    //     console.log(chalk.magentaBright('GENESE CONFIGGGG'), geneseConfig);
+    //     const zzz = geneseConfig?.creator?.tsConfigPath || `${INIT.projectPath}/tsconfig.json`;
+    //     console.log(chalk.cyanBright('CONFIG PATHHHHH'), zzz);
+    //     return zzz;
+    // }
 
 
     get declarationInfoPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/declaration-infos.ts` : `${INIT.nodeModulePath}/generated/declaration-infos.ts`;
+        return this.debug ? `${INIT.nodeModulePath}/generated/declaration-infos.js` : `${INIT.nodeModulePath}/dist/generated/declaration-infos.js`;
     }
 
 
     get instanceGeneratorPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/instance-generator.ts` : `${INIT.nodeModulePath}/generated/instance-generator.ts`;
+        return this.debug ? `${INIT.nodeModulePath}/generated/instance-generator.js` : `${INIT.nodeModulePath}/dist/generated/instance-generator.js`;
     }
 
 
     get projectWithNodeModules(): Project {
         if (!this._projectWithNodeModules) {
-            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
+            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
         }
         return this._projectWithNodeModules;
     }
