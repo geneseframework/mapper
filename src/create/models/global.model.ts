@@ -5,8 +5,7 @@ import { EnumInfo } from './declarations/enum-info.model';
 import { InterfaceInfo } from './declarations/interface-info.model';
 import { TypeInfo } from './declarations/type-info.model';
 import { DeclarationInfo } from './declarations/declaration-info.model';
-import * as chalk from 'chalk';
-import { GLOBAL } from '../const/global.const';
+import { geneseConfig } from '../../../geneseconfig';
 
 
 export class Global {
@@ -15,7 +14,7 @@ export class Global {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
-    geneseConfig: object = undefined;
+    geneseConfig: any = geneseConfig; // TODO: add type GeneseConfig
     start: number = undefined;
     wasInitialized: boolean = undefined;
 

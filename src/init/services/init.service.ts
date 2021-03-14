@@ -1,4 +1,4 @@
-import { Project } from 'ts-morph';
+import { ImportDeclaration, Project, SourceFile } from 'ts-morph';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
@@ -28,6 +28,7 @@ export class InitService {
         // INIT.appRoot = '../../../../../../../';
         await this.setGeneseConfig();
         INIT.debug ? this.createDebugProject() : this.createProject();
+        await this.modifyGeneseConfigImport();
         INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/creator`;
     }
 
@@ -48,9 +49,24 @@ export class InitService {
     }
 
 
-    // TODO
     private static async getGeneseConfig(): Promise<object> {
         return fs.existsSync(INIT.geneseConfigPath) ? await require(INIT.geneseConfigPath)?.geneseConfig : undefined;
+    }
+
+
+    private static async modifyGeneseConfigImport(): Promise<void> {
+        const path = INIT.debug ? `${process.cwd()}/src/create/models/global.model.ts` : `${appRoot}/node_modules/@genese/creator/dist/src/create/models/global.model.ts`;
+        console.log(chalk.magentaBright('MODIFY GCONFIGGGG import '), INIT.debug, path);
+        // if (!INIT.debug) {
+        const globalSourceFile: SourceFile = INIT.project.addSourceFileAtPath(path);
+        console.log(chalk.magentaBright('GLOBAL PATHHH SRCF'), globalSourceFile?.getBaseName());
+        const importDeclarations: ImportDeclaration[] = globalSourceFile.getImportDeclarations();
+        console.log(chalk.yellowBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclarations.map(i => i?.getStructure()));
+        const importDeclaration: ImportDeclaration = globalSourceFile.getImportDeclaration('../../../geneseconfig');
+        console.log(chalk.magentaBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclaration?.getStructure());
+        console.log(chalk.magentaBright('GLOBAL PATHHH INIT.geneseConfigPath'), INIT.geneseConfigPath);
+        importDeclaration.setModuleSpecifier(INIT.geneseConfigPath)
+        // }
     }
 
 

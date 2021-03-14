@@ -44,13 +44,8 @@ export class InstanceGeneratorService {
      */
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
-        console.log(chalk.yellowBright('INST PATHHHHHHH'), INIT.instanceGeneratorPath);
         INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
-
-        console.log(chalk.yellowBright('INST INIT.instanceGeneratorSourceFile'), INIT.instanceGeneratorSourceFile?.getFullText()?.length);
-        // INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
-        console.log(chalk.yellowBright('INST INIT.instanceGeneratorSourceFile 222'), INIT.instanceGeneratorSourceFile?.getFullText()?.length);
     }
 
 
@@ -64,7 +59,6 @@ export class InstanceGeneratorService {
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
             `${this.switchCode()}` +
-            // `}` +
             `${tabs(2)}return instance;\n` +
             `${tab}} catch(err) {\n` +
             `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +
