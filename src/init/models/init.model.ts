@@ -5,9 +5,11 @@ import * as chalk from 'chalk';
 
 export class Init {
 
+    appRoot: string = undefined;
     debug = false;
     declarationInfos: any[] = [];
     declarationInfoSourceFile: SourceFile = undefined;
+    geneseConfig: object = undefined;
     instanceGenerators: any[] = [];
     instanceGeneratorSourceFile: SourceFile = undefined;
     nodeModulePath: string = undefined;

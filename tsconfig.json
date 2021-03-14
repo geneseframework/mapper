@@ -16,6 +16,6 @@
         "generated/*"
     ],
     "exclude": [
-        "src/init"
+        "src/init/**/*"
     ]
 }
