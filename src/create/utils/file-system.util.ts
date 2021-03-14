@@ -11,6 +11,13 @@ export function getFilename(pathFile = ''): string {
 }
 
 
+export function removeExtension(pathFile: string): string {
+    const splitPath: string[] = pathFile.split('.');
+    const extension: string = splitPath[splitPath.length - 1];
+    return pathFile.slice(0, -extension.length - 1);
+}
+
+
 export function getFolderPath(filePath: string): string {
     return filePath?.slice(0, -getFilename(filePath).length - 1) ?? undefined;
 }

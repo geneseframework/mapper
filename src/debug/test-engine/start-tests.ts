@@ -23,7 +23,7 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.cyanBright('START TESTS GLOBAL DEBUG'), GLOBAL.debug);
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    // await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
+    await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
     if (!logPassed) {
         logFailedTests();
     }

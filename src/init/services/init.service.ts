@@ -5,6 +5,7 @@ import { INIT } from '../const/init.const';
 import * as chalk from 'chalk';
 import { throwError, throwWarning } from '../utils/errors.util';
 import * as fs from 'fs';
+import { removeExtension } from '../../create/utils/file-system.util';
 
 const appRoot = require('app-root-path');
 
@@ -60,12 +61,14 @@ export class InitService {
         // if (!INIT.debug) {
         const globalSourceFile: SourceFile = INIT.project.addSourceFileAtPath(path);
         console.log(chalk.magentaBright('GLOBAL PATHHH SRCF'), globalSourceFile?.getBaseName());
-        const importDeclarations: ImportDeclaration[] = globalSourceFile.getImportDeclarations();
-        console.log(chalk.yellowBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclarations.map(i => i?.getStructure()));
+        // const importDeclarations: ImportDeclaration[] = globalSourceFile.getImportDeclarations();
+        // console.log(chalk.yellowBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclarations.map(i => i?.getStructure()));
         const importDeclaration: ImportDeclaration = globalSourceFile.getImportDeclaration('../../../geneseconfig');
         console.log(chalk.magentaBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclaration?.getStructure());
         console.log(chalk.magentaBright('GLOBAL PATHHH INIT.geneseConfigPath'), INIT.geneseConfigPath);
-        importDeclaration.setModuleSpecifier(INIT.geneseConfigPath)
+        console.log(chalk.magentaBright('GLOBAL PATHHH INIT.geneseConfigPath'), removeExtension(INIT.geneseConfigPath));
+        importDeclaration.setModuleSpecifier(removeExtension(INIT.geneseConfigPath));
+        globalSourceFile.saveSync();
         // }
     }
 

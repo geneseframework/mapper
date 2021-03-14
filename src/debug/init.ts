@@ -5,8 +5,8 @@ import { InitService } from '../init/services/init.service';
 INIT.debug = true;
 GLOBAL.debug = true;
 
-async function init(): Promise<void> {
-    await InitService.start();
-}
-
-init();
+// async function init(): Promise<void> {
+//     await InitService.start();
+// }
+//
+// init();
