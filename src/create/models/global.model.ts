@@ -5,7 +5,7 @@ import { EnumInfo } from './declarations/enum-info.model';
 import { InterfaceInfo } from './declarations/interface-info.model';
 import { TypeInfo } from './declarations/type-info.model';
 import { DeclarationInfo } from './declarations/declaration-info.model';
-// import { geneseConfig } from '../../../geneseconfig';
+import { geneseConfig } from '/Users/utilisateur/Documents/projets/genese/genesemapper/geneseconfig';
 
 
 
@@ -15,7 +15,7 @@ export class Global {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
-    geneseConfig: any = undefined; // TODO: add type GeneseConfig
+    geneseConfig: any = geneseConfig; // TODO: add type GeneseConfig
     start: number = undefined;
     wasInitialized: boolean = undefined;
 

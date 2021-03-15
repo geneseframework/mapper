@@ -8,6 +8,7 @@ import { DeclarationInfo } from '../../create/models/declarations/declaration-in
 import { InitService } from '../../init/services/init.service';
 import { declarationInfos } from '../../../generated/declaration-infos';
 import { generateInstance } from '../../../generated/instance-generator';
+import { GlobalInitService } from '../../create/services/global-init.service';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -16,7 +17,8 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
-    await InitService.start();
+    // await GlobalInitService.start();
+    InitService.createDebugProject();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;
     GLOBAL.debug = true;
