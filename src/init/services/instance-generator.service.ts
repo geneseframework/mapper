@@ -58,7 +58,6 @@ export class InstanceGeneratorService {
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
             `${this.switchCode()}` +
-            // `}` +
             `${tabs(2)}return instance;\n` +
             `${tab}} catch(err) {\n` +
             `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +

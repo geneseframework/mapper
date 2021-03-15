@@ -11,7 +11,7 @@ import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-decl
 import { PropertyInit } from '../../types/property.type';
 import { GenericParameterInit } from '../../types/generic-parameter.type';
 import { DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
-import { flatInit } from '../native/arrays.util';
+import { flat } from '../native/arrays.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKindInit {
     if (!typeDeclaration) {
@@ -29,7 +29,7 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
 
 
 export function getImportDeclarations(typeName: string): ImportDeclaration[] {
-    const declarations: ImportDeclaration[] = flatInit(INIT.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
+    const declarations: ImportDeclaration[] = flat(INIT.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
     const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
     return groupByImportPath(declarationsWithSameName);
 }

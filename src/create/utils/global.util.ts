@@ -2,7 +2,6 @@ import { GLOBAL } from '../const/global.const';
 import { TypeDeclarationKind } from '../types/type-declaration-kind.type';
 
 
-
 export function hasDeclaration(typeName: string): boolean {
     return !!declarationKind(typeName);
 }

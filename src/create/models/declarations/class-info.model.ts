@@ -4,7 +4,7 @@ import { DeclarationInfo } from './declaration-info.model';
 
 export class ClassInfo extends DeclarationInfo {
 
-    hasPrivateConstructor: boolean = undefined;
+    hasPrivateConstructor: boolean = undefined; // TODO
     indexableType: IndexableType = undefined;
     isAbstract: boolean = undefined;
     numberOfConstructorArguments: number = undefined;

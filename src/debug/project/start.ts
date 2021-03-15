@@ -8,9 +8,7 @@ GLOBAL.debug = true;
 
 async function start() {
     console.log(chalk.yellowBright('Starts application...'));
-    // TODO : fix typing
     const cats: any = await Mapper.create([Cat], ARRAY_CAT_DATAS);
-    // const cats: Cat[] = await Mapper.createOld(Cat, ARRAY_CAT_DATAS);
     console.log(chalk.yellowBright('Typed object : '), cats);
 }
 

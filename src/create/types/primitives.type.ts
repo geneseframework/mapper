@@ -1,5 +1,3 @@
-import * as chalk from 'chalk';
-
 export const primitiveTypes = ['string', 'number', 'boolean'];
 
 

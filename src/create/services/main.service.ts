@@ -5,7 +5,7 @@ import { OptionsService } from './options.service';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
-import { TargetService } from './targets/target.service';
+import { TargetService } from './target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
 import { isAny, isNullOrUndefined } from '../utils/native/any.util';
 import { MapArrayService } from './map/map-array.service';
@@ -59,8 +59,6 @@ export class MainService {
 
     // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: CreateOptions): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
-        // console.log(chalk.cyanBright('DECL INFOSSSSS'), GLOBAL.declarationInfos.find(d => d.name === target));
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
@@ -80,19 +78,18 @@ export class MainService {
             return await MapQuotedService.create(target, data, options);
         } else if (isObjectLiteralType(target)) {
             return MapLiteralObjectService.create(data);
-        // } else if (isCurveBracketed(target)) {
+        // } else if (isCurveBracketed(target)) { // TODO
         //     return await MapObjectService.createOld(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
             return await MapComplexService.create(target, data, options);
-        // } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) {
+        // } else if (await isDeclaredOutOfProjectAddItToGlobal(target)) { // TODO
         //     return await MapOutOfProjectService.create(target, data, options);
         } else {
             // TODO : finish to implement
             throwWarning(`type not found : "${target}".`);
             return await MapComplexService.create(target, data, options);
-            // return throwTarget(target, data, options);
         }
     }
 

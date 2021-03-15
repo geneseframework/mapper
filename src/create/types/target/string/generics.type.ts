@@ -1,7 +1,6 @@
 import { hasSeparators } from './has-separators.type';
 import { getContainerFromRight, HasRightBorder } from './borders.type';
 import { removeBorders } from './containerized.type';
-import * as chalk from 'chalk';
 
 export type Generic = `${string}<${string}>`;
 export type EndsWithTag = Generic;

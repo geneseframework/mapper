@@ -11,7 +11,7 @@ import { EnumInfoInit } from '../models/declarations/enum-info.model';
 import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
 import { TypeInfoInit } from '../models/declarations/type-info.model';
 import { ClassInfoInit } from '../models/declarations/class-info.model';
-import { flatInit } from '../utils/native/arrays.util';
+import { flat } from '../utils/native/arrays.util';
 
 export class DeclarationInfoService {
 
@@ -46,7 +46,7 @@ export class DeclarationInfoService {
 
 
     private static setInterfaceInfos(): void {
-        const interfaceDeclarations: InterfaceDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
+        const interfaceDeclarations: InterfaceDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
         for (const interfaceDeclaration of interfaceDeclarations) {
             this.addInterfaceInfo(interfaceDeclaration);
         }
@@ -61,7 +61,7 @@ export class DeclarationInfoService {
 
 
     private static setEnumInfos(): void {
-        const enumDeclarations: EnumDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getEnums()));
+        const enumDeclarations: EnumDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getEnums()));
         for (const enumDeclaration of enumDeclarations) {
             this.addEnumInfo(enumDeclaration);
         }
@@ -76,7 +76,7 @@ export class DeclarationInfoService {
 
 
     private static setTypeInfos(): void {
-        const typeDeclarations: TypeAliasDeclaration[] = flatInit(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
+        const typeDeclarations: TypeAliasDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
         for (const typeDeclaration of typeDeclarations) {
             this.addTypeInfo(typeDeclaration);
         }

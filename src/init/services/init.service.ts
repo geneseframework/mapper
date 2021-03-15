@@ -2,7 +2,6 @@ import { Project } from 'ts-morph';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
-import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 
