@@ -5,7 +5,6 @@ import * as chalk from 'chalk';
 
 export class Init {
 
-    // appRoot: string = undefined;
     geneseConfigPath: string = undefined;
     tsConfigPath: string = undefined;
     debug = false;

@@ -63,7 +63,7 @@ export class InitService {
         console.log(chalk.magentaBright('GLOBAL PATHHH SRCF'), globalSourceFile?.getBaseName());
         // const importDeclarations: ImportDeclaration[] = globalSourceFile.getImportDeclarations();
         // console.log(chalk.yellowBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclarations.map(i => i?.getStructure()));
-        const importDeclaration: ImportDeclaration = globalSourceFile.getImportDeclaration('../../../geneseconfig');
+        const importDeclaration: ImportDeclaration = globalSourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).includes('geneseConfig'));
         console.log(chalk.magentaBright('GLOBAL PATHHH importDeclaration?.getStructure'), importDeclaration?.getStructure());
         console.log(chalk.magentaBright('GLOBAL PATHHH INIT.geneseConfigPath'), INIT.geneseConfigPath);
         console.log(chalk.magentaBright('GLOBAL PATHHH INIT.geneseConfigPath'), removeExtension(INIT.geneseConfigPath));
