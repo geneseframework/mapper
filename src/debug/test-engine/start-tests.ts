@@ -5,20 +5,16 @@ import { INIT } from '../../init/const/init.const';
 import { GLOBAL } from '../../create/const/global.const';
 import { Project, SourceFile } from 'ts-morph';
 import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
-import { InitService } from '../../init/services/init.service';
 import { declarationInfos } from '../../../generated/declaration-infos';
 import { generateInstance } from '../../../generated/instance-generator';
-import { GlobalInitService } from '../../create/services/global-init.service';
 
-INIT.debug = true;
 GLOBAL.debug = true;
 
 export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
-    // await GlobalInitService.start();
-    InitService.createDebugProject();
+    createDebugProject();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;
     GLOBAL.debug = true;
@@ -34,6 +30,22 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
     console.log(chalk.blueBright('Duration : '), duration, 'ms');
     clearCode();
+}
+
+
+/**
+ * In debug mode, creates a Project based on the @genese/mapper module itself
+ * @private
+ */
+function createDebugProject(): void {
+    INIT.projectPath = process.cwd();
+    INIT.project = new Project({
+        tsConfigFilePath: INIT.tsConfigPath,
+        skipFileDependencyResolution: true
+    });
+    INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
+    const distPath = process.cwd() + '/src/dist';
+    INIT.project.addSourceFilesAtPaths(`${distPath}/*{.d.ts,.ts}`);
 }
 
 
