@@ -12,7 +12,6 @@ import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
 import { TypeInfoInit } from '../models/declarations/type-info.model';
 import { ClassInfoInit } from '../models/declarations/class-info.model';
 import { flatInit } from '../utils/native/arrays.util';
-import * as chalk from 'chalk';
 
 export class DeclarationInfoService {
 
@@ -72,7 +71,6 @@ export class DeclarationInfoService {
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
         const enumInfo = new EnumInfoInit(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
         enumInfo.initializers = enumDeclaration.getStructure().members.map(m => this.removeQuotes(m.initializer as string));
-        // console.log(chalk.blueBright('ENU MVALLLLS'), enumInfo.initializers);
         INIT.addDeclarationInfo(enumInfo);
     }
 
@@ -104,11 +102,6 @@ export class DeclarationInfoService {
 
     static isSurroundedBy(text: string, boundary: string): boolean {
         return text && text.slice(0, 1) === boundary && text.slice(text.length - 1) === boundary && !removeBordersInit(text).includes(boundary);
-    }
-
-
-    static removeBorders(text: string): string {
-        return text.slice(1, -1);
     }
 
 

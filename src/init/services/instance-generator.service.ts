@@ -44,7 +44,6 @@ export class InstanceGeneratorService {
     private static async createInstanceGeneratorFile(): Promise<void> {
         const code: string = this.getInstanceGeneratorCode();
         INIT.instanceGeneratorSourceFile = INIT.project.createSourceFile(INIT.instanceGeneratorPath, code, {overwrite: true});
-        INIT.instanceGeneratorSourceFile.fixMissingImports();
         INIT.instanceGeneratorSourceFile.saveSync();
     }
 
