@@ -149,13 +149,12 @@ export class DeclarationInfoGeneratorService {
 
 
     private static getSpecificPropertyCode(property: PropertyInit): string {
-        let code = `${tabs(2)}{\n` +
+        return `${tabs(2)}{\n` +
             `${tabs(3)}initializer: ${addQuotesInit(property.initializer)},\n` +
             `${tabs(3)}isRequired: ${property.isRequired},\n` +
             `${tabs(3)}name: ${addQuotesInit(property.name)},\n` +
             `${tabs(3)}type: ${addQuotesInit(property.type)}\n` +
             `${tabs(2)}}`;
-        return code;
     }
 
 

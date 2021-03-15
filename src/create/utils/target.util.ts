@@ -12,7 +12,6 @@ import { ElementAndSeparator } from '../types/target/string/element-and-separato
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
 import { getContent, removeBorders } from '../types/target/string/containerized.type';
-import * as chalk from 'chalk';
 import { throwWarning } from './errors.util';
 import { hasInterrogation } from '../types/target/string/interrogation.type';
 import { hasSemiColumn } from '../types/target/string/semi-column.type';
@@ -36,7 +35,6 @@ export function getContainerizedElements(text: BracketedOrParenthesized): string
 
 
 export function getElements(text: string): string[] {
-    // console.log(chalk.blueBright('GET ELTTTS'), text);
     return getElementsWithSeparator(text).map(e => e[0]);
 }
 
@@ -46,7 +44,6 @@ function getElementsWithSeparator(text: string): ElementAndSeparator[] {
         return [];
     }
     const cleanedText: string = trimTarget(text);
-    // console.log(chalk.cyanBright('CLEANEDDDDD'), cleanedText);
     if (isBracketedOrParenthesized(cleanedText)) {
         return [[cleanedText, undefined]];
     } else if (hasSeparators(cleanedText)) {
@@ -86,8 +83,6 @@ function getSplitElements(elements: HasSeparators, separator: Separator): Elemen
 export function trimTarget(text: string): string {
     const toRemoveAtTheBeginning: RegExp = /^([?, &|:])+/g;
     const toRemoveAtTheEnd: RegExp = /([?, &|:])+$/g;
-    // const toRemoveAtTheBeginning: RegExp = /^([?, &|:] | extends)+/g;
-    // const toRemoveAtTheEnd: RegExp = /([?, &|:] | extends)+$/g;
     return isString(text) ? text.replace(toRemoveAtTheBeginning, '').replace(toRemoveAtTheEnd, '') : '';
 }
 

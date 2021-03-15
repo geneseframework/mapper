@@ -3,13 +3,11 @@ import { CreateOptions } from '../../models/create-options.model';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import * as chalk from 'chalk';
 
 export class MapTupleService<T> {
 
 
     static async create(target: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
-        // console.log(chalk.blueBright('MAP TUPLEEEE'), target, data);
         if (!isArrayOfSameLength(target, data)) {
             return undefined;
         }

@@ -2,6 +2,9 @@ import { Project, SourceFile, TypeAliasDeclarationStructure } from 'ts-morph';
 import * as chalk from 'chalk';
 
 
+// Tries to solve Generic Types.
+// TODO : implement Generic Types and then remove this file
+
 type FooType<T> = T extends string ? string : number;
 let fooVar: FooType<string>;
 

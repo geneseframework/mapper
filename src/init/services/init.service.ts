@@ -2,7 +2,7 @@ import { Project } from 'ts-morph';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
-import * as chalk from 'chalk';
+import { RefactoGlobalInitService } from './refacto-global-init.service';
 
 const appRoot = require('app-root-path');
 
@@ -14,7 +14,8 @@ export class InitService {
     static async start(): Promise<void> {
         await this.init();
         await DeclarationInfoService.init();
-        await InstanceGeneratorService.start();
+        await InstanceGeneratorService.init();
+        await RefactoGlobalInitService.init();
     }
 
 

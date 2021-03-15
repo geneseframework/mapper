@@ -4,7 +4,6 @@ import { TESTS } from './tests.const';
 import { isSameObject } from '../../create/utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
 import { isArray } from '../../create/utils/native/arrays.util';
-import { GLOBAL } from '../../create/const/global.const';
 
 const MAX_DURATION = 50;
 
