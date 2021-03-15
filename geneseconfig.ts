@@ -1,3 +1,4 @@
+// TODO: tsConfigPath
 export const geneseConfig = {
     creator: {
         differentiateStringsAndNumbers: true,

@@ -1,5 +1,8 @@
 tsconfig.tests.json
 tsconfig.json
 src/init
+src/create
+src/dist
 debug
+docs
 test-engine
