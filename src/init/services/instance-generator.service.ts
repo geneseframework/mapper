@@ -9,7 +9,7 @@ export class InstanceGeneratorService {
     /**
      * Starts the creation of the Instance Generator file
      */
-    static async start(): Promise<void> {
+    static async init(): Promise<void> {
         await this.createInstanceGeneratorFile();
     }
 

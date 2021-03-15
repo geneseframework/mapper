@@ -31,6 +31,11 @@ export class Init {
     }
 
 
+    get globalInitPath(): string {
+        return this.debug ? `${INIT.nodeModulePath}/src/dist/global-init.service.js` : `${INIT.nodeModulePath}/generated/global-init.service.js`;
+    }
+
+
     get instanceGeneratorPath(): string {
         return this.debug ? `${INIT.nodeModulePath}/src/dist/instance-generator.js` : `${INIT.nodeModulePath}/generated/instance-generator.js`;
     }
