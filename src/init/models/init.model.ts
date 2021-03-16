@@ -32,7 +32,7 @@ export class Init {
 
 
     get generatedConfigPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/config.ts` : `${INIT.nodeModulePath}/generated/config.js`;
+        return this.debug ? `${INIT.nodeModulePath}/src/dist/config.js` : `${INIT.nodeModulePath}/generated/config.js`;
     }
 
 
@@ -55,7 +55,7 @@ export class Init {
 
 
     get userGeneseConfigPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/geneseconfig.ts` : `${INIT.projectPath}/geneseconfig.js`;
+        return `${INIT.projectPath}/geneseconfig.ts`;
     }
 
 

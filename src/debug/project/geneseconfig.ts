@@ -1,4 +1,3 @@
-// TODO: tsConfigPath
 export const geneseConfig = {
     mapper: {
         differentiateStringsAndNumbers: true,

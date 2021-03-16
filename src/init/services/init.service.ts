@@ -4,6 +4,7 @@ import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
 import { RefactoGlobalInitService } from './refacto-global-init.service';
 import { GeneseConfigService } from './genese-config.service';
+import * as chalk from 'chalk';
 
 const appRoot = require('app-root-path');
 
@@ -17,7 +18,10 @@ export class InitService {
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
         await GeneseConfigService.init();
-        await RefactoGlobalInitService.init();
+        if (!INIT.debug) {
+            console.log(chalk.greenBright('USER GENESE DBG'), INIT.debug);
+            await RefactoGlobalInitService.init();
+        }
     }
 
 

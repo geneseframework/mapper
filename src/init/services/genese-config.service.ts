@@ -11,7 +11,6 @@ export class GeneseConfigService {
 
     static async init(): Promise<void> {
         const geneseConfigMapper: Config = await this.getUserConfig();
-        console.log(chalk.magentaBright('GENESE geneseConfigUser'), geneseConfigMapper);
         const code: string = this.getConfigCode(geneseConfigMapper);
         console.log(chalk.blueBright('NEW GENESE CODEEEEE'), code);
         await this.createGeneseConfigFile(code);
@@ -21,7 +20,6 @@ export class GeneseConfigService {
     private static async getUserConfig(): Promise<Config> {
         const content: any = await this.getUserConfigFileContent();
         const geneseConfigMapperUser: any = content?.geneseConfig?.mapper;
-        console.log(chalk.greenBright('USER GENESE CONFIGGGGG'), geneseConfigMapperUser);
         if (!geneseConfigMapperUser) {
             throwError(`geneseconfig.ts file has incorrect format. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
         } else {
