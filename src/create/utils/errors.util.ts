@@ -1,4 +1,4 @@
-import { CreateOptions } from '../models/create-options.model';
+import { Config } from '../../shared/models/config.model';
 import { CONFIG } from '../const/config.const';
 
 export function throwError(message = '', value: any = ''): never {
@@ -6,13 +6,14 @@ export function throwError(message = '', value: any = ''): never {
     throw Error(value);
 }
 
+
 export function throwWarning(message = '', value: any = ''): void {
     console.log(`Warning : ${message}\n`, value);
 }
 
 
-export function throwTarget(target: string, data?: any, options?: CreateOptions): any | never {
-    const opt: CreateOptions = options ?? CONFIG.create;
+export function throwTarget(target: string, data?: any, options?: Config): any | never {
+    const opt: Config = options ?? CONFIG.create;
     if (opt.throwTarget.error) {
         throwError(`impossible to read target "${target}" and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
     } else if (opt.throwTarget.setToUndefined) {

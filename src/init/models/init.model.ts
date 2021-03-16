@@ -31,8 +31,8 @@ export class Init {
     }
 
 
-    get geneseConfigPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/geneseconfig.ts` : `${INIT.projectPath}/generated/geneseconfig.js`;
+    get generatedConfigPath(): string {
+        return this.debug ? `${INIT.nodeModulePath}/src/dist/config.ts` : `${INIT.nodeModulePath}/generated/config.js`;
     }
 
 
@@ -51,6 +51,11 @@ export class Init {
             this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
         }
         return this._projectWithNodeModules;
+    }
+
+
+    get userGeneseConfigPath(): string {
+        return this.debug ? `${INIT.nodeModulePath}/geneseconfig.ts` : `${INIT.projectPath}/geneseconfig.js`;
     }
 
 

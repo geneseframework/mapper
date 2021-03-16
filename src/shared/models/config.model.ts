@@ -1,6 +1,6 @@
-import { ThrowTargetError } from './throw-target-error.model';
+import { ThrowTargetError } from './throw-target.model';
 
-export class CreateOptions {
+export class Config {
     differentiateStringsAndNumbers ?= true;
     isArray ?= false;
     throwTarget?: ThrowTargetError = new ThrowTargetError();

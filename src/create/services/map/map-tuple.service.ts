@@ -1,5 +1,5 @@
 import { Mapper } from '../../models/mapper';
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
@@ -7,7 +7,7 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 export class MapTupleService<T> {
 
 
-    static async create(target: Bracketed, data: any, options: CreateOptions): Promise<any[]> {
+    static async create(target: Bracketed, data: any, options: Config): Promise<any[]> {
         if (!isArrayOfSameLength(target, data)) {
             return undefined;
         }

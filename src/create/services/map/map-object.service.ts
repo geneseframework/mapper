@@ -1,4 +1,4 @@
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
 import { Property } from '../../types/target/property.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
@@ -7,7 +7,7 @@ import { removeBorders } from '../../types/target/string/containerized.type';
 export class MapObjectService {
 
 
-    static async create(target: CurveBracketed, data: any, options?: CreateOptions): Promise<object> {
+    static async create(target: CurveBracketed, data: any, options?: Config): Promise<object> {
         return this.createNewInstance(target);
     }
 

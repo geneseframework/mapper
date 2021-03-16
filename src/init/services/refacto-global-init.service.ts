@@ -8,7 +8,7 @@ export class RefactoGlobalInitService {
         const globalInitSourceFile: SourceFile = INIT.project.addSourceFileAtPath(INIT.globalInitPath);
         this.getImportDeclaration('declarationInfos', globalInitSourceFile).setModuleSpecifier(INIT.declarationInfoPath);
         this.getImportDeclaration('generateInstance', globalInitSourceFile).setModuleSpecifier(INIT.instanceGeneratorPath);
-        // this.getImportDeclaration('geneseconfig', globalInitSourceFile).setModuleSpecifier(INIT.geneseConfigPath);
+        // this.getImportDeclaration('geneseconfig', globalInitSourceFile).setModuleSpecifier(INIT.generatedConfigPath);
         globalInitSourceFile.saveSync();
     }
 

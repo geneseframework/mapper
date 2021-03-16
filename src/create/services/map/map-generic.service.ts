@@ -1,4 +1,4 @@
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { Generic, typeOfGeneric } from '../../types/target/string/generics.type';
 import { MainService } from '../main.service';
 import * as chalk from 'chalk';
@@ -7,7 +7,7 @@ import { GLOBAL } from '../../const/global.const';
 
 export class MapGenericService {
 
-    static async create(target: Generic, data: any, options: CreateOptions): Promise<any> {
+    static async create(target: Generic, data: any, options: Config): Promise<any> {
         return await MainService.mapToString(typeOfGeneric(target), data, options);
     }
 

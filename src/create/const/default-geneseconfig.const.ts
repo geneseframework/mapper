@@ -1,5 +1,5 @@
 export const defaultGeneseConfig = {
-    creator: {
+    mapper: {
         differentiateStringsAndNumbers: true,
         throwTarget: {
             error: false,

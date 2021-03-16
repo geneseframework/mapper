@@ -1,4 +1,4 @@
-import { CreateOptions } from '../models/create-options.model';
+import { Config } from '../../shared/models/config.model';
 import 'reflect-metadata';
 import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG } from '../const/config.const';
@@ -8,7 +8,7 @@ import { clone } from '../utils/native/clone.util';
 export class OptionsService {
 
 
-    static wasInitialized(options: CreateOptions): boolean {
+    static wasInitialized(options: Config): boolean {
         if (!isObjectWhichIsNotArray(options)) {
             return false;
         }
@@ -16,7 +16,7 @@ export class OptionsService {
     }
 
 
-    static initialize(options: CreateOptions): CreateOptions {
+    static initialize(options: Config): Config {
         const createOptions = clone(CONFIG.create);
         if (!options) {
             return createOptions;
