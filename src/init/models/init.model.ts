@@ -31,6 +31,11 @@ export class Init {
     }
 
 
+    get geneseConfigPath(): string {
+        return this.debug ? `${INIT.nodeModulePath}/geneseconfig.ts` : `${INIT.projectPath}/generated/geneseconfig.js`;
+    }
+
+
     get globalInitPath(): string {
         return this.debug ? `${INIT.nodeModulePath}/src/dist/global-init.service.js` : `${INIT.nodeModulePath}/dist/src/create/services/global-init.service.js`;
     }
