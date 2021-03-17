@@ -1,4 +1,4 @@
-import { Config } from '../../../shared/models/config.model';
+import { MapperConfig } from '../../../shared/models/config.model';
 import { Generic, typeOfGeneric } from '../../types/target/string/generics.type';
 import { MainService } from '../main.service';
 import { GLOBAL } from '../../const/global.const';
@@ -6,7 +6,7 @@ import { DeclarationInfo } from '../../../shared/models/declarations/declaration
 
 export class MapGenericService {
 
-    static async create(target: Generic, data: any, options: Config): Promise<any> {
+    static async create(target: Generic, data: any, options: MapperConfig): Promise<any> {
         return await MainService.mapToString(typeOfGeneric(target), data, options);
     }
 

@@ -1,6 +1,6 @@
 import { INIT } from '../const/init.const';
 import { throwError } from '../../create/utils/errors.util';
-import { Config } from '../../shared/models/config.model';
+import { MapperConfig } from '../../shared/models/config.model';
 import { Expression, ObjectLiteralExpression, PropertyAssignment, SourceFile, SyntaxKind } from 'ts-morph';
 import { tab, tabs } from '../../shared/utils/strings.util';
 import * as chalk from 'chalk';
@@ -9,13 +9,13 @@ export class ConfigService {
 
 
     static async init(): Promise<void> {
-        const geneseConfigMapper: Config = await this.setConfig();
+        const geneseConfigMapper: MapperConfig = await this.setConfig();
         const code: string = this.getConfigCode(geneseConfigMapper);
         await this.createGeneseConfigFile(code);
     }
 
 
-    private static async setConfig(): Promise<Config | never> {
+    private static async setConfig(): Promise<MapperConfig | never> {
         const userConfigSourceFileCopy: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
         if (!userConfigSourceFileCopy) {
             throwError(`geneseconfig.ts file not found. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
@@ -25,8 +25,8 @@ export class ConfigService {
     }
 
 
-    private static updateGeneseConfigMapper(userConfigSourceFileCopy: SourceFile): Config {
-        const newConfig = new Config();
+    private static updateGeneseConfigMapper(userConfigSourceFileCopy: SourceFile): MapperConfig {
+        const newConfig = new MapperConfig();
         const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
         const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;
         if (config) {
@@ -40,13 +40,12 @@ export class ConfigService {
             //     this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
             // }
         }
-        console.log(chalk.greenBright('NEW COFIGGGGG'), newConfig);
+        // console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
         return newConfig;
     }
 
 
     private static getInitializer(name: string, expression: ObjectLiteralExpression): Expression {
-        console.log(chalk.blueBright('EXPRRRRR'), expression?.getText());
         return this.getProperty(name, expression)?.getInitializer();
     }
 
@@ -64,7 +63,7 @@ export class ConfigService {
     }
 
 
-    private static getConfigCode(geneseConfigMapper: Config): string {
+    private static getConfigCode(geneseConfigMapper: MapperConfig): string {
         return this.declareConstCode() +
             `${tab}behavior: {\n` +
             `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.differentiateStringsAndNumbers.toString()},\n` +

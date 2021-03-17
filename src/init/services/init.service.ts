@@ -18,6 +18,7 @@ export class InitService {
         this.initPaths();
         await ConfigService.init();
         INIT.debug ? this.initDebugProject() : this.initRealProject();
+        console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
         if (!INIT.debug) {

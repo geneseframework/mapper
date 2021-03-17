@@ -1,3 +1,3 @@
-export class ConfigBehavior {
+export class MapperBehavior {
     differentiateStringsAndNumbers ?= true;
 }

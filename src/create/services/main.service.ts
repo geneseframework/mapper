@@ -1,5 +1,5 @@
 import { Target } from '../types/target/target.type';
-import { Config } from '../../shared/models/config.model';
+import { MapperConfig } from '../../shared/models/config.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
@@ -42,7 +42,7 @@ export class MainService {
      * @param options
      */
     // TODO : isArray Option
-    static async map<T>(target: Target<T>, data: any, options?: Config): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+    static async map<T>(target: Target<T>, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         await GlobalInitService.start();
         if (!OptionsService.wasInitialized(options)) {
@@ -52,13 +52,13 @@ export class MainService {
     }
 
 
-    static async mapToString<T>(target: Target<T>, data: any, options?: Config): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+    static async mapToString<T>(target: Target<T>, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         return await this.mapString(TargetService.toString(target), data, options);
     }
 
 
     // TODO : enums
-    private static async mapString<T>(target: string, data: any, options?: Config): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
+    private static async mapString<T>(target: string, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

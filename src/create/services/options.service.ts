@@ -1,4 +1,4 @@
-import { Config } from '../../shared/models/config.model';
+import { MapperConfig } from '../../shared/models/config.model';
 import 'reflect-metadata';
 import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 // import { CONFIG_OLD } from '../const/config.const';
@@ -9,7 +9,7 @@ import { GLOBAL } from '../const/global.const';
 export class OptionsService {
 
 
-    static wasInitialized(options: Config): boolean {
+    static wasInitialized(options: MapperConfig): boolean {
         if (!isObjectWhichIsNotArray(options)) {
             return false;
         }
@@ -17,8 +17,8 @@ export class OptionsService {
     }
 
 
-    static initialize(options: Config): Config {
-        const createOptions: Config = clone(GLOBAL.config);
+    static initialize(options: MapperConfig): MapperConfig {
+        const createOptions: MapperConfig = clone(GLOBAL.config);
         if (!options) {
             return createOptions;
         }

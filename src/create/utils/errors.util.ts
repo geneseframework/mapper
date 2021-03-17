@@ -8,8 +8,8 @@ export function throwWarning(message = '', value: any = ''): void {
 }
 
 
-// export function throwTarget(target: string, data?: any, options?: Config): any | never {
-//     const opt: Config = options ?? GLOBAL.config;
+// export function throwTarget(target: string, data?: any, options?: MapperConfig): any | never {
+//     const opt: MapperConfig = options ?? GLOBAL.config;
 //     if (opt.throwTarget.error) {
 //         throwError(`impossible to read target "${target}" and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
 //     } else if (opt.throwTarget.setToUndefined) {
