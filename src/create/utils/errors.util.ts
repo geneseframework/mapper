@@ -1,9 +1,9 @@
 import { Config } from '../../shared/models/config.model';
 import { CONFIG_OLD } from '../const/config.const';
 
-export function throwError(message = '', value: any = ''): never {
+export function throwError(message = '', value: any = ''): void {
     console.log(`Error : ${message}\n`, value);
-    throw Error(value);
+    // throw Error(value);
 }
 
 

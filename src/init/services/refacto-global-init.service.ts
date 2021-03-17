@@ -14,7 +14,7 @@ export class RefactoGlobalInitService {
 
 
     private static getImportDeclaration(importName: string, sourceFile: SourceFile): ImportDeclaration {
-        return sourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).includes(importName));
+        return sourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).flat().includes(importName));
     }
 
 }

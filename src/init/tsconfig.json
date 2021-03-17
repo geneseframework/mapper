@@ -8,7 +8,7 @@
             "es2019",
             "dom"
         ],
-        "outDir": "../../dist/init"
+        "outDir": "../../dist"
     },
     "include": [
         "./init.ts",

@@ -1,5 +1,6 @@
 import { defaultGeneseConfig } from '../../create/const/default-geneseconfig.const';
 import * as chalk from 'chalk';
+import * as fs from 'fs-extra';
 import { INIT } from '../const/init.const';
 import { throwError, throwWarning } from '../../create/utils/errors.util';
 import { GeneseConfig } from '../../shared/models/genese-config.model';
@@ -17,8 +18,9 @@ export class ConfigService {
     }
 
 
-    private static async getUserConfig(): Promise<Config> {
+    private static async getUserConfig(): Promise<Config | never> {
         const content: any = await this.getUserConfigFileContent();
+        console.log(chalk.blueBright('USERR CONFIG CONTENTTTTT'), content);
         const geneseConfigMapperUser: any = content?.geneseConfig?.mapper;
         if (!geneseConfigMapperUser) {
             throwError(`geneseconfig.ts file has incorrect format. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
@@ -28,11 +30,12 @@ export class ConfigService {
     }
 
 
-    private static async getUserConfigFileContent(): Promise<any> {
+    private static async getUserConfigFileContent(): Promise<any | never> {
         try {
-            return await require(INIT.userGeneseConfigPath);
+            return fs.readFileSync(INIT.userGeneseConfigPath, {encoding: 'utf-8'});
+            // return await require(INIT.userGeneseConfigPath);
         } catch (err) {
-            throwError(`geneseconfig.ts file not found at your project's root : `, INIT.generatedConfigPath);
+            throwError(`impossible to create config file : `, INIT.userGeneseConfigPath);
         }
     }
 
