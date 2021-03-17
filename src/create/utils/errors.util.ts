@@ -3,7 +3,6 @@ import { CONFIG_OLD } from '../const/config.const';
 
 export function throwError(message = '', value: any = ''): void {
     console.log(`Error : ${message}\n`, value);
-    // throw Error(value);
 }
 
 

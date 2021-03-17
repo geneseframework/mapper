@@ -4,6 +4,7 @@ import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { CONFIG_OLD } from '../const/config.const';
 import { isBoolean } from '../utils/native/booleans.util';
 import { clone } from '../utils/native/clone.util';
+import { GLOBAL } from '../const/global.const';
 
 export class OptionsService {
 
@@ -17,7 +18,7 @@ export class OptionsService {
 
 
     static initialize(options: Config): Config {
-        const createOptions = clone(CONFIG_OLD.create);
+        const createOptions = clone(GLOBAL.config);
         if (!options) {
             return createOptions;
         }
