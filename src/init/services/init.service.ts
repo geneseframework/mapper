@@ -41,8 +41,6 @@ export class InitService {
      */
     private static createProject(): void {
         INIT.projectPath = appRoot;
-        console.log('APP ROOOOOt INIT.projectPath', INIT.projectPath)
-        console.log('APP INIT.configFilePath', INIT.configFilePath)
         INIT.project = new Project({
             tsConfigFilePath: INIT.configFilePath,
             skipFileDependencyResolution: true
