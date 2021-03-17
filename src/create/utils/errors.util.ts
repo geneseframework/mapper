@@ -1,5 +1,5 @@
 import { Config } from '../../shared/models/config.model';
-import { CONFIG_OLD } from '../const/config.const';
+import { GLOBAL } from '../const/global.const';
 
 export function throwError(message = '', value: any = ''): void {
     console.log(`Error : ${message}\n`, value);
@@ -12,7 +12,7 @@ export function throwWarning(message = '', value: any = ''): void {
 
 
 export function throwTarget(target: string, data?: any, options?: Config): any | never {
-    const opt: Config = options ?? CONFIG_OLD.create;
+    const opt: Config = options ?? GLOBAL.config;
     if (opt.throwTarget.error) {
         throwError(`impossible to read target "${target}" and throwTarget.error is set to true in geneseconfig.json or in the createOption parameter of Mapper.create().`);
     } else if (opt.throwTarget.setToUndefined) {

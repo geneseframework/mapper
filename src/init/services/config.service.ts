@@ -1,4 +1,3 @@
-import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
 import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
@@ -37,7 +36,6 @@ export class ConfigService {
                 this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
             }
         }
-        console.log(chalk.magentaBright('GENESE defaultConfig'), newConfig);
         return newConfig;
     }
 
