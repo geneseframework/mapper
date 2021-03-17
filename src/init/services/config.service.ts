@@ -3,6 +3,7 @@ import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
 import { Expression, ObjectLiteralExpression, PropertyAssignment, SourceFile, SyntaxKind } from 'ts-morph';
 import { tab, tabs } from '../../shared/utils/strings.util';
+import * as chalk from 'chalk';
 
 export class ConfigService {
 
@@ -29,19 +30,24 @@ export class ConfigService {
         const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
         const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;
         if (config) {
-            this.updateProperty('differentiateStringsAndNumbers', config, newConfig, 'false', false);
+            const behavior: ObjectLiteralExpression = this.getInitializer('behavior', config) as ObjectLiteralExpression;
+            if (behavior) {
+                this.updateProperty('differentiateStringsAndNumbers', behavior, newConfig.behavior, 'false', false);
+            }
             // const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
             // if (throwTarget) {
             //     this.updateProperty('error', throwTarget, newConfig.throwTarget, 'true', true);
             //     this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
             // }
         }
+        console.log(chalk.greenBright('NEW COFIGGGGG'), newConfig);
         return newConfig;
     }
 
 
     private static getInitializer(name: string, expression: ObjectLiteralExpression): Expression {
-        return this.getProperty(name, expression).getInitializer();
+        console.log(chalk.blueBright('EXPRRRRR'), expression?.getText());
+        return this.getProperty(name, expression)?.getInitializer();
     }
 
 
@@ -60,11 +66,13 @@ export class ConfigService {
 
     private static getConfigCode(geneseConfigMapper: Config): string {
         return this.declareConstCode() +
-            `${tab}differentiateStringsAndNumbers: ${geneseConfigMapper.differentiateStringsAndNumbers.toString()},\n` +
-            `${tab}throwTarget: {\n` +
-            `${tabs(2)}error: ${geneseConfigMapper.throwTarget.error},\n` +
-            `${tabs(2)}setToUndefined: ${geneseConfigMapper.throwTarget.setToUndefined},\n` +
+            `${tab}behavior: {\n` +
+            `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.differentiateStringsAndNumbers.toString()},\n` +
             `${tab}}\n` +
+            // `${tab}throwTarget: {\n` +
+            // `${tabs(2)}error: ${geneseConfigMapper.throwTarget.error},\n` +
+            // `${tabs(2)}setToUndefined: ${geneseConfigMapper.throwTarget.setToUndefined},\n` +
+            // `${tab}}\n` +
             `}\n` +
             this.exportsCode();
     }

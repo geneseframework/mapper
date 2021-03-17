@@ -42,7 +42,7 @@ export type ChildTypeSpec = ParentTypeSpec;
 
 testMappers.push(new TestMapper(`'a' / ChildTypeSpecSpec`, 'ChildTypeSpec', 'a', {isolate: false}));
 testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / undefined`, 'ChildTypeSpec', 3, {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / '3'`, 'ChildTypeSpec', 3, {expectedValue: '3', createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildTypeSpecSpec / '3'`, 'ChildTypeSpec', 3, {expectedValue: '3', config: {behavior: {differentiateStringsAndNumbers: false}}, isolate: false}));
 
 
 // ---------------------------------------   Type defined by other types   -----------------------------------------------
@@ -54,8 +54,8 @@ export type ChildParentsTypeSpec = Parent1TypeSpec | Parent2TypeSpec;
 
 testMappers.push(new TestMapper(`'a' / ChildParentsTypeSpec`, 'ChildParentsTypeSpec', 'a', {isolate: false}));
 testMappers.push(new TestMapper(`3 / ChildParentsTypeSpec`, 'ChildParentsTypeSpec', 3, {isolate: false}));
-testMappers.push(new TestMapper(`3 / ChildParentsTypeSpec / '3'`, 'ChildParentsTypeSpec', 3, {expectedValue: '3', createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
-testMappers.push(new TestMapper(`{} / ChildParentsTypeSpec / undefined`, 'ChildParentsTypeSpec', {}, {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+testMappers.push(new TestMapper(`3 / ChildParentsTypeSpec / '3'`, 'ChildParentsTypeSpec', 3, {expectedValue: '3', config: {behavior: {differentiateStringsAndNumbers: false}}, isolate: false}));
+testMappers.push(new TestMapper(`{} / ChildParentsTypeSpec / undefined`, 'ChildParentsTypeSpec', {}, {expectedValue: undefined, config: {behavior: {differentiateStringsAndNumbers: false}}, isolate: false}));
 
 
 // ---------------------------------------   Type defined by other types   -----------------------------------------------
@@ -67,7 +67,7 @@ export type ChildParentNumberOrBooleanAndStringSpec = ParentNumberOrBooleanSpec 
 testMappers.push(new TestMapper(`'a' / ChildParentNumberOrBooleanAndStringSpec`, 'ChildParentNumberOrBooleanAndStringSpec', 'a', {isolate: false}));
 testMappers.push(new TestMapper(`3 / ChildParentNumberOrBooleanAndStringSpec`, 'ChildParentNumberOrBooleanAndStringSpec', 3, {isolate: false}));
 testMappers.push(new TestMapper(`3 / ChildParentNumberOrBooleanAndStringSpec / '3'`, 'ChildParentNumberOrBooleanAndStringSpec', 3, {isolate: false}));
-testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / undefined`, 'ChildParentNumberOrBooleanAndStringSpec', {}, {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / undefined`, 'ChildParentNumberOrBooleanAndStringSpec', {}, {expectedValue: undefined, config: {behavior: {differentiateStringsAndNumbers: false}}, isolate: false}));
 
 
 // -----------------------------------------   Type defined by a Class   --------------------------------------------------
@@ -92,8 +92,8 @@ testMappers.push(new TestMapper(`0 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumb
 testMappers.push(new TestMapper(`2 / UnionTypeNumberLiteralSpec`, 'UnionTypeNumberLiteralSpec', 2, {isolate: false}));
 testMappers.push(new TestMapper(`'a' / UnionTypeNumberLiteralSpec / undefined`, 'UnionTypeNumberLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
 // TODO: fix
-testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: undefined, createOptions: {differentiateStringsAndNumbers: true}, isolate: false}));
-testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: 2, createOptions: {differentiateStringsAndNumbers: false}, isolate: false}));
+testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: undefined, config: {behavior: {differentiateStringsAndNumbers: true}}, isolate: false}));
+testMappers.push(new TestMapper(`'2' / UnionTypeNumberLiteralSpec & !diff / 2`, 'UnionTypeNumberLiteralSpec', '2', {expectedValue: 2, config: {behavior: {differentiateStringsAndNumbers: false}}, isolate: false}));
 
 
 // -------------------------------------   Union types string | number   --------------------------------------------------

@@ -17,8 +17,8 @@ export class MapPrimitiveService {
 
     private static haveSameType(target: string, data: any, options: Config): boolean {
         return typeof data === target?.toLowerCase()
-            || (isString(data) && target?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
-            || (isNumber(data) && target?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);
+            || (isString(data) && target?.toLowerCase() === 'number' && options.behavior.differentiateStringsAndNumbers === false)
+            || (isNumber(data) && target?.toLowerCase() === 'string' && options.behavior.differentiateStringsAndNumbers === false);
     }
 
 }

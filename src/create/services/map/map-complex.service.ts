@@ -18,9 +18,9 @@ export class MapComplexService {
         } else if (hasUnion(target)) {
             if (isStringAsNullOrLiteral(first)) {
                 if (first === data?.toString()) {
-                    return options.differentiateStringsAndNumbers && isString(data) ? undefined : data;
+                    return options.behavior.differentiateStringsAndNumbers && isString(data) ? undefined : data;
                 } else if (isStringAsNullOrLiteral(others)) {
-                    return options.differentiateStringsAndNumbers && isString(data) ? undefined : data;
+                    return options.behavior.differentiateStringsAndNumbers && isString(data) ? undefined : data;
                 } else {
                     return await MainService.mapToString(others, data, options);
                 }

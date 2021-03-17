@@ -22,9 +22,9 @@ export class OptionsService {
         if (!options) {
             return createOptions;
         }
-        createOptions.differentiateStringsAndNumbers = isBoolean(options?.differentiateStringsAndNumbers) ? options.differentiateStringsAndNumbers : createOptions.differentiateStringsAndNumbers;
-        createOptions.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : createOptions.throwTarget.error;
-        createOptions.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setToUndefined') ? options.throwTarget.setToUndefined : createOptions.throwTarget.setToUndefined;
+        createOptions.behavior.differentiateStringsAndNumbers = isBoolean(options?.behavior?.differentiateStringsAndNumbers) ? options.behavior.differentiateStringsAndNumbers : createOptions.behavior.differentiateStringsAndNumbers;
+        // config.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : config.throwTarget.error;
+        // config.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setToUndefined') ? options.throwTarget.setToUndefined : config.throwTarget.setToUndefined;
         Reflect.defineMetadata('initialized', true, createOptions);
         return createOptions;
     }

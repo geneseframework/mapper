@@ -1,7 +1,8 @@
-import { ThrowTargetError } from './throw-target.model';
+import { ConfigBehavior } from './config-behavior.model';
 
 export class Config {
-    differentiateStringsAndNumbers ?= true;
-    isArray ?= false;
-    throwTarget?: ThrowTargetError = new ThrowTargetError();
+    behavior?: ConfigBehavior = new ConfigBehavior();
+    include?: string[] = [];
+    tsConfigPaths?: string[] = [];
+    // throwTarget?: ThrowTargetError = new ThrowTargetError();
 }
