@@ -1,5 +1,5 @@
-import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
-import { GenericParameter } from '../../../shared/types/target/generic-parameter.type';
+import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
+import { GenericParameter } from '../../types/target/generic-parameter.type';
 
 export abstract class DeclarationInfo {
 

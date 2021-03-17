@@ -5,12 +5,12 @@ import { tab, tabs } from '../utils/native/strings.util';
 import { DeclarationInfoInit } from '../models/declarations/declaration-info.model';
 import { isClassInfoInit, isEnumInfoInit, isInterfaceInfoInit, isTypeInfoInit } from '../utils/declaration-info.util';
 import { addQuotesInit } from '../types/quoted-init.type';
-import { InterfaceInfoInit } from '../models/declarations/interface-info.model';
-import { ClassInfoInit } from '../models/declarations/class-info.model';
-import { PropertyInit } from '../types/property.type';
-import { TypeInfoInit } from '../models/declarations/type-info.model';
-import { EnumInfoInit } from '../models/declarations/enum-info.model';
-import { ClassOrInterfaceInfoInit } from '../types/class-or-interface-info-init.type';
+import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
+import { TypeInfo } from '../../shared/models/declarations/type-info.model';
+import { Property } from '../../shared/types/target/property.type';
+import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
+import { ClassInfo } from '../../shared/models/declarations/class-info.model';
+import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info.type';
 
 export class DeclarationInfoGeneratorService {
 
@@ -117,7 +117,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getSpecificClassCode(classInfo: ClassInfoInit): string {
+    private static getSpecificClassCode(classInfo: ClassInfo): string {
         let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
             `${this.getIndexableTypeCode(classInfo)}` +
             `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
@@ -129,7 +129,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getSpecificInterfaceCode(interfaceInfo: InterfaceInfoInit): string {
+    private static getSpecificInterfaceCode(interfaceInfo: InterfaceInfo): string {
         let code = `${this.getIndexableTypeCode(interfaceInfo)}` +
             `${tabs(2)}properties: [\n` +
             `${this.getSpecificPropertiesCode(interfaceInfo)}` +
@@ -138,7 +138,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getIndexableTypeCode(classOrInterfaceInfo: ClassOrInterfaceInfoInit): string {
+    private static getIndexableTypeCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
         if (!classOrInterfaceInfo.indexableType) {
             return '';
         } else {
@@ -150,7 +150,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getSpecificPropertiesCode(classOrInterfaceInfo: ClassOrInterfaceInfoInit): string {
+    private static getSpecificPropertiesCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
         let code = '';
         for (const property of classOrInterfaceInfo.properties) {
             code = `${code}${this.getSpecificPropertyCode(property)},\n`;
@@ -159,7 +159,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getSpecificPropertyCode(property: PropertyInit): string {
+    private static getSpecificPropertyCode(property: Property): string {
         return `${tabs(2)}{\n` +
             `${tabs(3)}initializer: ${addQuotesInit(property.initializer)},\n` +
             `${tabs(3)}isRequired: ${property.isRequired},\n` +
@@ -170,13 +170,13 @@ export class DeclarationInfoGeneratorService {
 
 
     //TODO : Types with antiquotes
-    private static getSpecificTypeCode(typeInfo: TypeInfoInit): string {
+    private static getSpecificTypeCode(typeInfo: TypeInfo): string {
         let code = `${tabs(2)}type: ${addQuotesInit(typeInfo.type)},\n`;
         return code;
     }
 
 
-    private static getSpecificEnumCode(enumInfo: EnumInfoInit): string {
+    private static getSpecificEnumCode(enumInfo: EnumInfo): string {
         let code = `${tabs(2)}initializers: [\n`;
         for (const initializer of enumInfo.initializers) {
             code = `${code}${tabs(3)}${addQuotesInit(initializer)},\n`;

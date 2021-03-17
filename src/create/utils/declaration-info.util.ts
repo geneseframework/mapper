@@ -1,8 +1,8 @@
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
-import { ClassInfo } from '../models/declarations/class-info.model';
-import { InterfaceInfo } from '../models/declarations/interface-info.model';
-import { EnumInfo } from '../models/declarations/enum-info.model';
-import { TypeInfo } from '../models/declarations/type-info.model';
+import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
+import { ClassInfo } from '../../shared/models/declarations/class-info.model';
+import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
+import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
+import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 
 export function isClassInfo(declarationInfo: DeclarationInfo): declarationInfo is ClassInfo {
     return declarationInfo.kind === 'Class';

@@ -4,8 +4,8 @@ import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
-import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
-import { Property } from '../../types/target/property.type';
+import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
+import { Property } from '../../../shared/types/target/property.type';
 
 export class MapInstanceOrInterfaceService {
 
