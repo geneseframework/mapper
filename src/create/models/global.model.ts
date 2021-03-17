@@ -1,11 +1,11 @@
-import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../utils/declaration-info.util';
-import { EnumInfo } from './declarations/enum-info.model';
-import { InterfaceInfo } from './declarations/interface-info.model';
-import { TypeInfo } from './declarations/type-info.model';
-import { DeclarationInfo } from './declarations/declaration-info.model';
 import { Config } from '../../shared/models/config.model';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
+import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shared/utils/declaration-info.util';
+import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
+import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
+import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 
 
 export class Global {

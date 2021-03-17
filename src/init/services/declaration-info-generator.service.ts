@@ -2,8 +2,6 @@ import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { tab, tabs } from '../utils/native/strings.util';
-import { DeclarationInfoInit } from '../models/declarations/declaration-info.model';
-import { isClassInfoInit, isEnumInfoInit, isInterfaceInfoInit, isTypeInfoInit } from '../utils/declaration-info.util';
 import { addQuotesInit } from '../types/quoted-init.type';
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
@@ -11,6 +9,8 @@ import { Property } from '../../shared/types/target/property.type';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info.type';
+import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shared/utils/declaration-info.util';
+import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 
 export class DeclarationInfoGeneratorService {
 
@@ -79,7 +79,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getDeclarationInfoCode(declarationInfo: DeclarationInfoInit): string {
+    private static getDeclarationInfoCode(declarationInfo: DeclarationInfo): string {
         const typeParametersCode: string = this.getTypeParametersCode(declarationInfo);
         let code = `${tab}{\n` +
             `${tabs(2)}filePath: ${addQuotesInit(declarationInfo.filePath)},\n` +
@@ -94,7 +94,7 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getTypeParametersCode(declarationInfo: DeclarationInfoInit): string {
+    private static getTypeParametersCode(declarationInfo: DeclarationInfo): string {
         let code = '';
         for (const typeParameter of declarationInfo.typeParameters) {
             code = `${code}\n`; // TODO
@@ -103,14 +103,14 @@ export class DeclarationInfoGeneratorService {
     }
 
 
-    private static getSpecificCode(declarationInfo: DeclarationInfoInit): string {
-        if (isClassInfoInit(declarationInfo)) {
+    private static getSpecificCode(declarationInfo: DeclarationInfo): string {
+        if (isClassInfo(declarationInfo)) {
             return this.getSpecificClassCode(declarationInfo);
-        } else if (isInterfaceInfoInit(declarationInfo)) {
+        } else if (isInterfaceInfo(declarationInfo)) {
             return this.getSpecificInterfaceCode(declarationInfo);
-        } else if (isEnumInfoInit(declarationInfo)) {
+        } else if (isEnumInfo(declarationInfo)) {
             return this.getSpecificEnumCode(declarationInfo);
-        } else if (isTypeInfoInit(declarationInfo)) {
+        } else if (isTypeInfo(declarationInfo)) {
             return this.getSpecificTypeCode(declarationInfo);
         }
         return '';

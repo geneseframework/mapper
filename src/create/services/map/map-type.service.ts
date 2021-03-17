@@ -1,7 +1,7 @@
 import { Config } from '../../../shared/models/config.model';
 import { MainService } from '../main.service';
-import { TypeInfo } from '../../models/declarations/type-info.model';
 import { GLOBAL } from '../../const/global.const';
+import { TypeInfo } from '../../../shared/models/declarations/type-info.model';
 
 export class MapTypeService {
 

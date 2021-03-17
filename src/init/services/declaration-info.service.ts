@@ -6,12 +6,12 @@ import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { getIndexableType } from '../utils/ast/ast-indexes.util';
-import { InterfaceInfoInit } from '../models/declarations/interface-info.model';
-import { EnumInfoInit } from '../models/declarations/enum-info.model';
 import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
-import { TypeInfoInit } from '../models/declarations/type-info.model';
-import { ClassInfoInit } from '../models/declarations/class-info.model';
 import { flat } from '../utils/native/arrays.util';
+import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
+import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
+import { ClassInfo } from '../../shared/models/declarations/class-info.model';
+import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 
 export class DeclarationInfoService {
 
@@ -37,7 +37,7 @@ export class DeclarationInfoService {
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
-        const classInfo = new ClassInfoInit(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
+        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
         classInfo.indexableType = getIndexableType(classDeclaration);
@@ -54,7 +54,7 @@ export class DeclarationInfoService {
 
 
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
-        const interfaceInfo = new InterfaceInfoInit(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
+        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
         INIT.addDeclarationInfo(interfaceInfo);
     }
@@ -69,7 +69,7 @@ export class DeclarationInfoService {
 
 
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
-        const enumInfo = new EnumInfoInit(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
+        const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
         enumInfo.initializers = enumDeclaration.getStructure().members.map(m => this.removeQuotes(m.initializer as string));
         INIT.addDeclarationInfo(enumInfo);
     }
@@ -84,7 +84,7 @@ export class DeclarationInfoService {
 
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
-        const typeInfo = new TypeInfoInit(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
+        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
         typeInfo.type = typeDeclaration.getStructure()?.type as string;
         INIT.addDeclarationInfo(typeInfo);
     }
