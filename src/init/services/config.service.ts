@@ -5,6 +5,7 @@ import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
 import { tab, tabs } from '../utils/native/strings.util';
 import {
+    Expression,
     ObjectLiteralExpression,
     PropertyAssignment,
     PropertyAssignmentStructure,
@@ -48,19 +49,15 @@ export class ConfigService {
 
 
     private static updateGeneseConfigMapper(userConfigSourceFileCopy: SourceFile): Config {
-        const defaultConfig = new Config();
+        const newConfig = new Config();
         const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
-        const configPropertyAssignment: PropertyAssignment = configExpression?.getProperty('mapper') as PropertyAssignment;
-        const config: ObjectLiteralExpression = configPropertyAssignment.getInitializer() as ObjectLiteralExpression;
-        // const config: PropertyAssignmentStructure = configExpression?.getProperty('mapper').getStructure() as PropertyAssignmentStructure;
-        console.log(chalk.magentaBright('CONFIGGGGG'), configPropertyAssignment.getInitializer().getKindName());
-        // const config: ObjectLiteralElementLike = configExpression?.getProperty('mapper');
+        const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;
+        console.log(chalk.magentaBright('CONFIGGGGG'), config.getKindName());
         if (config) {
-            const differentiateStringsAndNumbersAssignment: PropertyAssignment = config.getProperty('differentiateStringsAndNumbers') as PropertyAssignment;
-            const differentiateStringsAndNumbers: string = differentiateStringsAndNumbersAssignment?.getInitializer().getText();
+            const differentiateStringsAndNumbers: string = this.getInitializer('differentiateStringsAndNumbers', config).getText();
             console.log(chalk.cyanBright('DIFFFFF'), differentiateStringsAndNumbers);
             if (differentiateStringsAndNumbers === 'false') {
-                defaultConfig.differentiateStringsAndNumbers = false;
+                newConfig.differentiateStringsAndNumbers = false;
             }
             // if (geneseConfigMapperUser.throwTarget?.error === true) {
             //     defaultConfig.throwTarget.error = true;
@@ -69,8 +66,18 @@ export class ConfigService {
             //     defaultConfig.throwTarget.setToUndefined = true;
             // }
         }
-        console.log(chalk.magentaBright('GENESE defaultConfig'), defaultConfig);
-        return defaultConfig;
+        console.log(chalk.magentaBright('GENESE defaultConfig'), newConfig);
+        return newConfig;
+    }
+
+
+    private static getInitializer(name: string, expression: ObjectLiteralExpression): Expression {
+        return this.getProperty(name, expression).getInitializer();
+    }
+
+
+    private static getProperty(name: string, expression: ObjectLiteralExpression): PropertyAssignment {
+        return expression?.getProperty(name) as PropertyAssignment;
     }
 
 
