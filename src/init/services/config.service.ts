@@ -6,7 +6,7 @@ import { GeneseConfig } from '../../shared/models/genese-config.model';
 import { Config } from '../../shared/models/config.model';
 import { tab, tabs } from '../utils/native/strings.util';
 
-export class GeneseConfigService {
+export class ConfigService {
 
 
     static async init(): Promise<void> {
@@ -54,13 +54,24 @@ export class GeneseConfigService {
 
 
     private static getConfigCode(geneseConfigMapper: Config): string {
-        return `export var config = {\n` +
+        return this.declareConstCode() +
             `${tab}differentiateStringsAndNumbers: ${geneseConfigMapper.differentiateStringsAndNumbers.toString()},\n` +
             `${tab}throwTarget: {\n` +
             `${tabs(2)}error: ${geneseConfigMapper.throwTarget.error},\n` +
             `${tabs(2)}setToUndefined: ${geneseConfigMapper.throwTarget.setToUndefined},\n` +
             `${tab}}\n` +
-            `}\n`;
+            `}\n` +
+            this.exportsCode();
+    }
+
+
+    private static declareConstCode(): string {
+        return INIT.debug ? `const config = {\n` : `export var config = {\n`;
+    }
+
+
+    private static exportsCode(): string {
+        return INIT.debug ? `exports.config = config;\n` : `\n`;
     }
 
 

@@ -53,7 +53,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static getInstanceGeneratorCode(): string {
-        return `export const generateInstance = async function(instanceGenerator) {\n` +
+        return this.declareConstCode() +
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
@@ -62,7 +62,18 @@ export class InstanceGeneratorService {
             `${tab}} catch(err) {\n` +
             `${tabs(2)}console.log('Impossible to map this instance. Did you exported it ?', err);\n` +
             `${tab}}\n` +
-            `}\n`;
+            `}\n` +
+            this.exportsCode();
+    }
+
+
+    private static declareConstCode(): string {
+        return INIT.debug ? `const generateInstance = async function(instanceGenerator) {\n` : `export const generateInstance = async function(instanceGenerator) {\n`;
+    }
+
+
+    private static exportsCode(): string {
+        return INIT.debug ? `exports.generateInstance = generateInstance;\n` : `\n`;
     }
 
 

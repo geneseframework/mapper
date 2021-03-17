@@ -1,4 +1,4 @@
-export var declarationInfos = [
+const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
         kind: `Class`,
@@ -1702,3 +1702,4 @@ export var declarationInfos = [
         type: `string | string[]`,
     },
 ];
+exports.declarationInfos = declarationInfos;
