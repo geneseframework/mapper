@@ -1,6 +1,6 @@
 import { hasSeparators } from './has-separators.type';
 import { getContainerFromRight, HasRightBorder } from './borders.type';
-import { removeBorders } from './containerized.type';
+import { removeBorders } from '../../../../shared/utils/strings.util';
 
 export type Generic = `${string}<${string}>`;
 export type EndsWithTag = Generic;

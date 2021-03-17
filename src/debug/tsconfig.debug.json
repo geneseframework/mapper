@@ -9,10 +9,7 @@
         ],
         "outDir": "../../dist"
     },
-    "include": [
-        "src/**/*",
-        "../dist/*.ts"
-    ],
+    "include": [],
     "exclude": [
     ]
 }

@@ -1,9 +1,12 @@
-export const geneseConfig = {
+import { GeneseConfig } from '../../shared/models/genese-config.model';
+
+export const geneseConfig: GeneseConfig = {
     mapper: {
-        differentiateStringsAndNumbers: true,
-        throwTarget: {
-            error: false,
-            setToUndefined: false
-        }
+        behavior: {
+            differentiateStringsAndNumbers: true,
+        },
+        include: [
+            '../out-of-project.model.ts'
+        ]
     }
 }

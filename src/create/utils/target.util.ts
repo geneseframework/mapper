@@ -11,11 +11,12 @@ import { isArray } from './native/arrays.util';
 import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
-import { getContent, removeBorders } from '../types/target/string/containerized.type';
+import { getContent } from '../types/target/string/containerized.type';
 import { throwWarning } from './errors.util';
 import { hasInterrogation } from '../types/target/string/interrogation.type';
 import { hasSemiColumn } from '../types/target/string/semi-column.type';
 import { hasExtends } from '../types/target/string/extends.type';
+import { removeBorders } from '../../shared/utils/strings.util';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {

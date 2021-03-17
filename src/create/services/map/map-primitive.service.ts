@@ -1,5 +1,5 @@
 import { Primitive } from '../../types/primitives.type';
-import { Config } from '../../../shared/models/config.model';
+import { MapperConfig } from '../../../shared/models/config.model';
 import { castStringAndNumbers } from '../../utils/native/primitives.util';
 import { isString } from '../../utils/native/strings.util';
 import { isNumber } from '../../utils/native/numbers.util';
@@ -7,7 +7,7 @@ import { isNumber } from '../../utils/native/numbers.util';
 export class MapPrimitiveService {
 
 
-    static create(target: string, data: any, options: Config): Primitive {
+    static create(target: string, data: any, options: MapperConfig): Primitive {
         if (data === null) {
             return null;
         }
@@ -15,10 +15,10 @@ export class MapPrimitiveService {
     }
 
 
-    private static haveSameType(target: string, data: any, options: Config): boolean {
+    private static haveSameType(target: string, data: any, options: MapperConfig): boolean {
         return typeof data === target?.toLowerCase()
-            || (isString(data) && target?.toLowerCase() === 'number' && options.differentiateStringsAndNumbers === false)
-            || (isNumber(data) && target?.toLowerCase() === 'string' && options.differentiateStringsAndNumbers === false);
+            || (isString(data) && target?.toLowerCase() === 'number' && options.behavior.differentiateStringsAndNumbers === false)
+            || (isNumber(data) && target?.toLowerCase() === 'string' && options.behavior.differentiateStringsAndNumbers === false);
     }
 
 }

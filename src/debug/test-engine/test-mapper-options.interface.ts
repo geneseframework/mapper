@@ -1,7 +1,7 @@
-import { Config } from '../../shared/models/config.model';
+import { MapperConfig } from '../../shared/models/config.model';
 
 export interface TestMapperOptions {
-    createOptions?: Config;
+    config?: MapperConfig;
     expectedValue?: any;
     isolate?: boolean;
     log?: boolean;

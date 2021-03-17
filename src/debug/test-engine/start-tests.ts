@@ -12,7 +12,7 @@ import { DeclarationInfo } from '../../shared/models/declarations/declaration-in
 INIT.debug = true;
 GLOBAL.debug = true;
 
-export async function startTests(logPassed: boolean, old: boolean): Promise<void> {
+export async function startTests(): Promise<void> {
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
     INIT.start = Date.now();
@@ -21,10 +21,8 @@ export async function startTests(logPassed: boolean, old: boolean): Promise<void
     GLOBAL.generateInstance = generateInstance;
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.testMappers.concat(TESTS.its), logPassed, old);
-    if (!logPassed) {
-        logFailedTests();
-    }
+    // await expect(TESTS.testMappers.concat(TESTS.its));
+    logFailedTests();
     const duration: number = Date.now() - start;
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
     console.log(chalk.redBright('Tests failed : '), TESTS.testsFailed);
@@ -84,6 +82,6 @@ async function getTests(specFiles: string[]): Promise<void> {
 
 function logFailedTests(): void {
     for (const failed of TESTS.failed) {
-        console.log(chalk.redBright('=> '), failed);
+        console.log(chalk.redBright('Failed => '), failed);
     }
 }

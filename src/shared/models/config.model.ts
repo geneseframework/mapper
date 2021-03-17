@@ -1,7 +1,8 @@
-import { ThrowTargetError } from './throw-target.model';
+import { MapperBehavior } from './config-behavior.model';
 
-export class Config {
-    differentiateStringsAndNumbers ?= true;
-    isArray ?= false;
-    throwTarget?: ThrowTargetError = new ThrowTargetError();
+export class MapperConfig {
+    behavior?: MapperBehavior = new MapperBehavior();
+    include?: string[] = [];
+    tsConfigPaths?: string[] = [];
+    // throwTarget?: ThrowTargetError = new ThrowTargetError();
 }

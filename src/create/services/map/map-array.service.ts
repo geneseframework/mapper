@@ -1,13 +1,13 @@
 import { isArray } from '../../utils/native/arrays.util';
 import { isAny } from '../../utils/native/any.util';
-import { Config } from '../../../shared/models/config.model';
+import { MapperConfig } from '../../../shared/models/config.model';
 import { Mapper } from '../../models/mapper';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapArrayService<T> {
 
 
-    static async create(target: ArrayType, data: any, options: Config): Promise<any[]> {
+    static async create(target: ArrayType, data: any, options: MapperConfig): Promise<any[]> {
         if (!isArray(data)) {
             return undefined;
         } else if (isAny(typeOfArray(target))) {

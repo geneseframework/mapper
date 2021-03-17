@@ -1,4 +1,4 @@
-import { Config } from '../../shared/models/config.model';
+import { MapperConfig } from '../../shared/models/config.model';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
@@ -11,7 +11,7 @@ import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 export class Global {
 
     checkedTargets: string[] = [];
-    config: Config = undefined;
+    config: MapperConfig = undefined;
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;

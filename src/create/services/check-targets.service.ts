@@ -1,4 +1,4 @@
-import { throwTarget } from '../utils/errors.util';
+import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveType } from '../types/primitives.type';
 import { isNullOrUndefined } from '../utils/native/any.util';
 import { isString } from '../utils/native/strings.util';
@@ -8,12 +8,12 @@ import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
 import { TargetService } from './target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
-import { removeBorders } from '../types/target/string/containerized.type';
 import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
 import { getElements, trimTarget } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
+import { removeBorders } from '../../shared/utils/strings.util';
 
 export class CheckTargetsService {
 
@@ -23,7 +23,8 @@ export class CheckTargetsService {
             return;
         }
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            throwTarget(target);
+            throwWarning(`impossible to read target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
+            // throwTarget(target);
         }
         GLOBAL.checkedTargets.push(target);
     }
