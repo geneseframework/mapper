@@ -1,11 +1,16 @@
-import { defaultGeneseConfig } from '../../create/const/default-geneseconfig.const';
 import * as chalk from 'chalk';
 import * as fs from 'fs-extra';
 import { INIT } from '../const/init.const';
-import { throwError, throwWarning } from '../../create/utils/errors.util';
-import { GeneseConfig } from '../../shared/models/genese-config.model';
+import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
 import { tab, tabs } from '../utils/native/strings.util';
+import {
+    ObjectLiteralExpression,
+    PropertyAssignment,
+    PropertyAssignmentStructure,
+    SourceFile,
+    SyntaxKind
+} from 'ts-morph';
 
 export class ConfigService {
 
@@ -19,13 +24,15 @@ export class ConfigService {
 
 
     private static async getUserConfig(): Promise<Config | never> {
-        const content: any = await this.getUserConfigFileContent();
-        console.log(chalk.blueBright('USERR CONFIG CONTENTTTTT'), content);
-        const geneseConfigMapperUser: any = content?.geneseConfig?.mapper;
-        if (!geneseConfigMapperUser) {
-            throwError(`geneseconfig.ts file has incorrect format. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
+        // const content: any = await this.getUserConfigFileContent();
+        // console.log(chalk.blueBright('USERR CONFIG CONTENTTTTT'), content);
+        const userConfigSourceFileCopy: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
+        console.log(chalk.blueBright('USERR CONFIG CONTENTTTTT'), userConfigSourceFileCopy?.getFullText());
+        if (!userConfigSourceFileCopy) {
+            throwError(`geneseconfig.ts file not found. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
+            // throwError(`geneseconfig.ts file has incorrect format. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
         } else {
-            return this.updateGeneseConfigMapper(geneseConfigMapperUser);
+            return this.updateGeneseConfigMapper(userConfigSourceFileCopy);
         }
     }
 
@@ -40,16 +47,27 @@ export class ConfigService {
     }
 
 
-    private static updateGeneseConfigMapper(geneseConfigMapperUser: any): Config {
+    private static updateGeneseConfigMapper(userConfigSourceFileCopy: SourceFile): Config {
         const defaultConfig = new Config();
-        if (geneseConfigMapperUser.differentiateStringsAndNumbers === false) {
-            defaultConfig.differentiateStringsAndNumbers = false;
-        }
-        if (geneseConfigMapperUser.throwTarget?.error === true) {
-            defaultConfig.throwTarget.error = true;
-        }
-        if (geneseConfigMapperUser.throwTarget?.setToUndefined === true) {
-            defaultConfig.throwTarget.setToUndefined = true;
+        const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
+        const configPropertyAssignment: PropertyAssignment = configExpression?.getProperty('mapper') as PropertyAssignment;
+        const config: ObjectLiteralExpression = configPropertyAssignment.getInitializer() as ObjectLiteralExpression;
+        // const config: PropertyAssignmentStructure = configExpression?.getProperty('mapper').getStructure() as PropertyAssignmentStructure;
+        console.log(chalk.magentaBright('CONFIGGGGG'), configPropertyAssignment.getInitializer().getKindName());
+        // const config: ObjectLiteralElementLike = configExpression?.getProperty('mapper');
+        if (config) {
+            const differentiateStringsAndNumbersAssignment: PropertyAssignment = config.getProperty('differentiateStringsAndNumbers') as PropertyAssignment;
+            const differentiateStringsAndNumbers: string = differentiateStringsAndNumbersAssignment?.getInitializer().getText();
+            console.log(chalk.cyanBright('DIFFFFF'), differentiateStringsAndNumbers);
+            if (differentiateStringsAndNumbers === 'false') {
+                defaultConfig.differentiateStringsAndNumbers = false;
+            }
+            // if (geneseConfigMapperUser.throwTarget?.error === true) {
+            //     defaultConfig.throwTarget.error = true;
+            // }
+            // if (geneseConfigMapperUser.throwTarget?.setToUndefined === true) {
+            //     defaultConfig.throwTarget.setToUndefined = true;
+            // }
         }
         console.log(chalk.magentaBright('GENESE defaultConfig'), defaultConfig);
         return defaultConfig;
