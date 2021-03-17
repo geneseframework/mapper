@@ -5,14 +5,16 @@ import { EnumInfo } from './declarations/enum-info.model';
 import { InterfaceInfo } from './declarations/interface-info.model';
 import { TypeInfo } from './declarations/type-info.model';
 import { DeclarationInfo } from './declarations/declaration-info.model';
+import { Config } from '../../shared/models/config.model';
 
 
 export class Global {
 
     checkedTargets: string[] = [];
+    config: Config = undefined;
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 

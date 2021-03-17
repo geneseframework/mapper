@@ -1,4 +1,4 @@
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
@@ -9,7 +9,7 @@ import { throwTarget } from '../../utils/errors.util';
 
 export class MapComplexService {
 
-    static async create(target: string, data: any, options: CreateOptions): Promise<any> {
+    static async create(target: string, data: any, options: Config): Promise<any> {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimTarget(target.slice(first.length));

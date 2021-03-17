@@ -1,5 +1,5 @@
 import { isNullOrUndefined } from '../../utils/native/any.util';
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../types/target/string/quoted.type';
 import { removeBorders } from '../../types/target/string/containerized.type';
@@ -10,7 +10,7 @@ import { Property } from '../../types/target/property.type';
 export class MapInstanceOrInterfaceService {
 
 
-    static async map(data: any, options: CreateOptions, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
+    static async map(data: any, options: Config, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
@@ -25,7 +25,7 @@ export class MapInstanceOrInterfaceService {
     }
 
 
-    private static async mapDataKey<T>(data: any, options: CreateOptions, key: string, instance: T, declaration: ClassOrInterfaceInfo): Promise<void> {
+    private static async mapDataKey<T>(data: any, options: Config, key: string, instance: T, declaration: ClassOrInterfaceInfo): Promise<void> {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.type;
         if (targetKeyType === 'undefined' || targetKeyType === undefined) {

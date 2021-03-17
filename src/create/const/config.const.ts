@@ -1,4 +1,4 @@
-import { Config } from '../models/config.model';
+import { ConfigOld } from '../models/config-old.model';
 
-export const CONFIG: Config = new Config();
+export const CONFIG_OLD: ConfigOld = new ConfigOld();
 

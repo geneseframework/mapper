@@ -53,9 +53,10 @@ export class DeclarationInfoGeneratorService {
      */
     private static getCode(): string {
         const declarationInfosCode: string = this.getDeclarationInfosCode();
-        return `export var declarationInfos = [\n` +
+        return this.declareConstCode() +
             `${declarationInfosCode}` +
-            `];\n`;
+            `];\n` +
+            this.exportsCode();
     }
 
 
@@ -65,6 +66,16 @@ export class DeclarationInfoGeneratorService {
             code = `${code}${this.getDeclarationInfoCode(declarationInfo)}\n`;
         }
         return code;
+    }
+
+
+    private static declareConstCode(): string {
+        return INIT.debug ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
+    }
+
+
+    private static exportsCode(): string {
+        return INIT.debug ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
     }
 
 

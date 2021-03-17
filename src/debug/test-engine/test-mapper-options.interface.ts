@@ -1,7 +1,7 @@
-import { CreateOptions } from '../../create/models/create-options.model';
+import { Config } from '../../shared/models/config.model';
 
 export interface TestMapperOptions {
-    createOptions?: CreateOptions;
+    createOptions?: Config;
     expectedValue?: any;
     isolate?: boolean;
     log?: boolean;

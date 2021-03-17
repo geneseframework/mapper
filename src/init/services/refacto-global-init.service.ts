@@ -8,12 +8,13 @@ export class RefactoGlobalInitService {
         const globalInitSourceFile: SourceFile = INIT.project.addSourceFileAtPath(INIT.globalInitPath);
         this.getImportDeclaration('declarationInfos', globalInitSourceFile).setModuleSpecifier(INIT.declarationInfoPath);
         this.getImportDeclaration('generateInstance', globalInitSourceFile).setModuleSpecifier(INIT.instanceGeneratorPath);
+        this.getImportDeclaration('config', globalInitSourceFile).setModuleSpecifier(INIT.generatedConfigPath);
         globalInitSourceFile.saveSync();
     }
 
 
     private static getImportDeclaration(importName: string, sourceFile: SourceFile): ImportDeclaration {
-        return sourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).includes(importName));
+        return sourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).flat().includes(importName));
     }
 
 }

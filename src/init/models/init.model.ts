@@ -31,8 +31,13 @@ export class Init {
     }
 
 
+    get generatedConfigPath(): string {
+        return this.debug ? `${INIT.nodeModulePath}/src/dist/config.js` : `${INIT.nodeModulePath}/generated/config.js`;
+    }
+
+
     get globalInitPath(): string {
-        return this.debug ? `${INIT.nodeModulePath}/src/dist/global-init.service.js` : `${INIT.nodeModulePath}/dist/src/create/services/global-init.service.js`;
+        return this.debug ? `${INIT.nodeModulePath}/src/dist/global-init.service.js` : `${INIT.nodeModulePath}/dist/create/services/global-init.service.js`;
     }
 
 
@@ -46,6 +51,11 @@ export class Init {
             this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
         }
         return this._projectWithNodeModules;
+    }
+
+
+    get userGeneseConfigPath(): string {
+        return `${INIT.projectPath}/geneseconfig.ts`;
     }
 
 

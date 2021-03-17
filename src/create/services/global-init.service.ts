@@ -1,8 +1,8 @@
-import { InitConfigService } from './init-config.service';
 import { GLOBAL } from '../const/global.const';
 import { generateInstance } from '../../dist/instance-generator';
 import { declarationInfos } from '../../dist/declaration-infos';
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
+import { config } from '../../dist/config';
 
 
 export class GlobalInitService {
@@ -12,7 +12,8 @@ export class GlobalInitService {
         if (!GLOBAL.wasInitialized) {
             GLOBAL.generateInstance = generateInstance;
             GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
-            await InitConfigService.start();
+            GLOBAL.config = config;
+            console.log('GLOBAL.geneseConfiggggg', GLOBAL.config);
             GLOBAL.wasInitialized = true;
         }
     }

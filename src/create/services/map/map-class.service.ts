@@ -1,7 +1,7 @@
 import { GLOBAL } from '../../const/global.const';
 import { InstanceGenerator } from '../../models/instance-generator.model';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import { ClassInfo } from '../../models/declarations/class-info.model';
@@ -9,12 +9,12 @@ import { ClassInfo } from '../../models/declarations/class-info.model';
 export class MapClassService<T> {
 
 
-    static async create(target: string, data: any, options: CreateOptions): Promise<any> {
+    static async create(target: string, data: any, options: Config): Promise<any> {
         return !isObjectWhichIsNotArray(data) ? undefined : await this.createInstance(target, data, options);
     }
 
 
-    static async createInstance(target: string, data: any, options: CreateOptions): Promise<any> {
+    static async createInstance(target: string, data: any, options: Config): Promise<any> {
         const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
         if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);

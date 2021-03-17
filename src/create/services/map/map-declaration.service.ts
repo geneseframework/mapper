@@ -1,6 +1,6 @@
 import { MapEnumService } from './map-enum.service';
 import { throwWarning } from '../../utils/errors.util';
-import { CreateOptions } from '../../models/create-options.model';
+import { Config } from '../../../shared/models/config.model';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
@@ -19,7 +19,7 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static async create(target: string, data: any, options: CreateOptions): Promise<any> {
+    static async create(target: string, data: any, options: Config): Promise<any> {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
         switch (typeDeclarationKind) {
