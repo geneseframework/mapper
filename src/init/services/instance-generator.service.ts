@@ -1,8 +1,8 @@
 import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
-import { tab, tabs } from '../utils/native/strings.util';
-import { InstanceGeneratorInit } from '../models/instance-generator-init.model';
+import { InstanceGenerator } from '../../shared/models/instance-generator.model';
+import { tab, tabs } from '../../shared/utils/strings.util';
 
 export class InstanceGeneratorService {
 
@@ -16,7 +16,7 @@ export class InstanceGeneratorService {
 
     static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
-            INIT.addInstanceGenerator(new InstanceGeneratorInit<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
+            INIT.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
     }
@@ -99,7 +99,7 @@ export class InstanceGeneratorService {
      * @param instanceGenerator
      * @private
      */
-    private static switchClause(instanceGenerator: InstanceGeneratorInit<any>): string {
+    private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `case '${instanceGenerator.id}':\n` +
         `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
         `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
@@ -114,7 +114,7 @@ export class InstanceGeneratorService {
      * @param instanceGenerator
      * @private
      */
-    private static undefinedArguments(instanceGenerator: InstanceGeneratorInit<any>): string {
+    private static undefinedArguments(instanceGenerator: InstanceGenerator<any>): string {
         let code: string = '(';
         if (instanceGenerator.numberOfConstructorArguments > 0) {
             for (let i = 0; i < instanceGenerator.numberOfConstructorArguments; i++) {

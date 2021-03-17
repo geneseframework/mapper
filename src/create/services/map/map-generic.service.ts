@@ -1,9 +1,8 @@
 import { Config } from '../../../shared/models/config.model';
 import { Generic, typeOfGeneric } from '../../types/target/string/generics.type';
 import { MainService } from '../main.service';
-import * as chalk from 'chalk';
-import { DeclarationInfo } from '../../models/declarations/declaration-info.model';
 import { GLOBAL } from '../../const/global.const';
+import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 
 export class MapGenericService {
 

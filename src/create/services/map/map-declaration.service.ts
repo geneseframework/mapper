@@ -5,9 +5,9 @@ import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
-import { DeclarationInfo } from '../../models/declarations/declaration-info.model';
 import { GLOBAL } from '../../const/global.const';
-import { TypeDeclarationKind } from '../../types/type-declaration-kind.type';
+import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
+import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 
 export class MapDeclarationService<T> {
 

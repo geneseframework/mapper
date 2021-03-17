@@ -1,7 +1,7 @@
 import { DeclarationInfo } from '../models/declarations/declaration-info.model';
 import { ClassInfo } from '../models/declarations/class-info.model';
-import { InterfaceInfo } from '../models/declarations/interface-info.model';
 import { EnumInfo } from '../models/declarations/enum-info.model';
+import { InterfaceInfo } from '../models/declarations/interface-info.model';
 import { TypeInfo } from '../models/declarations/type-info.model';
 
 export function isClassInfo(declarationInfo: DeclarationInfo): declarationInfo is ClassInfo {

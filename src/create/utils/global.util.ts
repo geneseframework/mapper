@@ -1,5 +1,5 @@
 import { GLOBAL } from '../const/global.const';
-import { TypeDeclarationKind } from '../types/type-declaration-kind.type';
+import { TypeDeclarationKind } from '../../shared/types/type-declaration-kind.type';
 
 
 export function hasDeclaration(typeName: string): boolean {

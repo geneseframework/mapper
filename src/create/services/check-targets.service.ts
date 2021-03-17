@@ -2,7 +2,7 @@ import { throwTarget } from '../utils/errors.util';
 import { isPrimitiveType } from '../types/primitives.type';
 import { isNullOrUndefined } from '../utils/native/any.util';
 import { isString } from '../utils/native/strings.util';
-import { isQuoted } from '../types/target/string/quoted.type';
+import { isQuoted } from '../../shared/types/quoted.type';
 import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
 import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';

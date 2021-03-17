@@ -1,8 +1,8 @@
 import { GLOBAL } from '../const/global.const';
 import { generateInstance } from '../../dist/instance-generator';
 import { declarationInfos } from '../../dist/declaration-infos';
-import { DeclarationInfo } from '../models/declarations/declaration-info.model';
 import { config } from '../../dist/config';
+import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 
 
 export class GlobalInitService {

@@ -5,9 +5,9 @@ import { INIT } from '../../init/const/init.const';
 import { GLOBAL } from '../../create/const/global.const';
 import { Project, SourceFile } from 'ts-morph';
 import { generateInstance } from '../../dist/instance-generator';
-import { DeclarationInfo } from '../../create/models/declarations/declaration-info.model';
 import { declarationInfos } from '../../dist/declaration-infos';
 import { InitService } from '../../init/services/init.service';
+import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 
 INIT.debug = true;
 GLOBAL.debug = true;

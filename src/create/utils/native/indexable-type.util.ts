@@ -2,7 +2,7 @@ import { IndexableType } from '../../types/indexable-type.type';
 import { StringOrNumber } from '../../types/string-or-number.type';
 import { isNumericString } from './strings.util';
 import { areBothTrueOrFalse } from './any.util';
-import { ClassOrInterfaceInfo } from '../../types/class-or-interface-info.type';
+import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 
 
 export function hasIndexableTypeAndKeyOfSameType(declaration: ClassOrInterfaceInfo, key: StringOrNumber): boolean {

@@ -12,7 +12,7 @@ import { MapArrayService } from './map/map-array.service';
 import { isArrayType } from '../types/target/string/array-type.type';
 import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
-import { isQuoted } from '../types/target/string/quoted.type';
+import { isQuoted } from '../../shared/types/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './check-targets.service';
 import { isStringAsNullOrLiteral } from '../types/null-or-literal.type';
