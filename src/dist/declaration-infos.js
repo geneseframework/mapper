@@ -1,5 +1,23 @@
 const declarationInfos = [
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project.model.ts`,
+        kind: `Class`,
+        name: `OutOfProject`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `name`,
+            type: `'oop'`
+        },
+        ],
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
         kind: `Class`,
         name: `Address`,

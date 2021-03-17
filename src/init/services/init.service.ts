@@ -5,6 +5,7 @@ import { INIT } from '../const/init.const';
 import { RefactoGlobalInitService } from './refacto-global-init.service';
 import { ConfigService } from './config.service';
 import * as chalk from 'chalk';
+import { MapperConfig } from '../../shared/models/config.model';
 
 const appRoot = require('app-root-path');
 
@@ -16,8 +17,9 @@ export class InitService {
     static async start(): Promise<void> {
         INIT.project = new Project({skipFileDependencyResolution: true});
         this.initPaths();
-        await ConfigService.init();
+        const mapperConfig: MapperConfig = await ConfigService.init();
         INIT.debug ? this.initDebugProject() : this.initRealProject();
+        this.addConfigIncludedFiles(mapperConfig);
         console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
@@ -61,6 +63,15 @@ export class InitService {
             skipFileDependencyResolution: true
         });
         INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
+    }
+
+
+    private static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
+        for (const path of mapperConfig.include) {
+            const filePath = `${INIT.projectPath}/${path}`;
+            console.log(chalk.yellowBright('FPATHHHH'), filePath);
+            INIT.project.addSourceFileAtPath(filePath);
+        }
     }
 
 

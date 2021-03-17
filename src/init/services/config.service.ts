@@ -15,10 +15,11 @@ import * as chalk from 'chalk';
 export class ConfigService {
 
 
-    static async init(): Promise<void> {
-        const geneseConfigMapper: MapperConfig = await this.setConfig();
-        const code: string = this.getConfigCode(geneseConfigMapper);
+    static async init(): Promise<MapperConfig> {
+        const mapperConfig: MapperConfig = await this.setConfig();
+        const code: string = this.getConfigCode(mapperConfig);
         await this.createGeneseConfigFile(code);
+        return mapperConfig;
     }
 
 
