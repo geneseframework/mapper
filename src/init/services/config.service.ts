@@ -59,12 +59,20 @@ export class ConfigService {
             if (differentiateStringsAndNumbers === 'false') {
                 newConfig.differentiateStringsAndNumbers = false;
             }
-            // if (geneseConfigMapperUser.throwTarget?.error === true) {
-            //     defaultConfig.throwTarget.error = true;
-            // }
-            // if (geneseConfigMapperUser.throwTarget?.setToUndefined === true) {
-            //     defaultConfig.throwTarget.setToUndefined = true;
-            // }
+            const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
+            console.log(chalk.cyanBright('THROWTGT'), throwTarget);
+            if (throwTarget) {
+                const err: string = this.getInitializer('error', throwTarget).getText();
+                console.log(chalk.yellowBright('ERRRRRRR'), err);
+                if (err === 'true') {
+                    newConfig.throwTarget.error = true;
+                }
+                const setToUndefined: string = this.getInitializer('setToUndefined', throwTarget).getText();
+                console.log(chalk.yellowBright('DIFFsetToUndefinedFFF'), setToUndefined);
+                if (setToUndefined== 'true') {
+                    newConfig.throwTarget.setToUndefined = true;
+                }
+            }
         }
         console.log(chalk.magentaBright('GENESE defaultConfig'), newConfig);
         return newConfig;
