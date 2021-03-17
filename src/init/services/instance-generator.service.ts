@@ -1,8 +1,8 @@
 import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
-import { tab, tabs } from '../utils/native/strings.util';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
+import { tab, tabs } from '../../shared/utils/strings.util';
 
 export class InstanceGeneratorService {
 

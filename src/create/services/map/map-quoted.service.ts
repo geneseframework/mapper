@@ -1,5 +1,5 @@
 import { Config } from '../../../shared/models/config.model';
-import { Quoted } from '../../types/target/string/quoted.type';
+import { Quoted } from '../../../shared/types/quoted.type';
 import { isString } from '../../utils/native/strings.util';
 import { isNumber } from '../../utils/native/numbers.util';
 import { removeBorders } from '../../types/target/string/containerized.type';

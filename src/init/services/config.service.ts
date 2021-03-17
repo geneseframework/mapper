@@ -1,8 +1,8 @@
 import { INIT } from '../const/init.const';
 import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
-import { tab, tabs } from '../utils/native/strings.util';
 import { Expression, ObjectLiteralExpression, PropertyAssignment, SourceFile, SyntaxKind } from 'ts-morph';
+import { tab, tabs } from '../../shared/utils/strings.util';
 
 export class ConfigService {
 

@@ -13,7 +13,7 @@ import { DeclarationInfoService } from '../../services/declaration-info.service'
 import { getDeclarationKind, getImportDeclarations } from './ast-declaration.util';
 import { INIT } from '../../const/init.const';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { TypeDeclarationKindInit } from '../../types/type-declaration-kind-init.type';
+import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 
 
 // TODO: Add imported classes in new instance generator file
@@ -106,7 +106,7 @@ async function addDeclarationInfoForType(type: TypeAliasDeclaration): Promise<vo
 }
 
 
-function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKindInit): Declaration {
+function getSourceFileDeclaration(name: string, sourceFile: SourceFile, kind: TypeDeclarationKind): Declaration {
     const declarationKind = `${kind}Declaration`;
     return sourceFile.getDescendantsOfKind(SyntaxKind[declarationKind]).find(e => (e as Declaration).getName() === name) as Declaration;
 }

@@ -6,12 +6,13 @@ import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
 import { InstanceGeneratorService } from './instance-generator.service';
 import { getIndexableType } from '../utils/ast/ast-indexes.util';
-import { QuotedInit, removeBordersInit } from '../types/quoted-init.type';
-import { flat } from '../utils/native/arrays.util';
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
+import { removeBorders } from '../../shared/utils/strings.util';
+import { Quoted } from '../../shared/types/quoted.type';
+import { flat } from '../../shared/utils/arrays.util';
 
 export class DeclarationInfoService {
 
@@ -91,17 +92,17 @@ export class DeclarationInfoService {
 
 
     static removeQuotes(text: string): string {
-        return this.isQuoted(text) ? removeBordersInit(text) : text;
+        return this.isQuoted(text) ? removeBorders(text) : text;
     }
 
 
-    static isQuoted(text: string): text is QuotedInit {
+    static isQuoted(text: string): text is Quoted {
         return this.isSurroundedBy(text, `'`) || this.isSurroundedBy(text, `"`) || this.isSurroundedBy(text, `\``);
     }
 
 
     static isSurroundedBy(text: string, boundary: string): boolean {
-        return text && text.slice(0, 1) === boundary && text.slice(text.length - 1) === boundary && !removeBordersInit(text).includes(boundary);
+        return text && text.slice(0, 1) === boundary && text.slice(text.length - 1) === boundary && !removeBorders(text).includes(boundary);
     }
 
 

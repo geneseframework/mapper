@@ -1,5 +1,5 @@
 import { ClassDeclaration, HeritageClause } from 'ts-morph';
-import { flat } from '../native/arrays.util';
+import { flat } from '../../../shared/utils/arrays.util';
 
 // TODO: check if needed for classes
 

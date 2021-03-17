@@ -1,4 +1,10 @@
 
+
+export function removeBorders(text: string): string {
+    return text.slice(1, -1);
+}
+
+
 export const tab = '    ';
 
 export function tabs(numberOfTabs: number): string {
