@@ -30,11 +30,11 @@ export class ConfigService {
         const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;
         if (config) {
             this.updateProperty('differentiateStringsAndNumbers', config, newConfig, 'false', false);
-            const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
-            if (throwTarget) {
-                this.updateProperty('error', throwTarget, newConfig.throwTarget, 'true', true);
-                this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
-            }
+            // const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
+            // if (throwTarget) {
+            //     this.updateProperty('error', throwTarget, newConfig.throwTarget, 'true', true);
+            //     this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
+            // }
         }
         return newConfig;
     }

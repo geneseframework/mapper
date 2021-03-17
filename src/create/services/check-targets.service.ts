@@ -1,4 +1,4 @@
-import { throwTarget } from '../utils/errors.util';
+import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveType } from '../types/primitives.type';
 import { isNullOrUndefined } from '../utils/native/any.util';
 import { isString } from '../utils/native/strings.util';
@@ -23,7 +23,8 @@ export class CheckTargetsService {
             return;
         }
         if (!await CheckTargetsService.hasCorrectFormat(target)) {
-            throwTarget(target);
+            throwWarning(`impossible to read target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
+            // throwTarget(target);
         }
         GLOBAL.checkedTargets.push(target);
     }

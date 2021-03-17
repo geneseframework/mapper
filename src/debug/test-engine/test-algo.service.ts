@@ -3,24 +3,18 @@ import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { isSameObject } from '../../create/utils/native/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
-import { isArray } from '../../create/utils/native/arrays.util';
 
 const MAX_DURATION = 50;
 
-export async function expect(testTypes: TestType[], logPassed: boolean, old: boolean): Promise<void>
-export async function expect(testType: TestType, logPassed: boolean, old: boolean): Promise<void>
-export async function expect(testTypes: TestType | TestType[], logPassed: boolean, old: boolean): Promise<void> {
-    if (isArray(testTypes)) {
-        for (const testMapper of includedTestTypes(testTypes)) {
-            await checkTest(testMapper, logPassed, old);
-        }
-    } else {
-        await checkTest(testTypes, logPassed, old);
+
+export async function expect(testTypes: TestType[]): Promise<void> {
+    for (const testMapper of includedTestTypes(testTypes)) {
+        await checkTest(testMapper);
     }
 }
 
 
-async function checkTest(testType: TestType, logPassed: boolean, old: boolean): Promise<void> {
+async function checkTest(testType: TestType): Promise<void> {
     let result;
     const start = Date.now();
     if (isTestIt(testType)) {
@@ -30,9 +24,7 @@ async function checkTest(testType: TestType, logPassed: boolean, old: boolean): 
     }
     const duration: number = Date.now() - start;
     if ((isExpectedResult(testType, result) && !isTooLong(duration)) || shouldFail(testType)) {
-        if (logPassed) {
-            console.log(chalk.greenBright(`Test passed (${duration} ms) : `), testType.title);
-        }
+        console.log(chalk.greenBright(`Test passed (${duration} ms) : `), testType.title);
         TESTS.testsPassed++;
         if (testType.options?.log) {
             log(testType, result);

@@ -5,7 +5,7 @@ import { MainService } from '../main.service';
 import { getElements, trimTarget } from '../../utils/target.util';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
-import { throwTarget } from '../../utils/errors.util';
+import { throwWarning } from '../../utils/errors.util';
 
 export class MapComplexService {
 
@@ -29,7 +29,8 @@ export class MapComplexService {
             // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
             return mapped || await MainService.mapToString(others, data, options);
         } else {
-            return throwTarget(target, data, options);
+            throwWarning(`unknown target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
+            // return throwTarget(target, data, options);
         }
     }
 }
