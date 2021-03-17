@@ -21,7 +21,7 @@ export async function startTests(): Promise<void> {
     GLOBAL.generateInstance = generateInstance;
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.testMappers.concat(TESTS.its));
+    // await expect(TESTS.testMappers.concat(TESTS.its));
     logFailedTests();
     const duration: number = Date.now() - start;
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);

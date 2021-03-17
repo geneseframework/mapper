@@ -1,8 +1,15 @@
 import { INIT } from '../const/init.const';
 import { throwError } from '../../create/utils/errors.util';
 import { MapperConfig } from '../../shared/models/config.model';
-import { Expression, ObjectLiteralExpression, PropertyAssignment, SourceFile, SyntaxKind } from 'ts-morph';
-import { tab, tabs } from '../../shared/utils/strings.util';
+import {
+    ArrayLiteralExpression,
+    Expression,
+    ObjectLiteralExpression,
+    PropertyAssignment,
+    SourceFile,
+    SyntaxKind
+} from 'ts-morph';
+import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import * as chalk from 'chalk';
 
 export class ConfigService {
@@ -32,7 +39,12 @@ export class ConfigService {
         if (config) {
             const behavior: ObjectLiteralExpression = this.getInitializer('behavior', config) as ObjectLiteralExpression;
             if (behavior) {
-                this.updateProperty('differentiateStringsAndNumbers', behavior, newConfig.behavior, 'false', false);
+                this.updateObjectProperty('differentiateStringsAndNumbers', behavior, newConfig.behavior, 'false', false);
+            }
+            const includes: ArrayLiteralExpression = this.getInitializer('include', config) as ArrayLiteralExpression;
+            console.log(chalk.magentaBright('INCLUDESSSS'), includes?.getKindName());
+            if (includes) {
+                this.updateStringArrayProperty('include', includes, newConfig);
             }
             // const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
             // if (throwTarget) {
@@ -40,7 +52,7 @@ export class ConfigService {
             //     this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
             // }
         }
-        // console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
+        console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
         return newConfig;
     }
 
@@ -55,7 +67,15 @@ export class ConfigService {
     }
 
 
-    private static updateProperty(key: string, expression: ObjectLiteralExpression, obj: any, conditionValue: string, newValue: any): void {
+    private static updateStringArrayProperty(key: string, expression: ArrayLiteralExpression, obj: any): void {
+        for (const element of expression?.getElements()) {
+            console.log(chalk.cyanBright('ELTTTTT'), element.getText());
+            obj[key].push(removeBorders(element.getText()));
+        }
+    }
+
+
+    private static updateObjectProperty(key: string, expression: ObjectLiteralExpression, obj: any, conditionValue: string, newValue: any): void {
         const text: string = this.getInitializer(key, expression)?.getText();
         if (text === conditionValue) {
             obj[key] = newValue;
