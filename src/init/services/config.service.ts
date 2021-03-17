@@ -1,4 +1,3 @@
-import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
 import { throwError } from '../../create/utils/errors.util';
 import { Config } from '../../shared/models/config.model';
@@ -11,7 +10,6 @@ export class ConfigService {
     static async init(): Promise<void> {
         const geneseConfigMapper: Config = await this.setConfig();
         const code: string = this.getConfigCode(geneseConfigMapper);
-        console.log(chalk.blueBright('NEW GENESE CODEEEEE'), code);
         await this.createGeneseConfigFile(code);
     }
 
@@ -38,7 +36,6 @@ export class ConfigService {
                 this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
             }
         }
-        console.log(chalk.magentaBright('GENESE defaultConfig'), newConfig);
         return newConfig;
     }
 
@@ -84,9 +81,7 @@ export class ConfigService {
 
 
     private static async createGeneseConfigFile(code: string): Promise<void> {
-        const soruceFile = INIT.project.createSourceFile(INIT.generatedConfigPath, code, {overwrite: true});
-        console.log(chalk.blueBright('SORUCEFILLLLLL'), soruceFile?.getBaseName());
-        soruceFile.saveSync();
+        INIT.project.createSourceFile(INIT.generatedConfigPath, code, {overwrite: true}).saveSync();
     }
 
 }

@@ -19,7 +19,6 @@ export class InitService {
         await InstanceGeneratorService.init();
         await ConfigService.init();
         if (!INIT.debug) {
-            console.log(chalk.greenBright('USER GENESE DBG'), INIT.debug);
             await RefactoGlobalInitService.init();
         }
     }

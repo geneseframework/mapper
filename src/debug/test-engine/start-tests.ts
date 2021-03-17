@@ -49,7 +49,6 @@ function clearDeclarationInfos(project: Project): void {
 
 function clearGenerateInstance(project: Project): void {
     const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.ts');
-    console.log(chalk.blueBright('CODEEEEE'), instanceGeneratorSourceFile.getFullText()?.length);
     const code = `export const generateInstance = async function(instanceGenerator) {
     try {
         let instance;

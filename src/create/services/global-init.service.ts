@@ -13,7 +13,6 @@ export class GlobalInitService {
             GLOBAL.generateInstance = generateInstance;
             GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
             GLOBAL.config = config;
-            console.log('GLOBAL.geneseConfiggggg', GLOBAL.config);
             GLOBAL.wasInitialized = true;
         }
     }
