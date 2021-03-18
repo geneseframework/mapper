@@ -9,7 +9,6 @@
         ],
         "outDir": "../../dist"
     },
-    "include": [],
-    "exclude": [
-    ]
+    "include": ["./out-of-project/files/oop-in-global-tsconfig.model.ts"],
+    "exclude": ["./out-of-project/files/oop-in-local-tsconfig.model.ts"]
 }

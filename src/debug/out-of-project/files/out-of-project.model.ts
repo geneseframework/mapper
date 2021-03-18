@@ -1,3 +1,3 @@
 export class OutOfProject {
-    name: 'oop';
+    name: string = 'oop';
 }

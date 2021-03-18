@@ -18,9 +18,8 @@
             "dom"
         ]
     },
-    "exclude": [],
+    "exclude": ["node_modules"],
     "include": [
-        "*.ts",
-        "**/*.ts"
+        "./files/oop-in-local-tsconfig.model.ts"
     ]
 }

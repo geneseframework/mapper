@@ -12,8 +12,8 @@ export class Init {
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
-    private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
+    tsConfigPaths: string[] = [];
 
 
     get classNames(): string[] {
@@ -21,7 +21,7 @@ export class Init {
     }
 
 
-    get configFilePath(): string {
+    get defaultTsConfigPath(): string {
         return `${INIT.projectPath}/tsconfig.json`;
     }
 
@@ -46,12 +46,12 @@ export class Init {
     }
 
 
-    get projectWithNodeModules(): Project {
-        if (!this._projectWithNodeModules) {
-            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.configFilePath });
-        }
-        return this._projectWithNodeModules;
-    }
+    // get projectWithNodeModules(): Project {
+    //     if (!this._projectWithNodeModules) {
+    //         this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
+    //     }
+    //     return this._projectWithNodeModules;
+    // }
 
 
     get userGeneseConfigPath(): string {

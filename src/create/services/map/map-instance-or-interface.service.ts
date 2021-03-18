@@ -2,10 +2,10 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 import { MapperConfig } from '../../../shared/models/config.model';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../../shared/types/quoted.type';
-import { removeBorders } from '../../types/target/string/containerized.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { Property } from '../../../shared/types/target/property.type';
+import { removeBorders } from '../../../shared/utils/strings.util';
 
 export class MapInstanceOrInterfaceService {
 
