@@ -2,9 +2,9 @@ const generateInstance = async function(instanceGenerator) {
     try {
         let instance;
         switch (instanceGenerator.id) {
-    case 'OutOfProject_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project.model.ts':
-        const OutOfProject = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project.model.ts').OutOfProject;
-        instance = new OutOfProject();
+    case 'Oop_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts':
+        const Oop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts').Oop;
+        instance = new Oop();
         break;
     case 'Address_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts':
         const Address = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts').Address;

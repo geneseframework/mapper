@@ -6,7 +6,7 @@ export const geneseConfig: GeneseConfig = {
             differentiateStringsAndNumbers: true,
         },
         include: [
-            '../out-of-project.model.ts'
+            '../out-of-project/files/out-of-project.model.ts'
         ]
     }
 }

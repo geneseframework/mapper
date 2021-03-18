@@ -18,7 +18,8 @@ export class InitService {
         INIT.project = new Project({skipFileDependencyResolution: true});
         this.initPaths();
         const mapperConfig: MapperConfig = await ConfigService.init();
-        INIT.debug ? this.initDebugProject() : this.initRealProject();
+        this.initProject();
+        // INIT.debug ? this.initProject() : this.initRealProject();
         this.addConfigIncludedFiles(mapperConfig);
         console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
@@ -34,29 +35,29 @@ export class InitService {
      * @private
      */
     private static initPaths(): void {
-        INIT.projectPath = INIT.debug ? `${process.cwd()}/src/debug/project` : appRoot;
-        INIT.nodeModulePath = INIT.debug ? process.cwd() : `${INIT.projectPath}/node_modules/@genese/mapper`;
+        INIT.projectPath = appRoot;
+        INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 
-
-    private static initDebugProject(): void {
-        // INIT.projectPath = `${process.cwd()}/src/debug/project`;
-        INIT.project = new Project({
-            tsConfigFilePath: INIT.configFilePath,
-            skipFileDependencyResolution: true
-        });
-        INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
-        const distPath = process.cwd() + '/src/dist';
-        INIT.project.addSourceFilesAtPaths(`${distPath}/*{.d.ts,.ts}`);
-        INIT.nodeModulePath = process.cwd();
-    }
+    //
+    // private static initProject(): void {
+    //     // INIT.projectPath = `${process.cwd()}/src/debug/project`;
+    //     INIT.project = new Project({
+    //         tsConfigFilePath: INIT.configFilePath,
+    //         skipFileDependencyResolution: true
+    //     });
+    //     INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
+    //     const distPath = process.cwd() + '/src/dist';
+    //     INIT.project.addSourceFilesAtPaths(`${distPath}/*{.d.ts,.ts}`);
+    //     INIT.nodeModulePath = process.cwd();
+    // }
 
 
     /**
      * Creates the Project object
      * @private
      */
-    private static initRealProject(): void {
+    private static initProject(): void {
         // INIT.projectPath = appRoot;
         INIT.project = new Project({
             tsConfigFilePath: INIT.configFilePath,
@@ -66,27 +67,11 @@ export class InitService {
     }
 
 
-    private static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
+    static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
         for (const path of mapperConfig.include) {
             const filePath = `${INIT.projectPath}/${path}`;
             console.log(chalk.yellowBright('FPATHHHH'), filePath);
             INIT.project.addSourceFileAtPath(filePath);
         }
     }
-
-
-    /**
-     * In debug mode, creates a Project based on the @genese/mapper module itself
-     * @private
-     */
-    // static createDebugProject(): void {
-    //     INIT.projectPath = `${process.cwd()}/src/debug/project`;
-    //     INIT.project = new Project({
-    //         tsConfigFilePath: INIT.configFilePath,
-    //         skipFileDependencyResolution: true
-    //     });
-    //     INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);
-    //     const distPath = process.cwd() + '/src/dist';
-    //     INIT.project.addSourceFilesAtPaths(`${distPath}/*{.d.ts,.ts}`);
-    // }
 }
