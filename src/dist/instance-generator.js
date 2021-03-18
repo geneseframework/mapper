@@ -6,6 +6,10 @@ const generateInstance = async function(instanceGenerator) {
         const Oop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts').Oop;
         instance = new Oop();
         break;
+    case 'DirOop_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts':
+        const DirOop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts').DirOop;
+        instance = new DirOop();
+        break;
     case 'Address_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts':
         const Address = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts').Address;
         instance = new Address(undefined, undefined, undefined);

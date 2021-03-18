@@ -112,4 +112,10 @@ export class ConfigService {
         INIT.project.createSourceFile(INIT.generatedConfigPath, code, {overwrite: true}).saveSync();
     }
 
+
+    static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
+        const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
+        INIT.project.addSourceFilesAtPaths(filePaths);
+    }
+
 }

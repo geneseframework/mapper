@@ -6,11 +6,10 @@ import { GLOBAL } from '../../create/const/global.const';
 import { Project, SourceFile } from 'ts-morph';
 import { generateInstance } from '../../dist/instance-generator';
 import { declarationInfos } from '../../dist/declaration-infos';
-import { InitService } from '../../init/services/init.service';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 import { MapperConfig } from '../../shared/models/config.model';
 import { ConfigService } from '../../init/services/config.service';
-import { initProject, initPaths } from '../init.debug';
+import { initPaths, initProject } from '../tests-init.debug';
 
 INIT.debug = true;
 GLOBAL.debug = true;
@@ -39,7 +38,7 @@ async function init(): Promise<void> {
     initPaths();
     const mapperConfig: MapperConfig = await ConfigService.init();
     initProject();
-    InitService.addConfigIncludedFiles(mapperConfig);
+    ConfigService.addConfigIncludedFiles(mapperConfig);
     console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
 }
 

@@ -18,6 +18,24 @@ const declarationInfos = [
         ],
     },
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts`,
+        kind: `Class`,
+        name: `DirOop`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `prop`,
+            type: `number`
+        },
+        ],
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
         kind: `Class`,
         name: `Address`,
