@@ -19,18 +19,23 @@ export class MapObjectService {
 
     private static createNewInstance(target: CurveBracketed): object {
         const newInstance = {};
-        const properties: Property[] = this.getProperties(target);
+        const properties: string[] = this.getProperties(target);
+        console.log(chalk.magentaBright('MAP OBJJJJJJ properties'), properties);
+        for (const property of properties) {
+            this.addMappedProperty(newInstance, property);
+        }
         return newInstance;
     }
 
 
-    private static getProperties(target: CurveBracketed): Property[] {
-        const properties: Property[] = [];
+    private static getProperties(target: CurveBracketed): string[] {
+        const properties: string[] = [];
         let textToParse: string = removeBorders(target);
         while (textToParse.length > 0) {
             textToParse = trimSeparators(textToParse);
             const nextProperty: string = this.getNextPropertyText(textToParse);
             console.log(chalk.redBright('MAP OBJJJJJJ nextProperty'), nextProperty);
+            properties.push(nextProperty);
             textToParse = nextProperty ? textToParse.slice(nextProperty.length) : textToParse.slice(1);
         }
         return properties;
@@ -62,6 +67,11 @@ export class MapObjectService {
 
     private static getPropertyName(text: string): string {
         return text.match(/^\w+:/g)?.[0]?.slice(0, -1);
+    }
+
+
+    private static addMappedProperty(instance: any, property: string): void {
+
     }
 
 

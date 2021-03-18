@@ -41,3 +41,10 @@ testMappers.push(new TestMapper(`{prop: 'a', nb: 2} / {prop: string, nb: number}
 testMappers.push(new TestMapper(`{prop: {first: 'a', last: 'b'}, nb: 2} / {prop: {first: string, last: string}, nb: number}`, '{prop: {first: string, last: string}, nb: number}', {prop: {first: 'a', last: 'b'}, nb: 2}, {isolate: false}));
 testMappers.push(new TestMapper(`{prop: [{first: 'a', last: 'b'}], nb: 2} / {prop: [{first: string, last: string}], nb: number}`, '{prop: [{first: string, last: string}], nb: number}', {prop: [{first: 'a', last: 'b'}], nb: 2}, {isolate: false}));
 
+
+export class SimpleClassSpec {
+    name: string;
+}
+testMappers.push(new TestMapper(`{prop: {name: 'Léo}} / {prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, `{prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, {prop: {name: 'Léo'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: {name: 'Léo}} / {prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, `{prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, {prop: {}}, {expectedValue: {prop: {name: 'Léa'}}, isolate: false}));
+
