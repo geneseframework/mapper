@@ -20,7 +20,7 @@ export class InitService {
         const mapperConfig: MapperConfig = await ConfigService.init();
         this.initProject();
         ConfigService.addConfigFilesToProject(mapperConfig);
-        console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
+        // console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
         if (!INIT.debug) {

@@ -12,7 +12,6 @@ export class Init {
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
-    // private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
     tsConfigPaths: string[] = [];
 

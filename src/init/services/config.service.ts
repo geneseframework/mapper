@@ -44,23 +44,10 @@ export class ConfigService {
             if (behavior) {
                 this.updateObjectProperty('differentiateStringsAndNumbers', behavior, newConfig.behavior, 'false', false);
             }
-            const includes: ArrayLiteralExpression = this.getInitializer('include', config) as ArrayLiteralExpression;
-            console.log(chalk.magentaBright('INCLUDESSSS'), includes?.getKindName());
-            if (includes) {
-                this.updateStringArrayProperty('include', includes, newConfig);
-            }
-            const tsConfigs: ArrayLiteralExpression = this.getInitializer('tsConfigs', config) as ArrayLiteralExpression;
-            console.log(chalk.magentaBright('TS CONFIGGGGGS'), tsConfigs?.getKindName());
-            if (tsConfigs) {
-                this.updateStringArrayProperty('tsConfigs', tsConfigs, newConfig);
-            }
-            // const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
-            // if (throwTarget) {
-            //     this.updateProperty('error', throwTarget, newConfig.throwTarget, 'true', true);
-            //     this.updateProperty('setToUndefined', throwTarget, newConfig.throwTarget, 'true', true);
-            // }
+            this.updateStringArrayProperty('include', config, newConfig);
+            this.updateStringArrayProperty('tsConfigs', config, newConfig);
         }
-        console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
+        // console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
         return newConfig;
     }
 
@@ -75,9 +62,16 @@ export class ConfigService {
     }
 
 
-    private static updateStringArrayProperty(key: string, expression: ArrayLiteralExpression, obj: any): void {
+    private static updateStringArrayProperty(key: string, config: ObjectLiteralExpression, newConfig: MapperConfig): void {
+        const initializer: ArrayLiteralExpression = this.getInitializer(key, config) as ArrayLiteralExpression;
+        if (initializer) {
+            this.updateStringArray(key, initializer, newConfig);
+        }
+    }
+
+
+    private static updateStringArray(key: string, expression: ArrayLiteralExpression, obj: any): void {
         for (const element of expression?.getElements()) {
-            console.log(chalk.cyanBright('ELTTTTT'), element.getText());
             obj[key].push(removeBorders(element.getText()));
         }
     }
@@ -96,10 +90,6 @@ export class ConfigService {
             `${tab}behavior: {\n` +
             `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.differentiateStringsAndNumbers.toString()},\n` +
             `${tab}}\n` +
-            // `${tab}throwTarget: {\n` +
-            // `${tabs(2)}error: ${geneseConfigMapper.throwTarget.error},\n` +
-            // `${tabs(2)}setToUndefined: ${geneseConfigMapper.throwTarget.setToUndefined},\n` +
-            // `${tab}}\n` +
             `}\n` +
             this.exportsCode();
     }
@@ -128,20 +118,16 @@ export class ConfigService {
 
     private static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
         const filePaths = this.normalizePaths(mapperConfig?.include);
-        // const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
-        // console.log(chalk.yellowBright('FPATHHHHHS'), filePaths);
         INIT.project.addSourceFilesAtPaths(filePaths);
     }
 
 
     private static addTsConfigFiles(mapperConfig: MapperConfig): void {
-        console.log(chalk.magentaBright('ADD TS CONFIG    mapperConfig.tsConfigs'), mapperConfig.tsConfigs);
         if (!isArray(mapperConfig?.tsConfigs) || mapperConfig.tsConfigs.length === 0) {
             INIT.project.addSourceFilesFromTsConfig(INIT.defaultTsConfigPath);
         } else {
             const tsConfigPaths = this.normalizePaths(mapperConfig?.tsConfigs);
             for (const tsConfigPath of tsConfigPaths) {
-                console.log(chalk.yellowBright('TSCONFIG PATHHH'), tsConfigPath);
                 INIT.project.addSourceFilesFromTsConfig(tsConfigPath);
             }
         }
