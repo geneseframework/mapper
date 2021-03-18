@@ -11,7 +11,8 @@ export const geneseConfig: GeneseConfig = {
             '/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/oop.model.ts'
         ],
         tsConfigs: [
-            '../out-of-project/tsconfig.oop.json'
+            '../out-of-project/tsconfig.oop.json',
+            './tsconfig.json'
         ]
     }
 }
