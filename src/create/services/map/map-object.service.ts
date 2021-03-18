@@ -1,7 +1,7 @@
 import { MapperConfig } from '../../../shared/models/config.model';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
 import { Property } from '../../types/target/property.type';
-import { removeBorders } from '../../types/target/string/containerized.type';
+import { removeBorders } from '../../../shared/utils/strings.util';
 
 // TODO: implement
 export class MapObjectService {

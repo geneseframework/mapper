@@ -3,6 +3,7 @@ tsconfig.json
 src/init
 src/create
 src/dist
+src/shared
 debug
 docs
 test-engine

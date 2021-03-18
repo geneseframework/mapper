@@ -10,9 +10,8 @@ import {
     SyntaxKind
 } from 'ts-morph';
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
-import * as chalk from 'chalk';
-import path = require('path');
 import { isArray } from '../../create/utils/native/arrays.util';
+import path = require('path');
 
 export class ConfigService {
 
@@ -47,7 +46,6 @@ export class ConfigService {
             this.updateStringArrayProperty('include', config, newConfig);
             this.updateStringArrayProperty('tsConfigs', config, newConfig);
         }
-        // console.log(chalk.greenBright('NEW CONFIGGGGG'), newConfig);
         return newConfig;
     }
 
