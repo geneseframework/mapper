@@ -11,6 +11,7 @@ import {
 } from 'ts-morph';
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import * as chalk from 'chalk';
+import path = require('path');
 
 export class ConfigService {
 
@@ -114,8 +115,24 @@ export class ConfigService {
 
 
     static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
-        const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
+        const filePaths = this.normalizePaths(mapperConfig?.include);
+        // const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
+        console.log(chalk.yellowBright('FPATHHHHHS'), filePaths);
         INIT.project.addSourceFilesAtPaths(filePaths);
+    }
+
+
+    private static normalizePaths(filePaths: string[]): string[] {
+        const normalizedPaths: string[] = [];
+        for (const filePath of filePaths) {
+            normalizedPaths.push(this.normalizePath(filePath));
+        }
+        return normalizedPaths;
+    }
+
+
+    private static normalizePath(filePath: string): string {
+        return path.isAbsolute(filePath) ? filePath : `${INIT.projectPath}/${filePath}`;
     }
 
 }

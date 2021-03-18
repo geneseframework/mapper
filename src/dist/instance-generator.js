@@ -2,9 +2,13 @@ const generateInstance = async function(instanceGenerator) {
     try {
         let instance;
         switch (instanceGenerator.id) {
-    case 'Oop_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts':
-        const Oop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts').Oop;
+    case 'Oop_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/files/oop.model.ts':
+        const Oop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/oop.model.ts').Oop;
         instance = new Oop();
+        break;
+    case 'OutOfProject_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts':
+        const OutOfProject = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts').OutOfProject;
+        instance = new OutOfProject();
         break;
     case 'DirOop_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts':
         const DirOop = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts').DirOop;

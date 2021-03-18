@@ -1,6 +1,7 @@
 import { TestMapper } from '../../../test-engine/test-mapper.model';
-import { Oop } from '../../../out-of-project/files/out-of-project.model';
+import { OutOfProject } from '../../../out-of-project/files/out-of-project.model';
 import { DirOop } from '../../../out-of-project/dir/dir-oop.model';
+import { Oop } from '../../../out-of-project/files/oop.model';
 
 export const testMappers: TestMapper[] = [];
 
@@ -8,5 +9,6 @@ export const testMappers: TestMapper[] = [];
 // ----------------------------------------------   Strings Literals   ----------------------------------------------------
 
 
-testMappers.push(new TestMapper(`{name: 'a'} / Oop`,Oop, {name: 'a'}, {isolate: true}));
-testMappers.push(new TestMapper(`{prop: 2} / DirOop`,DirOop, {prop: 2}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'a'} / OutOfProject`, OutOfProject, {name: 'a'}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 2} / DirOop`, DirOop, {prop: 2}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'b'} / Oop`, Oop, {prop: 'b'}, {isolate: true}));
