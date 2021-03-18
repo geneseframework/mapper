@@ -14,6 +14,7 @@ import { initPaths, initProject } from '../tests-init.debug';
 INIT.debug = true;
 GLOBAL.debug = true;
 
+
 export async function startTests(): Promise<void> {
     const start = Date.now();
     console.log(chalk.blueBright('START TESTS'));
@@ -37,12 +38,10 @@ async function init(): Promise<void> {
     INIT.project = new Project({skipFileDependencyResolution: true});
     initPaths();
     const mapperConfig: MapperConfig = await ConfigService.init();
-    initProject();
+    await initProject();
     ConfigService.addConfigFilesToProject(mapperConfig);
     console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
 }
-
-
 
 
 function clearCode(): void {

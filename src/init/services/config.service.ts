@@ -25,7 +25,7 @@ export class ConfigService {
     }
 
 
-    private static async setConfig(): Promise<MapperConfig | never> {
+    static async setConfig(): Promise<MapperConfig | never> {
         const userConfigSourceFileCopy: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
         if (!userConfigSourceFileCopy) {
             throwError(`geneseconfig.ts file not found. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
@@ -130,8 +130,9 @@ export class ConfigService {
 
 
     private static addTsConfigFiles(mapperConfig: MapperConfig): void {
+        console.log(chalk.magentaBright('ADD TS CONFIG    mapperConfig.tsConfigs'), mapperConfig.tsConfigs);
         if (!isArray(mapperConfig?.tsConfigs) || mapperConfig.tsConfigs.length === 0) {
-            INIT.tsConfigPaths = [`${INIT.projectPath}/tsconfig.json`];
+            INIT.project.addSourceFilesFromTsConfig(INIT.defaultTsConfigPath);
         } else {
             const tsConfigPaths = this.normalizePaths(mapperConfig?.tsConfigs);
             for (const tsConfigPath of tsConfigPaths) {

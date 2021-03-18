@@ -12,7 +12,7 @@ export class Init {
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
-    private _projectWithNodeModules: Project = undefined;
+    // private _projectWithNodeModules: Project = undefined;
     start: number = undefined;
     tsConfigPaths: string[] = [];
 
@@ -22,7 +22,7 @@ export class Init {
     }
 
 
-    get tsConfigPath(): string {
+    get defaultTsConfigPath(): string {
         return `${INIT.projectPath}/tsconfig.json`;
     }
 
@@ -47,12 +47,12 @@ export class Init {
     }
 
 
-    get projectWithNodeModules(): Project {
-        if (!this._projectWithNodeModules) {
-            this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
-        }
-        return this._projectWithNodeModules;
-    }
+    // get projectWithNodeModules(): Project {
+    //     if (!this._projectWithNodeModules) {
+    //         this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
+    //     }
+    //     return this._projectWithNodeModules;
+    // }
 
 
     get userGeneseConfigPath(): string {

@@ -14,7 +14,7 @@ GLOBAL.debug = true;
 export async function init(): Promise<void> {
     console.log(chalk.blueBright('zzzzz'));
     initPaths();
-    initProject();
+    await initProject();
     const mapperConfig: MapperConfig = await ConfigService.init();
     ConfigService.addConfigFilesToProject(mapperConfig);
     await DeclarationInfoService.init();

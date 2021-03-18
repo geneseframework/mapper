@@ -29,7 +29,8 @@ export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDecl
 
 
 export function getImportDeclarations(typeName: string): ImportDeclaration[] {
-    const declarations: ImportDeclaration[] = flat(INIT.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
+    const declarations: ImportDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getImportDeclarations()));
+    // const declarations: ImportDeclaration[] = flat(INIT.projectWithNodeModules.getSourceFiles().map(s => s.getImportDeclarations()));
     const declarationsWithSameName: ImportDeclaration[] = declarations.filter(i => i.getNamedImports().find(n => n.getName() === typeName));
     return groupByImportPath(declarationsWithSameName);
 }

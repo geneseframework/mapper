@@ -44,10 +44,7 @@ export class InitService {
      * @private
      */
     private static initProject(): void {
-        INIT.project = new Project({
-            tsConfigFilePath: INIT.tsConfigPath,
-            skipFileDependencyResolution: true
-        });
+        INIT.project = new Project({skipFileDependencyResolution: true});
         INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }
