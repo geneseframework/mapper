@@ -12,6 +12,7 @@ import {
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import * as chalk from 'chalk';
 import path = require('path');
+import { isArray } from '../../create/utils/native/arrays.util';
 
 export class ConfigService {
 
@@ -114,11 +115,30 @@ export class ConfigService {
     }
 
 
-    static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
+    static addConfigFilesToProject(mapperConfig: MapperConfig): void {
+        this.addConfigIncludedFiles(mapperConfig);
+        this.addTsConfigFiles(mapperConfig);
+    }
+
+
+    private static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
         const filePaths = this.normalizePaths(mapperConfig?.include);
         // const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
         console.log(chalk.yellowBright('FPATHHHHHS'), filePaths);
         INIT.project.addSourceFilesAtPaths(filePaths);
+    }
+
+
+    private static addTsConfigFiles(mapperConfig: MapperConfig): void {
+        if (!isArray(mapperConfig?.tsConfigs) || mapperConfig.tsConfigs.length === 0) {
+            INIT.tsConfigPaths = [`${INIT.projectPath}/tsconfig.json`];
+        } else {
+            const tsConfigPaths = this.normalizePaths(mapperConfig?.tsConfigs);
+            for (const tsConfigPath of tsConfigPaths) {
+                console.log(chalk.magentaBright('TSCONFIG PATHHH'), tsConfigPath);
+                INIT.project.addSourceFilesFromTsConfig(tsConfigPath);
+            }
+        }
     }
 
 

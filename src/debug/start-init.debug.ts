@@ -16,7 +16,7 @@ export async function init(): Promise<void> {
     initPaths();
     initProject();
     const mapperConfig: MapperConfig = await ConfigService.init();
-    ConfigService.addConfigIncludedFiles(mapperConfig);
+    ConfigService.addConfigFilesToProject(mapperConfig);
     await DeclarationInfoService.init();
     await InstanceGeneratorService.init();
 }

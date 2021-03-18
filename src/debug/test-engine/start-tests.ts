@@ -38,7 +38,7 @@ async function init(): Promise<void> {
     initPaths();
     const mapperConfig: MapperConfig = await ConfigService.init();
     initProject();
-    ConfigService.addConfigIncludedFiles(mapperConfig);
+    ConfigService.addConfigFilesToProject(mapperConfig);
     console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
 }
 

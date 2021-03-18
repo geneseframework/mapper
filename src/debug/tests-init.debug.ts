@@ -14,7 +14,7 @@ export function initPaths(): void {
 
 export function initProject(): void {
     INIT.project = new Project({
-        tsConfigFilePath: INIT.configFilePath,
+        tsConfigFilePath: INIT.tsConfigPath,
         skipFileDependencyResolution: true
     });
     INIT.project.addSourceFilesAtPaths(`${INIT.projectPath}/src/debug/**/*{.d.ts,.ts}`);

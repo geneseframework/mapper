@@ -3,6 +3,6 @@ import { MapperBehavior } from './config-behavior.model';
 export class MapperConfig {
     behavior?: MapperBehavior = new MapperBehavior();
     include?: string[] = [];
-    tsConfigPaths?: string[] = [];
+    tsConfigs?: string[] = [];
     // throwTarget?: ThrowTargetError = new ThrowTargetError();
 }

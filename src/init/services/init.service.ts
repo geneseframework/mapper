@@ -19,7 +19,7 @@ export class InitService {
         this.initPaths();
         const mapperConfig: MapperConfig = await ConfigService.init();
         this.initProject();
-        ConfigService.addConfigIncludedFiles(mapperConfig);
+        ConfigService.addConfigFilesToProject(mapperConfig);
         console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
@@ -45,7 +45,7 @@ export class InitService {
      */
     private static initProject(): void {
         INIT.project = new Project({
-            tsConfigFilePath: INIT.configFilePath,
+            tsConfigFilePath: INIT.tsConfigPath,
             skipFileDependencyResolution: true
         });
         INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
