@@ -2,7 +2,7 @@ import { MapperConfig } from '../../../shared/models/config.model';
 import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
-import { getElements, trimTarget } from '../../utils/target.util';
+import { getElements, trimSeparators } from '../../utils/target.util';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
 import { throwWarning } from '../../utils/errors.util';
@@ -12,7 +12,7 @@ export class MapComplexService {
     static async create(target: string, data: any, options: MapperConfig): Promise<any> {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
-        const others: string = trimTarget(target.slice(first.length));
+        const others: string = trimSeparators(target.slice(first.length));
         if (isParenthesized(target)) {
 
         } else if (hasUnion(target)) {

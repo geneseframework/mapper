@@ -41,10 +41,10 @@ export function getElements(text: string): string[] {
 
 
 function getElementsWithSeparator(text: string): ElementAndSeparator[] {
-    if (trimTarget(text).length === 0) {
+    if (trimSeparators(text).length === 0) {
         return [];
     }
-    const cleanedText: string = trimTarget(text);
+    const cleanedText: string = trimSeparators(text);
     if (isBracketedOrParenthesized(cleanedText)) {
         return [[cleanedText, undefined]];
     } else if (hasSeparators(cleanedText)) {
@@ -81,7 +81,7 @@ function getSplitElements(elements: HasSeparators, separator: Separator): Elemen
 }
 
 
-export function trimTarget(text: string): string {
+export function trimSeparators(text: string): string {
     const toRemoveAtTheBeginning: RegExp = /^([?, &|:])+/g;
     const toRemoveAtTheEnd: RegExp = /([?, &|:])+$/g;
     return isString(text) ? text.replace(toRemoveAtTheBeginning, '').replace(toRemoveAtTheEnd, '') : '';

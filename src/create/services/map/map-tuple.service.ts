@@ -1,4 +1,4 @@
-import { Mapper } from '../../models/mapper';
+import { create } from '../../main';
 import { MapperConfig } from '../../../shared/models/config.model';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
@@ -16,7 +16,7 @@ export class MapTupleService<T> {
             if (isNullOrUndefined(data[i])) {
                 tuple.push(data[i]);
             } else {
-                tuple.push(await Mapper.create(getContainerizedElements(target)[i], data[i], options));
+                tuple.push(await create(getContainerizedElements(target)[i], data[i], options));
             }
         }
         return tuple;

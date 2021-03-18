@@ -1,4 +1,4 @@
-import { Mapper } from '../../create/models/mapper';
+import { create } from '../../create/main';
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
 import { isSameObject } from '../../create/utils/native/is-same-object.util';
@@ -20,7 +20,7 @@ async function checkTest(testType: TestType): Promise<void> {
     if (isTestIt(testType)) {
         result = await testType.method(testType.data);
     } else {
-        result = await Mapper.create(testType.mapParameter, testType.data, testType.options?.config);
+        result = await create(testType.mapParameter, testType.data, testType.options?.config);
     }
     const duration: number = Date.now() - start;
     if ((isExpectedResult(testType, result) && !isTooLong(duration)) || shouldFail(testType)) {

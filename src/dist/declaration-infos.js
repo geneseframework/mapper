@@ -1222,6 +1222,24 @@ const declarationInfos = [
         ],
     },
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/objects.spec.ts`,
+        kind: `Class`,
+        name: `SimpleClassSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+        {
+            initializer: undefined,
+            isRequired: true,
+            name: `name`,
+            type: `string`
+        },
+        ],
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Class`,
         name: `TupleClassSpec`,

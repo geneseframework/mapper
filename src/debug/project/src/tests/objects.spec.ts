@@ -32,3 +32,19 @@ testMappers.push(new TestMapper(`'a' / [Object]`, [Object],'a', {expectedValue: 
 testMappers.push(new TestMapper(`['a'] / [Object]`, [Object],['a'], {expectedValue: [undefined], isolate: false}));
 testMappers.push(new TestMapper(`{element: ['a']} / [Object]`, [Object],{element: ['a']}, {expectedValue: undefined, isolate: false}));
 
+
+// ---------------------------------------------   Literal objects   ----------------------------------------------------
+
+
+testMappers.push(new TestMapper(`{prop: 'a'} / {prop: string}`, '{prop: string}', {prop: 'a'}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'a', nb: 2} / {prop: string, nb: number}`, '{prop: string, nb: number}', {prop: 'a', nb: 2}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: {first: 'a', last: 'b'}, nb: 2} / {prop: {first: string, last: string}, nb: number}`, '{prop: {first: string, last: string}, nb: number}', {prop: {first: 'a', last: 'b'}, nb: 2}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: [{first: 'a', last: 'b'}], nb: 2} / {prop: [{first: string, last: string}], nb: number}`, '{prop: [{first: string, last: string}], nb: number}', {prop: [{first: 'a', last: 'b'}], nb: 2}, {isolate: false}));
+
+
+export class SimpleClassSpec {
+    name: string;
+}
+testMappers.push(new TestMapper(`{prop: {name: 'Léo}} / {prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, `{prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, {prop: {name: 'Léo'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: {name: 'Léo}} / {prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, `{prop: SimpleClassSpec = new SimpleClassSpec('Léa')}`, {prop: {}}, {expectedValue: {prop: {name: 'Léa'}}, isolate: false}));
+

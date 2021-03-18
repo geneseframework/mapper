@@ -214,6 +214,10 @@ const generateInstance = async function(instanceGenerator) {
         const AnimalOwner = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts').AnimalOwner;
         instance = new AnimalOwner();
         break;
+    case 'SimpleClassSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/objects.spec.ts':
+        const SimpleClassSpec = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/objects.spec.ts').SimpleClassSpec;
+        instance = new SimpleClassSpec();
+        break;
     case 'TupleClassSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts':
         const TupleClassSpec = await require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts').TupleClassSpec;
         instance = new TupleClassSpec();

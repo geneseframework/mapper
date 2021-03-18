@@ -1,7 +1,7 @@
 import { isArray } from '../../utils/native/arrays.util';
 import { isAny } from '../../utils/native/any.util';
 import { MapperConfig } from '../../../shared/models/config.model';
-import { Mapper } from '../../models/mapper';
+import { create } from '../../main';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 
 export class MapArrayService<T> {
@@ -18,7 +18,7 @@ export class MapArrayService<T> {
                 if (element === null || element === undefined) {
                     arr.push(element);
                 } else {
-                    const mappedElement: any = await Mapper.create(typeOfArray(target), element, options);
+                    const mappedElement: any = await create(typeOfArray(target), element, options);
                     arr.push(mappedElement);
                 }
             }

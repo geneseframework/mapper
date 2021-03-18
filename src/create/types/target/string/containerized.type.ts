@@ -11,3 +11,4 @@ export type Containerized = Bracketed | Parenthesized | CurveBracketed | Tagged 
 export function getContent(text: Containerized): string {
     return removeBorders(text).trim();
 }
+

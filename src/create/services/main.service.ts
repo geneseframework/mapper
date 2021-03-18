@@ -28,6 +28,8 @@ import { hasGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
+import { MapObjectService } from './map/map-object.service';
+import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 
 export class MainService {
 
@@ -41,7 +43,6 @@ export class MainService {
      * @param data
      * @param options
      */
-    // TODO : isArray Option
     static async map<T>(target: Target<T>, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         GLOBAL.start = Date.now();
         await GlobalInitService.start();
@@ -57,7 +58,6 @@ export class MainService {
     }
 
 
-    // TODO : enums
     private static async mapString<T>(target: string, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
@@ -78,8 +78,8 @@ export class MainService {
             return await MapQuotedService.create(target, data, options);
         } else if (isObjectLiteralType(target)) {
             return MapLiteralObjectService.create(data);
-        // } else if (isCurveBracketed(target)) { // TODO
-        //     return await MapObjectService.createOld(target, data, options)
+        } else if (isCurveBracketed(target)) {
+            return await MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
