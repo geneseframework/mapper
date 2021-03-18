@@ -20,6 +20,6 @@
     },
     "exclude": ["node_modules"],
     "include": [
-        "../files/oop-in-local-tsconfig.model.ts"
+        "./files/oop-in-local-tsconfig.model.ts"
     ]
 }

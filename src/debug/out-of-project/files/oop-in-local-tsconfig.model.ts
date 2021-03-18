@@ -1,3 +1,3 @@
 export class OopInLocalTsconfig {
-    prop: string;
+    prop: string = 'oop';
 }

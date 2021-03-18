@@ -22,7 +22,9 @@ export async function startTests(): Promise<void> {
     await init();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;
+    INIT.project.addSourceFilesAtPaths('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/*.spec.ts');
     const specFiles: string[] = INIT.project.getSourceFiles().filter(s => isSpecFile(s.getBaseName())).map(s => s.getFilePath());
+    console.log(chalk.redBright('specFiles: '), INIT.project.getSourceFiles().map(s => s.getFilePath()));
     await getTests(specFiles);
     await expect(TESTS.testMappers.concat(TESTS.its));
     logFailedTests();

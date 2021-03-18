@@ -8,7 +8,9 @@ const MAX_DURATION = 50;
 
 
 export async function expect(testTypes: TestType[]): Promise<void> {
+    console.log(chalk.greenBright('EXPCCCCC'), testTypes.length);
     for (const testMapper of includedTestTypes(testTypes)) {
+        console.log(chalk.blueBright('TESTMPPPPP'), testMapper.title);
         await checkTest(testMapper);
     }
 }

@@ -49,6 +49,11 @@ export class ConfigService {
             if (includes) {
                 this.updateStringArrayProperty('include', includes, newConfig);
             }
+            const tsConfigs: ArrayLiteralExpression = this.getInitializer('tsConfigs', config) as ArrayLiteralExpression;
+            console.log(chalk.magentaBright('TS CONFIGGGGGS'), tsConfigs?.getKindName());
+            if (tsConfigs) {
+                this.updateStringArrayProperty('tsConfigs', tsConfigs, newConfig);
+            }
             // const throwTarget: ObjectLiteralExpression = this.getInitializer('throwTarget', config) as ObjectLiteralExpression;
             // if (throwTarget) {
             //     this.updateProperty('error', throwTarget, newConfig.throwTarget, 'true', true);
@@ -124,7 +129,7 @@ export class ConfigService {
     private static addConfigIncludedFiles(mapperConfig: MapperConfig): void {
         const filePaths = this.normalizePaths(mapperConfig?.include);
         // const filePaths = mapperConfig.include.map(path => `${INIT.projectPath}/${path}`);
-        console.log(chalk.yellowBright('FPATHHHHHS'), filePaths);
+        // console.log(chalk.yellowBright('FPATHHHHHS'), filePaths);
         INIT.project.addSourceFilesAtPaths(filePaths);
     }
 
@@ -136,7 +141,7 @@ export class ConfigService {
         } else {
             const tsConfigPaths = this.normalizePaths(mapperConfig?.tsConfigs);
             for (const tsConfigPath of tsConfigPaths) {
-                console.log(chalk.magentaBright('TSCONFIG PATHHH'), tsConfigPath);
+                console.log(chalk.yellowBright('TSCONFIG PATHHH'), tsConfigPath);
                 INIT.project.addSourceFilesFromTsConfig(tsConfigPath);
             }
         }
