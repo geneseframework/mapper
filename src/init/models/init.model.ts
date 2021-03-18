@@ -46,14 +46,6 @@ export class Init {
     }
 
 
-    // get projectWithNodeModules(): Project {
-    //     if (!this._projectWithNodeModules) {
-    //         this._projectWithNodeModules = new Project({ tsConfigFilePath: this.tsConfigPath });
-    //     }
-    //     return this._projectWithNodeModules;
-    // }
-
-
     get userGeneseConfigPath(): string {
         return `${INIT.projectPath}/geneseconfig.ts`;
     }

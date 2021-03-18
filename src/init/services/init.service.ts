@@ -4,7 +4,6 @@ import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
 import { RefactoGlobalInitService } from './refacto-global-init.service';
 import { ConfigService } from './config.service';
-import * as chalk from 'chalk';
 import { MapperConfig } from '../../shared/models/config.model';
 
 const appRoot = require('app-root-path');
@@ -20,7 +19,6 @@ export class InitService {
         const mapperConfig: MapperConfig = await ConfigService.init();
         this.initProject();
         ConfigService.addConfigFilesToProject(mapperConfig);
-        // console.log(chalk.blueBright('FILESSSS'), INIT.project.getSourceFiles().map(s => s.getBaseName()).filter(n => n.slice(0, 1) === 'o'));
         await DeclarationInfoService.init();
         await InstanceGeneratorService.init();
         if (!INIT.debug) {

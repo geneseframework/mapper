@@ -78,11 +78,6 @@ function clearGenerateInstance(project: Project): void {
 }
 
 
-function isSpecFile(path: string): boolean {
-    return path?.slice(-8) === '.spec.ts';
-}
-
-
 async function getTests(specFiles: string[]): Promise<void> {
     for (const specFile of specFiles) {
         const file: any = await require(specFile);
