@@ -2,29 +2,99 @@ import { MapperConfig } from '../../../shared/models/config.model';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
 import { Property } from '../../types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
+import * as chalk from 'chalk';
+import { getFirstContainer, hasLeftBorder } from '../../types/target/string/borders.type';
+import { Containerized } from '../../types/target/string/containerized.type';
+import { isComma } from '../../types/target/string/commas.type';
+import { trimSeparators } from '../../utils/target.util';
 
-// TODO: implement
 export class MapObjectService {
 
 
     static async create(target: CurveBracketed, data: any, options?: MapperConfig): Promise<object> {
+        console.log(chalk.cyanBright('MAP OBJJJJJJ'), target, data);
         return this.createNewInstance(target);
     }
 
 
     private static createNewInstance(target: CurveBracketed): object {
         const newInstance = {};
-        const nextProperty: Property = this.getNextProperty(removeBorders(target)); // TODO
+        const properties: Property[] = this.getProperties(target);
         return newInstance;
     }
 
 
-    private static getNextProperty(target: string): any {
-        const nextPropertyName: string = target.match(/^\w+:/g)?.[0]?.slice(0, -1);
-        if (nextPropertyName) {
-            const rest: string = target.slice(nextPropertyName.length + 1).trimLeft();
-            const firstChar: string = rest[0];
+    private static getProperties(target: CurveBracketed): Property[] {
+        const properties: Property[] = [];
+        let textToParse: string = removeBorders(target);
+        while (textToParse.length > 0) {
+            textToParse = trimSeparators(textToParse);
+            const nextProperty: string = this.getNextPropertyText(textToParse);
+            console.log(chalk.redBright('MAP OBJJJJJJ nextProperty'), nextProperty);
+            textToParse = nextProperty ? textToParse.slice(nextProperty.length) : textToParse.slice(1);
         }
+        return properties;
+    }
+
+
+    private static getNextPropertyText(text: string): string {
+        const propertyName: string = this.getPropertyName(text);
+        let property: string = propertyName;
+        console.log(chalk.yellowBright('MAP OBJJJJJJ property'), property);
+        let rest: string = text.slice(propertyName.length);
+        let propertyLength: number = propertyName.length;
+        let isTheEndOfTheProperty = false;
+        while (rest.length > 0 && !isTheEndOfTheProperty) {
+            if (hasLeftBorder(rest)) {
+                const container: Containerized = getFirstContainer(rest);
+                rest = rest.slice(container.length);
+                propertyLength += container.length;
+            } else if (isComma(rest.charAt(0))) {
+                isTheEndOfTheProperty = true;
+            } else {
+                rest = rest.slice(1);
+                propertyLength++;
+            }
+        }
+        return text.slice(0, propertyLength);
+    }
+
+
+    private static getPropertyName(text: string): string {
+        return text.match(/^\w+:/g)?.[0]?.slice(0, -1);
+    }
+
+
+    // private static isTheEndOfTheProperty(property: string, char: string): boolean {
+    //     return this.isNotInsideContainer() && [' ', ','];
+    // }
+
+
+    private static getNextProperty(target: string): Property {
+        const property: Property = {};
+        property.name = target.match(/^\w+:/g)?.[0]?.slice(0, -1);
+        console.log(chalk.yellowBright('MAP OBJJJJJJ nextPropertyName'), property.name);
+        if (property.name) {
+            const rest: string = target.slice(property.name.length + 1).trimLeft();
+            const firstChar: string = rest[0];
+            console.log(chalk.yellowBright('MAP OBJJJJJJ firstChar'), firstChar);
+            if (hasLeftBorder(rest)) {
+                property.type = getFirstContainer(rest);
+            } else {
+                property.type = this.getFirstWord(rest);
+            }
+        }
+        return property;
+    }
+
+
+    private static isNewInstance(text: string) {
+
+    }
+
+
+    private static getFirstWord(text: string) {
+        return text ?? text.split(' ')[0];
     }
 
 

@@ -1,5 +1,5 @@
 import { hasSeparators } from './has-separators.type';
-import { getContainerFromRight, HasRightBorder } from './borders.type';
+import { getLastContainer, HasRightBorder } from './borders.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 
 export type Generic = `${string}<${string}>`;
@@ -22,5 +22,5 @@ export function typeOfGeneric(text: Generic): string {
 
 
 export function tagOfGeneric(text: Generic): string {
-    return removeBorders(getContainerFromRight(text as unknown as HasRightBorder));
+    return removeBorders(getLastContainer(text as unknown as HasRightBorder));
 }

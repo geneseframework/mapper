@@ -9,7 +9,7 @@ import { isArrayType, typeOfArray } from '../types/target/string/array-type.type
 import { TargetService } from './target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
 import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
-import { getElements, trimTarget } from '../utils/target.util';
+import { getElements, trimSeparators } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
@@ -60,7 +60,7 @@ export class CheckTargetsService {
             return await this.hasCorrectElements(typeOfArray(text));
         } else if (hasGeneric(text)) {
             return await this.hasCorrectElements(typeOfGeneric(text));
-        } else if(hasSeparators(trimTarget(text))) {
+        } else if(hasSeparators(trimSeparators(text))) {
             return await this.haveCorrectElements(getElements(text));
         } else if (isCurveBracketed(text)) {
             return isPrimitiveType(text); // TODO
@@ -92,7 +92,7 @@ export class CheckTargetsService {
 
     private static async haveCorrectElements(texts: string[]): Promise<boolean> {
         for (const text of texts) {
-            if (!await this.hasCorrectElements(trimTarget(text))) {
+            if (!await this.hasCorrectElements(trimSeparators(text))) {
                 return false;
             }
         }

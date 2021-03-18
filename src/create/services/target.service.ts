@@ -4,7 +4,7 @@ import { Primitive } from '../types/primitives.type';
 import { isFunction } from '../utils/native/functions.util';
 import { isBoolean } from '../utils/native/booleans.util';
 import { isNumber } from '../utils/native/numbers.util';
-import { trimTarget } from '../utils/target.util';
+import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/null-or-literal.type';
 
 export class TargetService {
@@ -42,7 +42,7 @@ export class TargetService {
         if (['String', 'Number', 'Boolean', 'Object'].includes(target)) {
             return target.toLowerCase();
         }
-        target = trimTarget(target);
+        target = trimSeparators(target);
         const regExps: RegExp[] = this.primitiveRegexps();
         for (const regex of regExps) {
             const matches: string[] = target.match(regex) ?? [];
