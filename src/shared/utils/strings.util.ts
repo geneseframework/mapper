@@ -5,6 +5,11 @@ export function removeBorders(text: string): string {
 }
 
 
+export function capitalize(text) {
+    return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+}
+
+
 export const tab = '    ';
 
 export function tabs(numberOfTabs: number): string {

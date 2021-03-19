@@ -160,12 +160,12 @@ export class DeclarationInfoGeneratorService {
 
 
     private static getSpecificPropertyCode(property: Property): string {
-        return `${tabs(2)}{\n` +
-            `${tabs(3)}initializer: ${addQuotes(property.initializer)},\n` +
-            `${tabs(3)}isRequired: ${property.isRequired},\n` +
-            `${tabs(3)}name: ${addQuotes(property.name)},\n` +
-            `${tabs(3)}type: ${addQuotes(property.type)}\n` +
-            `${tabs(2)}}`;
+        return `${tabs(3)}{\n` +
+            `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
+            `${tabs(4)}isRequired: ${property.isRequired},\n` +
+            `${tabs(4)}name: ${addQuotes(property.name)},\n` +
+            `${tabs(4)}type: ${addQuotes(property.type)}\n` +
+            `${tabs(3)}}`;
     }
 
 
