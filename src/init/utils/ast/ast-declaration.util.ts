@@ -56,12 +56,12 @@ export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLit
     const properties: Property[] = [];
     for (const property of declaration.getProperties()) {
         if (isTypeLiteralProperty(property)) {
-            console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
-            console.log(chalk.cyanBright('PROPERTYYYYYY STRUCT'), property.getStructure());
-            console.log(chalk.cyanBright('PROPERTYYYYYY TYPEEEEE'), property.getTypeNode().getKindName());
+            // console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
+            // console.log(chalk.cyanBright('PROPERTYYYYYY STRUCT'), property.getStructure());
+            // console.log(chalk.cyanBright('PROPERTYYYYYY TYPEEEEE'), property.getTypeNode().getKindName());
             const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), property.getTypeNode() as TypeLiteralNode);
             const interfaceInfoName: string = createInterfaceInfo(property.getName(), typeLiteralDeclaration);
-            console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
+            // console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
             properties.push({name: property.getName(), type: interfaceInfoName } as Property);
         } else {
             const propertyStructure = property.getStructure();
@@ -74,11 +74,7 @@ export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLit
 
 
 function createInterfaceInfo(propertyName: string, typeLiteral: TypeLiteralDeclaration): string {
-    // if (typeLiteral.getName() === 'propObject') {
-        console.log(chalk.magentaBright('TYPE LITTTTTT STRUCT'), typeLiteral.getProperties().map(p => p.getStructure()));
-    // }
     const interfaceInfoName = `${typeLiteral.getName()}${capitalize(propertyName)}`;
-    console.log(chalk.magentaBright('TYPE LITTTTTT interfaceInfoName'), interfaceInfoName);
     const interfaceInfo = new InterfaceInfo(interfaceInfoName, typeLiteral.sourceFilePath, getProperties(typeLiteral));
     INIT.addDeclarationInfo(interfaceInfo);
     return interfaceInfoName;

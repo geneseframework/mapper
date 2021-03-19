@@ -30,7 +30,6 @@ import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
 import { MapObjectService } from './map/map-object.service';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
-import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -60,7 +59,7 @@ export class MainService {
 
 
     private static async mapString<T>(target: string, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         await CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

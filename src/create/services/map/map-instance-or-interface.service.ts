@@ -29,7 +29,7 @@ export class MapInstanceOrInterfaceService {
     private static async mapDataKey<T>(data: any, options: MapperConfig, key: string, instance: T, declaration: ClassOrInterfaceInfo): Promise<void> {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.type;
-        console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
+        // console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
         if (targetKeyType === 'undefined' || targetKeyType === undefined) {
             instance[key] = data;
         } else if (isQuoted(targetKeyType)) {
@@ -41,7 +41,6 @@ export class MapInstanceOrInterfaceService {
 
 
     private static isProperty(propertyName: string, classOrInterfaceInfo: ClassOrInterfaceInfo): boolean {
-        console.log(chalk.yellowBright('IS PROPPPP ?'), propertyName, classOrInterfaceInfo);
         return !!classOrInterfaceInfo.properties.find(p => p.name === propertyName);
     }
 

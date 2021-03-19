@@ -1150,6 +1150,24 @@ const declarationInfos = [
         ],
     },
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteralStringArraySpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `{str: string}[]`
+            },
+        ],
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts`,
         kind: `Class`,
         name: `DateSpec`,
