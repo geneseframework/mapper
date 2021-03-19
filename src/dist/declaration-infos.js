@@ -1112,6 +1112,27 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `ObjectLiteralStringNumberSpecProp`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `nb`,
+                type: `number`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteralStringNumberSpec`,
         typeParameters: [
@@ -1122,9 +1143,9 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                isRequired: undefined,
                 name: `prop`,
-                type: `{str: string, nb: number}`
+                type: `ObjectLiteralStringNumberSpecProp`
             },
         ],
     },
