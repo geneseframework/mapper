@@ -1,9 +1,9 @@
 import {
-    ClassDeclaration,
+    ClassDeclaration, ClassDeclarationStructure,
     EnumDeclaration,
     ImportDeclaration,
-    InterfaceDeclaration,
-    TypeAliasDeclaration
+    InterfaceDeclaration, InterfaceDeclarationStructure,
+    TypeAliasDeclaration, TypeLiteralNode, TypeNode
 } from 'ts-morph';
 import { INIT } from '../../const/init.const';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -12,6 +12,12 @@ import { GenericParameter } from '../../../shared/types/target/generic-parameter
 import { Property } from '../../../shared/types/target/property.type';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 import { flat } from '../../../shared/utils/arrays.util';
+import * as chalk from 'chalk';
+import { isTypeLiteralProperty } from './ast-type-literal.util';
+import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
+import { sourceFilePath } from './ast-sourcefile.util';
+import { TypeLiteralDeclaration } from '../../types/type-literal-declaration.type';
+import { capitalize } from '../../../shared/utils/strings.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
@@ -47,11 +53,40 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 }
 
 
-export function getProperties(declaration: ClassOrInterfaceDeclaration): Property[] {
+export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLiteralDeclaration): Property[] {
+    const properties: Property[] = [];
+    for (const property of declaration.getProperties()) {
+        if (isTypeLiteralProperty(property) && property.getName() === 'propObject') {
+            // if (isTypeLiteralProperty(property)) {
+            console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
+            console.log(chalk.cyanBright('PROPERTYYYYYY STRUCT'), property.getStructure());
+            console.log(chalk.cyanBright('PROPERTYYYYYY TYPEEEEE'), property.getTypeNode().getKindName());
+            const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), property.getTypeNode() as TypeLiteralNode);
+            const interfaceInfoName: string = createInterfaceInfo(property.getName(), typeLiteralDeclaration);
+            console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
+            properties.push({name: declaration.getName(), type: interfaceInfoName } as Property);
+        } else {
+            const structure = property.getStructure();
+            properties.push({name: structure.name, type: structure.type, initializer: structure.initializer, isRequired: !structure.hasQuestionToken} as Property);
+        }
+    }
+    return properties;
     // @ts-ignore
-    return declaration?.getStructure().properties.map(p => {
-        return {name: p.name, type: p.type, initializer: p.initializer, isRequired: !p.hasQuestionToken} as Property;
-    });
+    // return declaration?.getStructure().properties.map(p => {
+    //     return {name: p.name, type: p.type, initializer: p.initializer, isRequired: !p.hasQuestionToken} as Property;
+    // });
+}
+
+
+function createInterfaceInfo(propertyName: string, typeLiteral: TypeLiteralDeclaration): string {
+    // if (typeLiteral.getName() === 'propObject') {
+        console.log(chalk.magentaBright('TYPE LITTTTTT STRUCT'), typeLiteral.getProperties().map(p => p.getStructure()));
+    // }
+    const interfaceInfoName = `${typeLiteral.getName()}${capitalize(propertyName)}`;
+    console.log(chalk.magentaBright('TYPE LITTTTTT interfaceInfoName'), interfaceInfoName);
+    const interfaceInfo = new InterfaceInfo(interfaceInfoName, typeLiteral.sourceFilePath, getProperties(typeLiteral));
+    INIT.addDeclarationInfo(interfaceInfo);
+    return interfaceInfoName;
 }
 
 

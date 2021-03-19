@@ -9,12 +9,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: `'oop'`,
-            isRequired: true,
-            name: `prop`,
-            type: `string`
-        },
+            {
+                initializer: `'oop'`,
+                isRequired: true,
+                name: `prop`,
+                type: `string`
+            },
         ],
     },
     {
@@ -27,12 +27,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: `'a'`,
-            isRequired: true,
-            name: `prop`,
-            type: `string`
-        },
+            {
+                initializer: `'a'`,
+                isRequired: true,
+                name: `prop`,
+                type: `string`
+            },
         ],
     },
     {
@@ -45,12 +45,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: `'oop'`,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: `'oop'`,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -63,12 +63,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `number`
+            },
         ],
     },
     {
@@ -81,24 +81,24 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `street`,
-            type: `string`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `streetNumber`,
-            type: `number`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `town`,
-            type: `string`
-        },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `street`,
+                type: `string`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `streetNumber`,
+                type: `number`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `town`,
+                type: `string`
+            },
         ],
     },
     {
@@ -111,30 +111,30 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `age`,
-            type: `number`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `kind`,
-            type: `string`
-        },
-        {
-            initializer: `true`,
-            isRequired: true,
-            name: `live`,
-            type: undefined
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `order`,
-            type: `Order`
-        },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `age`,
+                type: `number`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `kind`,
+                type: `string`
+            },
+            {
+                initializer: `true`,
+                isRequired: true,
+                name: `live`,
+                type: undefined
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `order`,
+                type: `Order`
+            },
         ],
     },
     {
@@ -147,54 +147,54 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 3,
         properties: [
-        {
-            initializer: `[]`,
-            isRequired: true,
-            name: `colors`,
-            type: `Color[]`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `favouritePrey`,
-            type: `Prey`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `friend`,
-            type: `Person`
-        },
-        {
-            initializer: `false`,
-            isRequired: true,
-            name: `hungry`,
-            type: undefined
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `mood`,
-            type: `Mood`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `race`,
-            type: `Race`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `tattoo`,
-            type: `[string, number, Color, Person]`
-        },
+            {
+                initializer: `[]`,
+                isRequired: true,
+                name: `colors`,
+                type: `Color[]`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `favouritePrey`,
+                type: `Prey`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `friend`,
+                type: `Person`
+            },
+            {
+                initializer: `false`,
+                isRequired: true,
+                name: `hungry`,
+                type: undefined
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `mood`,
+                type: `Mood`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `race`,
+                type: `Race`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `tattoo`,
+                type: `[string, number, Color, Person]`
+            },
         ],
     },
     {
@@ -207,18 +207,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employees`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employees`,
+                type: `number`
+            },
         ],
     },
     {
@@ -243,18 +243,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `volunteers`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `volunteers`,
+                type: `number`
+            },
         ],
     },
     {
@@ -267,12 +267,12 @@ const declarationInfos = [
         isAbstract: true,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `live`,
-            type: `boolean`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `live`,
+                type: `boolean`
+            },
         ],
     },
     {
@@ -285,54 +285,54 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 6,
         properties: [
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `address`,
-            type: `Address`
-        },
-        {
-            initializer: `[]`,
-            isRequired: true,
-            name: `cats`,
-            type: `Cat[]`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `employer`,
-            type: `Employer`
-        },
-        {
-            initializer: `[]`,
-            isRequired: true,
-            name: `family`,
-            type: `Person[]`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `firstName`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `isHappy`,
-            type: `boolean`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `lastName`,
-            type: `string`
-        },
-        {
-            initializer: `undefined`,
-            isRequired: true,
-            name: `nickNames`,
-            type: `StringOrStrings`
-        },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `address`,
+                type: `Address`
+            },
+            {
+                initializer: `[]`,
+                isRequired: true,
+                name: `cats`,
+                type: `Cat[]`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `employer`,
+                type: `Employer`
+            },
+            {
+                initializer: `[]`,
+                isRequired: true,
+                name: `family`,
+                type: `Person[]`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `firstName`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `isHappy`,
+                type: `boolean`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `lastName`,
+                type: `string`
+            },
+            {
+                initializer: `undefined`,
+                isRequired: true,
+                name: `nickNames`,
+                type: `StringOrStrings`
+            },
         ],
     },
     {
@@ -345,12 +345,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -363,12 +363,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -381,12 +381,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `foo`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `foo`,
+                type: `string`
+            },
         ],
     },
     {
@@ -399,12 +399,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `bar`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `bar`,
+                type: `string`
+            },
         ],
     },
     {
@@ -417,12 +417,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `string`
+            },
         ],
     },
     {
@@ -435,42 +435,42 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `str`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `num`,
-            type: `number`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `bool`,
-            type: `boolean`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `strs`,
-            type: `string[]`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `nums`,
-            type: `number[]`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `bools`,
-            type: `boolean[]`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `num`,
+                type: `number`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `bool`,
+                type: `boolean`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `strs`,
+                type: `string[]`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `nums`,
+                type: `number[]`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `bools`,
+                type: `boolean[]`
+            },
         ],
     },
     {
@@ -483,24 +483,24 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `a`,
-            type: `any`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `b`,
-            type: `any[]`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `c`,
-            type: undefined
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `a`,
+                type: `any`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `b`,
+                type: `any[]`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `c`,
+                type: undefined
+            },
         ],
     },
     {
@@ -517,12 +517,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `a`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `a`,
+                type: `string`
+            },
         ],
     },
     {
@@ -539,12 +539,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `a`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `a`,
+                type: `string`
+            },
         ],
     },
     {
@@ -557,30 +557,30 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: `'aaa'`,
-            isRequired: true,
-            name: `a`,
-            type: undefined
-        },
-        {
-            initializer: `2`,
-            isRequired: true,
-            name: `b`,
-            type: undefined
-        },
-        {
-            initializer: `false`,
-            isRequired: true,
-            name: `c`,
-            type: undefined
-        },
-        {
-            initializer: `true`,
-            isRequired: true,
-            name: `d`,
-            type: undefined
-        },
+            {
+                initializer: `'aaa'`,
+                isRequired: true,
+                name: `a`,
+                type: undefined
+            },
+            {
+                initializer: `2`,
+                isRequired: true,
+                name: `b`,
+                type: undefined
+            },
+            {
+                initializer: `false`,
+                isRequired: true,
+                name: `c`,
+                type: undefined
+            },
+            {
+                initializer: `true`,
+                isRequired: true,
+                name: `d`,
+                type: undefined
+            },
         ],
     },
     {
@@ -593,30 +593,30 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 4,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `a`,
-            type: undefined
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `b`,
-            type: undefined
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `c`,
-            type: undefined
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `d`,
-            type: undefined
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `a`,
+                type: undefined
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `b`,
+                type: undefined
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `c`,
+                type: undefined
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `d`,
+                type: undefined
+            },
         ],
     },
     {
@@ -629,12 +629,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -647,24 +647,24 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `age`,
-            type: `number`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `cat`,
-            type: `CatSpec`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `firstName`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: `number`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `cat`,
+                type: `CatSpec`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `firstName`,
+                type: `string`
+            },
         ],
     },
     {
@@ -677,12 +677,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 1,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -695,12 +695,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `color`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `color`,
+                type: `string`
+            },
         ],
     },
     {
@@ -713,12 +713,12 @@ const declarationInfos = [
         isAbstract: true,
         numberOfConstructorArguments: 1,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -731,12 +731,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 2,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `color`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `color`,
+                type: `string`
+            },
         ],
     },
     {
@@ -749,14 +749,14 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: `{
+            {
+                initializer: `{
         name: 'Léa'
     }`,
-            isRequired: true,
-            name: `person`,
-            type: `IDefaultsSpec`
-        },
+                isRequired: true,
+                name: `person`,
+                type: `IDefaultsSpec`
+            },
         ],
     },
     {
@@ -769,12 +769,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `age`,
-            type: `string | number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: `string | number`
+            },
         ],
     },
     {
@@ -787,12 +787,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `null`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `null`
+            },
         ],
     },
     {
@@ -805,12 +805,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `undefined`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `undefined`
+            },
         ],
     },
     {
@@ -823,12 +823,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `unknown`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `unknown`
+            },
         ],
     },
     {
@@ -841,12 +841,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `4`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `4`
+            },
         ],
     },
     {
@@ -859,12 +859,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `'a'`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `'a'`
+            },
         ],
     },
     {
@@ -877,12 +877,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `false`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `false`
+            },
         ],
     },
     {
@@ -895,12 +895,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `colors`,
-            type: `StringsOrStringSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `colors`,
+                type: `StringsOrStringSpec`
+            },
         ],
     },
     {
@@ -913,12 +913,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `colors`,
-            type: `StringOrStringsSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `colors`,
+                type: `StringOrStringsSpec`
+            },
         ],
     },
     {
@@ -931,12 +931,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `ages`,
-            type: `NumbersOrNumberSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `ages`,
+                type: `NumbersOrNumberSpec`
+            },
         ],
     },
     {
@@ -949,12 +949,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `ages`,
-            type: `NumberOrNumbersSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `ages`,
+                type: `NumberOrNumbersSpec`
+            },
         ],
     },
     {
@@ -967,12 +967,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `level`,
-            type: `LevelSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `level`,
+                type: `LevelSpec`
+            },
         ],
     },
     {
@@ -985,12 +985,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1003,12 +1003,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `union`,
-            type: `UnionTypeClassAndStringSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `union`,
+                type: `UnionTypeClassAndStringSpec`
+            },
         ],
     },
     {
@@ -1021,18 +1021,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `volunteers`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `volunteers`,
+                type: `number`
+            },
         ],
     },
     {
@@ -1045,18 +1045,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employees`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employees`,
+                type: `number`
+            },
         ],
     },
     {
@@ -1069,12 +1069,27 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employer`,
-            type: `EmployerSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employer`,
+                type: `EmployerSpec`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `ObjectLiteralStringSpecPropObject`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1087,12 +1102,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `{str: string}`
-        },
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `ObjectLiteralStringSpec`,
+                type: `ObjectLiteralStringSpecPropObject`
+            },
         ],
     },
     {
@@ -1105,12 +1120,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `prop`,
-            type: `{str: string, nb: number}`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `prop`,
+                type: `{str: string, nb: number}`
+            },
         ],
     },
     {
@@ -1123,12 +1138,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `date`,
-            type: `Date`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `date`,
+                type: `Date`
+            },
         ],
     },
     {
@@ -1141,12 +1156,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `color`,
-            type: `ColorSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `color`,
+                type: `ColorSpec`
+            },
         ],
     },
     {
@@ -1159,12 +1174,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `colors`,
-            type: `ColorSpec[]`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `colors`,
+                type: `ColorSpec[]`
+            },
         ],
     },
     {
@@ -1177,12 +1192,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1195,12 +1210,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1213,12 +1228,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `animal`,
-            type: `AnimalSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `animal`,
+                type: `AnimalSpec`
+            },
         ],
     },
     {
@@ -1231,12 +1246,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `simpleName`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1249,12 +1264,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1267,12 +1282,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1285,24 +1300,24 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `age`,
-            type: `number`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `cat`,
-            type: `CatTupleSpec`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `firstName`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: `number`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `cat`,
+                type: `CatTupleSpec`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `firstName`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1315,18 +1330,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employees`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employees`,
+                type: `number`
+            },
         ],
     },
     {
@@ -1339,12 +1354,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `str`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1357,18 +1372,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `volunteers`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `volunteers`,
+                type: `number`
+            },
         ],
     },
     {
@@ -1381,18 +1396,18 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employees`,
-            type: `number`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employees`,
+                type: `number`
+            },
         ],
     },
     {
@@ -1405,12 +1420,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `employer`,
-            type: `EmployerTypeSpec`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `employer`,
+                type: `EmployerTypeSpec`
+            },
         ],
     },
     {
@@ -1423,12 +1438,12 @@ const declarationInfos = [
         isAbstract: false,
         numberOfConstructorArguments: 0,
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `NonReadableType<any>`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `NonReadableType<any>`
+            },
         ],
     },
     {
@@ -1474,12 +1489,12 @@ const declarationInfos = [
         typeParameters: [
         ],
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `animal`,
-            type: `Animal`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `animal`,
+                type: `Animal`
+            },
         ],
     },
     {
@@ -1489,12 +1504,12 @@ const declarationInfos = [
         typeParameters: [
         ],
         properties: [
-        {
-            initializer: undefined,
-            isRequired: false,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1504,18 +1519,18 @@ const declarationInfos = [
         typeParameters: [
         ],
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
-        {
-            initializer: undefined,
-            isRequired: false,
-            name: `otherName`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `otherName`,
+                type: `string`
+            },
         ],
     },
     {
@@ -1525,12 +1540,12 @@ const declarationInfos = [
         typeParameters: [
         ],
         properties: [
-        {
-            initializer: undefined,
-            isRequired: true,
-            name: `name`,
-            type: `string`
-        },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
         ],
     },
     {

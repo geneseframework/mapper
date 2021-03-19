@@ -1,12 +1,12 @@
 import { MapperConfig } from '../../../shared/models/config.model';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
-import { Property } from '../../types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import * as chalk from 'chalk';
 import { getFirstContainer, hasLeftBorder } from '../../types/target/string/borders.type';
 import { Containerized } from '../../types/target/string/containerized.type';
 import { isComma } from '../../types/target/string/commas.type';
 import { trimSeparators } from '../../utils/target.util';
+import { Property } from '../../../shared/types/target/property.type';
 
 export class MapObjectService {
 
