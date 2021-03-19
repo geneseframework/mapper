@@ -1105,7 +1105,7 @@ const declarationInfos = [
             {
                 initializer: undefined,
                 isRequired: undefined,
-                name: `ObjectLiteralStringSpec`,
+                name: `propObject`,
                 type: `ObjectLiteralStringSpecPropObject`
             },
         ],

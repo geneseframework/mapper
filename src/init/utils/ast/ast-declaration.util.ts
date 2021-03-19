@@ -16,7 +16,7 @@ import * as chalk from 'chalk';
 import { isTypeLiteralProperty } from './ast-type-literal.util';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { sourceFilePath } from './ast-sourcefile.util';
-import { TypeLiteralDeclaration } from '../../types/type-literal-declaration.type';
+import { TypeLiteralDeclaration } from '../../models/type-literal-declaration.model';
 import { capitalize } from '../../../shared/utils/strings.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
@@ -64,10 +64,14 @@ export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLit
             const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), property.getTypeNode() as TypeLiteralNode);
             const interfaceInfoName: string = createInterfaceInfo(property.getName(), typeLiteralDeclaration);
             console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
-            properties.push({name: declaration.getName(), type: interfaceInfoName } as Property);
+            properties.push({name: property.getName(), type: interfaceInfoName } as Property);
+            // properties.push({name: declaration.getName(), type: interfaceInfoName } as Property);
         } else {
-            const structure = property.getStructure();
-            properties.push({name: structure.name, type: structure.type, initializer: structure.initializer, isRequired: !structure.hasQuestionToken} as Property);
+            const propertyStructure = property.getStructure();
+            // const structure = (declaration as ClassOrInterfaceDeclaration).getStructure();
+            const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+            console.log(chalk.redBright('PROPPPPP'), prop);
+            properties.push(prop);
         }
     }
     return properties;
