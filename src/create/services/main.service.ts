@@ -60,7 +60,7 @@ export class MainService {
 
     private static async mapString<T>(target: string, data: any, options?: MapperConfig): Promise<T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[]> {
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
-        await CheckTargetsService.start(target);
+        CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;
         } else if (isDateTypeName(target)) {
