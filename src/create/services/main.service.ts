@@ -60,7 +60,7 @@ export class MainService {
 
 
     private static mapString<T>(target: string, data: any, options?: MapperConfig): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
-        console.log(chalk.greenBright('MAP STRRRRR'), target, data);
+        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

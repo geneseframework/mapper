@@ -29,7 +29,7 @@ export class MapInstanceOrInterfaceService {
     private static mapDataKey<T>(data: any, options: MapperConfig, key: string, instance: T, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.type;
-        console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
+        // console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
         if (targetKeyType === 'undefined' || targetKeyType === undefined) {
             instance[key] = data;
         } else if (isQuoted(targetKeyType)) {
@@ -37,7 +37,6 @@ export class MapInstanceOrInterfaceService {
         } else {
             instance[key] = MainService.mapToString(targetKeyType, data, options);
         }
-        console.log(chalk.magentaBright('MAP DATA KKKK instance[key]'), instance[key]);
     }
 
 

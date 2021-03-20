@@ -15,7 +15,6 @@ export class Global {
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T;
-    // generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 
@@ -72,13 +71,6 @@ export class Global {
 
     get typeNames(): string[] {
         return this.declarationInfos.filter(d => d.kind === 'TypeAlias').map(d => d.name);
-    }
-
-
-    log(message: string, value: any, predicate: boolean): void {
-        if (predicate) {
-            // console.log(chalk.yellowBright(message), value);
-        }
     }
 
     logDuration(message: string, color: 'blueBright' | 'yellowBright' | 'magentaBright' | 'cyanBright' | 'greenBright' = 'blueBright'): void {

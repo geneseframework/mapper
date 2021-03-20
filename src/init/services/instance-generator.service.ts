@@ -112,7 +112,6 @@ export class InstanceGeneratorService {
      */
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `${tabs(2)}case '${instanceGenerator.id}':\n` +
-        // `${tabs(2)}const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
         `${tabs(4)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
         `${tabs(4)}break;\n`;
     }

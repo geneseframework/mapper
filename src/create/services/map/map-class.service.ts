@@ -22,9 +22,8 @@ export class MapClassService<T> {
             return undefined;
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
-        console.log(chalk.cyanBright('MAP CLASSSS'), target, data, instanceGenerator);
+        // console.log(chalk.cyanBright('MAP CLASSSS'), target, data, instanceGenerator);
         const instance: object = GLOBAL.generateInstance(instanceGenerator) as object;
-        console.log(chalk.cyanBright('MAP CLASSSS instance'), instance);
         MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
         return instance;
     }
