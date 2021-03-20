@@ -12,6 +12,7 @@ import {
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import { isArray } from '../../create/utils/native/arrays.util';
 import path = require('path');
+import { commonjs } from '../../shared/const/commonjs.const';
 
 export class ConfigService {
 
@@ -94,12 +95,12 @@ export class ConfigService {
 
 
     private static declareConstCode(): string {
-        return INIT.debug ? `const config = {\n` : `export var config = {\n`;
+        return INIT.debug || commonjs ? `const config = {\n` : `export var config = {\n`;
     }
 
 
     private static exportsCode(): string {
-        return INIT.debug ? `exports.config = config;\n` : `\n`;
+        return INIT.debug || commonjs ? `exports.config = config;\n` : `\n`;
     }
 
 
