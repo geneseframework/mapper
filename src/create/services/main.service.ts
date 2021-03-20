@@ -76,11 +76,11 @@ export class MainService {
         } else if (isPrimitiveTypeName(target)) {
             return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
-            return await MapQuotedService.create(target, data, options);
+            return MapQuotedService.create(target, data, options);
         } else if (isObjectLiteralType(target)) {
             return MapLiteralObjectService.create(data);
         } else if (isCurveBracketed(target)) {
-            return await MapObjectService.create(target, data, options)
+            return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return await MapDeclarationService.create(target, data, options);
         } else if (hasSeparators(target)) {
