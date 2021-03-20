@@ -6,8 +6,8 @@ import { DeclarationInfo } from '../../../shared/models/declarations/declaration
 
 export class MapGenericService {
 
-    static async create(target: Generic, data: any, options: MapperConfig): Promise<any> {
-        return await MainService.mapToString(typeOfGeneric(target), data, options);
+    static create(target: Generic, data: any, options: MapperConfig): any {
+        return MainService.mapToString(typeOfGeneric(target), data, options);
     }
 
     // TODO
