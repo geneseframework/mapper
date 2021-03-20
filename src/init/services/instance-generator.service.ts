@@ -54,7 +54,8 @@ export class InstanceGeneratorService {
      * @private
      */
     private static getInstanceGeneratorCode(): string {
-        return this.declareConstCode() +
+        return this.getRequiresCode() +
+            this.declareConstCode() +
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
@@ -68,8 +69,17 @@ export class InstanceGeneratorService {
     }
 
 
+    private static getRequiresCode(): string {
+        let requiresCode = ''
+        for (const instanceGenerator of INIT.instanceGenerators) {
+            requiresCode = `${requiresCode}const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
+        }
+        return `${requiresCode}\n`;
+    }
+
+
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const generateInstance = async function(instanceGenerator) {\n` : `export const generateInstance = async function(instanceGenerator) {\n`;
+        return INIT.debug || commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
     }
 
 
@@ -101,10 +111,9 @@ export class InstanceGeneratorService {
      * @private
      */
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
-        return `case '${instanceGenerator.id}':\n` +
-        `${tabs(2)}const ${instanceGenerator.typeName} = await require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
-        `${tabs(2)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
-        `${tabs(2)}break;\n`;
+        return `${tabs(2)}case '${instanceGenerator.id}':\n` +
+        `${tabs(4)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
+        `${tabs(4)}break;\n`;
     }
 
 

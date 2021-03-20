@@ -18,11 +18,11 @@ import { removeBorders } from '../../shared/utils/strings.util';
 export class CheckTargetsService {
 
 
-    static async start(target: string): Promise<void> {
+    static start(target: string): void {
         if (GLOBAL.wasChecked(target)) {
             return;
         }
-        if (!await CheckTargetsService.hasCorrectFormat(target)) {
+        if (!CheckTargetsService.hasCorrectFormat(target)) {
             throwWarning(`impossible to read target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
             // throwTarget(target);
         }
@@ -36,7 +36,7 @@ export class CheckTargetsService {
      * Don't use targets which are on one of these cases.
      * @param target
      */
-    static async hasCorrectFormat(target: string): Promise<boolean> {
+    static hasCorrectFormat(target: string): boolean {
         if (isNullOrUndefined(target)) {
             return true;
         }
@@ -44,37 +44,37 @@ export class CheckTargetsService {
             target = TargetService.toString(target);
         }
         const normalizedTarget: string = TargetService.normalize(target);
-        return await CheckTargetsService.hasCorrectElements(normalizedTarget);
+        return CheckTargetsService.hasCorrectElements(normalizedTarget);
     }
 
 
-    private static async hasCorrectElements(text: string): Promise<boolean> {
+    private static hasCorrectElements(text: string): boolean {
         if (isPrimitiveType(text)
             || isQuoted(text)
             || isStringAsTrivialType(text)) {
             return true;
         }
         if (isBracketedOrParenthesized(text)) {
-            return await this.isCorrectContainer(text);
+            return this.isCorrectContainer(text);
         } else if (isArrayType(text)) {
-            return await this.hasCorrectElements(typeOfArray(text));
+            return this.hasCorrectElements(typeOfArray(text));
         } else if (hasGeneric(text)) {
-            return await this.hasCorrectElements(typeOfGeneric(text));
+            return this.hasCorrectElements(typeOfGeneric(text));
         } else if(hasSeparators(trimSeparators(text))) {
-            return await this.haveCorrectElements(getElements(text));
+            return this.haveCorrectElements(getElements(text));
         } else if (isCurveBracketed(text)) {
             return isPrimitiveType(text); // TODO
         } else if (hasDeclaration(text)) {
             return true;
-        } else if (await this.isDeclaredOutOfProject(text)) { // TODO
+        } else if ( this.isDeclaredOutOfProject(text)) { // TODO
             return true;
         }
         return false;
     }
 
 
-    private static async isCorrectContainer(text: string): Promise<boolean> {
-        return isBracketedOrParenthesized(text) && await this.hasCorrectElements(removeBorders(text))
+    private static isCorrectContainer(text: string): boolean {
+        return isBracketedOrParenthesized(text) &&  this.hasCorrectElements(removeBorders(text))
     }
 
 
@@ -85,14 +85,14 @@ export class CheckTargetsService {
 
 
     // TODO
-    private static async isDeclaredOutOfProject(text: string): Promise<boolean> {
+    private static isDeclaredOutOfProject(text: string): boolean {
         return false;
     }
 
 
-    private static async haveCorrectElements(texts: string[]): Promise<boolean> {
+    private static haveCorrectElements(texts: string[]): boolean {
         for (const text of texts) {
-            if (!await this.hasCorrectElements(trimSeparators(text))) {
+            if (!this.hasCorrectElements(trimSeparators(text))) {
                 return false;
             }
         }

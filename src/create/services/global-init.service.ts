@@ -8,7 +8,7 @@ import { DeclarationInfo } from '../../shared/models/declarations/declaration-in
 export class GlobalInitService {
 
 
-    static async start(): Promise<void> {
+    static start(): void {
         if (!GLOBAL.wasInitialized) {
             GLOBAL.generateInstance = generateInstance;
             GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];

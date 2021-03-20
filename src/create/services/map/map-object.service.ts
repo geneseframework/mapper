@@ -11,12 +11,12 @@ import { Property } from '../../../shared/types/target/property.type';
 export class MapObjectService {
 
 
-    static async create(target: CurveBracketed, data: any, options?: MapperConfig): Promise<object> {
+    static create(target: CurveBracketed, data: any, options?: MapperConfig): object {
         console.log(chalk.cyanBright('MAP OBJJJJJJ'), target, data);
         return this.createNewInstance(target);
     }
 
-
+    // TODO: check if it really runs
     private static createNewInstance(target: CurveBracketed): object {
         const newInstance = {};
         const properties: string[] = this.getProperties(target);
@@ -75,11 +75,6 @@ export class MapObjectService {
     }
 
 
-    // private static isTheEndOfTheProperty(property: string, char: string): boolean {
-    //     return this.isNotInsideContainer() && [' ', ','];
-    // }
-
-
     private static getNextProperty(target: string): Property {
         const property: Property = {};
         property.name = target.match(/^\w+:/g)?.[0]?.slice(0, -1);
@@ -99,7 +94,7 @@ export class MapObjectService {
 
 
     private static isNewInstance(text: string) {
-
+        // TODO
     }
 
 

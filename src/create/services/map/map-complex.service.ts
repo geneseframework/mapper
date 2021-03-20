@@ -9,7 +9,7 @@ import { throwWarning } from '../../utils/errors.util';
 
 export class MapComplexService {
 
-    static async create(target: string, data: any, options: MapperConfig): Promise<any> {
+    static create(target: string, data: any, options: MapperConfig): any {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
@@ -22,12 +22,12 @@ export class MapComplexService {
                 } else if (isStringAsNullOrLiteral(others)) {
                     return options.behavior.differentiateStringsAndNumbers && isString(data) ? undefined : data;
                 } else {
-                    return await MainService.mapToString(others, data, options);
+                    return MainService.mapToString(others, data, options);
                 }
             }
-            const mapped: any = await MainService.mapToString(first, data, options);
+            const mapped: any = MainService.mapToString(first, data, options);
             // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
-            return mapped || await MainService.mapToString(others, data, options);
+            return mapped || MainService.mapToString(others, data, options);
         } else {
             throwWarning(`unknown target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
             // return throwTarget(target, data, options);

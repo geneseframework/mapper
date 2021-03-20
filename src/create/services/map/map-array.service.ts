@@ -7,7 +7,7 @@ import { ArrayType, typeOfArray } from '../../types/target/string/array-type.typ
 export class MapArrayService<T> {
 
 
-    static async create(target: ArrayType, data: any, options: MapperConfig): Promise<any[]> {
+    static create(target: ArrayType, data: any, options: MapperConfig): any[] {
         if (!isArray(data)) {
             return undefined;
         } else if (isAny(typeOfArray(target))) {
@@ -18,7 +18,7 @@ export class MapArrayService<T> {
                 if (element === null || element === undefined) {
                     arr.push(element);
                 } else {
-                    const mappedElement: any = await create(typeOfArray(target), element, options);
+                    const mappedElement: any = create(typeOfArray(target), element, options);
                     arr.push(mappedElement);
                 }
             }

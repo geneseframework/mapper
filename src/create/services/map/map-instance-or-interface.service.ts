@@ -11,22 +11,22 @@ import * as chalk from 'chalk';
 export class MapInstanceOrInterfaceService {
 
 
-    static async map(data: any, options: MapperConfig, instance: object, declaration: ClassOrInterfaceInfo): Promise<void> {
+    static map(data: any, options: MapperConfig, instance: object, declaration: ClassOrInterfaceInfo): void {
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
-                    await this.mapDataKey(data[key], options, key, instance, declaration);
+                    this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = await MainService.mapToString(declaration.indexableType.returnType, data[key], options);
+                instance[key] = MainService.mapToString(declaration.indexableType.returnType, data[key], options);
             }
         }
     }
 
 
-    private static async mapDataKey<T>(data: any, options: MapperConfig, key: string, instance: T, declaration: ClassOrInterfaceInfo): Promise<void> {
+    private static mapDataKey<T>(data: any, options: MapperConfig, key: string, instance: T, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.type;
         // console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
@@ -35,7 +35,7 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             instance[key] = removeBorders(targetKeyType);
         } else {
-            instance[key] = await MainService.mapToString(targetKeyType, data, options);
+            instance[key] = MainService.mapToString(targetKeyType, data, options);
         }
     }
 

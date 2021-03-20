@@ -7,29 +7,29 @@ export class MapEnumService {
 
 
     // TODO: check if we need options & create diagram
-    static async create<T>(target: string, data: any): Promise<T | T[]> {
+    static create<T>(target: string, data: any): T | T[] {
         const enumInfo: EnumInfo = GLOBAL.getEnumInfo(target);
         if (isArray(data) && isBracketed(target)) {
-            return await this.createEnumsArray(data, enumInfo);
+            return this.createEnumsArray(data, enumInfo);
         } else if (!isArray(data) && !isBracketed(target)) {
-            return await this.map(data, enumInfo);
+            return this.map(data, enumInfo);
         } else {
             return undefined;
         }
     }
 
 
-    private static async createEnumsArray<T>(data: any[], enumInfo: EnumInfo): Promise<T[]> {
+    private static createEnumsArray<T>(data: any[], enumInfo: EnumInfo): T[] {
         const enumsArray: T[] = [];
         for (const element of data) {
-            const value: T = await this.map(element, enumInfo);
+            const value: T = this.map(element, enumInfo);
             enumsArray.push(value);
         }
         return enumsArray;
     }
 
 
-    static async map(dataValue: any, enumInfo: EnumInfo): Promise<any> {
+    static map(dataValue: any, enumInfo: EnumInfo): any {
         if (this.isEnumValue(dataValue, enumInfo)) {
             return dataValue;
         } else {
