@@ -54,8 +54,9 @@ export class InstanceGeneratorService {
      * @private
      */
     private static getInstanceGeneratorCode(): string {
-        return this.getRequiresCode() +
-            this.declareConstCode() +
+        // return this.getRequiresCode() +
+        return this.declareConstCode() +
+            // this.declareConstCode() +
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
@@ -97,10 +98,10 @@ export class InstanceGeneratorService {
         for (const instanceGenerator of INIT.instanceGenerators) {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
         }
-        switchCode = `${switchCode}${tab}default:\n` +
-            `${tabs(2)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
-            `${tabs(2)}instance = undefined;\n` +
-            `}\n`;
+        switchCode = `${switchCode}${tabs(3)}default:\n` +
+            `${tabs(4)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
+            `${tabs(4)}instance = undefined;\n` +
+            `${tabs(2)}}\n`;
         return switchCode;
     }
 
@@ -112,8 +113,9 @@ export class InstanceGeneratorService {
      */
     private static switchClause(instanceGenerator: InstanceGenerator<any>): string {
         return `${tabs(2)}case '${instanceGenerator.id}':\n` +
-        `${tabs(4)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
-        `${tabs(4)}break;\n`;
+            `${tabs(4)}const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n` +
+            `${tabs(4)}instance = new ${instanceGenerator.typeName}${this.undefinedArguments(instanceGenerator)};\n` +
+            `${tabs(4)}break;\n`;
     }
 
 
