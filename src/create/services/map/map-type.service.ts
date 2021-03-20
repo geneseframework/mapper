@@ -6,9 +6,9 @@ import { TypeInfo } from '../../../shared/models/declarations/type-info.model';
 export class MapTypeService {
 
 
-    static async create<T>(target: string, data: any, options: MapperConfig): Promise<any> {
+    static create<T>(target: string, data: any, options: MapperConfig): any {
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
-        return await MainService.mapToString(typeInfo.type, data, options);
+        return MainService.mapToString(typeInfo.type, data, options);
     }
 
 }

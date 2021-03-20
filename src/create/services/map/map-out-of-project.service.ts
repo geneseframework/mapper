@@ -5,7 +5,7 @@ import { MainService } from '../main.service';
 // TODO
 export class MapOutOfProjectService {
 
-    static async create(target: string, data: any, options: MapperConfig): Promise<any> {
+    static create(target: string, data: any, options: MapperConfig): any {
         console.log(chalk.yellowBright('MAP OOPPPPPPPP'), target, data);
         return MainService.mapToString(target, data, options);
     }
