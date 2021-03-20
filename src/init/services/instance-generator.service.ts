@@ -3,6 +3,7 @@ import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast
 import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { tab, tabs } from '../../shared/utils/strings.util';
+import { commonjs } from '../../shared/const/commonjs.const';
 
 export class InstanceGeneratorService {
 
@@ -68,12 +69,12 @@ export class InstanceGeneratorService {
 
 
     private static declareConstCode(): string {
-        return INIT.debug ? `const generateInstance = async function(instanceGenerator) {\n` : `export const generateInstance = async function(instanceGenerator) {\n`;
+        return INIT.debug || commonjs ? `const generateInstance = async function(instanceGenerator) {\n` : `export const generateInstance = async function(instanceGenerator) {\n`;
     }
 
 
     private static exportsCode(): string {
-        return INIT.debug ? `exports.generateInstance = generateInstance;\n` : `\n`;
+        return INIT.debug || commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
     }
 
 

@@ -11,6 +11,7 @@ import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shar
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 import { addQuotes } from '../../shared/types/quoted.type';
 import { tab, tabs } from '../../shared/utils/strings.util';
+import { commonjs } from '../../shared/const/commonjs.const';
 
 export class DeclarationInfoGeneratorService {
 
@@ -70,12 +71,12 @@ export class DeclarationInfoGeneratorService {
 
 
     private static declareConstCode(): string {
-        return INIT.debug ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
+        return INIT.debug || commonjs ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
     }
 
 
     private static exportsCode(): string {
-        return INIT.debug ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
+        return INIT.debug || commonjs ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
     }
 
 
