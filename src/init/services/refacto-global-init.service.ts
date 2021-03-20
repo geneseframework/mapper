@@ -41,7 +41,6 @@ export class RefactoGlobalInitService {
 
     private static setRequireStatement(variableStatement: VariableStatement, sourceFile: SourceFile): void {
         let text: string = variableStatement.getText();
-        console.log(chalk.blueBright('REQUIREeeee'), text);
         text = text.replace('../../dist', '../../../generated');
         variableStatement.replaceWithText(text);
     }
