@@ -7,7 +7,7 @@ import { isNullOrUndefined } from '../../utils/native/any.util';
 export class MapTupleService<T> {
 
 
-    static async create(target: Bracketed, data: any, options: MapperConfig): Promise<any[]> {
+    static create(target: Bracketed, data: any, options: MapperConfig): any[] {
         if (!isArrayOfSameLength(target, data)) {
             return undefined;
         }
@@ -16,7 +16,7 @@ export class MapTupleService<T> {
             if (isNullOrUndefined(data[i])) {
                 tuple.push(data[i]);
             } else {
-                tuple.push(await create(getContainerizedElements(target)[i], data[i], options));
+                tuple.push(create(getContainerizedElements(target)[i], data[i], options));
             }
         }
         return tuple;

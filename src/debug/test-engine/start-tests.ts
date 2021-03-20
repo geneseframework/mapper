@@ -24,7 +24,7 @@ export async function startTests(): Promise<void> {
     GLOBAL.generateInstance = generateInstance;
     const specFiles: string[] = INIT.project.addSourceFilesAtPaths('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/*.spec.ts').map(s => s.getFilePath());
     await getTests(specFiles);
-    await expect(TESTS.testMappers.concat(TESTS.its));
+    expect(TESTS.testMappers.concat(TESTS.its));
     logFailedTests();
     const duration: number = Date.now() - start;
     console.log(chalk.greenBright('\nTests passed : '), TESTS.testsPassed);
@@ -59,7 +59,7 @@ function clearDeclarationInfos(project: Project): void {
 
 function clearGenerateInstance(project: Project): void {
     const instanceGeneratorSourceFile: SourceFile = project.addSourceFileAtPath( process.cwd() + '/src/dist/instance-generator.ts');
-    const code = `export const generateInstance = async function(instanceGenerator) {
+    const code = `export const generateInstance = function(instanceGenerator) {
     try {
         let instance;
         switch (instanceGenerator.id) {

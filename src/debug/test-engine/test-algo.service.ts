@@ -7,20 +7,20 @@ import { isTestIt, TestType } from './test-type.type';
 const MAX_DURATION = 50;
 
 
-export async function expect(testTypes: TestType[]): Promise<void> {
+export function expect(testTypes: TestType[]): void {
     for (const testMapper of includedTestTypes(testTypes)) {
-        await checkTest(testMapper);
+        checkTest(testMapper);
     }
 }
 
 
-async function checkTest(testType: TestType): Promise<void> {
+function checkTest(testType: TestType): void {
     let result;
     const start = Date.now();
     if (isTestIt(testType)) {
-        result = await testType.method(testType.data);
+        result = testType.method(testType.data);
     } else {
-        result = await create(testType.mapParameter, testType.data, testType.options?.config);
+        result = create(testType.mapParameter, testType.data, testType.options?.config);
     }
     const duration: number = Date.now() - start;
     if ((isExpectedResult(testType, result) && !isTooLong(duration)) || shouldFail(testType)) {

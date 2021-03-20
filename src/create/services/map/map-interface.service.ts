@@ -8,15 +8,15 @@ import { InterfaceInfo } from '../../../shared/models/declarations/interface-inf
 export class MapInterfaceService {
 
 
-    static async create<T>(target: string, data: any, options: MapperConfig): Promise<T | T[] | Date | Date[]> {
-        return !isObjectWhichIsNotArray(data) ? undefined : await this.createInterface<T>(target, data, options);
+    static create<T>(target: string, data: any, options: MapperConfig): T | T[] | Date | Date[] {
+        return !isObjectWhichIsNotArray(data) ? undefined : this.createInterface<T>(target, data, options);
     }
 
 
-    static async createInterface<T>(target: string, data: any, options: MapperConfig): Promise<T | Date> {
+    static createInterface<T>(target: string, data: any, options: MapperConfig): T | Date {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
-        await MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
+        MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
         return this.implementsRequiredProperties(tInterface, interfaceInfo) ? tInterface as T : undefined;
     }
 

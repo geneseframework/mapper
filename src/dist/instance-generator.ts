@@ -1,4 +1,4 @@
-export const generateInstance = async function(instanceGenerator) {
+export const generateInstance = function(instanceGenerator) {
     try {
         let instance;
         switch (instanceGenerator.id) {

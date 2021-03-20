@@ -14,7 +14,8 @@ export class Global {
     config: MapperConfig = undefined;
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
-    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
+    generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T;
+    // generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => Promise<T>;
     start: number = undefined;
     wasInitialized: boolean = undefined;
 
