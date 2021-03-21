@@ -15,7 +15,7 @@ With @genese/mapper, you can transform untyped javascript objects into safe type
 
 @genese/mapper exposes only one method, the `create()` method.
 
-- Example 1
+- Example 1 : creation of a simple object
 
 ```ts
 export class Person {
@@ -40,7 +40,7 @@ person.name = data.name;
 
 Now, assume that `Person` is a little more complex class :
 
-- Example 2
+- Example 2 : creation of a more complex object
 
 ```ts
 export class Person {
@@ -91,7 +91,49 @@ person.cat.meaow(); // => logs 'Meaow !'
 ```
 The `data` object may be as complex as you want, you will still have only one line to write to create a real object, including nested objects if necessary.
 
-In reality, even if this kind of usage can simplify the creation of known objects, the real power of `@genese/mapper` is to give you the possibility to create safe typed objects even when you don't know the data value or even the shape of data. We will see some examples in the next chapters.
+- Example 3 : validation of the data shape
+
+In reality, even if this kind of usage can simplify the creation of known objects, the real power of `@genese/mapper` is to give you the possibility to create safe typed objects even when you don't know the data value or even the shape of data.
+Assume that you receive some data with unknown value or shape, like for http requests. You want to check the data shape and verify if the data value respects your DTO contract :
+
+```ts
+export interface PersonDto {
+	name: string;
+	skills: string[];
+}
+```
+
+Without @genese/mapper, your NestJs controller in the backend should be like this :
+
+```ts
+@Post()
+addPerson(@Body() data: PersonDto) {
+	if (isValid(data)) {
+		addNewPersonToDataBase(data); // do some stuff
+    }
+}
+
+isValid(data: any): data is PersonDto {
+	return data 
+        && typeof data.name === 'string'
+        && Array.isArray(data.skills)
+        && data.skills.every(d => typeof d === 'string');
+}
+```
+
+With @genese/mapper, you could simply do that :
+
+```ts
+@Post()
+addPerson(@Body() data: PersonDto) {
+    if (create('PersonDto', data)) { // The create() method checks if data value respects the contract of the interface PersonDto. If data is incorrect, create() returns undefined.
+        addNewPersonToDataBase(data);
+    }
+}
+```
+
+The `create()` method can be used with primitives, arrays, tuples, classes, interfaces, enums and types.
+
 
 [Top](#table-of-contents)
 ## Installation
@@ -177,7 +219,28 @@ export class Person {
 }
 
 const person = create(Person, {name: 'Léa'});
-console.log('PERSON :', person); // => logs Person {
-person.hello();
+console.log('PERSON :', person); // => log : PERSON Person { name: 'Léa' }
+person.hello(); // => log : Hello John !
+```
+Of course, the `create()` method could be called from another file.
 
+## Unknown data value and shape
+
+In many cases, you don't know the value of `data`, like results of http requests. You must check if data exists, if it respects the contract (has a correct shape), remove the eventual unnecessary properties and eventually add default values.
+You can do all of this in one line with the `create()` method. In case of irrelevant data properties, wrong values format or missing properties, the `create()` method has specific behavior which we will now explain. In some cases, this behavior can be modified thanks to `geneseconfig.ts` file.
+We will now explain this behavior for the different cases :
+
+### Primitives
+
+You want to check if the received data is a primitive (string, number or boolean) :
+
+```ts
+const foo: string = create('string', data); // => foo equals data if data is a string, and undefined if not.
+```
+Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes or primitive constructors, like `create(Person, data)` or `create(String, data)`;
+
+In the previous code, if data is equal to `1`, `foo` will be equal to `undefined`. Sometimes, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
+
+```ts
+const foo: string = create('string', data, {}); // => foo equals data if data is a string, and undefined if not.
 ```
