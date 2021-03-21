@@ -1,51 +1,139 @@
-# genese-mapper
-Generic mapper of javascript objects.
+# @genese/mapper
+Map javascript objects of unknown type into the required TypeScript type.
 
 ## Table of Contents
-* [Why use genese-mapper ?](#why-use-genese)
+* [Basic usage](#basic-usage)
 * [Installation](#installation)
 * [Models](#models)
 * [Methods](#methods)
 * [Other tools](#other-tools)
 
 
-## Why use genese-mapper
+## Basic usage
 
-genese-mapper is the core module of the ***Genese*** framework. With genese-mapper, you can transform untyped javascript objects into typed objects. The most common use of genese-mapper is to transform `json` http responses into typed objects (with your own models). 
+With @genese/mapper, you can transform untyped javascript objects into safe typed objects.
 
-genese-mapper can be used alone if you just need to type some javascript objects, but is much more powerful inside other genese modules, like [genese-angular](https://www.npmjs.com/package/genese-angular), which is combining generic http data-services and generic mapper service. For example, with genese-angular, you can just remove all your long and fastidious data-services and mappers : one line in your components is enough !
+@genese/mapper exposes only one method, the `create()` method.
 
-- Example 
+- Example 1 : creation of a simple object
 
-
-Supposing that in your environment.ts, `genese.api = http://localhost:3000` .
-
-``books.component.ts``
 ```ts
-export class BooksComponent {
-
-    public booksGenese: Genese<Book>;
-
-    constructor(private geneseService: GeneseService) {
-        this.booksGenese = geneseService.getGeneseInstance(Book);
+export class Person {
+	
+	name: string;
+	
+	hello(): void {
+		console.log(`Hello ${this.name} !`);
     }
+}
 
-    this.booksGenese.getOne('/books', '1').subscribe((book: Book) => {
-         // book is the data returned by 
-         // the request http://localhost:3000/books/1
-         // and formatted with type Book
-    });
+const data = {name: 'John'};
+const person: Person = create(Person, data); // => person is a real Person object
+person.hello(); // => logs 'Hello John !'
+```
+
+The example 1 is trivial, and is equivalent to :
+```ts
+const person: Person = new Person();
+person.name = data.name;
+```
+
+Now, assume that `Person` is a little more complex class :
+
+- Example 2 : creation of a more complex object
+
+```ts
+export class Person {
+	
+	age: number;
+	cat: Cat;
+	firstname: string;
+	lastname: string;
+	
+	hello(): void {
+		console.log(`Hello ${this.name} !`);
+    }
+}
+
+export class Cat {
+	name: string;
+	
+	meaow(): void {
+        console.log(`Meaow !`);
+    }
+}
+
+const data = {
+	age: 20, 
+    cat: {
+		name: 'Molly'
+    },
+    firstname: 'John', 
+    lastname: 'Doe',
+};
+```
+In this case, it would be much longer to create manually the `Person` object :
+```ts
+const cat: Cat = new Cat();
+cat.name = data.cat.name;
+const person: Person = new Person();
+person.age = data.age;
+person.firstname = data.firstname;
+person.lastname = data.lastname;
+person.hello(); // => logs 'Hello John !'
+person.cat.meaow(); // => logs 'Meaow !'
+```
+With `@genese/mapper`, you can do it in one line :
+```ts
+const person: Person = create(Person, data); // => person is a real Person object and contains a real Cat object
+person.hello(); // => logs 'Hello John !'
+person.cat.meaow(); // => logs 'Meaow !'
+```
+The `data` object may be as complex as you want, you will still have only one line to write to create a real object, including nested objects if necessary.
+
+- Example 3 : validation of the data shape
+
+In reality, even if this kind of usage can simplify the creation of known objects, the real power of `@genese/mapper` is to give you the possibility to create safe typed objects even when you don't know the data value or even the shape of data.
+Assume that you receive some data with unknown value or shape, like for http requests. You want to check the data shape and verify if the data value respects your DTO contract :
+
+```ts
+export interface PersonDto {
+	name: string;
+	skills: string[];
 }
 ```
 
-In this simple example, the line `this.booksGenese.getOne('/books', '1')` sends a GET request with the Angular `HttpClient` method, and returns an object of type `Book` (which is a model that you defined beforehand).
+Without @genese/mapper, your NestJs controller in the backend should be like this :
 
-But under the hood, genese-angular calls the genese-mapper module, which is the real generic mapper. 
-The genese-angular module simply added genese-mapper as dependency.
+```ts
+@Post()
+addPerson(@Body() data: PersonDto) {
+	if (isValid(data)) {
+		addNewPersonToDataBase(data); // do some stuff
+    }
+}
 
-That's why you can use genese-mapper alone, or use it as a dependency of another module, like genese-angular.
+isValid(data: any): data is PersonDto {
+	return data 
+        && typeof data.name === 'string'
+        && Array.isArray(data.skills)
+        && data.skills.every(d => typeof d === 'string');
+}
+```
 
-A complete demonstration of use of genese-mapper with genese-angular is available here : [genese-angular-demo](https://www.npmjs.com/package/genese-angular-demo).
+With @genese/mapper, you could simply do that :
+
+```ts
+@Post()
+addPerson(@Body() data: PersonDto) {
+    if (create('PersonDto', data)) { // The create() method checks if data value respects the contract of the interface PersonDto. If data is incorrect, create() returns undefined.
+        addNewPersonToDataBase(data);
+    }
+}
+```
+
+The `create()` method can be used with primitives, arrays, tuples, classes, interfaces, enums and types.
+
 
 [Top](#table-of-contents)
 ## Installation
@@ -53,263 +141,123 @@ A complete demonstration of use of genese-mapper with genese-angular is availabl
 Install the npm module:
 
 ```sh
-npm install genese-mapper --save
+npm install @genese/mapper
 ```
+
+[Top](#table-of-contents)
+## Configuration
+
+### package.json
+
+Add this line to your `package.json` :
+```json
+{
+    "scripts": {
+        "mapper": "node node_modules/@genese/mapper/dist/init/init.js"
+    }
+}
+```
+
+The instruction `npm run mapper` **must** be called **before** executing your own code.
+
+Example with Angular application :
+
+```json
+{
+    "scripts": {
+        "mapper": "node node_modules/@genese/mapper/dist/init/init.js",
+        "start": "npm run mapper && ng serve"
+    }
+}
+```
+
+Example if you run your code in NodeJs environment, like in backend :
+
+```json
+{
+    "scripts": {
+        "mapper": "node node_modules/@genese/mapper/dist/init/init.js",
+        "start": "npm run mapper && ts-node main.ts"
+    }
+}
+```
+This constraint is due to the fact that in a first phase of its process, `@genese/mapper` will read the code of your project and create some temporary files which will be used later, when you will call the `create()` method.
+
+###geneseconfig.ts
+
+Add a file called `geneseconfig.ts` at the root of your project :
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {}
+}
+```
+For now, let's keep the property `mapper` empty. We will see configuration options later.
+
+
 
 [Top](#table-of-contents) 
-## Models
+## Start
 
-Genese needs to be able to find all the properties of your models. That's why it is imperative to set default values to all the properties of your models, including inside nested objects.
-Respecting this constraint, Genese will be able to return all the objects correctly formatted.
+Let's try `@genese/mapper` in a simple example, assuming that you want to run your code in NodeJs environment.
 
-* Note
+For that, install the `ts-node` module :
 
-A Genese good practice is to set all the properties of your models as optional. It will be easier to create new objects and will not crash if one day you forget to set a property.
+```sh
+npm install ts-node
+```
+Create a file called `mapper-example.ts` at the root of your project with this code :
+```ts
+import { create } from '@genese/mapper/dist/create/main';
 
-[Top](#table-of-contents) -> [Models](#models)
+export class Person {
+    name: string;
+
+    hello() {
+        console.log(`Hello ${this.name} !`)
+    }
+}
+
+const person = create(Person, {name: 'Léa'});
+console.log('PERSON :', person); // => log : PERSON Person { name: 'Léa' }
+person.hello(); // => log : Hello John !
+```
+Of course, the `create()` method could be called from another file.
+
+## Unknown data value and shape
+
+In many cases, you don't know the value of `data`, like results of http requests. You must check if data exists, if it respects the contract (has a correct shape), remove the eventual unnecessary properties and eventually add default values.
+You can do all of this in one line with the `create()` method. In case of irrelevant data properties, wrong values format or missing properties, the `create()` method has specific behavior which we will now explain. In some cases, this behavior can be modified thanks to `geneseconfig.ts` file.
+We will now explain this behavior for the different cases :
+
 ### Primitives
-* Example with primitives
+
+You want to check if the received data is a primitive (string, number or boolean) :
 
 ```ts
-export class Book = {
-    id ?= '';
-    codeNumbers: number[] = [0];
-    collectionNumber?: 0;
-    isAvailable?: true;
-    name ?= '';
-}
+const foo: string = create('string', data); // => foo equals data if data is a string, and undefined if not.
+```
+Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes or primitive constructors, like `create(Person, data)` or `create(String, data)`;
+
+In the previous code, if data is equal to `1`, `foo` will be equal to `undefined`. Sometimes, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
+
+```ts
+const foo: string = create('string', data, {castStringsAndNumbers: true}); // => foo equals '1' if data equals 1.
 ```
 
-[Top](#table-of-contents) -> [Models](#models)
-### Nested objects
-* Example with nested object
+If you want to use this behavior for all your project, you can do it with the `geneseconfig.ts` file :
 
 ```ts
-export class Book = {
-    id ?= '';
-    public editor?: {
-        name?: string,
-        place?: {
-            city?: string,
-            country?: string
-        }
-    } = {
-        name: '',
-        place: {
-            city: '',
-            country: ''
-        }
-    };
-}
-```
-
-[Top](#table-of-contents) -> [Models](#models)
-### Indexable types
-
-Suppose that you wait http responses like this 
-```ts
-{
-    en: 'The caves of steel',
-    fr: 'Les cavernes d\'acier'
-}
-``` 
-and suppose that you don't know in advance how many properties will have your response. In this example, you don't know in advance how many translations you will receive and in which languages.
-In this case, you need to use indexable types like this :
-
-```ts
-export class Book = {
-    [key: string]: string
-}
-```
-This is the simplest example of indexable types.
-Now, suppose that your http request returns something more complex like this :
-
-```ts
-{
-    en: {
-        country: 'England',
-        name: 'The caves of steel'
-    },
-    fr: {
-        country: 'France',
-        name: 'Les cavernes d\'acier'
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+        behavior: {
+            castStringsAndNumbers: true,
+        },
     }
 }
+
+const foo: string = create('string', data); // => Now foo equals '1' if data equals 1, without adding option inside the `create()` method.
 ```
 
-In this case, you simply need to define your Genese model like this :
-```ts
-export class Book = {
-    [key: string]: {
-        country?: string,
-        name?: string
-    } = {
-        gnIndexableType: {
-            country: '',
-            name: ''
-        }
-    }
-}
-```
+At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
 
-The ``gnIndexableType`` key is a special key used by Genese to understand that you wait a response with indexableTypes.
-You'll need to use it every time you'll have to use indexable types.
-
-[Top](#table-of-contents)
-## Usage
-
-At first, define your model :
-
-`book.model.ts` 
-```ts
-export class Book = {
-    id ?= '';
-    collectionNumber ?= 0;
-    editor?: {
-        country: string,
-        name: string
-    } = { country: '', name: ''};
-    isAvailable?: true;
-    name ?= '';
-}
-```
-
-Then, simply create a new GeneseMapper defined with the Book class : 
-
-```ts
-    const geneseMapper = new GeneseMapper(Book); 
-```
-
-Now, you're ready to use genese-mapper methods ! 
-
-[Top](#table-of-contents)
-## Methods
-
- genese-mapper exports two main methods :
- 
- ### map(data: any): T
- 
- This method receives a javascript object without any type, and returns a Typescript object with T type. T is the name of the class used to create your GeneseMapper: (`Book` in our case).
- 
- - Example
- 
-```ts
-class Book = {
-    id ?= '';
-    collectionNumber ?= 0;
-    editor?: {
-        country: string,
-        name: string
-    } = { country: '', name: ''};
-    isAvailable?: true;
-    name ?= '';
-    other ?= undefined;
-}
-
-const data = {
-    id: 1,
-    collectionNumber: 3,
-    editor: {
-        country: 'France',
-        name: 'Gallimard',
-        town: 'Paris'
-    },
-    name: 'The caves of steel',
-    other: 'Author: Isaac Asimov',
-    price: 10
-}
-
-const geneseMapper = new GeneseMapper(Book); 
-
-const book: Book = geneseMapper.map(data);
-
-// book will be equal to :
-
-{
-    id: '1',
-    collectionNumber: 3,
-    editor: {
-        country: 'France',
-        name: 'Gallimard',
-    },
-    isAvailable: true,
-    name: 'The caves of steel',
-    other: 'Author: Isaac Asimov',
-}
-
-```
-
-As you can see, `book` is a Typescript object with type `Book`. genese-mapper looped on the properties of the `Book` class, and checked if data have the same property names with the expected type, including in nested objects.
-
-***Note***
-
-- If some properties of data object are not in your model, like `price` or `editor.town`, they are simply removed.
-- If some properties of the class are not present in data object, the value by default is used, like for the `iSavailable` property.
-- Numbers are automatically casted in strings if necessary (like for `id` property), and inversely (if the string can be cast in number). 
-- When you set a default value to `undefined` in your model, genese accepts any kind of data for this property, like for `other` property.
-
-### arrayMap(data: any[]): T[]
-
-This method simply uses the `.map()` method for each element of the `data` array, and returns an array of Typescript object with type T.
-
-- Example
-
-
- 
-```ts
-class Book = {
-    id ?= '';
-    isAvailable?: true;
-    name ?= '';
-}
-
-const data = [
-    {
-        id: 1,
-        name: 'The caves of steel',
-        price: 10
-    },
-    {
-        id: 2,
-        name: 'Robots and Empire',
-        price: 20
-    }
-]
-
-const geneseMapper = new GeneseMapper(Book); 
-
-const books: Book[] = geneseMapper.arrayMap(data);
-
-// books will be equal to :
-[
-    {
-        id: '1',
-        isAvailable: true,
-        name: 'The caves of steel'
-    },
-    {
-        id: '2',
-        isAvailable: true,
-        name: 'Robots and Empire'
-    }
-]
-
-```
-
-[Top](#table-of-contents)
-## Other tools
-
-`.map()` and `arrayMap()` are the main Genese methods, but genese-mapper provides you some other tools which can be very useful :
-
-
-### clone(model: any): any
-
-Makes a deep copy of an object and returns its clone. 
-
-### isPrimitive(target: any): boolean
-
-Returns `true` if the type of `target` is `string`, `boolean` or `number`, `false` if not.
-
-### isSameObject(obj1: any, obj2: any): boolean
-
-Returns `true` if `obj1` and `obj2` are "equivalent", ie if they have the same keys with the same values, even in deep nested objects. Returns `false` if not.

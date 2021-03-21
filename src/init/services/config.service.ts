@@ -87,7 +87,7 @@ export class ConfigService {
     private static getConfigCode(geneseConfigMapper: MapperConfig): string {
         return this.declareConstCode() +
             `${tab}behavior: {\n` +
-            `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.differentiateStringsAndNumbers.toString()},\n` +
+            `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.castStringsAndNumbers.toString()},\n` +
             `${tab}}\n` +
             `}\n` +
             this.exportsCode();

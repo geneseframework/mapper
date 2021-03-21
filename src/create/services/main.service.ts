@@ -1,5 +1,4 @@
 import { Target } from '../types/target/target.type';
-import { MapperConfig } from '../../shared/models/config.model';
 import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
 import { OptionsService } from './options.service';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
@@ -31,6 +30,7 @@ import { GlobalInitService } from './global-init.service';
 import { MapObjectService } from './map/map-object.service';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 import * as chalk from 'chalk';
+import { MapperBehavior } from '../../shared/models/config-behavior.model';
 
 export class MainService {
 
@@ -44,7 +44,7 @@ export class MainService {
      * @param data
      * @param options
      */
-    static map<T>(target: Target<T>, data: any, options?: MapperConfig): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    static map<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
          GlobalInitService.start();
         if (!OptionsService.wasInitialized(options)) {
@@ -54,12 +54,12 @@ export class MainService {
     }
 
 
-    static mapToString<T>(target: Target<T>, data: any, options?: MapperConfig): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    static mapToString<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         return this.mapString(TargetService.toString(target), data, options);
     }
 
 
-    private static mapString<T>(target: string, data: any, options?: MapperConfig): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    private static mapString<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {

@@ -1,4 +1,3 @@
-import { MapperConfig } from '../../../shared/models/config.model';
 import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import * as chalk from 'chalk';
@@ -7,16 +6,17 @@ import { Containerized } from '../../types/target/string/containerized.type';
 import { isComma } from '../../types/target/string/commas.type';
 import { trimSeparators } from '../../utils/target.util';
 import { Property } from '../../../shared/types/target/property.type';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapObjectService {
 
 
-    static create(target: CurveBracketed, data: any, options?: MapperConfig): object {
+    static create(target: CurveBracketed, data: any, options?: MapperBehavior): object {
         console.log(chalk.cyanBright('MAP OBJJJJJJ'), target, data);
         return this.createNewInstance(target);
     }
 
-    // TODO: check if it really runs
+    // TODO: check if it really runs and if we need options
     private static createNewInstance(target: CurveBracketed): object {
         const newInstance = {};
         const properties: string[] = this.getProperties(target);

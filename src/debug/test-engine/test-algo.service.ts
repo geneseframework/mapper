@@ -20,7 +20,7 @@ function checkTest(testType: TestType): void {
     if (isTestIt(testType)) {
         result = testType.method(testType.data);
     } else {
-        result = create(testType.mapParameter, testType.data, testType.options?.config);
+        result = create(testType.mapParameter, testType.data, testType.options?.behavior);
     }
     const duration: number = Date.now() - start;
     if ((isExpectedResult(testType, result) && !isTooLong(duration)) || shouldFail(testType)) {

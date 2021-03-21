@@ -1,13 +1,13 @@
 import { isArray } from '../../utils/native/arrays.util';
 import { isAny } from '../../utils/native/any.util';
-import { MapperConfig } from '../../../shared/models/config.model';
 import { create } from '../../main';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapArrayService<T> {
 
 
-    static create(target: ArrayType, data: any, options: MapperConfig): any[] {
+    static create(target: ArrayType, data: any, options: MapperBehavior): any[] {
         if (!isArray(data)) {
             return undefined;
         } else if (isAny(typeOfArray(target))) {

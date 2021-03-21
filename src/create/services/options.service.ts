@@ -1,15 +1,14 @@
-import { MapperConfig } from '../../shared/models/config.model';
 import 'reflect-metadata';
 import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
-// import { CONFIG_OLD } from '../const/config.const';
 import { isBoolean } from '../utils/native/booleans.util';
 import { clone } from '../utils/native/clone.util';
 import { GLOBAL } from '../const/global.const';
+import { MapperBehavior } from '../../shared/models/config-behavior.model';
 
 export class OptionsService {
 
 
-    static wasInitialized(options: MapperConfig): boolean {
+    static wasInitialized(options: MapperBehavior): boolean {
         if (!isObjectWhichIsNotArray(options)) {
             return false;
         }
@@ -17,14 +16,12 @@ export class OptionsService {
     }
 
 
-    static initialize(options: MapperConfig): MapperConfig {
-        const createOptions: MapperConfig = clone(GLOBAL.config);
+    static initialize(options: MapperBehavior): MapperBehavior {
+        const createOptions: MapperBehavior = clone(GLOBAL.config);
         if (!options) {
             return createOptions;
         }
-        createOptions.behavior.differentiateStringsAndNumbers = isBoolean(options?.behavior?.differentiateStringsAndNumbers) ? options.behavior.differentiateStringsAndNumbers : createOptions.behavior.differentiateStringsAndNumbers;
-        // config.throwTarget.error = options?.throwTarget?.hasOwnProperty('error') ? options.throwTarget.error : config.throwTarget.error;
-        // config.throwTarget.setToUndefined = options?.throwTarget?.hasOwnProperty('setToUndefined') ? options.throwTarget.setToUndefined : config.throwTarget.setToUndefined;
+        createOptions.castStringsAndNumbers = isBoolean(options?.castStringsAndNumbers) ? options.castStringsAndNumbers : createOptions.castStringsAndNumbers;
         Reflect.defineMetadata('initialized', true, createOptions);
         return createOptions;
     }

@@ -1,4 +1,3 @@
-import { MapperConfig } from '../../../shared/models/config.model';
 import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
@@ -6,10 +5,11 @@ import { getElements, trimSeparators } from '../../utils/target.util';
 import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
 import { throwWarning } from '../../utils/errors.util';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapComplexService {
 
-    static create(target: string, data: any, options: MapperConfig): any {
+    static create(target: string, data: any, options: MapperBehavior): any {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
@@ -18,9 +18,9 @@ export class MapComplexService {
         } else if (hasUnion(target)) {
             if (isStringAsNullOrLiteral(first)) {
                 if (first === data?.toString()) {
-                    return options.behavior.differentiateStringsAndNumbers && isString(data) ? undefined : data;
+                    return !options.castStringsAndNumbers && isString(data) ? undefined : data;
                 } else if (isStringAsNullOrLiteral(others)) {
-                    return options.behavior.differentiateStringsAndNumbers && isString(data) ? undefined : data;
+                    return !options.castStringsAndNumbers && isString(data) ? undefined : data;
                 } else {
                     return MainService.mapToString(others, data, options);
                 }

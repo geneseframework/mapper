@@ -1,13 +1,13 @@
 import { create } from '../../main';
-import { MapperConfig } from '../../../shared/models/config.model';
 import { Bracketed } from '../../types/target/string/bracketed.type';
 import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
 import { isNullOrUndefined } from '../../utils/native/any.util';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapTupleService<T> {
 
 
-    static create(target: Bracketed, data: any, options: MapperConfig): any[] {
+    static create(target: Bracketed, data: any, options: MapperBehavior): any[] {
         if (!isArrayOfSameLength(target, data)) {
             return undefined;
         }

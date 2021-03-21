@@ -1,7 +1,7 @@
-import { MapperConfig } from '../../shared/models/config.model';
+import { MapperBehavior } from '../../shared/models/config-behavior.model';
 
 export interface TestMapperOptions {
-    config?: MapperConfig;
+    behavior?: MapperBehavior;
     expectedValue?: any;
     isolate?: boolean;
     log?: boolean;

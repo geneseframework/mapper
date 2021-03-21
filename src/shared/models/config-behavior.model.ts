@@ -1,3 +1,3 @@
 export class MapperBehavior {
-    differentiateStringsAndNumbers ?= true;
+    castStringsAndNumbers ?= false;
 }
