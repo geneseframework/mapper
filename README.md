@@ -242,5 +242,22 @@ Please note the quotes around the word `string`. The only cases where you can om
 In the previous code, if data is equal to `1`, `foo` will be equal to `undefined`. Sometimes, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
 
 ```ts
-const foo: string = create('string', data, {}); // => foo equals data if data is a string, and undefined if not.
+const foo: string = create('string', data, {castStringsAndNumbers: true}); // => foo equals '1' if data equals 1.
 ```
+
+If you want to use this behavior for all your project, you can do it with the `geneseconfig.ts` file :
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+        behavior: {
+            castStringsAndNumbers: true,
+        },
+    }
+}
+
+const foo: string = create('string', data); // => Now foo equals '1' if data equals 1, without adding option inside the `create()` method.
+```
+
+At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
+
