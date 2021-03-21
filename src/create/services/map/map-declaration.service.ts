@@ -1,6 +1,5 @@
 import { MapEnumService } from './map-enum.service';
 import { throwWarning } from '../../utils/errors.util';
-import { MapperConfig } from '../../../shared/models/config.model';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
@@ -8,6 +7,7 @@ import { isArrayType, typeOfArray } from '../../types/target/string/array-type.t
 import { GLOBAL } from '../../const/global.const';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapDeclarationService<T> {
 
@@ -19,7 +19,7 @@ export class MapDeclarationService<T> {
      * @param options
      * @private
      */
-    static create(target: string, data: any, options: MapperConfig): any {
+    static create(target: string, data: any, options: MapperBehavior): any {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
         switch (typeDeclarationKind) {

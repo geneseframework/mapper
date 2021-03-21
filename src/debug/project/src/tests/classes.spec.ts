@@ -159,7 +159,7 @@ const personWithWrongTypes = new PersonCatSpec();
 personWithWrongTypes.age = age as unknown as number;
 personWithWrongTypes.firstName = 2 as unknown as string;
 
-testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / personWithWrongTypes`, PersonCatSpec, {age: '49', firstName: 2}, {expectedValue: personWithWrongTypes, config: {behavior: {differentiateStringsAndNumbers: false}}}));
+testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / personWithWrongTypes`, PersonCatSpec, {age: '49', firstName: 2}, {expectedValue: personWithWrongTypes, behavior: {castStringsAndNumbers: true}}));
 
 
 // --------------------------------------------------   External Module   -------------------------------------------------

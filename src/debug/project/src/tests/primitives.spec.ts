@@ -17,7 +17,7 @@ testMappers.push(new TestMapper(`'blue' / string`, 'string','blue', {isolate: fa
 testMappers.push(new TestMapper(`undefined / string`, 'string',undefined));
 testMappers.push(new TestMapper(`null / string`, 'string',null));
 testMappers.push(new TestMapper(`2 / string / undefined`, 'string',2, {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', config: {behavior: {differentiateStringsAndNumbers: false}}}));
+testMappers.push(new TestMapper(`2 / string & !differentiate / '2'`, 'string',2, {expectedValue: '2', behavior: {castStringsAndNumbers: true}, isolate: false}));
 
 testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 
@@ -27,8 +27,8 @@ testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 
 testMappers.push(new TestMapper(`2 / number`, 'number',2));
 testMappers.push(new TestMapper(`'2' / number / undefined`, 'number','2', {expectedValue: undefined}));
-testMappers.push(new TestMapper(`'2' / number & !differentiate / 2`, 'number','2', {expectedValue: 2, config: {behavior: {differentiateStringsAndNumbers: false}}}));
-testMappers.push(new TestMapper(`'a' / number & !differentiate / NaN`, 'number','a', {expectedValue: NaN, config: {behavior: {differentiateStringsAndNumbers: false}}}));
+testMappers.push(new TestMapper(`'2' / number & !differentiate / 2`, 'number','2', {expectedValue: 2, behavior: {castStringsAndNumbers: true}}));
+testMappers.push(new TestMapper(`'a' / number & !differentiate / NaN`, 'number','a', {expectedValue: NaN, behavior: {castStringsAndNumbers: true}}));
 testMappers.push(new TestMapper(`undefined / number`, 'number',undefined));
 testMappers.push(new TestMapper(`2 / number / undefined`, 'number','blue', {expectedValue: undefined}));
 
@@ -54,7 +54,7 @@ testMappers.push(new TestMapper(`['blue', 2] / string[] / ['blue']`, 'string[]',
 testMappers.push(new TestMapper(`undefined / string[]`, 'string[]',undefined));
 testMappers.push(new TestMapper(`'blue' / string[] / undefined`, 'string[]','blue', {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[2] / string[] / []`, 'string[]',[2], {expectedValue: [undefined]}));
-testMappers.push(new TestMapper(`[2] / string[] && !differentiate / ['2']`, 'string[]',[2], {expectedValue: ['2'], config: {behavior: {differentiateStringsAndNumbers: false}}}));
+testMappers.push(new TestMapper(`[2] / string[] && !differentiate / ['2']`, 'string[]',[2], {expectedValue: ['2'], behavior: {castStringsAndNumbers: true}}));
 testMappers.push(new TestMapper(`[] / string[] / []`, 'string[]',[]));
 testMappers.push(new TestMapper(`[{}] / string[] / [{}]`, 'string[]',[{}], {expectedValue: [undefined]}));
 testMappers.push(new TestMapper(`[{}] / string[] / [['a']]`, 'string[]',[['a']], {expectedValue: [undefined]}));
@@ -66,8 +66,8 @@ testMappers.push(new TestMapper(`[null] / string[] / [null]`, 'string[]',[null],
 
 
 testMappers.push(new TestMapper(`[2] / number[]`, 'number[]',[2]));
-testMappers.push(new TestMapper(`['2'] / number[] && !differentiate / [2]`, 'number[]',['2'], {expectedValue: [2], config: {behavior: {differentiateStringsAndNumbers: false}}}));
-testMappers.push(new TestMapper(`['2'] / [Number] && !differentiate / [2]`, [Number],['2'], {expectedValue: [2], config: {behavior: {differentiateStringsAndNumbers: false}}}));
+testMappers.push(new TestMapper(`['2'] / number[] && !differentiate / [2]`, 'number[]',['2'], {expectedValue: [2], behavior: {castStringsAndNumbers: true}}));
+testMappers.push(new TestMapper(`['2'] / [Number] && !differentiate / [2]`, [Number],['2'], {expectedValue: [2], behavior: {castStringsAndNumbers: true}}));
 
 
 // --------------------------------------------------   Booleans   ---------------------------------------------------------

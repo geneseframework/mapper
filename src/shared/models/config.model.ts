@@ -4,5 +4,4 @@ export class MapperConfig {
     behavior?: MapperBehavior = new MapperBehavior();
     include?: string[] = [];
     tsConfigs?: string[] = [];
-    // throwTarget?: ThrowTargetError = new ThrowTargetError();
 }

@@ -1,6 +1,6 @@
 const config = {
     behavior: {
-        differentiateStringsAndNumbers: true,
+        differentiateStringsAndNumbers: false,
     }
 }
 exports.config = config;

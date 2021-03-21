@@ -1,12 +1,12 @@
-import { MapperConfig } from '../../../shared/models/config.model';
 import { Generic, typeOfGeneric } from '../../types/target/string/generics.type';
 import { MainService } from '../main.service';
 import { GLOBAL } from '../../const/global.const';
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapGenericService {
 
-    static create(target: Generic, data: any, options: MapperConfig): any {
+    static create(target: Generic, data: any, options: MapperBehavior): any {
         return MainService.mapToString(typeOfGeneric(target), data, options);
     }
 
