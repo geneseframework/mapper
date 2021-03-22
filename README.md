@@ -298,10 +298,10 @@ person.hello(); // => logs 'Hello John ! You are 20 years old.'
 
 Examples :
 ```ts
-create(Person, undefined);                      // person === undefined;
-create(Person, {});                             // person === Person {};
-create(Person, {name: undefined, age: 20});     // person === Person {name: undefined; age: 20};
-create(Person, {age: 20});                      // person === Person {age: 20};
+create(Person, undefined);                      // undefined;
+create(Person, {});                             // Person {};
+create(Person, {name: undefined, age: 20});     // Person {name: undefined; age: 20};
+create(Person, {age: 20});                      // Person {age: 20};
 ```
 
 #### Irrelevant properties
@@ -479,12 +479,46 @@ export class Person {
 }
 
 const foo = {address: {country: 'Spain', city: 'Barcelona'}};
-const fooPerson: Person = create(Person, data);    // person === Person {address: {country: 'Spain', city: 'Barcelona'}}
+const fooPerson: Person = create(Person, data);     // person === Person {address: {country: 'Spain', city: 'Barcelona'}}
 
 const bar = {address: {country: 'Spain', street: 'Ramblas'}};
-const barPerson: Person = create(Person, data);    // person === Person {address: undefined}
+const barPerson: Person = create(Person, data);     // person === Person {address: undefined}
 
 const data = {address: {country: 'Spain', city: 23}};
-const person: Person = create(Person, data);    // person === Person {address: {country: 'Spain', city: undefined}}
+const person: Person = create(Person, data);        // person === Person {address: {country: 'Spain', city: undefined}}
 ```
 
+### Interfaces
+
+The interfaces are treated as classes, with the specificities due to interfaces: the respect of the contract.
+
+Please note that contrary to classes, the name of the interface must be surrounded by quotes. 
+```ts
+export interface Person {
+	name: string;
+	age: number;
+	city?: string
+}
+
+create('Person', {name: 'John', age: 20, city: 'Milano'});      // person === Person {name: 'John', age: 20, city: 'Milano'}
+create('Person', {name: 'John', age: 20});                      // person === Person {name: 'John', age: 20}
+create('Person', {name: 'John'});                               // person === undefined
+```
+
+### Enums
+
+If `data` value is one of the enum values, `@genese/mapper` will return this value. If not, it will return `undefined`.
+
+As for interfaces or types, the name of the enum must be surrounded by quotes.
+
+```ts
+export enum Color {
+	WHITE = 'White',
+    BLACK = 'Black',
+}
+
+create('Color', 'White');                                       // 'White'
+create('Color', 'Blue');                                        // undefined
+```
+
+### Tuples
