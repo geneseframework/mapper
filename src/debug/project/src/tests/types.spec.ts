@@ -1,7 +1,4 @@
 import { TestMapper } from '../../../test-engine/test-mapper.model';
-import * as chalk from 'chalk';
-import { create } from '../../../../create/main';
-import * as stream from 'stream';
 
 export const testMappers: TestMapper[] = [];
 
