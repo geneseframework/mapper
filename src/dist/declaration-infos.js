@@ -1386,6 +1386,24 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
+        name: `Cattt`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `color`,
+                type: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Class`,
         name: `ClassStringSpec`,
         typeParameters: [
         ],
@@ -1687,6 +1705,14 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
+        name: `BlueType`,
+        typeParameters: [
+        ],
+        type: `'Blue'`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
         name: `StringAloneSpec`,
         typeParameters: [
         ],
@@ -1763,6 +1789,14 @@ const declarationInfos = [
         typeParameters: [
         ],
         type: `CompanyAloneClassSpec`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `ggg`,
+        typeParameters: [
+        ],
+        type: `CompanyAloneClassSpec | Cattt`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
