@@ -261,3 +261,197 @@ const foo: string = create('string', data); // => Now foo equals '1' if data equ
 
 At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
 
+### Classes
+
+You want to cast `data` in a safe typed instance of a given class. 
+
+```ts
+export class Person {
+	
+	age: number;
+	name: string;
+	
+	hello(): void {
+		console.log(`Hello ${this.name} ! You are ${this.age} years old.`);
+    }
+}
+
+const data = {name: 'John'};
+const person: Person = create(Person, data); // => person is a real Person object
+person.hello(); // => logs 'Hello John ! You are 20 years old.'
+```
+
+- If `data` is undefined or is not an object, `create()` will return `undefined`.
+- If `data` is an object, `create()` will return an instance of `Person`. In this case, let us examine in details the behavior of the `create()` method :
+- If the property `name` is equal to `undefined` in data, the value of `name` will be equal to `undefined` in `person`
+- If the property `name` not exists in `data`, the property `name` will not exist in `person`.
+
+Examples :
+```ts
+create(Person, undefined);                      // person === undefined;
+create(Person, {});                             // person === Person {};
+create(Person, {name: undefined, age: 20});     // person === Person {name: undefined; age: 20};
+create(Person, {age: 20});                      // person === Person {age: 20};
+```
+
+#### Irrelevant properties
+
+If a property exists in `data` object but not in `Person`, this property is removed :
+
+```ts
+const data = {name: 'John', age: 20};
+const person: Person = create(Person, data);    // person === Person {name: 'John'}
+```
+
+#### Properties with wrong type
+
+If a `data` property has a wrong type, the value of this property in the mapped object will be equal to `undefined` or to the default value.
+
+```ts
+const data = {name: 20};
+const person: Person = create(Person, data);    // person === Person {name: undefined}
+```
+
+With wrong type but identifying strings and numbers :
+
+```ts
+const data = {age: '20'};
+const person: Person = create(Person, data, {castStringsAndNumbers: true});    // person === Person {age: 20}
+```
+
+With default property :
+
+```ts
+export class Person {
+	name: string = 'John';
+}
+
+const data = {name: 3};
+const person: Person = create(Person, data);    // person === Person {name: 'John'}
+```
+
+#### Constructor parameters
+
+If your class has constructor parameters, the instance will be created by replacing each parameter by the corresponding `data` value or by undefined if this value not exists in data.
+
+Without default value :
+```ts
+export class Person {
+    name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+const data = {name: 'John'};
+const person: Person = create(Person, data);    // person is equal to Person {name: 'John'}
+```
+
+With default value :
+```ts
+export class Person {
+    name: string;
+
+    constructor(name: string = 'John') {
+    	this.name = name;
+    }
+}
+
+const data = {name: undefined};
+const person: Person = create(Person, data);    // person === Person {name: 'John'}
+```
+
+#### Indexable keys
+
+Indexable types are usable with `@genese/mapper` :
+
+```ts
+export class Person {
+    name: string;
+    [key: string]: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+const data = {name: 'John', role: 'user'};
+const person: Person = create(Person, data);    // person === Person {name: 'John', role: 'user'}
+```
+
+#### Nested classes
+
+Properties with `class` types are mapped as instances of their corresponding type :
+
+```ts
+export class Person {
+	name: string;
+	cat: Cat;
+}
+
+export class Cat {
+	name: string;
+	
+	meaow(): void {
+        console.log(`Meaow !`);
+    }
+}
+
+const data = {
+	name: 'John', 
+    cat: {
+		name: 'Molly'
+    }
+};
+const person: Person = create(Person, data);    // person === Person {name: 'John', cat: Cat {name: 'Molly'}}
+const molly: Cat = person.cat;                  // molly === Cat {name: 'Molly'}
+molly.meaow();                                  // log: Meaow !
+```
+
+#### Heritage
+
+`@genese/mapper` takes into account the notion of heritage :
+
+```ts
+export class Person {
+	name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+
+    hello(): void {
+        console.log(`Hello ${this.name} !`);
+    }
+}
+
+export class User extends Person {
+	role: string;
+	
+	constructor(role: string, name: string) {
+		super(name);
+		this.role = role;
+    }
+}
+
+const data = {
+	name: 'John', 
+    role: 'user',
+};
+const user: User = create(User, data);          // user === User {name: 'John', role: 'user'}
+user.hello();                                   // log: Hello John !
+```
+
+#### Abstract classes
+
+Abstract classes can't be instantiated :
+
+```ts
+export abstract class AbstractPerson {
+    name: string;
+}
+const data = {name: 'John'};
+const person = create(AbstractPerson, data);    // person === undefined
+```
+

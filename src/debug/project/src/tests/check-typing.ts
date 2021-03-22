@@ -19,7 +19,7 @@ class BarClass {
 /**
  * The compilation should crash if one of the result initializers has wrong type
  */
-function checkTyping() {
+// function checkTyping() {
 
 
     // ---------------------------------------------   Strings   -----------------------------------------------------
@@ -133,6 +133,6 @@ function checkTyping() {
     const fooClassArrayTupleWithNumberData: unknown = create([FooClass, FooClass], 2);
     const fooClassArrayTupleWithTData: unknown = create([FooClass, FooClass], new FooClass());
 
-}
+// }
 
 // checkTyping()
