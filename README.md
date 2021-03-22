@@ -1,12 +1,38 @@
 # @genese/mapper
-Map javascript objects of unknown type into the required TypeScript type.
+Maps objects of unknown type into the required type.
 
 ## Table of Contents
 * [Basic usage](#basic-usage)
 * [Installation](#installation)
-* [Models](#models)
-* [Methods](#methods)
-* [Other tools](#other-tools)
+* [Configuration](#configuration)
+  * [package.json](#packagejson)
+  * [geneseconfig.ts](#geneseconfigts)
+* [Start](#start)
+* [create() method](#create-method)
+  * [Primitives](#primitives)
+  * [Arrays](#arrays)
+  * [Classes](#classes)
+    * [Basic behavior](#basic-behavior)
+    * [Irrelevant properties](#irrelevant-properties)
+    * [Properties with wrong type](#properties-with-wrong-type)
+    * [Constructor parameters](#constructor-parameters)
+    * [Indexable keys](#indexable-keys)
+    * [Nested classes](#nested-classes)
+    * [Heritage](#heritage)
+    * [Abstract classes](#abstract-classes)
+    * [Literal objects](#literal-objects)
+  * [Interfaces](#interfaces)
+  * [Enums](#enums)
+  * [Tuples](#tuples)
+  * [Types](#types)
+    * [Literal types](#literal-types)
+    * [Union types](#union-types)
+    * [Types defined by classes](#types-defined-by-classes)
+  * [Dates](#dates)
+* [Configuration details](#configuration-details)
+  * [Basics](#basics)
+  * [Options 'include' and 'tsconfigs'](#options-include-and-tsconfigs)
+* [Limitations](#limitations)
 
 
 ## Basic usage
@@ -223,12 +249,14 @@ person.hello(); // => log : Hello John !
 ```
 Of course, the `create()` method could be called from another file.
 
-## Unknown data value and shape
+[Top](#table-of-contents)
+## create() method
 
 In many cases, you don't know the value of `data`, like results of http requests. You must check if data exists, if it respects the contract (has a correct shape), remove the eventual unnecessary properties and eventually add default values.
 You can do all of this in one line with the `create()` method. In case of irrelevant data properties, wrong values format or missing properties, the `create()` method has specific behavior which we will now explain. In some cases, this behavior can be modified thanks to `geneseconfig.ts` file.
 We will now explain this behavior for the different cases :
 
+[Top](#table-of-contents)
 ### Primitives
 
 You want to check if the received data is a primitive (string, number or boolean) :
@@ -280,6 +308,7 @@ create(1, '1', {castStringsAndNumbers: true});  // 1
 create(1, '1');                                 // undefined        
 ```
 
+[Top](#table-of-contents)
 ### Arrays
 
 Arrays are mapped trivially like this :
@@ -290,10 +319,12 @@ const bar: string[] = create('string[]', ['blue', 2]);                          
 const baz: string[] = create('string[]', ['blue', 2], {castStringsAndNumbers: true});       // foo === ['blue', '2'];
 ```
 
+[Top](#table-of-contents)
 ### Classes
 
 You want to cast `data` in a safe typed instance of a given class. 
 
+#### Basic behavior
 ```ts
 export class Person {
 	
@@ -507,6 +538,7 @@ const data = {address: {country: 'Spain', city: 23}};
 const person: Person = create(Person, data);        // person === Person {address: {country: 'Spain', city: undefined}}
 ```
 
+[Top](#table-of-contents)
 ### Interfaces
 
 The interfaces are treated as classes, with the specificities due to interfaces: the respect of the contract.
@@ -524,6 +556,7 @@ create('Person', {name: 'John', age: 20});                      // person === Pe
 create('Person', {name: 'John'});                               // person === undefined
 ```
 
+[Top](#table-of-contents)
 ### Enums
 
 If `data` value is one of the enum values, `@genese/mapper` will return this value. If not, it will return `undefined`.
@@ -540,6 +573,7 @@ create('Color', 'White');                                       // 'White'
 create('Color', 'Blue');                                        // undefined
 ```
 
+[Top](#table-of-contents)
 ### Tuples
 
 `@genese/mapper` checks if the number of elements of `data` is the same than the expected tuple, and if the type of each element is correct. If the number of elements is wrong, it returns `undefined`. If the number of elements is correct, `@genese/mapper` returns a tuple where each element is mapped as usual.
@@ -569,6 +603,7 @@ create(`[Person, Person]`, [{name: 'John'}, {name: 'Jane'}]);    // [Person {nam
 create(`['Person', 'Person']`, [{name: 'John'}, {name: 'Jane'}]);// [undefined, undefined]
 ```
 
+[Top](#table-of-contents)
 ### Types
 
 Generally speaking, the `@genese/mapper` behavior is close to the behavior for interfaces : if `data` respects the contract defined by the expected type, `@genese/mapper` will return the `data` value. If not, it will return `undefined`;
@@ -616,6 +651,7 @@ const person: Person = create('TPerson', {name: 'John'});       // Person {name:
 person.hello();                                                 // log : 'Hello John !'
 ```
 
+[Top](#table-of-contents)
 ### Dates
 
 `@genese/mapper` is able to interpret dates. The date type may be written with quotes or without, as `Date` constructor :
@@ -633,8 +669,10 @@ const bar: number = create(Date, '2021-02-19T17:36:53.999Z');   // error detecte
 ```
 
 
+[Top](#table-of-contents)
 ## Configuration details
 
+[Top](#table-of-contents)
 ### Basics
 We saw on the [basic configuration] section that a file called `geneseconfig.ts` must be at the root of your project :
 
@@ -656,7 +694,8 @@ export const geneseConfig: GeneseConfig = {
 
 Now, let's look at other configuration options.
 
-### include && tsconfigs
+[Top](#table-of-contents)
+### Options 'include' and 'tsconfigs'
 
 By default, `@genese/mapper` analyze all the files corresponding to the `tsconfig.json` file at the root of your project. You can change this behavior by two ways :
 
@@ -693,5 +732,81 @@ export const geneseConfig: GeneseConfig = {
 }
 ```
 
+[Top](#table-of-contents)
+## Limitations
+
+Some features are still in progress and will be added in the future :
+
+- Literal objects
+
+For now, literal objects are mapped when they type some property of a given class, but you can't use them directly, outside any class :
+
+```ts
+export class Person {
+	address: {
+		country: string,
+        city: string,
+    }
+}
+create(Person, {address: {country: 'Italy', city: 'Roma'}});                                            // runs
+create(`{address: {country: string, city: string}}`, {address: {country: 'Italy', city: 'Roma'}});      // fails
+```
+
+- Generic types
+
+Generic types are actually not supported :
+
+```ts
+export class Person<T> {
+    property: T
+}
+create('Person<string>', {property: 'a'});              // fails
+```
+
+- Intersection types
+
+`@genese/mapper` supports union types but not intersection types :
+
+```ts
+export type Person = User & Role
+create('Person', {name: 'a'});                          // fails
+```
+
+- New instances as default value
+
+For now, `@genese/mapper` will fail in this situation :
 
 
+```ts
+export class Cat<T> {
+    name: string;
+}
+export class Person<T> {
+    cat: Cat = new Cat();
+}
+create('Person', {cat: {name: 'Molly'}});              // fails
+```
+
+[Top](#table-of-contents)
+## Warnings
+
+`@genese/mapper` throws different warnings :
+
+- ***`unknown target "...". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`***
+
+`@genese/mapper` was not able to find the definition of a given type. In this case, `@genese/mapper` will not check the `data` shape or value and simply copy-paste it in the result of the `create()` method.
+
+Possibilities :
+- typing error in your call to the `create()` method 
+```ts
+create('strring', '2')                                  // Warning
+```
+- your call is correct but, `@genese/mapper` was not able to find the targeted type.
+```ts
+create('SomeUnknownClass', {name: 'John'});             // Warning
+```
+Please verify if the file of this class exists in your project, is included in your `typescript.json`. If not, add it in the `geneseconfig.ts` configuration.
+
+- ***Mapping failed : an unknown error occurred.***
+
+An error happens somewhere in the module and `@genese/mapper` was not able to identify it.
