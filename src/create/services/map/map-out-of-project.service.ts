@@ -1,12 +1,10 @@
-import { MapperConfig } from '../../../shared/models/config.model';
-import * as chalk from 'chalk';
 import { MainService } from '../main.service';
+import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 // TODO
 export class MapOutOfProjectService {
 
-    static create(target: string, data: any, options: MapperConfig): any {
-        console.log(chalk.yellowBright('MAP OOPPPPPPPP'), target, data);
+    static create(target: string, data: any, options: MapperBehavior): any {
         return MainService.mapToString(target, data, options);
     }
 
