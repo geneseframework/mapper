@@ -86,34 +86,11 @@ testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / 
 export class CompanyAloneClassSpec {
     name: string;
     employees: number;
-
-    zzz() {
-        console.log(chalk.red('zzzZZZZZZ'), this.name);
-    }
 }
 export type CompanyAloneSpec = CompanyAloneClassSpec;
 
-const aaa: CompanyAloneClassSpec = create('CompanyAloneSpec', {name: 'sssss'});
-aaa.zzz();
 
-export class Cattt {
-    color: string;
-
-    meaow() {
-        console.log(chalk.red('MEAOWWWW'));
-    }
-}
-
-export type ggg = CompanyAloneClassSpec | Cattt;
-
-const mmm: any = create('ggg', {name: 'fff'});
-// mmm.zzz();
-// mmm.meaow();
-// TODO : ppp.meaow() should run
-const ppp: any = create('ggg', {color: 'reddd'});
-// ppp.zzz();
-// ppp.meaow();
-testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: false}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
@@ -166,6 +143,12 @@ testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'Un
 testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
 
 
+// ------------------------------------------   Intersection types   ------------------------------------------------------
+
+// TODO: intersection types
+
+
+
 // ---------------------------------   Union of two Classes, and one Class[]   --------------------------------------------
 
 
@@ -190,4 +173,40 @@ testMappers.push(new TestMapper(`{name: 'Greenpeace', volunteers: 3000} / Employ
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 
 
-// TODO: intersection types
+
+// TODO : fix behavior of union of classes methods
+
+// export class CompanyAloneClassSpec {
+//     name: string;
+//     employees: number;
+//
+//     zzz() {
+//         console.log(chalk.red('zzzZZZZZZ'), this.name);
+//     }
+// }
+// export type CompanyAloneSpec = CompanyAloneClassSpec;
+//
+// const aaa: CompanyAloneClassSpec = create('CompanyAloneSpec', {name: 'sssss'});
+// aaa.zzz();
+//
+// export class Cattt {
+//     color: string;
+//
+//     meaow() {
+//         console.log(chalk.red('MEAOWWWW'));
+//     }
+// }
+//
+// export type ggg = CompanyAloneClassSpec | Cattt;
+//
+// const mmm: any = create('ggg', {name: 'fff'});
+// // mmm.zzz();
+// // mmm.meaow();
+// // TODO : ppp.meaow() should run
+// const ppp: any = create('ggg', {color: 'reddd'});
+// // ppp.zzz();
+// // ppp.meaow();
+
+
+
+
