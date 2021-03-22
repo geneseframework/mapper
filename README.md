@@ -183,17 +183,16 @@ Example if you run your code in NodeJs environment, like in backend :
 ```
 This constraint is due to the fact that in a first phase of its process, `@genese/mapper` will read the code of your project and create some temporary files which will be used later, when you will call the `create()` method.
 
-###geneseconfig.ts
+### geneseconfig.ts
 
-Add a file called `geneseconfig.ts` at the root of your project :
+Add a file called `geneseconfig.ts` must be at the root of your project :
 
 ```ts
 export const geneseConfig: GeneseConfig = {
     mapper: {}
 }
 ```
-For now, let's keep the property `mapper` empty. We will see configuration options later.
-
+For now, let's keep the property `mapper` empty. We will see configuration details later.
 
 
 [Top](#table-of-contents) 
@@ -632,5 +631,67 @@ The usage of `Date` constructor may be interesting because `@genese/mapper` will
 const foo: number = create('Date', '2021-02-19T17:36:53.999Z'); // no error detected                    
 const bar: number = create(Date, '2021-02-19T17:36:53.999Z');   // error detected                    
 ```
+
+
+## Configuration details
+
+### Basics
+We saw on the [basic configuration] section that a file called `geneseconfig.ts` must be at the root of your project :
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {}
+}
+```
+
+We also saw the possibility to add specific behavior for strings and numbers in a [previous section] :
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+    	castStringsAndNumbers: true                             // strings will be cast in numbers and inversely
+    }
+}
+```
+
+Now, let's look at other configuration options.
+
+### include && tsconfigs
+
+By default, `@genese/mapper` analyze all the files corresponding to the `tsconfig.json` file at the root of your project. You can change this behavior by two ways :
+
+- Include some specific files
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+    	include: ['path/to/one/file.ts', 'path/to/other-file.ts']
+    }
+}
+```
+
+- Use different `tsconfig` files
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+    	tsconfigs: ['path/to/tsconfig.json', 'path/to/tsconfig.app.json']
+    }
+}
+```
+
+**Caution**
+
+If the `tsconfigs` option exists and is not empty, `@genese/mapper` will not use the default `tsconfig.json` file at the root of your project. If you want to use both the default `tsconfig.json` and another one, you must include both in the `tsconfigs` property.
+
+
+```ts
+export const geneseConfig: GeneseConfig = {
+    mapper: {
+    	tsconfigs: ['tsconfig.json', 'path/to/other/tsconfig.json']
+    }
+}
+```
+
 
 
