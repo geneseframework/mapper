@@ -8,6 +8,8 @@ export const testMappers: TestMapper[] = [];
 
 testMappers.push(new TestMapper(`['blue'] / ['string']`, ['string'],['blue']));
 testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, ['string', 'string'],['blue', 'white'], {isolate: false}));
+testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, `[string, string]`,['blue', 'white'], {isolate: false}));
+testMappers.push(new TestMapper(`['blue', 'white'] / ['string', 'string']`, `['string', 'string']`,['blue', 'white'], {expectedValue: [undefined, undefined], isolate: false}));
 testMappers.push(new TestMapper(`['blue', 3] / ['string', 'number']`, ['string', 'number'],['blue', 3], {isolate: false}));
 testMappers.push(new TestMapper(`['blue', 3] / ['number', 'string'] / [undefined, undefined]`, ['number', 'string'],['blue', 3], {expectedValue: [undefined, undefined], isolate: false}));
 testMappers.push(new TestMapper(`['2', 3] / ['number', 'string'] & !differentiate / ['2', '3']`, ['number', 'string'],['2', 3], {expectedValue: ['2', '3'], isolate: false, behavior: {castStringsAndNumbers: true}}));

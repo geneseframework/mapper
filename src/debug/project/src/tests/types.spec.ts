@@ -1,6 +1,16 @@
 import { TestMapper } from '../../../test-engine/test-mapper.model';
+import * as chalk from 'chalk';
+import { create } from '../../../../create/main';
+import * as stream from 'stream';
 
 export const testMappers: TestMapper[] = [];
+
+
+// ----------------------------------------------   literal   --------------------------------------------------------------
+
+export type BlueType = 'Blue';
+testMappers.push(new TestMapper(`'Blue' / BlueType`, 'BlueType', 'Blue', {isolate: false}));
+testMappers.push(new TestMapper(`'Blue' / BlueType`, 'BlueType', 'White', {expectedValue: undefined, isolate: false}));
 
 
 // ----------------------------------------------   string   --------------------------------------------------------------
@@ -76,10 +86,34 @@ testMappers.push(new TestMapper(`{} / ChildParentNumberOrBooleanAndStringSpec / 
 export class CompanyAloneClassSpec {
     name: string;
     employees: number;
+
+    zzz() {
+        console.log(chalk.red('zzzZZZZZZ'), this.name);
+    }
 }
 export type CompanyAloneSpec = CompanyAloneClassSpec;
 
-testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: false}));
+const aaa: CompanyAloneClassSpec = create('CompanyAloneSpec', {name: 'sssss'});
+aaa.zzz();
+
+export class Cattt {
+    color: string;
+
+    meaow() {
+        console.log(chalk.red('MEAOWWWW'));
+    }
+}
+
+export type ggg = CompanyAloneClassSpec | Cattt;
+
+const mmm: any = create('ggg', {name: 'fff'});
+// mmm.zzz();
+// mmm.meaow();
+// TODO : ppp.meaow() should run
+const ppp: any = create('ggg', {color: 'reddd'});
+// ppp.zzz();
+// ppp.meaow();
+testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAloneSpec`, 'CompanyAloneSpec', {name: 'Total', employees: 30000}, {isolate: true}));
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
@@ -154,3 +188,6 @@ testMappers.push(new TestMapper(`{name: 'Greenpeace', volunteers: 3000} / Employ
 // testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / Employer`, 'EmployerSpec',{name: 'Total', employees: 30000}, {isolate: true}));
 // testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], {expectedValue: undefined, isolate: true}));
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
+
+
+// TODO: intersection types

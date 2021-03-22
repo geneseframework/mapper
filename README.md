@@ -235,14 +235,21 @@ We will now explain this behavior for the different cases :
 You want to check if the received data is a primitive (string, number or boolean) :
 
 ```ts
-const foo: string = create('string', data);     // => foo equals data if data is a string, and undefined if not.
+const foo: string = create('string', data);         // => foo equals data if data is a string, and undefined if not.
 ```
 Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes or primitive constructors, like `create(Person, data)` or `create(String, data)`;
 
-In the previous code, if data is equal to `1`, `foo` will be equal to `undefined`. Sometimes, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
+Examples :
+```ts
+create('string', 'a');                              // 'a'
+create('number', 1);                                // 1
+create('string', 1);                                // undefined
+```
+
+In the previous example, if data is equal to `1`, `foo` will be equal to `undefined`. However, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
 
 ```ts
-const foo: string = create('string', data, {castStringsAndNumbers: true}); // => foo equals '1' if data equals 1.
+create('string', 1, {castStringsAndNumbers: true}); // '1'.
 ```
 
 If you want to use this behavior for all your project, you can do it with the `geneseconfig.ts` file :
@@ -260,6 +267,19 @@ const foo: string = create('string', data);     // => Now foo equals '1' if data
 ```
 
 At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
+
+**Caution**
+
+In the below code, `'a'` is interpreted a literal element :
+
+```ts
+create('a', 'a');                               // 'a'
+create('a', 'b');                               // undefined
+create(1, 1);                                   // 1
+create(1, '1');                                 // undefined
+create(1, '1', {castStringsAndNumbers: true});  // 1    
+create(1, '1');                                 // undefined        
+```
 
 ### Arrays
 
@@ -522,3 +542,95 @@ create('Color', 'Blue');                                        // undefined
 ```
 
 ### Tuples
+
+`@genese/mapper` checks if the number of elements of `data` is the same than the expected tuple, and if the type of each element is correct. If the number of elements is wrong, it returns `undefined`. If the number of elements is correct, `@genese/mapper` returns a tuple where each element is mapped as usual.
+
+```ts
+create(['string', 'string'], ['blue', 'white']);                 // ['blue', 'white']
+create(['string', 'string'], ['blue']);                          // undefined
+create(['string', 'string'], ['blue', 3]);                       // ['blue', undefined]
+```
+
+**Caution :**
+
+You can surround tuples by quotes or not, but if you choose to surround them by quotes, the words surrounded by quotes inside the tuples will be understood as literal strings :
+
+```ts
+create(`[string, string]`, ['blue', 'white']);                   // ['blue', 'white']
+create(`['string', 'string']`, ['blue', 'white']);               // [undefined, undefined]
+```
+
+In the same way, classes, interfaces or types inside a quoted tuple can't be surrounded by quotes (if they are, they will be understood as literal strings) :
+
+```ts
+export class Person {
+	name: string;
+}
+create(`[Person, Person]`, [{name: 'John'}, {name: 'Jane'}]);    // [Person {name: 'John'}, Person {name: 'Jane'}]
+create(`['Person', 'Person']`, [{name: 'John'}, {name: 'Jane'}]);// [undefined, undefined]
+```
+
+### Types
+
+Generally speaking, the `@genese/mapper` behavior is close to the behavior for interfaces : if `data` respects the contract defined by the expected type, `@genese/mapper` will return the `data` value. If not, it will return `undefined`;
+
+As interfaces or enums, the name of the type must be surrounded by quotes.
+
+#### Literal types
+
+In case of literal types, `@genese/mapper` only checks if `data` value is equal to the type value :
+
+```ts
+export type LiteralString = 'blue';
+
+create('LiteralString', 'blue');                                // 'blue'
+create('LiteralString', 'white');                               // undefined
+```
+
+#### Union types
+
+For union types, `@genese/mapper` checks if `data` shape respects one of the types of the union :
+
+```ts
+export type StringOrNumber = string | number;
+
+create('StringOrNumber', '2');                                  // '2'
+create('StringOrNumber', 2);                                    // 2
+create('StringOrNumber', {name: 'John'});                       // undefined
+```
+
+#### Types defined by classes
+
+If a type is defined as a class, `@genese/mapper` will interpret it as the given class. That means that you will be able to use the eventual method of the class :
+
+```ts
+export class Person {
+	name: string;
+	
+	hello(): void {
+		console.log(`Hello ${this.name} !`);
+    }
+}
+
+export type TPerson = Person;
+const person: Person = create('TPerson', {name: 'John'});       // Person {name: 'John'}
+person.hello();                                                 // log : 'Hello John !'
+```
+
+### Dates
+
+`@genese/mapper` is able to interpret dates. The date type may be written with quotes or without, as `Date` constructor :
+
+```ts
+create('Date', '2021-02-19T17:36:53.999Z');                     // new Date('2021-02-19T17:36:53.999Z')                    
+create(Date, '2021-02-19T17:36:53.999Z');                       // new Date('2021-02-19T17:36:53.999Z')                    
+```
+
+The usage of `Date` constructor may be interesting because `@genese/mapper` will check if the type of the variable is correct :
+
+```ts
+const foo: number = create('Date', '2021-02-19T17:36:53.999Z'); // no error detected                    
+const bar: number = create(Date, '2021-02-19T17:36:53.999Z');   // error detected                    
+```
+
+

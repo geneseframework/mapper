@@ -20,8 +20,6 @@ export class ColorsClassSpec {
     colors: ColorSpec[];
 }
 
-// TODO : other cases with enums
-
 testMappers.push(new TestMapper(`{color: 'White'} / ColorClassSpec`, ColorClassSpec, {color: 'White'}, {isolate: false}));
 testMappers.push(new TestMapper(`{color: ColorSpec.WHITE} / ColorClassSpec`, ColorClassSpec, {color: ColorSpec.WHITE}));
 testMappers.push(new TestMapper(`{color: 'Blue'} / ColorClassSpec / {}`, ColorClassSpec, {color: 'Blue'}, {expectedValue: {color: undefined}}));

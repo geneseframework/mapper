@@ -99,7 +99,8 @@ class BarClass {
 
     // ---------------------------------------------   Dates   -----------------------------------------------------
 
-    const fooDate: Date = create(Date, 1614094099126);
+    const fooDate: number = create('Date', 1614094099126);
+    const barDate: number = create(Date, 1614094099126);
     const fooDateDate: Date = create(Date, 'Tue Feb 23 2021');
     const fooDateType: Date = create(Date, 'a');
     const fooDateTypeDate: unknown = create(Date, false);
