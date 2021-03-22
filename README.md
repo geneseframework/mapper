@@ -8,11 +8,14 @@ Maps objects of unknown type into the required type.
   * [package.json](#packagejson)
   * [geneseconfig.ts](#geneseconfigts)
 * [Start](#start)
-* [create() method](#create-method)
+* [The ***create()*** method](#the-create-method)
   * [Primitives](#primitives)
+    * [Basic behavior with primitives](#basic-behavior-with-primitives)
+    * [The ***castStringsAndNumbers*** option](#the-caststringsandnumbers-option)
+    * [Literal primitives](#literal-primitives)
   * [Arrays](#arrays)
   * [Classes](#classes)
-    * [Basic behavior](#basic-behavior)
+    * [Basic behavior with classes](#basic-behavior-with-classes)
     * [Irrelevant properties](#irrelevant-properties)
     * [Properties with wrong type](#properties-with-wrong-type)
     * [Constructor parameters](#constructor-parameters)
@@ -33,6 +36,7 @@ Maps objects of unknown type into the required type.
   * [Basics](#basics)
   * [Options 'include' and 'tsconfigs'](#options-include-and-tsconfigs)
 * [Limitations](#limitations)
+* [Warnings](#warnings)
 
 
 ## Basic usage
@@ -54,19 +58,20 @@ export class Person {
 }
 
 const data = {name: 'John'};
-const person: Person = create(Person, data); // => person is a real Person object
-person.hello(); // => logs 'Hello John !'
+const person: Person = create(Person, data);    // person is a real Person object
+person.hello();                                 // log : 'Hello John !'
 ```
 
-The example 1 is trivial, and is equivalent to :
+This example is trivial, and is equivalent to :
 ```ts
 const person: Person = new Person();
 person.name = data.name;
 ```
 
-Now, assume that `Person` is a little more complex class :
 
 - Example 2 : creation of a more complex object
+
+Now, assume that `Person` is a little more complex :
 
 ```ts
 export class Person {
@@ -98,29 +103,36 @@ const data = {
     lastname: 'Doe',
 };
 ```
-In this case, it would be much longer to create manually the `Person` object :
+
+In this case, it would be sufficiently long to create manually the `Person` object :
 ```ts
 const cat: Cat = new Cat();
 cat.name = data.cat.name;
+
 const person: Person = new Person();
 person.age = data.age;
 person.firstname = data.firstname;
 person.lastname = data.lastname;
+
 person.hello(); // => logs 'Hello John !'
 person.cat.meaow(); // => logs 'Meaow !'
 ```
+
 With `@genese/mapper`, you can do it in one line :
+
 ```ts
 const person: Person = create(Person, data); // => person is a real Person object and contains a real Cat object
+
 person.hello(); // => logs 'Hello John !'
 person.cat.meaow(); // => logs 'Meaow !'
 ```
-The `data` object may be as complex as you want, you will still have only one line to write to create a real object, including nested objects if necessary.
+The `data` object may be as complex as you want, you will still need only one line to create a real object, including nested objects if necessary.
 
 - Example 3 : validation of the data shape
 
-In reality, even if this kind of usage can simplify the creation of known objects, the real power of `@genese/mapper` is to give you the possibility to create safe typed objects even when you don't know the data value or even the shape of data.
-Assume that you receive some data with unknown value or shape, like for http requests. You want to check the data shape and verify if the data value respects your DTO contract :
+In reality, even if the above usage may simplify the creation of known objects, the real power of `@genese/mapper` is to give you the possibility to create safe typed objects even when you don't know the `data` value or even the shape of `data`.
+
+Assume that you receive some `data` with unknown value or shape, like for http requests. You need to check the `data` shape and verify if its value respects your DTO contract :
 
 ```ts
 export interface PersonDto {
@@ -129,7 +141,7 @@ export interface PersonDto {
 }
 ```
 
-Without @genese/mapper, your NestJs controller in the backend should be like this :
+Without `@genese/mapper`, your NestJs controller in the backend could be written like this :
 
 ```ts
 @Post()
@@ -152,7 +164,7 @@ With @genese/mapper, you could simply do that :
 ```ts
 @Post()
 addPerson(@Body() data: PersonDto) {
-    if (create('PersonDto', data)) { // The create() method checks if data value respects the contract of the interface PersonDto. If data is incorrect, create() returns undefined.
+    if (create('PersonDto', data)) { // The create() method checks everything for you. If data value respects the contract of the interface PersonDto the create() method will return the data value. If data is incorrect, create() will return undefined.
         addNewPersonToDataBase(data);
     }
 }
@@ -184,9 +196,9 @@ Add this line to your `package.json` :
 }
 ```
 
-The instruction `npm run mapper` **must** be called **before** executing your own code.
+The instruction `npm run mapper` must be called **before** executing your own code.
 
-Example with Angular application :
+- Example with Angular application :
 
 ```json
 {
@@ -197,7 +209,7 @@ Example with Angular application :
 }
 ```
 
-Example if you run your code in NodeJs environment, like in backend :
+- Example if you run your code in NodeJs environment, like in backend :
 
 ```json
 {
@@ -207,18 +219,18 @@ Example if you run your code in NodeJs environment, like in backend :
     }
 }
 ```
-This constraint is due to the fact that in a first phase of its process, `@genese/mapper` will read the code of your project and create some temporary files which will be used later, when you will call the `create()` method.
+This constraint is due to the fact that in the first phase of its process, `@genese/mapper` analyzes the code of your project and create some temporary files. These files will be used later, when you will call the `create()` method.
 
 ### geneseconfig.ts
 
-Add a file called `geneseconfig.ts` must be at the root of your project :
+A file called `geneseconfig.ts` must be at the root of your project :
 
 ```ts
 export const geneseConfig: GeneseConfig = {
     mapper: {}
 }
 ```
-For now, let's keep the property `mapper` empty. We will see configuration details later.
+For now, let's keep the property `mapper` empty. We will see configuration details [later](#configuration-details).
 
 
 [Top](#table-of-contents) 
@@ -231,7 +243,9 @@ For that, install the `ts-node` module :
 ```sh
 npm install ts-node
 ```
+
 Create a file called `mapper-example.ts` at the root of your project with this code :
+
 ```ts
 import { create } from '@genese/mapper/dist/create/main';
 
@@ -250,30 +264,34 @@ person.hello(); // => log : Hello John !
 Of course, the `create()` method could be called from another file.
 
 [Top](#table-of-contents)
-## create() method
+## The create() method
 
-In many cases, you don't know the value of `data`, like results of http requests. You must check if data exists, if it respects the contract (has a correct shape), remove the eventual unnecessary properties and eventually add default values.
+In many cases, you don't know the value of `data`, like results of http requests. You must check if data exists, if it respects the contract (ie: has a correct shape), remove the eventual unnecessary properties and eventually add default values.
 You can do all of this in one line with the `create()` method. In case of irrelevant data properties, wrong values format or missing properties, the `create()` method has specific behavior which we will now explain. In some cases, this behavior can be modified thanks to `geneseconfig.ts` file.
-We will now explain this behavior for the different cases :
+We will now explain this behavior for different cases :
 
 [Top](#table-of-contents)
 ### Primitives
+
+#### Basic behavior with primitives
 
 You want to check if the received data is a primitive (string, number or boolean) :
 
 ```ts
 const foo: string = create('string', data);         // => foo equals data if data is a string, and undefined if not.
 ```
-Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes or primitive constructors, like `create(Person, data)` or `create(String, data)`;
+Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes, primitive constructors and tuples, like `create(Person, data)`, `create(String, data)` or `create(['string', 'number'], data)`.
 
-Examples :
+- Examples :
 ```ts
 create('string', 'a');                              // 'a'
 create('number', 1);                                // 1
 create('string', 1);                                // undefined
 ```
 
-In the previous example, if data is equal to `1`, `foo` will be equal to `undefined`. However, you could prefer to identify strings and numbers and receive `'1'` instead of undefined. For that, you can change the behavior of the `create()` method by adding a specific option :
+#### The ***castStringsAndNumbers*** option
+
+In the last example, the result will be equal to `undefined` because `1` is not a `string`. However, you could prefer to identify strings and numbers and receive `'1'` instead of `undefined`. For that, you can change the behavior of the `create()` method by adding a specific option :
 
 ```ts
 create('string', 1, {castStringsAndNumbers: true}); // '1'.
@@ -293,11 +311,11 @@ export const geneseConfig: GeneseConfig = {
 const foo: string = create('string', data);     // => Now foo equals '1' if data equals 1, without adding option inside the `create()` method.
 ```
 
-At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
+At the opposite, you can cast `strings` and `numbers` for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
 
-**Caution**
+#### Literal primitives
 
-In the below code, `'a'` is interpreted a literal element :
+In the below examples, `'a'` and `1` are interpreted as a literal elements : `@genese/mapper` will return `data` value if `data` is equal to this literal element, and `undefined` if not.
 
 ```ts
 create('a', 'a');                               // 'a'
@@ -314,17 +332,17 @@ create(1, '1');                                 // undefined
 Arrays are mapped trivially like this :
 
 ```ts
-const foo: string[] = create('string[]', ['blue', 'white']);                                // foo === ['blue', 'white'];
-const bar: string[] = create('string[]', ['blue', 2]);                                      // foo === ['blue', undefined];
-const baz: string[] = create('string[]', ['blue', 2], {castStringsAndNumbers: true});       // foo === ['blue', '2'];
+create('string[]', ['blue', 'white']);                                // ['blue', 'white'];
+create('string[]', ['blue', 2]);                                      // ['blue', undefined];
+create('string[]', ['blue', 2], {castStringsAndNumbers: true});       // ['blue', '2'];
 ```
 
 [Top](#table-of-contents)
 ### Classes
 
-You want to cast `data` in a safe typed instance of a given class. 
+You want to cast `data` in a safe typed instance of a given class :
 
-#### Basic behavior
+#### Basic behavior with classes
 ```ts
 export class Person {
 	
@@ -336,17 +354,18 @@ export class Person {
     }
 }
 
-const data = {name: 'John'};
-const person: Person = create(Person, data);    // => person is a real Person object
-person.hello(); // => logs 'Hello John ! You are 20 years old.'
+const data = {name: 'John', age: 20};
+const person: Person = create(Person, data);    // person is a real Person object
+person.hello();                                 // log: 'Hello John ! You are 20 years old.'
 ```
 
 - If `data` is undefined or is not an object, `create()` will return `undefined`.
-- If `data` is an object, `create()` will return an instance of `Person`. In this case, let us examine in details the behavior of the `create()` method :
-- If the property `name` is equal to `undefined` in data, the value of `name` will be equal to `undefined` in `person`
-- If the property `name` not exists in `data`, the property `name` will not exist in `person`.
+- If `data` is an object, `create()` will return an instance of `Person`.
+- If the property `name` is equal to `undefined` in `data`, the value of `name` will be equal to `undefined` in `person`.
+- If the property `name` does not exist in `data`, the property `name` will not exist in `person`.
 
-Examples :
+
+- Examples :
 ```ts
 create(Person, undefined);                      // undefined;
 create(Person, {});                             // Person {};
@@ -356,7 +375,7 @@ create(Person, {age: 20});                      // Person {age: 20};
 
 #### Irrelevant properties
 
-If a property exists in `data` object but not in `Person`, this property is removed :
+If a property exists in `data` object but not in `Person`, this property will be removed :
 
 ```ts
 const data = {name: 'John', age: 20};
@@ -365,7 +384,7 @@ const person: Person = create(Person, data);    // person === Person {name: 'Joh
 
 #### Properties with wrong type
 
-If a `data` property has a wrong type, the value of this property in the mapped object will be equal to `undefined` or to the default value.
+If a `data` property has a wrong type, the value of this property in the mapped object will be equal to `undefined`, or to the default value if exists.
 
 ```ts
 const data = {name: 20};
@@ -392,9 +411,10 @@ const person: Person = create(Person, data);    // person === Person {name: 'Joh
 
 #### Constructor parameters
 
-If your class has constructor parameters, the instance will be created by replacing each parameter by the corresponding `data` value or by undefined if this value not exists in data.
+If your class has constructor parameters, the instance will be created by replacing each parameter by the corresponding `data` value or by `undefined` if this value does not exist in `data`.
 
 Without default value :
+
 ```ts
 export class Person {
     name: string;
@@ -404,8 +424,8 @@ export class Person {
     }
 }
 
-const data = {name: 'John'};
-const person: Person = create(Person, data);    // person === Person {name: 'John'}
+create(Person, {name: 'John'});                 // Person {name: 'John'}
+create(Person, {});                             // Person {}
 ```
 
 With default value :
@@ -418,8 +438,9 @@ export class Person {
     }
 }
 
-const data = {name: undefined};
-const person: Person = create(Person, data);    // person === Person {name: 'John'}
+create(Person, {name: 'Jane'});                 // Person {name: 'Jane'}
+create(Person, {name: undefined});              // Person {name: 'John'}
+create(Person, {});                             // Person {name: 'John'}
 ```
 
 #### Indexable keys
@@ -436,8 +457,7 @@ export class Person {
     }
 }
 
-const data = {name: 'John', role: 'user'};
-const person: Person = create(Person, data);    // person === Person {name: 'John', role: 'user'}
+create(Person, {name: 'John', role: 'user'});   // Person {name: 'John', role: 'user'}
 ```
 
 #### Nested classes
@@ -505,7 +525,7 @@ user.hello();                                   // log: Hello John !
 
 #### Abstract classes
 
-Abstract classes can't be instantiated :
+Abstract classes can't be instantiated. If you try, `@genese/mapper` will return `undefined`.
 
 ```ts
 export abstract class AbstractPerson {
@@ -517,8 +537,9 @@ const person = create(AbstractPerson, data);    // person === undefined
 
 #### Literal objects
 
-If a property is typed with a literal object and if the corresponding data property don't have the same keys than the literal object, the result will be equal to undefined.
-If `data` has the same keys but with a wrong format, these keys will be mapped as usual.
+If a property is typed with a literal object and if the corresponding data property don't have the same keys than the literal object, the result will be equal to `undefined`.
+
+If `data` has the same keys, these keys will be mapped as usual.
 
 ```ts
 export class Person {
@@ -529,13 +550,13 @@ export class Person {
 }
 
 const foo = {address: {country: 'Spain', city: 'Barcelona'}};
-const fooPerson: Person = create(Person, data);     // person === Person {address: {country: 'Spain', city: 'Barcelona'}}
+const fooPerson: Person = create(Person, data);                 // fooPerson === Person {address: {country: 'Spain', city: 'Barcelona'}}
 
 const bar = {address: {country: 'Spain', street: 'Ramblas'}};
-const barPerson: Person = create(Person, data);     // person === Person {address: undefined}
+const barPerson: Person = create(Person, data);                 // barPerson === Person {address: undefined}
 
 const data = {address: {country: 'Spain', city: 23}};
-const person: Person = create(Person, data);        // person === Person {address: {country: 'Spain', city: undefined}}
+const bazPerson: Person = create(Person, data);                 // bazPerson === Person {address: {country: 'Spain', city: undefined}}
 ```
 
 [Top](#table-of-contents)
@@ -792,7 +813,7 @@ create('Person', {cat: {name: 'Molly'}});              // fails
 
 `@genese/mapper` throws different warnings :
 
-- ***`unknown target "...". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`***
+- ***unknown target "...". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.***
 
 `@genese/mapper` was not able to find the definition of a given type. In this case, `@genese/mapper` will not check the `data` shape or value and simply copy-paste it in the result of the `create()` method.
 
@@ -810,3 +831,8 @@ Please verify if the file of this class exists in your project, is included in y
 - ***Mapping failed : an unknown error occurred.***
 
 An error happens somewhere in the module and `@genese/mapper` was not able to identify it.
+
+- ***different elements "..." are declared in your project.***
+
+You should not have two declarations with the same name in your project (two classes with the same name, one class with the same name than a type, etc.)
+
