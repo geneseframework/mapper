@@ -238,10 +238,6 @@ const generateInstance = function(instanceGenerator) {
                 const CompanyAloneClassSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts').CompanyAloneClassSpec;
                 instance = new CompanyAloneClassSpec();
                 break;
-            case 'Cattt_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
-                const Cattt = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts').Cattt;
-                instance = new Cattt();
-                break;
             case 'ClassStringSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts':
                 const ClassStringSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts').ClassStringSpec;
                 instance = new ClassStringSpec();

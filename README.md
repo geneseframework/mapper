@@ -550,13 +550,13 @@ export class Person {
 }
 
 const foo = {address: {country: 'Spain', city: 'Barcelona'}};
-const fooPerson: Person = create(Person, data);                 // fooPerson === Person {address: {country: 'Spain', city: 'Barcelona'}}
+create(Person, foo);                            // Person {address: {country: 'Spain', city: 'Barcelona'}}
 
 const bar = {address: {country: 'Spain', street: 'Ramblas'}};
-const barPerson: Person = create(Person, data);                 // barPerson === Person {address: undefined}
+create(Person, bar);                            // Person {address: undefined}
 
-const data = {address: {country: 'Spain', city: 23}};
-const bazPerson: Person = create(Person, data);                 // bazPerson === Person {address: {country: 'Spain', city: undefined}}
+const baz = {address: {country: 'Spain', city: 23}};
+create(Person, baz);                            // Person {address: {country: 'Spain', city: undefined}}
 ```
 
 [Top](#table-of-contents)
@@ -564,7 +564,8 @@ const bazPerson: Person = create(Person, data);                 // bazPerson ===
 
 The interfaces are treated as classes, with the specificities due to interfaces: the respect of the contract.
 
-Please note that contrary to classes, the name of the interface must be surrounded by quotes. 
+Please note that contrary to classes, the name of the interface must be surrounded by quotes.
+
 ```ts
 export interface Person {
 	name: string;
@@ -572,9 +573,9 @@ export interface Person {
 	city?: string
 }
 
-create('Person', {name: 'John', age: 20, city: 'Milano'});      // person === Person {name: 'John', age: 20, city: 'Milano'}
-create('Person', {name: 'John', age: 20});                      // person === Person {name: 'John', age: 20}
-create('Person', {name: 'John'});                               // person === undefined
+create('Person', {name: 'John', age: 20, city: 'Milano'});      // Person {name: 'John', age: 20, city: 'Milano'}
+create('Person', {name: 'John', age: 20});                      // Person {name: 'John', age: 20}
+create('Person', {name: 'John'});                               // undefined
 ```
 
 [Top](#table-of-contents)
@@ -597,7 +598,7 @@ create('Color', 'Blue');                                        // undefined
 [Top](#table-of-contents)
 ### Tuples
 
-`@genese/mapper` checks if the number of elements of `data` is the same than the expected tuple, and if the type of each element is correct. If the number of elements is wrong, it returns `undefined`. If the number of elements is correct, `@genese/mapper` returns a tuple where each element is mapped as usual.
+`@genese/mapper` checks if the number of elements of `data` is the same as in the expected tuple, and if the type of each element is correct. If the number of elements is wrong, it returns `undefined`. If the number of elements is correct, `@genese/mapper` returns a tuple where each element is mapped as usual.
 
 ```ts
 create(['string', 'string'], ['blue', 'white']);                 // ['blue', 'white']
@@ -627,13 +628,13 @@ create(`['Person', 'Person']`, [{name: 'John'}, {name: 'Jane'}]);// [undefined, 
 [Top](#table-of-contents)
 ### Types
 
-Generally speaking, the `@genese/mapper` behavior is close to the behavior for interfaces : if `data` respects the contract defined by the expected type, `@genese/mapper` will return the `data` value. If not, it will return `undefined`;
+Generally speaking, the `@genese/mapper` behavior for types is close to its behavior for interfaces : if `data` respects the contract defined by the expected type, `@genese/mapper` will return the `data` value. If not, it will return `undefined`.
 
-As interfaces or enums, the name of the type must be surrounded by quotes.
+As for interfaces or enums, the name of the type must be surrounded by quotes.
 
 #### Literal types
 
-In case of literal types, `@genese/mapper` only checks if `data` value is equal to the type value :
+In case of literal types, `@genese/mapper` only checks if `data` value is equal to the literal value of the type :
 
 ```ts
 export type LiteralString = 'blue';
@@ -656,7 +657,7 @@ create('StringOrNumber', {name: 'John'});                       // undefined
 
 #### Types defined by classes
 
-If a type is defined as a class, `@genese/mapper` will interpret it as the given class. That means that you will be able to use the eventual method of the class :
+If a type is corresponding to a class, `@genese/mapper` will interpret this type as its relative class. That means that you will be able to use the eventual method of this class :
 
 ```ts
 export class Person {
@@ -682,7 +683,7 @@ create('Date', '2021-02-19T17:36:53.999Z');                     // new Date('202
 create(Date, '2021-02-19T17:36:53.999Z');                       // new Date('2021-02-19T17:36:53.999Z')                    
 ```
 
-The usage of `Date` constructor may be interesting because `@genese/mapper` will check if the type of the variable is correct :
+The usage of `Date` constructor may be interesting because `@genese/mapper` will check at compile time if the type of the variable is correct :
 
 ```ts
 const foo: number = create('Date', '2021-02-19T17:36:53.999Z'); // no error detected                    
@@ -695,7 +696,7 @@ const bar: number = create(Date, '2021-02-19T17:36:53.999Z');   // error detecte
 
 [Top](#table-of-contents)
 ### Basics
-We saw on the [basic configuration] section that a file called `geneseconfig.ts` must be at the root of your project :
+We saw on the [basic configuration](#configuration) section that a file called `geneseconfig.ts` must be at the root of your project :
 
 ```ts
 export const geneseConfig: GeneseConfig = {
@@ -703,7 +704,7 @@ export const geneseConfig: GeneseConfig = {
 }
 ```
 
-We also saw the possibility to add specific behavior for strings and numbers in a [previous section] :
+We also saw the possibility to add specific behavior for strings and numbers in a [previous section](#the-caststringsandnumbers-option) :
 
 ```ts
 export const geneseConfig: GeneseConfig = {
@@ -718,7 +719,7 @@ Now, let's look at other configuration options.
 [Top](#table-of-contents)
 ### Options 'include' and 'tsconfigs'
 
-By default, `@genese/mapper` analyze all the files corresponding to the `tsconfig.json` file at the root of your project. You can change this behavior by two ways :
+By default, `@genese/mapper` analyze all the files corresponding to the `tsconfig.json` located at the root of your project. You can change this behavior by two ways :
 
 - Include some specific files
 
@@ -730,7 +731,7 @@ export const geneseConfig: GeneseConfig = {
 }
 ```
 
-- Use different `tsconfig` files
+- Use different `tsconfig.json` files
 
 ```ts
 export const geneseConfig: GeneseConfig = {
@@ -742,7 +743,7 @@ export const geneseConfig: GeneseConfig = {
 
 **Caution**
 
-If the `tsconfigs` option exists and is not empty, `@genese/mapper` will not use the default `tsconfig.json` file at the root of your project. If you want to use both the default `tsconfig.json` and another one, you must include both in the `tsconfigs` property.
+If the `tsconfigs` option exists and is not empty, `@genese/mapper` will not use the default `tsconfig.json` file. If you want to use the default `tsconfig.json` and another one, you must include both in the `tsconfigs` property.
 
 
 ```ts
@@ -793,9 +794,9 @@ export type Person = User & Role
 create('Person', {name: 'a'});                          // fails
 ```
 
-- New instances as default value
+- New instances as default values
 
-For now, `@genese/mapper` will fail in this situation :
+For now, `@genese/mapper` will fail when the default value of a property is given by something like `new SomeClass()` :
 
 
 ```ts
@@ -815,24 +816,20 @@ create('Person', {cat: {name: 'Molly'}});              // fails
 
 - ***unknown target "...". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.***
 
-`@genese/mapper` was not able to find the definition of a given type. In this case, `@genese/mapper` will not check the `data` shape or value and simply copy-paste it in the result of the `create()` method.
+`@genese/mapper` was not able to find the definition of a given type. In this case, `@genese/mapper` will not check the `data` shape or value and will simply copy-paste it in the result of the `create()` method.
 
 Possibilities :
 - typing error in your call to the `create()` method 
 ```ts
 create('strring', '2')                                  // Warning
 ```
-- your call is correct but, `@genese/mapper` was not able to find the targeted type.
+- your call is correct but `@genese/mapper` was not able to find the targeted type.
 ```ts
 create('SomeUnknownClass', {name: 'John'});             // Warning
 ```
-Please verify if the file of this class exists in your project, is included in your `typescript.json`. If not, add it in the `geneseconfig.ts` configuration.
-
-- ***Mapping failed : an unknown error occurred.***
-
-An error happens somewhere in the module and `@genese/mapper` was not able to identify it.
+In this case, please verify if the file corresponding to `SomeUnknownClass` exists in your project (ie: is included in your `typescript.json`). If not, add it in the `geneseconfig.ts` configuration.
 
 - ***different elements "..." are declared in your project.***
 
-You should not have two declarations with the same name in your project (two classes with the same name, one class with the same name than a type, etc.)
+You should not have two declarations with the same name in your project (two classes with the same name, one class with the same name as a type, etc.)
 
