@@ -1,5 +1,4 @@
 import { INIT } from '../const/init.const';
-import { throwError } from '../../create/utils/errors.util';
 import { MapperConfig } from '../../shared/models/config.model';
 import {
     ArrayLiteralExpression,
@@ -11,8 +10,9 @@ import {
 } from 'ts-morph';
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import { isArray } from '../../create/utils/native/arrays.util';
-import path = require('path');
 import { commonjs } from '../../shared/const/commonjs.const';
+import * as fs from 'fs-extra';
+import path = require('path');
 
 export class ConfigService {
 
@@ -26,16 +26,21 @@ export class ConfigService {
 
 
     static async setConfig(): Promise<MapperConfig | never> {
-        const userConfigSourceFileCopy: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
-        if (!userConfigSourceFileCopy) {
-            throwError(`geneseconfig.ts file not found. Please see the documentation : https://www.npmjs.com/package/genese/mapper`)
+        if (this.geneseConfigFileExists()) {
+            const userConfigSourceFile: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
+            return this.getMapperConfig(userConfigSourceFile);
         } else {
-            return this.updateGeneseConfigMapper(userConfigSourceFileCopy);
+            return new MapperConfig();
         }
     }
 
 
-    private static updateGeneseConfigMapper(userConfigSourceFileCopy: SourceFile): MapperConfig {
+    private static geneseConfigFileExists(): boolean {
+        return fs.existsSync(INIT.userGeneseConfigPath);
+    }
+
+
+    private static getMapperConfig(userConfigSourceFileCopy: SourceFile): MapperConfig {
         const newConfig = new MapperConfig();
         const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
         const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;

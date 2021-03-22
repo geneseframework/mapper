@@ -223,7 +223,7 @@ This constraint is due to the fact that in the first phase of its process, `@gen
 
 ### geneseconfig.ts
 
-A file called `geneseconfig.ts` must be at the root of your project :
+A file called `geneseconfig.ts` can be added at the root of your project. If there is no `geneseconfig.ts` file at the root of your project, `@genese/mapper` will use configuration by default.
 
 ```ts
 export const geneseConfig: GeneseConfig = {
@@ -696,7 +696,7 @@ const bar: number = create(Date, '2021-02-19T17:36:53.999Z');   // error detecte
 
 [Top](#table-of-contents)
 ### Basics
-We saw on the [basic configuration](#configuration) section that a file called `geneseconfig.ts` must be at the root of your project :
+We saw on the [basic configuration](#configuration) section that a file called `geneseconfig.ts` can be added at the root of your project :
 
 ```ts
 export const geneseConfig: GeneseConfig = {
