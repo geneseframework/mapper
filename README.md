@@ -235,7 +235,7 @@ We will now explain this behavior for the different cases :
 You want to check if the received data is a primitive (string, number or boolean) :
 
 ```ts
-const foo: string = create('string', data); // => foo equals data if data is a string, and undefined if not.
+const foo: string = create('string', data);     // => foo equals data if data is a string, and undefined if not.
 ```
 Please note the quotes around the word `string`. The only cases where you can omit the quotes are for classes or primitive constructors, like `create(Person, data)` or `create(String, data)`;
 
@@ -256,10 +256,20 @@ export const geneseConfig: GeneseConfig = {
     }
 }
 
-const foo: string = create('string', data); // => Now foo equals '1' if data equals 1, without adding option inside the `create()` method.
+const foo: string = create('string', data);     // => Now foo equals '1' if data equals 1, without adding option inside the `create()` method.
 ```
 
 At the opposite, you can cast strings and numbers for all your project with the config above, and not cast them for a specific call to the `create()` method by adding to it the option `castStringsAndNumbers: false`.
+
+### Arrays
+
+Arrays are mapped trivially like this :
+
+```ts
+const foo: string[] = create('string[]', ['blue', 'white']);                                // foo === ['blue', 'white'];
+const bar: string[] = create('string[]', ['blue', 2]);                                      // foo === ['blue', undefined];
+const baz: string[] = create('string[]', ['blue', 2], {castStringsAndNumbers: true});       // foo === ['blue', '2'];
+```
 
 ### Classes
 
@@ -277,7 +287,7 @@ export class Person {
 }
 
 const data = {name: 'John'};
-const person: Person = create(Person, data); // => person is a real Person object
+const person: Person = create(Person, data);    // => person is a real Person object
 person.hello(); // => logs 'Hello John ! You are 20 years old.'
 ```
 
@@ -345,7 +355,7 @@ export class Person {
 }
 
 const data = {name: 'John'};
-const person: Person = create(Person, data);    // person is equal to Person {name: 'John'}
+const person: Person = create(Person, data);    // person === Person {name: 'John'}
 ```
 
 With default value :
@@ -453,5 +463,28 @@ export abstract class AbstractPerson {
 }
 const data = {name: 'John'};
 const person = create(AbstractPerson, data);    // person === undefined
+```
+
+#### Literal objects
+
+If a property is typed with a literal object and if the corresponding data property don't have the same keys than the literal object, the result will be equal to undefined.
+If `data` has the same keys but with a wrong format, these keys will be mapped as usual.
+
+```ts
+export class Person {
+    address: {
+    	country: string,
+        city: string,
+    };
+}
+
+const foo = {address: {country: 'Spain', city: 'Barcelona'}};
+const fooPerson: Person = create(Person, data);    // person === Person {address: {country: 'Spain', city: 'Barcelona'}}
+
+const bar = {address: {country: 'Spain', street: 'Ramblas'}};
+const barPerson: Person = create(Person, data);    // person === Person {address: undefined}
+
+const data = {address: {country: 'Spain', city: 23}};
+const person: Person = create(Person, data);    // person === Person {address: {country: 'Spain', city: undefined}}
 ```
 

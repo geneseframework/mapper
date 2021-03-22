@@ -391,8 +391,10 @@ export class ObjectLiteralStringSpec {
     propObject: {str: string};
 }
 testMappers.push(new TestMapper(`{propObject: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {propObject: {str: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{propObject: 2} / ObjectLiteralStringSpec / {propObject: undefined}`, ObjectLiteralStringSpec, {propObject: 2}, {expectedValue: {propObject: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{propObject: {}} / ObjectLiteralStringSpec / {propObject: undefined}`, ObjectLiteralStringSpec, {propObject: {}}, {expectedValue: {propObject: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{propObject: {str: 2}} / ObjectLiteralStringSpec / {propObject: 4}`, ObjectLiteralStringSpec, {propObject: {str: 2}}, {expectedValue: {propObject: {str: undefined}}, isolate: false}));
-testMappers.push(new TestMapper(`{propObject: 2} / ObjectLiteralStringSpec / {propObject: 4}`, ObjectLiteralStringSpec, {propObject: 2}, {expectedValue: {propObject: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{propObject: {str: 2}} / ObjectLiteralStringSpec / {propObject: 4}`, ObjectLiteralStringSpec, {propObject: {irrelevant: 'a'}}, {expectedValue: {propObject: undefined}, isolate: false}));
 
 
 export class ObjectLiteralStringNumberSpec {
