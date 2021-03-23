@@ -852,3 +852,7 @@ You should not have two declarations with the same name in your project (two cla
 To be able to create a new instance, `@genese/mapper` must be able to import it in a temporary file. That's why you **must** export classes used by `@genese/mapper`, even if your call to the `create()` method is in the same file as the definition of your class.
 
 At the opposite, the keyword `export` is not mandatory for interfaces, types or enums.
+
+- ***Warning: ... depends on '@genese/mapper/dist/create/main'. CommonJS or AMD dependencies can cause optimization bailouts.***
+
+You can remove this Angular warning by configuring [CommonJs dependencies](https://angular.io/guide/build#configuring-commonjs-dependencies).
