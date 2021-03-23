@@ -2,9 +2,7 @@
 # @genese/mapper
 Maps objects of unknown type into the required type.
 
-<p align="center">
-    <img src="./docs/logo-genese-150x150.png?raw=true" alt="genese logo">
-</p>
+![genese logo](./docs/logo-genese-150x150.png?raw=true "Genese logo")
 
 ## Basic usage
 
