@@ -1,10 +1,10 @@
 
-# @genese/mapper
-Maps objects of unknown type into the required type.
-
 <p align="center">
     <img src="https://raw.githubusercontent.com/geneseframework/mapper/develop/docs/logo-genese-150x150.png" alt="genese logo">
 </p>
+
+# @genese/mapper
+Maps objects of unknown type into the required type.
 
 ## Basic usage
 
