@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/logo-genese-200x200.jpeg" alt="genese logo">
+    <img src="./docs/logo-genese-200x200.png" alt="genese logo">
 </p>
 
 # @genese/mapper
