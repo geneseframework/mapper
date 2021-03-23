@@ -1,4 +1,6 @@
-[genese logo](./docs/logo-genese-200x200.jpeg)
+<p align="center">
+    <img src="./docs/logo-genese-200x200.jpeg" alt="genese logo">
+</p>
 
 # @genese/mapper
 Maps objects of unknown type into the required type.
