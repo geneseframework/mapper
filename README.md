@@ -25,7 +25,7 @@ export class Person {
 }
 
 const data = {name: 'John'};
-const person: Person = create(Person, data);    // person is a real Person object
+const person: Person = create(Person, data);    // person is a Person object
 person.hello();                                 // log : 'Hello John !'
 ```
 
@@ -88,7 +88,7 @@ person.cat.meaow(); // => logs 'Meaow !'
 With `@genese/mapper`, you can do it in one line :
 
 ```ts
-const person: Person = create(Person, data);    // real Person object which contains a real Cat object
+const person: Person = create(Person, data);    // Person object which contains a Cat object
 
 person.hello();                                 // log: 'Hello John !'
 person.cat.meaow();                             // log: 'Meaow !'
@@ -362,7 +362,7 @@ export class Person {
 }
 
 const data = {name: 'John', age: 20};
-const person: Person = create(Person, data);    // person is a real Person object
+const person: Person = create(Person, data);    // person is a Person object
 person.hello();                                 // log: 'Hello John ! You are 20 years old.'
 ```
 
