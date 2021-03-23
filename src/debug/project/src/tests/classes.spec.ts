@@ -339,6 +339,7 @@ export class LevelClassSpec {
 }
 
 testMappers.push(new TestMapper(`{level: 1} / LevelClassSpec`, LevelClassSpec, {level: 1}, {isolate: false}));
+testMappers.push(new TestMapper(`{level: 1} / LevelClassSpec`, LevelClassSpec, {level: 1}, {isolate: false}));
 
 
 // --------------------------------------   Property with Type which is Union Type   --------------------------------------
