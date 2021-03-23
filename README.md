@@ -3,7 +3,7 @@
 Maps objects of unknown type into the required type.
 
 <p align="center">
-    <img src="https://github.com/geneseframework/docs/logo-genese-150x150.png?raw=true" alt="genese logo">
+    <img src="https://raw.githubusercontent.com/geneseframework/mapper/develop/docs/logo-genese-150x150.png" alt="genese logo">
 </p>
 
 ## Basic usage
