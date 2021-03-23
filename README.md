@@ -49,7 +49,7 @@ With @genese/mapper, you can transform untyped javascript objects into safe type
 
 @genese/mapper exposes only one method, the `create()` method.
 
-- Example 1 : creation of a simple object
+- Example 1 : creation of a typed object
 
 ```ts
 export class Person {
