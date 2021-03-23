@@ -1,47 +1,10 @@
+
 <p align="center">
-    <img src="./docs/logo-genese-150x150.png" alt="genese logo">
+    <img src="https://raw.githubusercontent.com/geneseframework/mapper/develop/docs/logo-genese-150x150.png" alt="genese logo">
 </p>
 
 # @genese/mapper
 Maps objects of unknown type into the required type.
-
-## Table of Contents
-* [Basic usage](#basic-usage)
-* [Installation](#installation)
-* [Configuration](#configuration)
-  * [package.json](#packagejson)
-  * [geneseconfig.ts](#geneseconfigts)
-* [Start](#start)
-* [The ***create()*** method](#the-create-method)
-  * [Primitives](#primitives)
-    * [Basic behavior with primitives](#basic-behavior-with-primitives)
-    * [The ***castStringsAndNumbers*** option](#the-caststringsandnumbers-option)
-    * [Literal primitives](#literal-primitives)
-  * [Arrays](#arrays)
-  * [Classes](#classes)
-    * [Basic behavior with classes](#basic-behavior-with-classes)
-    * [Irrelevant properties](#irrelevant-properties)
-    * [Properties with wrong type](#properties-with-wrong-type)
-    * [Constructor parameters](#constructor-parameters)
-    * [Indexable keys](#indexable-types)
-    * [Nested classes](#nested-classes)
-    * [Heritage](#heritage)
-    * [Abstract classes](#abstract-classes)
-    * [Literal objects](#literal-objects)
-  * [Interfaces](#interfaces)
-  * [Enums](#enums)
-  * [Tuples](#tuples)
-  * [Types](#types)
-    * [Literal types](#literal-types)
-    * [Union types](#union-types)
-    * [Types defined by classes](#types-defined-by-classes)
-  * [Dates](#dates)
-* [Configuration details](#configuration-details)
-  * [Basics](#basics)
-  * [Options 'include' and 'tsconfigs'](#options-include-and-tsconfigs)
-* [Limitations](#limitations)
-* [Warnings](#warnings)
-
 
 ## Basic usage
 
@@ -62,15 +25,11 @@ export class Person {
 }
 
 const data = {name: 'John'};
-const person: Person = create(Person, data);    // person is a real Person object
+const person: Person = create(Person, data);    // person is a Person object
 person.hello();                                 // log : 'Hello John !'
 ```
 
-This b
-
-
-
-is equivalent to :
+This is equivalent to :
 ```ts
 const person: Person = new Person();
 person.name = data.name;
@@ -129,7 +88,7 @@ person.cat.meaow(); // => logs 'Meaow !'
 With `@genese/mapper`, you can do it in one line :
 
 ```ts
-const person: Person = create(Person, data);    // real Person object which contains a real Cat object
+const person: Person = create(Person, data);    // Person object which contains a Cat object
 
 person.hello();                                 // log: 'Hello John !'
 person.cat.meaow();                             // log: 'Meaow !'
@@ -180,6 +139,44 @@ addPerson(@Body() data: PersonDto) {
 The `create()` method checks everything for you. If data value respects the contract of the interface `PersonDto` the `create()` method will return the `data` value. If data is incorrect, it will return `undefined`.
 
 This method can be used with primitives, arrays, tuples, classes, interfaces, enums and types.
+
+
+## Table of Contents
+* [Basic usage](#basic-usage)
+* [Installation](#installation)
+* [Configuration](#configuration)
+    * [package.json](#packagejson)
+    * [geneseconfig.ts](#geneseconfigts)
+* [Start](#start)
+* [The ***create()*** method](#the-create-method)
+    * [Primitives](#primitives)
+        * [Basic behavior with primitives](#basic-behavior-with-primitives)
+        * [The ***castStringsAndNumbers*** option](#the-caststringsandnumbers-option)
+        * [Literal primitives](#literal-primitives)
+    * [Arrays](#arrays)
+    * [Classes](#classes)
+        * [Basic behavior with classes](#basic-behavior-with-classes)
+        * [Irrelevant properties](#irrelevant-properties)
+        * [Properties with wrong type](#properties-with-wrong-type)
+        * [Constructor parameters](#constructor-parameters)
+        * [Indexable keys](#indexable-types)
+        * [Nested classes](#nested-classes)
+        * [Heritage](#heritage)
+        * [Abstract classes](#abstract-classes)
+        * [Literal objects](#literal-objects)
+    * [Interfaces](#interfaces)
+    * [Enums](#enums)
+    * [Tuples](#tuples)
+    * [Types](#types)
+        * [Literal types](#literal-types)
+        * [Union types](#union-types)
+        * [Types defined by classes](#types-defined-by-classes)
+    * [Dates](#dates)
+* [Configuration details](#configuration-details)
+    * [Basics](#basics)
+    * [Options 'include' and 'tsconfigs'](#options-include-and-tsconfigs)
+* [Limitations](#limitations)
+* [Warnings](#warnings)
 
 
 [Top](#table-of-contents)
@@ -365,7 +362,7 @@ export class Person {
 }
 
 const data = {name: 'John', age: 20};
-const person: Person = create(Person, data);    // person is a real Person object
+const person: Person = create(Person, data);    // person is a Person object
 person.hello();                                 // log: 'Hello John ! You are 20 years old.'
 ```
 
@@ -852,3 +849,7 @@ You should not have two declarations with the same name in your project (two cla
 To be able to create a new instance, `@genese/mapper` must be able to import it in a temporary file. That's why you **must** export classes used by `@genese/mapper`, even if your call to the `create()` method is in the same file as the definition of your class.
 
 At the opposite, the keyword `export` is not mandatory for interfaces, types or enums.
+
+- ***Warning: ... depends on '@genese/mapper/dist/create/main'. CommonJS or AMD dependencies can cause optimization bailouts.***
+
+You can remove this Angular warning by configuring [CommonJs dependencies](https://angular.io/guide/build#configuring-commonjs-dependencies).
