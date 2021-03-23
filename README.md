@@ -1,3 +1,5 @@
+[genese logo](./docs/logo-genese-200x200.jpeg)
+
 # @genese/mapper
 Maps objects of unknown type into the required type.
 
