@@ -804,6 +804,16 @@ export type Person = User & Role
 create('Person', {name: 'a'});                          // fails
 ```
 
+- Types defined by functions
+
+Function types are not yet supported by `@genese/mapper`.
+
+```ts
+export type FunctionTypeSpec = () => string;
+create('FunctionTypeSpec', () => 'a');                  // fails
+```
+
+
 - New instances as default values
 
 For now, `@genese/mapper` will fail when the default value of a property is given by something like `new SomeClass()` :

@@ -18,13 +18,16 @@ import { removeBorders } from '../../shared/utils/strings.util';
 export class CheckTargetsService {
 
 
+    /**
+     * Checks if target is readable by @genese/mapper
+     * @param target
+     */
     static start(target: string): void {
         if (GLOBAL.wasChecked(target)) {
             return;
         }
         if (!CheckTargetsService.hasCorrectFormat(target)) {
-            throwWarning(`impossible to read target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
-            // throwTarget(target);
+            throwWarning(`impossible to read type "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
         }
         GLOBAL.checkedTargets.push(target);
     }

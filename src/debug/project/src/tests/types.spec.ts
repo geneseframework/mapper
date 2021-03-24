@@ -140,11 +140,6 @@ testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'Un
 testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
 
 
-// ------------------------------------------   Intersection types   ------------------------------------------------------
-
-// TODO: intersection types
-
-
 
 // ---------------------------------   Union of two Classes, and one Class[]   --------------------------------------------
 
@@ -168,6 +163,20 @@ testMappers.push(new TestMapper(`{name: 'Greenpeace', volunteers: 3000} / Employ
 // testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / Employer`, 'EmployerSpec',{name: 'Total', employees: 30000}, {isolate: true}));
 // testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / EmployerSpec`, 'EmployerSpec',[{ name: 'Total', employees: 30000 }], {expectedValue: undefined, isolate: true}));
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
+
+
+// ------------------------------------------   Intersection types   ------------------------------------------------------
+
+// TODO: intersection types
+
+
+// ------------------------------------------   Function types   ------------------------------------------------------
+
+// TODO: function types
+
+export type FunctionTypeSpec = () => string;
+
+// testMappers.push(new TestMapper(`() => 'a' / FunctionTypeSpec`, 'FunctionTypeSpec',() => 'a', {isolate: true}));
 
 
 

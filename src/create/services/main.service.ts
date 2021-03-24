@@ -36,7 +36,7 @@ export class MainService {
 
     /**
      * - If not already done, initializes the global configuration.
-     * - Returns the data formatted with the target's model
+     * - Returns the data formatted with the type required by the user
      * @param target    // The type required by the user.
      * @param data      // Data to map
      * @param options   // Behavior options for this call to the create() method
@@ -51,8 +51,13 @@ export class MainService {
     }
 
 
+    /**
+     * Returns the data formatted with the type defined by a stringified type
+     * @param target
+     * @param data
+     * @param options
+     */
     static mapStringTarget<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
-        // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
             return data;

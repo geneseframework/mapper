@@ -1813,6 +1813,14 @@ const declarationInfos = [
         type: `NgoClassSpec | NgoClassSpec[] | CompanyClassSpec`,
     },
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `FunctionTypeSpec`,
+        typeParameters: [
+        ],
+        type: `() => string`,
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/warnings.spec.ts`,
         kind: `TypeAlias`,
         name: `NonReadableType`,
