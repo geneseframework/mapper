@@ -32,21 +32,35 @@ export class MapInstanceOrInterfaceService {
     }
 
 
-    private static mapDataKey(data: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
-        const property: Property = declaration.properties.find(p => p.name === key);
-        const targetKeyType: string = property.type;
-        if (targetKeyType === 'undefined') {
-            instance[key] = data;
-        } else if (isQuoted(targetKeyType)) {
-            instance[key] = removeBorders(targetKeyType);
-        } else {
-            instance[key] = MainService.mapStringTarget(targetKeyType, data, options);
-        }
+    /**
+     * Checks if a string is the name of the property of a given class or interface
+     * @param propertyName          // The text to check
+     * @param classOrInterfaceInfo  // The class or interface
+     * @private
+     */
+    private static isProperty(propertyName: string, classOrInterfaceInfo: ClassOrInterfaceInfo): boolean {
+        return !!classOrInterfaceInfo.properties.find(p => p.name === propertyName);
     }
 
 
-    private static isProperty(propertyName: string, classOrInterfaceInfo: ClassOrInterfaceInfo): boolean {
-        return !!classOrInterfaceInfo.properties.find(p => p.name === propertyName);
+    /**
+     * Returns mapped value for a given key of the target
+     * @param dataKey       // The value of data for a given key
+     * @param options       // The create() options
+     * @param key           // The key of the target
+     * @param instance      // Instance object if maps a class, object if maps an interface
+     * @param declaration   // The declaration corresponding to the class or interface
+     */
+    private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
+        const property: Property = declaration.properties.find(p => p.name === key);
+        const targetKeyType: string = property.type;
+        if (targetKeyType === 'undefined') {
+            instance[key] = undefined;
+        } else if (isQuoted(targetKeyType)) {
+            instance[key] = removeBorders(targetKeyType);
+        } else {
+            instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options);
+        }
     }
 
 }

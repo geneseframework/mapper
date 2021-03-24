@@ -249,7 +249,7 @@ testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec,
 export class UndefinedSpec {
     prop: undefined;
 }
-testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: false}));
+testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: undefined}, isolate: false}));
 
 
 export class UnknownSpec {
