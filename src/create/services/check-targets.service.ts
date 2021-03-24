@@ -7,7 +7,7 @@ import { hasSeparators } from '../types/target/string/has-separators.type';
 import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
 import { TargetService } from './target.service';
 import { isStringAsTrivialType } from '../types/null-or-literal.type';
-import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type';
+import { isGeneric, typeOfGeneric } from '../types/target/string/generics.type';
 import { getElements, trimSeparators } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
@@ -65,7 +65,7 @@ export class CheckTargetsService {
             return this.hasCorrectElements(removeBorders(target));
         } else if (isArrayType(target)) {
             return this.hasCorrectElements(typeOfArray(target));
-        } else if (hasGeneric(target)) {
+        } else if (isGeneric(target)) {
             return this.hasCorrectElements(typeOfGeneric(target));
         } else if(hasSeparators(trimSeparators(target))) {
             return this.haveCorrectElements(getElements(target));

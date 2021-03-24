@@ -6,7 +6,7 @@ export type Generic = `${string}<${string}>`;
 export type EndsWithTag = Generic;
 
 
-export function hasGeneric(text: string): text is Generic {
+export function isGeneric(text: string): text is Generic {
     return endsWithTag(text) && !hasSeparators(typeOfGeneric(text));
 }
 

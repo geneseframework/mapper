@@ -6,6 +6,9 @@ import { isStringAsNullOrLiteralOrNumeric } from '../../types/null-or-literal.ty
 import { isString } from '../../utils/native/strings.util';
 import { throwWarning } from '../../utils/errors.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { isComplexType } from '../../types/target/string/ComplexType';
+import { isGeneric } from '../../types/target/string/generics.type';
+import { MapGenericService } from './map-generic.service';
 
 export class MapComplexService {
 
@@ -28,6 +31,8 @@ export class MapComplexService {
             const mapped: any = MainService.mapStringTarget(first, data, options);
             // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
             return mapped || MainService.mapStringTarget(others, data, options);
+        } else if (isGeneric(target)) {
+            return MapGenericService.create(target, data, options);
         } else {
             throwWarning(`unknown target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
             // return throwTarget(target, data, options);

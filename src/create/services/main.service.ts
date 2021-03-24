@@ -22,7 +22,7 @@ import { MapLiteralObjectService } from './map/map-literal-object.service';
 import { GLOBAL } from '../const/global.const';
 import { hasSeparators } from '../types/target/string/has-separators.type';
 import { throwWarning } from '../utils/errors.util';
-import { hasGeneric } from '../types/target/string/generics.type';
+import { isGeneric } from '../types/target/string/generics.type';
 import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
@@ -32,6 +32,7 @@ import * as chalk from 'chalk';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
 import { isWildCard } from '../types/target/string/wildcard.type';
 import { isNullOrUndefined } from '../types/null-or-undefined.type';
+import { isComplexType } from '../types/target/string/ComplexType';
 
 export class MainService {
 
@@ -70,8 +71,6 @@ export class MainService {
             return MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
             return MapArrayService.create(target, data, options);
-        } else if (hasGeneric(target)) {
-            return MapGenericService.create(target, data, options);
         } else if (isPrimitiveTypeName(target)) {
             return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
@@ -82,7 +81,7 @@ export class MainService {
             return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return MapDeclarationService.create(target, data, options);
-        } else if (hasSeparators(target)) {
+        } else if (isComplexType(target)) {
             return MapComplexService.create(target, data, options);
         // } else if ( isDeclaredOutOfProjectAddItToGlobal(target)) { // TODO
         //     return MapOutOfProjectService.create(target, data, options);
