@@ -142,7 +142,6 @@ This method can be used with primitives, arrays, tuples, classes, interfaces, en
 
 
 ## Table of Contents
-* [Basic usage](#basic-usage)
 * [Installation](#installation)
 * [Configuration](#configuration)
     * [package.json](#packagejson)
