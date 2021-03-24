@@ -6,7 +6,6 @@ import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './target.service';
 import { isBracketed } from '../types/target/string/bracketed.type';
-import { isAny, isNullOrUndefined } from '../utils/native/any.util';
 import { MapArrayService } from './map/map-array.service';
 import { isArrayType } from '../types/target/string/array-type.type';
 import { MapComplexService } from './map/map-complex.service';
@@ -31,6 +30,8 @@ import { MapObjectService } from './map/map-object.service';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 import * as chalk from 'chalk';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
+import { isWildCard } from '../types/target/string/wildcard.type';
+import { isNullOrUndefined } from '../types/null-or-undefined.type';
 
 export class MainService {
 
@@ -59,7 +60,7 @@ export class MainService {
      */
     static mapStringTarget<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         CheckTargetsService.start(target);
-        if (isNullOrUndefined(data) || isAny(target)) {
+        if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;
         } else if (isDateTypeName(target)) {
             return MapDateService.create(data);

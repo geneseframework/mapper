@@ -1,6 +1,5 @@
 import { throwWarning } from '../utils/errors.util';
 import { isPrimitiveType } from '../types/primitives.type';
-import { isNullOrUndefined } from '../utils/native/any.util';
 import { isString } from '../utils/native/strings.util';
 import { isQuoted } from '../../shared/types/quoted.type';
 import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
@@ -13,6 +12,7 @@ import { getElements, trimSeparators } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { removeBorders } from '../../shared/utils/strings.util';
+import { isNullOrUndefined } from '../types/null-or-undefined.type';
 
 export class CheckTargetsService {
 

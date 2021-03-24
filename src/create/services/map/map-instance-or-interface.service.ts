@@ -1,4 +1,3 @@
-import { isNullOrUndefined } from '../../utils/native/any.util';
 import { MainService } from '../main.service';
 import { isQuoted } from '../../../shared/types/quoted.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
@@ -6,6 +5,7 @@ import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-i
 import { Property } from '../../../shared/types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { isNullOrUndefined } from '../../types/null-or-undefined.type';
 
 export class MapInstanceOrInterfaceService {
 

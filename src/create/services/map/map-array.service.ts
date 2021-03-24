@@ -1,8 +1,8 @@
 import { isArray } from '../../utils/native/arrays.util';
-import { isAny } from '../../utils/native/any.util';
 import { create } from '../../main';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { isWildCard } from '../../types/target/string/wildcard.type';
 
 export class MapArrayService<T> {
 
@@ -10,7 +10,7 @@ export class MapArrayService<T> {
     static create(target: ArrayType, data: any, options: MapperBehavior): any[] {
         if (!isArray(data)) {
             return undefined;
-        } else if (isAny(typeOfArray(target))) {
+        } else if (isWildCard(typeOfArray(target))) {
             return data;
         } else {
             const arr: any[] = [];
