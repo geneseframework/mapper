@@ -142,6 +142,10 @@ const generateInstance = function(instanceGenerator) {
                 const BooleanLiteralSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').BooleanLiteralSpec;
                 instance = new BooleanLiteralSpec();
                 break;
+            case 'PropertyObjectSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+                const PropertyObjectSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').PropertyObjectSpec;
+                instance = new PropertyObjectSpec();
+                break;
             case 'PaintStringsOrStringSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
                 const PaintStringsOrStringSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').PaintStringsOrStringSpec;
                 instance = new PaintStringsOrStringSpec();

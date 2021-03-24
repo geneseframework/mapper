@@ -276,6 +276,17 @@ export class BooleanLiteralSpec {
 testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: false}));
 
 
+// ----------------------------------------------------   Object   ------------------------------------------------------
+
+
+export class PropertyObjectSpec {
+    prop: object;
+}
+testMappers.push(new TestMapper(`{prop: {name: 'a'}} / PropertyObjectSpec`, PropertyObjectSpec, {prop: {name: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: ['a']} / PropertyObjectSpec`, PropertyObjectSpec, {prop: ['a']}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: 'a'} / PropertyObjectSpec / {prop: undefined}`, PropertyObjectSpec, {prop: 'a'}, {expectedValue: {prop: undefined}, isolate: false}));
+
+
 
 // ----------------------------------   Property typed with type: string[] or string ---------------------------------------
 

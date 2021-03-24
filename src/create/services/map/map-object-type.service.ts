@@ -1,15 +1,16 @@
 import { isArray } from '../../utils/native/arrays.util';
-import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
+import { isObject, isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 
 export class MapObjectTypeService {
 
 
+    /**
+     * If target is 'object' or 'Object', this method returns mapped data if data is an object or an array
+     * @param data
+     */
     static create(data: object): object {
-        if (isArray(data)) {
-            return this.createArrayObjects(data as object[]);
-        } else {
-            return this.createObject(data);
-        }
+        return isObject(data) ? data : undefined;
+        // return isArray(data) ? this.createArrayObjects(data as object[]) : this.createObject(data);
     }
 
 
