@@ -13,10 +13,10 @@ export class MapDeclarationService<T> {
 
 
     /**
-     * Returns mapped data when target is a DeclarationOrDate node.
-     * @param target
-     * @param data
-     * @param options
+     * Returns mapped data when target is a Declaration node (Class, Interface, Enum, Type).
+     * @param target    // The target which corresponds to a class, interface, enum or type
+     * @param data      // The data to map
+     * @param options   // The create() options
      * @private
      */
     static create(target: string, data: any, options: MapperBehavior): any {

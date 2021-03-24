@@ -10,6 +10,13 @@ import { isNullOrUndefined } from '../../types/null-or-undefined.type';
 export class MapInstanceOrInterfaceService {
 
 
+    /**
+     * Returns instance or interface with mapped data
+     * @param data          // The data to map
+     * @param options       // The create() options
+     * @param instance      // New instance if maps a class, empty object if maps an interface
+     * @param declaration   // The declaration corresponding to the class or interface
+     */
     static map(data: any, options: MapperBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
@@ -25,11 +32,10 @@ export class MapInstanceOrInterfaceService {
     }
 
 
-    private static mapDataKey<T>(data: any, options: MapperBehavior, key: string, instance: T, declaration: ClassOrInterfaceInfo): void {
+    private static mapDataKey(data: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.type;
-        // console.log(chalk.magentaBright('MAP DATA KKKK'), data, key, instance);
-        if (targetKeyType === 'undefined' || targetKeyType === undefined) {
+        if (targetKeyType === 'undefined') {
             instance[key] = data;
         } else if (isQuoted(targetKeyType)) {
             instance[key] = removeBorders(targetKeyType);
