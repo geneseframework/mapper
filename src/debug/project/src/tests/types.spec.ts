@@ -169,6 +169,12 @@ testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / Employe
 
 // TODO: intersection types
 
+export type IntersectionLeftTypeSpec = {name: string};
+export type IntersectionRightTypeSpec = {age: number};
+export type IntersectionTypeSpec = IntersectionLeftTypeSpec & IntersectionRightTypeSpec;
+
+// testMappers.push(new TestMapper(`{name: 'a'} / IntersectionTypeSpec`, 'IntersectionTypeSpec',{name: 'a'}, {isolate: true}));
+
 
 // ------------------------------------------   Function types   ------------------------------------------------------
 

@@ -11,7 +11,7 @@ export type NullOrBooleanOrNumber = null | boolean | number;
 export type NumericOrStringifiedNullOrBoolean = Numeric | 'null' | 'true' | 'false' ;
 
 
-export function isStringAsNullOrLiteralOrNumeric(text: string): text is NumericOrStringifiedNullOrBoolean {
+export function isStringAsNumericOrStringifiedNullOrBoolean(text: string): text is NumericOrStringifiedNullOrBoolean {
     return text === 'null' || isNumeric(text) || text === 'true' || text === 'false';
 }
 

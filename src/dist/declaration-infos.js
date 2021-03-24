@@ -1833,6 +1833,30 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
+        name: `IntersectionLeftTypeSpec`,
+        typeParameters: [
+        ],
+        type: `{name: string}`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `IntersectionRightTypeSpec`,
+        typeParameters: [
+        ],
+        type: `{age: number}`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `IntersectionTypeSpec`,
+        typeParameters: [
+        ],
+        type: `IntersectionLeftTypeSpec & IntersectionRightTypeSpec`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
         name: `FunctionTypeSpec`,
         typeParameters: [
         ],

@@ -13,7 +13,7 @@ import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../../shared/types/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './check-targets.service';
-import { isStringAsNullOrLiteralOrNumeric } from '../types/null-or-literal.type';
+import { isStringAsNumericOrStringifiedNullOrBoolean } from '../types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
@@ -61,7 +61,7 @@ export class MainService {
             return data;
         } else if (isDateTypeName(target)) {
             return MapDateService.create(data);
-        } else if (isStringAsNullOrLiteralOrNumeric(target)) {
+        } else if (isStringAsNumericOrStringifiedNullOrBoolean(target)) {
             return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
             return MapTupleService.create(target, data, options)
