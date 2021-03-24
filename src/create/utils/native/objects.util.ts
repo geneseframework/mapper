@@ -9,6 +9,6 @@ export function isObjectWhichIsNotArray(data: any): data is object {
 }
 
 
-export function isObjectLiteralType(text: string): text is 'object' {
+export function isObjectType(text: string): text is 'object' | 'Object' {
     return ['object', 'Object'].includes(text);
 }

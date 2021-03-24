@@ -17,22 +17,18 @@ import { isStringAsNullOrLiteralOrNumeric } from '../types/null-or-literal.type'
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
-import { isObjectLiteralType } from '../utils/native/objects.util';
-import { MapLiteralObjectService } from './map/map-literal-object.service';
+import { isObjectType } from '../utils/native/objects.util';
+import { MapObjectTypeService } from './map/map-object-type.service';
 import { GLOBAL } from '../const/global.const';
-import { hasSeparators } from '../types/target/string/has-separators.type';
 import { throwWarning } from '../utils/errors.util';
-import { isGeneric } from '../types/target/string/generics.type';
-import { MapGenericService } from './map/map-generic.service';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
 import { MapObjectService } from './map/map-object.service';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
-import * as chalk from 'chalk';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
 import { isWildCard } from '../types/target/string/wildcard.type';
 import { isNullOrUndefined } from '../types/null-or-undefined.type';
-import { isComplexType } from '../types/target/string/ComplexType';
+import { isComplexType } from '../types/target/string/complex-type.type';
 
 export class MainService {
 
@@ -75,8 +71,8 @@ export class MainService {
             return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
             return MapQuotedService.create(target, data, options);
-        } else if (isObjectLiteralType(target)) {
-            return MapLiteralObjectService.create(data);
+        } else if (isObjectType(target)) {
+            return MapObjectTypeService.create(data);
         } else if (isCurveBracketed(target)) {
             return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {

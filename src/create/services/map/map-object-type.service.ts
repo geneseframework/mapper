@@ -1,7 +1,7 @@
 import { isArray } from '../../utils/native/arrays.util';
 import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 
-export class MapLiteralObjectService {
+export class MapObjectTypeService {
 
 
     static create(data: object): object {
