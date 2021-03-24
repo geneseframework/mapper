@@ -12,9 +12,7 @@ import { hasGeneric, typeOfGeneric } from '../types/target/string/generics.type'
 import { getElements, trimSeparators } from '../utils/target.util';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
-import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 import { removeBorders } from '../../shared/utils/strings.util';
-import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
@@ -75,8 +73,9 @@ export class CheckTargetsService {
             return true;
         } else if (this.isDeclaredOutOfProject(target)) { // TODO
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
 
@@ -86,8 +85,13 @@ export class CheckTargetsService {
     }
 
 
-    private static haveCorrectElements(texts: string[]): boolean {
-        for (const text of texts) {
+    /**
+     * Checks if each element of an array of element is a correct target
+     * @param elements  // The different elements of a given stringified target
+     * @private
+     */
+    private static haveCorrectElements(elements: string[]): boolean {
+        for (const text of elements) {
             if (!this.hasCorrectElements(trimSeparators(text))) {
                 return false;
             }
