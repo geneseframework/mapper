@@ -5,7 +5,12 @@ import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapTypeService {
 
-
+    /**
+     * Returns the data mapped with the target defined by the stringified definition of a given type
+     * @param target    // The target with type format
+     * @param data      // The data to map
+     * @param options   // The create() options
+     */
     static create<T>(target: string, data: any, options: MapperBehavior): any {
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
         return MainService.mapStringTarget(typeInfo.type, data, options);

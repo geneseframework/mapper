@@ -9,14 +9,14 @@ import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
-export class MapDeclarationService<T> {
+export class MapDeclarationService {
 
 
     /**
-     * Returns mapped data when target is a DeclarationOrDate node.
-     * @param target
-     * @param data
-     * @param options
+     * Returns mapped data when target is a Declaration node (Class, Interface, Enum, Type).
+     * @param target    // The target which corresponds to a class, interface, enum or type
+     * @param data      // The data to map
+     * @param options   // The create() options
      * @private
      */
     static create(target: string, data: any, options: MapperBehavior): any {
@@ -38,6 +38,11 @@ export class MapDeclarationService<T> {
     }
 
 
+    /**
+     * Returns the kind of declaration corresponding to the target
+     * @param target    // The target to search
+     * @private
+     */
     private static getTypeDeclarationKind(target: string): TypeDeclarationKind {
         const declarationInfos: DeclarationInfo[] = GLOBAL.declarationInfos.filter(d => d.name === target);
         if (declarationInfos.length > 1) {

@@ -45,7 +45,7 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        return this.mapStringTarget<T>(TargetService.stringify(target), data, options);
+        return this.mapStringTarget(TargetService.stringify(target), data, options);
     }
 
 
@@ -55,7 +55,7 @@ export class MainService {
      * @param data
      * @param options
      */
-    static mapStringTarget<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    static mapStringTarget(target: string, data: any, options?: MapperBehavior): any {
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;
