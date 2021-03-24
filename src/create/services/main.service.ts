@@ -86,9 +86,8 @@ export class MainService {
         // } else if ( isDeclaredOutOfProjectAddItToGlobal(target)) { // TODO
         //     return MapOutOfProjectService.create(target, data, options);
         } else {
-            // TODO : finish to implement
-            throwWarning(`type not found : "${target}".`);
-            return MapComplexService.create(target, data, options);
+            throwWarning(`type not found : "${target}". @genese/mapper interpreted it as "any" by default.`);
+            return data;
         }
     }
 
