@@ -64,7 +64,7 @@ export class CheckTargetsService {
             return true;
         }
         if (isBracketedOrParenthesized(target)) {
-            return this.isCorrectContainer(target);
+            return this.hasCorrectElements(removeBorders(target));
         } else if (isArrayType(target)) {
             return this.hasCorrectElements(typeOfArray(target));
         } else if (hasGeneric(target)) {
@@ -77,11 +77,6 @@ export class CheckTargetsService {
             return true;
         }
         return false;
-    }
-
-
-    private static isCorrectContainer(text: string): boolean {
-        return isBracketedOrParenthesized(text) &&  this.hasCorrectElements(removeBorders(text))
     }
 
 
