@@ -6,12 +6,18 @@ import { isStringAsNullOrLiteralOrNumeric } from '../../types/null-or-literal.ty
 import { isString } from '../../utils/native/strings.util';
 import { throwWarning } from '../../utils/errors.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isComplexType } from '../../types/target/string/ComplexType';
 import { isGeneric } from '../../types/target/string/generics.type';
 import { MapGenericService } from './map-generic.service';
 
 export class MapComplexService {
 
+
+    /**
+     *
+     * @param target    // The target with a complex format (generics, unions, intersections, etc.)
+     * @param data      // The data to map
+     * @param options   // The create() options
+     */
     static create(target: string, data: any, options: MapperBehavior): any {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
