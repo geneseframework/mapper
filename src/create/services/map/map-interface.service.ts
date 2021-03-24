@@ -1,10 +1,9 @@
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
-import { isObjectWhichIsNotArray } from '../../utils/native/objects.util';
 import { GLOBAL } from '../../const/global.const';
 import { includes } from '../../utils/native/arrays.util';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { ObjectNotArray } from '../../types/not-some-type.type';
+import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/not-some-type.type';
 
 export class MapInterfaceService {
 

@@ -9,7 +9,7 @@ import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
-export class MapDeclarationService<T> {
+export class MapDeclarationService {
 
 
     /**
@@ -38,6 +38,11 @@ export class MapDeclarationService<T> {
     }
 
 
+    /**
+     * Returns the kind of declaration corresponding to the target
+     * @param target    // The target to search
+     * @private
+     */
     private static getTypeDeclarationKind(target: string): TypeDeclarationKind {
         const declarationInfos: DeclarationInfo[] = GLOBAL.declarationInfos.filter(d => d.name === target);
         if (declarationInfos.length > 1) {
