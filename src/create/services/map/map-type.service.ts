@@ -8,7 +8,7 @@ export class MapTypeService {
 
     static create<T>(target: string, data: any, options: MapperBehavior): any {
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
-        return MainService.mapToString(typeInfo.type, data, options);
+        return MainService.mapStringTarget(typeInfo.type, data, options);
     }
 
 }

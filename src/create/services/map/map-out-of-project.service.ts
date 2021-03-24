@@ -5,7 +5,7 @@ import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 export class MapOutOfProjectService {
 
     static create(target: string, data: any, options: MapperBehavior): any {
-        return MainService.mapToString(target, data, options);
+        return MainService.mapStringTarget(target, data, options);
     }
 
 

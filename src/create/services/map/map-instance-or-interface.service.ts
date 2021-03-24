@@ -19,7 +19,7 @@ export class MapInstanceOrInterfaceService {
                     this.mapDataKey(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = MainService.mapToString(declaration.indexableType.returnType, data[key], options);
+                instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
             }
         }
     }
@@ -34,7 +34,7 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             instance[key] = removeBorders(targetKeyType);
         } else {
-            instance[key] = MainService.mapToString(targetKeyType, data, options);
+            instance[key] = MainService.mapStringTarget(targetKeyType, data, options);
         }
     }
 

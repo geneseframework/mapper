@@ -22,12 +22,12 @@ export class MapComplexService {
                 } else if (isStringAsNullOrLiteral(others)) {
                     return !options.castStringsAndNumbers && isString(data) ? undefined : data;
                 } else {
-                    return MainService.mapToString(others, data, options);
+                    return MainService.mapStringTarget(others, data, options);
                 }
             }
-            const mapped: any = MainService.mapToString(first, data, options);
+            const mapped: any = MainService.mapStringTarget(first, data, options);
             // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
-            return mapped || MainService.mapToString(others, data, options);
+            return mapped || MainService.mapStringTarget(others, data, options);
         } else {
             throwWarning(`unknown target "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
             // return throwTarget(target, data, options);

@@ -35,14 +35,11 @@ import { MapperBehavior } from '../../shared/models/config-behavior.model';
 export class MainService {
 
     /**
-     * Returns the data formatted with the target's model
-     * - Initializes the instance generator and the global configuration.
-     * - Set options for the current mapping.
-     * - Returns undefined when data is incompatible with target
-     * - Returns mapped data instead
-     * @param target
-     * @param data
-     * @param options
+     * - If not already done, initializes the global configuration.
+     * - Returns the data formatted with the target's model
+     * @param target    // The type required by the user.
+     * @param data      // Data to map
+     * @param options   // Behavior options for this call to the create() method
      */
     static map<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
@@ -50,16 +47,11 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        return this.mapToString<T>(target, data, options);
+        return this.mapStringTarget<T>(TargetService.toString(target), data, options);
     }
 
 
-    static mapToString<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
-        return this.mapString(TargetService.toString(target), data, options);
-    }
-
-
-    private static mapString<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    static mapStringTarget<T>(target: string, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         // console.log(chalk.greenBright('MAP STRRRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isAny(target)) {
