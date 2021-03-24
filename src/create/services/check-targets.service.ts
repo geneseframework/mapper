@@ -14,13 +14,14 @@ import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 import { removeBorders } from '../../shared/utils/strings.util';
+import * as chalk from 'chalk';
 
 export class CheckTargetsService {
 
 
     /**
-     * Checks if target is readable by @genese/mapper
-     * @param target
+     * If target was not already checked, checks if this target is readable by @genese/mapper
+     * @param target    // The target to check
      */
     static start(target: string): void {
         if (GLOBAL.wasChecked(target)) {
@@ -34,42 +35,45 @@ export class CheckTargetsService {
 
 
     /**
-     * CAUTION: some cases are not covered and may cause errors :
-     *  - functions which are not constructors
-     * Don't use targets which are on one of these cases.
-     * @param target
+     * Checks if target is readable by @genese/mapper
+     * @param target    // The target to check
      */
     static hasCorrectFormat(target: string): boolean {
         if (isNullOrUndefined(target)) {
             return true;
         }
         if (!isString(target)) {
-            target = TargetService.toString(target);
+            target = TargetService.stringify(target);
         }
         const normalizedTarget: string = TargetService.normalize(target);
         return CheckTargetsService.hasCorrectElements(normalizedTarget);
     }
 
 
-    private static hasCorrectElements(text: string): boolean {
-        if (isPrimitiveType(text)
-            || isQuoted(text)
-            || isStringAsTrivialType(text)) {
+    /**
+     * Checks if target is composed of correct elements.
+     *
+     * Remark : target is never surrounded by curved brackets : literal objects were transformed in types generated during the init process
+     * @param target    // The target to check
+     * @private
+     */
+    private static hasCorrectElements(target: string): boolean {
+        if (isPrimitiveType(target)
+            || isQuoted(target)
+            || isStringAsTrivialType(target)) {
             return true;
         }
-        if (isBracketedOrParenthesized(text)) {
-            return this.isCorrectContainer(text);
-        } else if (isArrayType(text)) {
-            return this.hasCorrectElements(typeOfArray(text));
-        } else if (hasGeneric(text)) {
-            return this.hasCorrectElements(typeOfGeneric(text));
-        } else if(hasSeparators(trimSeparators(text))) {
-            return this.haveCorrectElements(getElements(text));
-        } else if (isCurveBracketed(text)) {
-            return isPrimitiveType(text); // TODO
-        } else if (hasDeclaration(text)) {
+        if (isBracketedOrParenthesized(target)) {
+            return this.isCorrectContainer(target);
+        } else if (isArrayType(target)) {
+            return this.hasCorrectElements(typeOfArray(target));
+        } else if (hasGeneric(target)) {
+            return this.hasCorrectElements(typeOfGeneric(target));
+        } else if(hasSeparators(trimSeparators(target))) {
+            return this.haveCorrectElements(getElements(target));
+        } else if (hasDeclaration(target)) {
             return true;
-        } else if ( this.isDeclaredOutOfProject(text)) { // TODO
+        } else if (this.isDeclaredOutOfProject(target)) { // TODO
             return true;
         }
         return false;
@@ -78,12 +82,6 @@ export class CheckTargetsService {
 
     private static isCorrectContainer(text: string): boolean {
         return isBracketedOrParenthesized(text) &&  this.hasCorrectElements(removeBorders(text))
-    }
-
-
-    // TODO
-    private static isCorrectObject(text: string): boolean {
-        return isPrimitiveType(text) // TODO : remove this return
     }
 
 

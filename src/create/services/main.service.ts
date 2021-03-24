@@ -47,7 +47,7 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        return this.mapStringTarget<T>(TargetService.toString(target), data, options);
+        return this.mapStringTarget<T>(TargetService.stringify(target), data, options);
     }
 
 
