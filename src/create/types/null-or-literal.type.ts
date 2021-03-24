@@ -1,13 +1,18 @@
+import { isNumeric, Numeric } from '../../shared/types/numeric.type';
+
 export function isNull(value: any): value is null {
     return value === null;
 }
 
 
-export type NullOrLiteral = Number | Boolean | Object | null | undefined ;
+export type NullOrBooleanOrNumber = null | boolean | number;
 
 
-export function isStringAsNullOrLiteral(text: string): boolean {
-    return text === 'null' || !isNaN(Number(text)) || text === 'true' || text === 'false';
+export type NumericOrStringifiedNullOrBoolean = Numeric | 'null' | 'true' | 'false' ;
+
+
+export function isStringAsNullOrLiteralOrNumeric(text: string): text is NumericOrStringifiedNullOrBoolean {
+    return text === 'null' || isNumeric(text) || text === 'true' || text === 'false';
 }
 
 

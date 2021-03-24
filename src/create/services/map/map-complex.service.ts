@@ -2,7 +2,7 @@ import { isParenthesized } from '../../types/target/string/parenthesis.type';
 import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
 import { getElements, trimSeparators } from '../../utils/target.util';
-import { isStringAsNullOrLiteral } from '../../types/null-or-literal.type';
+import { isStringAsNullOrLiteralOrNumeric } from '../../types/null-or-literal.type';
 import { isString } from '../../utils/native/strings.util';
 import { throwWarning } from '../../utils/errors.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
@@ -16,10 +16,10 @@ export class MapComplexService {
         if (isParenthesized(target)) {
 
         } else if (hasUnion(target)) {
-            if (isStringAsNullOrLiteral(first)) {
+            if (isStringAsNullOrLiteralOrNumeric(first)) {
                 if (first === data?.toString()) {
                     return !options.castStringsAndNumbers && isString(data) ? undefined : data;
-                } else if (isStringAsNullOrLiteral(others)) {
+                } else if (isStringAsNullOrLiteralOrNumeric(others)) {
                     return !options.castStringsAndNumbers && isString(data) ? undefined : data;
                 } else {
                     return MainService.mapStringTarget(others, data, options);
