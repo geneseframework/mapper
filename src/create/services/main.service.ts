@@ -22,12 +22,11 @@ import { GLOBAL } from '../const/global.const';
 import { throwWarning } from '../utils/errors.util';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
-import { MapObjectService } from './map/map-object.service';
-import { isCurveBracketed } from '../types/target/string/curve-bracketed.type';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
 import { isWildCard } from '../types/target/string/wildcard.type';
 import { isNullOrUndefined } from '../types/null-or-undefined.type';
 import { isComplexType } from '../types/target/string/complex-type.type';
+import { MapObjectTypeService } from './map/map-object-type.service';
 
 export class MainService {
 
@@ -71,7 +70,7 @@ export class MainService {
         } else if (isQuoted(target)) {
             return MapQuotedService.create(target, data, options);
         } else if (isObjectType(target)) {
-            return MapObjectService.create(data);
+            return MapObjectTypeService.create(data);
         // } else if (isCurveBracketed(target)) {
         //     return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {

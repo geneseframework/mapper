@@ -96,9 +96,10 @@ testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec',
 
 export type TypeObjectSpec = {name: string};
 
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: true}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: true}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {}, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', 'a', {expectedValue: undefined, isolate: false}));
 
 
 // ----------------------------------------   Union types 0 | 1 | 2   -----------------------------------------------------
