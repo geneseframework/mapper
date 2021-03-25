@@ -1,5 +1,7 @@
-import { PropertySignature, TypeLiteralNode } from 'ts-morph';
+import { PropertyDeclaration, PropertySignature, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import * as chalk from 'chalk';
+
+export type PropertyOrTypeAliasDeclaration = PropertyDeclaration | TypeAliasDeclaration;
 
 export class TypeLiteralDeclaration {
 

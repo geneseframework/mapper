@@ -16,8 +16,9 @@ import { flat } from '../../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
 import { isTypeLiteralProperty } from './ast-type-literal.util';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
-import { TypeLiteralDeclaration } from '../../models/type-literal-declaration.model';
+import { PropertyOrTypeAliasDeclaration, TypeLiteralDeclaration } from '../../models/type-literal-declaration.model';
 import { HasTypeLiteralNode } from '../../types/type-literal-property.type';
+import { capitalize } from '../../../shared/utils/strings.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
@@ -78,6 +79,19 @@ export function createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode: HasTy
     return interfaceInfo;
 }
 
+
+export function createIIII(parentInfoName: string, declaration: PropertyOrTypeAliasDeclaration, typeLiteralNode: TypeLiteralNode): InterfaceInfo {
+    const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), typeLiteralNode);
+    const interfaceInfo = new InterfaceInfo(interfaceInfoName(parentInfoName, declaration.getName()), declaration.getSourceFile().getFilePath(), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(typeLiteralDeclaration));
+    INIT.addDeclarationInfo(interfaceInfo);
+    return interfaceInfo;
+}
+
+
+
+function interfaceInfoName(declarationName: string, propertyName: string): string {
+    return `${declarationName}${capitalize(propertyName)}`;
+}
 
 export function genericParameters(declaration: GenericableDeclaration): GenericParameter[] {
     return declaration.getStructure().typeParameters;
