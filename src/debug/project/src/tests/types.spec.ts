@@ -96,7 +96,7 @@ testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec',
 
 export type TypeObjectSpec = {name: string};
 
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: false}));
 
 
 // ----------------------------------------   Union types 0 | 1 | 2   -----------------------------------------------------

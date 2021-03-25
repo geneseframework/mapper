@@ -54,10 +54,9 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 
 export function getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(declaration: ClassOrInterfaceDeclaration | TypeLiteralDeclaration): Property[] {
     const properties: Property[] = [];
-    // console.log(chalk.cyanBright('GET PROPPPPPPS'), declaration.getName());
     for (const property of declaration.getProperties()) {
         if (isTypeLiteralProperty(property)) {
-            console.log(chalk.yellowBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
+            // console.log(chalk.yellowBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
             const hasTypeLiteralNode = new HasTypeLiteralNode(declaration.getName(), property.getName(), property.getSourceFile().getFilePath(), property.getTypeNode() as TypeLiteralNode);
             const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
             const newProperty: Property = {name: property.getName(), type: newInterfaceInfo.name};
