@@ -184,7 +184,8 @@ export type IntersectionLeftTypeSpec = {name: string};
 export type IntersectionRightTypeSpec = {age: number};
 export type IntersectionTypeSpec = IntersectionLeftTypeSpec & IntersectionRightTypeSpec;
 
-// testMappers.push(new TestMapper(`{name: 'a'} / IntersectionTypeSpec`, 'IntersectionTypeSpec',{name: 'a'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'a', age: 20} / IntersectionTypeSpec`, 'IntersectionTypeSpec',{name: 'a', age: 20}, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`{name: 'a'} / IntersectionTypeSpec / undefined`, 'IntersectionTypeSpec',{name: 'a'}, {expectedValue: undefined, isolate: true}));
 
 
 // ------------------------------------------   Function types   ------------------------------------------------------

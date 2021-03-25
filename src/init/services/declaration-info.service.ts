@@ -99,9 +99,9 @@ export class DeclarationInfoService {
 
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
-        if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
-        // if (typeDeclaration.getName() === 'TypeObjectSpec') {
-        //     console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+        // if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
+        if (typeAliasDeclaration.getName() === 'IntersectionRightTypeSpec') {
+            console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
             const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
             typeInfo.type = newInterfaceInfo.name;
         } else {
