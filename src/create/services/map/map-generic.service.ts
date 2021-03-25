@@ -7,7 +7,7 @@ import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 export class MapGenericService {
 
     static create(target: Generic, data: any, options: MapperBehavior): any {
-        return MainService.mapToString(typeOfGeneric(target), data, options);
+        return MainService.mapStringTarget(typeOfGeneric(target), data, options);
     }
 
     // TODO

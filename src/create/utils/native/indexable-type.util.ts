@@ -1,8 +1,8 @@
 import { IndexableType } from '../../types/indexable-type.type';
 import { StringOrNumber } from '../../types/string-or-number.type';
-import { isNumericString } from './strings.util';
-import { areBothTrueOrFalse } from './any.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
+import { isNumeric } from '../../../shared/types/numeric.type';
+import { areBothTrueOrFalse } from '../../types/same-booleans.type';
 
 
 export function hasIndexableTypeAndKeyOfSameType(declaration: ClassOrInterfaceInfo, key: StringOrNumber): boolean {
@@ -41,7 +41,7 @@ export function hasIndexableTypeAndKeyOfSameType(declaration: ClassOrInterfaceIn
 
 
 export function keyHasSameTypeThanIndexable(key: StringOrNumber, indexableType: IndexableType): boolean {
-    return areBothTrueOrFalse(hasNumericKey(indexableType), isNumericString(key?.toString()));
+    return areBothTrueOrFalse([hasNumericKey(indexableType), isNumeric(key?.toString())]);
 }
 
 export function hasNumericKey(indexableType: IndexableType): boolean {

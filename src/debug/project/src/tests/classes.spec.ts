@@ -249,7 +249,7 @@ testMappers.push(new TestMapper(`{prop: 1} / NullSpec / {prop: null}`, NullSpec,
 export class UndefinedSpec {
     prop: undefined;
 }
-testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: 1}, isolate: false}));
+testMappers.push(new TestMapper(`{prop: 1} / UndefinedSpec / {prop: 1}`, UndefinedSpec, {prop: 1}, {expectedValue: {prop: undefined}, isolate: false}));
 
 
 export class UnknownSpec {
@@ -274,6 +274,17 @@ export class BooleanLiteralSpec {
     prop: false;
 }
 testMappers.push(new TestMapper(`{prop: false} / BooleanLiteralSpec / {prop: 4}`, BooleanLiteralSpec, {prop: false}, {expectedValue: {prop: false}, isolate: false}));
+
+
+// ----------------------------------------------------   Object   ------------------------------------------------------
+
+
+export class PropertyObjectSpec {
+    prop: object;
+}
+testMappers.push(new TestMapper(`{prop: {name: 'a'}} / PropertyObjectSpec`, PropertyObjectSpec, {prop: {name: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: ['a']} / PropertyObjectSpec`, PropertyObjectSpec, {prop: ['a']}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: 'a'} / PropertyObjectSpec / {prop: undefined}`, PropertyObjectSpec, {prop: 'a'}, {expectedValue: {prop: undefined}, isolate: false}));
 
 
 

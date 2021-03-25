@@ -91,6 +91,14 @@ testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAlon
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
+// ----------------------------------------   Types as interfaces   -----------------------------------------------------
+
+
+export type TypeObjectSpec = {name: string};
+
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: false}));
+
+
 // ----------------------------------------   Union types 0 | 1 | 2   -----------------------------------------------------
 
 
@@ -140,11 +148,6 @@ testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'Un
 testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
 
 
-// ------------------------------------------   Intersection types   ------------------------------------------------------
-
-// TODO: intersection types
-
-
 
 // ---------------------------------   Union of two Classes, and one Class[]   --------------------------------------------
 
@@ -170,6 +173,26 @@ testMappers.push(new TestMapper(`{name: 'Greenpeace', volunteers: 3000} / Employ
 testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / EmployerSpec[]`, 'EmployerSpec[]',[{ name: 'Total', volunteers: 3000 }]));
 
 
+// ------------------------------------------   Intersection types   ------------------------------------------------------
+
+// TODO: intersection types
+
+export type IntersectionLeftTypeSpec = {name: string};
+export type IntersectionRightTypeSpec = {age: number};
+export type IntersectionTypeSpec = IntersectionLeftTypeSpec & IntersectionRightTypeSpec;
+
+// testMappers.push(new TestMapper(`{name: 'a'} / IntersectionTypeSpec`, 'IntersectionTypeSpec',{name: 'a'}, {isolate: false}));
+
+
+// ------------------------------------------   Function types   ------------------------------------------------------
+
+// TODO: function types
+
+export type FunctionTypeSpec = () => string;
+
+// testMappers.push(new TestMapper(`() => 'a' / FunctionTypeSpec`, 'FunctionTypeSpec',() => 'a', {isolate: true}));
+
+
 
 // TODO : fix behavior of union of classes methods
 
@@ -177,14 +200,14 @@ testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / Employe
 //     name: string;
 //     employees: number;
 //
-//     zzz() {
+//     createAndReturnInterfaceInfoWithTypeLiteralNode() {
 //         console.log(chalk.red('zzzZZZZZZ'), this.name);
 //     }
 // }
 // export type CompanyAloneSpec = CompanyAloneClassSpec;
 //
 // const aaa: CompanyAloneClassSpec = create('CompanyAloneSpec', {name: 'sssss'});
-// aaa.zzz();
+// aaa.createAndReturnInterfaceInfoWithTypeLiteralNode();
 //
 // export class Cattt {
 //     color: string;
@@ -197,11 +220,11 @@ testMappers.push(new TestMapper(`[{ name: 'Total', volunteers: 3000 }] / Employe
 // export type ggg = CompanyAloneClassSpec | Cattt;
 //
 // const mmm: any = create('ggg', {name: 'fff'});
-// // mmm.zzz();
+// // mmm.createAndReturnInterfaceInfoWithTypeLiteralNode();
 // // mmm.meaow();
 // // TODO : ppp.meaow() should run
 // const ppp: any = create('ggg', {color: 'reddd'});
-// // ppp.zzz();
+// // ppp.createAndReturnInterfaceInfoWithTypeLiteralNode();
 // // ppp.meaow();
 
 

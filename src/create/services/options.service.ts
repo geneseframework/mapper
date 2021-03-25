@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { isObjectWhichIsNotArray } from '../utils/native/objects.util';
 import { isBoolean } from '../utils/native/booleans.util';
 import { clone } from '../utils/native/clone.util';
 import { GLOBAL } from '../const/global.const';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
+import { isObjectWhichIsNotArray } from '../types/not-some-type.type';
 
 export class OptionsService {
 

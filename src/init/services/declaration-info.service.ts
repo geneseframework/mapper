@@ -1,6 +1,16 @@
-import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
+import {
+    ClassDeclaration,
+    EnumDeclaration,
+    InterfaceDeclaration,
+    TypeAliasDeclaration,
+    TypeLiteralNode
+} from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
+import {
+    createInterfaceInfoFromTypeLiteralNode,
+    genericParameters,
+    getPropertiesAndAddInterfaceInfoIfHasTypeLiteral
+} from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -13,6 +23,9 @@ import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
+import * as chalk from 'chalk';
+import { isCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
+import { HasTypeLiteralNode } from '../types/type-literal-property.type';
 
 export class DeclarationInfoService {
 
@@ -38,7 +51,7 @@ export class DeclarationInfoService {
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
-        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
+        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
         classInfo.indexableType = getIndexableType(classDeclaration);
@@ -55,7 +68,7 @@ export class DeclarationInfoService {
 
 
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
-        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
+        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
         INIT.addDeclarationInfo(interfaceInfo);
     }
@@ -84,10 +97,24 @@ export class DeclarationInfoService {
     }
 
 
-    static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
-        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
-        typeInfo.type = typeDeclaration.getStructure()?.type as string;
+    static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
+        const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
+        if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
+        // if (typeDeclaration.getName() === 'TypeObjectSpec') {
+        //     console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+            const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
+            typeInfo.type = newInterfaceInfo.name;
+        } else {
+            typeInfo.type = typeAliasDeclaration.getStructure()?.type as string;
+        }
+        // Create interfaceInfo if needed
         INIT.addDeclarationInfo(typeInfo);
+    }
+
+
+    private static addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
+        const hasTypeLiteralNode = new HasTypeLiteralNode(typeAliasDeclaration.getName(), 'Interface', typeAliasDeclaration.getSourceFile().getFilePath(), typeAliasDeclaration.getTypeNode() as TypeLiteralNode);
+        return createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
     }
 
 

@@ -9,7 +9,7 @@ import { isNull } from '../types/null-or-literal.type';
 
 export class TargetService {
 
-    static toString<T>(target: Target<T>): string {
+    static stringify<T>(target: Target<T>): string {
         if (isNull(target)) {
             return 'null';
         } else if (isArray(target)) {
@@ -27,7 +27,7 @@ export class TargetService {
     private static stringifyArray(tupleTarget: any[]): string {
         let stringifiedTarget = '[';
         for (const target of tupleTarget) {
-            stringifiedTarget = `${stringifiedTarget}${this.toString(target)}, `;
+            stringifiedTarget = `${stringifiedTarget}${this.stringify(target)}, `;
         }
         return `${stringifiedTarget.slice(0, -2)}]`;
     }

@@ -142,7 +142,6 @@ This method can be used with primitives, arrays, tuples, classes, interfaces, en
 
 
 ## Table of Contents
-* [Basic usage](#basic-usage)
 * [Installation](#installation)
 * [Configuration](#configuration)
     * [package.json](#packagejson)
@@ -804,6 +803,16 @@ create('Person<string>', {property: 'a'});              // fails
 export type Person = User & Role
 create('Person', {name: 'a'});                          // fails
 ```
+
+- Types defined by functions
+
+Function types are not yet supported by `@genese/mapper`.
+
+```ts
+export type FunctionTypeSpec = () => string;
+create('FunctionTypeSpec', () => 'a');                  // fails
+```
+
 
 - New instances as default values
 

@@ -19,7 +19,8 @@ import { ConstructorArray } from './types/target/constructor-array.type';
 import { MapperBehavior } from '../shared/models/config-behavior.model';
 
 /**
- * Maps some data in the target's format.
+ * The create() method
+ * Maps objects of unknown type into safe typed objects
  */
 
 // --------------------------------------------   String overloads   --------------------------------------------------

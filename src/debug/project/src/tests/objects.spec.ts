@@ -36,7 +36,7 @@ testMappers.push(new TestMapper(`{element: ['a']} / [Object]`, [Object],{element
 // ---------------------------------------------   Literal objects   ----------------------------------------------------
 
 
-// testMappers.push(new TestMapper(`{prop: 'a'} / {prop: string}`, '{prop: string}', {prop: 'a'}, {isolate: false}));
+// testMappers.push(new TestMapper(`{prop: 'a'} / {prop: string}`, '{prop: string}', {prop: 'a'}, {isolate: true}));
 // testMappers.push(new TestMapper(`{prop: 'a', nb: 2} / {prop: string, nb: number}`, '{prop: string, nb: number}', {prop: 'a', nb: 2}, {isolate: false}));
 // testMappers.push(new TestMapper(`{prop: {first: 'a', last: 'b'}, nb: 2} / {prop: {first: string, last: string}, nb: number}`, '{prop: {first: string, last: string}, nb: number}', {prop: {first: 'a', last: 'b'}, nb: 2}, {isolate: false}));
 // testMappers.push(new TestMapper(`{prop: [{first: 'a', last: 'b'}], nb: 2} / {prop: [{first: string, last: string}], nb: number}`, '{prop: [{first: string, last: string}], nb: number}', {prop: [{first: 'a', last: 'b'}], nb: 2}, {isolate: false}));
