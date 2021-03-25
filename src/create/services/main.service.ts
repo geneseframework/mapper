@@ -18,7 +18,6 @@ import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../utils/native/dates.util';
 import { MapDateService } from './map/map-date.service';
 import { isObjectType } from '../utils/native/objects.util';
-import { MapObjectTypeService } from './map/map-object-type.service';
 import { GLOBAL } from '../const/global.const';
 import { throwWarning } from '../utils/errors.util';
 import { hasDeclaration } from '../utils/global.util';
@@ -72,7 +71,7 @@ export class MainService {
         } else if (isQuoted(target)) {
             return MapQuotedService.create(target, data, options);
         } else if (isObjectType(target)) {
-            return MapObjectTypeService.create(data);
+            return MapObjectService.create(data);
         // } else if (isCurveBracketed(target)) {
         //     return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {

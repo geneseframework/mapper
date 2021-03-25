@@ -107,7 +107,6 @@ export class DeclarationInfoService {
         } else {
             typeInfo.type = typeAliasDeclaration.getStructure()?.type as string;
         }
-        // Create interfaceInfo if needed
         INIT.addDeclarationInfo(typeInfo);
     }
 
