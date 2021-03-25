@@ -13,6 +13,7 @@ import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
+import * as chalk from 'chalk';
 
 export class DeclarationInfoService {
 
@@ -85,6 +86,10 @@ export class DeclarationInfoService {
 
 
     static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
+        if (typeDeclaration.getName() === 'TypeObjectSpec') {
+            console.log(chalk.blueBright('ADD TP INFOOOOO'), typeDeclaration.getStructure());
+        }
+        // Create interfaceInfo if needed
         const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
         typeInfo.type = typeDeclaration.getStructure()?.type as string;
         INIT.addDeclarationInfo(typeInfo);

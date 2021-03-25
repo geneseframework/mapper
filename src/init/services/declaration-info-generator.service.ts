@@ -16,7 +16,7 @@ import { commonjs } from '../../shared/const/commonjs.const';
 export class DeclarationInfoGeneratorService {
 
     /**
-     * Creates the Instance Generator file
+     * Creates the file containing the informations about the different declarations in the user's code
      * @private
      */
     static async createDeclarationInfoFile(): Promise<void> {
@@ -173,6 +173,7 @@ export class DeclarationInfoGeneratorService {
     //TODO : Types with antiquotes
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
         let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
+        // Add properties if type is interface-like
         return code;
     }
 

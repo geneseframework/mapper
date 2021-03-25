@@ -13,6 +13,7 @@ import { isGeneric } from '../../types/target/string/generics.type';
 import { MapGenericService } from './map-generic.service';
 import { ComplexType } from '../../types/target/string/complex-type.type';
 import * as chalk from 'chalk';
+import { hasIntersection, Intersection } from '../../types/target/string/intersection.type';
 
 export class MapComplexService {
 
@@ -27,11 +28,13 @@ export class MapComplexService {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
-        console.log(chalk.yellowBright('CPXXXXXXX'), target, data, first, others);
+        // console.log(chalk.yellowBright('CPXXXXXXX'), target, data, first, others);
         if (isParenthesized(target)) {
 
         } else if (hasUnion(target)) {
             return this.mapUnionType(target, data, options, first, others);
+        } else if (hasIntersection(target)) {
+            return this.mapIntersectionType(target, data, options, first, others);
         } else if (isGeneric(target)) {
             return MapGenericService.create(target, data, options);
         } else {
@@ -42,9 +45,9 @@ export class MapComplexService {
 
     private static mapUnionType(target: Union, data: any, options: MapperBehavior, first: string, others: string): any {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
-            return this.mapNumericOrStringifiedNullOrBoolean(data,options, first, others);
+            return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
-        console.log(chalk.magentaBright('CPXXXXXXX NOT NUMORRRRR'), target, data, first, others);
+        // console.log(chalk.magentaBright('CPXXXXXXX UNIONNNN'), target, data, first, others);
         const mapped: any = MainService.mapStringTarget(first, data, options);
         // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
         return mapped || MainService.mapStringTarget(others, data, options);
@@ -60,4 +63,16 @@ export class MapComplexService {
             return MainService.mapStringTarget(others, data, options);
         }
     }
+
+
+    private static mapIntersectionType(target: Intersection, data: any, options: MapperBehavior, first: string, others: string): any {
+        // console.log(chalk.cyanBright('CPXXXXXXX INTERSECTTTTT'), target, data, first, others);
+        const left: any = MainService.mapStringTarget(first, data, options);
+        const right: any = MainService.mapStringTarget(others, data, options);
+        // console.log(chalk.cyanBright('LEFTTTTTT'), left);
+        // console.log(chalk.cyanBright('RIGHTTTTT'), right);
+// TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
+        return left && right ? data : undefined;
+    }
+
 }

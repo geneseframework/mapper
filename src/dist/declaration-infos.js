@@ -1793,6 +1793,14 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
+        name: `TypeObjectSpec`,
+        typeParameters: [
+        ],
+        type: `{name: string}`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
         name: `UnionTypeNumberLiteralSpec`,
         typeParameters: [
         ],

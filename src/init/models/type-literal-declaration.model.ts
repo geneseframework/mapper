@@ -1,5 +1,6 @@
 import { PropertySignature, TypeLiteralNode } from 'ts-morph';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
+import * as chalk from 'chalk';
 
 export class TypeLiteralDeclaration {
 
