@@ -4,7 +4,7 @@ import {
     ImportDeclaration,
     InterfaceDeclaration,
     TypeAliasDeclaration,
-    TypeLiteralNode, TypeNode
+    TypeLiteralNode
 } from 'ts-morph';
 import { INIT } from '../../const/init.const';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
@@ -17,7 +17,6 @@ import * as chalk from 'chalk';
 import { isTypeLiteralProperty } from './ast-type-literal.util';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { TypeLiteralDeclaration } from '../../models/type-literal-declaration.model';
-import { capitalize } from '../../../shared/utils/strings.util';
 import { HasTypeLiteralNode } from '../../types/type-literal-property.type';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
@@ -53,23 +52,16 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 }
 
 
-export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLiteralDeclaration): Property[] {
+export function getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(declaration: ClassOrInterfaceDeclaration | TypeLiteralDeclaration): Property[] {
     const properties: Property[] = [];
     // console.log(chalk.cyanBright('GET PROPPPPPPS'), declaration.getName());
     for (const property of declaration.getProperties()) {
         if (isTypeLiteralProperty(property)) {
             console.log(chalk.yellowBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
-// const interfaceInfoName: string = getInterfaceInfoName(declaration.getName(), property.getName());
             const hasTypeLiteralNode = new HasTypeLiteralNode(declaration.getName(), property.getName(), property.getSourceFile().getFilePath(), property.getTypeNode() as TypeLiteralNode);
-            const newInterfaceInfo: InterfaceInfo = this.createInterfaceInfoWithTypeLiteralNode(hasTypeLiteralNode);
+            const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
             const newProperty: Property = {name: property.getName(), type: newInterfaceInfo.name};
-            // console.log(chalk.cyanBright('PROPERTYYYYYY STRUCT'), property.getStructure());
-            // console.log(chalk.cyanBright('PROPERTYYYYYY TYPEEEEE'), property.getTypeNode().getKindName());
-            // const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), property.getTypeNode() as TypeLiteralNode);
-            // const interfaceInfoName: string = createInterfaceInfoFromTypeLiteral(property.getName(), typeLiteralDeclaration);
-            // console.log(chalk.cyanBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
             properties.push(newProperty);
-            // properties.push({name: property.getName(), type: interfaceInfoName } as Property);
         } else {
             const propertyStructure = property.getStructure();
             const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
@@ -80,26 +72,11 @@ export function getProperties(declaration: ClassOrInterfaceDeclaration | TypeLit
 }
 
 
-export function createInterfaceInfoWithTypeLiteralNode(hasTypeLiteralNode: HasTypeLiteralNode): InterfaceInfo {
+export function createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode: HasTypeLiteralNode): InterfaceInfo {
     const typeLiteralDeclaration = new TypeLiteralDeclaration(hasTypeLiteralNode.declarationName, hasTypeLiteralNode.typeLiteralNode);
-    // createInterfaceInfoFromTypeLiteral(hasTypeLiteralNode.name, typeLiteralDeclaration);
-    const interfaceInfo = new InterfaceInfo(hasTypeLiteralNode.interfaceInfoName, hasTypeLiteralNode.path, getProperties(typeLiteralDeclaration));
+    const interfaceInfo = new InterfaceInfo(hasTypeLiteralNode.interfaceInfoName, hasTypeLiteralNode.path, getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(typeLiteralDeclaration));
     INIT.addDeclarationInfo(interfaceInfo);
     return interfaceInfo;
-}
-
-
-function getInterfaceInfoName(declarationName: string, propertyName: string): string {
-    return `${declarationName}${capitalize(propertyName)}`;
-}
-
-
-
-export function createInterfaceInfoFromTypeLiteral(propertyName: string, typeLiteral: TypeLiteralDeclaration): string {
-    const interfaceInfoName = `${typeLiteral.getName()}${capitalize(propertyName)}`;
-    const interfaceInfo = new InterfaceInfo(interfaceInfoName, typeLiteral.sourceFilePath, getProperties(typeLiteral));
-    INIT.addDeclarationInfo(interfaceInfo);
-    return interfaceInfoName;
 }
 
 

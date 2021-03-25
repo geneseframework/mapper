@@ -1,6 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters, getProperties } from '../utils/ast/ast-declaration.util';
+import { genericParameters, getPropertiesAndAddInterfaceInfoIfHasTypeLiteral } from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -39,7 +39,7 @@ export class DeclarationInfoService {
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
-        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getProperties(classDeclaration));
+        const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
         classInfo.indexableType = getIndexableType(classDeclaration);
@@ -56,7 +56,7 @@ export class DeclarationInfoService {
 
 
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
-        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getProperties(interfaceDeclaration));
+        const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
         INIT.addDeclarationInfo(interfaceInfo);
     }

@@ -1,5 +1,4 @@
 import { PropertySignature, TypeLiteralNode } from 'ts-morph';
-import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import * as chalk from 'chalk';
 
 export class TypeLiteralDeclaration {
@@ -12,23 +11,14 @@ export class TypeLiteralDeclaration {
         this._typeLiteralNode = typeLiteralNode;
     }
 
-
+    // This method is called in getPropertiesAndAddInterfaceInfoIfHasTypeLiteral()
     getName(): string {
         return this._name;
     }
 
-
+    // This method is called in getPropertiesAndAddInterfaceInfoIfHasTypeLiteral()
     getProperties(): PropertySignature[] {
+        console.log(chalk.redBright('GET PROPS.??????'), this.getName());
         return this._typeLiteralNode.getProperties();
-    }
-
-
-    get typeLiteralNode(): TypeLiteralNode {
-        return this._typeLiteralNode;
-    }
-
-
-    get sourceFilePath(): string {
-        return sourceFilePath(this._typeLiteralNode);
     }
 }

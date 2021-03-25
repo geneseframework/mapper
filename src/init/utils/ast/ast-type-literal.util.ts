@@ -1,6 +1,6 @@
 import { SyntaxKind, TypeLiteralNode, TypeNode } from 'ts-morph';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { HasTypeLiteralNode, TypeLiteralProperty } from '../../types/type-literal-property.type';
+import { TypeLiteralProperty } from '../../types/type-literal-property.type';
 
 
 export function isTypeLiteralProperty(propertyDeclaration: PropertyDeclarationOrSignature): propertyDeclaration is TypeLiteralProperty {
