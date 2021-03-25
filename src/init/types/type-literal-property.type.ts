@@ -2,7 +2,7 @@ import { PropertyDeclaration, SyntaxKind, TypeLiteralNode, TypeNode } from 'ts-m
 import { PropertyDeclarationOrSignature } from './property-declaration-or-signature.type';
 
 export class TypeLiteralProperty extends PropertyDeclaration {
-    getTypeNode: () => TypeLiteralNode = () => this.getTypeNode() as TypeLiteralNode;
+    getTypeNode: () => TypeLiteralNode = () => this.getTypeNode();
 }
 
 
