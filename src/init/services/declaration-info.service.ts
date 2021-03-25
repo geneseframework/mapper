@@ -1,6 +1,16 @@
-import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
+import {
+    ClassDeclaration,
+    EnumDeclaration,
+    InterfaceDeclaration,
+    TypeAliasDeclaration,
+    TypeLiteralNode
+} from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters, getPropertiesAndAddInterfaceInfoIfHasTypeLiteral } from '../utils/ast/ast-declaration.util';
+import {
+    createInterfaceInfoFromTypeLiteralNode,
+    genericParameters,
+    getPropertiesAndAddInterfaceInfoIfHasTypeLiteral
+} from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -14,6 +24,8 @@ import { removeBorders } from '../../shared/utils/strings.util';
 import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
+import { isCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
+import { HasTypeLiteralNode } from '../types/type-literal-property.type';
 
 export class DeclarationInfoService {
 
@@ -85,14 +97,24 @@ export class DeclarationInfoService {
     }
 
 
-    static addTypeInfo(typeDeclaration: TypeAliasDeclaration): void {
-        if (typeDeclaration.getName() === 'TypeObjectSpec') {
-            console.log(chalk.blueBright('ADD TP INFOOOOO'), typeDeclaration.getStructure());
+    static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
+        const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
+        if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
+        // if (typeDeclaration.getName() === 'TypeObjectSpec') {
+            console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+            const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
+            typeInfo.type = newInterfaceInfo.name;
+        } else {
+            typeInfo.type = typeAliasDeclaration.getStructure()?.type as string;
         }
         // Create interfaceInfo if needed
-        const typeInfo = new TypeInfo(typeDeclaration.getName(), sourceFilePath(typeDeclaration), genericParameters(typeDeclaration));
-        typeInfo.type = typeDeclaration.getStructure()?.type as string;
         INIT.addDeclarationInfo(typeInfo);
+    }
+
+
+    private static addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
+        const hasTypeLiteralNode = new HasTypeLiteralNode(typeAliasDeclaration.getName(), 'Interface', typeAliasDeclaration.getSourceFile().getFilePath(), typeAliasDeclaration.getTypeNode() as TypeLiteralNode);
+        return createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
     }
 
 

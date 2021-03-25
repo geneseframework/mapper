@@ -1792,11 +1792,26 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeObjectSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeObjectSpec`,
         typeParameters: [
         ],
-        type: `{name: string}`,
+        type: `TypeObjectSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1840,11 +1855,41 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `IntersectionLeftTypeSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionLeftTypeSpec`,
         typeParameters: [
         ],
-        type: `{name: string}`,
+        type: `IntersectionLeftTypeSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `IntersectionRightTypeSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: `number`
+            },
+        ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1852,7 +1897,7 @@ const declarationInfos = [
         name: `IntersectionRightTypeSpec`,
         typeParameters: [
         ],
-        type: `{age: number}`,
+        type: `IntersectionRightTypeSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

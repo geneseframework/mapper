@@ -19,7 +19,9 @@ export class HasTypeLiteralNode {
         this.typeLiteralNode = typeLiteralNode;
     }
 
+
     get interfaceInfoName(): string {
         return `${this.declarationName}${capitalize(this.propertyName)}`;
     }
+
 }
