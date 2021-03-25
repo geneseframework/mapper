@@ -19,7 +19,7 @@ export class MapObjectService {
     // TODO: check if it really runs and if we need options
     // private static createNewInstance(target: CurveBracketed): object {
     //     const newInstance = {};
-    //     const properties: string[] = this.getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(target);
+    //     const properties: string[] = this.getPropertiesFromClassOrInterface(target);
     //     console.log(chalk.magentaBright('MAP OBJJJJJJ properties'), properties);
     //     for (const property of properties) {
     //         this.addMappedProperty(newInstance, property);
@@ -28,7 +28,7 @@ export class MapObjectService {
     // }
     //
     //
-    // private static getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(target: CurveBracketed): string[] {
+    // private static getPropertiesFromClassOrInterface(target: CurveBracketed): string[] {
     //     const properties: string[] = [];
     //     let textToParse: string = removeBorders(target);
     //     while (textToParse.length > 0) {
