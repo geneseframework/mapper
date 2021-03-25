@@ -1,13 +1,7 @@
-import {
-    ClassDeclaration,
-    EnumDeclaration,
-    InterfaceDeclaration,
-    TypeAliasDeclaration,
-    TypeLiteralNode
-} from 'ts-morph';
+import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import {
-    createInterfaceInfoFromTypeLiteralNode,
+    createInterfaceInfoFromTypeAliasDeclaration,
     genericParameters,
     getPropertiesAndAddInterfaceInfoIfHasTypeLiteral
 } from '../utils/ast/ast-declaration.util';
@@ -25,7 +19,6 @@ import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
 import { isCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
-import { HasTypeLiteralNode } from '../types/type-literal-property.type';
 
 export class DeclarationInfoService {
 
@@ -112,8 +105,7 @@ export class DeclarationInfoService {
 
 
     private static addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
-        const hasTypeLiteralNode = new HasTypeLiteralNode(typeAliasDeclaration.getName(), 'Interface', typeAliasDeclaration.getSourceFile().getFilePath(), typeAliasDeclaration.getTypeNode() as TypeLiteralNode);
-        return createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
+        return createInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
     }
 
 
