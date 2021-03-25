@@ -20,6 +20,7 @@ import { capitalize } from '../../../shared/utils/strings.util';
 import { isTypeLiteralProperty } from '../../types/type-literal-property.type';
 import * as chalk from 'chalk';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
+import { CurveBracketed, getCurveBracketedBlocs } from '../../../create/types/target/string/curve-bracketed.type';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
@@ -58,18 +59,23 @@ export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceD
     const properties: Property[] = [];
     for (const propertyDeclarationOrSignature of declaration.getProperties()) {
         if (declaration.getName() === 'ObjectLiteralStringArraySpec') {
-            console.log(chalk.cyanBright('GETPROPPPP'), propertyDeclarationOrSignature.getStructure());
+            // console.log(chalk.cyanBright('GETPROPPPP'), propertyDeclarationOrSignature.getStructure());
         }
         if (hasTypeLiteral(propertyDeclarationOrSignature)) {
-            console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propertyDeclarationOrSignature.getKindName(), propertyDeclarationOrSignature.getName());
+            // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propertyDeclarationOrSignature.getKindName(), propertyDeclarationOrSignature.getName());
             const typeLiteralAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(propertyDeclarationOrSignature);
+            const interfaceInfos: InterfaceInfo[] = [];
             for (let i = 0; i < typeLiteralAncestors.length; i++) {
                 const infoName: string = `${getInterfaceInfoName(declaration.getName(), propertyDeclarationOrSignature.getName())}_${i}`;
-                createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
+                interfaceInfos.push(createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]));
             }
             console.log(chalk.magentaBright('GETPROPPPP'), typeLiteralAncestors.map(t => t.getProperties().map(p => p.getStructure())).flat());
             if (declaration.getName() === 'ObjectLiteralStringArraySpec') {
                 console.log(chalk.greenBright('ISTLPPPPP'), propertyDeclarationOrSignature.getStructure());
+                const initialType: string = propertyDeclarationOrSignature.getStructure().type as string;
+                console.log(chalk.greenBright('INITIALLLLL TP'), initialType);
+                const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
+                console.log(chalk.cyanBright('FINALLLL TP'), finalType);
             }
             if (isTypeLiteralProperty(propertyDeclarationOrSignature)) {
                 console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propertyDeclarationOrSignature.getKindName(), propertyDeclarationOrSignature.getName());
@@ -84,6 +90,21 @@ export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceD
         }
     }
     return properties;
+}
+
+
+function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfaceInfos: InterfaceInfo[]): string {
+    const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
+    let finalType: string = initialType;
+    for (const curveBracketedBloc of curveBracketedBlocs) {
+        finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
+    }
+    return finalType;
+}
+
+
+function getInterfaceInfoNameFromCurveBracketed(curveBracketed: CurveBracketed, interfaceInfos: InterfaceInfo[]): string {
+    return curveBracketed;
 }
 
 
