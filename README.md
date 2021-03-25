@@ -795,15 +795,6 @@ export class Person<T> {
 create('Person<string>', {property: 'a'});              // fails
 ```
 
-- Intersection types
-
-`@genese/mapper` supports union types but not intersection types :
-
-```ts
-export type Person = User & Role
-create('Person', {name: 'a'});                          // fails
-```
-
 - Types defined by functions
 
 Function types are not yet supported by `@genese/mapper`.
