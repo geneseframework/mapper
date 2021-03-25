@@ -2,7 +2,8 @@ import { PropertyDeclaration, TypeLiteralNode } from 'ts-morph';
 import { capitalize } from '../../shared/utils/strings.util';
 
 export class TypeLiteralProperty extends PropertyDeclaration {
-    getTypeLiteralNode: () => TypeLiteralNode = () => this.getTypeNode() as TypeLiteralNode;
+    getTypeNode: () => TypeLiteralNode = () => this.getTypeNode() as TypeLiteralNode;
+    // getTypeLiteralNode: () => TypeLiteralNode = () => this.getTypeNode() as TypeLiteralNode;
 }
 
 

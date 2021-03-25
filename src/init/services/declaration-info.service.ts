@@ -7,6 +7,7 @@ import {
 } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import {
+    createIIII,
     createInterfaceInfoFromTypeLiteralNode,
     genericParameters,
     getPropertiesAndAddInterfaceInfoIfHasTypeLiteral
@@ -112,8 +113,9 @@ export class DeclarationInfoService {
 
 
     private static addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
-        const hasTypeLiteralNode = new HasTypeLiteralNode(typeAliasDeclaration.getName(), 'Interface', typeAliasDeclaration.getSourceFile().getFilePath(), typeAliasDeclaration.getTypeNode() as TypeLiteralNode);
-        return createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
+        return createIIII(typeAliasDeclaration);
+        // const hasTypeLiteralNode = new HasTypeLiteralNode(typeAliasDeclaration.getName(), 'Interface', typeAliasDeclaration.getSourceFile().getFilePath(), typeAliasDeclaration.getTypeNode() as TypeLiteralNode);
+        // return createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode);
     }
 
 

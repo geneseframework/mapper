@@ -2,7 +2,7 @@ import {
     ClassDeclaration,
     EnumDeclaration,
     ImportDeclaration,
-    InterfaceDeclaration,
+    InterfaceDeclaration, PropertyDeclaration, PropertySignature,
     TypeAliasDeclaration,
     TypeLiteralNode
 } from 'ts-morph';
@@ -80,16 +80,51 @@ export function createInterfaceInfoFromTypeLiteralNode(hasTypeLiteralNode: HasTy
 }
 
 
-export function createIIII(parentInfoName: string, declaration: PropertyOrTypeAliasDeclaration, typeLiteralNode: TypeLiteralNode): InterfaceInfo {
-    const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), typeLiteralNode);
-    const interfaceInfo = new InterfaceInfo(interfaceInfoName(parentInfoName, declaration.getName()), declaration.getSourceFile().getFilePath(), getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(typeLiteralDeclaration));
+export function createIIII(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
+    // const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), typeLiteralNode);
+    const properties: Property[] = [];
+    const typeLiteralNode: TypeLiteralNode = typeAliasDeclaration.getTypeNode() as TypeLiteralNode;
+    for (const propertySignature of typeLiteralNode.getProperties()) {
+        const typeAliasPropertyName = `${typeAliasDeclaration.getName()}${propertySignature.getName()}`;
+        properties.push(getPropertyFromPropertySignature(typeAliasPropertyName, propertySignature))
+    }
+    const interfaceInfo = new InterfaceInfo(getInterfaceInfoName(typeAliasDeclaration.getName(), 'Interface'), typeAliasDeclaration.getSourceFile().getFilePath(), properties);
     INIT.addDeclarationInfo(interfaceInfo);
     return interfaceInfo;
 }
 
 
 
-function interfaceInfoName(declarationName: string, propertyName: string): string {
+export function getPropertyFromPropertySignature(parentName: string, propertySignature: PropertySignature): Property {
+    if (isTypeLiteralProperty(propertySignature)) {
+        const typeLiteralNode: TypeLiteralNode = propertySignature.getTypeNode() as TypeLiteralNode;
+        const newInterfaceInfo: InterfaceInfo = createIITypeLiteralNode(getInterfaceInfoName(parentName, propertySignature.getName()), typeLiteralNode);
+        return {name: propertySignature.getName(), type: newInterfaceInfo.name};
+    } else {
+        const propertyStructure = propertySignature.getStructure();
+        return {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+    }
+}
+
+
+
+export function createIITypeLiteralNode(interfaceInfoName: string, typeLiteralNode: TypeLiteralNode): InterfaceInfo {
+    // const typeLiteralDeclaration = new TypeLiteralDeclaration(declaration.getName(), typeLiteralNode);
+    const properties: Property[] = [];
+    // const typeLiteralNode: TypeLiteralNode = typeLiteralNode.getTypeNode() as TypeLiteralNode;
+    for (const propertySignature of typeLiteralNode.getProperties()) {
+        const interfaceInfoPropertyName = `${interfaceInfoName}${propertySignature.getName()}`;
+        properties.push(getPropertyFromPropertySignature(interfaceInfoPropertyName, propertySignature));
+    }
+    const interfaceInfo = new InterfaceInfo(interfaceInfoName, typeLiteralNode.getSourceFile().getFilePath(), properties);
+    INIT.addDeclarationInfo(interfaceInfo);
+    return interfaceInfo;
+}
+
+
+
+
+function getInterfaceInfoName(declarationName: string, propertyName: string): string {
     return `${declarationName}${capitalize(propertyName)}`;
 }
 
