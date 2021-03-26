@@ -19,6 +19,7 @@ import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
 import { isCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
+import { isTypeLiteral } from '../utils/ast/ast-type-declaration.util';
 
 export class DeclarationInfoService {
 
@@ -92,12 +93,15 @@ export class DeclarationInfoService {
 
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
-        if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
-            if (typeAliasDeclaration.getName() === 'ObjectLiteralStringArraySpec') {
-                console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+        if (isTypeLiteral(typeAliasDeclaration)) {
+            if (typeAliasDeclaration.getName() === 'TypeLiteralSpec') {
+                console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
+                // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
             }
             const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
             typeInfo.type = newInterfaceInfo.name;
+            // if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
+            //
         } else {
             typeInfo.type = typeAliasDeclaration.getStructure()?.type as string;
         }
