@@ -11,7 +11,9 @@ export class HierarchicTypeLiteralService {
     private static getTypeLiterals(node: Node, typeLiterals: HierarchicTypeLiteral[]): HierarchicTypeLiteral[] {
         const htls: HierarchicTypeLiteral[] = [];
         for (const typeLiteral of this.getTypeLiteralAncestors(node)) {
+            if (this.isTrivialTypeLiteral(typeLiteral)) {
 
+            }
         }
         return htls;
     }
