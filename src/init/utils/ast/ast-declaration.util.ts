@@ -21,8 +21,9 @@ import { isTypeLiteralProperty } from '../../types/type-literal-property.type';
 import * as chalk from 'chalk';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { CurveBracketed, getCurveBracketedBlocs } from '../../../create/types/target/string/curve-bracketed.type';
-import { getInterfaceInfoNameFromCurveBracketed } from '../interface-info.util';
 import { HasStructureType } from '../../types/class-or-interface-or-type-declaration.type';
+import { getInterfaceInfoNameFromCurveBracketed } from '../interface-info.util';
+import { hasTypeLiteral } from './ast-type-literal.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
@@ -158,11 +159,6 @@ function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfa
         finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
     }
     return finalType;
-}
-
-
-function hasTypeLiteral(propertyDeclarationOrSignature: PropertyDeclarationOrSignature): boolean {
-    return !!propertyDeclarationOrSignature.getFirstDescendantByKind(SyntaxKind.TypeLiteral);
 }
 
 
