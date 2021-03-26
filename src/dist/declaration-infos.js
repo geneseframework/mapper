@@ -1096,96 +1096,6 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringSpecPropObject`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Class`,
-        name: `ObjectLiteralStringSpec`,
-        typeParameters: [
-        ],
-        hasPrivateConstructor: false,
-        isAbstract: false,
-        numberOfConstructorArguments: 0,
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: undefined,
-                name: `propObject`,
-                type: `ObjectLiteralStringSpecPropObject`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringNumberSpecProp`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                type: `string`
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `nb`,
-                type: `number`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Class`,
-        name: `ObjectLiteralStringNumberSpec`,
-        typeParameters: [
-        ],
-        hasPrivateConstructor: false,
-        isAbstract: false,
-        numberOfConstructorArguments: 0,
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: undefined,
-                name: `prop`,
-                type: `ObjectLiteralStringNumberSpecProp`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Class`,
-        name: `ObjectLiteralStringArraySpec`,
-        typeParameters: [
-        ],
-        hasPrivateConstructor: false,
-        isAbstract: false,
-        numberOfConstructorArguments: 0,
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `prop`,
-                type: `{str: string}[]`
-            },
-        ],
-    },
-    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts`,
         kind: `Class`,
         name: `DateSpec`,
@@ -1745,7 +1655,7 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeObjectSpecInterface`,
+        name: `TypeLiteralSpecInterface`,
         typeParameters: [
         ],
         properties: [
@@ -1760,10 +1670,10 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
-        name: `TypeObjectSpec`,
+        name: `TypeLiteralSpec`,
         typeParameters: [
         ],
-        type: `TypeObjectSpecInterface`,
+        type: `TypeLiteralSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

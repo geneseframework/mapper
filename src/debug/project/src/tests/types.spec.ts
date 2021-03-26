@@ -49,15 +49,15 @@ testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAlon
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
-// ----------------------------------------   Types as interfaces   -----------------------------------------------------
+// ----------------------------------------------   Literal types   -------------------------------------------------------
 
 
-export type TypeObjectSpec = {name: string};
+export type TypeLiteralSpec = {name: string};
 
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 'Léa'}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', {}, {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeObjectSpec', 'a', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 'Léa'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
 
 
 

@@ -3,7 +3,8 @@ import {
     EnumDeclaration,
     ImportDeclaration,
     InterfaceDeclaration,
-    PropertySignature,
+    Node,
+    SyntaxKind,
     TypeAliasDeclaration,
     TypeLiteralNode
 } from 'ts-morph';
@@ -17,6 +18,11 @@ import { flat } from '../../../shared/utils/arrays.util';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { capitalize } from '../../../shared/utils/strings.util';
 import { isTypeLiteralProperty } from '../../types/type-literal-property.type';
+import * as chalk from 'chalk';
+import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
+import { CurveBracketed, getCurveBracketedBlocs } from '../../../create/types/target/string/curve-bracketed.type';
+import { getInterfaceInfoNameFromCurveBracketed } from '../interface-info.util';
+import { HasStructureType } from '../../types/class-or-interface-or-type-declaration.type';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
@@ -50,22 +56,145 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
     return importDeclarations;
 }
 
+// interface GetStructure {
+//     getStructure: () => string | WriterFunction
+// }
 
-export function getPropertiesAndAddInterfaceInfoIfHasTypeLiteral(declaration: ClassOrInterfaceDeclaration): Property[] {
+export function declarationType(declaration: HasStructureType): string {
+    return declaration.getStructure().type as string;
+}
+
+
+export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceDeclaration): Property[] {
     const properties: Property[] = [];
-    for (const property of declaration.getProperties()) {
-        if (isTypeLiteralProperty(property)) {
-            // console.log(chalk.yellowBright('PROPERTYYYYYY'), property.getKindName(), property.getName());
-            const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(declaration.getName(), property.getName()), property.getTypeNode());
-            const newProperty: Property = {name: property.getName(), type: newInterfaceInfo.name};
-            properties.push(newProperty);
-        } else {
-            const propertyStructure = property.getStructure();
-            const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
-            properties.push(prop);
-        }
+    for (const propDecOrSign of declaration.getProperties()) {
+        properties.push(getPropertyFromPropDecOrSign(declaration.getName(), propDecOrSign))
     }
     return properties;
+}
+
+// TODO : replace brackets by interface namesvbgcf
+export function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: PropertyDeclarationOrSignature): Property {
+    if (parentName === 'ObjectLiteralStringArraySpec') {
+        // console.log(chalk.cyanBright('GETPROPPPP'), propDecOrSign.getStructure());
+    }
+    if (hasTypeLiteral(propDecOrSign)) {
+        console.log(chalk.cyanBright('GETPROPPPP'), propDecOrSign.getStructure());
+        // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
+        const typeLiteralAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(propDecOrSign);
+        const interfaceInfos: InterfaceInfo[] = [];
+        for (let i = 0; i < typeLiteralAncestors.length; i++) {
+            if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
+                const infoName: string = `${getInterfaceInfoName(parentName, propDecOrSign.getName())}_${i}`;
+                const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
+                newII.text = propDecOrSign.getStructure().type as string;
+                interfaceInfos.push(newII);
+            } else {
+
+            }
+        }
+        console.log(chalk.magentaBright('GETPROPPPP'), typeLiteralAncestors.map(t => t.getProperties().map(p => p.getStructure())).flat());
+        if (parentName === 'ObjectLiteralStringArraySpec') {
+            console.log(chalk.greenBright('ISTLPPPPP'), interfaceInfos);
+            const initialType: string = propDecOrSign.getStructure().type as string;
+            console.log(chalk.greenBright('INITIALLLLL TP'), initialType);
+            const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
+            console.log(chalk.cyanBright('FINALLLL TP'), finalType);
+        }
+        if (isTypeLiteralProperty(propDecOrSign)) {
+            // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
+            const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propDecOrSign.getName()), propDecOrSign.getTypeNode() as TypeLiteralNode);
+            const newProperty: Property = {name: propDecOrSign.getName(), type: newInterfaceInfo.name};
+            return newProperty;
+        }
+    } else {
+        const propertyStructure = propDecOrSign.getStructure();
+        const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        return prop;
+    }
+}
+
+
+function addIIWithTypLit(parentName: string, childName: string, propertyDeclarationOrSignature: PropertyDeclarationOrSignature) {
+    const typeLiteralAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(propertyDeclarationOrSignature);
+    const interfaceInfos: InterfaceInfo[] = [];
+    for (let i = 0; i < typeLiteralAncestors.length; i++) {
+        const infoName: string = `${getInterfaceInfoName(parentName, childName)}_${i}`;
+        if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
+            const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
+            newII.text = propertyDeclarationOrSignature.getStructure().type as string;
+            interfaceInfos.push(newII);
+        } else {
+            // console.log(chalk.blueBright(''), typeLiteralAncestors[i].getty);
+            const literalAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(typeLiteralAncestors[i]);
+            // addIIWithTypLit(getInterfaceInfoName(parentName, childName), `_${i}`, 'zzz', literalAncestors)
+        }
+    }
+}
+
+
+function getTypeWithoutCurvedBrackets(initialType: string, propertyDeclarationOrSignature: PropertyDeclarationOrSignature, parentName: string): string {
+    const trivialTypeLiterals: TypeLiteralNode[] = getTrivialTypeLiterals(propertyDeclarationOrSignature);
+    const interfaceInfos: InterfaceInfo[] = [];
+    for (let i = 0; i < trivialTypeLiterals.length; i++) {
+        const infoName: string = `${getInterfaceInfoName(parentName, propertyDeclarationOrSignature.getName())}_${i}`;
+        const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, trivialTypeLiterals[i]);
+        newII.text = propertyDeclarationOrSignature.getStructure().type as string;
+        interfaceInfos.push(newII);
+    }
+    const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
+    let finalType: string = initialType;
+    for (const curveBracketedBloc of curveBracketedBlocs) {
+        finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
+    }
+    return finalType;
+}
+
+
+function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfaceInfos: InterfaceInfo[]): string {
+    const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
+    let finalType: string = initialType;
+    for (const curveBracketedBloc of curveBracketedBlocs) {
+        finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
+    }
+    return finalType;
+}
+
+
+function hasTypeLiteral(propertyDeclarationOrSignature: PropertyDeclarationOrSignature): boolean {
+    return !!propertyDeclarationOrSignature.getFirstDescendantByKind(SyntaxKind.TypeLiteral);
+}
+
+
+function getTrivialTypeLiterals(propertySignature: PropertyDeclarationOrSignature): TypeLiteralNode[] {
+    const typeLiteralNodes: TypeLiteralNode[] = [];
+    for (const typeLiteralNode of propertySignature.getDescendantsOfKind(SyntaxKind.TypeLiteral)) {
+        if (isTrivialTypeLiteral(typeLiteralNode)) {
+            typeLiteralNodes.push(typeLiteralNode)
+        }
+    }
+    return typeLiteralNodes;
+}
+
+
+function isTrivialTypeLiteral(typeLiteralNode: TypeLiteralNode): boolean {
+    return !typeLiteralNode.getFirstDescendantByKind(SyntaxKind.TypeLiteral);
+}
+
+
+function getTypeLiteralAncestors(node: Node): TypeLiteralNode[] {
+    const typeLiteralNodes: TypeLiteralNode[] = [];
+    for (const typeLiteralNode of node.getDescendantsOfKind(SyntaxKind.TypeLiteral)) {
+        if (isTypeLiteralAncestor(typeLiteralNode)) {
+            typeLiteralNodes.push(typeLiteralNode)
+        }
+    }
+    return typeLiteralNodes;
+}
+
+
+function isTypeLiteralAncestor(typeLiteralNode: TypeLiteralNode): boolean {
+    return !typeLiteralNode.getFirstAncestorByKind(SyntaxKind.TypeLiteral);
 }
 
 
@@ -82,7 +211,7 @@ export function createInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration
 }
 
 
-export function getPropertyFromPropertySignature(parentName: string, propertySignature: PropertySignature): Property {
+export function getPropertyFromPropertySignature(parentName: string, propertySignature: PropertyDeclarationOrSignature): Property {
     if (isTypeLiteralProperty(propertySignature)) {
         const typeLiteralNode: TypeLiteralNode = propertySignature.getTypeNode() as TypeLiteralNode;
         const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propertySignature.getName()), typeLiteralNode);
@@ -109,6 +238,7 @@ export function createInterfaceInfoFromTypeLiteralNode(interfaceInfoName: string
 function getInterfaceInfoName(declarationName: string, propertyName: string): string {
     return `${declarationName}${capitalize(propertyName)}`;
 }
+
 
 export function genericParameters(declaration: GenericableDeclaration): GenericParameter[] {
     return declaration.getStructure().typeParameters;
