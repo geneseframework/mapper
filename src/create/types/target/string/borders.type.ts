@@ -2,43 +2,76 @@ import { Containerized } from './containerized.type';
 import * as chalk from 'chalk';
 
 export type LeftBorder = '{' | '[' | '(' | '<';
-export function hasLeftBorder(text: string): text is LeftBorder {
-    return text?.length > 0 && ['{', '[', '(', '<'].includes(text.charAt(0));
-}
-
 export type RightBorder = '}' | ']' | ')' | '>';
-export function hasRightBorder(text: string): text is RightBorder {
-    return text?.length > 0 && ['}', ']', ')', '>'].includes(text.slice(-1));
+export type Border = LeftBorder | RightBorder;
+
+export function isLeftBorder(text: string): text is LeftBorder {
+    return ['{', '[', '(', '<'].includes(text);
 }
 
 
-export function getRightBorder(char: LeftBorder): RightBorder {
-    switch (char) {
-        case '{':
-            return '}';
-        case '[':
-            return ']';
-        case '(':
-            return ')';
-        case '<':
-            return '>';
+export function isRightBorder(text: string): text is RightBorder {
+    return ['}', ']', ')', '>'].includes(text);
+}
+
+
+export function isBorder(text: string): text is Border {
+    return isLeftBorder(text) || isRightBorder(text);
+}
+
+
+export function hasLeftBorder(text: string): boolean {
+    return text?.length > 0 && isLeftBorder(text.charAt(0));
+}
+
+
+export function hasRightBorder(text: string): boolean {
+    return text?.length > 0 && isRightBorder(text.slice(-1));
+}
+
+
+export function oppositeBorder(char: LeftBorder): RightBorder
+export function oppositeBorder(char: RightBorder): LeftBorder
+export function oppositeBorder(char: Border): Border {
+    if (isLeftBorder(char)) {
+        switch (char) {
+            case '{':
+                return '}';
+            case '[':
+                return ']';
+            case '(':
+                return ')';
+            case '<':
+                return '>';
+        }
+    } else {
+        switch (char) {
+            case '}':
+                return '{';
+            case ']':
+                return '[';
+            case ')':
+                return '(';
+            case '>':
+                return '<';
+        }
     }
 }
 
 
-
-export function getLeftBorder(char: RightBorder): LeftBorder {
-    switch (char) {
-        case '}':
-            return '{';
-        case ']':
-            return '[';
-        case ')':
-            return '(';
-        case '>':
-            return '<';
-    }
-}
+//
+// export function getLeftBorder(char: RightBorder): LeftBorder {
+//     switch (char) {
+//         case '}':
+//             return '{';
+//         case ']':
+//             return '[';
+//         case ')':
+//             return '(';
+//         case '>':
+//             return '<';
+//     }
+// }
 
 
 export type HasLeftBorder = `{${string}` |`[${string}` |`(${string}` |`<${string}`;
@@ -52,7 +85,7 @@ export function getFirstContainer(text: HasLeftBorder): Containerized {
         if (text[i] === leftBorder) {
             nest++;
         }
-        if (text[i] === getRightBorder(leftBorder)) {
+        if (text[i] === oppositeBorder(leftBorder)) {
             nest--;
         }
         if (nest === 0) {
@@ -71,7 +104,7 @@ export function getLastContainer(text: HasRightBorder): Containerized {
         if (text.charAt(position) === rightBorder) {
             nest++;
         }
-        if (text.charAt(position) === getLeftBorder(rightBorder)) {
+        if (text.charAt(position) === oppositeBorder(rightBorder)) {
             nest--;
         }
         if (nest === 0) {

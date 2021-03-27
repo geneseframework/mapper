@@ -2,6 +2,6 @@
 //     initializer?: any, // TODO?: Initializer with new()
 //     isRequired?: boolean,
 //     name?: string,
-//     text?: string,
+//     stringifiedType?: string,
 //     type?: string,
 // }

@@ -18,8 +18,9 @@ import { removeBorders } from '../../shared/utils/strings.util';
 import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
-import { isCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
-import { isTypeLiteral } from '../utils/ast/ast-type-declaration.util';
+import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
+import { HierarchicTypeLiteral } from '../models/hierarchic-type-literal.model';
+import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
 
 export class DeclarationInfoService {
 
@@ -93,10 +94,12 @@ export class DeclarationInfoService {
 
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
-        if (isTypeLiteral(typeAliasDeclaration)) {
+        if (hasTypeLiteral(typeAliasDeclaration)) {
             if (typeAliasDeclaration.getName() === 'TypeLiteralSpec') {
-                console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
+                console.log(chalk.yellowBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
+                const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);
                 // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+                console.log(chalk.greenBright('HTLSSSSS'), htl.interfaceInfo);
             }
             const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
             typeInfo.type = newInterfaceInfo.name;

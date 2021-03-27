@@ -42,11 +42,11 @@ export class MapObjectService {
     // }
     //
     //
-    // private static getNextPropertyText(text: string): string {
-    //     const propertyName: string = this.getPropertyName(text);
+    // private static getNextPropertyText(stringifiedType: string): string {
+    //     const propertyName: string = this.getPropertyName(stringifiedType);
     //     let property: string = propertyName;
     //     console.log(chalk.yellowBright('MAP OBJJJJJJ property'), property);
-    //     let rest: string = text.slice(propertyName.length);
+    //     let rest: string = stringifiedType.slice(propertyName.length);
     //     let propertyLength: number = propertyName.length;
     //     let isTheEndOfTheProperty = false;
     //     while (rest.length > 0 && !isTheEndOfTheProperty) {
@@ -61,12 +61,12 @@ export class MapObjectService {
     //             propertyLength++;
     //         }
     //     }
-    //     return text.slice(0, propertyLength);
+    //     return stringifiedType.slice(0, propertyLength);
     // }
     //
     //
-    // private static getPropertyName(text: string): string {
-    //     return text.match(/^\w+:/g)?.[0]?.slice(0, -1);
+    // private static getPropertyName(stringifiedType: string): string {
+    //     return stringifiedType.match(/^\w+:/g)?.[0]?.slice(0, -1);
     // }
     //
     //
@@ -93,13 +93,13 @@ export class MapObjectService {
     // }
     //
     //
-    // private static isNewInstance(text: string) {
+    // private static isNewInstance(stringifiedType: string) {
     //     // TODO
     // }
     //
     //
-    // private static getFirstWord(text: string) {
-    //     return text ?? text.split(' ')[0];
+    // private static getFirstWord(stringifiedType: string) {
+    //     return stringifiedType ?? stringifiedType.split(' ')[0];
     // }
 
 

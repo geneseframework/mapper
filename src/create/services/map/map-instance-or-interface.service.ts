@@ -34,7 +34,7 @@ export class MapInstanceOrInterfaceService {
 
     /**
      * Checks if a string is the name of the property of a given class or interface
-     * @param propertyName          // The text to check
+     * @param propertyName          // The stringifiedType to check
      * @param classOrInterfaceInfo  // The class or interface
      * @private
      */
