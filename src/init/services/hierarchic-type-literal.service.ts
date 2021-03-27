@@ -5,7 +5,6 @@ import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
-import { CurveBracketed, getCurveBracketedBlocs } from '../../create/types/target/string/curve-bracketed.type';
 
 export class HierarchicTypeLiteralService {
 
@@ -86,20 +85,20 @@ export class HierarchicTypeLiteralService {
         if (!htl.parent) {
             return;
         }
-        htl.parent.stringifiedType = this.updateStringifiedType(htl.parent, htl);
+        htl.parent.interfaceInfo.stringifiedType = this.updateStringifiedType(htl.parent, htl);
     }
 
 
     private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
-        console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
-        const stringifiedObjects: CurveBracketed[] = getCurveBracketedBlocs(parent.stringifiedType);
-        console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), stringifiedObjects);
-        for (const stringifiedObject of stringifiedObjects) {
-            console.log(chalk.redBright('UPDATE STTTTT CORRESPONDSTO'), child.interfaceInfo.correspondsTo(stringifiedObject));
-            if (child.interfaceInfo.correspondsTo(stringifiedObject)) {
-                // parent.interfaceInfo.q
-            }
-        }
+        // console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
+        // const stringifiedObjects: CurveBracketed[] = getCurveBracketedBlockInfos(parent.stringifiedType);
+        // console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), stringifiedObjects);
+        // for (const stringifiedObject of stringifiedObjects) {
+        //     console.log(chalk.redBright('UPDATE STTTTT CORRESPONDSTO'), child.interfaceInfo.correspondsTo(stringifiedObject));
+        //     if (child.interfaceInfo.correspondsTo(stringifiedObject)) {
+        //         // parent.interfaceInfo.q
+        //     }
+        // }
         return undefined;
     }
 

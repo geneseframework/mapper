@@ -20,9 +20,7 @@ import { capitalize } from '../../../shared/utils/strings.util';
 import { isTypeLiteralProperty } from '../../types/type-literal-property.type';
 import * as chalk from 'chalk';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
-import { CurveBracketed, getCurveBracketedBlocs } from '../../../create/types/target/string/curve-bracketed.type';
 import { HasStructureType } from '../../types/class-or-interface-or-type-declaration.type';
-import { getInterfaceInfoNameFromCurveBracketed } from '../interface-info.util';
 import { hasTypeLiteral } from './ast-type-literal.util';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
@@ -99,8 +97,8 @@ export function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: 
             console.log(chalk.greenBright('ISTLPPPPP'), interfaceInfos);
             const initialType: string = propDecOrSign.getStructure().type as string;
             console.log(chalk.greenBright('INITIALLLLL TP'), initialType);
-            const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
-            console.log(chalk.cyanBright('FINALLLL TP'), finalType);
+            // const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
+            // console.log(chalk.cyanBright('FINALLLL TP'), finalType);
         }
         if (isTypeLiteralProperty(propDecOrSign)) {
             // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
@@ -134,32 +132,32 @@ function addIIWithTypLit(parentName: string, childName: string, propertyDeclarat
 }
 
 
-function getTypeWithoutCurvedBrackets(initialType: string, propertyDeclarationOrSignature: PropertyDeclarationOrSignature, parentName: string): string {
-    const trivialTypeLiterals: TypeLiteralNode[] = getTrivialTypeLiterals(propertyDeclarationOrSignature);
-    const interfaceInfos: InterfaceInfo[] = [];
-    for (let i = 0; i < trivialTypeLiterals.length; i++) {
-        const infoName: string = `${getInterfaceInfoName(parentName, propertyDeclarationOrSignature.getName())}_${i}`;
-        const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, trivialTypeLiterals[i]);
-        newII.stringifiedType = propertyDeclarationOrSignature.getStructure().type as string;
-        interfaceInfos.push(newII);
-    }
-    const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
-    let finalType: string = initialType;
-    for (const curveBracketedBloc of curveBracketedBlocs) {
-        finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
-    }
-    return finalType;
-}
-
-
-function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfaceInfos: InterfaceInfo[]): string {
-    const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
-    let finalType: string = initialType;
-    for (const curveBracketedBloc of curveBracketedBlocs) {
-        finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
-    }
-    return finalType;
-}
+// function getTypeWithoutCurvedBrackets(initialType: string, propertyDeclarationOrSignature: PropertyDeclarationOrSignature, parentName: string): string {
+//     const trivialTypeLiterals: TypeLiteralNode[] = getTrivialTypeLiterals(propertyDeclarationOrSignature);
+//     const interfaceInfos: InterfaceInfo[] = [];
+//     for (let i = 0; i < trivialTypeLiterals.length; i++) {
+//         const infoName: string = `${getInterfaceInfoName(parentName, propertyDeclarationOrSignature.getName())}_${i}`;
+//         const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, trivialTypeLiterals[i]);
+//         newII.stringifiedType = propertyDeclarationOrSignature.getStructure().type as string;
+//         interfaceInfos.push(newII);
+//     }
+//     const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlockInfos(initialType);
+//     let finalType: string = initialType;
+//     for (const curveBracketedBloc of curveBracketedBlocs) {
+//         finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
+//     }
+//     return finalType;
+// }
+//
+//
+// function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfaceInfos: InterfaceInfo[]): string {
+//     const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlockInfos(initialType);
+//     let finalType: string = initialType;
+//     for (const curveBracketedBloc of curveBracketedBlocs) {
+//         finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
+//     }
+//     return finalType;
+// }
 
 
 function getTrivialTypeLiterals(propertySignature: PropertyDeclarationOrSignature): TypeLiteralNode[] {
