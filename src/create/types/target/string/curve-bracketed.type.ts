@@ -3,6 +3,7 @@ import { Property } from '../../../../shared/types/target/property.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 import { isComma } from './commas.type';
 import * as chalk from 'chalk';
+import { firstWord } from './word.type';
 
 export type CurveBracketed = `{${string}}`;
 
@@ -47,5 +48,16 @@ function getPropertiesTexts(text: string): string[] {
 
 
 function getProperty(propertyText: string): Property {
-    return undefined;
+    return  {
+        name: firstWord(propertyText),
+        stringifiedText:`{${propertyText}}`
+    };
+    // let rest: string = propertyText.slice(property.name.length).trim();
+    // property.isRequired = rest.charAt(0) !== '?';
+    // rest = property.isRequired ? rest.slice(1) : rest;
+    // if (rest.charAt(0) === ':') {
+    //
+    // }
+    // console.log(chalk.redBright('GET PROPPPP'), property, rest);
+    // return property;
 }

@@ -7,5 +7,5 @@ export function isWord(text: string): text is Word {
 
 
 export function firstWord(text: string): Word {
-    return undefined;
+    return text.match(/\w+/g)[0];
 }

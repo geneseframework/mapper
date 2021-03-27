@@ -60,7 +60,7 @@ testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec',
 
 export type TypeLiteralSpec = {name: string};
 
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 'Léa'}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 'Léa'}, {isolate: true}));
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
