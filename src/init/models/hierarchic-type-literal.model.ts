@@ -1,7 +1,8 @@
-import { PropertyDeclaration, TypeAliasDeclaration, Node } from 'ts-morph';
+import { PropertyDeclaration, TypeAliasDeclaration, Node, TypeLiteralNode } from 'ts-morph';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import * as chalk from 'chalk';
 import { declarationType } from '../utils/ast/ast-declaration.util';
+
 
 export class HierarchicTypeLiteral {
 
@@ -45,4 +46,8 @@ export class HierarchicTypeLiteral {
 
         }
     }
+}
+
+export class HierarchicTypeLiteralNode extends HierarchicTypeLiteral {
+    node: TypeLiteralNode;
 }

@@ -99,7 +99,7 @@ export class DeclarationInfoService {
                 console.log(chalk.yellowBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
                 const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);
                 // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
-                console.log(chalk.greenBright('HTLSSSSS'), htl);
+                console.log(chalk.greenBright('HTLSSSSS'), htl.interfaceInfo);
             }
             const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
             typeInfo.type = newInterfaceInfo.name;
