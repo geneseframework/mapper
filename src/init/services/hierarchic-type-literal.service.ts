@@ -5,27 +5,29 @@ import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType, getPropertyFromPropDecOrSign } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
+import { Block, getBlocks } from '../../create/types/target/string/block.type';
 
 export class HierarchicTypeLiteralService {
 
     static create(declaration: TypeOrPropertyDeclaration): HierarchicTypeLiteral {
-        const htl = new HierarchicTypeLiteral(declaration, declaration);
-        htl.children = this.createHTLChildren(declaration, declaration);
+        const htl = new HierarchicTypeLiteral(declaration, declaration, undefined);
+        htl.stringifiedType
+        htl.children = this.createHTLChildren(declaration, htl);
         return htl;
     }
 
 
-    private static createHTLChildren(root: TypeOrPropertyDeclaration, node: Node): HierarchicTypeLiteral[] {
+    private static createHTLChildren(root: TypeOrPropertyDeclaration, parent: HierarchicTypeLiteral): HierarchicTypeLiteral[] {
         const htls: HierarchicTypeLiteral[] = [];
-        const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(node);
+        const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.node);
         for (let i = 0; i < ancestors.length; i++) {
-            const htl = new HierarchicTypeLiteral(root, ancestors[i], i);
-            console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
+            const htl = new HierarchicTypeLiteral(root, ancestors[i], parent, i);
+            console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
                 this.addPropertiesAndUpdateParent(htl as HierarchicTypeLiteralNode);
-            } else if (hasTypeLiteral(node)) {
-                console.log(chalk.magentaBright('HTL HAS TLLLLL'), node.getKindName());
+            } else if (hasTypeLiteral(parent.node)) {
+                console.log(chalk.magentaBright('HTL HAS TLLLLL'), parent.node.getKindName());
                 // htl.children = this.createHTLChildren(ancestors[i], )
             }
             htls.push(htl);
@@ -57,9 +59,8 @@ export class HierarchicTypeLiteralService {
 
 
     private static addPropertiesAndUpdateParent(htl: HierarchicTypeLiteralNode): void {
-        // if (htl.node instanceof TypeLiteralNode) {
             htl.interfaceInfo.properties = this.getProperties(htl.node);
-        // }
+            this.updateParent(htl);
     }
 
 
@@ -76,6 +77,21 @@ export class HierarchicTypeLiteralService {
             properties.push(property);
         }
         return properties;
+    }
+
+
+    private static updateParent(htl: HierarchicTypeLiteralNode): void {
+        if (!htl.parent) {
+            return;
+        }
+        htl.parent.stringifiedType = this.updateStringifiedType(htl.parent, htl);
+    }
+
+
+    private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
+        console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
+        const blocks: Block[] = getBlocks(parent.stringifiedType);
+        return undefined;
     }
 
 }

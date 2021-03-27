@@ -16,12 +16,13 @@ export class HierarchicTypeLiteral {
     root: PropertyDeclaration | TypeAliasDeclaration = undefined;
     stringifiedType: string = undefined;
 
-    constructor(root: PropertyDeclaration | TypeAliasDeclaration, node: Node, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
+    constructor(root: PropertyDeclaration | TypeAliasDeclaration, node: Node, parent: HierarchicTypeLiteral, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
         this.root = root;
         this.isTrivial = isTrivial;
         this.children = children;
         this.childIndex = childIndex;
         this.node = node;
+        this.parent = parent;
         this.setInterfaceInfo();
         this.setStringifiedType();
     }
@@ -40,7 +41,7 @@ export class HierarchicTypeLiteral {
 
     setStringifiedType(): void {
         console.log(chalk.blueBright('STRUCT TYPPPPP'), this.root.getStructure().type);
-        if (!this.node) {
+        if (!this.parent) {
             this.stringifiedType = declarationType(this.root);
         } else {
 
