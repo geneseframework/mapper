@@ -11,6 +11,7 @@ export class HierarchicTypeLiteral {
     // declarationInfo
     interfaceInfo: InterfaceInfo = undefined;
     isTrivial = false;
+    name: string = undefined;
     node: Node = undefined;
     parent: HierarchicTypeLiteral = undefined;
     root: PropertyDeclaration | TypeAliasDeclaration = undefined;
@@ -23,14 +24,16 @@ export class HierarchicTypeLiteral {
         this.childIndex = childIndex;
         this.node = node;
         this.parent = parent;
+        this.setName();
         this.setInterfaceInfo();
         this.setStringifiedType();
     }
 
 
-    get name(): string {
-        const suffix = this.parent ? `${this.parent.name}` : `${this.root.getName()}`;
-        return `${suffix}_${this.childIndex}`;
+    setName(): void {
+        // TODO : if root is PropDecl, include class or interface name
+        // const suffix = this.parent ? `${this.parent.name}` : `${this.parent.name.getName()}`;
+        this.name = this.parent ? `${this.parent.name}_${this.childIndex}` : `${this.root.getName()}`;
     }
 
 
@@ -44,7 +47,7 @@ export class HierarchicTypeLiteral {
         if (!this.parent) {
             this.stringifiedType = declarationType(this.root);
         } else {
-
+            // TODO
         }
     }
 }

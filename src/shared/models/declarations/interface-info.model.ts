@@ -2,6 +2,7 @@ import { Property } from '../../types/target/property.type';
 import { DeclarationInfo } from './declaration-info.model';
 import { IndexableType } from '../../types/indexable-type.type';
 import { CurveBracketed } from '../../../create/types/target/string/curve-bracketed.type';
+import * as chalk from 'chalk';
 
 export class InterfaceInfo extends DeclarationInfo {
 
@@ -16,6 +17,8 @@ export class InterfaceInfo extends DeclarationInfo {
 
 
     correspondsTo(text: CurveBracketed): boolean {
+        console.log(chalk.blueBright('CTOOOO text'), text);
+        console.log(chalk.blueBright('CTOOOO properties'), this.properties);
         return undefined;
     }
 

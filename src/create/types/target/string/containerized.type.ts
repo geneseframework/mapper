@@ -7,7 +7,10 @@ import { removeBorders } from '../../../../shared/utils/strings.util';
 
 export type Containerized = Bracketed | Parenthesized | CurveBracketed | Tagged | Quoted;
 
-
+export type rrr = {
+    zzz,
+    uuu
+}
 
 export function isContainerized(text: string): text is Containerized {
     return isBracketed(text) || isParenthesized(text) || isCurveBracketed(text) || isTagged(text) || isQuoted(text);

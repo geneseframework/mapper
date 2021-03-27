@@ -1677,6 +1677,35 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralWithoutTypesSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: undefined
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: undefined
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralWithoutTypesSpec`,
+        typeParameters: [
+        ],
+        type: `TypeLiteralWithoutTypesSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ColorsTypeSpec`,
         typeParameters: [
