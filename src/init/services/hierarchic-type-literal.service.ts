@@ -3,7 +3,7 @@ import { Node, SyntaxKind, TypeLiteralNode } from 'ts-morph';
 import { getFirstTypeLiteralAncestor, hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
-import { declarationType, getPropertyFromPropDecOrSign } from '../utils/ast/ast-declaration.util';
+import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
 import { Block, getBlocks } from '../../create/types/target/string/block.type';
 
@@ -11,7 +11,6 @@ export class HierarchicTypeLiteralService {
 
     static create(declaration: TypeOrPropertyDeclaration): HierarchicTypeLiteral {
         const htl = new HierarchicTypeLiteral(declaration, declaration, undefined);
-        htl.stringifiedType
         htl.children = this.createHTLChildren(declaration, htl);
         return htl;
     }
@@ -91,6 +90,7 @@ export class HierarchicTypeLiteralService {
     private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
         console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
         const blocks: Block[] = getBlocks(parent.stringifiedType);
+        console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), blocks);
         return undefined;
     }
 
