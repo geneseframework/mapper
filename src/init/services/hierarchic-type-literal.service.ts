@@ -6,6 +6,7 @@ import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
 import { Block, getBlocks } from '../../create/types/target/string/block.type';
+import { getCurveBracketedBlocs } from '../../create/types/target/string/curve-bracketed.type';
 
 export class HierarchicTypeLiteralService {
 
@@ -89,7 +90,7 @@ export class HierarchicTypeLiteralService {
 
     private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
         console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
-        const blocks: Block[] = getBlocks(parent.stringifiedType);
+        const blocks: Block[] = getCurveBracketedBlocs(parent.stringifiedType);
         console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), blocks);
         return undefined;
     }
