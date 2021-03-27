@@ -4,6 +4,6 @@ export function hasCommas(text: string): text is Commas {
     return /,/g.test(text);
 }
 
-export function isComma(text: string): text is ',' {
-    return text === ',';
+export function isComma(char: string): char is ',' {
+    return char === ',';
 }

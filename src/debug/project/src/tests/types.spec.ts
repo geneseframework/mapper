@@ -49,7 +49,13 @@ testMappers.push(new TestMapper(`{name: 'Total', employees: 30000} / CompanyAlon
 testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec', 3, {expectedValue: undefined}));
 
 
+// ------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------   Literal types   -------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+
+
+// ----------------------------------------------   Simple literal type   -------------------------------------------------------
 
 
 export type TypeLiteralSpec = {name: string};
@@ -58,6 +64,15 @@ testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralS
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
+
+
+// ------------------------------------------   Literal type without types  -------------------------------------------------------
+
+
+export type TypeLiteralWithoutTypesSpec = {name, age};
+
+// TODO
+// testMappers.push(new TestMapper(`{name: 'Léa'} / TypeObjectSpec`, 'TypeLiteralSpec', {name: 'Léa'}, {isolate: true}));
 
 
 

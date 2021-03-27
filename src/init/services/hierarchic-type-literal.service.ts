@@ -5,12 +5,13 @@ import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
-import { CurveBracketed, getCurveBracketedBlocs } from '../../create/types/target/string/curve-bracketed.type';
 
 export class HierarchicTypeLiteralService {
 
     static create(declaration: TypeOrPropertyDeclaration): HierarchicTypeLiteral {
         const htl = new HierarchicTypeLiteral(declaration, declaration, undefined);
+        // htl.interfaceInfo.name = `${declaration.getName()}Interface`;
+        console.log(chalk.yellowBright('HTL ROOT....'), htl.interfaceInfo);
         htl.children = this.createHTLChildren(declaration, htl);
         return htl;
     }
@@ -22,6 +23,7 @@ export class HierarchicTypeLiteralService {
         for (let i = 0; i < ancestors.length; i++) {
             const htl = new HierarchicTypeLiteral(root, ancestors[i], parent, i);
             console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
+            console.log(chalk.magentaBright('HTL ....'), htl.interfaceInfo);
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
                 this.addPropertiesAndUpdateParent(htl as HierarchicTypeLiteralNode);
@@ -83,19 +85,20 @@ export class HierarchicTypeLiteralService {
         if (!htl.parent) {
             return;
         }
-        htl.parent.stringifiedType = this.updateStringifiedType(htl.parent, htl);
+        htl.parent.interfaceInfo.stringifiedType = this.updateStringifiedType(htl.parent, htl);
     }
 
 
     private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
-        console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
-        const stringifiedObjects: CurveBracketed[] = getCurveBracketedBlocs(parent.stringifiedType);
-        console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), stringifiedObjects);
-        for (const stringifiedObject of stringifiedObjects) {
-            if (child.interfaceInfo.correspondsTo(stringifiedObject)) {
-                // parent.interfaceInfo.q
-            }
-        }
+        // console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
+        // const stringifiedObjects: CurveBracketed[] = getCurveBracketedBlockInfos(parent.stringifiedType);
+        // console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), stringifiedObjects);
+        // for (const stringifiedObject of stringifiedObjects) {
+        //     console.log(chalk.redBright('UPDATE STTTTT CORRESPONDSTO'), child.interfaceInfo.correspondsTo(stringifiedObject));
+        //     if (child.interfaceInfo.correspondsTo(stringifiedObject)) {
+        //         // parent.interfaceInfo.q
+        //     }
+        // }
         return undefined;
     }
 
