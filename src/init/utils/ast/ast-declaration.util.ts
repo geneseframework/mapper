@@ -88,7 +88,7 @@ export function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: 
             if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
                 const infoName: string = `${getInterfaceInfoName(parentName, propDecOrSign.getName())}_${i}`;
                 const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
-                newII.text = propDecOrSign.getStructure().type as string;
+                newII.stringifiedType = propDecOrSign.getStructure().type as string;
                 interfaceInfos.push(newII);
             } else {
 
@@ -123,7 +123,7 @@ function addIIWithTypLit(parentName: string, childName: string, propertyDeclarat
         const infoName: string = `${getInterfaceInfoName(parentName, childName)}_${i}`;
         if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
             const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
-            newII.text = propertyDeclarationOrSignature.getStructure().type as string;
+            newII.stringifiedType = propertyDeclarationOrSignature.getStructure().type as string;
             interfaceInfos.push(newII);
         } else {
             // console.log(chalk.blueBright(''), typeLiteralAncestors[i].getty);
@@ -140,7 +140,7 @@ function getTypeWithoutCurvedBrackets(initialType: string, propertyDeclarationOr
     for (let i = 0; i < trivialTypeLiterals.length; i++) {
         const infoName: string = `${getInterfaceInfoName(parentName, propertyDeclarationOrSignature.getName())}_${i}`;
         const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, trivialTypeLiterals[i]);
-        newII.text = propertyDeclarationOrSignature.getStructure().type as string;
+        newII.stringifiedType = propertyDeclarationOrSignature.getStructure().type as string;
         interfaceInfos.push(newII);
     }
     const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlocs(initialType);
@@ -172,7 +172,7 @@ function getTrivialTypeLiterals(propertySignature: PropertyDeclarationOrSignatur
     return typeLiteralNodes;
 }
 
-
+// TODO: remove
 function isTrivialTypeLiteral(typeLiteralNode: TypeLiteralNode): boolean {
     return !typeLiteralNode.getFirstDescendantByKind(SyntaxKind.TypeLiteral);
 }
