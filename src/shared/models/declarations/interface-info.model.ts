@@ -1,6 +1,7 @@
 import { Property } from '../../types/target/property.type';
 import { DeclarationInfo } from './declaration-info.model';
 import { IndexableType } from '../../types/indexable-type.type';
+import { CurveBracketed } from '../../../create/types/target/string/curve-bracketed.type';
 
 export class InterfaceInfo extends DeclarationInfo {
 
@@ -11,6 +12,11 @@ export class InterfaceInfo extends DeclarationInfo {
     constructor(name: string, filePath: string, properties: Property[] = [], typeParameters: any[] = []) {
         super(name, filePath, 'Interface', typeParameters);
         this.properties = properties;
+    }
+
+
+    correspondsTo(text: CurveBracketed): boolean {
+        return undefined;
     }
 
 }
