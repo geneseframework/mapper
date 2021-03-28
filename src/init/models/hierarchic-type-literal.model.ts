@@ -2,21 +2,19 @@ import { PropertyDeclaration, TypeAliasDeclaration, Node, TypeLiteralNode } from
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import * as chalk from 'chalk';
 import { declarationType } from '../utils/ast/ast-declaration.util';
-import { CurveBracketed, getPropertiesFromCurveBracketed } from '../../create/types/target/string/curve-bracketed.type';
+import { CurvedBracketed, getPropertiesFromCurvedBracketed } from '../../create/types/target/string/curve-bracketed.type';
 
 
 export class HierarchicTypeLiteral {
 
     childIndex: number = undefined;
     children: HierarchicTypeLiteral[] = [];
-    // declarationInfo
     interfaceInfo: InterfaceInfo = undefined;
     isTrivial = false;
     name: string = undefined;
     node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode = undefined;
     parent: HierarchicTypeLiteral = undefined;
     root: PropertyDeclaration | TypeAliasDeclaration = undefined;
-    // stringifiedType: string = undefined;
 
     constructor(root: PropertyDeclaration | TypeAliasDeclaration, node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode, parent: HierarchicTypeLiteral, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
         this.root = root;
@@ -26,8 +24,12 @@ export class HierarchicTypeLiteral {
         this.node = node;
         this.parent = parent;
         this.setName();
-        // this.setStringifiedType();
         this.setInterfaceInfo();
+    }
+
+
+    get isRoot(): boolean {
+        return !this.parent;
     }
 
 
@@ -42,6 +44,7 @@ export class HierarchicTypeLiteral {
         this.interfaceInfo = new InterfaceInfo(this.name, this.root.getSourceFile().getFilePath());
         if (this.parent) {
             this.setProperties();
+            // this.interfaceInfo.stringifiedType =
         } else {
             this.interfaceInfo.stringifiedType = declarationType(this.root);
         }
@@ -49,9 +52,9 @@ export class HierarchicTypeLiteral {
 
 
     private setProperties(): void {
-        const stringifiedType: CurveBracketed = this.parent.interfaceInfo.stringifiedType as CurveBracketed;
+        const stringifiedType: CurvedBracketed = this.parent.interfaceInfo.stringifiedType as CurvedBracketed;
         console.log(chalk.blueBright('SET PROPSSSS: PARENT ST'), stringifiedType);
-        this.interfaceInfo.properties = getPropertiesFromCurveBracketed(stringifiedType);
+        this.interfaceInfo.properties = getPropertiesFromCurvedBracketed(stringifiedType);
     }
 }
 

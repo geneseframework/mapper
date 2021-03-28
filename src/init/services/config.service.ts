@@ -9,9 +9,9 @@ import {
     SyntaxKind
 } from 'ts-morph';
 import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
-import { isArray } from '../../create/utils/native/arrays.util';
 import { commonjs } from '../../shared/const/commonjs.const';
 import * as fs from 'fs-extra';
+import { isArray } from '../../shared/utils/arrays.util';
 // import * as path from 'path';
 const path = require('path');
 

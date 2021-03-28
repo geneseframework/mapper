@@ -50,7 +50,7 @@ export function getBlockInfos(text: string): BlockInfo[] {
             }
         }
     }
-    console.log(chalk.magentaBright('GET CBBBB BLOCSSSSS'), blocs);
+    // console.log(chalk.magentaBright('GET CBBBB BLOCSSSSS'), blocs);
     return blocs;
 }
 

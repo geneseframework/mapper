@@ -1,4 +1,4 @@
-import { CurveBracketed } from '../../types/target/string/curve-bracketed.type';
+import { CurvedBracketed } from '../../types/target/string/curve-bracketed.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import * as chalk from 'chalk';
 import { getFirstContainer, hasLeftBorder } from '../../types/target/string/borders.type';
@@ -11,13 +11,13 @@ import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 export class MapObjectService {
 
     // TODO: create(some object)
-    // static create(target: CurveBracketed, data: any, options?: MapperBehavior): object {
+    // static create(target: CurvedBracketed, data: any, options?: MapperBehavior): object {
         // console.log(chalk.cyanBright('MAP OBJJJJJJ'), target, data);
         // return this.createNewInstance(target);
     // }
 
     // TODO: check if it really runs and if we need options
-    // private static createNewInstance(target: CurveBracketed): object {
+    // private static createNewInstance(target: CurvedBracketed): object {
     //     const newInstance = {};
     //     const properties: string[] = this.getPropertiesFromClassOrInterface(target);
     //     console.log(chalk.magentaBright('MAP OBJJJJJJ properties'), properties);
@@ -28,7 +28,7 @@ export class MapObjectService {
     // }
     //
     //
-    // private static getPropertiesFromClassOrInterface(target: CurveBracketed): string[] {
+    // private static getPropertiesFromClassOrInterface(target: CurvedBracketed): string[] {
     //     const properties: string[] = [];
     //     let textToParse: string = removeBorders(target);
     //     while (textToParse.length > 0) {

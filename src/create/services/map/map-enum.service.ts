@@ -1,7 +1,7 @@
-import { isArray } from '../../utils/native/arrays.util';
 import { isBracketed } from '../../types/target/string/bracketed.type';
 import { GLOBAL } from '../../const/global.const';
 import { EnumInfo } from '../../../shared/models/declarations/enum-info.model';
+import { isArray } from '../../../shared/utils/arrays.util';
 
 export class MapEnumService {
 

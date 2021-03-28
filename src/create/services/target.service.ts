@@ -1,11 +1,11 @@
 import { Target } from '../types/target/target.type';
-import { isArray } from '../utils/native/arrays.util';
 import { Primitive } from '../types/primitives.type';
 import { isFunction } from '../utils/native/functions.util';
 import { isBoolean } from '../utils/native/booleans.util';
 import { isNumber } from '../utils/native/numbers.util';
 import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/null-or-literal.type';
+import { isArray } from '../../shared/utils/arrays.util';
 
 export class TargetService {
 

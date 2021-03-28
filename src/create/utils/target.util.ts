@@ -7,7 +7,6 @@ import { Bracketed } from '../types/target/string/bracketed.type';
 import { hasUnion } from '../types/target/string/union.type';
 import { hasIntersection } from '../types/target/string/intersection.type';
 import { hasCommas } from '../types/target/string/commas.type';
-import { isArray } from './native/arrays.util';
 import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
@@ -17,6 +16,7 @@ import { hasInterrogation } from '../types/target/string/interrogation.type';
 import { hasSemiColumn } from '../types/target/string/semi-column.type';
 import { hasExtends } from '../types/target/string/extends.type';
 import { removeBorders } from '../../shared/utils/strings.util';
+import { isArray } from '../../shared/utils/arrays.util';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {

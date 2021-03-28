@@ -1655,7 +1655,7 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralSpecInterface`,
+        name: `TypeLiteralSpec_0`,
         typeParameters: [
         ],
         properties: [
@@ -1673,7 +1673,7 @@ const declarationInfos = [
         name: `TypeLiteralSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralSpecInterface`,
+        type: `TypeLiteralSpec_0`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1703,6 +1703,56 @@ const declarationInfos = [
         typeParameters: [
         ],
         type: `TypeLiteralWithoutTypesSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralNestedSpecaddressAddress`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `country`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `city`,
+                type: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralNestedSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `address`,
+                type: `TypeLiteralNestedSpecaddressAddress`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralNestedSpec`,
+        typeParameters: [
+        ],
+        type: `TypeLiteralNestedSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

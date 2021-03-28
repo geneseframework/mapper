@@ -141,7 +141,7 @@ function addIIWithTypLit(parentName: string, childName: string, propertyDeclarat
 //         newII.stringifiedType = propertyDeclarationOrSignature.getStructure().type as string;
 //         interfaceInfos.push(newII);
 //     }
-//     const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlockInfos(initialType);
+//     const curveBracketedBlocs: CurvedBracketed[] = getCurveBracketedBlockInfos(initialType);
 //     let finalType: string = initialType;
 //     for (const curveBracketedBloc of curveBracketedBlocs) {
 //         finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
@@ -151,7 +151,7 @@ function addIIWithTypLit(parentName: string, childName: string, propertyDeclarat
 //
 //
 // function replaceCurveBracketedBlocsByInterfaceNames(initialType: string, interfaceInfos: InterfaceInfo[]): string {
-//     const curveBracketedBlocs: CurveBracketed[] = getCurveBracketedBlockInfos(initialType);
+//     const curveBracketedBlocs: CurvedBracketed[] = getCurveBracketedBlockInfos(initialType);
 //     let finalType: string = initialType;
 //     for (const curveBracketedBloc of curveBracketedBlocs) {
 //         finalType = finalType.replace(curveBracketedBloc, getInterfaceInfoNameFromCurveBracketed(curveBracketedBloc, interfaceInfos));
