@@ -71,7 +71,7 @@ export class MainService {
             return MapQuotedService.create(target, data, options);
         } else if (isObjectType(target)) {
             return MapObjectTypeService.create(data);
-        // } else if (isCurveBracketed(target)) {
+        // } else if (isCurvedBracketed(target)) {
         //     return MapObjectService.create(target, data, options)
         } else if (hasDeclaration(target)) {
             return MapDeclarationService.create(target, data, options);

@@ -5,6 +5,15 @@ import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
+import { INIT } from '../const/init.const';
+import { replaceAll } from '../../shared/utils/strings.util';
+import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
+import {
+    CurvedBracketed,
+    CurvedBracketedBlockInfo,
+    getCurvedBracketedBlockInfos
+} from '../../create/types/target/string/curve-bracketed.type';
+import { BlockInfo } from '../../create/types/target/string/block.type';
 
 export class HierarchicTypeLiteralService {
 
@@ -23,7 +32,7 @@ export class HierarchicTypeLiteralService {
         for (let i = 0; i < ancestors.length; i++) {
             const htl = new HierarchicTypeLiteral(root, ancestors[i], parent, i);
             console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
-            console.log(chalk.magentaBright('HTL ....'), htl.interfaceInfo);
+            console.log(chalk.magentaBright('HTL CHILD....'), htl.interfaceInfo);
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
                 this.addPropertiesAndUpdateParent(htl as HierarchicTypeLiteralNode);
@@ -61,6 +70,7 @@ export class HierarchicTypeLiteralService {
 
     private static addPropertiesAndUpdateParent(htl: HierarchicTypeLiteralNode): void {
             htl.interfaceInfo.properties = this.getProperties(htl.node);
+            INIT.addDeclarationInfo(htl.interfaceInfo);
             this.updateParent(htl);
     }
 
@@ -85,21 +95,34 @@ export class HierarchicTypeLiteralService {
         if (!htl.parent) {
             return;
         }
-        htl.parent.interfaceInfo.stringifiedType = this.updateStringifiedType(htl.parent, htl);
+        if (htl.parent.isRoot) {
+            htl.parent.interfaceInfo.stringifiedType = this.replaceCurvedBracketsByInterfaceInfoName(htl.parent.interfaceInfo.stringifiedType, htl.interfaceInfo);
+        } else {
+            // TODO
+        }
+        console.log(chalk.cyanBright('HTL IIIIII'), htl.interfaceInfo);
+        // const correspondingProperties: Property[] = htl.parent.interfaceInfo.properties.filter(p => htl.interfaceInfo.correspondsTo(p.stringifiedType));
+        // console.log(chalk.cyanBright('CORR PROPSSSS'), correspondingProperties);
+    }
+
+    // TODO
+    private static replaceCurvedBracketsByInterfaceInfoName(text: string, interfaceInfo: InterfaceInfo): string {
+        console.log(chalk.magentaBright('REPLACE CBSSSSS'), text, interfaceInfo);
+        const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(text);
+        console.log(chalk.magentaBright('BLOKKKKKK'), blockInfos);
+        // TODO: find if blocks correspond to ii props
+        for (const block of blockInfos.map(b => b.block)) {
+            if (interfaceInfo.correspondsTo(block)) {
+                text = replaceAll(text, block, interfaceInfo.name);
+            }
+        }
+        console.log(chalk.magentaBright('TEXT UPDATEDDDD'), text);
+        return text;
     }
 
 
-    private static updateStringifiedType(parent: HierarchicTypeLiteral, child: HierarchicTypeLiteralNode): string {
-        // console.log(chalk.redBright('UPDATE STTTTT parent.stringifiedType'), parent.stringifiedType);
-        // const stringifiedObjects: CurveBracketed[] = getCurveBracketedBlockInfos(parent.stringifiedType);
-        // console.log(chalk.redBright('UPDATE STTTTT blockkkkks'), stringifiedObjects);
-        // for (const stringifiedObject of stringifiedObjects) {
-        //     console.log(chalk.redBright('UPDATE STTTTT CORRESPONDSTO'), child.interfaceInfo.correspondsTo(stringifiedObject));
-        //     if (child.interfaceInfo.correspondsTo(stringifiedObject)) {
-        //         // parent.interfaceInfo.q
-        //     }
-        // }
-        return undefined;
-    }
+    // private static areEquivalent(block: CurvedBracketed, properties: Property[]): boolean {
+    //     return false;
+    // }
 
 }

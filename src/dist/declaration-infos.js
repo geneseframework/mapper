@@ -1655,7 +1655,7 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralSpecInterface`,
+        name: `TypeLiteralSpec_0`,
         typeParameters: [
         ],
         properties: [
@@ -1673,7 +1673,7 @@ const declarationInfos = [
         name: `TypeLiteralSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralSpecInterface`,
+        type: `TypeLiteralSpec_0`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

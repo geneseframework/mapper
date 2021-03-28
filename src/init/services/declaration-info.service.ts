@@ -100,10 +100,12 @@ export class DeclarationInfoService {
                 const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);
                 // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
                 console.log(chalk.greenBright('HTLSSSSS'), htl.interfaceInfo);
+                typeInfo.type = htl.interfaceInfo.stringifiedType;
+            } else {
+                const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
+                typeInfo.type = newInterfaceInfo.name;
             }
-            const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
-            typeInfo.type = newInterfaceInfo.name;
-            // if (isCurveBracketed(typeAliasDeclaration?.getStructure().type as string)) {
+            // if (isCurvedBracketed(typeAliasDeclaration?.getStructure().type as string)) {
             //
         } else {
             typeInfo.type = typeAliasDeclaration.getStructure()?.type as string;

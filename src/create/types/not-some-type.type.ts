@@ -1,6 +1,6 @@
 import { Primitive } from './primitives.type';
-import { isArray } from '../utils/native/arrays.util';
 import { isObject } from '../utils/native/objects.util';
+import { isArray } from '../../shared/utils/arrays.util';
 
 export type NotString = number | boolean | object;
 export type NotNumber = string | boolean | object;

@@ -5,23 +5,24 @@ import { isComma } from './commas.type';
 import * as chalk from 'chalk';
 import { firstWord } from './word.type';
 
-export type CurveBracketed = `{${string}}`;
+export type CurvedBracketed = `{${string}}`;
 
-export function isCurveBracketed(text: string): text is CurveBracketed {
+export type CurvedBracketedBlockInfo = {
+    block: CurvedBracketed,
+    end: number,
+    start: number
+}
+
+
+export function isCurvedBracketed(text: string): text is CurvedBracketed {
     return /^{.*}$/g.test(text);
 }
 
 
-// export function getCurveBracketedBlockInfos(text: string): CurveBracketed[] {
-//     return getBlockInfos(text).filter(b => isCurveBracketed(b)) as CurveBracketed[];
-// }
-
-
-export function getPropertiesFromCurveBracketed(text: CurveBracketed): Property[] {
-    // const textWithoutBorders: string = removeBorders(text);
+export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
-    console.log(chalk.yellowBright('PROPTEXTTTTS'), propertiesTexts);
+    // console.log(chalk.yellowBright('PROPTEXTTTTS'), propertiesTexts);
     for (const propertyText of propertiesTexts) {
         properties.push(getProperty(propertyText));
     }
@@ -48,16 +49,48 @@ function getPropertiesTexts(text: string): string[] {
 
 
 function getProperty(propertyText: string): Property {
-    return  {
-        name: firstWord(propertyText),
-        stringifiedText:`{${propertyText}}`
-    };
-    // let rest: string = propertyText.slice(property.name.length).trim();
-    // property.isRequired = rest.charAt(0) !== '?';
-    // rest = property.isRequired ? rest.slice(1) : rest;
-    // if (rest.charAt(0) === ':') {
-    //
-    // }
+    let rest: string = propertyText;
+    const property: Property = {};
+    rest = setNameAndReturnRest(rest, property);
+    rest = setIsRequiredAndReturnRest(rest, property);
+    rest = setTypeAndReturnRest(rest, property);
+    setInitializer(rest, property);
     // console.log(chalk.redBright('GET PROPPPP'), property, rest);
-    // return property;
+    return property;
+}
+
+
+function setNameAndReturnRest(rest: string, property: Property): string {
+    property.name = firstWord(rest);
+    return rest.slice(property.name.length).trim();
+}
+
+
+function setIsRequiredAndReturnRest(rest: string, property: Property): string {
+    property.isRequired = rest.charAt(0) !== '?';
+    return property.isRequired ? rest: rest.slice(1);
+}
+
+
+function setTypeAndReturnRest(rest: string, property: Property): string {
+    const split: string[] = rest.split('=');
+    console.log(chalk.greenBright('SPLITTTT'), rest, split);
+    const beforeEqual: string = split[0] ?? '';
+    const afterEqual: string = split[1] ?? '';
+    if (beforeEqual.charAt(0) === ':') {
+        property.type = beforeEqual.slice(1).trim();
+    } else {
+        property.type = afterEqual ? 'apparentType' : undefined;
+    }
+    return afterEqual.trim();
+}
+
+
+function setInitializer(rest: string, property: Property): void {
+    property.initializer = rest || undefined;
+}
+
+
+export function getCurvedBracketedBlockInfos(text: string): CurvedBracketedBlockInfo[] {
+    return getBlockInfos(text).filter(b => isCurvedBracketed(b.block)) as CurvedBracketedBlockInfo[];
 }

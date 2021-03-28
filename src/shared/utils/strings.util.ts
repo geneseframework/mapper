@@ -10,6 +10,11 @@ export function capitalize(text) {
 }
 
 
+export function replaceAll(text: string, search: string, replace: string): string {
+    return text?.split(search).join(replace);
+}
+
+
 export const tab = '    ';
 
 export function tabs(numberOfTabs: number): string {

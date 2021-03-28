@@ -1,9 +1,9 @@
-import { isArray } from '../../utils/native/arrays.util';
 import { create } from '../../main';
 import { ArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isWildCard } from '../../types/target/string/wildcard.type';
 import { isNullOrUndefined } from '../../types/null-or-undefined.type';
+import { isArray } from '../../../shared/utils/arrays.util';
 
 export class MapArrayService<T> {
 
