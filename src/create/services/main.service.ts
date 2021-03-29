@@ -27,6 +27,7 @@ import { isWildCard } from '../types/target/string/wildcard.type';
 import { isNullOrUndefined } from '../types/null-or-undefined.type';
 import { isComplexType } from '../types/target/string/complex-type.type';
 import { MapObjectTypeService } from './map/map-object-type.service';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -54,6 +55,7 @@ export class MainService {
      * @param options
      */
     static mapStringTarget(target: string, data: any, options?: MapperBehavior): any {
+        console.log(chalk.greenBright('MAP STRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;

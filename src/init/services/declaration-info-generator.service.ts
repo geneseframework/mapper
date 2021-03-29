@@ -165,14 +165,14 @@ export class DeclarationInfoGeneratorService {
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
             `${tabs(4)}isRequired: ${property.isRequired},\n` +
             `${tabs(4)}name: ${addQuotes(property.name)},\n` +
-            `${tabs(4)}type: ${addQuotes(property.type)}\n` +
+            `${tabs(4)}stringifiedType: ${addQuotes(property.type)}\n` +
             `${tabs(3)}}`;
     }
 
 
     //TODO : Types with antiquotes
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
-        let code = `${tabs(2)}type: ${addQuotes(typeInfo.stringifiedType)},\n`;
+        let code = `${tabs(2)}stringifiedType: ${addQuotes(typeInfo.stringifiedType)},\n`;
         // Add properties if type is interface-like
         return code;
     }
