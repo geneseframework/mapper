@@ -72,8 +72,8 @@ testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteral
 
 export type TypeLiteralToKeysSpec = {name: string, age: number};
 
-testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralToKeysSpec`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: 20}, {isolate: true}));
-testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralToKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralToKeysSpec`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: 20}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralToKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
 
 
 // ------------------------------------------   Literal type without types  -----------------------------------------------
