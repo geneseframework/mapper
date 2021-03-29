@@ -27,6 +27,7 @@ export class HierarchicTypeLiteralService {
         // static create(declaration: TypeOrPropertyDeclaration): DeclarationInfo {
         const blockInfos: BlockInfo[] = this.getBlockInfos(declaration);
         // const htl = new HierarchicTypeLiteral(declaration, declaration, undefined);
+        console.log(chalk.yellowBright('FINAL BLOCK INFOOOOOO'), blockInfos);
         if (declaration instanceof TypeAliasDeclaration) {
             interfaceInfo.stringifiedType = replaceBlocksByNames(declarationType(declaration), blockInfos);
         }
@@ -46,7 +47,9 @@ export class HierarchicTypeLiteralService {
             htl.name = `${declaration.getName()}Interface`;
             console.log(chalk.blueBright('GET BLINFOOOOO htl name & origin st'), htl.name, htl.originalStringifiedType);
             htl.children = this.createHTLChildren(htl);
-            blockInfos.push({name: htl.interfaceInfo.name, block: htl.originalStringifiedType});
+            for (const child of htl.children) {
+                blockInfos.push({name: child.interfaceInfo.name, block: htl.originalStringifiedType});
+            }
         }
         return blockInfos;
     }
@@ -84,10 +87,11 @@ export class HierarchicTypeLiteralService {
                 // for (const propertyDeclaration of parent.typeLiteralNode.getProperties())
                 // const propertyDeclaration: PropertyDeclaration =
                 htl.children = this.createHTLChildren(htl);
-                console.log(chalk.yellowBright('HTL htl.children'), htl.children);
                 this.updateInterfaceInfo(htl);
+                console.log(chalk.yellowBright('HTL htl.children'), htl.children);
                 throw 'ZZZZ'
             }
+            console.log(chalk.blueBright('ZZZZZZZZZZ'), );
             htls.push(htl);
         }
         return htls;
@@ -194,6 +198,7 @@ export class HierarchicTypeLiteralService {
             }
             properties.push(property);
         }
+        console.log(chalk.cyanBright('PROPSSSSS END'), properties);
         return properties;
     }
 
@@ -206,8 +211,8 @@ export class HierarchicTypeLiteralService {
 
 
     private static updateParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
-        const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
         console.log(chalk.redBright('UPDATEEEEE PARENT props'), parent.interfaceInfo.properties);
+        const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
         console.log(chalk.redBright('UPDATEEEEE PARENT bi'), blockInfo);
         for (const property of parent.interfaceInfo.properties) {
             property.type = replaceBlocksByNames(property.type, [blockInfo]);

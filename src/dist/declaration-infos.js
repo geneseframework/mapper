@@ -1679,7 +1679,7 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralNestedSpec_1`,
+        name: `TypeLiteralNestedSpecInterface_0`,
         typeParameters: [
         ],
         properties: [
@@ -1697,7 +1697,7 @@ const declarationInfos = [
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
         ],
-        type: `{name: string, address: {country: string}}`,
+        type: `TypeLiteralNestedSpecInterface_0`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
