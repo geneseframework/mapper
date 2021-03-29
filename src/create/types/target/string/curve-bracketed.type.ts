@@ -32,7 +32,7 @@ export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Propert
 
 
 function getPropertiesTexts(text: string): string[] {
-    console.log(chalk.redBright('GPROPTXTTTTTT'), text);
+    // console.log(chalk.redBright('GPROPTXTTTTTT'), text);
     let propertyText = '';
     const propertiesTexts: string[] = [];
     let rest = text;
@@ -51,7 +51,7 @@ function getPropertiesTexts(text: string): string[] {
         }
         // console.log(chalk.yellowBright('GPROPTXTTTTTT PROP TXTTTT'), propertyText);
     }
-    console.log(chalk.redBright('GPROPTXTTTTTT RSLT'), propertiesTexts);
+    // console.log(chalk.redBright('GPROPTXTTTTTT RSLT'), propertiesTexts);
     return propertiesTexts;
 }
 

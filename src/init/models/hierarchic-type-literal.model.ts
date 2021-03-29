@@ -28,7 +28,7 @@ export class HierarchicTypeLiteral {
         this.originalStringifiedType = originalStringifiedType;
         this.parent = parent;
         // this.setName(parentName);
-        // this.setInterfaceInfo();
+        this.setInterfaceInfo();
     }
 
 
@@ -44,8 +44,8 @@ export class HierarchicTypeLiteral {
     }
 
 
-    // setInterfaceInfo(parentStringifiedType: string): void {
-    //     this.interfaceInfo = new InterfaceInfo(this.name, this.typeLiteralNode.getSourceFile().getFilePath());
+    setInterfaceInfo(): void {
+        this.interfaceInfo = new InterfaceInfo(this.name, this.typeLiteralNode.getSourceFile().getFilePath());
     //     if (this.parent) {
     //         this.setProperties();
     //         // this.interfaceInfo.stringifiedType =
@@ -53,7 +53,7 @@ export class HierarchicTypeLiteral {
     //         // this.interfaceInfo.stringifiedType = declarationType(this.root);
     //         console.log(chalk.redBright('SET IIIIII parent'), this.interfaceInfo.stringifiedType);
     //     }
-    // }
+    }
     //
     //
     // private setProperties(parentStringifiedType: string): void {

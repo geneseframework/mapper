@@ -69,7 +69,7 @@ function isEndOfBlock(char: string, leftBorder: LeftBorder, openingBorders: numb
 export function isInsideBlocks(position: number, text: string): boolean {
     const blockInfos: BlockInfo[] = getBlockInfos(text);
     const zzz = blockInfos.some(b => isInsideBlock(position, b));
-    console.log(chalk.blueBright('IS INSIDE BLOCKKKK ?'), zzz,  position, text.charAt(position));
+    // console.log(chalk.blueBright('IS INSIDE BLOCKKKK ?'), zzz,  position, text.charAt(position));
     return zzz;
 }
 

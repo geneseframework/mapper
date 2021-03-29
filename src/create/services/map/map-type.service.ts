@@ -13,9 +13,9 @@ export class MapTypeService {
      * @param options   // The create() options
      */
     static create<T>(target: string, data: any, options: MapperBehavior): any {
-        console.log(chalk.magentaBright('MAP TYPPPP'), target, data);
+        // console.log(chalk.magentaBright('MAP TYPPPP'), target, data);
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
-        console.log(chalk.magentaBright('MAP TYPPPP typeInfo'), typeInfo);
+        // console.log(chalk.magentaBright('MAP TYPPPP typeInfo'), typeInfo);
         return MainService.mapStringTarget(typeInfo.stringifiedType, data, options);
     }
 

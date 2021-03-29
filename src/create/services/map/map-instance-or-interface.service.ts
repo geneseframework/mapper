@@ -53,7 +53,7 @@ export class MapInstanceOrInterfaceService {
      * @param declaration   // The declaration corresponding to the class or interface
      */
     private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
-        console.log(chalk.magentaBright('MAP DATA KKKKKK'), dataKey, key, instance, declaration);
+        // console.log(chalk.magentaBright('MAP DATA KKKKKK'), dataKey, key, instance, declaration);
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {
