@@ -1,22 +1,18 @@
-import { Containerized, isContainerized } from './containerized.type';
-import { isWord, Word } from './word.type';
-import * as chalk from 'chalk';
+import { Containerized } from './containerized.type';
+import { Word } from './word.type';
 import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders.type';
 
 export type Block = Containerized | Word;
 export type BlockInfo = {
     block: Block,
-    end: number,
-    start: number
-}
-
-export function isBlock(text: string): text is Block {
-    return isContainerized(text) || isWord(text);
+    end?: number,
+    name?: string,
+    start?: number
 }
 
 
 export function getBlockInfos(text: string): BlockInfo[] {
-    console.log(chalk.cyanBright('GET CBBBB'), text);
+    // console.log(chalk.cyanBright('GET BBBBLOK INFOS'), text);
     let leftBorder: LeftBorder;
     let openingBorders = 0;
     let startPosition = 0;
@@ -50,7 +46,7 @@ export function getBlockInfos(text: string): BlockInfo[] {
             }
         }
     }
-    // console.log(chalk.magentaBright('GET CBBBB BLOCSSSSS'), blocs);
+    // console.log(chalk.magentaBright('GET BBBBLOK INFOS END'), blocs);
     return blocs;
 }
 
@@ -65,6 +61,12 @@ function isEndOfBlock(char: string, leftBorder: LeftBorder, openingBorders: numb
 }
 
 
-export function isInsideBlock(position: number, text: string): boolean {
-    return undefined;
+export function isInsideBlocks(position: number, text: string): boolean {
+    const blockInfos: BlockInfo[] = getBlockInfos(text);
+    return blockInfos.some(b => isInsideBlock(position, b));
+}
+
+
+function isInsideBlock(position: number, blockInfo: BlockInfo): boolean {
+    return position >= blockInfo.start && position <= blockInfo.end;
 }

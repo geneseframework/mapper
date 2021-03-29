@@ -13,7 +13,7 @@ const declarationInfos = [
                 initializer: `'oop'`,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -31,7 +31,7 @@ const declarationInfos = [
                 initializer: `'a'`,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -49,7 +49,7 @@ const declarationInfos = [
                 initializer: `'oop'`,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -67,7 +67,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -85,19 +85,19 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `street`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `streetNumber`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `town`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -115,25 +115,25 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `kind`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `true`,
                 isRequired: true,
                 name: `live`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `order`,
-                type: `Order`
+                stringifiedType: `Order`
             },
         ],
     },
@@ -151,49 +151,49 @@ const declarationInfos = [
                 initializer: `[]`,
                 isRequired: true,
                 name: `colors`,
-                type: `Color[]`
+                stringifiedType: `Color[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `favouritePrey`,
-                type: `Prey`
+                stringifiedType: `Prey`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `friend`,
-                type: `Person`
+                stringifiedType: `Person`
             },
             {
                 initializer: `false`,
                 isRequired: true,
                 name: `hungry`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `mood`,
-                type: `Mood`
+                stringifiedType: `Mood`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `race`,
-                type: `Race`
+                stringifiedType: `Race`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `tattoo`,
-                type: `[string, number, Color, Person]`
+                stringifiedType: `[string, number, Color, Person]`
             },
         ],
     },
@@ -211,13 +211,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -247,13 +247,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -271,7 +271,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `live`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
         ],
     },
@@ -289,49 +289,49 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `address`,
-                type: `Address`
+                stringifiedType: `Address`
             },
             {
                 initializer: `[]`,
                 isRequired: true,
                 name: `cats`,
-                type: `Cat[]`
+                stringifiedType: `Cat[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `employer`,
-                type: `Employer`
+                stringifiedType: `Employer`
             },
             {
                 initializer: `[]`,
                 isRequired: true,
                 name: `family`,
-                type: `Person[]`
+                stringifiedType: `Person[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `isHappy`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `lastName`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `nickNames`,
-                type: `StringOrStrings`
+                stringifiedType: `StringOrStrings`
             },
         ],
     },
@@ -349,7 +349,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -367,7 +367,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -385,7 +385,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `foo`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -403,7 +403,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `bar`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -421,7 +421,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -439,37 +439,37 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `num`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `bool`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `strs`,
-                type: `string[]`
+                stringifiedType: `string[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `nums`,
-                type: `number[]`
+                stringifiedType: `number[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `bools`,
-                type: `boolean[]`
+                stringifiedType: `boolean[]`
             },
         ],
     },
@@ -487,19 +487,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `any`
+                stringifiedType: `any`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `b`,
-                type: `any[]`
+                stringifiedType: `any[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -521,7 +521,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -543,7 +543,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -561,25 +561,25 @@ const declarationInfos = [
                 initializer: `'aaa'`,
                 isRequired: true,
                 name: `a`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `2`,
                 isRequired: true,
                 name: `b`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `false`,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `true`,
                 isRequired: true,
                 name: `d`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -597,25 +597,25 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `b`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `d`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -633,7 +633,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -651,19 +651,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `cat`,
-                type: `CatSpec`
+                stringifiedType: `CatSpec`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -681,7 +681,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -699,7 +699,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -717,7 +717,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -735,7 +735,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -755,7 +755,7 @@ const declarationInfos = [
     }`,
                 isRequired: true,
                 name: `person`,
-                type: `IDefaultsSpec`
+                stringifiedType: `IDefaultsSpec`
             },
         ],
     },
@@ -773,7 +773,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `string | number`
+                stringifiedType: `string | number`
             },
         ],
     },
@@ -791,7 +791,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `null`
+                stringifiedType: `null`
             },
         ],
     },
@@ -809,7 +809,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `undefined`
+                stringifiedType: `undefined`
             },
         ],
     },
@@ -827,7 +827,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `unknown`
+                stringifiedType: `unknown`
             },
         ],
     },
@@ -845,7 +845,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `4`
+                stringifiedType: `4`
             },
         ],
     },
@@ -863,7 +863,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `'a'`
+                stringifiedType: `'a'`
             },
         ],
     },
@@ -881,7 +881,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `false`
+                stringifiedType: `false`
             },
         ],
     },
@@ -899,7 +899,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `object`
+                stringifiedType: `object`
             },
         ],
     },
@@ -917,7 +917,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `StringsOrStringSpec`
+                stringifiedType: `StringsOrStringSpec`
             },
         ],
     },
@@ -935,7 +935,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `StringOrStringsSpec`
+                stringifiedType: `StringOrStringsSpec`
             },
         ],
     },
@@ -953,7 +953,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `ages`,
-                type: `NumbersOrNumberSpec`
+                stringifiedType: `NumbersOrNumberSpec`
             },
         ],
     },
@@ -971,7 +971,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `ages`,
-                type: `NumberOrNumbersSpec`
+                stringifiedType: `NumberOrNumbersSpec`
             },
         ],
     },
@@ -989,7 +989,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `level`,
-                type: `LevelSpec`
+                stringifiedType: `LevelSpec`
             },
         ],
     },
@@ -1007,7 +1007,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1025,7 +1025,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `union`,
-                type: `UnionTypeClassAndStringSpec`
+                stringifiedType: `UnionTypeClassAndStringSpec`
             },
         ],
     },
@@ -1043,13 +1043,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1067,13 +1067,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1091,7 +1091,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `employer`,
-                type: `EmployerSpec`
+                stringifiedType: `EmployerSpec`
             },
         ],
     },
@@ -1109,7 +1109,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `date`,
-                type: `Date`
+                stringifiedType: `Date`
             },
         ],
     },
@@ -1127,7 +1127,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `ColorSpec`
+                stringifiedType: `ColorSpec`
             },
         ],
     },
@@ -1145,7 +1145,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `ColorSpec[]`
+                stringifiedType: `ColorSpec[]`
             },
         ],
     },
@@ -1163,7 +1163,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1181,7 +1181,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1199,7 +1199,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `animal`,
-                type: `AnimalSpec`
+                stringifiedType: `AnimalSpec`
             },
         ],
     },
@@ -1217,7 +1217,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `simpleName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1235,7 +1235,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1253,7 +1253,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1271,19 +1271,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `cat`,
-                type: `CatTupleSpec`
+                stringifiedType: `CatTupleSpec`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1301,13 +1301,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1325,7 +1325,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1343,13 +1343,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1367,13 +1367,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1391,7 +1391,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `employer`,
-                type: `EmployerTypeSpec`
+                stringifiedType: `EmployerTypeSpec`
             },
         ],
     },
@@ -1409,7 +1409,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `NonReadableType<any>`
+                stringifiedType: `NonReadableType<any>`
             },
         ],
     },
@@ -1460,7 +1460,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `animal`,
-                type: `Animal`
+                stringifiedType: `Animal`
             },
         ],
     },
@@ -1475,7 +1475,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: false,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1490,13 +1490,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `otherName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1511,7 +1511,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1521,7 +1521,7 @@ const declarationInfos = [
         name: `CheckTypeSpec`,
         typeParameters: [
         ],
-        type: `string | number`,
+        stringifiedType: `string | number`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1529,7 +1529,7 @@ const declarationInfos = [
         name: `StringsOrStringSpec`,
         typeParameters: [
         ],
-        type: `string[] | string`,
+        stringifiedType: `string[] | string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1537,7 +1537,7 @@ const declarationInfos = [
         name: `StringOrStringsSpec`,
         typeParameters: [
         ],
-        type: `string | string[]`,
+        stringifiedType: `string | string[]`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1545,7 +1545,7 @@ const declarationInfos = [
         name: `NumbersOrNumberSpec`,
         typeParameters: [
         ],
-        type: `number[] | number`,
+        stringifiedType: `number[] | number`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1553,7 +1553,7 @@ const declarationInfos = [
         name: `NumberOrNumbersSpec`,
         typeParameters: [
         ],
-        type: `number | number[]`,
+        stringifiedType: `number | number[]`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1561,7 +1561,7 @@ const declarationInfos = [
         name: `LevelSpec`,
         typeParameters: [
         ],
-        type: `1 | 2 | 3`,
+        stringifiedType: `1 | 2 | 3`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1569,7 +1569,7 @@ const declarationInfos = [
         name: `UnionTypeClassAndStringSpec`,
         typeParameters: [
         ],
-        type: `CatSpec | string`,
+        stringifiedType: `CatSpec | string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
@@ -1577,7 +1577,7 @@ const declarationInfos = [
         name: `EmployerSpec`,
         typeParameters: [
         ],
-        type: `NgoSpec | NgoSpec[] | CompanySpec`,
+        stringifiedType: `NgoSpec | NgoSpec[] | CompanySpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
@@ -1586,7 +1586,7 @@ const declarationInfos = [
         typeParameters: [
         
 ],
-        type: `T extends string ? string : boolean`,
+        stringifiedType: `T extends string ? string : boolean`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -1594,7 +1594,7 @@ const declarationInfos = [
         name: `TupleTypeSpec`,
         typeParameters: [
         ],
-        type: `TupleClassSpec | TupleInterfaceSpec`,
+        stringifiedType: `TupleClassSpec | TupleInterfaceSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -1602,7 +1602,7 @@ const declarationInfos = [
         name: `TupleStringTupleStringStringSpec`,
         typeParameters: [
         ],
-        type: `['string', ['string', 'string']]`,
+        stringifiedType: `['string', ['string', 'string']]`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
@@ -1610,7 +1610,7 @@ const declarationInfos = [
         name: `TupleStringTupleStringNumberSpec`,
         typeParameters: [
         ],
-        type: `['string', ['string', 'number']]`,
+        stringifiedType: `['string', ['string', 'number']]`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1618,7 +1618,7 @@ const declarationInfos = [
         name: `BlueType`,
         typeParameters: [
         ],
-        type: `'Blue'`,
+        stringifiedType: `'Blue'`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1626,7 +1626,7 @@ const declarationInfos = [
         name: `StringAloneSpec`,
         typeParameters: [
         ],
-        type: `string`,
+        stringifiedType: `string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1634,7 +1634,7 @@ const declarationInfos = [
         name: `ParentTypeSpec`,
         typeParameters: [
         ],
-        type: `string`,
+        stringifiedType: `string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1642,7 +1642,7 @@ const declarationInfos = [
         name: `ChildTypeSpec`,
         typeParameters: [
         ],
-        type: `ParentTypeSpec`,
+        stringifiedType: `ParentTypeSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1650,12 +1650,12 @@ const declarationInfos = [
         name: `CompanyAloneSpec`,
         typeParameters: [
         ],
-        type: `CompanyAloneClassSpec`,
+        stringifiedType: `CompanyAloneClassSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralSpec_0`,
+        name: `TypeLiteralSpecInterface`,
         typeParameters: [
         ],
         properties: [
@@ -1663,7 +1663,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1673,7 +1673,36 @@ const declarationInfos = [
         name: `TypeLiteralSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralSpec_0`,
+        stringifiedType: `TypeLiteralSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralToKeysSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                stringifiedType: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                stringifiedType: `number`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralToKeysSpec`,
+        typeParameters: [
+        ],
+        stringifiedType: `TypeLiteralToKeysSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1686,13 +1715,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -1702,12 +1731,12 @@ const declarationInfos = [
         name: `TypeLiteralWithoutTypesSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralWithoutTypesSpecInterface`,
+        stringifiedType: `TypeLiteralWithoutTypesSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralNestedSpecaddressAddress`,
+        name: `TypeLiteralNestedSpecInterface_0`,
         typeParameters: [
         ],
         properties: [
@@ -1715,13 +1744,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `country`,
-                type: `string`
-            },
-            {
-                initializer: undefined,
-                isRequired: false,
-                name: `city`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1736,13 +1759,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: undefined,
+                isRequired: true,
                 name: `address`,
-                type: `TypeLiteralNestedSpecaddressAddress`
+                stringifiedType: `TypeLiteralNestedSpecInterface_0`
             },
         ],
     },
@@ -1752,7 +1775,57 @@ const declarationInfos = [
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralNestedSpecInterface`,
+        stringifiedType: `TypeLiteralNestedSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralNestedOptionalSpecInterface_0`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `country`,
+                stringifiedType: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `city`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralNestedOptionalSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                stringifiedType: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `address`,
+                stringifiedType: `TypeLiteralNestedOptionalSpecInterface_0`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralNestedOptionalSpec`,
+        typeParameters: [
+        ],
+        stringifiedType: `TypeLiteralNestedOptionalSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1760,7 +1833,7 @@ const declarationInfos = [
         name: `ColorsTypeSpec`,
         typeParameters: [
         ],
-        type: `'Blue' | 'White'`,
+        stringifiedType: `'Blue' | 'White'`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1768,7 +1841,7 @@ const declarationInfos = [
         name: `Parent1TypeSpec`,
         typeParameters: [
         ],
-        type: `string`,
+        stringifiedType: `string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1776,7 +1849,7 @@ const declarationInfos = [
         name: `Parent2TypeSpec`,
         typeParameters: [
         ],
-        type: `number`,
+        stringifiedType: `number`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1784,7 +1857,7 @@ const declarationInfos = [
         name: `ChildParentsTypeSpec`,
         typeParameters: [
         ],
-        type: `Parent1TypeSpec | Parent2TypeSpec`,
+        stringifiedType: `Parent1TypeSpec | Parent2TypeSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1792,7 +1865,7 @@ const declarationInfos = [
         name: `ParentNumberOrBooleanSpec`,
         typeParameters: [
         ],
-        type: `number | boolean`,
+        stringifiedType: `number | boolean`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1800,7 +1873,7 @@ const declarationInfos = [
         name: `ChildParentNumberOrBooleanAndStringSpec`,
         typeParameters: [
         ],
-        type: `ParentNumberOrBooleanSpec | string`,
+        stringifiedType: `ParentNumberOrBooleanSpec | string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1808,7 +1881,7 @@ const declarationInfos = [
         name: `UnionTypeNumberLiteralSpec`,
         typeParameters: [
         ],
-        type: `0 | 1 | 2`,
+        stringifiedType: `0 | 1 | 2`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1816,7 +1889,7 @@ const declarationInfos = [
         name: `UnionTypeSpec`,
         typeParameters: [
         ],
-        type: `string | number`,
+        stringifiedType: `string | number`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1824,7 +1897,7 @@ const declarationInfos = [
         name: `UnionTypeStringOrStringsSpec`,
         typeParameters: [
         ],
-        type: `string | string[]`,
+        stringifiedType: `string | string[]`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1832,7 +1905,7 @@ const declarationInfos = [
         name: `UnionClassStringOrNumberSpec`,
         typeParameters: [
         ],
-        type: `ClassStringSpec | number`,
+        stringifiedType: `ClassStringSpec | number`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1840,7 +1913,7 @@ const declarationInfos = [
         name: `EmployerTypeSpec`,
         typeParameters: [
         ],
-        type: `NgoClassSpec | NgoClassSpec[] | CompanyClassSpec`,
+        stringifiedType: `NgoClassSpec | NgoClassSpec[] | CompanyClassSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1853,7 +1926,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1863,7 +1936,7 @@ const declarationInfos = [
         name: `IntersectionMandatoryLeftTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionMandatoryLeftTypeSpecInterface`,
+        stringifiedType: `IntersectionMandatoryLeftTypeSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1876,7 +1949,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1886,7 +1959,7 @@ const declarationInfos = [
         name: `IntersectionMandatoryRightTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionMandatoryRightTypeSpecInterface`,
+        stringifiedType: `IntersectionMandatoryRightTypeSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1894,7 +1967,7 @@ const declarationInfos = [
         name: `IntersectionMandatoryTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionMandatoryLeftTypeSpec & IntersectionMandatoryRightTypeSpec`,
+        stringifiedType: `IntersectionMandatoryLeftTypeSpec & IntersectionMandatoryRightTypeSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1907,7 +1980,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1917,7 +1990,7 @@ const declarationInfos = [
         name: `IntersectionOptionalLeftTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionOptionalLeftTypeSpecInterface`,
+        stringifiedType: `IntersectionOptionalLeftTypeSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1930,13 +2003,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `city`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1946,7 +2019,7 @@ const declarationInfos = [
         name: `IntersectionOptionalRightTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionOptionalRightTypeSpecInterface`,
+        stringifiedType: `IntersectionOptionalRightTypeSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1954,7 +2027,7 @@ const declarationInfos = [
         name: `IntersectionOptionalTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionOptionalLeftTypeSpec & IntersectionOptionalRightTypeSpec`,
+        stringifiedType: `IntersectionOptionalLeftTypeSpec & IntersectionOptionalRightTypeSpec`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1962,7 +2035,7 @@ const declarationInfos = [
         name: `FunctionTypeSpec`,
         typeParameters: [
         ],
-        type: `() => string`,
+        stringifiedType: `() => string`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/warnings.spec.ts`,
@@ -1971,7 +2044,7 @@ const declarationInfos = [
         typeParameters: [
         
 ],
-        type: `T extends string ? number : boolean`,
+        stringifiedType: `T extends string ? number : boolean`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/employer.type.ts`,
@@ -1979,7 +2052,7 @@ const declarationInfos = [
         name: `Employer`,
         typeParameters: [
         ],
-        type: `Ngo | Ngo[] | Company`,
+        stringifiedType: `Ngo | Ngo[] | Company`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/order.type.ts`,
@@ -1987,7 +2060,7 @@ const declarationInfos = [
         name: `Order`,
         typeParameters: [
         ],
-        type: `'vertebrate' | 'invertebrate'`,
+        stringifiedType: `'vertebrate' | 'invertebrate'`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/race.type.ts`,
@@ -1995,7 +2068,7 @@ const declarationInfos = [
         name: `Race`,
         typeParameters: [
         ],
-        type: `'European' | 'Siamese' | 'British short hair'`,
+        stringifiedType: `'European' | 'Siamese' | 'British short hair'`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/string-or-strings.type.ts`,
@@ -2003,7 +2076,7 @@ const declarationInfos = [
         name: `StringOrStrings`,
         typeParameters: [
         ],
-        type: `string | string[]`,
+        stringifiedType: `string | string[]`,
     },
 ];
 exports.declarationInfos = declarationInfos;
