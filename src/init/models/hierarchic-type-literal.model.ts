@@ -12,23 +12,23 @@ export class HierarchicTypeLiteral {
     interfaceInfo: InterfaceInfo = undefined;
     isTrivial = false;
     name: string = undefined;
-    node: TypeLiteralNode = undefined;
-    newStringifiedType: string = undefined;
-    originalStringifiedType: string = undefined;
-    // node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode = undefined;
+    typeLiteralNode: TypeLiteralNode = undefined;
+    newStringifiedType: CurvedBracketed = undefined;
+    originalStringifiedType: CurvedBracketed = undefined;
+    // typeLiteralNode: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode = undefined;
     parent: HierarchicTypeLiteral = undefined;
     // root: PropertyDeclaration | TypeAliasDeclaration = undefined;
 
-    constructor(node: TypeLiteralNode, parent: HierarchicTypeLiteral, originalStringifiedType: string, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
+    constructor(node: TypeLiteralNode, parent: HierarchicTypeLiteral, originalStringifiedType: CurvedBracketed, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
         // this.root = root;
         this.isTrivial = isTrivial;
         this.children = children;
         this.childIndex = childIndex;
-        this.node = node;
+        this.typeLiteralNode = node;
         this.originalStringifiedType = originalStringifiedType;
         this.parent = parent;
-        this.setName();
-        this.setInterfaceInfo();
+        // this.setName(parentName);
+        // this.setInterfaceInfo();
     }
 
 
@@ -37,32 +37,33 @@ export class HierarchicTypeLiteral {
     }
 
 
-    setName(): void {
+    setName(parentName: string): void {
         // TODO : if root is PropDecl, include class or interface name
-        this.name = this.parent ? `${this.parent.name}_${this.childIndex}` : `${this.parent.name}`;
+        this.name = `${parentName}_${this.childIndex}`;
+        // this.name = this.parent ? `${parentName}_${this.childIndex}` : `${parentName}`;
     }
 
 
-    setInterfaceInfo(): void {
-        this.interfaceInfo = new InterfaceInfo(this.name, this.node.getSourceFile().getFilePath());
-        if (this.parent) {
-            this.setProperties();
-            // this.interfaceInfo.stringifiedType =
-        } else {
-            // this.interfaceInfo.stringifiedType = declarationType(this.root);
-            console.log(chalk.redBright('SET IIIIII parent'), this.interfaceInfo.stringifiedType);
-        }
-    }
-
-
-    private setProperties(): void {
-        const stringifiedType: CurvedBracketed = this.parent.interfaceInfo.stringifiedType as CurvedBracketed;
-        console.log(chalk.blueBright('SET PROPSSSS: kind node'), this.node.getKindName());
-        console.log(chalk.blueBright('SET PROPSSSS: PARENT II'), this.parent.interfaceInfo);
-        this.interfaceInfo.properties = getPropertiesFromCurvedBracketed(stringifiedType);
-    }
+    // setInterfaceInfo(parentStringifiedType: string): void {
+    //     this.interfaceInfo = new InterfaceInfo(this.name, this.typeLiteralNode.getSourceFile().getFilePath());
+    //     if (this.parent) {
+    //         this.setProperties();
+    //         // this.interfaceInfo.stringifiedType =
+    //     } else {
+    //         // this.interfaceInfo.stringifiedType = declarationType(this.root);
+    //         console.log(chalk.redBright('SET IIIIII parent'), this.interfaceInfo.stringifiedType);
+    //     }
+    // }
+    //
+    //
+    // private setProperties(parentStringifiedType: string): void {
+    //     const stringifiedType: CurvedBracketed = this.parent.interfaceInfo.stringifiedType as CurvedBracketed;
+    //     console.log(chalk.blueBright('SET PROPSSSS: kind typeLiteralNode'), this.typeLiteralNode.getKindName());
+    //     console.log(chalk.blueBright('SET PROPSSSS: PARENT ST'), stringifiedType, this.parent.originalStringifiedType);
+    //     this.interfaceInfo.properties = getPropertiesFromCurvedBracketed(parentStringifiedType);
+    // }
 }
 
 export class HierarchicTypeLiteralNode extends HierarchicTypeLiteral {
-    node: TypeLiteralNode;
+    typeLiteralNode: TypeLiteralNode;
 }

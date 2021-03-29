@@ -9,14 +9,18 @@ import { BlockInfo } from '../../create/types/target/string/block.type';
 
 
 export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): string {
-
+    for (const blockInfo of blockInfos) {
+        text = text.replace(blockInfo.block, blockInfo.name);
+    }
+    return text;
 }
 
+
 export function textCorrespondsToProperties(text: CurvedBracketed, properties: Property[]): boolean {
-    console.log(chalk.blueBright('CTOOOO text'), text);
-    console.log(chalk.blueBright('CTOOOO properties'), properties);
+    // console.log(chalk.blueBright('CTOOOO text'), text);
+    // console.log(chalk.blueBright('CTOOOO properties'), properties);
     const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
-    console.log(chalk.blueBright('CTOOOO text properties'), textProperties);
+    // console.log(chalk.blueBright('CTOOOO text properties'), textProperties);
     return haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
 }
 

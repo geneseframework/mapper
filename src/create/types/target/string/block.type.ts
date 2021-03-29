@@ -17,7 +17,7 @@ export function isBlock(text: string): text is Block {
 
 
 export function getBlockInfos(text: string): BlockInfo[] {
-    console.log(chalk.cyanBright('GET CBBBB'), text);
+    // console.log(chalk.cyanBright('GET BBBBLOK INFOS'), text);
     let leftBorder: LeftBorder;
     let openingBorders = 0;
     let startPosition = 0;
@@ -51,7 +51,7 @@ export function getBlockInfos(text: string): BlockInfo[] {
             }
         }
     }
-    // console.log(chalk.magentaBright('GET CBBBB BLOCSSSSS'), blocs);
+    // console.log(chalk.magentaBright('GET BBBBLOK INFOS END'), blocs);
     return blocs;
 }
 

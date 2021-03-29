@@ -196,7 +196,7 @@ Add this line to your `package.json` :
 ```json
 {
     "scripts": {
-        "mapper": "node node_modules/@genese/mapper/dist/init/init.js"
+        "mapper": "typeLiteralNode node_modules/@genese/mapper/dist/init/init.js"
     }
 }
 ```
@@ -208,7 +208,7 @@ The instruction `npm run mapper` must be called **before** executing your own co
 ```json
 {
     "scripts": {
-        "mapper": "node node_modules/@genese/mapper/dist/init/init.js",
+        "mapper": "typeLiteralNode node_modules/@genese/mapper/dist/init/init.js",
         "start": "npm run mapper && ng serve"
     }
 }
@@ -219,8 +219,8 @@ The instruction `npm run mapper` must be called **before** executing your own co
 ```json
 {
     "scripts": {
-        "mapper": "node node_modules/@genese/mapper/dist/init/init.js",
-        "start": "npm run mapper && ts-node main.ts"
+        "mapper": "typeLiteralNode node_modules/@genese/mapper/dist/init/init.js",
+        "start": "npm run mapper && ts-typeLiteralNode main.ts"
     }
 }
 ```
@@ -246,7 +246,7 @@ Let's try `@genese/mapper` in a simple example, assuming that you want to run yo
 For that, install the `ts-node` module :
 
 ```sh
-npm install ts-node
+npm install ts-typeLiteralNode
 ```
 
 Create a file called `mapper-example.ts` at the root of your project with this code :

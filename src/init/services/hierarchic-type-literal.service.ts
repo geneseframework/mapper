@@ -1,24 +1,22 @@
 import { HierarchicTypeLiteral, HierarchicTypeLiteralNode } from '../models/hierarchic-type-literal.model';
-import { Node, PropertyDeclaration, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
+import { Node, PropertySignature, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import { getFirstTypeLiteralAncestor, hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
-import { replaceAll } from '../../shared/utils/strings.util';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import {
     CurvedBracketed,
     CurvedBracketedBlockInfo,
-    getCurvedBracketedBlockInfos
+    getCurvedBracketedBlockInfos, getPropertiesFromCurvedBracketed
 } from '../../create/types/target/string/curve-bracketed.type';
-import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
-import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
-import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
+import { throwWarning } from '../../create/utils/errors.util';
+import { removeBorders } from '../../shared/utils/strings.util';
 
 export class HierarchicTypeLiteralService {
 
@@ -41,9 +39,14 @@ export class HierarchicTypeLiteralService {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
         for (const typeLiteralAncestor of typeLiteralAncestors) {
-            const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, declarationType(declaration));
+            console.log(chalk.blueBright('GET BLINFOOOOO text typeLiteralNode'), typeLiteralAncestor.getText());
+            const rootST = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
+            console.log(chalk.blueBright('GET BLINFOOOOO rootST'), rootST);
+            const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, rootST);
+            htl.name = `${declaration.getName()}Interface`;
+            console.log(chalk.blueBright('GET BLINFOOOOO htl name & origin st'), htl.name, htl.originalStringifiedType);
             htl.children = this.createHTLChildren(htl);
-            blockInfos.push({name: htl.name, block: htl.originalStringifiedType});
+            blockInfos.push({name: htl.interfaceInfo.name, block: htl.originalStringifiedType});
         }
         return blockInfos;
     }
@@ -58,24 +61,31 @@ export class HierarchicTypeLiteralService {
 
     private static createHTLChildren(parent: HierarchicTypeLiteral): HierarchicTypeLiteral[] {
         const htls: HierarchicTypeLiteral[] = [];
-        console.log(chalk.magentaBright('CREATE HTL CHILD parent kind....'), parent.node.getKindName());
-        const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.node);
+        console.log(chalk.magentaBright('CREATE HTL CHILD parent ....'), parent.name, parent.originalStringifiedType);
+        console.log(chalk.magentaBright('CREATE HTL CHILD parent typeLiteralNode txt....'), parent.typeLiteralNode.getText());
+        const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.typeLiteralNode);
         for (let i = 0; i < ancestors.length; i++) {
-            const originalStringifiedType: string = this.getOriginalStringifiedType(ancestors[i], parent.originalStringifiedType);
+            // const originalStringifiedType: CurvedBracketed = '{zzz: zzz}'
+            console.log(chalk.magentaBright('CREATE HTL CHILD ANCESTOR TEXTTTTT ....'), ancestors[i].getText());
+            const originalStringifiedType: CurvedBracketed = this.getOriginalStringifiedType(ancestors[i], removeBorders(parent.originalStringifiedType));
+            console.log(chalk.magentaBright('CREATE HTL CHILD originalStringifiedType ....'), originalStringifiedType);
             const htl = new HierarchicTypeLiteral(ancestors[i], parent, originalStringifiedType, i);
-            console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
+            htl.setName(parent.name);
+            console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), htl.name, this.isTrivialTypeLiteral(ancestors[i]));
+            htl.interfaceInfo = this.createHTLInterfaceInfo(htl);
             console.log(chalk.magentaBright('HTL CHILD....'), htl.interfaceInfo);
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
                 this.addPropertiesAndUpdateParent(htl as HierarchicTypeLiteralNode);
-            } else if (hasTypeLiteral(parent.node)) {
-                console.log(chalk.yellowBright('HTL HAS TLLLLL parent kind'), parent.node.getKindName());
+            } else if (hasTypeLiteral(parent.typeLiteralNode)) {
+                console.log(chalk.yellowBright('HTL HAS TLLLLL parent kind'), parent.typeLiteralNode.getKindName());
                 console.log(chalk.yellowBright('HTL HAS TLLLLL parent II'), parent.interfaceInfo);
-                // const props: PropertyDeclarationOrSignature[] = parent.node instanceof TypeLiteralNode ? parent.node.getMembers() : parent.node instanceof PropertyDeclaration ? parent.node : parent.node.getProperties();
-                // for (const propertyDeclaration of parent.node.getProperties())
+                // const props: PropertyDeclarationOrSignature[] = parent.typeLiteralNode instanceof TypeLiteralNode ? parent.typeLiteralNode.getMembers() : parent.typeLiteralNode instanceof PropertyDeclaration ? parent.typeLiteralNode : parent.typeLiteralNode.getProperties();
+                // for (const propertyDeclaration of parent.typeLiteralNode.getProperties())
                 // const propertyDeclaration: PropertyDeclaration =
                 htl.children = this.createHTLChildren(htl);
                 console.log(chalk.yellowBright('HTL htl.children'), htl.children);
+                this.updateInterfaceInfo(htl);
                 throw 'ZZZZ'
             }
             htls.push(htl);
@@ -84,32 +94,48 @@ export class HierarchicTypeLiteralService {
     }
 
 
+    // TODO
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
+        console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS typeLiteralNode text'), typeLiteralNode.getText());
+        console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS parentStringifiedType'), parentStringifiedType);
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
+        console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS blockInfos'), blockInfos);
         for (const blockInfo of blockInfos) {
-            if (parentStringifiedType.includes(blockInfo.block)) {
+            if (textCorrespondsToProperties(blockInfo.block, this.getProperties(typeLiteralNode))) {
+                console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS bi'), blockInfo);
                 return blockInfo.block;
             }
         }
+        throwWarning(`property signature not found in ${parentStringifiedType}`);
+    }
+
+
+    private static createHTLInterfaceInfo(htl: HierarchicTypeLiteral): InterfaceInfo {
+        const interfaceInfo = new InterfaceInfo(htl.name, sourceFilePath(htl.typeLiteralNode));
+        interfaceInfo.properties = getPropertiesFromCurvedBracketed(htl.originalStringifiedType);
+        console.log(chalk.blueBright('CREATE HTL IIIIIII'), interfaceInfo);
+        // TODO:
+        // replace blocks for each property
+        return interfaceInfo;
     }
 
 
     // private static createHTLChildren(root: TypeOrPropertyDeclaration, parent: HierarchicTypeLiteral): HierarchicTypeLiteral[] {
     //     const htls: HierarchicTypeLiteral[] = [];
-    //     console.log(chalk.magentaBright('CREATE HTL CHILD parent kind....'), parent.node.getKindName());
-    //     const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.node);
+    //     console.log(chalk.magentaBright('CREATE HTL CHILD parent kind....'), parent.typeLiteralNode.getKindName());
+    //     const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.typeLiteralNode);
     //     for (let i = 0; i < ancestors.length; i++) {
     //         const htl = new HierarchicTypeLiteral(root, ancestors[i], parent, i);
-    //         console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.node.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
+    //         console.log(chalk.magentaBright('HTL HAS TLLLLL ????'), parent.typeLiteralNode.getKindName(), this.isTrivialTypeLiteral(ancestors[i]));
     //         console.log(chalk.magentaBright('HTL CHILD....'), htl.interfaceInfo);
     //         if (this.isTrivialTypeLiteral(ancestors[i])) {
     //             htl.isTrivial = true;
     //             this.addPropertiesAndUpdateParent(htl as HierarchicTypeLiteralNode);
-    //         } else if (hasTypeLiteral(parent.node)) {
-    //             console.log(chalk.yellowBright('HTL HAS TLLLLL parent kind'), parent.node.getKindName());
+    //         } else if (hasTypeLiteral(parent.typeLiteralNode)) {
+    //             console.log(chalk.yellowBright('HTL HAS TLLLLL parent kind'), parent.typeLiteralNode.getKindName());
     //             console.log(chalk.yellowBright('HTL HAS TLLLLL parent II'), parent.interfaceInfo);
-    //             const props: PropertyDeclarationOrSignature[] = parent.node instanceof TypeLiteralNode ? parent.node.getMembers() : parent.node instanceof PropertyDeclaration ? parent.node : parent.node.getProperties();
-    //             // for (const propertyDeclaration of parent.node.getProperties())
+    //             const props: PropertyDeclarationOrSignature[] = parent.typeLiteralNode instanceof TypeLiteralNode ? parent.typeLiteralNode.getMembers() : parent.typeLiteralNode instanceof PropertyDeclaration ? parent.typeLiteralNode : parent.typeLiteralNode.getProperties();
+    //             // for (const propertyDeclaration of parent.typeLiteralNode.getProperties())
     //             // const propertyDeclaration: PropertyDeclaration =
     //             htl.children = this.createHTLChildren(root, htl);
     //             console.log(chalk.yellowBright('HTL htl.children'), htl.children);
@@ -128,31 +154,35 @@ export class HierarchicTypeLiteralService {
 
     private static getTypeLiteralAncestors(node: Node): TypeLiteralNode[] {
         const typeLiteralNodes: TypeLiteralNode[] = [];
-        console.log(chalk.greenBright('GET TL ANCESTORSSSSS'), node.getKindName(), node.getDescendantsOfKind(SyntaxKind.TypeLiteral).length);
+        console.log(chalk.greenBright('GET TL ANCESTORSSSSS'), node.getText(), node.getKindName(), node.getDescendantsOfKind(SyntaxKind.TypeLiteral).length);
         for (const typeLiteralNode of node.getDescendantsOfKind(SyntaxKind.TypeLiteral)) {
             if (this.isTypeLiteralAncestorInRootNode(typeLiteralNode, node)) {
+                console.log(chalk.greenBright('GET TL ANCESTORSSSSS TL NODE'), typeLiteralNode.getText());
                 typeLiteralNodes.push(typeLiteralNode)
             }
         }
-        console.log(chalk.greenBright('GET TL ANCESTORSSSSS TL NODES'), typeLiteralNodes.length);
         return typeLiteralNodes;
     }
 
 
     private static isTypeLiteralAncestorInRootNode(typeLiteralNode: TypeLiteralNode, root: Node): boolean {
         const ancestor: TypeLiteralNode = getFirstTypeLiteralAncestor(typeLiteralNode);
-        return !ancestor || ancestor !== getFirstTypeLiteralAncestor(root);
+        console.log(chalk.redBright('ISTL ANCESTORRRR???'), typeLiteralNode.getText(), root.getText());
+        console.log(chalk.redBright('ISTL ANCESTORRRR??? ancestor txt'), ancestor?.getText());
+        console.log(chalk.redBright('ISTL ANCESTORRRR??? ancestor === root ?'), ancestor?.getKindName(), root.getKindName());
+        console.log(chalk.redBright('ISTL ANCESTORRRR???'), ancestor === root);
+        return !ancestor || ancestor === root;
     }
 
 
     private static addPropertiesAndUpdateParent(htl: HierarchicTypeLiteralNode): void {
-        htl.interfaceInfo.properties = this.getProperties(htl.node);
+        htl.interfaceInfo.properties = this.getProperties(htl.typeLiteralNode);
         INIT.addDeclarationInfo(htl.interfaceInfo);
-        this.updateParent(htl);
+        // this.updateParent(htl);
     }
 
 
-    private static getProperties(typeLiteral: TypeLiteralNode): Property[] {
+    static getProperties(typeLiteral: TypeLiteralNode): Property[] {
         console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
@@ -168,17 +198,25 @@ export class HierarchicTypeLiteralService {
     }
 
 
-    private static updateParent(htl: HierarchicTypeLiteralNode): void {
-        if (!htl.parent) {
-            return;
+    private static updateInterfaceInfo(htl: HierarchicTypeLiteral): void {
+        for (const child of htl.children) {
+            this.updateParent(child, htl);
         }
-        // if (htl.parent.isRoot) {
-        const blockInfo: BlockInfo = {block: htl.originalStringifiedType, name: htl.name};
-            console.log(chalk.redBright('UPDATEEEEE PARENT bi'), blockInfo);
-            htl.parent.newStringifiedType = replaceBlocksByNames(htl.parent.originalStringifiedType, [blockInfo]);
+    }
+
+
+    private static updateParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
+        const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
+        console.log(chalk.redBright('UPDATEEEEE PARENT props'), parent.interfaceInfo.properties);
+        console.log(chalk.redBright('UPDATEEEEE PARENT bi'), blockInfo);
+        for (const property of parent.interfaceInfo.properties) {
+            property.type = replaceBlocksByNames(property.type, [blockInfo]);
+        }
+        console.log(chalk.redBright('UPDATEEEEEDD PARENT props'), parent.interfaceInfo.properties);
+        // htl.parent.newStringifiedType = replaceBlocksByNames(htl.parent.originalStringifiedType, [blockInfo]);
         // } else {
-            // TODO
-            // console.log(chalk.redBright('UPDATE PARENTTTT parent II'), htl.parent.interfaceInfo);
+        // TODO
+        // console.log(chalk.redBright('UPDATE PARENTTTT parent II'), htl.parent.interfaceInfo);
         // }
         // console.log(chalk.cyanBright('HTL IIIIII'), htl.interfaceInfo);
         // const correspondingProperties: Property[] = htl.parent.interfaceInfo.properties.filter(p => htl.interfaceInfo.correspondsTo(p.stringifiedType));
