@@ -1,22 +1,22 @@
 import { HierarchicTypeLiteral, HierarchicTypeLiteralNode } from '../models/hierarchic-type-literal.model';
-import { Node, PropertySignature, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
-import { getFirstTypeLiteralAncestor, hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
+import { Node, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
+import { getFirstTypeLiteralAncestor } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
 import { declarationType } from '../utils/ast/ast-declaration.util';
-import * as chalk from 'chalk';
 import { INIT } from '../const/init.const';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import {
     CurvedBracketed,
     CurvedBracketedBlockInfo,
-    getCurvedBracketedBlockInfos, getPropertiesFromCurvedBracketed
+    getCurvedBracketedBlockInfos,
+    getPropertiesFromCurvedBracketed
 } from '../../create/types/target/string/curve-bracketed.type';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
-import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
 import { throwWarning } from '../../create/utils/errors.util';
 import { removeBorders } from '../../shared/utils/strings.util';
+import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 
 export class HierarchicTypeLiteralService {
 
@@ -80,7 +80,6 @@ export class HierarchicTypeLiteralService {
     }
 
 
-    // TODO
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         for (const blockInfo of blockInfos) {

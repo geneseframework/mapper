@@ -70,10 +70,30 @@ testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteral
 // -------------------------------------------   Literal type with two keys   ---------------------------------------------
 
 
-export type TypeLiteralToKeysSpec = {name: string, age: number};
+export type TypeLiteralTwoKeysSpec = {name: string, age: number};
 
-testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralToKeysSpec`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: 20}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralToKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralTwoKeysSpec`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: 20}, {isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralTwoKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
+
+
+
+// ---------------------------------------------   Array of literal types   -----------------------------------------------
+
+
+export type TypeLiteralArraySpec = {name: string}[];
+
+testMappers.push(new TestMapper(`[{name: 'Léa'}] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [{name: 'Léa'}], {isolate: false}));
+testMappers.push(new TestMapper(`[] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [], {isolate: false}));
+testMappers.push(new TestMapper(`[{age: 20}] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [{age: 20}], {expectedValue:[undefined], isolate: false}));
+
+
+
+// ---------------------------------------------   Array of literal types   -----------------------------------------------
+
+
+export type TypeLiteralArrayOfArraySpec = {age: number, name: string}[][];
+
+testMappers.push(new TestMapper(`[[{age: 20, name: 'Léa'}]] / TypeLiteralArrayOfArraySpec`, 'TypeLiteralArrayOfArraySpec', [[{age: 20, name: 'Léa'}]], {isolate: false}));
 
 
 // ------------------------------------------   Literal type without types  -----------------------------------------------
