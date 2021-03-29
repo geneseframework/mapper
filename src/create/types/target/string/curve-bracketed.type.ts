@@ -2,7 +2,6 @@ import { getBlockInfos, isInsideBlocks } from './block.type';
 import { Property } from '../../../../shared/types/target/property.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 import { isComma } from './commas.type';
-import * as chalk from 'chalk';
 import { firstWord } from './word.type';
 
 export type CurvedBracketed = `{${string}}`;
@@ -22,17 +21,14 @@ export function isCurvedBracketed(text: string): text is CurvedBracketed {
 export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
-    console.log(chalk.whiteBright('getPropertiesFromCurvedBracketed PROPTEXTTTTS'), propertiesTexts);
     for (const propertyText of propertiesTexts) {
         properties.push(getProperty(propertyText));
     }
-    // console.log(chalk.whiteBright('getPropertiesFromCurvedBracketed PROPS RETURNNNNN'), properties);
     return properties;
 }
 
 
 function getPropertiesTexts(text: string): string[] {
-    // console.log(chalk.redBright('GPROPTXTTTTTT'), text);
     let propertyText = '';
     const propertiesTexts: string[] = [];
     let rest = text;
@@ -49,9 +45,7 @@ function getPropertiesTexts(text: string): string[] {
         } else {
             propertyText = `${propertyText}${char}`;
         }
-        // console.log(chalk.yellowBright('GPROPTXTTTTTT PROP TXTTTT'), propertyText);
     }
-    // console.log(chalk.redBright('GPROPTXTTTTTT RSLT'), propertiesTexts);
     return propertiesTexts;
 }
 
@@ -63,7 +57,6 @@ function getProperty(propertyText: string): Property {
     rest = setIsRequiredAndReturnRest(rest, property);
     rest = setTypeAndReturnRest(rest, property);
     setInitializer(rest, property);
-    // console.log(chalk.redBright('GET PROPPPP'), propertyText, property, rest);
     return property;
 }
 
@@ -84,7 +77,6 @@ function setTypeAndReturnRest(rest: string, property: Property): string {
     const split: string[] = rest.split('=');
     const beforeEqual: string = split[0] ?? '';
     const afterEqual: string = split[1] ?? '';
-    // console.log(chalk.greenBright('SPLITTTT'), rest, split, beforeEqual, afterEqual);
     if (beforeEqual.charAt(0) === ':') {
         property.type = beforeEqual.slice(1).trim();
     } else {

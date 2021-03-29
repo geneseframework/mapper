@@ -1,10 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import {
-    createInterfaceInfoFromTypeAliasDeclaration,
-    genericParameters,
-    getPropertiesFromClassOrInterface
-} from '../utils/ast/ast-declaration.util';
+import { genericParameters, getPropertiesFromClassOrInterface } from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -17,11 +13,8 @@ import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
-import * as chalk from 'chalk';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
-import { HierarchicTypeLiteral } from '../models/hierarchic-type-literal.model';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
-import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 
 export class DeclarationInfoService {
 
@@ -96,31 +89,12 @@ export class DeclarationInfoService {
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
-            // if (typeAliasDeclaration.getName() === 'TypeLiteralNestedOptionalSpec') {
-                console.log(chalk.yellowBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
-            // }
                 typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
-                // const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);
-                // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
-            // if (typeAliasDeclaration.getName() === 'TypeLiteralNestedOptionalSpec') {
-                console.log(chalk.greenBright('TYPEINFOOOOOO'), typeInfo);
-                // typeInfo.stringifiedType = htl.interfaceInfo.stringifiedType;
-            // } else {
-            //     const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
-            //     typeInfo.stringifiedType = newInterfaceInfo.name;
-            // }
-            console.log(chalk.yellowBright('--------------------------------'));
-            // if (isCurvedBracketed(typeAliasDeclaration?.getStructure().type as string)) {
-            //
+            // console.log(chalk.yellowBright('--------------------------------'));
         } else {
             typeInfo.stringifiedType = typeAliasDeclaration.getStructure()?.type as string;
         }
         INIT.addDeclarationInfo(typeInfo);
-    }
-
-
-    private static addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration: TypeAliasDeclaration): InterfaceInfo {
-        return createInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
     }
 
 

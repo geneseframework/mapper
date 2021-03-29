@@ -2,7 +2,6 @@ import {
     CurvedBracketed,
     getPropertiesFromCurvedBracketed
 } from '../../create/types/target/string/curve-bracketed.type';
-import * as chalk from 'chalk';
 import { Property } from '../../shared/types/target/property.type';
 import { haveSameLength } from '../../shared/utils/arrays.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
@@ -17,13 +16,8 @@ export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): str
 
 
 export function textCorrespondsToProperties(text: CurvedBracketed, properties: Property[]): boolean {
-    // console.log(chalk.yellow('CTOOOO text'), text);
-    // console.log(chalk.yellow('CTOOOO properties'), properties);
     const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
-    // console.log(chalk.yellow('CTOOOO text properties'), textProperties);
-    const zzz = haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
-    console.log(chalk.yellowBright('TXT CORRR ??? '), haveSameLength(textProperties, properties), textPropertiesAreIncludedInThisProperties(textProperties, properties));
-    return zzz;
+    return haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
 }
 
 

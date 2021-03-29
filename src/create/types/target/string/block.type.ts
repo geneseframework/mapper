@@ -1,6 +1,5 @@
-import { Containerized, isContainerized } from './containerized.type';
-import { isWord, Word } from './word.type';
-import * as chalk from 'chalk';
+import { Containerized } from './containerized.type';
+import { Word } from './word.type';
 import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders.type';
 
 export type Block = Containerized | Word;
@@ -9,10 +8,6 @@ export type BlockInfo = {
     end?: number,
     name?: string,
     start?: number
-}
-
-export function isBlock(text: string): text is Block {
-    return isContainerized(text) || isWord(text);
 }
 
 
@@ -68,9 +63,7 @@ function isEndOfBlock(char: string, leftBorder: LeftBorder, openingBorders: numb
 
 export function isInsideBlocks(position: number, text: string): boolean {
     const blockInfos: BlockInfo[] = getBlockInfos(text);
-    const zzz = blockInfos.some(b => isInsideBlock(position, b));
-    // console.log(chalk.blueBright('IS INSIDE BLOCKKKK ?'), zzz,  position, text.charAt(position));
-    return zzz;
+    return blockInfos.some(b => isInsideBlock(position, b));
 }
 
 
