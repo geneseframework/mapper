@@ -186,6 +186,14 @@ const generateInstance = function(instanceGenerator) {
                 const PersonSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').PersonSpec;
                 instance = new PersonSpec();
                 break;
+            case 'ObjectLiteralStringSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+                const ObjectLiteralStringSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteralStringSpec;
+                instance = new ObjectLiteralStringSpec();
+                break;
+            case 'ObjectLiteralStringNumberSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+                const ObjectLiteralStringNumberSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteralStringNumberSpec;
+                instance = new ObjectLiteralStringNumberSpec();
+                break;
             case 'DateSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts':
                 const DateSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts').DateSpec;
                 instance = new DateSpec();

@@ -76,7 +76,6 @@ testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralTwoKeysSpe
 testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralTwoKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
 
 
-
 // ---------------------------------------------   Array of literal types   -----------------------------------------------
 
 
@@ -85,7 +84,6 @@ export type TypeLiteralArraySpec = {name: string}[];
 testMappers.push(new TestMapper(`[{name: 'Léa'}] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [{name: 'Léa'}], {isolate: false}));
 testMappers.push(new TestMapper(`[] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [], {isolate: false}));
 testMappers.push(new TestMapper(`[{age: 20}] / TypeLiteralArraySpec`, 'TypeLiteralArraySpec', [{age: 20}], {expectedValue:[undefined], isolate: false}));
-
 
 
 // ---------------------------------------------   Array of literal types   -----------------------------------------------

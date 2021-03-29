@@ -399,24 +399,24 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 // ------------------------------------------   Property with Type object   -----------------------------------------------
 
 
-// export class ObjectLiteralStringSpec {
-//     propObject: {str: string};
-// }
-// testMappers.push(new TestMapper(`{propObject: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {propObject: {str: 'a'}}, {isolate: false}));
-// testMappers.push(new TestMapper(`{propObject: 2} / ObjectLiteralStringSpec / {propObject: undefined}`, ObjectLiteralStringSpec, {propObject: 2}, {expectedValue: {propObject: undefined}, isolate: false}));
-// testMappers.push(new TestMapper(`{propObject: {}} / ObjectLiteralStringSpec / {propObject: undefined}`, ObjectLiteralStringSpec, {propObject: {}}, {expectedValue: {propObject: undefined}, isolate: false}));
-// testMappers.push(new TestMapper(`{propObject: {str: 2}} / ObjectLiteralStringSpec / {propObject: 4}`, ObjectLiteralStringSpec, {propObject: {str: 2}}, {expectedValue: {propObject: {str: undefined}}, isolate: false}));
-// testMappers.push(new TestMapper(`{propObject: {str: 2}} / ObjectLiteralStringSpec / {propObject: 4}`, ObjectLiteralStringSpec, {propObject: {irrelevant: 'a'}}, {expectedValue: {propObject: undefined}, isolate: false}));
-//
-//
-// export class ObjectLiteralStringNumberSpec {
-//     prop: {str: string, nb: number};
-// }
-// testMappers.push(new TestMapper(`{prop: {str: 'a', nb: 2} / ObjectLiteralStringNumberSpec`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: false}));
+export class ObjectLiteralStringSpec {
+    obj: {str: string};
+}
+testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: {obj: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: {obj: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: {obj: {str: undefined}}, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: {obj: undefined}, isolate: false}));
+
+
+export class ObjectLiteralStringNumberSpec {
+    prop: {str: string, nb: number};
+}
+testMappers.push(new TestMapper(`{prop: {str: 'a', nb: 2} / ObjectLiteralStringNumberSpec`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: false}));
 
 // TODO : Literal Array type
-// export class ObjectLiteralStringArraySpec {
-//     prop: {str: {name: string}}[];
-//     // prop: {str: string}[];
-// }
-// testMappers.push(new TestMapper(`{prop: {str: 'a', nb: 2} / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: false}));
+export class ObjectLiteralStringArraySpec {
+    // prop: {str: {name: string}}[];
+    prop: {str: string}[];
+}
+testMappers.push(new TestMapper(`{prop: [{str: 'a', nb: 2}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: true}));
