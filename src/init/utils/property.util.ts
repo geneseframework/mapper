@@ -17,11 +17,13 @@ export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): str
 
 
 export function textCorrespondsToProperties(text: CurvedBracketed, properties: Property[]): boolean {
-    // console.log(chalk.blueBright('CTOOOO text'), text);
-    // console.log(chalk.blueBright('CTOOOO properties'), properties);
+    // console.log(chalk.yellow('CTOOOO text'), text);
+    // console.log(chalk.yellow('CTOOOO properties'), properties);
     const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
-    // console.log(chalk.blueBright('CTOOOO text properties'), textProperties);
-    return haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
+    // console.log(chalk.yellow('CTOOOO text properties'), textProperties);
+    const zzz = haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
+    console.log(chalk.yellowBright('TXT CORRR ??? '), haveSameLength(textProperties, properties), textPropertiesAreIncludedInThisProperties(textProperties, properties));
+    return zzz;
 }
 
 

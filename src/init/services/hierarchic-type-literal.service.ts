@@ -40,6 +40,8 @@ export class HierarchicTypeLiteralService {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
         for (const typeLiteralAncestor of typeLiteralAncestors) {
+            console.log(chalk.blueBright('GET BLINFOOOOO text declaration'), declaration.getText());
+            console.log(chalk.blueBright('GET BLINFOOOOO text declaration type'), declarationType(declaration));
             console.log(chalk.blueBright('GET BLINFOOOOO text typeLiteralNode'), typeLiteralAncestor.getText());
             const rootST = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
             console.log(chalk.blueBright('GET BLINFOOOOO rootST'), rootST);
@@ -109,7 +111,7 @@ export class HierarchicTypeLiteralService {
         // console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS typeLiteralNode text'), typeLiteralNode.getText());
         // console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS parentStringifiedType'), parentStringifiedType);
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
-        // console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS blockInfos'), blockInfos);
+        console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS blockInfos'), blockInfos);
         for (const blockInfo of blockInfos) {
             if (textCorrespondsToProperties(blockInfo.block, this.getProperties(typeLiteralNode))) {
                 console.log(chalk.greenBright('TEXT CORRESPONDS TO PROPSSSS bi'), blockInfo);
@@ -193,7 +195,7 @@ export class HierarchicTypeLiteralService {
 
 
     static getProperties(typeLiteral: TypeLiteralNode): Property[] {
-        // console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
+        console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
             const property: Property = {
@@ -204,7 +206,7 @@ export class HierarchicTypeLiteralService {
             }
             properties.push(property);
         }
-        // console.log(chalk.cyanBright('PROPSSSSS END'), properties);
+        console.log(chalk.cyanBright('PROPSSSSS END'), properties);
         return properties;
     }
 

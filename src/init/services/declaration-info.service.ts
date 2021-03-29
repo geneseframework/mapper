@@ -96,17 +96,20 @@ export class DeclarationInfoService {
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
-            if (typeAliasDeclaration.getName() === 'TypeLiteralToKeysSpec') {
+            if (typeAliasDeclaration.getName() === 'TypeLiteralNestedOptionalSpec') {
                 console.log(chalk.yellowBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
+            }
                 typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
                 // const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);
                 // console.log(chalk.blueBright('ADD TP INFOOOOO'), typeAliasDeclaration.getStructure());
+            if (typeAliasDeclaration.getName() === 'TypeLiteralNestedOptionalSpec') {
                 console.log(chalk.greenBright('TYPEINFOOOOOO'), typeInfo);
                 // typeInfo.stringifiedType = htl.interfaceInfo.stringifiedType;
             // } else {
             //     const newInterfaceInfo: InterfaceInfo = this.addInterfaceInfoFromTypeAliasDeclaration(typeAliasDeclaration);
             //     typeInfo.stringifiedType = newInterfaceInfo.name;
             }
+            console.log(chalk.yellowBright('--------------------------------'));
             // if (isCurvedBracketed(typeAliasDeclaration?.getStructure().type as string)) {
             //
         } else {

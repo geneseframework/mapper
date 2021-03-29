@@ -1,4 +1,4 @@
-import { getBlockInfos, isInsideBlock } from './block.type';
+import { getBlockInfos, isInsideBlocks } from './block.type';
 import { Property } from '../../../../shared/types/target/property.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 import { isComma } from './commas.type';
@@ -22,16 +22,17 @@ export function isCurvedBracketed(text: string): text is CurvedBracketed {
 export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
-    // console.log(chalk.yellowBright('getPropertiesFromCurvedBracketed PROPTEXTTTTS'), propertiesTexts);
+    console.log(chalk.whiteBright('getPropertiesFromCurvedBracketed PROPTEXTTTTS'), propertiesTexts);
     for (const propertyText of propertiesTexts) {
         properties.push(getProperty(propertyText));
     }
-    // console.log(chalk.yellowBright('getPropertiesFromCurvedBracketed PROPS RETURNNNNN'), properties);
+    // console.log(chalk.whiteBright('getPropertiesFromCurvedBracketed PROPS RETURNNNNN'), properties);
     return properties;
 }
 
 
 function getPropertiesTexts(text: string): string[] {
+    console.log(chalk.redBright('GPROPTXTTTTTT'), text);
     let propertyText = '';
     const propertiesTexts: string[] = [];
     let rest = text;
@@ -39,14 +40,18 @@ function getPropertiesTexts(text: string): string[] {
         const char: string = rest.charAt(i);
         if (i === rest.length - 1) {
             propertiesTexts.push(`${propertyText}${char}`);
-        } else if (!isInsideBlock(i, rest) && !isComma(char)) {
+        } else if (isInsideBlocks(i, text)) {
             propertyText = `${propertyText}${char}`;
         } else if (isComma(char)) {
             propertiesTexts.push(propertyText);
             propertyText = '';
             rest = rest.slice(propertyText.length + 1).trim();
+        } else {
+            propertyText = `${propertyText}${char}`;
         }
+        // console.log(chalk.yellowBright('GPROPTXTTTTTT PROP TXTTTT'), propertyText);
     }
+    console.log(chalk.redBright('GPROPTXTTTTTT RSLT'), propertiesTexts);
     return propertiesTexts;
 }
 
