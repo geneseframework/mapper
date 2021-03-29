@@ -12,16 +12,20 @@ export class HierarchicTypeLiteral {
     interfaceInfo: InterfaceInfo = undefined;
     isTrivial = false;
     name: string = undefined;
-    node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode = undefined;
+    node: TypeLiteralNode = undefined;
+    newStringifiedType: string = undefined;
+    originalStringifiedType: string = undefined;
+    // node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode = undefined;
     parent: HierarchicTypeLiteral = undefined;
-    root: PropertyDeclaration | TypeAliasDeclaration = undefined;
+    // root: PropertyDeclaration | TypeAliasDeclaration = undefined;
 
-    constructor(root: PropertyDeclaration | TypeAliasDeclaration, node: PropertyDeclaration | TypeAliasDeclaration | TypeLiteralNode, parent: HierarchicTypeLiteral, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
-        this.root = root;
+    constructor(node: TypeLiteralNode, parent: HierarchicTypeLiteral, originalStringifiedType: string, childIndex?: number, isTrivial = false, children: HierarchicTypeLiteral[] = []) {
+        // this.root = root;
         this.isTrivial = isTrivial;
         this.children = children;
         this.childIndex = childIndex;
         this.node = node;
+        this.originalStringifiedType = originalStringifiedType;
         this.parent = parent;
         this.setName();
         this.setInterfaceInfo();
@@ -35,25 +39,26 @@ export class HierarchicTypeLiteral {
 
     setName(): void {
         // TODO : if root is PropDecl, include class or interface name
-        // const suffix = this.parent ? `${this.parent.name}` : `${this.parent.name.getName()}`;
-        this.name = this.parent ? `${this.parent.name}_${this.childIndex}` : `${this.root.getName()}`;
+        this.name = this.parent ? `${this.parent.name}_${this.childIndex}` : `${this.parent.name}`;
     }
 
 
     setInterfaceInfo(): void {
-        this.interfaceInfo = new InterfaceInfo(this.name, this.root.getSourceFile().getFilePath());
+        this.interfaceInfo = new InterfaceInfo(this.name, this.node.getSourceFile().getFilePath());
         if (this.parent) {
             this.setProperties();
             // this.interfaceInfo.stringifiedType =
         } else {
-            this.interfaceInfo.stringifiedType = declarationType(this.root);
+            // this.interfaceInfo.stringifiedType = declarationType(this.root);
+            console.log(chalk.redBright('SET IIIIII parent'), this.interfaceInfo.stringifiedType);
         }
     }
 
 
     private setProperties(): void {
         const stringifiedType: CurvedBracketed = this.parent.interfaceInfo.stringifiedType as CurvedBracketed;
-        console.log(chalk.blueBright('SET PROPSSSS: PARENT ST'), stringifiedType);
+        console.log(chalk.blueBright('SET PROPSSSS: kind node'), this.node.getKindName());
+        console.log(chalk.blueBright('SET PROPSSSS: PARENT II'), this.parent.interfaceInfo);
         this.interfaceInfo.properties = getPropertiesFromCurvedBracketed(stringifiedType);
     }
 }

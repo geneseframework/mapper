@@ -4,6 +4,7 @@ import { GenericParameter } from '../../types/target/generic-parameter.type';
 export class TypeInfo extends DeclarationInfo {
 
     type: string = undefined;
+    stringifiedType: string = undefined;
 
     constructor(name: string, filePath: string, typeParameters: GenericParameter[] = []) {
         super(name, filePath, 'TypeAlias', typeParameters);

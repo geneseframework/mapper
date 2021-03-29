@@ -19,35 +19,4 @@ export class InterfaceInfo extends DeclarationInfo {
         this.properties = properties;
     }
 
-
-    correspondsTo(text: CurvedBracketed): boolean {
-        console.log(chalk.blueBright('CTOOOO text'), text);
-        console.log(chalk.blueBright('CTOOOO properties'), this.properties);
-        const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
-        console.log(chalk.blueBright('CTOOOO text properties'), textProperties);
-        return haveSameLength(textProperties, this.properties) && this.textPropertiesAreIncludedInThisProperties(textProperties);
-    }
-
-
-    private textPropertiesAreIncludedInThisProperties(textProperties: Property[]): boolean {
-        for (const textProperty of textProperties) {
-            if (!this.textPropertyIsIncludedInThisProperties(textProperty)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    private textPropertyIsIncludedInThisProperties(textProperty: Property): boolean {
-        const property: Property = this.properties.find(p => p.name === textProperty.name);
-        if (!property) {
-            return false;
-        } else {
-            return textProperty.initializer === property.initializer
-                && (textProperty.type === property.type || 'apparentType')
-                && textProperty.isRequired === property.isRequired;
-        }
-    }
-
 }

@@ -1654,47 +1654,19 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `TypeLiteralSpec_0`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `name`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralSpec_0`,
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `TypeLiteralWithoutTypesSpecInterface`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralToKeysSpec`,
         typeParameters: [
         ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `name`,
-                type: undefined
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `age`,
-                type: undefined
-            },
-        ],
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1702,12 +1674,12 @@ const declarationInfos = [
         name: `TypeLiteralWithoutTypesSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralWithoutTypesSpecInterface`,
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralNestedSpecaddressAddress`,
+        name: `TypeLiteralNestedSpec_1`,
         typeParameters: [
         ],
         properties: [
@@ -1717,33 +1689,6 @@ const declarationInfos = [
                 name: `country`,
                 type: `string`
             },
-            {
-                initializer: undefined,
-                isRequired: false,
-                name: `city`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `TypeLiteralNestedSpecInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `name`,
-                type: `string`
-            },
-            {
-                initializer: undefined,
-                isRequired: undefined,
-                name: `address`,
-                type: `TypeLiteralNestedSpecaddressAddress`
-            },
         ],
     },
     {
@@ -1752,7 +1697,15 @@ const declarationInfos = [
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralNestedSpecInterface`,
+        type: `{name: string, address: {country: string}}`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralNestedOptionalSpec`,
+        typeParameters: [
+        ],
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1844,41 +1797,11 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `IntersectionMandatoryLeftTypeSpecInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `name`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionMandatoryLeftTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionMandatoryLeftTypeSpecInterface`,
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `IntersectionMandatoryRightTypeSpecInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `age`,
-                type: `number`
-            },
-        ],
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1886,7 +1809,7 @@ const declarationInfos = [
         name: `IntersectionMandatoryRightTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionMandatoryRightTypeSpecInterface`,
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1898,47 +1821,11 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `IntersectionOptionalLeftTypeSpecInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `name`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionOptionalLeftTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionOptionalLeftTypeSpecInterface`,
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `IntersectionOptionalRightTypeSpecInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `age`,
-                type: `number`
-            },
-            {
-                initializer: undefined,
-                isRequired: false,
-                name: `city`,
-                type: `string`
-            },
-        ],
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1946,7 +1833,7 @@ const declarationInfos = [
         name: `IntersectionOptionalRightTypeSpec`,
         typeParameters: [
         ],
-        type: `IntersectionOptionalRightTypeSpecInterface`,
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

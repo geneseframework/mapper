@@ -172,7 +172,7 @@ export class DeclarationInfoGeneratorService {
 
     //TODO : Types with antiquotes
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
-        let code = `${tabs(2)}type: ${addQuotes(typeInfo.type)},\n`;
+        let code = `${tabs(2)}type: ${addQuotes(typeInfo.stringifiedType)},\n`;
         // Add properties if type is interface-like
         return code;
     }

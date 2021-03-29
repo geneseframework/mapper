@@ -6,8 +6,9 @@ import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders
 export type Block = Containerized | Word;
 export type BlockInfo = {
     block: Block,
-    end: number,
-    start: number
+    end?: number,
+    name?: string,
+    start?: number
 }
 
 export function isBlock(text: string): text is Block {
