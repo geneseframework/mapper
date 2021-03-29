@@ -396,7 +396,7 @@ export class PersonSpec {
 testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 3000}} / PersonSpec`, PersonSpec,{employer: [{ name: 'Greenpeace', volunteers: 3000}]}));
 
 
-// ------------------------------------------   Property with Type object   -----------------------------------------------
+// ------------------------------------------   Property with Type Literal string   ---------------------------------------
 
 
 export class ObjectLiteralStringSpec {
@@ -409,14 +409,20 @@ testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {ob
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: {obj: undefined}, isolate: false}));
 
 
+// ---------------------------------------   Property with Type Literal string number   -----------------------------------
+
+
 export class ObjectLiteralStringNumberSpec {
     prop: {str: string, nb: number};
 }
 testMappers.push(new TestMapper(`{prop: {str: 'a', nb: 2} / ObjectLiteralStringNumberSpec`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: false}));
 
-// TODO : Literal Array type
+
+// ------------------------------------------   Property with array of Type Literal   -------------------------------------
+
+
 export class ObjectLiteralStringArraySpec {
-    // prop: {str: {name: string}}[];
     prop: {str: string}[];
 }
-testMappers.push(new TestMapper(`{prop: [{str: 'a', nb: 2}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: [{str: 'a'}, {str: 'b'}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: {str: 'a'} / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: {str: 'a'}}, {expectedValue: {prop: undefined}, isolate: false}));
