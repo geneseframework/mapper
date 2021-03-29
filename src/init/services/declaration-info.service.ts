@@ -96,7 +96,7 @@ export class DeclarationInfoService {
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
-            if (typeAliasDeclaration.getName() === 'TypeLiteralNestedSpec') {
+            if (typeAliasDeclaration.getName() === 'TypeLiteralToKeysSpec') {
                 console.log(chalk.yellowBright('ADD TP INFOOOOO'), typeAliasDeclaration.getTypeNode().getKindName(), typeAliasDeclaration?.getStructure().type);
                 typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
                 // const htl: HierarchicTypeLiteral = HierarchicTypeLiteralService.create(typeAliasDeclaration);

@@ -1662,11 +1662,32 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `Interface`,
+        name: `TypeLiteralToKeysSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `name`,
+                type: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `age`,
+                type: `number`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralToKeysSpec`,
         typeParameters: [
         ],
-        type: undefined,
+        type: `TypeLiteralToKeysSpecInterface`,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1678,26 +1699,11 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `TypeLiteralNestedSpecInterface_0`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `country`,
-                type: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
         ],
-        type: `TypeLiteralNestedSpecInterface_0`,
+        type: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
