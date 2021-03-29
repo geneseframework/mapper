@@ -1,6 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters, getPropertiesFromClassOrInterface } from '../utils/ast/ast-declaration.util';
+import { genericParameters } from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -15,6 +15,7 @@ import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
+import { getPropertiesFromClassOrInterface } from '../types/class-or-interface-declaration.type';
 
 export class DeclarationInfoService {
 
@@ -89,7 +90,7 @@ export class DeclarationInfoService {
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
-                typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
+            typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
             // console.log(chalk.yellowBright('--------------------------------'));
         } else {
             typeInfo.stringifiedType = typeAliasDeclaration.getStructure()?.type as string;

@@ -3,5 +3,5 @@ export type Property = {
     isRequired?: boolean,
     name?: string,
     stringifiedType?: string,
-    type?: string,
+    type?: string, // TODO: remove
 }
