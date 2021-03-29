@@ -89,7 +89,7 @@ export class DeclarationInfoService {
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
-                typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
+            typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
             // console.log(chalk.yellowBright('--------------------------------'));
         } else {
             typeInfo.stringifiedType = typeAliasDeclaration.getStructure()?.type as string;

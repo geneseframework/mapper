@@ -415,8 +415,8 @@ export class ObjectLiteralStringNumberSpec {
 testMappers.push(new TestMapper(`{prop: {str: 'a', nb: 2} / ObjectLiteralStringNumberSpec`, ObjectLiteralStringNumberSpec, {prop: {str: 'a', nb: 2}}, {isolate: false}));
 
 // TODO : Literal Array type
-export class ObjectLiteralStringArraySpec {
-    // prop: {str: {name: string}}[];
-    prop: {str: string}[];
-}
-testMappers.push(new TestMapper(`{prop: [{str: 'a', nb: 2}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: true}));
+// export class ObjectLiteralStringArraySpec {
+//     // prop: {str: {name: string}}[];
+//     prop: {str: string}[];
+// }
+// testMappers.push(new TestMapper(`{prop: [{str: 'a', nb: 2}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: true}));

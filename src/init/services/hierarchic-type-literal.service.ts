@@ -1,5 +1,5 @@
 import { HierarchicTypeLiteral, HierarchicTypeLiteralNode } from '../models/hierarchic-type-literal.model';
-import { Node, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
+import { Node, PropertySignature, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import { getFirstTypeLiteralAncestor } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclaration } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
@@ -20,7 +20,7 @@ import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/prop
 
 export class HierarchicTypeLiteralService {
 
-    static create(declaration: TypeOrPropertyDeclaration): InterfaceInfo {
+    static create(declaration: TypeOrPropertyDeclaration | PropertySignature): InterfaceInfo {
         const interfaceInfo: InterfaceInfo = new InterfaceInfo(declaration.getName(), sourceFilePath(declaration));
         const blockInfos: BlockInfo[] = this.getBlockInfos(declaration);
         // console.log(chalk.yellowBright('FINAL BLOCK INFOOOOOO'), blockInfos);
@@ -32,7 +32,7 @@ export class HierarchicTypeLiteralService {
     }
 
 
-    private static getBlockInfos(declaration: TypeOrPropertyDeclaration): BlockInfo[] {
+    private static getBlockInfos(declaration: TypeOrPropertyDeclaration | PropertySignature): BlockInfo[] {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
         for (const typeLiteralAncestor of typeLiteralAncestors) {

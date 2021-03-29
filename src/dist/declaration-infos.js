@@ -1098,6 +1098,21 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
+        name: `objInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
         name: `ObjectLiteralStringSpecObj_0`,
         typeParameters: [
         ],
@@ -1140,6 +1155,27 @@ const declarationInfos = [
                 isRequired: undefined,
                 name: `obj`,
                 stringifiedType: `ObjectLiteralStringSpecObj`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `propInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                stringifiedType: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `nb`,
+                stringifiedType: `number`
             },
         ],
     },
