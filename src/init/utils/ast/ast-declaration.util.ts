@@ -82,33 +82,37 @@ export function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: 
         // console.log(chalk.cyanBright('GETPROPPPP'), propDecOrSign.getStructure());
         console.log(chalk.yellowBright('PROPERTYYYYYY'), propDecOrSign.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
 
-        const stringifiedType = HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType;
-        const typeLiteralAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(propDecOrSign);
-        const interfaceInfos: InterfaceInfo[] = [];
-        for (let i = 0; i < typeLiteralAncestors.length; i++) {
-            if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
-                const infoName: string = `${getInterfaceInfoName(parentName, propDecOrSign.getName())}_${i}`;
-                const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
-                newII.stringifiedType = propDecOrSign.getStructure().type as string;
-                interfaceInfos.push(newII);
-            } else {
-
-            }
-        }
-        console.log(chalk.magentaBright('GETPROPPPP'), typeLiteralAncestors.map(t => t.getProperties().map(p => p.getStructure())).flat());
-        if (parentName === 'ObjectLiteralStringArraySpec') {
-            console.log(chalk.greenBright('ISTLPPPPP'), interfaceInfos);
-            const initialType: string = propDecOrSign.getStructure().type as string;
-            console.log(chalk.greenBright('INITIALLLLL TP'), initialType);
-            // const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
-            // console.log(chalk.cyanBright('FINALLLL TP'), finalType);
-        }
-        if (isTypeLiteralProperty(propDecOrSign)) {
-            // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
-            const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propDecOrSign.getName()), propDecOrSign.getTypeNode() as TypeLiteralNode);
-            const newProperty: Property = {name: propDecOrSign.getName(), type: newInterfaceInfo.name};
-            return newProperty;
-        }
+        const propertyStringifiedType = HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType;
+        console.log(chalk.yellowBright(' getPropertyFromPropDecOrSign propertyStringifiedType'), propertyStringifiedType);
+        const stringifiedType = `${parentName}${propertyStringifiedType}`;
+        const newProperty: Property = {name: propDecOrSign.getName(), type: propertyStringifiedType};
+        return newProperty;
+        // const typeLiteralAncestors: TypeLiteralNode[] = getTypeLiteralAncestors(propDecOrSign);
+        // const interfaceInfos: InterfaceInfo[] = [];
+        // for (let i = 0; i < typeLiteralAncestors.length; i++) {
+        //     if (isTrivialTypeLiteral(typeLiteralAncestors[i])) {
+        //         const infoName: string = `${getInterfaceInfoName(parentName, propDecOrSign.getName())}_${i}`;
+        //         const newII: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(infoName, typeLiteralAncestors[i]);
+        //         newII.stringifiedType = propDecOrSign.getStructure().type as string;
+        //         interfaceInfos.push(newII);
+        //     } else {
+        //
+        //     }
+        // }
+        // console.log(chalk.magentaBright('GETPROPPPP'), typeLiteralAncestors.map(t => t.getProperties().map(p => p.getStructure())).flat());
+        // if (parentName === 'ObjectLiteralStringArraySpec') {
+        //     console.log(chalk.greenBright('ISTLPPPPP'), interfaceInfos);
+        //     const initialType: string = propDecOrSign.getStructure().type as string;
+        //     console.log(chalk.greenBright('INITIALLLLL TP'), initialType);
+        //     // const finalType: string = replaceCurveBracketedBlocsByInterfaceNames(initialType, interfaceInfos);
+        //     // console.log(chalk.cyanBright('FINALLLL TP'), finalType);
+        // }
+        // if (isTypeLiteralProperty(propDecOrSign)) {
+        //     // console.log(chalk.yellowBright('PROPERTYYYYYY'), declaration.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
+        //     const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propDecOrSign.getName()), propDecOrSign.getTypeNode() as TypeLiteralNode);
+        //     const newProperty: Property = {name: propDecOrSign.getName(), type: newInterfaceInfo.name};
+        //     return newProperty;
+        // }
     } else {
         const propertyStructure = propDecOrSign.getStructure();
         const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;

@@ -2,7 +2,7 @@ import {
     ClassDeclaration,
     EnumDeclaration,
     InterfaceDeclaration,
-    PropertyDeclaration,
+    PropertyDeclaration, PropertySignature,
     TypeAliasDeclaration
 } from 'ts-morph';
 import { DateDeclaration } from './date-declaration.model';
@@ -15,3 +15,5 @@ export type GenericableDeclaration =  ClassDeclaration | InterfaceDeclaration | 
 export type DeclarationOrDate =  Declaration | DateDeclaration;
 
 export type TypeOrPropertyDeclaration = TypeAliasDeclaration | PropertyDeclaration;
+
+export type TypeOrPropertyDeclarationOrSignature = TypeAliasDeclaration | PropertyDeclaration | PropertySignature;

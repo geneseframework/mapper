@@ -1098,37 +1098,7 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
-        name: `objInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                stringifiedType: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringSpecObj_0`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                stringifiedType: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringSpecObj`,
+        name: `ObjectLiteralStringSpecInterface`,
         typeParameters: [
         ],
         properties: [
@@ -1154,56 +1124,14 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `obj`,
-                stringifiedType: `ObjectLiteralStringSpecObj`
+                stringifiedType: `ObjectLiteralStringSpecInterface`
             },
         ],
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
-        name: `propInterface`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                stringifiedType: `string`
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `nb`,
-                stringifiedType: `number`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringNumberSpecProp_0`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `str`,
-                stringifiedType: `string`
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `nb`,
-                stringifiedType: `number`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
-        kind: `Interface`,
-        name: `ObjectLiteralStringNumberSpecProp`,
+        name: `ObjectLiteralStringNumberSpecInterface`,
         typeParameters: [
         ],
         properties: [
@@ -1235,7 +1163,40 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `prop`,
-                stringifiedType: `ObjectLiteralStringNumberSpecProp`
+                stringifiedType: `ObjectLiteralStringNumberSpecInterface`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `ObjectLiteralStringArraySpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `str`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteralStringArraySpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `prop`,
+                stringifiedType: `ObjectLiteralStringArraySpecInterface[]`
             },
         ],
     },
