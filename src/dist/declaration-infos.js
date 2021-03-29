@@ -1662,39 +1662,8 @@ const declarationInfos = [
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `TypeAlias`,
-        name: `TypeLiteralToKeysSpec`,
-        typeParameters: [
-        ],
-        stringifiedType: undefined,
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `TypeAlias`,
-        name: `TypeLiteralWithoutTypesSpec`,
-        typeParameters: [
-        ],
-        stringifiedType: undefined,
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
-        name: `TypeLiteralNestedSpecInterface_0`,
-        typeParameters: [
-        ],
-        properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `country`,
-                stringifiedType: `string`
-            },
-        ],
-    },
-    {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
-        kind: `Interface`,
-        name: `TypeLiteralNestedSpecInterface`,
+        name: `TypeLiteralToKeysSpecInterface`,
         typeParameters: [
         ],
         properties: [
@@ -1707,10 +1676,26 @@ const declarationInfos = [
             {
                 initializer: undefined,
                 isRequired: true,
-                name: `address`,
-                stringifiedType: `TypeLiteralNestedSpecInterface_0`
+                name: `age`,
+                stringifiedType: `number`
             },
         ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralToKeysSpec`,
+        typeParameters: [
+        ],
+        stringifiedType: `TypeLiteralToKeysSpecInterface`,
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        kind: `TypeAlias`,
+        name: `TypeLiteralWithoutTypesSpec`,
+        typeParameters: [
+        ],
+        stringifiedType: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
@@ -1718,7 +1703,7 @@ const declarationInfos = [
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
         ],
-        stringifiedType: `TypeLiteralNestedSpecInterface`,
+        stringifiedType: undefined,
     },
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,

@@ -72,8 +72,8 @@ testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteral
 
 export type TypeLiteralToKeysSpec = {name: string, age: number};
 
-testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralToKeysSpec`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: 20}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralToKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralToKeysSpec`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: 20}, {isolate: true}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralToKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralToKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: true}));
 
 
 // ------------------------------------------   Literal type without types  -----------------------------------------------
@@ -91,7 +91,7 @@ export type TypeLiteralWithoutTypesSpec = {name, age};
 export type TypeLiteralNestedSpec = {name: string, address: {country: string}};
 
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {country: 'France'}}, {isolate: false}));
-testMappers.push(new TestMapper(`{address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {address: {country: 'France'}}, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`{address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {address: {country: 'France'}}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {country: 'France'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa', address: {city: 'Montpellier'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {city: 'Montpellier'}}, {expectedValue: { name: 'Léa', address: undefined }, isolate: false}));
 
