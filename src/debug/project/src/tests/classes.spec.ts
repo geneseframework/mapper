@@ -459,3 +459,14 @@ export class ObjectLiteralStringArraySpec {
 }
 testMappers.push(new TestMapper(`{prop: [{str: 'a'}, {str: 'b'}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: false}));
 testMappers.push(new TestMapper(`{prop: {str: 'a'} / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: {str: 'a'}}, {expectedValue: {prop: undefined}, isolate: false}));
+
+
+// ------------------------------------   Property with Type Literal in Indexable type   --------------------------------
+
+
+// TODO: Literal types in indexable types
+export class ObjectLiteraIndexableTLLSpec {
+    [key: string]: {name: string}
+}
+testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableTLLSpec`, ObjectLiteraIndexableTLLSpec, {obj: {name: 'a'}}, {isolate: true}));
+
