@@ -21,10 +21,10 @@ export function isCurvedBracketed(text: string): text is CurvedBracketed {
 
 export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
-    console.log(chalk.yellowBright(`GET PROPTXTTTT |${text}|`));
+    // console.log(chalk.yellowBright(`GET PROPTXTTTT |${text}|`));
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
     for (const propertyText of propertiesTexts) {
-        console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
+        // console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
         properties.push(getProperty(propertyText));
     }
     return properties;

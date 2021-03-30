@@ -44,7 +44,6 @@ export class MainService {
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
-        console.log(chalk.yellowBright('MAPPPPP'), target, TargetService.stringify(target));
         return this.mapStringTarget(TargetService.stringify(target), data, options);
     }
 

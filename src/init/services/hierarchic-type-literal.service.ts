@@ -44,7 +44,7 @@ export class HierarchicTypeLiteralService {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
         for (const typeLiteralAncestor of typeLiteralAncestors) {
-            console.log(chalk.blueBright(`DECLA TIIIIP |${declarationType(declaration)}|`));
+            // console.log(chalk.blueBright(`DECLA TIIIIP |${declarationType(declaration)}|`));
             const rootST = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
             // console.log(chalk.blueBright('GET BLINFOOOOO rootST'), rootST);
             const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, rootST);
