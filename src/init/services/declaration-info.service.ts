@@ -15,7 +15,7 @@ import { Quoted } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
-import { getPropertiesFromClassOrInterface } from '../types/class-or-interface-declaration.type';
+import { getPropertiesFromClassOrInterface } from '../utils/declaration-info-get-properties.util';
 
 export class DeclarationInfoService {
 
