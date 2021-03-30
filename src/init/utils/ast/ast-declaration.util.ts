@@ -52,7 +52,12 @@ export function declarationType(declaration: HasStructureType): string {
 
 
 function removeIncorrectChars(text: string): string {
-    return text ? text.replace(/\r?\n|\r/g, '') : text;
+    if (!text) {
+        return text;
+    }
+    text = text.replace(/\r?\n|\r/g, '')
+        .replace(/ +/g, ' ');
+    return text;
 }
 
 

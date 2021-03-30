@@ -400,14 +400,27 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 
 
 export class ObjectLiteralStringSpec {
-    obj: {
-        str: string};
+    obj: {str: string};
 }
 testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: {obj: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: {obj: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: {obj: {str: undefined}}, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: {obj: undefined}, isolate: false}));
+
+
+// --------------------------------------   Property with Type Literal with wrong chars   ---------------------------------
+
+
+export class ObjectLiteralWrongCharsSpec {
+    obj?: {
+        name?: string,
+        place?: {
+            city?: string,
+        }
+    }
+}
+testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {name: 'a'}}, {isolate: false}));
 
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------
