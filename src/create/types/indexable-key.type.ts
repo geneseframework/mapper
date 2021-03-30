@@ -1,6 +1,5 @@
 import { IndexableType } from '../../shared/types/indexable-type.type';
 import { throwWarning } from '../utils/errors.util';
-import * as chalk from 'chalk';
 
 export type IndexableKey = `[${string}:${string}]: ${string}`;
 
@@ -16,7 +15,6 @@ export function startsWithIndexableKey(text: string): text is IndexableKey {
 
 export function getIndexableTypeFromIndexableKey(text: IndexableKey): IndexableType {
     const split: string[] = text.split(']: ');
-    // console.log(chalk.magentaBright('SPLITTTT'), text, split);
     const returnType: string = split[1];
     const type: 'string' | 'number' = split[0].match(/\w+$/)[0] as 'string' | 'number';
     if (!['string', 'number'].includes(type)) {

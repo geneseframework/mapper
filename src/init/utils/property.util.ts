@@ -5,7 +5,6 @@ import {
 import { Property } from '../../shared/types/target/property.type';
 import { haveSameLength } from '../../shared/utils/arrays.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
-import * as chalk from 'chalk';
 
 
 export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): string {
@@ -18,10 +17,6 @@ export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): str
 
 export function textCorrespondsToProperties(text: CurvedBracketed, properties: Property[]): boolean {
     const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
-    // if (text.includes('key:')) {
-    //     console.log(chalk.magentaBright('TEXT PROPPPPS'), text);
-    //     console.log(chalk.magentaBright('TEXT PROPPPPS'), textProperties);
-    // }
     return haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
 }
 
@@ -38,11 +33,6 @@ function textPropertiesAreIncludedInThisProperties(textProperties: Property[], p
 
 function textPropertyIsIncludedInThisProperties(textProperty: Property, properties: Property[]): boolean {
     const property: Property = properties.find(p => p.name === textProperty.name);
-    // if (textProperty.name.includes('key:')) {
-    //     console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), textProperty);
-    //     console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), properties);
-    //     console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), property);
-    // }
     if (!property) {
         return false;
     } else {

@@ -468,5 +468,7 @@ testMappers.push(new TestMapper(`{prop: {str: 'a'} / ObjectLiteralStringArraySpe
 export class ObjectLiteraIndexableTLLSpec {
     [key: string]: {name: string}
 }
-testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableTLLSpec`, ObjectLiteraIndexableTLLSpec, {obj: {name: 'a'}}, {isolate: true}));
+// testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableTLLSpec`, ObjectLiteraIndexableTLLSpec, {obj: {name: 'a'}}, {isolate: true}));
 
+
+// TODO: Literals nested 2 times ?

@@ -28,7 +28,6 @@ export class MapComplexService {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
-        // console.log(chalk.yellowBright('CPXXXXXXX'), target, data, first, others);
         if (isParenthesized(target)) {
 
         } else if (hasUnion(target)) {
@@ -47,7 +46,6 @@ export class MapComplexService {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
-        // console.log(chalk.magentaBright('CPXXXXXXX UNIONNNN'), target, data, first, others);
         const mapped: any = MainService.mapStringTarget(first, data, options);
         // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
         return mapped || MainService.mapStringTarget(others, data, options);
@@ -66,11 +64,8 @@ export class MapComplexService {
 
 
     private static mapIntersectionType(target: Intersection, data: any, options: MapperBehavior, first: string, others: string): any {
-        // console.log(chalk.cyanBright('CPXXXXXXX INTERSECTTTTT'), target, data, first, others);
         const left: any = MainService.mapStringTarget(first, data, options);
         const right: any = MainService.mapStringTarget(others, data, options);
-        // console.log(chalk.cyanBright('LEFTTTTTT'), left);
-        // console.log(chalk.cyanBright('RIGHTTTTT'), right);
 // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
         return left && right ? data : undefined;
     }

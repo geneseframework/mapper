@@ -91,7 +91,6 @@ export class DeclarationInfoService {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
             typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
-            // console.log(chalk.yellowBright('--------------------------------'));
         } else {
             typeInfo.stringifiedType = declarationType(typeAliasDeclaration);
         }
