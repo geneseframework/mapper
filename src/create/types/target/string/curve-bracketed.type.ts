@@ -3,6 +3,10 @@ import { Property } from '../../../../shared/types/target/property.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 import { isComma } from './commas.type';
 import { firstWord } from './word.type';
+import * as chalk from 'chalk';
+import { getIndexableTypeFromIndexableKey, startsWithIndexableKey } from '../../indexable-key.type';
+import { getFirstBracketed } from './bracketed.type';
+import { IndexableType } from '../../../../shared/types/indexable-type.type';
 
 export type CurvedBracketed = `{${string}}`;
 
@@ -21,17 +25,45 @@ export function isCurvedBracketed(text: string): text is CurvedBracketed {
 export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
+    // if (text?.includes('key:')) {
+    //     console.log(chalk.yellowBright(`GET PROPTXTTTT |${text}|`));
+    //     console.log(chalk.yellowBright(`GET propertiesTexts |${propertiesTexts}|`));
+    // }
     for (const propertyText of propertiesTexts) {
-        properties.push(getProperty(propertyText));
+        if (!startsWithIndexableKey(propertyText)) {
+            const zzz = getProperty(propertyText);
+            properties.push(zzz);
+            // if (text.includes('key:')) {
+            //     console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
+            //     console.log(chalk.blueBright(`PROPTXTTTT zzz `), zzz);
+            // }
+        }
     }
     return properties;
+}
+
+
+export function getIndexableTypeFromCurvedBracketed(text: CurvedBracketed): IndexableType {
+    const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
+    for (const propertyText of propertiesTexts) {
+        if (startsWithIndexableKey(propertyText)) {
+            const indexableType: IndexableType = getIndexableTypeFromIndexableKey(propertyText);
+            if (text?.includes('key:')) {
+                console.log(chalk.yellowBright(`GET IDXTPPPPP |${propertyText}|`), startsWithIndexableKey(propertyText));
+                console.log(chalk.yellowBright(`GET IDXTPPPPP propertiesTexts |${propertiesTexts}|`));
+                console.log(chalk.yellowBright(`GET IDXTPPPPP indexableType `), indexableType);
+            }
+            return indexableType;
+        }
+    }
+    return undefined;
 }
 
 
 function getPropertiesTexts(text: string): string[] {
     let propertyText = '';
     const propertiesTexts: string[] = [];
-    let rest = text;
+    let rest = text.trim();
     for (let i = 0; i < rest.length; i++) {
         const char: string = rest.charAt(i);
         if (i === rest.length - 1) {
@@ -62,7 +94,11 @@ function getProperty(propertyText: string): Property {
 
 
 function setNameAndReturnRest(rest: string, property: Property): string {
-    property.name = firstWord(rest);
+    // if (startsWithIndexableKey(rest)) {
+    //     console.log(chalk.magentaBright('STARTS WITH IDDDDDDX KEY'), rest);
+    //     console.log(chalk.magentaBright('FIRST IDDDDDDX KEY'), getFirstBracketed(rest));
+    // }
+    property.name = startsWithIndexableKey(rest) ? getFirstBracketed(rest) : firstWord(rest);
     return rest.slice(property.name.length).trim();
 }
 

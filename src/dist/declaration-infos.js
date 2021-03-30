@@ -1131,6 +1131,95 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
+        name: `ObjectLiteralWrongCharsSpecInterface_0`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `city`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `ObjectLiteralWrongCharsSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `name`,
+                stringifiedType: `string`
+            },
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `place`,
+                stringifiedType: `ObjectLiteralWrongCharsSpecInterface_0`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteralWrongCharsSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `obj`,
+                stringifiedType: `ObjectLiteralWrongCharsSpecInterface`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
+        name: `ObjectLiteraIndexableSpecInterface`,
+        typeParameters: [
+        ],
+        indexableType: {
+            returnType: `string`,
+            type: `string`
+        },
+        properties: [
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteraIndexableSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        indexableType: {
+            returnType: `string`,
+            type: `string`
+        },
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `obj`,
+                stringifiedType: `ObjectLiteraIndexableSpecInterface`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
         name: `ObjectLiteralStringNumberSpecInterface`,
         typeParameters: [
         ],

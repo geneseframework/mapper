@@ -396,6 +396,12 @@ export class PersonSpec {
 testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 3000}} / PersonSpec`, PersonSpec,{employer: [{ name: 'Greenpeace', volunteers: 3000}]}));
 
 
+// ------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------   Classes with property having Type Literal   -----------------------------------
+// ------------------------------------------------------------------------------------------------------------------------
+
+
+
 // ------------------------------------------   Property with Type Literal string   ---------------------------------------
 
 
@@ -407,6 +413,33 @@ testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / {obj: unde
 testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: {obj: undefined}, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: {obj: {str: undefined}}, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: {obj: undefined}, isolate: false}));
+
+
+// --------------------------------------   Property with Type Literal with wrong chars   ---------------------------------
+
+
+export class ObjectLiteralWrongCharsSpec {
+    obj?: {
+        name?:    string,
+        place?: {
+            city?:  string,
+        }
+    }
+}
+testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {name: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{obj: {    name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {    name: 'a'}}, {isolate: false}));
+
+
+// ------------------------------------   Property with Type Literal with Indexable type   --------------------------------
+
+
+export class ObjectLiteraIndexableSpec {
+    obj?: {
+        [key: string]: string
+    }
+}
+testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableSpec`, ObjectLiteraIndexableSpec, {obj: {name: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec / {obj: undefined}`, ObjectLiteraIndexableSpec, {obj: 'a'}, {expectedValue: {obj: undefined}, isolate: false}));
 
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------

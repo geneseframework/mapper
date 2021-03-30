@@ -13,6 +13,9 @@ import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { isNullOrUndefined } from '../types/null-or-undefined.type';
+import * as chalk from 'chalk';
+import { isContainerized } from '../types/target/string/containerized.type';
+import { isIndexableKey } from '../types/indexable-key.type';
 
 export class CheckTargetsService {
 
@@ -37,6 +40,7 @@ export class CheckTargetsService {
      * @param target    // The target to check
      */
     static hasCorrectFormat(target: string): boolean {
+        console.log(chalk.redBright('IS CORRECTTTT ?'), target);
         if (isNullOrUndefined(target)) {
             return true;
         }
@@ -56,17 +60,23 @@ export class CheckTargetsService {
      * @private
      */
     private static hasCorrectElements(target: string): boolean {
+        // console.log(chalk.redBright(`HAS CORRECT ELTSSSS ???? |${target}|`));
         if (isPrimitiveType(target)
             || isQuoted(target)
             || isStringAsTrivialType(target)) {
             return true;
         }
-        if (isBracketedOrParenthesized(target)) {
+        // console.log(chalk.redBright(' ?????????'), target, isContainerized(target));
+        if (isContainerized(target)) {
+            // console.log(chalk.redBright('IS CONTTTTTT'), target);
             return this.hasCorrectElements(removeBorders(target));
         } else if (isArrayType(target)) {
             return this.hasCorrectElements(typeOfArray(target));
         } else if (isGeneric(target)) {
             return this.hasCorrectElements(typeOfGeneric(target));
+        } else if (isIndexableKey(target)) {
+            // console.log(chalk.greenBright('IS IDX KEYYYY'), target);
+            return true;
         } else if(hasSeparators(trimSeparators(target))) {
             return this.haveCorrectElements(getElements(target));
         } else if (hasDeclaration(target)) {
@@ -74,6 +84,7 @@ export class CheckTargetsService {
         } else if (this.isDeclaredOutOfProject(target)) { // TODO
             return true;
         } else {
+            // console.log(chalk.redBright('INCORRECT ELTSSSS'), target);
             return false;
         }
     }
