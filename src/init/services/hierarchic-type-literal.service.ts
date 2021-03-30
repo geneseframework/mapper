@@ -19,6 +19,7 @@ import { throwWarning } from '../../create/utils/errors.util';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import * as chalk from 'chalk';
 
 export class HierarchicTypeLiteralService {
 
@@ -44,11 +45,12 @@ export class HierarchicTypeLiteralService {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
         for (const typeLiteralAncestor of typeLiteralAncestors) {
-            const rootST = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
-            const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, rootST);
+            const stringifiedType: CurvedBracketed = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
+            const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, stringifiedType);
             htl.name = this.getInterfaceInfoName(declaration);
             htl.interfaceInfo = this.createHTLInterfaceInfo(htl);
             htl.children = this.createHTLChildren(htl);
+            this.replaceBlocksByInterfaceInfoNames(htl);
             INIT.addDeclarationInfo(htl.interfaceInfo);
             blockInfos.push({name: htl.name, block: htl.originalStringifiedType});
         }
@@ -67,10 +69,12 @@ export class HierarchicTypeLiteralService {
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
                 this.addProperties(htl as HierarchicTypeLiteralNode);
-                this.updateParent(htl, parent);
+                // TODO: remove this line when replaceBlocksByInterfaceInfoNames() will be implemented
+                this.replaceBlocksByInterfaceInfoNameInHTLParent(htl, parent);
             } else {
-                this.updateInterfaceInfo(htl);
-                // TODO: update parent ?
+                console.log(chalk.redBright('NOT TRIVIALLLL'), htl);
+                this.createHTLChildren(htl);
+                // TODO: createHTLChildren & replaceBlocksByInterfaceInfoNameInHTLParent ?
             }
             htls.push(htl);
         }
@@ -80,8 +84,9 @@ export class HierarchicTypeLiteralService {
 
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
+        const typeLiteralProperties: Property[] = this.getTypeLiteralProperties(typeLiteralNode);
         for (const blockInfo of blockInfos) {
-            if (textCorrespondsToProperties(blockInfo.block, this.getTypeLiteralProperties(typeLiteralNode))) {
+            if (textCorrespondsToProperties(blockInfo.block, typeLiteralProperties)) {
                 return blockInfo.block;
             }
         }
@@ -145,17 +150,17 @@ export class HierarchicTypeLiteralService {
     }
 
 
-    private static updateInterfaceInfo(htl: HierarchicTypeLiteral): void {
-        for (const child of htl.children) {
-            this.updateParent(child, htl);
-        }
-    }
-
-
-    private static updateParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
+    private static replaceBlocksByInterfaceInfoNameInHTLParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
         const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
         for (const property of parent.interfaceInfo.properties) {
             property.type = replaceBlocksByNames(property.type, [blockInfo]);
         }
+    }
+
+    private static replaceBlocksByInterfaceInfoNames(htl: HierarchicTypeLiteral): void {
+        // TODO: get HTLs with trivial children
+        // TODO: foreach of them, replace block by II name
+        // TODO: set isTrivial to true
+        // TODO: loop until all are trivial
     }
 }
