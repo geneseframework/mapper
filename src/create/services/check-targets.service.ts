@@ -60,22 +60,22 @@ export class CheckTargetsService {
      * @private
      */
     private static hasCorrectElements(target: string): boolean {
-        console.log(chalk.redBright(`HAS CORRECT ELTSSSS ???? |${target}|`));
+        // console.log(chalk.redBright(`HAS CORRECT ELTSSSS ???? |${target}|`));
         if (isPrimitiveType(target)
             || isQuoted(target)
             || isStringAsTrivialType(target)) {
             return true;
         }
-        console.log(chalk.redBright(' ?????????'), target, isContainerized(target));
+        // console.log(chalk.redBright(' ?????????'), target, isContainerized(target));
         if (isContainerized(target)) {
-            console.log(chalk.redBright('IS CONTTTTTT'), target);
+            // console.log(chalk.redBright('IS CONTTTTTT'), target);
             return this.hasCorrectElements(removeBorders(target));
         } else if (isArrayType(target)) {
             return this.hasCorrectElements(typeOfArray(target));
         } else if (isGeneric(target)) {
             return this.hasCorrectElements(typeOfGeneric(target));
         } else if (isIndexableKey(target)) {
-            console.log(chalk.greenBright('IS IDX KEYYYY'), target);
+            // console.log(chalk.greenBright('IS IDX KEYYYY'), target);
             return true;
         } else if(hasSeparators(trimSeparators(target))) {
             return this.haveCorrectElements(getElements(target));
@@ -84,7 +84,7 @@ export class CheckTargetsService {
         } else if (this.isDeclaredOutOfProject(target)) { // TODO
             return true;
         } else {
-            console.log(chalk.redBright('INCORRECT ELTSSSS'), target);
+            // console.log(chalk.redBright('INCORRECT ELTSSSS'), target);
             return false;
         }
     }

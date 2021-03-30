@@ -75,7 +75,7 @@ export class IndexableNumberSpec {
     [key: number]: string;
 }
 
-testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {isolate: false}));
+testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {isolate: true}));
 testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}, isolate: false}));
 testMappers.push(new TestMapper(`{a: 'a', 0: 3, 1: 'b'} / IndexableNumberSpec / {a: 'a', 0: undefined, 1: 'b'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
 
@@ -422,6 +422,7 @@ export class ObjectLiteralWrongCharsSpec {
 }
 testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {name: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{obj: {    name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {    name: 'a'}}, {isolate: false}));
+
 
 // ------------------------------------   Property with Type Literal with Indexable type   --------------------------------
 

@@ -44,7 +44,7 @@ export class TargetService {
             return target.toLowerCase();
         }
         target = trimSeparators(target);
-        console.log(chalk.blueBright('TRIMMMMM'), target);
+        // console.log(chalk.blueBright('TRIMMMMM'), target);
         const regExps: RegExp[] = this.primitiveRegexps();
         for (const regex of regExps) {
             const matches: string[] = target.match(regex) ?? [];
@@ -52,7 +52,7 @@ export class TargetService {
                 target = target.replace(match, match.toLowerCase());
             }
         }
-        console.log(chalk.cyanBright('NORMALIZEDDDD'), target);
+        // console.log(chalk.cyanBright('NORMALIZEDDDD'), target);
         return target;
     }
 

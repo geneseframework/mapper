@@ -55,7 +55,7 @@ export class MainService {
      * @param options
      */
     static mapStringTarget(target: string, data: any, options?: MapperBehavior): any {
-        // console.log(chalk.greenBright('MAP STRRR'), target, data);
+        console.log(chalk.greenBright('MAP STRRR'), target, data);
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;

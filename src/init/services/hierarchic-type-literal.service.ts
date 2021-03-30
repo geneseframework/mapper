@@ -94,16 +94,16 @@ export class HierarchicTypeLiteralService {
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         for (const blockInfo of blockInfos) {
-            if (blockInfo.block.includes('key:')) {
-                console.log(chalk.greenBright('TEXT PROPPPPS'), blockInfo.block);
-                console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
-                console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
-            }
+            // if (blockInfo.block.includes('key:')) {
+            //     console.log(chalk.greenBright('TEXT PROPPPPS'), blockInfo.block);
+            //     console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
+            //     console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
+            // }
             if (textCorrespondsToProperties(blockInfo.block, this.getTypeLiteralProperties(typeLiteralNode))) {
 
-                if (blockInfo.block.includes('key:')) {
-                    console.log(chalk.greenBright('TEXT PROPPPPS okkkkkkk'), blockInfo.block);
-                }
+                // if (blockInfo.block.includes('key:')) {
+                //     console.log(chalk.greenBright('TEXT PROPPPPS okkkkkkk'), blockInfo.block);
+                // }
                 return blockInfo.block;
             }
         }
@@ -151,15 +151,15 @@ export class HierarchicTypeLiteralService {
 
 
     static getTypeLiteralProperties(typeLiteral: TypeLiteralNode): Property[] {
-        console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
-        if (typeLiteral.getProperties().length === 0) {
-            console.log(chalk.blueBright('PROPSSSSS MEMBERS'), typeLiteral.getMembers().map(p => p.getStructure()));
-        }
+        // console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
+        // if (typeLiteral.getProperties().length === 0) {
+        //     console.log(chalk.blueBright('PROPSSSSS MEMBERS'), typeLiteral.getMembers().map(p => p.getStructure()));
+        // }
         let properties: Property[] = this.getClassicProperties(typeLiteral);
         properties.push(...this.getIndexableTypeProperties(typeLiteral));
-        if (typeLiteral.getProperties().length === 0) {
-            console.log(chalk.cyanBright('PROPSSSSS END'), properties);
-        }
+        // if (typeLiteral.getProperties().length === 0) {
+        //     console.log(chalk.cyanBright('PROPSSSSS END'), properties);
+        // }
         return properties;
     }
 
@@ -181,21 +181,19 @@ export class HierarchicTypeLiteralService {
 
     private static getIndexableTypeProperties(typeLiteral: TypeLiteralNode): Property[] {
         const properties: Property[] = [];
-
-        if (typeLiteral.getProperties().length === 0) {
-            console.log(chalk.redBright('GET IDXABLEEEEE'), typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure());
-        }
-            const indexSignature: IndexSignatureDeclarationStructure = typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure();
-
-            if (indexSignature) {
-                const property: Property = {
-                    initializer: undefined,
-                    isRequired: true,
-                    name: `[${indexSignature.keyName}: ${indexSignature.keyType}]`,
-                    type: indexSignature.returnType as string
-                }
-                properties.push(property);
+        // if (typeLiteral.getProperties().length === 0) {
+        //     console.log(chalk.redBright('GET IDXABLEEEEE'), typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure());
+        // }
+        const indexSignature: IndexSignatureDeclarationStructure = typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure();
+        if (indexSignature) {
+            const property: Property = {
+                initializer: undefined,
+                isRequired: true,
+                name: `[${indexSignature.keyName}: ${indexSignature.keyType}]`,
+                type: indexSignature.returnType as string
             }
+            properties.push(property);
+        }
         return properties;
     }
 
