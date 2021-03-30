@@ -414,13 +414,14 @@ testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {ob
 
 export class ObjectLiteralWrongCharsSpec {
     obj?: {
-        name?: string,
+        name?:    string,
         place?: {
-            city?: string,
+            city?:  string,
         }
     }
 }
 testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {name: 'a'}}, {isolate: false}));
+testMappers.push(new TestMapper(`{obj: {    name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {    name: 'a'}}, {isolate: false}));
 
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------
