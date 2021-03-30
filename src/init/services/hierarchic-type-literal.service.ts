@@ -16,7 +16,7 @@ import { InterfaceInfo } from '../../shared/models/declarations/interface-info.m
 import {
     CurvedBracketed,
     CurvedBracketedBlockInfo,
-    getCurvedBracketedBlockInfos,
+    getCurvedBracketedBlockInfos, getIndexableTypeFromCurvedBracketed,
     getPropertiesFromCurvedBracketed
 } from '../../create/types/target/string/curve-bracketed.type';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
@@ -112,10 +112,16 @@ export class HierarchicTypeLiteralService {
 
 
     private static createHTLInterfaceInfo(htl: HierarchicTypeLiteral): InterfaceInfo {
-        // console.log(chalk.blueBright(`PROPTXTTTT |${htl.name}|`));
-        // console.log(chalk.blueBright(`PROPTXTTTT |${htl.originalStringifiedType}|`));
+        if (htl.originalStringifiedType.includes('key:')) {
+            console.log(chalk.blueBright(`PROPTXTTTT |${htl.name}|`));
+            console.log(chalk.blueBright(`PROPTXTTTT |${htl.originalStringifiedType}|`));
+        }
         const interfaceInfo = new InterfaceInfo(htl.name, sourceFilePath(htl.typeLiteralNode));
         interfaceInfo.properties = getPropertiesFromCurvedBracketed(htl.originalStringifiedType);
+        interfaceInfo.indexableType = getIndexableTypeFromCurvedBracketed(htl.originalStringifiedType);
+        if (htl.originalStringifiedType.includes('key:')) {
+            console.log(chalk.cyanBright(`PROPTXTTTT interfaceInfo.properties`), interfaceInfo.properties);
+        }
         return interfaceInfo;
     }
 

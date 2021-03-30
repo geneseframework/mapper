@@ -1,6 +1,6 @@
 import { ClassDeclaration, EnumDeclaration, InterfaceDeclaration, TypeAliasDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
-import { genericParameters } from '../utils/ast/ast-declaration.util';
+import { declarationType, genericParameters } from '../utils/ast/ast-declaration.util';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { INIT } from '../const/init.const';
 import { DeclarationInfoGeneratorService } from './declaration-info-generator.service';
@@ -93,7 +93,7 @@ export class DeclarationInfoService {
             typeInfo.stringifiedType = HierarchicTypeLiteralService.create(typeAliasDeclaration).stringifiedType;
             // console.log(chalk.yellowBright('--------------------------------'));
         } else {
-            typeInfo.stringifiedType = typeAliasDeclaration.getStructure()?.type as string;
+            typeInfo.stringifiedType = declarationType(typeAliasDeclaration);
         }
         INIT.addDeclarationInfo(typeInfo);
     }
