@@ -1189,6 +1189,12 @@ const declarationInfos = [
         typeParameters: [
         ],
         properties: [
+            {
+                initializer: undefined,
+                isRequired: true,
+                name: `[key: string]`,
+                stringifiedType: `string`
+            },
         ],
     },
     {
@@ -1209,7 +1215,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `obj`,
-                stringifiedType: `{ [key: string]: string}`
+                stringifiedType: `ObjectLiteraIndexableSpecInterface`
             },
         ],
     },

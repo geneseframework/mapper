@@ -94,7 +94,16 @@ export class HierarchicTypeLiteralService {
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         for (const blockInfo of blockInfos) {
+            if (blockInfo.block.includes('key:')) {
+                console.log(chalk.greenBright('TEXT PROPPPPS'), blockInfo.block);
+                console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
+                console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
+            }
             if (textCorrespondsToProperties(blockInfo.block, this.getTypeLiteralProperties(typeLiteralNode))) {
+
+                if (blockInfo.block.includes('key:')) {
+                    console.log(chalk.greenBright('TEXT PROPPPPS okkkkkkk'), blockInfo.block);
+                }
                 return blockInfo.block;
             }
         }
@@ -181,7 +190,7 @@ export class HierarchicTypeLiteralService {
             if (indexSignature) {
                 const property: Property = {
                     initializer: undefined,
-                    isRequired: false,
+                    isRequired: true,
                     name: `[${indexSignature.keyName}: ${indexSignature.keyType}]`,
                     type: indexSignature.returnType as string
                 }

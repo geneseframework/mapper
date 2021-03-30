@@ -15,19 +15,3 @@ export function getIndexableType(declaration: ClassOrInterfaceDeclaration): Inde
         }
     }
 }
-
-
-// function getIndexableKey(indexSignature: IndexSignatureDeclaration): IndexableType {
-//     return {returnType: keyReturnType(indexSignature), type: keyType(indexSignature)};
-// }
-
-
-function keyReturnType(indexSignature: IndexSignatureDeclaration): string {
-    return indexSignature?.getStructure()?.returnType as string;
-}
-
-
-function keyType(indexSignature: IndexSignatureDeclaration): 'string' | 'number' {
-    return indexSignature?.getStructure()?.keyType as 'string' | 'number';
-}
-

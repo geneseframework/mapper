@@ -431,7 +431,8 @@ export class ObjectLiteraIndexableSpec {
         [key: string]: string
     }
 }
-testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec`, ObjectLiteraIndexableSpec, {obj: 'a'}, {isolate: true}));
+testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableSpec`, ObjectLiteraIndexableSpec, {obj: {name: 'a'}}, {isolate: true}));
+testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec / {obj: undefined}`, ObjectLiteraIndexableSpec, {obj: 'a'}, {expectedValue: {obj: undefined}, isolate: false}));
 
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------

@@ -38,6 +38,11 @@ function textPropertiesAreIncludedInThisProperties(textProperties: Property[], p
 
 function textPropertyIsIncludedInThisProperties(textProperty: Property, properties: Property[]): boolean {
     const property: Property = properties.find(p => p.name === textProperty.name);
+    if (textProperty.name.includes('key:')) {
+        console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), textProperty);
+        console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), properties);
+        console.log(chalk.yellowBright('TXT INCLUDED IN PROPSSSSS ???'), property);
+    }
     if (!property) {
         return false;
     } else {
