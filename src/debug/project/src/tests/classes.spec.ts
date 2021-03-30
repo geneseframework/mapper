@@ -423,6 +423,16 @@ export class ObjectLiteralWrongCharsSpec {
 testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {name: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{obj: {    name: 'a'}} / ObjectLiteralWrongCharsSpec`, ObjectLiteralWrongCharsSpec, {obj: {    name: 'a'}}, {isolate: false}));
 
+// ------------------------------------   Property with Type Literal with Indexable type   --------------------------------
+
+
+export class ObjectLiteraIndexableSpec {
+    obj?: {
+        [key: string]: string
+    }
+}
+testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec`, ObjectLiteraIndexableSpec, {obj: 'a'}, {isolate: true}));
+
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------
 

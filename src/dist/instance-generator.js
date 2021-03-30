@@ -194,6 +194,10 @@ const generateInstance = function(instanceGenerator) {
                 const ObjectLiteralWrongCharsSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteralWrongCharsSpec;
                 instance = new ObjectLiteralWrongCharsSpec();
                 break;
+            case 'ObjectLiteraIndexableSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+                const ObjectLiteraIndexableSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteraIndexableSpec;
+                instance = new ObjectLiteraIndexableSpec();
+                break;
             case 'ObjectLiteralStringNumberSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
                 const ObjectLiteralStringNumberSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteralStringNumberSpec;
                 instance = new ObjectLiteralStringNumberSpec();

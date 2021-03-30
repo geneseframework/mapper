@@ -1185,6 +1185,37 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
+        name: `ObjectLiteraIndexableSpecInterface`,
+        typeParameters: [
+        ],
+        properties: [
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteraIndexableSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        indexableType: {
+            returnType: `string`,
+            type: `string`
+        },
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: undefined,
+                name: `obj`,
+                stringifiedType: `{ [key: string]: string}`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Interface`,
         name: `ObjectLiteralStringNumberSpecInterface`,
         typeParameters: [
         ],

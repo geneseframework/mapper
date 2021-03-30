@@ -1,5 +1,3 @@
-
-
 export function removeBorders(text: string): string {
     return text?.slice(1, -1) ?? '';
 }

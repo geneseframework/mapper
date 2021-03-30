@@ -1,5 +1,12 @@
 import { HierarchicTypeLiteral, HierarchicTypeLiteralNode } from '../models/hierarchic-type-literal.model';
-import { Node, PropertySignature, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
+import {
+    IndexSignatureDeclarationStructure,
+    Node,
+    PropertySignature,
+    SyntaxKind,
+    TypeAliasDeclaration,
+    TypeLiteralNode
+} from 'ts-morph';
 import { getFirstTypeLiteralAncestor } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclaration, TypeOrPropertyDeclarationOrSignature } from '../types/type-declaration.type';
 import { Property } from '../../shared/types/target/property.type';
@@ -87,7 +94,7 @@ export class HierarchicTypeLiteralService {
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         for (const blockInfo of blockInfos) {
-            if (textCorrespondsToProperties(blockInfo.block, this.getProperties(typeLiteralNode))) {
+            if (textCorrespondsToProperties(blockInfo.block, this.getTypeLiteralProperties(typeLiteralNode))) {
                 return blockInfo.block;
             }
         }
@@ -128,14 +135,27 @@ export class HierarchicTypeLiteralService {
 
 
     private static addProperties(htl: HierarchicTypeLiteralNode): void {
-        htl.interfaceInfo.properties = this.getProperties(htl.typeLiteralNode);
+        htl.interfaceInfo.properties = this.getTypeLiteralProperties(htl.typeLiteralNode);
         INIT.addDeclarationInfo(htl.interfaceInfo);
         // this.updateParent(htl);
     }
 
 
-    static getProperties(typeLiteral: TypeLiteralNode): Property[] {
-        // console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
+    static getTypeLiteralProperties(typeLiteral: TypeLiteralNode): Property[] {
+        console.log(chalk.cyanBright('PROPSSSSS'), typeLiteral.getProperties().map(p => p.getName()));
+        if (typeLiteral.getProperties().length === 0) {
+            console.log(chalk.blueBright('PROPSSSSS MEMBERS'), typeLiteral.getMembers().map(p => p.getStructure()));
+        }
+        let properties: Property[] = this.getClassicProperties(typeLiteral);
+        properties.push(...this.getIndexableTypeProperties(typeLiteral));
+        if (typeLiteral.getProperties().length === 0) {
+            console.log(chalk.cyanBright('PROPSSSSS END'), properties);
+        }
+        return properties;
+    }
+
+
+    private static getClassicProperties(typeLiteral: TypeLiteralNode): Property[] {
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
             const property: Property = {
@@ -146,7 +166,27 @@ export class HierarchicTypeLiteralService {
             }
             properties.push(property);
         }
-        // console.log(chalk.cyanBright('PROPSSSSS END'), properties);
+        return properties;
+    }
+
+
+    private static getIndexableTypeProperties(typeLiteral: TypeLiteralNode): Property[] {
+        const properties: Property[] = [];
+
+        if (typeLiteral.getProperties().length === 0) {
+            console.log(chalk.redBright('GET IDXABLEEEEE'), typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure());
+        }
+            const indexSignature: IndexSignatureDeclarationStructure = typeLiteral.getFirstDescendantByKind(SyntaxKind.IndexSignature)?.getStructure();
+
+            if (indexSignature) {
+                const property: Property = {
+                    initializer: undefined,
+                    isRequired: false,
+                    name: `[${indexSignature.keyName}: ${indexSignature.keyType}]`,
+                    type: indexSignature.returnType as string
+                }
+                properties.push(property);
+            }
         return properties;
     }
 

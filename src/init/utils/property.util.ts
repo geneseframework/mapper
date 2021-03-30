@@ -5,6 +5,7 @@ import {
 import { Property } from '../../shared/types/target/property.type';
 import { haveSameLength } from '../../shared/utils/arrays.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
+import * as chalk from 'chalk';
 
 
 export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): string {
@@ -17,6 +18,10 @@ export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): str
 
 export function textCorrespondsToProperties(text: CurvedBracketed, properties: Property[]): boolean {
     const textProperties: Property[] = getPropertiesFromCurvedBracketed(text);
+    if (text.includes('key:')) {
+        console.log(chalk.magentaBright('TEXT PROPPPPS'), text);
+        console.log(chalk.magentaBright('TEXT PROPPPPS'), textProperties);
+    }
     return haveSameLength(textProperties, properties) && textPropertiesAreIncludedInThisProperties(textProperties, properties);
 }
 
