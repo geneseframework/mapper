@@ -1188,13 +1188,11 @@ const declarationInfos = [
         name: `ObjectLiteraIndexableSpecInterface`,
         typeParameters: [
         ],
+        indexableType: {
+            returnType: `string`,
+            type: `string`
+        },
         properties: [
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `[key: string]`,
-                stringifiedType: `string`
-            },
         ],
     },
     {

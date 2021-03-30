@@ -94,11 +94,11 @@ export class HierarchicTypeLiteralService {
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         for (const blockInfo of blockInfos) {
-            // if (blockInfo.block.includes('key:')) {
-            //     console.log(chalk.greenBright('TEXT PROPPPPS'), blockInfo.block);
-            //     console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
-            //     console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
-            // }
+            if (blockInfo.block.includes('key:')) {
+                console.log(chalk.greenBright('TEXT PROPPPPS parentStringifiedType'), parentStringifiedType);
+                console.log(chalk.greenBright('TEXT PROPPPPS blockInfo.block'), blockInfo.block);
+                console.log(chalk.greenBright('TEXT PROPPPPS tl noddddd'), this.getTypeLiteralProperties(typeLiteralNode));
+            }
             if (textCorrespondsToProperties(blockInfo.block, this.getTypeLiteralProperties(typeLiteralNode))) {
 
                 // if (blockInfo.block.includes('key:')) {
@@ -120,7 +120,7 @@ export class HierarchicTypeLiteralService {
         interfaceInfo.properties = getPropertiesFromCurvedBracketed(htl.originalStringifiedType);
         interfaceInfo.indexableType = getIndexableTypeFromCurvedBracketed(htl.originalStringifiedType);
         if (htl.originalStringifiedType.includes('key:')) {
-            console.log(chalk.cyanBright(`PROPTXTTTT interfaceInfo.properties`), interfaceInfo.properties);
+            console.log(chalk.cyanBright(`PROPTXTTTT interfaceInfo`), interfaceInfo);
         }
         return interfaceInfo;
     }
@@ -162,7 +162,7 @@ export class HierarchicTypeLiteralService {
         //     console.log(chalk.blueBright('PROPSSSSS MEMBERS'), typeLiteral.getMembers().map(p => p.getStructure()));
         // }
         let properties: Property[] = this.getClassicProperties(typeLiteral);
-        properties.push(...this.getIndexableTypeProperties(typeLiteral));
+        // properties.push(...this.getIndexableTypeProperties(typeLiteral));
         // if (typeLiteral.getProperties().length === 0) {
         //     console.log(chalk.cyanBright('PROPSSSSS END'), properties);
         // }

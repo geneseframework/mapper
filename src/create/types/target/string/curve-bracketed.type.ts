@@ -30,19 +30,20 @@ export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Propert
     //     console.log(chalk.yellowBright(`GET propertiesTexts |${propertiesTexts}|`));
     // }
     for (const propertyText of propertiesTexts) {
-        const zzz= getProperty(propertyText);
-        properties.push(zzz);
-        // if (text.includes('key:')) {
-        //     console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
-        //     console.log(chalk.blueBright(`PROPTXTTTT zzz `), zzz);
-        // }
+        if (!startsWithIndexableKey(propertyText)) {
+            const zzz = getProperty(propertyText);
+            properties.push(zzz);
+            // if (text.includes('key:')) {
+            //     console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
+            //     console.log(chalk.blueBright(`PROPTXTTTT zzz `), zzz);
+            // }
+        }
     }
     return properties;
 }
 
 
 export function getIndexableTypeFromCurvedBracketed(text: CurvedBracketed): IndexableType {
-    const properties: Property[] = [];
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
     for (const propertyText of propertiesTexts) {
         if (startsWithIndexableKey(propertyText)) {
@@ -52,12 +53,8 @@ export function getIndexableTypeFromCurvedBracketed(text: CurvedBracketed): Inde
                 console.log(chalk.yellowBright(`GET IDXTPPPPP propertiesTexts |${propertiesTexts}|`));
                 console.log(chalk.yellowBright(`GET IDXTPPPPP indexableType `), indexableType);
             }
-            // properties.push(zzz);
+            return indexableType;
         }
-        // if (text.includes('key:')) {
-        //     console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
-        //     console.log(chalk.blueBright(`PROPTXTTTT zzz `), zzz);
-        // }
     }
     return undefined;
 }
