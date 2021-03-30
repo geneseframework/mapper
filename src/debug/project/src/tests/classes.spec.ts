@@ -400,7 +400,8 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 
 
 export class ObjectLiteralStringSpec {
-    obj: {str: string};
+    obj: {
+        str: string};
 }
 testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: {obj: undefined}, isolate: false}));

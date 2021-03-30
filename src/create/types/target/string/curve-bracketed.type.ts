@@ -3,6 +3,7 @@ import { Property } from '../../../../shared/types/target/property.type';
 import { removeBorders } from '../../../../shared/utils/strings.util';
 import { isComma } from './commas.type';
 import { firstWord } from './word.type';
+import * as chalk from 'chalk';
 
 export type CurvedBracketed = `{${string}}`;
 
@@ -20,8 +21,10 @@ export function isCurvedBracketed(text: string): text is CurvedBracketed {
 
 export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Property[] {
     const properties: Property[] = [];
+    console.log(chalk.yellowBright(`GET PROPTXTTTT |${text}|`));
     const propertiesTexts: string[] = getPropertiesTexts(removeBorders(text));
     for (const propertyText of propertiesTexts) {
+        console.log(chalk.blueBright(`PROPTXTTTT |${propertyText}|`));
         properties.push(getProperty(propertyText));
     }
     return properties;
@@ -31,7 +34,7 @@ export function getPropertiesFromCurvedBracketed(text: CurvedBracketed): Propert
 function getPropertiesTexts(text: string): string[] {
     let propertyText = '';
     const propertiesTexts: string[] = [];
-    let rest = text;
+    let rest = text.trim();
     for (let i = 0; i < rest.length; i++) {
         const char: string = rest.charAt(i);
         if (i === rest.length - 1) {
@@ -48,6 +51,11 @@ function getPropertiesTexts(text: string): string[] {
     }
     return propertiesTexts;
 }
+
+
+// function trimProperty(text: string): string {
+//
+// }
 
 
 function getProperty(propertyText: string): Property {

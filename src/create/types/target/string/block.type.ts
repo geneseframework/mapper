@@ -1,6 +1,7 @@
 import { Containerized } from './containerized.type';
 import { Word } from './word.type';
 import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders.type';
+import * as chalk from 'chalk';
 
 export type Block = Containerized | Word;
 export type BlockInfo = {
@@ -20,8 +21,6 @@ export function getBlockInfos(text: string): BlockInfo[] {
     const blocs: BlockInfo[] = [];
     for (let i = 0; i < text.length; i++) {
         const char: string = text.charAt(i);
-        if (isLeftBorder(char) && openingBorders === 0) {
-        }
         if (isStartOfBlock(char, openingBorders)) {
             leftBorder = char;
             block = char;

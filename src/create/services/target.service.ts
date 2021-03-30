@@ -6,6 +6,7 @@ import { isNumber } from '../utils/native/numbers.util';
 import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/null-or-literal.type';
 import { isArray } from '../../shared/utils/arrays.util';
+import * as chalk from 'chalk';
 
 export class TargetService {
 

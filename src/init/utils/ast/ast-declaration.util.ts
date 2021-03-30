@@ -46,7 +46,13 @@ function groupByImportPath(declarations: ImportDeclaration[]): ImportDeclaration
 
 
 export function declarationType(declaration: HasStructureType): string {
-    return declaration.getStructure().type as string;
+    const type: string = declaration.getStructure().type as string;
+    return removeIncorrectChars(type);
+}
+
+
+function removeIncorrectChars(text: string): string {
+    return text ? text.replace(/\r?\n|\r/g, '') : text;
 }
 
 

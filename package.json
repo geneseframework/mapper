@@ -1,6 +1,6 @@
 {
     "name": "@genese/mapper",
-    "version": "2.0.0-alpha.12",
+    "version": "2.0.0-alpha.13",
     "author": {
         "name": "Gilles Fabre",
         "url": "https://github.com/gillesfabre34"
@@ -15,7 +15,7 @@
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
-        "republish_package": "cd src && tsc && cd ./init && tsc && cd ../.. && npm unpublish -f && npm publish",
+        "republish_package": "rm -rf dist && cd src && tsc && cd ./init && tsc && cd ../.. && npm unpublish -f && npm publish",
         "debug": "ts-node src/debug/project/start.ts",
         "test": "npm run init_files && ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-with-passed.ts",
         "test-fails": "ts-node -P src/debug/tsconfig.debug.json src/debug/test-engine/start-tests-without-passed.ts",

@@ -7,6 +7,8 @@ import { isTypeLiteralProperty } from './type-literal-property.type';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { INIT } from '../const/init.const';
 import { capitalize } from '../../shared/utils/strings.util';
+import { TargetService } from '../../create/services/target.service';
+import { declarationType } from '../utils/ast/ast-declaration.util';
 
 
 export type ClassOrInterfaceDeclaration = ClassDeclaration | InterfaceDeclaration;
@@ -28,7 +30,8 @@ function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: Propert
         return {name: propDecOrSign.getName(), type: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        const prop = {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        // const stringifiedType: string = TargetService.removeIncorrectChars(propertyStructure.type)
+        const prop = {name: propertyStructure.name, type: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
         return prop;
     }
 }
@@ -36,7 +39,7 @@ function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: Propert
 
 function getPropertyFromPropertySignature(parentName: string, propertySignature: PropertyDeclarationOrSignature): Property {
     if (isTypeLiteralProperty(propertySignature)) {
-        const typeLiteralNode: TypeLiteralNode = propertySignature.getTypeNode() as TypeLiteralNode;
+        const typeLiteralNode: TypeLiteralNode = propertySignature.getTypeNode();
         const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propertySignature.getName()), typeLiteralNode);
         return {name: propertySignature.getName(), type: newInterfaceInfo.name};
     } else {
