@@ -27,10 +27,8 @@ export class MapInterfaceService {
      */
     static createInterface(target: string, data: ObjectNotArray, options: MapperBehavior): any {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
-        // console.log(chalk.redBright('INTERFACEEEE'), target, data, interfaceInfo);
         const tInterface = {};
         MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
-        // console.log(chalk.redBright('INTERFACEEEE RESLTTT'), tInterface);
         return this.hasRequiredProperties(tInterface, interfaceInfo) ? tInterface : undefined;
     }
 

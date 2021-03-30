@@ -26,13 +26,10 @@ export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceD
 
 function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: PropertyDeclarationOrSignature): Property {
     if (hasTypeLiteral(propDecOrSign)) {
-        // console.log(chalk.yellowBright('PROPERTYYYYYY'), propDecOrSign.getName(), propDecOrSign.getKindName(), propDecOrSign.getName());
         return {name: propDecOrSign.getName(), type: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        // const stringifiedType: string = TargetService.removeIncorrectChars(propertyStructure.type)
-        const prop = {name: propertyStructure.name, type: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
-        return prop;
+        return {name: propertyStructure.name, type: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
     }
 }
 

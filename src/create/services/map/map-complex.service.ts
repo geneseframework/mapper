@@ -1,5 +1,5 @@
 import { isParenthesized } from '../../types/target/string/parenthesis.type';
-import { hasUnion, Union } from '../../types/target/string/union.type';
+import { hasUnion } from '../../types/target/string/union.type';
 import { MainService } from '../main.service';
 import { getElements, trimSeparators } from '../../utils/target.util';
 import {
@@ -12,8 +12,7 @@ import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isGeneric } from '../../types/target/string/generics.type';
 import { MapGenericService } from './map-generic.service';
 import { ComplexType } from '../../types/target/string/complex-type.type';
-import * as chalk from 'chalk';
-import { hasIntersection, Intersection } from '../../types/target/string/intersection.type';
+import { hasIntersection } from '../../types/target/string/intersection.type';
 
 export class MapComplexService {
 
@@ -31,9 +30,9 @@ export class MapComplexService {
         if (isParenthesized(target)) {
 
         } else if (hasUnion(target)) {
-            return this.mapUnionType(target, data, options, first, others);
+            return this.mapUnionType(data, options, first, others);
         } else if (hasIntersection(target)) {
-            return this.mapIntersectionType(target, data, options, first, others);
+            return this.mapIntersectionType(data, options, first, others);
         } else if (isGeneric(target)) {
             return MapGenericService.create(target, data, options);
         } else {
@@ -42,7 +41,7 @@ export class MapComplexService {
     }
 
 
-    private static mapUnionType(target: Union, data: any, options: MapperBehavior, first: string, others: string): any {
+    private static mapUnionType(data: any, options: MapperBehavior, first: string, others: string): any {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
@@ -63,7 +62,7 @@ export class MapComplexService {
     }
 
 
-    private static mapIntersectionType(target: Intersection, data: any, options: MapperBehavior, first: string, others: string): any {
+    private static mapIntersectionType(data: any, options: MapperBehavior, first: string, others: string): any {
         const left: any = MainService.mapStringTarget(first, data, options);
         const right: any = MainService.mapStringTarget(others, data, options);
 // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type

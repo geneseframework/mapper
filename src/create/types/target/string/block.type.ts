@@ -13,7 +13,6 @@ export type BlockInfo = {
 
 
 export function getBlockInfos(text: string): BlockInfo[] {
-    // console.log(chalk.cyanBright('GET BBBBLOK INFOS'), text);
     let leftBorder: LeftBorder;
     let openingBorders = 0;
     let startPosition = 0;
@@ -45,7 +44,6 @@ export function getBlockInfos(text: string): BlockInfo[] {
             }
         }
     }
-    // console.log(chalk.magentaBright('GET BBBBLOK INFOS END'), blocs);
     return blocs;
 }
 

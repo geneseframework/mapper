@@ -40,7 +40,6 @@ export class CheckTargetsService {
      * @param target    // The target to check
      */
     static hasCorrectFormat(target: string): boolean {
-        console.log(chalk.redBright('IS CORRECTTTT ?'), target);
         if (isNullOrUndefined(target)) {
             return true;
         }

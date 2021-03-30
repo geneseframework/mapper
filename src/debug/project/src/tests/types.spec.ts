@@ -303,38 +303,3 @@ export type FunctionTypeSpec = () => string;
 
 
 // TODO : fix behavior of union of classes methods
-
-// export class CompanyAloneClassSpec {
-//     name: string;
-//     employees: number;
-//
-//     createAndReturnInterfaceInfoWithTypeLiteralNode() {
-//         console.log(chalk.red('zzzZZZZZZ'), this.name);
-//     }
-// }
-// export type CompanyAloneSpec = CompanyAloneClassSpec;
-//
-// const aaa: CompanyAloneClassSpec = create('CompanyAloneSpec', {name: 'sssss'});
-// aaa.createAndReturnInterfaceInfoWithTypeLiteralNode();
-//
-// export class Cattt {
-//     color: string;
-//
-//     meaow() {
-//         console.log(chalk.red('MEAOWWWW'));
-//     }
-// }
-//
-// export type ggg = CompanyAloneClassSpec | Cattt;
-//
-// const mmm: any = create('ggg', {name: 'fff'});
-// // mmm.createAndReturnInterfaceInfoWithTypeLiteralNode();
-// // mmm.meaow();
-// // TODO : ppp.meaow() should run
-// const ppp: any = create('ggg', {color: 'reddd'});
-// // ppp.createAndReturnInterfaceInfoWithTypeLiteralNode();
-// // ppp.meaow();
-
-
-
-
