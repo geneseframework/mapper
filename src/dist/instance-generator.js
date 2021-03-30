@@ -206,6 +206,10 @@ const generateInstance = function(instanceGenerator) {
                 const ObjectLiteralStringArraySpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteralStringArraySpec;
                 instance = new ObjectLiteralStringArraySpec();
                 break;
+            case 'ObjectLiteraIndexableTLLSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts':
+                const ObjectLiteraIndexableTLLSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts').ObjectLiteraIndexableTLLSpec;
+                instance = new ObjectLiteraIndexableTLLSpec();
+                break;
             case 'DateSpec_/users/utilisateur/documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts':
                 const DateSpec = require('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts').DateSpec;
                 instance = new DateSpec();

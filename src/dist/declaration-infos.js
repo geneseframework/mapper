@@ -1290,6 +1290,22 @@ const declarationInfos = [
         ],
     },
     {
+        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `ObjectLiteraIndexableTLLSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        indexableType: {
+            returnType: `{name: string}`,
+            type: `string`
+        },
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+        ],
+    },
+    {
         filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts`,
         kind: `Class`,
         name: `DateSpec`,

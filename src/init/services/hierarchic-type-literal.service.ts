@@ -53,10 +53,10 @@ export class HierarchicTypeLiteralService {
         for (const typeLiteralAncestor of typeLiteralAncestors) {
             // console.log(chalk.blueBright(`DECLA TIIIIP |${declarationType(declaration)}|`));
             const rootST = this.getOriginalStringifiedType(typeLiteralAncestor, declarationType(declaration));
-            // console.log(chalk.blueBright('GET BLINFOOOOO rootST'), rootST);
+            console.log(chalk.blueBright('GET BLINFOOOOO rootST'), rootST);
             const htl = new HierarchicTypeLiteral(typeLiteralAncestor, undefined, rootST);
             htl.name = this.getInterfaceInfoName(declaration);
-            // console.log(chalk.blueBright('GET BLINFOOOOO htl name & origin st'), htl.name, htl.originalStringifiedType);
+            console.log(chalk.blueBright('GET BLINFOOOOO htl name & origin st'), htl.name, htl.originalStringifiedType);
             htl.interfaceInfo = this.createHTLInterfaceInfo(htl);
             htl.children = this.createHTLChildren(htl);
             INIT.addDeclarationInfo(htl.interfaceInfo);
@@ -112,14 +112,14 @@ export class HierarchicTypeLiteralService {
 
 
     private static createHTLInterfaceInfo(htl: HierarchicTypeLiteral): InterfaceInfo {
-        if (htl.originalStringifiedType.includes('key:')) {
+        if (htl.originalStringifiedType?.includes('key:')) {
             console.log(chalk.blueBright(`PROPTXTTTT |${htl.name}|`));
             console.log(chalk.blueBright(`PROPTXTTTT |${htl.originalStringifiedType}|`));
         }
         const interfaceInfo = new InterfaceInfo(htl.name, sourceFilePath(htl.typeLiteralNode));
         interfaceInfo.properties = getPropertiesFromCurvedBracketed(htl.originalStringifiedType);
         interfaceInfo.indexableType = getIndexableTypeFromCurvedBracketed(htl.originalStringifiedType);
-        if (htl.originalStringifiedType.includes('key:')) {
+        if (htl.originalStringifiedType?.includes('key:')) {
             console.log(chalk.cyanBright(`PROPTXTTTT interfaceInfo`), interfaceInfo);
         }
         return interfaceInfo;
