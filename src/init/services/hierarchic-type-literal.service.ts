@@ -1,4 +1,4 @@
-import { HierarchicTypeLiteral, HierarchicTypeLiteralNode } from '../models/hierarchic-type-literal.model';
+import { HierarchicTypeLiteral } from '../models/hierarchic-type-literal.model';
 import { Node, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import { getFirstTypeLiteralAncestor } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclarationOrSignature } from '../types/type-declaration.type';
@@ -19,7 +19,6 @@ import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
-import * as chalk from 'chalk';
 
 export class HierarchicTypeLiteralService {
 
@@ -68,7 +67,7 @@ export class HierarchicTypeLiteralService {
             htl.interfaceInfo = this.createHTLInterfaceInfo(htl);
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
-                this.addProperties(htl as HierarchicTypeLiteralNode);
+                this.addProperties(htl);
                 // TODO: remove this line when replaceBlocksByInterfaceInfoNames() will be implemented
                 this.replaceBlocksByInterfaceInfoNameInHTLParent(htl, parent);
             } else {
@@ -122,7 +121,7 @@ export class HierarchicTypeLiteralService {
     }
 
 
-    private static addProperties(htl: HierarchicTypeLiteralNode): void {
+    private static addProperties(htl: HierarchicTypeLiteral): void {
         htl.interfaceInfo.properties = this.getTypeLiteralProperties(htl.typeLiteralNode);
         INIT.addDeclarationInfo(htl.interfaceInfo);
     }

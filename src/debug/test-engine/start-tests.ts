@@ -17,7 +17,6 @@ INIT.debug = true;
 export async function startTests(): Promise<void> {
     const start = Date.now();
     console.log(chalk.yellowBright('START TESTS'));
-    INIT.start = Date.now();
     await init();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;

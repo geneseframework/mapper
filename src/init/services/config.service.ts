@@ -12,12 +12,18 @@ import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
 import { commonjs } from '../../shared/const/commonjs.const';
 import * as fs from 'fs-extra';
 import { isArray } from '../../shared/utils/arrays.util';
-// import * as path from 'path';
+import { getInitializer } from '../utils/ast/ast-property.util';
 const path = require('path');
 
+/**
+ * Creates the config.js file from the user's geneseconfig.ts file and the default config
+ */
 export class ConfigService {
 
 
+    /**
+     * Returns the MapperConfig object after have created the config.js file from the user's geneseconfig.ts file and the default config
+     */
     static async init(): Promise<MapperConfig> {
         const mapperConfig: MapperConfig = await this.setConfig();
         const code: string = this.getConfigCode(mapperConfig);
@@ -25,7 +31,9 @@ export class ConfigService {
         return mapperConfig;
     }
 
-
+    /**
+     * Returns the MapperConfig of the geneseconfig.ts file if exists and new MapperConfig if not
+     */
     static async setConfig(): Promise<MapperConfig | never> {
         if (this.geneseConfigFileExists()) {
             const userConfigSourceFile: SourceFile = INIT.project.addSourceFileAtPath(INIT.userGeneseConfigPath);
@@ -35,18 +43,25 @@ export class ConfigService {
         }
     }
 
-
+    /**
+     * Checks if the geneseconfig.ts file exists
+     * @private
+     */
     private static geneseConfigFileExists(): boolean {
         return fs.existsSync(INIT.userGeneseConfigPath);
     }
 
-
-    private static getMapperConfig(userConfigSourceFileCopy: SourceFile): MapperConfig {
+    /**
+     * Returns MapperConfig object created from the geneseconfig.ts file
+     * @param userConfigSourceFile  // The SourceFile of the geneseconfig.ts file
+     * @private
+     */
+    private static getMapperConfig(userConfigSourceFile: SourceFile): MapperConfig {
         const newConfig = new MapperConfig();
-        const configExpression: ObjectLiteralExpression = userConfigSourceFileCopy.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
-        const config: ObjectLiteralExpression = this.getInitializer('mapper', configExpression) as ObjectLiteralExpression;
+        const configExpression: ObjectLiteralExpression = userConfigSourceFile.getVariableStatement('geneseConfig').getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
+        const config: ObjectLiteralExpression = getInitializer('mapper', configExpression) as ObjectLiteralExpression;
         if (config) {
-            const behavior: ObjectLiteralExpression = this.getInitializer('behavior', config) as ObjectLiteralExpression;
+            const behavior: ObjectLiteralExpression = getInitializer('behavior', config) as ObjectLiteralExpression;
             if (behavior) {
                 this.updateObjectProperty('differentiateStringsAndNumbers', behavior, newConfig.behavior, 'false', false);
             }
@@ -57,18 +72,8 @@ export class ConfigService {
     }
 
 
-    private static getInitializer(name: string, expression: ObjectLiteralExpression): Expression {
-        return this.getProperty(name, expression)?.getInitializer();
-    }
-
-
-    private static getProperty(name: string, expression: ObjectLiteralExpression): PropertyAssignment {
-        return expression?.getProperty(name) as PropertyAssignment;
-    }
-
-
     private static updateStringArrayProperty(key: string, config: ObjectLiteralExpression, newConfig: MapperConfig): void {
-        const initializer: ArrayLiteralExpression = this.getInitializer(key, config) as ArrayLiteralExpression;
+        const initializer: ArrayLiteralExpression = getInitializer(key, config) as ArrayLiteralExpression;
         if (initializer) {
             this.updateStringArray(key, initializer, newConfig);
         }
@@ -83,7 +88,7 @@ export class ConfigService {
 
 
     private static updateObjectProperty(key: string, expression: ObjectLiteralExpression, obj: any, conditionValue: string, newValue: any): void {
-        const text: string = this.getInitializer(key, expression)?.getText();
+        const text: string = getInitializer(key, expression)?.getText();
         if (text === conditionValue) {
             obj[key] = newValue;
         }
