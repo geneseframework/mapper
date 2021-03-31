@@ -1,4 +1,4 @@
-import { isObject } from '../../utils/native/objects.util';
+import { isObject } from '../../../shared/core/utils/primitives/objects.util';
 
 export class MapObjectTypeService {
 

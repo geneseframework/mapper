@@ -18,3 +18,14 @@ export function addQuotes(text: string): string {
     const escapedText = text.replace(/`/g, '\\`');
     return `\`${escapedText}\``;
 }
+
+
+
+export function removeQuotes(text: string): string {
+    return this.isQuoted(text) ? removeBorders(text) : text;
+}
+
+
+// export function isQuoted(text: string): text is Quoted {
+//     return this.isSurroundedBy(text, `'`) || this.isSurroundedBy(text, `"`) || this.isSurroundedBy(text, `\``);
+// }

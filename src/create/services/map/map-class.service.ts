@@ -1,16 +1,16 @@
 import { GLOBAL } from '../../const/global.const';
-import { throwWarning } from '../../utils/errors.util';
+import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { InstanceGenerator } from '../../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isObjectWhichIsNotArray } from '../../types/not-some-type.type';
+import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
 
 export class MapClassService<T> {
 
     /**
      * When target corresponds to an exported class, returns instance with mapped data if data is an object, undefined if not
-     * @param target    // The target corresponding to an exported class
+     * @param target    // The stringified target
      * @param data      // The data to map
      * @param options   // The create() options
      */

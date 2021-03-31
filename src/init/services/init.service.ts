@@ -33,7 +33,7 @@ export class InitService {
      */
     private static initPaths(): void {
         INIT.projectPath = appRoot;
-        INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
+        INIT.geneseMapperNodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 
 
@@ -43,6 +43,6 @@ export class InitService {
      */
     private static initProject(): void {
         INIT.project = new Project({skipFileDependencyResolution: true});
-        INIT.nodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
+        INIT.geneseMapperNodeModulePath = `${INIT.projectPath}/node_modules/@genese/mapper`;
     }
 }

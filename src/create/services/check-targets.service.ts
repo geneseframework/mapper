@@ -1,46 +1,39 @@
-import { throwWarning } from '../utils/errors.util';
-import { isPrimitiveType } from '../types/primitives.type';
-import { isString } from '../utils/native/strings.util';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
+import { isPrimitiveType } from '../types/trivial-types/primitives.type';
+import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { isQuoted } from '../../shared/types/quoted.type';
-import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
-import { hasSeparators } from '../types/target/string/has-separators.type';
-import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
+import { hasSeparators } from '../types/separators/has-separators.type';
 import { TargetService } from './target.service';
-import { isStringAsTrivialType } from '../types/null-or-literal.type';
-import { isGeneric, typeOfGeneric } from '../types/target/string/generics.type';
+import { isStringAsTrivialType } from '../types/trivial-types/null-or-literal.type';
 import { getElements, trimSeparators } from '../utils/target.util';
-import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { removeBorders } from '../../shared/utils/strings.util';
-import { isNullOrUndefined } from '../types/null-or-undefined.type';
-import * as chalk from 'chalk';
-import { isContainerized } from '../types/target/string/containerized.type';
-import { isIndexableKey } from '../types/indexable-key.type';
+import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
+import { isContainerized } from '../types/containers/containerized.type';
+import { isIndexableKey } from '../types/properties/indexable-key.type';
+import { isArrayType, typeOfArray } from '../types/non-trivial-types/array-type.type';
+import { isGeneric, typeOfGeneric } from '../types/non-trivial-types/generics.type';
 
+/**
+ * Service checking if a given stringified target has correct format
+ */
 export class CheckTargetsService {
-
 
     /**
      * If target was not already checked, checks if this target is readable by @genese/mapper
      * @param target    // The target to check
      */
     static start(target: string): void {
-        if (GLOBAL.wasChecked(target)) {
-            return;
-        }
         if (!CheckTargetsService.hasCorrectFormat(target)) {
-            throwWarning(`impossible to read type "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
+            throwWarning(`impossible to read "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
         }
-        GLOBAL.checkedTargets.push(target);
     }
-
 
     /**
      * Checks if target is readable by @genese/mapper
      * @param target    // The target to check
      */
     static hasCorrectFormat(target: string): boolean {
-        console.log(chalk.redBright('IS CORRECTTTT ?'), target);
         if (isNullOrUndefined(target)) {
             return true;
         }
@@ -51,7 +44,6 @@ export class CheckTargetsService {
         return CheckTargetsService.hasCorrectElements(normalizedTarget);
     }
 
-
     /**
      * Checks if target is composed of correct elements.
      *
@@ -60,22 +52,18 @@ export class CheckTargetsService {
      * @private
      */
     private static hasCorrectElements(target: string): boolean {
-        // console.log(chalk.redBright(`HAS CORRECT ELTSSSS ???? |${target}|`));
         if (isPrimitiveType(target)
             || isQuoted(target)
             || isStringAsTrivialType(target)) {
             return true;
         }
-        // console.log(chalk.redBright(' ?????????'), target, isContainerized(target));
         if (isContainerized(target)) {
-            // console.log(chalk.redBright('IS CONTTTTTT'), target);
             return this.hasCorrectElements(removeBorders(target));
         } else if (isArrayType(target)) {
             return this.hasCorrectElements(typeOfArray(target));
         } else if (isGeneric(target)) {
             return this.hasCorrectElements(typeOfGeneric(target));
         } else if (isIndexableKey(target)) {
-            // console.log(chalk.greenBright('IS IDX KEYYYY'), target);
             return true;
         } else if(hasSeparators(trimSeparators(target))) {
             return this.haveCorrectElements(getElements(target));
@@ -84,17 +72,14 @@ export class CheckTargetsService {
         } else if (this.isDeclaredOutOfProject(target)) { // TODO
             return true;
         } else {
-            // console.log(chalk.redBright('INCORRECT ELTSSSS'), target);
             return false;
         }
     }
-
 
     // TODO
     private static isDeclaredOutOfProject(text: string): boolean {
         return false;
     }
-
 
     /**
      * Checks if each element of an array of element is a correct target

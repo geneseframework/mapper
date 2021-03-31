@@ -1,8 +1,7 @@
-import { TConstructor } from './types/t-constructor.type';
-import { Target } from './types/target/target.type';
-import { ArrayOfPrimitiveElements, Primitive } from './types/primitives.type';
-import { throwWarning } from './utils/errors.util';
-import { DateConstructorParameters } from './types/date-constructor-parameters.type';
+import { TConstructor } from './types/others/t-constructor.type';
+import { ArrayOfPrimitiveElements, Primitive } from './types/trivial-types/primitives.type';
+import { throwWarning } from '../shared/core/utils/functions/errors.util';
+import { DateConstructorParameters } from './types/trivial-types/date-constructor-parameters.type';
 import {
     NotArray,
     NotBoolean,
@@ -12,15 +11,16 @@ import {
     NotObject,
     NotString,
     ObjectNotArray
-} from './types/not-some-type.type';
-import { Combination } from './types/target/string/combination.type';
+} from './types/trivial-types/not-some-type.type';
 import { MainService } from './services/main.service';
-import { ConstructorArray } from './types/target/constructor-array.type';
 import { MapperBehavior } from '../shared/models/config-behavior.model';
+import { ConstructorArray } from './types/non-trivial-types/constructor-array.type';
+import { Combination } from './types/non-trivial-types/combination.type';
+import { Target } from './types/others/target.type';
 
 /**
  * The create() method
- * Maps objects of unknown type into safe typed objects
+ * Maps untyped objects into safe typed objects
  */
 
 // --------------------------------------------   String overloads   --------------------------------------------------

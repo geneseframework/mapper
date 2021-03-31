@@ -12,13 +12,11 @@ import { ConfigService } from '../../init/services/config.service';
 import { initPaths, initProject } from '../tests-init.debug';
 
 INIT.debug = true;
-GLOBAL.debug = true;
 
 
 export async function startTests(): Promise<void> {
     const start = Date.now();
     console.log(chalk.yellowBright('START TESTS'));
-    INIT.start = Date.now();
     await init();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;

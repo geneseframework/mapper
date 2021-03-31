@@ -1,12 +1,11 @@
 import { MainService } from '../main.service';
 import { isQuoted } from '../../../shared/types/quoted.type';
-import { hasIndexableTypeAndKeyOfSameType } from '../../utils/native/indexable-type.util';
+import { hasIndexableTypeAndKeyOfSameType } from '../../utils/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { Property } from '../../../shared/types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isNullOrUndefined } from '../../types/null-or-undefined.type';
-import * as chalk from 'chalk';
+import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 
 export class MapInstanceOrInterfaceService {
 
@@ -53,7 +52,6 @@ export class MapInstanceOrInterfaceService {
      * @param declaration   // The declaration corresponding to the class or interface
      */
     private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
-        // console.log(chalk.magentaBright('MAP DATA KKKKKK'), dataKey, key, instance, declaration);
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {

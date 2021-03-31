@@ -1,8 +1,9 @@
 import { InitService } from './services/init.service';
-import { INIT } from './const/init.const';
 
+/**
+ * Launches the init() process
+ */
 export async function init() {
-    INIT.start = Date.now();
     await InitService.start();
 }
 

@@ -1,11 +1,10 @@
 import { create } from '../../main';
-import { Bracketed } from '../../types/target/string/bracketed.type';
-import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
+import { Bracketed, isArrayOfSameLength } from '../../types/containers/bracketed.type';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isNullOrUndefined } from '../../types/null-or-undefined.type';
+import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
+import { getContainerizedElements } from '../../types/containers/bracketed-or-penthesized.type';
 
 export class MapTupleService<T> {
-
 
     /**
      * Returns mapped tuple if data is correct, undefined if not
@@ -16,7 +15,6 @@ export class MapTupleService<T> {
     static create(target: Bracketed, data: any, options: MapperBehavior): any[] {
         return isArrayOfSameLength(target, data) ? this.mapTuple(target, data, options) : undefined;
     }
-
 
     /**
      * Returns mapped tuple

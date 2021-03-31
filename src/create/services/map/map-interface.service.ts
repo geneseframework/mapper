@@ -2,7 +2,7 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/not-some-type.type';
+import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/trivial-types/not-some-type.type';
 import { includes } from '../../../shared/utils/arrays.util';
 import * as chalk from 'chalk';
 
@@ -27,10 +27,8 @@ export class MapInterfaceService {
      */
     static createInterface(target: string, data: ObjectNotArray, options: MapperBehavior): any {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
-        // console.log(chalk.redBright('INTERFACEEEE'), target, data, interfaceInfo);
         const tInterface = {};
         MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
-        // console.log(chalk.redBright('INTERFACEEEE RESLTTT'), tInterface);
         return this.hasRequiredProperties(tInterface, interfaceInfo) ? tInterface : undefined;
     }
 

@@ -9,7 +9,6 @@ import { MapperConfig } from '../shared/models/config.model';
 
 
 INIT.debug = true;
-GLOBAL.debug = true;
 
 export async function init(): Promise<void> {
     initPaths();
