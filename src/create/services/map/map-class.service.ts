@@ -1,5 +1,5 @@
 import { GLOBAL } from '../../const/global.const';
-import { throwWarning } from '../../utils/errors.util';
+import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { InstanceGenerator } from '../../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';

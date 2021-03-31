@@ -1,6 +1,6 @@
-import { throwWarning } from '../utils/errors.util';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { isPrimitiveType } from '../types/primitives.type';
-import { isString } from '../utils/native/strings.util';
+import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { isQuoted } from '../../shared/types/quoted.type';
 import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
 import { hasSeparators } from '../types/target/string/has-separators.type';

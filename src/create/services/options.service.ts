@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { isBoolean } from '../utils/native/booleans.util';
-import { clone } from '../utils/native/clone.util';
+import { isBoolean } from '../../shared/core/utils/booleans.util';
+import { clone } from '../../shared/core/utils/functions/clone.util';
 import { GLOBAL } from '../const/global.const';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
 

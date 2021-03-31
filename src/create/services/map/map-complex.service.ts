@@ -6,8 +6,8 @@ import {
     isStringAsNumericOrStringifiedNullOrBoolean,
     NumericOrStringifiedNullOrBoolean
 } from '../../types/null-or-literal.type';
-import { isString } from '../../utils/native/strings.util';
-import { throwWarning } from '../../utils/errors.util';
+import { isString } from '../../../shared/core/utils/primitives/strings.util';
+import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isGeneric } from '../../types/target/string/generics.type';
 import { MapGenericService } from './map-generic.service';

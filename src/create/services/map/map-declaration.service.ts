@@ -1,5 +1,5 @@
 import { MapEnumService } from './map-enum.service';
-import { throwWarning } from '../../utils/errors.util';
+import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';

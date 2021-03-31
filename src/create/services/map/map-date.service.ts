@@ -1,4 +1,4 @@
-import { isValidDateConstructor } from '../../utils/native/dates.util';
+import { isValidDateConstructor } from '../../../shared/core/utils/primitives/dates.util';
 
 export class MapDateService {
 

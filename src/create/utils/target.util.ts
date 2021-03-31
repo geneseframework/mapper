@@ -2,7 +2,7 @@ import {
     BracketedOrParenthesized,
     isBracketedOrParenthesized
 } from '../types/target/string/bracketed-or-penthesized.type';
-import { isString } from './native/strings.util';
+import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { Bracketed } from '../types/target/string/bracketed.type';
 import { hasUnion } from '../types/target/string/union.type';
 import { hasIntersection } from '../types/target/string/intersection.type';
@@ -11,7 +11,7 @@ import { ElementAndSeparator } from '../types/target/string/element-and-separato
 import { Separator } from '../types/target/string/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
 import { getContent } from '../types/target/string/containerized.type';
-import { throwWarning } from './errors.util';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { hasInterrogation } from '../types/target/string/interrogation.type';
 import { hasSemiColumn } from '../types/target/string/semi-column.type';
 import { hasExtends } from '../types/target/string/extends.type';

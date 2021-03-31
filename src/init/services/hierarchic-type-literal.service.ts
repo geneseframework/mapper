@@ -15,7 +15,7 @@ import {
 } from '../../create/types/target/string/curve-bracketed.type';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { BlockInfo } from '../../create/types/target/string/block.type';
-import { throwWarning } from '../../create/utils/errors.util';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
