@@ -11,15 +11,20 @@ import { InterfaceInfo } from '../../shared/models/declarations/interface-info.m
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { removeBorders } from '../../shared/utils/strings.util';
-import { Quoted } from '../../shared/types/quoted.type';
+import { Quoted, removeQuotes } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
 import { getPropertiesFromClassOrInterface } from '../utils/declaration-info-get-properties.util';
 
+/**
+ * Generates the declaration-infos.js file from the user's project
+ */
 export class DeclarationInfoService {
 
-
+    /**
+     * Starts the init() process
+     */
     static async init(): Promise<void> {
         await this.setClassInfos();
         this.setEnumInfos();
@@ -28,7 +33,10 @@ export class DeclarationInfoService {
         await DeclarationInfoGeneratorService.createDeclarationInfoFile();
     }
 
-
+    /**
+     * Adds classInfos to GLOBAL declarationInfos array by parsing the declarations of the classes of the user's project
+     * @private
+     */
     private static async setClassInfos(): Promise<void> {
         const classDeclarations: ClassDeclaration[] = INIT.project.getSourceFiles().map(s => s.getClasses()).flat();
         const alreadyDone: string[] = []
@@ -36,8 +44,12 @@ export class DeclarationInfoService {
             this.addClassInfo(classDeclaration, alreadyDone);
         }
     }
-
-
+// TODO: remove already done ?
+    /**
+     * Adds a classInfo corresponding to a given class declared in the user's project
+     * @param classDeclaration  // The declaration of the class
+     * @param alreadyDone       // True if this
+     */
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
         DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
@@ -48,7 +60,10 @@ export class DeclarationInfoService {
         INIT.addDeclarationInfo(classInfo);
     }
 
-
+    /**
+     * Adds interfaceInfos to GLOBAL declarationInfos array by parsing the declarations of the interfaces of the user's project
+     * @private
+     */
     private static setInterfaceInfos(): void {
         const interfaceDeclarations: InterfaceDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getInterfaces()));
         for (const interfaceDeclaration of interfaceDeclarations) {
@@ -63,7 +78,10 @@ export class DeclarationInfoService {
         INIT.addDeclarationInfo(interfaceInfo);
     }
 
-
+    /**
+     * Adds enumInfos to GLOBAL declarationInfos array by parsing the declarations of the enums of the user's project
+     * @private
+     */
     private static setEnumInfos(): void {
         const enumDeclarations: EnumDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getEnums()));
         for (const enumDeclaration of enumDeclarations) {
@@ -74,11 +92,14 @@ export class DeclarationInfoService {
 
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
         const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
-        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => this.removeQuotes(m.initializer as string));
+        enumInfo.initializers = enumDeclaration.getStructure().members.map(m => removeQuotes(m.initializer as string));
         INIT.addDeclarationInfo(enumInfo);
     }
 
-
+    /**
+     * Adds typeInfos to GLOBAL declarationInfos array by parsing the declarations of the types of the user's project
+     * @private
+     */
     private static setTypeInfos(): void {
         const typeDeclarations: TypeAliasDeclaration[] = flat(INIT.project.getSourceFiles().map(s => s.getTypeAliases()));
         for (const typeDeclaration of typeDeclarations) {
@@ -96,21 +117,5 @@ export class DeclarationInfoService {
         }
         INIT.addDeclarationInfo(typeInfo);
     }
-
-
-    static removeQuotes(text: string): string {
-        return this.isQuoted(text) ? removeBorders(text) : text;
-    }
-
-
-    static isQuoted(text: string): text is Quoted {
-        return this.isSurroundedBy(text, `'`) || this.isSurroundedBy(text, `"`) || this.isSurroundedBy(text, `\``);
-    }
-
-
-    static isSurroundedBy(text: string, boundary: string): boolean {
-        return text && text.slice(0, 1) === boundary && text.slice(text.length - 1) === boundary && !removeBorders(text).includes(boundary);
-    }
-
 
 }
