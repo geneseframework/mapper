@@ -20,7 +20,7 @@ import { Target } from './types/others/target.type';
 
 /**
  * The create() method
- * Maps objects of unknown type into safe typed objects
+ * Maps untyped objects into safe typed objects
  */
 
 // --------------------------------------------   String overloads   --------------------------------------------------

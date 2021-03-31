@@ -1,19 +1,20 @@
 import { Project, SourceFile } from 'ts-morph';
 import { INIT } from '../const/init.const';
 
-
+/**
+ * The global values used during the init() process
+ */
 export class Init {
 
-    debug = false;
-    declarationInfos: any[] = [];
-    declarationInfoSourceFile: SourceFile = undefined;
-    instanceGenerators: any[] = [];
-    instanceGeneratorSourceFile: SourceFile = undefined;
+    debug = false;                                          // True if we are in debug mode, false if not
+    declarationInfos: any[] = [];                           // The declarationsInfos which will be create during the init() process
+    declarationInfoSourceFile: SourceFile = undefined;      // The sourceFile of the declaration-infos.ts file
+    instanceGenerators: any[] = [];                         // The switch cases of the method which will be used in the create() process to instantiate classes
+    instanceGeneratorSourceFile: SourceFile = undefined;    // The sourceFile of the instance-generator.ts file
     nodeModulePath: string = undefined;
     project: Project = undefined;
     projectPath: string = undefined;
     start: number = undefined;
-    tsConfigPaths: string[] = [];
 
 
     get classNames(): string[] {
