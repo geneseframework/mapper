@@ -1,8 +1,8 @@
 import { create } from '../../main';
-import { Bracketed } from '../../types/containers/bracketed.type';
-import { getContainerizedElements, isArrayOfSameLength } from '../../utils/target.util';
+import { Bracketed, isArrayOfSameLength } from '../../types/containers/bracketed.type';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
+import { getContainerizedElements } from '../../types/containers/bracketed-or-penthesized.type';
 
 export class MapTupleService<T> {
 

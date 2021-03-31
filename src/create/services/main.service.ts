@@ -1,6 +1,5 @@
-import { ArrayOfPrimitiveElements, Primitive } from '../types/trivial-types/primitives.type';
+import { ArrayOfPrimitiveElements, isPrimitiveType, Primitive } from '../types/trivial-types/primitives.type';
 import { OptionsService } from './options.service';
-import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './target.service';
@@ -63,7 +62,7 @@ export class MainService {
             return MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
             return MapArrayService.create(target, data, options);
-        } else if (isPrimitiveTypeName(target)) {
+        } else if (isPrimitiveType(target)) {
             return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
             return MapQuotedService.create(target, data, options);
