@@ -39,7 +39,7 @@ export class MainService {
      */
     static map<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
-         GlobalInitService.start();
+        GlobalInitService.start();
         if (!OptionsService.wasInitialized(options)) {
             options = OptionsService.initialize(options);
         }
@@ -75,8 +75,8 @@ export class MainService {
             return MapDeclarationService.create(target, data, options);
         } else if (isComplexType(target)) {
             return MapComplexService.create(target, data, options);
-        // } else if ( isDeclaredOutOfProjectAddItToGlobal(target)) { // TODO
-        //     return MapOutOfProjectService.create(target, data, options);
+            // } else if ( isDeclaredOutOfProjectAddItToGlobal(target)) { // TODO
+            //     return MapOutOfProjectService.create(target, data, options);
         } else {
             throwWarning(`type not found : "${target}". @genese/mapper interpreted it as "any" by default.`);
             return data;
