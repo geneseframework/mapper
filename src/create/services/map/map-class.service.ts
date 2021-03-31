@@ -10,7 +10,7 @@ export class MapClassService<T> {
 
     /**
      * When target corresponds to an exported class, returns instance with mapped data if data is an object, undefined if not
-     * @param target    // The target corresponding to an exported class
+     * @param target    // The stringified target
      * @param data      // The data to map
      * @param options   // The create() options
      */

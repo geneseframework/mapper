@@ -6,7 +6,6 @@ import { isNullOrUndefined } from '../../types/null-or-undefined.type';
 
 export class MapTupleService<T> {
 
-
     /**
      * Returns mapped tuple if data is correct, undefined if not
      * @param target    // The target with tuple format
@@ -16,7 +15,6 @@ export class MapTupleService<T> {
     static create(target: Bracketed, data: any, options: MapperBehavior): any[] {
         return isArrayOfSameLength(target, data) ? this.mapTuple(target, data, options) : undefined;
     }
-
 
     /**
      * Returns mapped tuple
