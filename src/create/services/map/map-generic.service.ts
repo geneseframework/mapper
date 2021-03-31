@@ -1,6 +1,6 @@
-import { Generic, typeOfGeneric } from '../../types/target/string/generics.type';
 import { MainService } from '../main.service';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { Generic, typeOfGeneric } from '../../types/non-trivial-types/generics.type';
 
 /**
  * Service used in case of stringified types corresponding to a generic type

@@ -1,4 +1,4 @@
-import { NullOrBooleanOrNumber, NumericOrStringifiedNullOrBoolean } from '../../types/null-or-literal.type';
+import { NullOrBooleanOrNumber, NumericOrStringifiedNullOrBoolean } from '../../types/trivial-types/null-or-literal.type';
 
 /**
  * Service used in case of stringified target corresponding numeric strings, 'null', 'true' or 'false'

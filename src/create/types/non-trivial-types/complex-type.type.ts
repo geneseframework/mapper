@@ -1,4 +1,4 @@
-import { hasSeparators, HasSeparators } from './has-separators.type';
+import { hasSeparators, HasSeparators } from '../separators/has-separators.type';
 import { Generic, isGeneric } from './generics.type';
 
 /**

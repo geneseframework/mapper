@@ -1,4 +1,4 @@
-import { isNumeric, Numeric } from '../../shared/types/numeric.type';
+import { isNumeric, Numeric } from '../../../shared/types/numeric.type';
 
 /**
  * Null, boolean or number values

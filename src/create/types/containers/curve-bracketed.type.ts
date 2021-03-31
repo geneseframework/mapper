@@ -1,11 +1,11 @@
 import { getBlockInfos, isInsideBlocks } from './block.type';
-import { Property } from '../../../../shared/types/target/property.type';
-import { removeBorders } from '../../../../shared/utils/strings.util';
-import { isComma } from './commas.type';
-import { firstWord } from './word.type';
-import { getIndexableTypeFromIndexableKey, startsWithIndexableKey } from '../../indexable-key.type';
+import { Property } from '../../../shared/types/target/property.type';
+import { removeBorders } from '../../../shared/utils/strings.util';
+import { isComma } from '../separators/commas.type';
+import { getIndexableTypeFromIndexableKey, startsWithIndexableKey } from '../properties/indexable-key.type';
 import { getFirstBracketed } from './bracketed.type';
-import { IndexableType } from '../../../../shared/types/indexable-type.type';
+import { IndexableType } from '../../../shared/types/indexable-type.type';
+import { firstWord } from '../others/word.type';
 
 /**
  * Texts surrounded by curved brackets

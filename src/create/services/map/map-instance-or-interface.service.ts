@@ -5,7 +5,7 @@ import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-i
 import { Property } from '../../../shared/types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isNullOrUndefined } from '../../types/null-or-undefined.type';
+import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 
 export class MapInstanceOrInterfaceService {
 

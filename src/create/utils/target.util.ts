@@ -1,22 +1,22 @@
 import {
     BracketedOrParenthesized,
     isBracketedOrParenthesized
-} from '../types/target/string/bracketed-or-penthesized.type';
+} from '../types/containers/bracketed-or-penthesized.type';
 import { isString } from '../../shared/core/utils/primitives/strings.util';
-import { Bracketed } from '../types/target/string/bracketed.type';
-import { hasUnion } from '../types/target/string/union.type';
-import { hasIntersection } from '../types/target/string/intersection.type';
-import { hasCommas } from '../types/target/string/commas.type';
-import { ElementAndSeparator } from '../types/target/string/element-and-separator.type';
-import { Separator } from '../types/target/string/separator.type';
-import { HasSeparators, hasSeparators, splitSeparator } from '../types/target/string/has-separators.type';
-import { getContent } from '../types/target/string/containerized.type';
+import { Bracketed } from '../types/containers/bracketed.type';
+import { hasCommas } from '../types/separators/commas.type';
+import { ElementAndSeparator } from '../types/separators/element-and-separator.type';
+import { Separator } from '../types/separators/separator.type';
+import { HasSeparators, hasSeparators, splitSeparator } from '../types/separators/has-separators.type';
+import { getContent } from '../types/containers/containerized.type';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
-import { hasInterrogation } from '../types/target/string/interrogation.type';
-import { hasSemiColumn } from '../types/target/string/semi-column.type';
-import { hasExtends } from '../types/target/string/extends.type';
+import { hasSemiColumn } from '../types/separators/semi-column.type';
+import { hasExtends } from '../types/separators/extends.type';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { isArray } from '../../shared/utils/arrays.util';
+import { hasUnion } from '../types/non-trivial-types/union.type';
+import { hasIntersection } from '../types/non-trivial-types/intersection.type';
+import { hasInterrogation } from '../types/non-trivial-types/interrogation.type';
 
 
 export function isArrayOfSameLength(text: Bracketed, data: any[]): boolean {

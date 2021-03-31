@@ -1,19 +1,17 @@
-import { Target } from '../types/target/target.type';
-import { ArrayOfPrimitiveElements, Primitive } from '../types/primitives.type';
+import { ArrayOfPrimitiveElements, Primitive } from '../types/trivial-types/primitives.type';
 import { OptionsService } from './options.service';
 import { isPrimitiveTypeName } from '../utils/native/types.util';
 import { MapPrimitiveService } from './map/map-primitive.service';
 import { MapTupleService } from './map/map-tuple.service';
 import { TargetService } from './target.service';
-import { isBracketed } from '../types/target/string/bracketed.type';
+import { isBracketed } from '../types/containers/bracketed.type';
 import { MapArrayService } from './map/map-array.service';
-import { isArrayType } from '../types/target/string/array-type.type';
 import { MapComplexService } from './map/map-complex.service';
 import { MapDeclarationService } from './map/map-declaration.service';
 import { isQuoted } from '../../shared/types/quoted.type';
 import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './check-targets.service';
-import { isStringAsNumericOrStringifiedNullOrBoolean } from '../types/null-or-literal.type';
+import { isStringAsNumericOrStringifiedNullOrBoolean } from '../types/trivial-types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
 import { isDateTypeName } from '../../shared/core/utils/primitives/dates.util';
 import { MapDateService } from './map/map-date.service';
@@ -23,10 +21,12 @@ import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
-import { isWildCard } from '../types/target/string/wildcard.type';
-import { isNullOrUndefined } from '../types/null-or-undefined.type';
-import { isComplexType } from '../types/target/string/complex-type.type';
+import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
 import { MapObjectTypeService } from './map/map-object-type.service';
+import { Target } from '../types/others/target.type';
+import { isWildCard } from '../types/non-trivial-types/wildcard.type';
+import { isArrayType } from '../types/non-trivial-types/array-type.type';
+import { isComplexType } from '../types/non-trivial-types/complex-type.type';
 
 export class MainService {
 

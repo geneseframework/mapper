@@ -1,10 +1,10 @@
-import { Union } from './union.type';
-import { Intersection } from './intersection.type';
 import { Commas } from './commas.type';
 import { SemiColumn } from './semi-column.type';
-import { Interrogation } from './interrogation.type';
 import { Extends, hasExtends } from './extends.type';
 import { Separator } from './separator.type';
+import { Union } from '../non-trivial-types/union.type';
+import { Intersection } from '../non-trivial-types/intersection.type';
+import { Interrogation } from '../non-trivial-types/interrogation.type';
 
 /**
  * Types having separators : '|', '&', ',', '?', ':', 'extends'

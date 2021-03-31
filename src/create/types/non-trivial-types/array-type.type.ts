@@ -1,4 +1,4 @@
-import { hasSeparators } from './has-separators.type';
+import { hasSeparators } from '../separators/has-separators.type';
 
 export type ArrayType = `${string}[]`;              // Type corresponding to targets without separators ending with empty brackets
 export type EndsWithEmptyBrackets = ArrayType;      // Equivalent type used to to define strings ending with empty brackets

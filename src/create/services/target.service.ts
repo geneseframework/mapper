@@ -1,11 +1,11 @@
-import { Target } from '../types/target/target.type';
-import { Primitive } from '../types/primitives.type';
+import { Primitive } from '../types/trivial-types/primitives.type';
 import { isFunction } from '../../shared/core/utils/primitives/functions.util';
 import { isBoolean } from '../../shared/core/utils/booleans.util';
 import { isNumber } from '../../shared/core/utils/primitives/numbers.util';
 import { trimSeparators } from '../utils/target.util';
-import { isNull } from '../types/null-or-literal.type';
+import { isNull } from '../types/trivial-types/null-or-literal.type';
 import { isArray } from '../../shared/utils/arrays.util';
+import { Target } from '../types/others/target.type';
 
 /**
  * Service used to stringify the parameter 'target' of the create() method

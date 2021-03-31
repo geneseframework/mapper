@@ -1,6 +1,6 @@
 import { TypeLiteralNode } from 'ts-morph';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
-import { CurvedBracketed } from '../../create/types/target/string/curve-bracketed.type';
+import { CurvedBracketed } from '../../create/types/containers/curve-bracketed.type';
 
 
 export class HierarchicTypeLiteral {

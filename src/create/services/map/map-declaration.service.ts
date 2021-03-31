@@ -3,11 +3,11 @@ import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
-import { isArrayType, typeOfArray } from '../../types/target/string/array-type.type';
 import { GLOBAL } from '../../const/global.const';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { isArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
 
 export class MapDeclarationService {
 

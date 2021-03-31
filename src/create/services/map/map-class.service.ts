@@ -4,7 +4,7 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { InstanceGenerator } from '../../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { isObjectWhichIsNotArray } from '../../types/not-some-type.type';
+import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
 
 export class MapClassService<T> {
 

@@ -1,8 +1,8 @@
-import { IndexableType } from '../../types/indexable-type.type';
-import { StringOrNumber } from '../../types/string-or-number.type';
+import { IndexableType } from '../../types/properties/indexable-type.type';
+import { StringOrNumber } from '../../types/trivial-types/string-or-number.type';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { isNumeric } from '../../../shared/types/numeric.type';
-import { areBothTrueOrFalse } from '../../types/same-booleans.type';
+import { areBothTrueOrFalse } from '../../types/others/same-booleans.type';
 
 
 export function hasIndexableTypeAndKeyOfSameType(declaration: ClassOrInterfaceInfo, key: StringOrNumber): boolean {

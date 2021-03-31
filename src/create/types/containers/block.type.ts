@@ -1,6 +1,6 @@
 import { Containerized } from './containerized.type';
-import { Word } from './word.type';
 import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders.type';
+import { Word } from '../others/word.type';
 
 /**
  * Elements like words or strings surrounded by {}, (), <> or [] which are not included inside other strings surrounded by {}, (), <> or []. Blocks are the ancestor elements of a stringified target.

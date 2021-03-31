@@ -1,10 +1,10 @@
 import {
     CurvedBracketed,
     getPropertiesFromCurvedBracketed
-} from '../../create/types/target/string/curve-bracketed.type';
+} from '../../create/types/containers/curve-bracketed.type';
 import { Property } from '../../shared/types/target/property.type';
 import { haveSameLength } from '../../shared/utils/arrays.util';
-import { BlockInfo } from '../../create/types/target/string/block.type';
+import { BlockInfo } from '../../create/types/containers/block.type';
 
 
 export function replaceBlocksByNames(text: string, blockInfos: BlockInfo[]): string {

@@ -1,21 +1,18 @@
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
-import { isPrimitiveType } from '../types/primitives.type';
+import { isPrimitiveType } from '../types/trivial-types/primitives.type';
 import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { isQuoted } from '../../shared/types/quoted.type';
-import { isBracketedOrParenthesized } from '../types/target/string/bracketed-or-penthesized.type';
-import { hasSeparators } from '../types/target/string/has-separators.type';
-import { isArrayType, typeOfArray } from '../types/target/string/array-type.type';
+import { hasSeparators } from '../types/separators/has-separators.type';
 import { TargetService } from './target.service';
-import { isStringAsTrivialType } from '../types/null-or-literal.type';
-import { isGeneric, typeOfGeneric } from '../types/target/string/generics.type';
+import { isStringAsTrivialType } from '../types/trivial-types/null-or-literal.type';
 import { getElements, trimSeparators } from '../utils/target.util';
-import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { removeBorders } from '../../shared/utils/strings.util';
-import { isNullOrUndefined } from '../types/null-or-undefined.type';
-import * as chalk from 'chalk';
-import { isContainerized } from '../types/target/string/containerized.type';
-import { isIndexableKey } from '../types/indexable-key.type';
+import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
+import { isContainerized } from '../types/containers/containerized.type';
+import { isIndexableKey } from '../types/properties/indexable-key.type';
+import { isArrayType, typeOfArray } from '../types/non-trivial-types/array-type.type';
+import { isGeneric, typeOfGeneric } from '../types/non-trivial-types/generics.type';
 
 /**
  * Service checking if a given stringified target has correct format

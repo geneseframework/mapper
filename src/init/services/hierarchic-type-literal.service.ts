@@ -12,9 +12,9 @@ import {
     getCurvedBracketedBlockInfos,
     getIndexableTypeFromCurvedBracketed,
     getPropertiesFromCurvedBracketed
-} from '../../create/types/target/string/curve-bracketed.type';
+} from '../../create/types/containers/curve-bracketed.type';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
-import { BlockInfo } from '../../create/types/target/string/block.type';
+import { BlockInfo } from '../../create/types/containers/block.type';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { removeBorders } from '../../shared/utils/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
