@@ -19,7 +19,6 @@ import { hasIntersection } from '../../types/target/string/intersection.type';
  */
 export class MapComplexService {
 
-
     /**
      *
      * @param target    // The target with a complex format (generics, unions, intersections, etc.)

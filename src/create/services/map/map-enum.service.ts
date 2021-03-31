@@ -5,9 +5,12 @@ import { isArray } from '../../../shared/utils/arrays.util';
 
 export class MapEnumService {
 
-
-    // TODO: check if we need options & create diagram
-    static create<T>(target: string, data: any): T | T[] {
+    /**
+     * Return mapped data when target corresponds to an exported enum or an array of enums
+     * @param target    // The target corresponding to an exported enum
+     * @param data      // The data to map
+     */
+    static create(target: string, data: any): any {
         const enumInfo: EnumInfo = GLOBAL.getEnumInfo(target);
         if (isArray(data) && isBracketed(target)) {
             return this.createEnumsArray(data, enumInfo);
@@ -18,26 +21,39 @@ export class MapEnumService {
         }
     }
 
-
-    private static createEnumsArray<T>(data: any[], enumInfo: EnumInfo): T[] {
-        const enumsArray: T[] = [];
+    /**
+     * Return mapped data when target corresponds to an array of enums
+     * @param data      // The data to map
+     * @param enumInfo  // Some enumInfo found in global declarationInfos array
+     */
+    private static createEnumsArray(data: any[], enumInfo: EnumInfo): any[] {
+        const enumsArray: any[] = [];
         for (const element of data) {
-            const value: T = this.map(element, enumInfo);
+            const value: any = this.map(element, enumInfo);
             enumsArray.push(value);
         }
         return enumsArray;
     }
 
-
-    static map(dataValue: any, enumInfo: EnumInfo): any {
-        if (this.isEnumValue(dataValue, enumInfo)) {
-            return dataValue;
+    /**
+     * Return mapped data when target corresponds to an enum
+     * @param data      // The data to map
+     * @param enumInfo  // Some enumInfo found in global declarationInfos array
+     */
+    static map(data: any, enumInfo: EnumInfo): any {
+        if (this.isEnumValue(data, enumInfo)) {
+            return data;
         } else {
             return undefined;
         }
     }
 
-
+    /**
+     * Checks if a value is one of the values of a given enum
+     * @param value
+     * @param enumInfo
+     * @private
+     */
     private static isEnumValue(value: any, enumInfo: EnumInfo): boolean {
         return enumInfo.initializers.includes(value);
     }

@@ -4,7 +4,7 @@ export class MapDateService {
 
 
     /**
-     * Returns new Date(data) if data is a valid date constructor
+     * Returns mapped date (ie: new Date(data)) if data is a valid date constructor
      * @param data
      */
     static create(data: any): Date {
