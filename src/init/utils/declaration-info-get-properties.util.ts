@@ -14,13 +14,13 @@ import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declara
 export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceDeclaration): Property[] {
     const properties: Property[] = [];
     for (const propDecOrSign of declaration.getProperties()) {
-        properties.push(getPropertyFromPropDecOrSign(declaration.getName(), propDecOrSign))
+        properties.push(getPropertyFromDeclarationOrSignature(declaration.getName(), propDecOrSign))
     }
     return properties;
 }
 
 
-function getPropertyFromPropDecOrSign(parentName: string, propDecOrSign: PropertyDeclarationOrSignature): Property {
+function getPropertyFromDeclarationOrSignature(parentName: string, propDecOrSign: PropertyDeclarationOrSignature): Property {
     if (hasTypeLiteral(propDecOrSign)) {
         return {name: propDecOrSign.getName(), type: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
     } else {
