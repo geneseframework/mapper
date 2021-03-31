@@ -14,6 +14,9 @@ import { MapGenericService } from './map-generic.service';
 import { ComplexType } from '../../types/target/string/complex-type.type';
 import { hasIntersection } from '../../types/target/string/intersection.type';
 
+/**
+ * Service used in case of non-trivial stringified types
+ */
 export class MapComplexService {
 
 
@@ -28,7 +31,7 @@ export class MapComplexService {
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
         if (isParenthesized(target)) {
-
+            // TODO
         } else if (hasUnion(target)) {
             return this.mapUnionType(data, options, first, others);
         } else if (hasIntersection(target)) {
@@ -40,17 +43,30 @@ export class MapComplexService {
         }
     }
 
-
+    /**
+     * Returns mapped value in case of Union types
+     * @param data      // The data to map
+     * @param options   // The create() options
+     * @param first     // The first element of the union
+     * @param others    // The other elements of the union
+     * @private
+     */
     private static mapUnionType(data: any, options: MapperBehavior, first: string, others: string): any {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
         const mapped: any = MainService.mapStringTarget(first, data, options);
-        // TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
         return mapped || MainService.mapStringTarget(others, data, options);
     }
 
-
+    /**
+     * Returns mapped value in case of Union types which have the first element of the union which is numeric string, 'null' or 'boolean' maps
+     * @param data      // The data to map
+     * @param options   // The create() options
+     * @param first     // The first element of the union
+     * @param others    // The other elements of the union
+     * @private
+     */
     private static mapNumericOrStringifiedNullOrBoolean(data: any, options: MapperBehavior, first: NumericOrStringifiedNullOrBoolean, others: string): any {
         if (first === data?.toString()) {
             return !options.castStringsAndNumbers && isString(data) ? undefined : data;
@@ -61,11 +77,17 @@ export class MapComplexService {
         }
     }
 
-
+    /**
+     * Returns mapped value in case of Intersection types
+     * @param data      // The data to map
+     * @param options   // The create() options
+     * @param first     // The first element of the union
+     * @param others    // The other elements of the union
+     * @private
+     */
     private static mapIntersectionType(data: any, options: MapperBehavior, first: string, others: string): any {
         const left: any = MainService.mapStringTarget(first, data, options);
         const right: any = MainService.mapStringTarget(others, data, options);
-// TODO: implement behavior if mapped is defined but could be defined too in the other parts of the union type
         return left && right ? data : undefined;
     }
 
