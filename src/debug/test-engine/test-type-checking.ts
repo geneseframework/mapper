@@ -1,7 +1,6 @@
 import * as chalk from 'chalk';
 import { GLOBAL } from '../../create/const/global.const';
 
-GLOBAL.debug = true;
 
 async function startTestTypeChecking() {
     try {

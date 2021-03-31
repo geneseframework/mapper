@@ -8,20 +8,17 @@ import { InterfaceInfo } from '../../shared/models/declarations/interface-info.m
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 
 
+/**
+ * The global elements used during the create() process
+ */
 export class Global {
 
-    checkedTargets: string[] = [];
-    config: MapperConfig = undefined;
+    config: MapperConfig = undefined;               // The config coming from the user geneseconfig.ts file and found from the config.js file created during the init process
     debug = false;
     declarationInfos: DeclarationInfo[] = [];
     generateInstance: <T>(instanceGenerator: InstanceGenerator<T>) => T;
     start: number = undefined;
     wasInitialized: boolean = undefined;
-
-
-    check(target: string): void {
-        this.checkedTargets.push(target);
-    }
 
 
     getClassInfo(target: string): ClassInfo {
@@ -46,11 +43,6 @@ export class Global {
 
     getTypeInfo(target: string): TypeInfo {
         return this.declarationInfos.find(d => isTypeInfo(d) && d.name === target) as TypeInfo;
-    }
-
-
-    wasChecked(target: string): boolean {
-        return this.checkedTargets.includes(target);
     }
 
 

@@ -12,7 +12,6 @@ import { ConfigService } from '../../init/services/config.service';
 import { initPaths, initProject } from '../tests-init.debug';
 
 INIT.debug = true;
-GLOBAL.debug = true;
 
 
 export async function startTests(): Promise<void> {

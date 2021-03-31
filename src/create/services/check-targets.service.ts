@@ -25,13 +25,9 @@ export class CheckTargetsService {
      * @param target    // The target to check
      */
     static start(target: string): void {
-        if (GLOBAL.wasChecked(target)) {
-            return;
-        }
         if (!CheckTargetsService.hasCorrectFormat(target)) {
-            throwWarning(`impossible to read type "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
+            throwWarning(`impossible to read "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
         }
-        GLOBAL.checkedTargets.push(target);
     }
 
 
