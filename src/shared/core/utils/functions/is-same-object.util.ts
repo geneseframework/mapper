@@ -1,7 +1,6 @@
 /**
- * Check if two objects have the same initializers for every key
+ * Checks if two objects have the same values for every key, including nested properties
  */
-
 export function isSameObject(obj1: any, obj2: any, differentiateStringsAndNumbers = false): boolean {
     if (trivialEquality(obj1, obj2, differentiateStringsAndNumbers)) {
         return true;
