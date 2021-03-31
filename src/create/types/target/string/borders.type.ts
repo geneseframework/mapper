@@ -53,29 +53,15 @@ export function oppositeBorder(char: Border): Border {
     }
 }
 
-
-export type HasLeftBorder = `{${string}` |`[${string}` |`(${string}` |`<${string}`;
+/**
+ * Texts ending with a right border
+ */
 export type HasRightBorder = `${string}}` |`${string}]` |`${string})` |`${string}>`;
 
-
-export function getFirstContainer(text: HasLeftBorder): Containerized {
-    const leftBorder: LeftBorder = text[0] as LeftBorder;
-    let nest = 0;
-    for (let i = 0; i < text.length; i++) {
-        if (text[i] === leftBorder) {
-            nest++;
-        }
-        if (text[i] === oppositeBorder(leftBorder)) {
-            nest--;
-        }
-        if (nest === 0) {
-            return text.slice(0, i) as Containerized;
-        }
-    }
-    return undefined;
-}
-
-
+/**
+ * Returns the last container of a text ending by a right border
+ * @param text
+ */
 export function getLastContainer(text: HasRightBorder): Containerized {
     const rightBorder: RightBorder = text[text.length - 1] as RightBorder;
     let nest = 0;
