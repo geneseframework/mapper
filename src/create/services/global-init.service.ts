@@ -7,7 +7,9 @@ import { DeclarationInfo } from '../../shared/models/declarations/declaration-in
 
 export class GlobalInitService {
 
-
+    /**
+     * Initialize the global values if not already done (ie: during the first call to create() method)
+     */
     static start(): void {
         if (!GLOBAL.wasInitialized) {
             GLOBAL.generateInstance = generateInstance;

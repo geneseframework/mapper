@@ -40,9 +40,7 @@ export class MainService {
     static map<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
         GlobalInitService.start();
-        if (!OptionsService.wasInitialized(options)) {
-            options = OptionsService.initialize(options);
-        }
+        options = OptionsService.initialize(options);
         return this.mapStringTarget(TargetService.stringify(target), data, options);
     }
 

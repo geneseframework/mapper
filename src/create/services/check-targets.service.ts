@@ -17,8 +17,10 @@ import * as chalk from 'chalk';
 import { isContainerized } from '../types/target/string/containerized.type';
 import { isIndexableKey } from '../types/indexable-key.type';
 
+/**
+ * Service checking if a given stringified target has correct format
+ */
 export class CheckTargetsService {
-
 
     /**
      * If target was not already checked, checks if this target is readable by @genese/mapper
@@ -29,7 +31,6 @@ export class CheckTargetsService {
             throwWarning(`impossible to read "${target}". @genese/mapper interpreted it as "any" and data will be set "as is" in the mapped response.`)
         }
     }
-
 
     /**
      * Checks if target is readable by @genese/mapper
@@ -45,7 +46,6 @@ export class CheckTargetsService {
         const normalizedTarget: string = TargetService.normalize(target);
         return CheckTargetsService.hasCorrectElements(normalizedTarget);
     }
-
 
     /**
      * Checks if target is composed of correct elements.
@@ -79,12 +79,10 @@ export class CheckTargetsService {
         }
     }
 
-
     // TODO
     private static isDeclaredOutOfProject(text: string): boolean {
         return false;
     }
-
 
     /**
      * Checks if each element of an array of element is a correct target
