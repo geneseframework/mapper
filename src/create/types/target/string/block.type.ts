@@ -1,17 +1,19 @@
 import { Containerized } from './containerized.type';
 import { Word } from './word.type';
 import { isLeftBorder, LeftBorder, oppositeBorder, RightBorder } from './borders.type';
-import * as chalk from 'chalk';
 
-export type Block = Containerized | Word;
-export type BlockInfo = {
+export type Block = Containerized | Word;   // Elements like words or strings surrounded by {}, () or [] which are not included inside other strings surrounded by {}, () or []. Blocks are the ancestor elements of a stringified target.
+export type BlockInfo = {                   // Information about blocks
     block: Block,
     end?: number,
     name?: string,
     start?: number
 }
 
-
+/**
+ * Returns the blocks included in a given text with their information
+ * @param text
+ */
 export function getBlockInfos(text: string): BlockInfo[] {
     let leftBorder: LeftBorder;
     let openingBorders = 0;
@@ -47,23 +49,40 @@ export function getBlockInfos(text: string): BlockInfo[] {
     return blocs;
 }
 
-
+/**
+ * Checks if a char is the first char of a block
+ * @param char              // The char to check
+ * @param openingBorders    // The number of non-closed borders
+ */
 function isStartOfBlock(char: string, openingBorders: number): char is LeftBorder {
     return isLeftBorder(char) && openingBorders === 0;
 }
 
-
+/**
+ * Checks if a char is the last char of a block
+ * @param char              // The char to check
+ * @param leftBorder        // The type of border of the current block
+ * @param openingBorders    // The number of non-closed borders
+ */
 function isEndOfBlock(char: string, leftBorder: LeftBorder, openingBorders: number): char is RightBorder {
     return char === oppositeBorder(leftBorder) && openingBorders === 1;
 }
 
-
+/**
+ * Checks if a position is inside one of the blocks of a given text
+ * @param position  // The checked position
+ * @param text      // The checked text
+ */
 export function isInsideBlocks(position: number, text: string): boolean {
     const blockInfos: BlockInfo[] = getBlockInfos(text);
     return blockInfos.some(b => isInsideBlock(position, b));
 }
 
-
+/**
+ * Checks if a position is inside a given block
+ * @param position      // The checked position
+ * @param blockInfo     // The info of the given block
+ */
 function isInsideBlock(position: number, blockInfo: BlockInfo): boolean {
     return position >= blockInfo.start && position <= blockInfo.end;
 }
