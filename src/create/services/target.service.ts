@@ -1,6 +1,6 @@
 import { Primitive } from '../types/trivial-types/primitives.type';
 import { isFunction } from '../../shared/core/utils/primitives/functions.util';
-import { isBoolean } from '../../shared/core/utils/booleans.util';
+import { isBoolean } from '../../shared/core/utils/primitives/booleans.util';
 import { isNumber } from '../../shared/core/utils/primitives/numbers.util';
 import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/trivial-types/null-or-literal.type';
