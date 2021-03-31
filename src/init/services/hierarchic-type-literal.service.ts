@@ -72,9 +72,7 @@ export class HierarchicTypeLiteralService {
                 // TODO: remove this line when replaceBlocksByInterfaceInfoNames() will be implemented
                 this.replaceBlocksByInterfaceInfoNameInHTLParent(htl, parent);
             } else {
-                console.log(chalk.redBright('NOT TRIVIALLLL'), htl);
                 this.createHTLChildren(htl);
-                // TODO: createHTLChildren & replaceBlocksByInterfaceInfoNameInHTLParent ?
             }
             htls.push(htl);
         }
