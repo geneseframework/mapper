@@ -1,35 +1,30 @@
 import { Containerized } from './containerized.type';
 import * as chalk from 'chalk';
 
-export type LeftBorder = '{' | '[' | '(' | '<';
-export type RightBorder = '}' | ']' | ')' | '>';
-export type Border = LeftBorder | RightBorder;
+export type LeftBorder = '{' | '[' | '(' | '<';     // The possible left borders of some containerized text
+export type RightBorder = '}' | ']' | ')' | '>';    // The possible right borders of some containerized text
+export type Border = LeftBorder | RightBorder;      // The possible borders of some containerized text
 
-export function isLeftBorder(text: string): text is LeftBorder {
-    return ['{', '[', '(', '<'].includes(text);
+/**
+ * Checks if a char is a left border
+ * @param char
+ */
+export function isLeftBorder(char: string): char is LeftBorder {
+    return ['{', '[', '(', '<'].includes(char);
 }
 
-
-export function isRightBorder(text: string): text is RightBorder {
-    return ['}', ']', ')', '>'].includes(text);
+/**
+ * Checks if a char is a right border
+ * @param char
+ */
+export function isRightBorder(char: string): char is RightBorder {
+    return ['}', ']', ')', '>'].includes(char);
 }
 
-
-export function isBorder(text: string): text is Border {
-    return isLeftBorder(text) || isRightBorder(text);
-}
-
-
-export function hasLeftBorder(text: string): boolean {
-    return text?.length > 0 && isLeftBorder(text.charAt(0));
-}
-
-
-export function hasRightBorder(text: string): boolean {
-    return text?.length > 0 && isRightBorder(text.slice(-1));
-}
-
-
+/**
+ * Returns the opposite char of a given border char
+ * @param char
+ */
 export function oppositeBorder(char: LeftBorder): RightBorder
 export function oppositeBorder(char: RightBorder): LeftBorder
 export function oppositeBorder(char: Border): Border {
@@ -57,21 +52,6 @@ export function oppositeBorder(char: Border): Border {
         }
     }
 }
-
-
-//
-// export function getLeftBorder(char: RightBorder): LeftBorder {
-//     switch (char) {
-//         case '}':
-//             return '{';
-//         case ']':
-//             return '[';
-//         case ')':
-//             return '(';
-//         case '>':
-//             return '<';
-//     }
-// }
 
 
 export type HasLeftBorder = `{${string}` |`[${string}` |`(${string}` |`<${string}`;
