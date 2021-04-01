@@ -1,5 +1,5 @@
-import { isArray } from '../../../shared/utils/arrays.util';
-import { removeBorders } from '../../../shared/utils/strings.util';
+import { isArray } from '../../../shared/core/utils/primitives/arrays.util';
+import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
 import { getElements } from '../../utils/target.util';
 
 /**

@@ -7,7 +7,7 @@ import { isTypeLiteralProperty } from '../models/type-literal-property.model';
 import { TypeLiteralNode } from 'ts-morph';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { INIT } from '../const/init.const';
-import { capitalize } from '../../shared/utils/strings.util';
+import { capitalize } from '../../shared/core/utils/primitives/strings.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 
 /**

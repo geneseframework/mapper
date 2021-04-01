@@ -3,7 +3,7 @@ import {
     getPropertiesFromCurvedBracketed
 } from '../../create/types/containers/curve-bracketed.type';
 import { Property } from '../../shared/types/target/property.type';
-import { haveSameLength } from '../../shared/utils/arrays.util';
+import { haveSameLength } from '../../shared/core/utils/primitives/arrays.util';
 import { BlockInfo } from '../../create/types/containers/block.type';
 
 /**

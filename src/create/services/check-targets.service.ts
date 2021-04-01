@@ -7,7 +7,7 @@ import { TargetService } from './target.service';
 import { isStringAsTrivialType } from '../types/trivial-types/null-or-literal.type';
 import { getElements, trimSeparators } from '../utils/target.util';
 import { hasDeclaration } from '../utils/global.util';
-import { removeBorders } from '../../shared/utils/strings.util';
+import { removeBorders } from '../../shared/core/utils/primitives/strings.util';
 import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
 import { isContainerized } from '../types/containers/containerized.type';
 import { isIndexableKey } from '../types/properties/indexable-key.type';

@@ -3,7 +3,7 @@ import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/trivial-types/not-some-type.type';
-import { includes } from '../../../shared/utils/arrays.util';
+import { includes } from '../../../shared/core/utils/primitives/arrays.util';
 import * as chalk from 'chalk';
 
 export class MapInterfaceService {

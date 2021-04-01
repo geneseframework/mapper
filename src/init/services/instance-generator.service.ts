@@ -2,7 +2,7 @@ import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
-import { tab, tabs } from '../../shared/utils/strings.util';
+import { tab, tabs } from '../../shared/core/utils/primitives/strings.util';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 
 /**

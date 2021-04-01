@@ -8,7 +8,7 @@ import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shared/utils/declaration-info.util';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 import { addQuotes } from '../../shared/types/quoted.type';
-import { tab, tabs } from '../../shared/utils/strings.util';
+import { tab, tabs } from '../../shared/core/utils/primitives/strings.util';
 
 /**
  * Generates the declaration-infos.js file, which will be used by the create() method to find the info about the instance or the object to create

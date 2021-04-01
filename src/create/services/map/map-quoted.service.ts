@@ -1,7 +1,7 @@
 import { Quoted } from '../../../shared/types/quoted.type';
 import { isString } from '../../../shared/core/utils/primitives/strings.util';
 import { isNumber } from '../../../shared/core/utils/primitives/numbers.util';
-import { removeBorders } from '../../../shared/utils/strings.util';
+import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 
 export class MapQuotedService {
