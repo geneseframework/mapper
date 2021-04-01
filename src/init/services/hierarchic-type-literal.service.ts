@@ -16,7 +16,7 @@ import {
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { BlockInfo } from '../../create/types/containers/block.type';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
-import { removeBorders } from '../../shared/utils/strings.util';
+import { removeBorders } from '../../shared/core/utils/primitives/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 

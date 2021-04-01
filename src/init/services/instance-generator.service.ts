@@ -2,9 +2,9 @@ import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
-import { tab, tabs } from '../../shared/utils/strings.util';
-import { commonjs } from '../../shared/const/commonjs.const';
+import { tab, tabs } from '../../shared/core/utils/primitives/strings.util';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
+
 /**
  * Generates the instance-generator.js file which ill be used by the create() method to instantiate new objects
  */
@@ -100,7 +100,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
+        return `const generateInstance = function(instanceGenerator) {\n`;
     }
 
     /**
@@ -110,7 +110,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
+        return `exports.generateInstance = generateInstance;\n`;
     }
 
 

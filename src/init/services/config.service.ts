@@ -1,10 +1,9 @@
 import { INIT } from '../const/init.const';
 import { MapperConfig } from '../../shared/models/config.model';
 import { ArrayLiteralExpression, ObjectLiteralExpression, SourceFile, SyntaxKind } from 'ts-morph';
-import { removeBorders, tab, tabs } from '../../shared/utils/strings.util';
-import { commonjs } from '../../shared/const/commonjs.const';
+import { removeBorders, tab, tabs } from '../../shared/core/utils/primitives/strings.util';
 import * as fs from 'fs-extra';
-import { isArray } from '../../shared/utils/arrays.util';
+import { isArray } from '../../shared/core/utils/primitives/arrays.util';
 import { getInitializer } from '../utils/ast/ast-property.util';
 
 const path = require('path');
@@ -114,32 +113,12 @@ export class ConfigService {
      * @private
      */
     private static getConfigCode(geneseConfigMapper: MapperConfig): string {
-        return this.declareConstCode() +
+        return `const config = {\n` +
             `${tab}behavior: {\n` +
             `${tabs(2)}differentiateStringsAndNumbers: ${geneseConfigMapper.behavior.castStringsAndNumbers.toString()},\n` +
             `${tab}}\n` +
             `}\n` +
-            this.exportsCode();
-    }
-
-    /**
-     * Returns the first line of the config.js file
-     * - In NodeJs environment, declares 'config' constant
-     * - In browser environment, uses 'export' keyword
-     * @private
-     */
-    private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const config = {\n` : `export var config = {\n`;
-    }
-
-    /**
-     * Returns the last line of the config.js file
-     * - In NodeJs environment, exports 'config' constant with 'exports.config' syntax
-     * - In browser environment, adds empty line
-     * @private
-     */
-    private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.config = config;\n` : `\n`;
+            `exports.config = config;\n`;
     }
 
     /**

@@ -8,8 +8,7 @@ import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info
 import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shared/utils/declaration-info.util';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
 import { addQuotes } from '../../shared/types/quoted.type';
-import { tab, tabs } from '../../shared/utils/strings.util';
-import { commonjs } from '../../shared/const/commonjs.const';
+import { tab, tabs } from '../../shared/core/utils/primitives/strings.util';
 
 /**
  * Generates the declaration-infos.js file, which will be used by the create() method to find the info about the instance or the object to create
@@ -57,7 +56,7 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
+        return `const declarationInfos = [\n`;
     }
 
     /**
@@ -67,7 +66,7 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
+        return `exports.declarationInfos = declarationInfos;\n`;
     }
 
     /**

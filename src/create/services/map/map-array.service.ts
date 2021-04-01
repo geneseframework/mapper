@@ -1,7 +1,7 @@
 import { create } from '../../main';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
-import { isArray } from '../../../shared/utils/arrays.util';
+import { isArray } from '../../../shared/core/utils/primitives/arrays.util';
 import { ArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
 import { isWildCard } from '../../types/non-trivial-types/wildcard.type';
 

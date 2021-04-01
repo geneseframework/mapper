@@ -1,9 +1,8 @@
-import { ImportDeclaration, SourceFile, SyntaxKind, VariableStatement } from 'ts-morph';
+import { SourceFile, SyntaxKind, VariableStatement } from 'ts-morph';
 import { INIT } from '../const/init.const';
-import { commonjs } from '../../shared/const/commonjs.const';
 
 /**
- * Modifies the global-init.service.js file in case it will be used in NodeJs environment or in browser environment
+ * Modifies the global-init.service.js file
  */
 export class RefactoGlobalInitService {
 
@@ -13,38 +12,12 @@ export class RefactoGlobalInitService {
      */
     static async init(): Promise<void> {
         const globalInitSourceFile: SourceFile = INIT.project.addSourceFileAtPath(INIT.globalInitPath);
-        if (commonjs) {
-            this.setRequireStatements(globalInitSourceFile);
-        } else {
-            this.setImportDeclarations(globalInitSourceFile);
-        }
+        this.setRequireStatements(globalInitSourceFile);
         globalInitSourceFile.saveSync();
     }
 
     /**
-     * Sets the imports to the generated files in case of a browser environment
-     * @param sourceFile    // The SourceFile corresponding to the file to import
-     * @private
-     */
-    private static setImportDeclarations(sourceFile: SourceFile): void {
-        this.setImportDeclaration('declarationInfos', sourceFile).setModuleSpecifier(INIT.declarationInfoPath);
-        this.setImportDeclaration('generateInstance', sourceFile).setModuleSpecifier(INIT.instanceGeneratorPath);
-        this.setImportDeclaration('config', sourceFile).setModuleSpecifier(INIT.generatedConfigPath);
-    }
-
-    /**
-     * Sets the import to a given generated file in case of a browser environment
-     * @param importName    // The name of the import which will be used for the imported file
-     * @param sourceFile    // The SourceFile corresponding to the file to import
-     * @private
-     */
-    private static setImportDeclaration(importName: string, sourceFile: SourceFile): ImportDeclaration {
-        return sourceFile.getImportDeclarations().find(i => i.getNamedImports().map(n => n.getName()).flat().includes(importName));
-
-    }
-
-    /**
-     * Sets the requires to the generated files in case of a NodeJs environment
+     * Sets the requires to the generated files
      * @param sourceFile    // The SourceFile corresponding to the file to import
      * @private
      */

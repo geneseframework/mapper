@@ -57,7 +57,6 @@ export class Global {
      * @param target
      */
     getTypeInfo(target: string): TypeInfo {
-        console.log(chalk.blueBright(''), this.declarationInfos.filter(d => d.name === 'BlueType'));
         return this.declarationInfos.find(d => isTypeInfo(d) && d.name === target) as TypeInfo;
     }
 

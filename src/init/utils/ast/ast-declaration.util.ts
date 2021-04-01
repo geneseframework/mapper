@@ -9,7 +9,7 @@ import { INIT } from '../../const/init.const';
 import { DeclarationOrDate, GenericableDeclaration } from '../../types/type-declaration.type';
 import { GenericParameter } from '../../../shared/types/target/generic-parameter.type';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
-import { flat } from '../../../shared/utils/arrays.util';
+import { flat } from '../../../shared/core/utils/primitives/arrays.util';
 import { HasStructureType } from '../../types/has-structure-type.type';
 
 /**

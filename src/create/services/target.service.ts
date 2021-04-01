@@ -4,7 +4,7 @@ import { isBoolean } from '../../shared/core/utils/primitives/booleans.util';
 import { isNumber } from '../../shared/core/utils/primitives/numbers.util';
 import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/trivial-types/null-or-literal.type';
-import { isArray } from '../../shared/utils/arrays.util';
+import { isArray } from '../../shared/core/utils/primitives/arrays.util';
 import { Target } from '../types/others/target.type';
 
 /**
