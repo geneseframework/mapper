@@ -8,10 +8,17 @@ import { MapperConfig } from '../../shared/models/config.model';
 
 const appRoot = require('app-root-path');
 
+/**
+ * Process launched before the execution of the project's code which will generate the mandatory files of the create() method which will be used at runtime.
+ */
 export class InitService {
 
     /**
-     * Starts the initialization and the creation of the Instance Generator file
+     * Generates the mandatory files of the create() method :
+     * - config.js
+     * - declaration-infos.js
+     * - instance-generator.js
+     * - global-init.service.js (refacto of the original file)
      */
     static async start(): Promise<void> {
         INIT.project = new Project({skipFileDependencyResolution: true});
