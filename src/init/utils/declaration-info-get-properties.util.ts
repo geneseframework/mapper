@@ -3,7 +3,7 @@ import { PropertyDeclarationOrSignature } from '../types/property-declaration-or
 import { hasTypeLiteral } from './ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from '../services/hierarchic-type-literal.service';
 import { declarationType } from './ast/ast-declaration.util';
-import { isTypeLiteralProperty } from '../types/type-literal-property.type';
+import { isTypeLiteralProperty } from '../models/type-literal-property.model';
 import { TypeLiteralNode } from 'ts-morph';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { INIT } from '../const/init.const';
