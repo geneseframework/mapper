@@ -117,7 +117,7 @@ export class HierarchicTypeLiteralService {
                 return blockInfo.block;
             }
         }
-        throwWarning(`property signature not found in ${parentStringifiedType}`);
+        throwWarning(`property signature not found for '${typeLiteralNode?.getText()}' in '${parentStringifiedType}'`);
     }
 
     /**

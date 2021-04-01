@@ -10,7 +10,7 @@ import { DeclarationOrDate, GenericableDeclaration } from '../../types/type-decl
 import { GenericParameter } from '../../../shared/types/target/generic-parameter.type';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 import { flat } from '../../../shared/utils/arrays.util';
-import { HasStructureType } from '../../types/class-or-interface-or-type-declaration.type';
+import { HasStructureType } from '../../types/has-structure-type.type';
 
 export function getDeclarationKind(typeDeclaration: DeclarationOrDate): TypeDeclarationKind {
     if (!typeDeclaration) {
