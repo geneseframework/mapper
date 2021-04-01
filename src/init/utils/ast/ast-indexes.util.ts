@@ -2,7 +2,10 @@ import { IndexSignatureDeclaration, IndexSignatureDeclarationStructure, SyntaxKi
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
 import { IndexableType } from '../../../shared/types/indexable-type.type';
 
-
+/**
+ * Returns the eventual IndexableType corresponding to a given ClassDeclaration or InterfaceDeclaration
+ * @param declaration   // The declaration to check
+ */
 export function getIndexableType(declaration: ClassOrInterfaceDeclaration): IndexableType {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
