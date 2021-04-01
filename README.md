@@ -6,9 +6,11 @@
 # @genese/mapper
 Maps objects of unknown type into the required type.
 
+`@genese/mapper` is a part of the [@genese](https://www.npmjs.com/package/genese) tools suite.
+
 ## Basic usage
 
-With @genese/mapper, you can transform untyped javascript objects into safe typed objects.
+With `@genese/mapper`, you can transform untyped javascript objects into safe typed objects.
 
 @genese/mapper exposes only one method, the `create()` method.
 
