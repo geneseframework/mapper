@@ -1,8 +1,8 @@
-import { IndexableType } from '../types/properties/indexable-type.type';
 import { StringOrNumber } from '../types/trivial-types/string-or-number.type';
 import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info.type';
 import { isNumeric } from '../../shared/types/numeric.type';
 import { areBothTrueOrFalse } from '../types/others/same-booleans.type';
+import { IndexableType } from '../../shared/types/indexable-type.type';
 
 /**
  * Checks if a classInfo or InterfaceInfo has an indexable type and if the parameter 'key' corresponds to the type of the indexable key

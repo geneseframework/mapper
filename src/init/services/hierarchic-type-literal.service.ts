@@ -117,7 +117,7 @@ export class HierarchicTypeLiteralService {
                 return blockInfo.block;
             }
         }
-        throwWarning(`property signature not found in ${parentStringifiedType}`);
+        throwWarning(`property signature not found for '${typeLiteralNode?.getText()}' in '${parentStringifiedType}'`);
     }
 
     /**
@@ -189,7 +189,7 @@ export class HierarchicTypeLiteralService {
                 initializer:  prop.getInitializer(),
                 isRequired: !prop.hasQuestionToken(),
                 name: prop.getName(),
-                type: declarationType(prop)
+                stringifiedType: declarationType(prop)
             }
             properties.push(property);
         }
@@ -205,7 +205,7 @@ export class HierarchicTypeLiteralService {
     private static replaceBlocksByInterfaceInfoNameInHTLParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
         const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
         for (const property of parent.interfaceInfo.properties) {
-            property.type = replaceBlocksByNames(property.type, [blockInfo]);
+            property.stringifiedType = replaceBlocksByNames(property.stringifiedType, [blockInfo]);
         }
     }
 

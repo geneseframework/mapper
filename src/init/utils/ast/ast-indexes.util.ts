@@ -1,9 +1,12 @@
 import { IndexSignatureDeclaration, IndexSignatureDeclarationStructure, SyntaxKind } from 'ts-morph';
 import { ClassOrInterfaceDeclaration } from '../../types/class-or-interface-declaration.type';
-import { IndexableTypeInit } from '../../types/indexable-type-init.type';
+import { IndexableType } from '../../../shared/types/indexable-type.type';
 
-
-export function getIndexableType(declaration: ClassOrInterfaceDeclaration): IndexableTypeInit {
+/**
+ * Returns the eventual IndexableType corresponding to a given ClassDeclaration or InterfaceDeclaration
+ * @param declaration   // The declaration to check
+ */
+export function getIndexableType(declaration: ClassOrInterfaceDeclaration): IndexableType {
     const indexSignatures: IndexSignatureDeclaration[] = declaration.getDescendantsOfKind(SyntaxKind.IndexSignature);
     if (indexSignatures.length === 0) {
         return undefined;

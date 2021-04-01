@@ -15,15 +15,16 @@ import { INIT } from '../../const/init.const';
 import { PropertyDeclarationOrSignature } from '../../types/property-declaration-or-signature.type';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 
-
-// TODO: Add imported classes in new instance generator file
-// TODO: remove ts-morph from runtime
+// TODO: implement createMethod() for files out of project
+/**
+ * Checks if some target is declared in a file which is out of user's project (ex: node_modules)
+ * @param target    // The target to check
+ */
 export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promise<boolean> {
     const declarations: ImportDeclaration[] = getImportDeclarations(target);
     if (declarations.length === 0) {
         return false;
     } else if (declarations.length > 1) {
-        // throwWarning(`${target} is declared in multiple files.`);
         return true;
     } else {
         const importSourceFile: SourceFile = declarations[0].getModuleSpecifierSourceFile();
