@@ -13,7 +13,7 @@ export const testMappers: TestMapper[] = [];
 
 export type BlueType = 'Blue';
 testMappers.push(new TestMapper(`'Blue' / BlueType`, 'BlueType', 'Blue', {isolate: false}));
-testMappers.push(new TestMapper(`'Blue' / BlueType`, 'BlueType', 'White', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`'White' / BlueType`, 'BlueType', 'White', {expectedValue: undefined, isolate: false}));
 
 
 // -------------------------------------------------   string   -----------------------------------------------------------

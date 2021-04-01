@@ -6,6 +6,7 @@ import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shar
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
+import * as chalk from 'chalk';
 
 
 /**
@@ -56,6 +57,7 @@ export class Global {
      * @param target
      */
     getTypeInfo(target: string): TypeInfo {
+        console.log(chalk.blueBright(''), this.declarationInfos.filter(d => d.name === 'BlueType'));
         return this.declarationInfos.find(d => isTypeInfo(d) && d.name === target) as TypeInfo;
     }
 

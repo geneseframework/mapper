@@ -22,7 +22,7 @@ export class ColorsClassSpec {
 
 testMappers.push(new TestMapper(`{color: 'White'} / ColorClassSpec`, ColorClassSpec, {color: 'White'}, {isolate: false}));
 testMappers.push(new TestMapper(`{color: ColorSpec.WHITE} / ColorClassSpec`, ColorClassSpec, {color: ColorSpec.WHITE}));
-testMappers.push(new TestMapper(`{color: 'Blue'} / ColorClassSpec / {}`, ColorClassSpec, {color: 'Blue'}, {expectedValue: {color: undefined}}));
+testMappers.push(new TestMapper(`{color: 'Blue'} / ColorClassSpec / {}`, ColorClassSpec, {color: 'Blue'}, {expectedValue: {color: undefined}, isolate: false}));
 
 
 testMappers.push(new TestMapper(`{colors: ['White']} / ColorClassSpec`, ColorsClassSpec, {colors: ['White']}));

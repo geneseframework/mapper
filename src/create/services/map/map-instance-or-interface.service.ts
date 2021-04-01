@@ -6,6 +6,7 @@ import { Property } from '../../../shared/types/target/property.type';
 import { removeBorders } from '../../../shared/utils/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
+import * as chalk from 'chalk';
 
 export class MapInstanceOrInterfaceService {
 
@@ -53,7 +54,9 @@ export class MapInstanceOrInterfaceService {
      */
     private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
-        const targetKeyType: string = property.stringifiedType;
+        const targetKeyType: string = property.type;
+        // const targetKeyType: string = property.stringifiedType;
+        console.log(chalk.cyanBright('TARGET KTTTTT'), targetKeyType);
         if (targetKeyType === 'undefined') {
             instance[key] = undefined;
         } else if (isQuoted(targetKeyType)) {

@@ -176,7 +176,7 @@ export class DeclarationInfoGeneratorService {
     }
 
     /**
-     * Returns the code specific to a given in classes and interfaces
+     * Returns the code specific to a given property in classes and interfaces
      * @param property   // The property info corresponding to the code to write
      * @private
      */
@@ -185,7 +185,7 @@ export class DeclarationInfoGeneratorService {
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
             `${tabs(4)}isRequired: ${property.isRequired},\n` +
             `${tabs(4)}name: ${addQuotes(property.name)},\n` +
-            `${tabs(4)}stringifiedType: ${addQuotes(property.type)}\n` +
+            `${tabs(4)}type: ${addQuotes(property.type)}\n` +
             `${tabs(3)}}`;
     }
 
