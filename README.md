@@ -16,9 +16,9 @@ With @genese/mapper, you can transform untyped javascript objects into safe type
 
 ```ts
 export class Person {
-    
+
     name: string;
-    
+
     hello(): void {
         console.log(`Hello ${this.name} !`);
     }
@@ -42,12 +42,12 @@ Now, assume that `Person` is a little more complex :
 
 ```ts
 export class Person {
-    
+
     age: number;
     cat: Cat;
     firstname: string;
     lastname: string;
-    
+
     hello(): void {
         console.log(`Hello ${this.name} !`);
     }
@@ -55,18 +55,18 @@ export class Person {
 
 export class Cat {
     name: string;
-    
+
     meaow(): void {
         console.log(`Meaow !`);
     }
 }
 
 const data = {
-    age: 20, 
+    age: 20,
     cat: {
         name: 'Molly'
     },
-    firstname: 'John', 
+    firstname: 'John',
     lastname: 'Doe',
 };
 ```
@@ -119,7 +119,7 @@ addPerson(@Body() data: PersonDto) {
 }
 
 isValid(data: any): data is PersonDto {
-    return data 
+    return data
         && typeof data.name === 'string'
         && Array.isArray(data.skills)
         && data.skills.every(d => typeof d === 'string');
@@ -237,8 +237,24 @@ export const geneseConfig: GeneseConfig = {
 ```
 For now, let's keep the property `mapper` empty. We will see configuration details [later](#configuration-details).
 
+### angular.json
 
-[Top](#table-of-contents) 
+Angular outputs warnings for CommonJS modules. To disable these warnings, you can add the `@genese/mapper` module to the `allowCommonJsDependencies` option in the `build` options located in teh `angular.json` file :
+
+```json
+"build": {
+    "builder": "@angular-devkit/build-angular:browser",
+        "options": {
+        "allowedCommonJsDependencies": [
+            "@genese/mapper"
+        ]
+    ...
+    }
+...
+},
+```
+
+[Top](#table-of-contents)
 ## Start
 
 Let's try `@genese/mapper` in a simple example, assuming that you want to run your code in NodeJs environment.
@@ -351,10 +367,10 @@ Assume that you want to cast `data` in a safe typed instance :
 #### Basic behavior with classes
 ```ts
 export class Person {
-    
+
     age: number;
     name: string;
-    
+
     hello(): void {
         console.log(`Hello ${this.name} ! You are ${this.age} years old.`);
     }
@@ -482,14 +498,14 @@ export class Person {
 
 export class Cat {
     name: string;
-    
+
     meaow(): void {
         console.log(`Meaow !`);
     }
 }
 
 const data = {
-    name: 'John', 
+    name: 'John',
     cat: {
         name: 'Molly'
     }
@@ -518,7 +534,7 @@ export class Person {
 
 export class User extends Person {
     role: string;
-    
+
     constructor(role: string, name: string) {
         super(name);
         this.role = role;
@@ -526,7 +542,7 @@ export class User extends Person {
 }
 
 const data = {
-    name: 'John', 
+    name: 'John',
     role: 'user',
 };
 const user: User = create(User, data);          // user === User {name: 'John', role: 'user'}
@@ -672,7 +688,7 @@ If a type is corresponding to a class, `@genese/mapper` will interpret this type
 ```ts
 export class Person {
     name: string;
-    
+
     hello(): void {
         console.log(`Hello ${this.name} !`);
     }
@@ -830,7 +846,7 @@ create('Person', {cat: {name: 'Molly'}});              // fails
 `@genese/mapper` was not able to find the definition of a given type. In this case, `@genese/mapper` will not check the `data` shape or value and will simply copy-paste it in the result of the `create()` method.
 
 Possibilities :
-- there is a typing error in your call to the `create()` method 
+- there is a typing error in your call to the `create()` method
 ```ts
 create('strring', '2')                                  // Warning
 ```

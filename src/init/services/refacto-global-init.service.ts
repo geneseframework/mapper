@@ -1,6 +1,7 @@
 import { ImportDeclaration, SourceFile, SyntaxKind, VariableStatement } from 'ts-morph';
 import { INIT } from '../const/init.const';
 import { commonjs } from '../../shared/const/commonjs.const';
+import * as chalk from 'chalk';
 
 /**
  * Modifies the global-init.service.js file in case it will be used in NodeJs environment or in browser environment
@@ -16,6 +17,7 @@ export class RefactoGlobalInitService {
         if (commonjs) {
             this.setRequireStatements(globalInitSourceFile);
         } else {
+            console.log(chalk.blueBright('NO COMMONJSSSSS'));
             this.setImportDeclarations(globalInitSourceFile);
         }
         globalInitSourceFile.saveSync();
