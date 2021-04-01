@@ -30,10 +30,10 @@ export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceD
  */
 function getPropertyFromDeclarationOrSignature(propDecOrSign: PropertyDeclarationOrSignature): Property {
     if (hasTypeLiteral(propDecOrSign)) {
-        return {name: propDecOrSign.getName(), type: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
+        return {name: propDecOrSign.getName(), stringifiedType: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return {name: propertyStructure.name, type: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        return {name: propertyStructure.name, stringifiedType: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
     }
 }
 
@@ -64,10 +64,10 @@ function getPropertyFromPropertySignature(parentName: string, propDecOrSign: Pro
     if (isTypeLiteralProperty(propDecOrSign)) {
         const typeLiteralNode: TypeLiteralNode = propDecOrSign.getTypeNode();
         const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propDecOrSign.getName()), typeLiteralNode);
-        return {name: propDecOrSign.getName(), type: newInterfaceInfo.name};
+        return {name: propDecOrSign.getName(), stringifiedType: newInterfaceInfo.name};
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return {name: propertyStructure.name, type: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        return {name: propertyStructure.name, stringifiedType: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
     }
 }
 

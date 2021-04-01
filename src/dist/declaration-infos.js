@@ -13,7 +13,7 @@ const declarationInfos = [
                 initializer: `'oop'`,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -31,7 +31,7 @@ const declarationInfos = [
                 initializer: `'a'`,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -49,7 +49,7 @@ const declarationInfos = [
                 initializer: `'oop'`,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -67,7 +67,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -85,19 +85,19 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `street`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `streetNumber`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `town`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -115,25 +115,25 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `kind`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `true`,
                 isRequired: true,
                 name: `live`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `order`,
-                type: `Order`
+                stringifiedType: `Order`
             },
         ],
     },
@@ -151,49 +151,49 @@ const declarationInfos = [
                 initializer: `[]`,
                 isRequired: true,
                 name: `colors`,
-                type: `Color[]`
+                stringifiedType: `Color[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `favouritePrey`,
-                type: `Prey`
+                stringifiedType: `Prey`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `friend`,
-                type: `Person`
+                stringifiedType: `Person`
             },
             {
                 initializer: `false`,
                 isRequired: true,
                 name: `hungry`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `mood`,
-                type: `Mood`
+                stringifiedType: `Mood`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `race`,
-                type: `Race`
+                stringifiedType: `Race`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `tattoo`,
-                type: `[string, number, Color, Person]`
+                stringifiedType: `[string, number, Color, Person]`
             },
         ],
     },
@@ -211,13 +211,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -247,13 +247,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -271,7 +271,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `live`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
         ],
     },
@@ -289,49 +289,49 @@ const declarationInfos = [
                 initializer: `undefined`,
                 isRequired: true,
                 name: `address`,
-                type: `Address`
+                stringifiedType: `Address`
             },
             {
                 initializer: `[]`,
                 isRequired: true,
                 name: `cats`,
-                type: `Cat[]`
+                stringifiedType: `Cat[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `employer`,
-                type: `Employer`
+                stringifiedType: `Employer`
             },
             {
                 initializer: `[]`,
                 isRequired: true,
                 name: `family`,
-                type: `Person[]`
+                stringifiedType: `Person[]`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `isHappy`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `lastName`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
                 isRequired: true,
                 name: `nickNames`,
-                type: `StringOrStrings`
+                stringifiedType: `StringOrStrings`
             },
         ],
     },
@@ -349,7 +349,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -367,7 +367,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -385,7 +385,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `foo`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -403,7 +403,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `bar`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -421,7 +421,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -439,37 +439,37 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `num`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `bool`,
-                type: `boolean`
+                stringifiedType: `boolean`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `strs`,
-                type: `string[]`
+                stringifiedType: `string[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `nums`,
-                type: `number[]`
+                stringifiedType: `number[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `bools`,
-                type: `boolean[]`
+                stringifiedType: `boolean[]`
             },
         ],
     },
@@ -487,19 +487,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `any`
+                stringifiedType: `any`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `b`,
-                type: `any[]`
+                stringifiedType: `any[]`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -521,7 +521,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -543,7 +543,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -561,25 +561,25 @@ const declarationInfos = [
                 initializer: `'aaa'`,
                 isRequired: true,
                 name: `a`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `2`,
                 isRequired: true,
                 name: `b`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `false`,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: `true`,
                 isRequired: true,
                 name: `d`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -597,25 +597,25 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `a`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `b`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `c`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `d`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -633,7 +633,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -651,19 +651,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `cat`,
-                type: `CatSpec`
+                stringifiedType: `CatSpec`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -681,7 +681,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -699,7 +699,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -717,7 +717,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -735,7 +735,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -755,7 +755,7 @@ const declarationInfos = [
     }`,
                 isRequired: true,
                 name: `person`,
-                type: `IDefaultsSpec`
+                stringifiedType: `IDefaultsSpec`
             },
         ],
     },
@@ -773,7 +773,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `string | number`
+                stringifiedType: `string | number`
             },
         ],
     },
@@ -791,7 +791,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `null`
+                stringifiedType: `null`
             },
         ],
     },
@@ -809,7 +809,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `undefined`
+                stringifiedType: `undefined`
             },
         ],
     },
@@ -827,7 +827,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `unknown`
+                stringifiedType: `unknown`
             },
         ],
     },
@@ -845,7 +845,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `4`
+                stringifiedType: `4`
             },
         ],
     },
@@ -863,7 +863,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `'a'`
+                stringifiedType: `'a'`
             },
         ],
     },
@@ -881,7 +881,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `false`
+                stringifiedType: `false`
             },
         ],
     },
@@ -899,7 +899,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `prop`,
-                type: `object`
+                stringifiedType: `object`
             },
         ],
     },
@@ -917,7 +917,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `StringsOrStringSpec`
+                stringifiedType: `StringsOrStringSpec`
             },
         ],
     },
@@ -935,7 +935,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `StringOrStringsSpec`
+                stringifiedType: `StringOrStringsSpec`
             },
         ],
     },
@@ -953,7 +953,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `ages`,
-                type: `NumbersOrNumberSpec`
+                stringifiedType: `NumbersOrNumberSpec`
             },
         ],
     },
@@ -971,7 +971,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `ages`,
-                type: `NumberOrNumbersSpec`
+                stringifiedType: `NumberOrNumbersSpec`
             },
         ],
     },
@@ -989,7 +989,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `level`,
-                type: `LevelSpec`
+                stringifiedType: `LevelSpec`
             },
         ],
     },
@@ -1007,7 +1007,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1025,7 +1025,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `union`,
-                type: `UnionTypeClassAndStringSpec`
+                stringifiedType: `UnionTypeClassAndStringSpec`
             },
         ],
     },
@@ -1043,13 +1043,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1067,13 +1067,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1091,7 +1091,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `employer`,
-                type: `EmployerSpec`
+                stringifiedType: `EmployerSpec`
             },
         ],
     },
@@ -1106,7 +1106,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1124,7 +1124,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `obj`,
-                type: `ObjectLiteralStringSpecInterface`
+                stringifiedType: `ObjectLiteralStringSpecInterface`
             },
         ],
     },
@@ -1139,7 +1139,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: false,
                 name: `city`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1154,13 +1154,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: false,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `place`,
-                type: `ObjectLiteralWrongCharsSpecInterface_0`
+                stringifiedType: `ObjectLiteralWrongCharsSpecInterface_0`
             },
         ],
     },
@@ -1178,7 +1178,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `obj`,
-                type: `ObjectLiteralWrongCharsSpecInterface`
+                stringifiedType: `ObjectLiteralWrongCharsSpecInterface`
             },
         ],
     },
@@ -1213,7 +1213,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `obj`,
-                type: `ObjectLiteraIndexableSpecInterface`
+                stringifiedType: `ObjectLiteraIndexableSpecInterface`
             },
         ],
     },
@@ -1228,13 +1228,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `nb`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1252,7 +1252,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `prop`,
-                type: `ObjectLiteralStringNumberSpecInterface`
+                stringifiedType: `ObjectLiteralStringNumberSpecInterface`
             },
         ],
     },
@@ -1267,7 +1267,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1285,7 +1285,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: undefined,
                 name: `prop`,
-                type: `ObjectLiteralStringArraySpecInterface[]`
+                stringifiedType: `ObjectLiteralStringArraySpecInterface[]`
             },
         ],
     },
@@ -1319,7 +1319,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `date`,
-                type: `Date`
+                stringifiedType: `Date`
             },
         ],
     },
@@ -1337,7 +1337,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `color`,
-                type: `ColorSpec`
+                stringifiedType: `ColorSpec`
             },
         ],
     },
@@ -1355,7 +1355,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `colors`,
-                type: `ColorSpec[]`
+                stringifiedType: `ColorSpec[]`
             },
         ],
     },
@@ -1373,7 +1373,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1391,7 +1391,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1409,7 +1409,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `animal`,
-                type: `AnimalSpec`
+                stringifiedType: `AnimalSpec`
             },
         ],
     },
@@ -1427,7 +1427,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `simpleName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1445,7 +1445,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1463,7 +1463,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1481,19 +1481,19 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `cat`,
-                type: `CatTupleSpec`
+                stringifiedType: `CatTupleSpec`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `firstName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1511,13 +1511,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1535,7 +1535,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `str`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1553,13 +1553,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `volunteers`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1577,13 +1577,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `employees`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1601,7 +1601,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `employer`,
-                type: `EmployerTypeSpec`
+                stringifiedType: `EmployerTypeSpec`
             },
         ],
     },
@@ -1619,7 +1619,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `NonReadableType<any>`
+                stringifiedType: `NonReadableType<any>`
             },
         ],
     },
@@ -1670,7 +1670,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `animal`,
-                type: `Animal`
+                stringifiedType: `Animal`
             },
         ],
     },
@@ -1685,7 +1685,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: false,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1700,13 +1700,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `otherName`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1721,7 +1721,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1873,7 +1873,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1896,13 +1896,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -1925,7 +1925,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1948,13 +1948,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -1977,13 +1977,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: undefined
+                stringifiedType: undefined
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: undefined
+                stringifiedType: undefined
             },
         ],
     },
@@ -2006,7 +2006,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `country`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -2021,13 +2021,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `address`,
-                type: `TypeLiteralNestedSpecInterface_0`
+                stringifiedType: `TypeLiteralNestedSpecInterface_0`
             },
         ],
     },
@@ -2050,13 +2050,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `country`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `city`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -2071,13 +2071,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
             {
                 initializer: undefined,
                 isRequired: true,
                 name: `address`,
-                type: `TypeLiteralNestedOptionalSpecInterface_0`
+                stringifiedType: `TypeLiteralNestedOptionalSpecInterface_0`
             },
         ],
     },
@@ -2188,7 +2188,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -2211,7 +2211,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
         ],
     },
@@ -2242,7 +2242,7 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `name`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },
@@ -2265,13 +2265,13 @@ const declarationInfos = [
                 initializer: undefined,
                 isRequired: true,
                 name: `age`,
-                type: `number`
+                stringifiedType: `number`
             },
             {
                 initializer: undefined,
                 isRequired: false,
                 name: `city`,
-                type: `string`
+                stringifiedType: `string`
             },
         ],
     },

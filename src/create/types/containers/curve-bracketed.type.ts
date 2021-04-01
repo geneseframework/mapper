@@ -127,9 +127,9 @@ function setTypeAndReturnRest(rest: string, property: Property): string {
     const beforeEqual: string = split[0] ?? '';
     const afterEqual: string = split[1] ?? '';
     if (beforeEqual.charAt(0) === ':') {
-        property.type = beforeEqual.slice(1).trim();
+        property.stringifiedType = beforeEqual.slice(1).trim();
     } else {
-        property.type = afterEqual ? 'apparentType' : undefined;
+        property.stringifiedType = afterEqual ? 'apparentType' : undefined;
     }
     return afterEqual.trim();
 }

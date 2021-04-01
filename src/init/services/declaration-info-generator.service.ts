@@ -185,7 +185,7 @@ export class DeclarationInfoGeneratorService {
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
             `${tabs(4)}isRequired: ${property.isRequired},\n` +
             `${tabs(4)}name: ${addQuotes(property.name)},\n` +
-            `${tabs(4)}type: ${addQuotes(property.type)}\n` +
+            `${tabs(4)}stringifiedType: ${addQuotes(property.stringifiedType)}\n` +
             `${tabs(3)}}`;
     }
 

@@ -53,7 +53,7 @@ function textPropertyIsIncludedInThisProperties(textProperty: Property, properti
         return false;
     } else {
         return textProperty.initializer === property.initializer
-            && (textProperty.type === property.type || 'apparentType')
+            && (textProperty.stringifiedType === property.stringifiedType || 'apparentType')
             && textProperty.isRequired === property.isRequired;
     }
 }

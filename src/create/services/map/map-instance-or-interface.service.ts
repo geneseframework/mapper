@@ -54,9 +54,7 @@ export class MapInstanceOrInterfaceService {
      */
     private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
-        const targetKeyType: string = property.type;
-        // const targetKeyType: string = property.stringifiedType;
-        console.log(chalk.cyanBright('TARGET KTTTTT'), targetKeyType);
+        const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {
             instance[key] = undefined;
         } else if (isQuoted(targetKeyType)) {
