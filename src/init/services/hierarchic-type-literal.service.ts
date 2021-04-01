@@ -20,8 +20,21 @@ import { removeBorders } from '../../shared/utils/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
 
+/**
+ * Creates the Hierarchic Type Literals (HTL) which will be used to generate the InterfaceInfos corresponding to the blocks surrounded by curved brackets in the stringified type of a TypeAliasDeclaration
+ * - Find recursively the curved bracketed blocks inside stringified type (finds the biggest blocks and creates HTLs children corresponding to the nested curved bracketed blocks)
+ * - Creates new InterfaceInfos for each HTL (parents and children)
+ * - Replaces recursively the curved bracketed blocks by their corresponding InterfaceInfo name
+ * - Updates the stringified type of the TypeAliasDeclaration or PropertyDeclaration of a class or interface
+ * More details in the corresponding diagram in ./docs/diagrams.mdj (StarUML file)
+ */
 export class HierarchicTypeLiteralService {
 
+    /**
+     * Creates the InterfaceInfo corresponding to the stringified type of a TypeAliasDeclaration or to the PropertyDeclaration of a class or interface property
+     * More details on the description of the service above
+     * @param declaration       // The declaration with the stringified type including texts surrounded by curved brackets
+     */
     static create(declaration: TypeOrPropertyDeclarationOrSignature): InterfaceInfo {
         const interfaceInfo: InterfaceInfo = new InterfaceInfo(declaration.getName(), sourceFilePath(declaration));
         const blockInfos: BlockInfo[] = this.getBlockInfos(declaration);
@@ -29,17 +42,11 @@ export class HierarchicTypeLiteralService {
         return interfaceInfo;
     }
 
-
-    private static getInterfaceInfoName(declaration: TypeOrPropertyDeclarationOrSignature): string {
-        if (declaration instanceof TypeAliasDeclaration) {
-            return `${declaration.getName()}Interface`;
-        } else {
-            const parentDeclaration: ClassOrInterfaceDeclaration = declaration.getParent() as ClassOrInterfaceDeclaration;
-            return `${parentDeclaration.getName()}Interface`;
-        }
-    }
-
-
+    /**
+     * Returns the info about curved bracketed blocks of the stringified type of the TypeAliasDeclaration or the PropertyDeclaration
+     * @param declaration       // The declaration with the stringified type including texts surrounded by curved brackets
+     * @private
+     */
     private static getBlockInfos(declaration: TypeOrPropertyDeclarationOrSignature): BlockInfo[] {
         const typeLiteralAncestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(declaration);
         const blockInfos: BlockInfo[] = [];
@@ -56,7 +63,25 @@ export class HierarchicTypeLiteralService {
         return blockInfos;
     }
 
+    /**
+     * Returns the name of the InterfaceInfo which will be used to construct the names of the HTL children and their corresponding InterfaceInfo
+     * @param declaration       // The declaration with the stringified type including texts surrounded by curved brackets
+     * @private
+     */
+    private static getInterfaceInfoName(declaration: TypeOrPropertyDeclarationOrSignature): string {
+        if (declaration instanceof TypeAliasDeclaration) {
+            return `${declaration.getName()}Interface`;
+        } else {
+            const parentDeclaration: ClassOrInterfaceDeclaration = declaration.getParent() as ClassOrInterfaceDeclaration;
+            return `${parentDeclaration.getName()}Interface`;
+        }
+    }
 
+    /**
+     * Returns the children of a given HTL (corresponding to the nested curved bracketed blocks nested in the stringified type of the HTL parent)
+     * @param parent        // The HTL parent
+     * @private
+     */
     private static createHTLChildren(parent: HierarchicTypeLiteral): HierarchicTypeLiteral[] {
         const htls: HierarchicTypeLiteral[] = [];
         const ancestors: TypeLiteralNode[] = this.getTypeLiteralAncestors(parent.typeLiteralNode);
@@ -67,7 +92,7 @@ export class HierarchicTypeLiteralService {
             htl.interfaceInfo = this.createHTLInterfaceInfo(htl);
             if (this.isTrivialTypeLiteral(ancestors[i])) {
                 htl.isTrivial = true;
-                this.addProperties(htl);
+                this.addPropertiesAndAddInterfaceInfoToTheDeclarationInfosArray(htl);
                 // TODO: remove this line when replaceBlocksByInterfaceInfoNames() will be implemented
                 this.replaceBlocksByInterfaceInfoNameInHTLParent(htl, parent);
             } else {
@@ -78,7 +103,12 @@ export class HierarchicTypeLiteralService {
         return htls;
     }
 
-
+    /**
+     * Returns the curved bracketed block corresponding to a TypeLiteral node in the stringified type of the HTL parent
+     * @param typeLiteralNode           // The TypeLiteral node to analyze
+     * @param parentStringifiedType     // The text of its HTL parent
+     * @private
+     */
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
         const typeLiteralProperties: Property[] = this.getTypeLiteralProperties(typeLiteralNode);
@@ -90,7 +120,11 @@ export class HierarchicTypeLiteralService {
         throwWarning(`property signature not found in ${parentStringifiedType}`);
     }
 
-
+    /**
+     * Returns the InterfaceInfo corresponding to a given HTL
+     * @param htl       // The HTL to analyze
+     * @private
+     */
     private static createHTLInterfaceInfo(htl: HierarchicTypeLiteral): InterfaceInfo {
         const interfaceInfo = new InterfaceInfo(htl.name, sourceFilePath(htl.typeLiteralNode));
         interfaceInfo.properties = getPropertiesFromCurvedBracketed(htl.originalStringifiedType);
@@ -98,12 +132,20 @@ export class HierarchicTypeLiteralService {
         return interfaceInfo;
     }
 
-
+    /**
+     * Checks if a TypeLiteral node has TypeLiteral node children
+     * @param typeLiteralNode   // The TypeLiteral node to analyze
+     * @private
+     */
     private static isTrivialTypeLiteral(typeLiteralNode: TypeLiteralNode): boolean {
         return !typeLiteralNode.getFirstDescendantByKind(SyntaxKind.TypeLiteral);
     }
 
-
+    /**
+     * Returns the TypeLiteral nodes which are the ancestors of a given Node
+     * @param node      // The node to analyze
+     * @private
+     */
     private static getTypeLiteralAncestors(node: Node): TypeLiteralNode[] {
         const typeLiteralNodes: TypeLiteralNode[] = [];
         for (const typeLiteralNode of node.getDescendantsOfKind(SyntaxKind.TypeLiteral)) {
@@ -114,19 +156,32 @@ export class HierarchicTypeLiteralService {
         return typeLiteralNodes;
     }
 
-
+    /**
+     * Checks if a TypeLiteral Node is a child of root Node
+     * @param typeLiteralNode
+     * @param root
+     * @private
+     */
     private static isTypeLiteralAncestorInRootNode(typeLiteralNode: TypeLiteralNode, root: Node): boolean {
         const ancestor: TypeLiteralNode = getFirstTypeLiteralAncestor(typeLiteralNode);
         return !ancestor || ancestor === root;
     }
 
-
-    private static addProperties(htl: HierarchicTypeLiteral): void {
+    /**
+     * - Adds properties to the InterfaceInfo corresponding to a given HTL
+     * - Push this InterfaceInfo to the array of DeclarationInfo in the generated declaration-info.js file
+     * @param htl       // The HTL to analyze
+     * @private
+     */
+    private static addPropertiesAndAddInterfaceInfoToTheDeclarationInfosArray(htl: HierarchicTypeLiteral): void {
         htl.interfaceInfo.properties = this.getTypeLiteralProperties(htl.typeLiteralNode);
         INIT.addDeclarationInfo(htl.interfaceInfo);
     }
 
-
+    /**
+     * Returns the array of Property corresponding to the 'classic' properties of a given TypeLiteral Node (ie: the properties which are not indexable types)
+     * @param typeLiteral
+     */
     static getTypeLiteralProperties(typeLiteral: TypeLiteralNode): Property[] {
         return this.getClassicProperties(typeLiteral);
     }
