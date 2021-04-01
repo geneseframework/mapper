@@ -16,6 +16,7 @@ import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
 import { getPropertiesFromClassOrInterface } from '../utils/declaration-info-get-properties.util';
+import * as chalk from 'chalk';
 
 /**
  * Generates the declaration-infos.js file from the user's project
@@ -52,7 +53,6 @@ export class DeclarationInfoService {
      */
     static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
-        DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
         const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getPropertiesFromClassOrInterface(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();

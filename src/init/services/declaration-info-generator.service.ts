@@ -12,6 +12,8 @@ import { DeclarationInfo } from '../../shared/models/declarations/declaration-in
 import { addQuotes } from '../../shared/types/quoted.type';
 import { tab, tabs } from '../../shared/utils/strings.util';
 import { commonjs } from '../../shared/const/commonjs.const';
+import { includes } from '../../shared/utils/arrays.util';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 
 export class DeclarationInfoGeneratorService {
 
@@ -24,29 +26,6 @@ export class DeclarationInfoGeneratorService {
         INIT.declarationInfoSourceFile = INIT.project.createSourceFile(INIT.declarationInfoPath, code, {overwrite: true});
         INIT.declarationInfoSourceFile.saveSync();
     }
-
-
-    static createDeclarationInfoIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
-        if (this.shouldCreateDeclarationInfo(classDeclaration, alreadyDone)) {
-            alreadyDone.push(classDeclaration.getName());
-        }
-    }
-
-
-    private static shouldCreateDeclarationInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
-        return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
-    }
-
-
-    /**
-     * Returns true if a class may be instantiated (no private constructor and not abstract)
-     * @param classDeclaration
-     * @private
-     */
-    private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
-        return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
-    }
-
 
     /**
      * Sets the code of the Instance Generator file, without the generators themselves

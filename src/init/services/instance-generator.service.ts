@@ -4,6 +4,7 @@ import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { tab, tabs } from '../../shared/utils/strings.util';
 import { commonjs } from '../../shared/const/commonjs.const';
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 
 export class InstanceGeneratorService {
 
@@ -15,16 +16,18 @@ export class InstanceGeneratorService {
     }
 
 
-    static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
+    static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): string[] {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
             INIT.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
+        return alreadyDone;
     }
 
 
     static shouldCreateInstanceGenerator(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
-        return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
+        return this.mayBeInstantiated(classDeclaration) && !this.isAlreadyDone(classDeclaration.getName(), alreadyDone);
+        // return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
     }
 
 
@@ -35,6 +38,15 @@ export class InstanceGeneratorService {
      */
     private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
         return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
+    }
+
+
+    private static isAlreadyDone(className: string, alreadyDone: string[]): boolean {
+        if (alreadyDone.includes(className)) {
+            throwWarning(`multiple declarations '${className}'. @genese/mapper will not be able to know which one to choose.`);
+            return true;
+        }
+        return false;
     }
 
 
