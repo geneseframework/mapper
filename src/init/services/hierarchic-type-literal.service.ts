@@ -111,7 +111,7 @@ export class HierarchicTypeLiteralService {
      */
     private static getOriginalStringifiedType(typeLiteralNode: TypeLiteralNode, parentStringifiedType: string): CurvedBracketed {
         const blockInfos: CurvedBracketedBlockInfo[] = getCurvedBracketedBlockInfos(parentStringifiedType);
-        const typeLiteralProperties: Property[] = this.getTypeLiteralProperties(typeLiteralNode);
+        const typeLiteralProperties: Property[] = this.getTypeLiteralClassicProperties(typeLiteralNode);
         for (const blockInfo of blockInfos) {
             if (textCorrespondsToProperties(blockInfo.block, typeLiteralProperties)) {
                 return blockInfo.block;
@@ -174,7 +174,7 @@ export class HierarchicTypeLiteralService {
      * @private
      */
     private static addPropertiesAndAddInterfaceInfoToTheDeclarationInfosArray(htl: HierarchicTypeLiteral): void {
-        htl.interfaceInfo.properties = this.getTypeLiteralProperties(htl.typeLiteralNode);
+        htl.interfaceInfo.properties = this.getTypeLiteralClassicProperties(htl.typeLiteralNode);
         INIT.addDeclarationInfo(htl.interfaceInfo);
     }
 
@@ -182,12 +182,7 @@ export class HierarchicTypeLiteralService {
      * Returns the array of Property corresponding to the 'classic' properties of a given TypeLiteral Node (ie: the properties which are not indexable types)
      * @param typeLiteral
      */
-    static getTypeLiteralProperties(typeLiteral: TypeLiteralNode): Property[] {
-        return this.getClassicProperties(typeLiteral);
-    }
-
-
-    private static getClassicProperties(typeLiteral: TypeLiteralNode): Property[] {
+    static getTypeLiteralClassicProperties(typeLiteral: TypeLiteralNode): Property[] {
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
             const property: Property = {
@@ -201,7 +196,12 @@ export class HierarchicTypeLiteralService {
         return properties;
     }
 
-
+    /**
+     * Replaces a curved bracketed block in HTL parent with the name of the InterfaceInfo of one of its HTL children
+     * @param child     // The HTL child
+     * @param parent    // The HTL parent
+     * @private
+     */
     private static replaceBlocksByInterfaceInfoNameInHTLParent(child: HierarchicTypeLiteral, parent: HierarchicTypeLiteral): void {
         const blockInfo: BlockInfo = {block: child.originalStringifiedType, name: child.interfaceInfo.name};
         for (const property of parent.interfaceInfo.properties) {
@@ -209,6 +209,11 @@ export class HierarchicTypeLiteralService {
         }
     }
 
+    /**
+     * Recursive method replacing curved bracketed blocks by their corresponding InterfaceInfo name for a given HTL
+     * @param htl       // The HTL to update
+     * @private
+     */
     private static replaceBlocksByInterfaceInfoNames(htl: HierarchicTypeLiteral): void {
         // TODO: get HTLs with trivial children
         // TODO: foreach of them, replace block by II name
