@@ -15,7 +15,6 @@ import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
 import { getPropertiesFromClassOrInterface } from '../utils/declaration-info-get-properties.util';
-import * as chalk from 'chalk';
 
 /**
  * Generates the declaration-infos.js file from the user's project
@@ -28,7 +27,6 @@ export class DeclarationInfoService {
      * - Generates the instance-generator.js file which will be used to instantiate new objects when the create() method is about classes
      */
     static async init(): Promise<void> {
-        console.log(chalk.blueBright('ZZZ'), );
         await this.setClassInfos();
         this.setEnumInfos();
         this.setInterfaceInfos();
