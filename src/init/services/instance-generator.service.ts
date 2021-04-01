@@ -3,8 +3,8 @@ import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast
 import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { tab, tabs } from '../../shared/utils/strings.util';
-import { commonjs } from '../../shared/const/commonjs.const';
 import { throwWarning } from '../../shared/core/utils/functions/errors.util';
+
 /**
  * Generates the instance-generator.js file which ill be used by the create() method to instantiate new objects
  */
@@ -100,7 +100,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static declareConstCode(): string {
-        return commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
+        return `const generateInstance = function(instanceGenerator) {\n`;
     }
 
     /**
@@ -110,7 +110,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static exportsCode(): string {
-        return commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
+        return `exports.generateInstance = generateInstance;\n`;
     }
 
 
