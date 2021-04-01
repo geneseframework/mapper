@@ -129,7 +129,7 @@ export class ConfigService {
      * @private
      */
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const config = {\n` : `export var config = {\n`;
+        return commonjs ? `const config = {\n` : `export var config = {\n`;
     }
 
     /**
@@ -139,7 +139,7 @@ export class ConfigService {
      * @private
      */
     private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.config = config;\n` : `\n`;
+        return commonjs ? `exports.config = config;\n` : `\n`;
     }
 
     /**

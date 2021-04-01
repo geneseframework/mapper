@@ -100,7 +100,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
+        return commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
     }
 
     /**
@@ -110,7 +110,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
+        return commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
     }
 
 

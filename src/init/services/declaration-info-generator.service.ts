@@ -57,7 +57,7 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     private static declareConstCode(): string {
-        return INIT.debug || commonjs ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
+        return commonjs ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
     }
 
     /**
@@ -67,7 +67,7 @@ export class DeclarationInfoGeneratorService {
      * @private
      */
     private static exportsCode(): string {
-        return INIT.debug || commonjs ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
+        return commonjs ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
     }
 
     /**
