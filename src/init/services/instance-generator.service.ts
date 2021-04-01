@@ -4,27 +4,39 @@ import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { tab, tabs } from '../../shared/utils/strings.util';
 import { commonjs } from '../../shared/const/commonjs.const';
-
+import { throwWarning } from '../../shared/core/utils/functions/errors.util';
+/**
+ * Generates the instance-generator.js file which ill be used by the create() method to instantiate new objects
+ */
 export class InstanceGeneratorService {
 
     /**
-     * Starts the creation of the Instance Generator file
+     * Generates the instance-generator.js file
      */
     static async init(): Promise<void> {
         await this.createInstanceGeneratorFile();
     }
 
-
-    static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
+    /**
+     * Adds a new element of the switch clauses of the generateInstance() method in the instance-generator.js file
+     * @param classDeclaration      // The ClassDeclaration corresponding to the switch clause to add
+     * @param alreadyDone           // Checks if user's code has multiple declarations with the same name
+     */
+    static createInstanceGeneratorIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): string[] {
         if (this.shouldCreateInstanceGenerator(classDeclaration, alreadyDone)) {
             INIT.addInstanceGenerator(new InstanceGenerator<any>(classDeclaration.getName(), classDeclaration.getSourceFile().getFilePath(), numberOfConstructorArgs(classDeclaration)));
             alreadyDone.push(classDeclaration.getName());
         }
+        return alreadyDone;
     }
 
-
+    /**
+     * Checks if a class may be instantiated and if this class was not already added to the switch clauses of the generateInstance() method
+     * @param classDeclaration      // The ClassDeclaration corresponding to the switch clause to add
+     * @param alreadyDone           // Checks if user's code has multiple declarations with the same name
+     */
     static shouldCreateInstanceGenerator(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
-        return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
+        return this.mayBeInstantiated(classDeclaration) && !this.isAlreadyDone(classDeclaration.getName(), alreadyDone);
     }
 
 
@@ -35,6 +47,20 @@ export class InstanceGeneratorService {
      */
     private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
         return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
+    }
+
+    /**
+     * Checks if user's code has multiple declarations with the same name
+     * @param className     // The className to check
+     * @param alreadyDone   // The names already added in the switch clauses
+     * @private
+     */
+    private static isAlreadyDone(className: string, alreadyDone: string[]): boolean {
+        if (alreadyDone.includes(className)) {
+            throwWarning(`multiple declarations '${className}'. @genese/mapper will not be able to know which one to choose.`);
+            return true;
+        }
+        return false;
     }
 
 
@@ -54,9 +80,7 @@ export class InstanceGeneratorService {
      * @private
      */
     private static getInstanceGeneratorCode(): string {
-        // return this.getRequiresCode() +
         return this.declareConstCode() +
-            // this.declareConstCode() +
             `${tab}try {\n` +
             `${tabs(2)}let instance;\n` +
             `${tabs(2)}switch (instanceGenerator.id) {\n` +
@@ -69,21 +93,22 @@ export class InstanceGeneratorService {
             this.exportsCode();
     }
 
-
-    private static getRequiresCode(): string {
-        let requiresCode = ''
-        for (const instanceGenerator of INIT.instanceGenerators) {
-            requiresCode = `${requiresCode}const ${instanceGenerator.typeName} = require('${instanceGenerator.typeDeclarationPath}').${instanceGenerator.typeName};\n`;
-        }
-        return `${requiresCode}\n`;
-    }
-
-
+    /**
+     * Returns the first line of the instance-generator.js file :
+     * - In NodeJs environment: 'const generateInstance = function(instanceGenerator) {' (export keyword is not allowed)
+     * - In browser environment: 'export const generateInstance = function(instanceGenerator) {' (export keyword is allowed)
+     * @private
+     */
     private static declareConstCode(): string {
         return INIT.debug || commonjs ? `const generateInstance = function(instanceGenerator) {\n` : `export const generateInstance = function(instanceGenerator) {\n`;
     }
 
-
+    /**
+     * Returns the last line of the instance-generator.js file :
+     * - In NodeJs environment: 'exports.generateInstance = generateInstance;' (usage of the exports.xxx syntax)
+     * - In browser environment: empty line
+     * @private
+     */
     private static exportsCode(): string {
         return INIT.debug || commonjs ? `exports.generateInstance = generateInstance;\n` : `\n`;
     }

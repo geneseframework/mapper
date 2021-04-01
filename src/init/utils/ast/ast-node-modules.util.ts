@@ -37,7 +37,7 @@ export async function isDeclaredOutOfProjectAddItToGlobal(target: string): Promi
 function addDeclarationInfoToGlobalDeclarationInfos(target: string, sourceFile: SourceFile): Declaration {
     let declaration: Declaration = getSourceFileDeclaration(target, sourceFile, 'Class');
     if (declaration) {
-        DeclarationInfoService.addClassInfo(declaration as ClassDeclaration, INIT.classNames);
+        DeclarationInfoService.addClassInfoAndUpdateAlreadyDone(declaration as ClassDeclaration, INIT.classNames);
         return declaration;
     }
     declaration = getSourceFileDeclaration(target, sourceFile, 'Interface');

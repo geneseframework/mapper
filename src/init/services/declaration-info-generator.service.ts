@@ -1,5 +1,3 @@
-import { ClassDeclaration } from 'ts-morph';
-import { hasPrivateConstructor } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
@@ -13,6 +11,9 @@ import { addQuotes } from '../../shared/types/quoted.type';
 import { tab, tabs } from '../../shared/utils/strings.util';
 import { commonjs } from '../../shared/const/commonjs.const';
 
+/**
+ * Generates the declaration-infos.js file, which will be used by the create() method to find the info about the instance or the object to create
+ */
 export class DeclarationInfoGeneratorService {
 
     /**
@@ -25,31 +26,8 @@ export class DeclarationInfoGeneratorService {
         INIT.declarationInfoSourceFile.saveSync();
     }
 
-
-    static createDeclarationInfoIfNotAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
-        if (this.shouldCreateDeclarationInfo(classDeclaration, alreadyDone)) {
-            alreadyDone.push(classDeclaration.getName());
-        }
-    }
-
-
-    private static shouldCreateDeclarationInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): boolean {
-        return this.mayBeInstantiated(classDeclaration) && !alreadyDone.includes(classDeclaration.getName());
-    }
-
-
     /**
-     * Returns true if a class may be instantiated (no private constructor and not abstract)
-     * @param classDeclaration
-     * @private
-     */
-    private static mayBeInstantiated(classDeclaration: ClassDeclaration): boolean {
-        return !hasPrivateConstructor(classDeclaration) && !classDeclaration.isAbstract();
-    }
-
-
-    /**
-     * Sets the code of the Instance Generator file, without the generators themselves
+     * Sets the code of the instance-generator.js file
      * @private
      */
     private static getCode(): string {
@@ -60,7 +38,10 @@ export class DeclarationInfoGeneratorService {
             this.exportsCode();
     }
 
-
+    /**
+     * Returns the code of all the elements of the array 'declarationInfos'
+     * @private
+     */
     private static getDeclarationInfosCode(): string {
         let code = '';
         for (const declarationInfo of INIT.declarationInfos) {
@@ -69,20 +50,33 @@ export class DeclarationInfoGeneratorService {
         return code;
     }
 
-
+    /**
+     * Returns the first line of the declaration-info.js file :
+     * - In NodeJs environment: 'const declarationInfos = [' (export keyword is not allowed)
+     * - In browser environment: 'export var declarationInfos = [' (export keyword is allowed)
+     * @private
+     */
     private static declareConstCode(): string {
         return INIT.debug || commonjs ? `const declarationInfos = [\n` : `export var declarationInfos = [\n`;
     }
 
-
+    /**
+     * Returns the last line of the declaration-info.js file :
+     * - In NodeJs environment: 'exports.declarationInfos = declarationInfos;' (usage of the exports.xxx syntax)
+     * - In browser environment: empty line
+     * @private
+     */
     private static exportsCode(): string {
         return INIT.debug || commonjs ? `exports.declarationInfos = declarationInfos;\n` : `\n`;
     }
 
-
+    /**
+     * Returns the code of one element of the array 'declarationInfos'
+     * @private
+     */
     private static getDeclarationInfoCode(declarationInfo: DeclarationInfo): string {
         const typeParametersCode: string = this.getTypeParametersCode(declarationInfo);
-        let code = `${tab}{\n` +
+        return `${tab}{\n` +
             `${tabs(2)}filePath: ${addQuotes(declarationInfo.filePath)},\n` +
             `${tabs(2)}kind: ${addQuotes(declarationInfo.kind)},\n` +
             `${tabs(2)}name: ${addQuotes(declarationInfo.name)},\n` +
@@ -91,19 +85,27 @@ export class DeclarationInfoGeneratorService {
             `],\n` +
             `${this.getSpecificCode(declarationInfo)}` +
             `${tab}},`;
-        return code;
     }
 
-
+    /**
+     * // TODO
+     * Returns the type parameters for generic types
+     * @param declarationInfo
+     * @private
+     */
     private static getTypeParametersCode(declarationInfo: DeclarationInfo): string {
         let code = '';
         for (const typeParameter of declarationInfo.typeParameters) {
-            code = `${code}\n`; // TODO
+            code = `${code}\n`; // TODO: finish to implement
         }
         return code;
     }
 
-
+    /**
+     * Returns the code specific to classes, interfaces, enums or types
+     * @param declarationInfo   // The declarationInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificCode(declarationInfo: DeclarationInfo): string {
         if (isClassInfo(declarationInfo)) {
             return this.getSpecificClassCode(declarationInfo);
@@ -117,28 +119,38 @@ export class DeclarationInfoGeneratorService {
         return '';
     }
 
-
+    /**
+     * Returns the code specific to classes
+     * @param classInfo   // The classInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificClassCode(classInfo: ClassInfo): string {
-        let code = `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
+        return `${tabs(2)}hasPrivateConstructor: ${classInfo.hasPrivateConstructor},\n` +
             `${this.getIndexableTypeCode(classInfo)}` +
             `${tabs(2)}isAbstract: ${classInfo.isAbstract},\n` +
             `${tabs(2)}numberOfConstructorArguments: ${classInfo.numberOfConstructorArguments},\n` +
             `${tabs(2)}properties: [\n` +
             `${this.getSpecificPropertiesCode(classInfo)}` +
             `${tabs(2)}],\n`;
-        return code;
     }
 
-
+    /**
+     * Returns the code specific to interfaces
+     * @param interfaceInfo   // The interfaceInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificInterfaceCode(interfaceInfo: InterfaceInfo): string {
-        let code = `${this.getIndexableTypeCode(interfaceInfo)}` +
+        return `${this.getIndexableTypeCode(interfaceInfo)}` +
             `${tabs(2)}properties: [\n` +
             `${this.getSpecificPropertiesCode(interfaceInfo)}` +
             `${tabs(2)}],\n`;
-        return code;
     }
 
-
+    /**
+     * Returns the code specific to indexable types in classes and interfaces
+     * @param classOrInterfaceInfo   // The classOrInterfaceInfo corresponding to the code to write
+     * @private
+     */
     private static getIndexableTypeCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
         if (!classOrInterfaceInfo.indexableType) {
             return '';
@@ -150,7 +162,11 @@ export class DeclarationInfoGeneratorService {
         }
     }
 
-
+    /**
+     * Returns the code specific to properties in classes and interfaces
+     * @param classOrInterfaceInfo   // The classOrInterfaceInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificPropertiesCode(classOrInterfaceInfo: ClassOrInterfaceInfo): string {
         let code = '';
         for (const property of classOrInterfaceInfo.properties) {
@@ -159,7 +175,11 @@ export class DeclarationInfoGeneratorService {
         return code;
     }
 
-
+    /**
+     * Returns the code specific to a given in classes and interfaces
+     * @param property   // The property info corresponding to the code to write
+     * @private
+     */
     private static getSpecificPropertyCode(property: Property): string {
         return `${tabs(3)}{\n` +
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
@@ -169,15 +189,21 @@ export class DeclarationInfoGeneratorService {
             `${tabs(3)}}`;
     }
 
-
-    //TODO : Types with antiquotes
+    //TODO : Types with anti-quotes
+    /**
+     * Returns the code specific to types
+     * @param typeInfo   // The typeInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificTypeCode(typeInfo: TypeInfo): string {
-        let code = `${tabs(2)}stringifiedType: ${addQuotes(typeInfo.stringifiedType)},\n`;
-        // Add properties if type is interface-like
-        return code;
+        return `${tabs(2)}stringifiedType: ${addQuotes(typeInfo.stringifiedType)},\n`;
     }
 
-
+    /**
+     * Returns the code specific to enums
+     * @param enumInfo   // The enumInfo corresponding to the code to write
+     * @private
+     */
     private static getSpecificEnumCode(enumInfo: EnumInfo): string {
         let code = `${tabs(2)}initializers: [\n`;
         for (const initializer of enumInfo.initializers) {

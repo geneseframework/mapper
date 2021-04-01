@@ -10,8 +10,7 @@ import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
-import { removeBorders } from '../../shared/utils/strings.util';
-import { Quoted, removeQuotes } from '../../shared/types/quoted.type';
+import { removeQuotes } from '../../shared/types/quoted.type';
 import { flat } from '../../shared/utils/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
@@ -24,6 +23,8 @@ export class DeclarationInfoService {
 
     /**
      * Starts the init() process
+     * - Generates the declaration-infos.js file which will be used to find info about all the declarations of the user's project (classes, interfaces, enums, types)
+     * - Generates the instance-generator.js file which will be used to instantiate new objects when the create() method is about classes
      */
     static async init(): Promise<void> {
         await this.setClassInfos();
@@ -41,18 +42,17 @@ export class DeclarationInfoService {
         const classDeclarations: ClassDeclaration[] = INIT.project.getSourceFiles().map(s => s.getClasses()).flat();
         const alreadyDone: string[] = []
         for (const classDeclaration of classDeclarations) {
-            this.addClassInfo(classDeclaration, alreadyDone);
+            this.addClassInfoAndUpdateAlreadyDone(classDeclaration, alreadyDone);
         }
     }
-// TODO: remove already done ?
+
     /**
-     * Adds a classInfo corresponding to a given class declared in the user's project
+     * Adds a classInfo corresponding to a given class declared in the user's project and checks if some class doesn't have the same name than other declaration in the user's project
      * @param classDeclaration  // The declaration of the class
-     * @param alreadyDone       // True if this
+     * @param alreadyDone       // The classNames already added to the array of declarationInfo
      */
-    static addClassInfo(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
+    static addClassInfoAndUpdateAlreadyDone(classDeclaration: ClassDeclaration, alreadyDone: string[]): void {
         InstanceGeneratorService.createInstanceGeneratorIfNotAlreadyDone(classDeclaration, alreadyDone);
-        DeclarationInfoGeneratorService.createDeclarationInfoIfNotAlreadyDone(classDeclaration, alreadyDone);
         const classInfo = new ClassInfo(classDeclaration.getName(), sourceFilePath(classDeclaration), numberOfConstructorArgs(classDeclaration), getPropertiesFromClassOrInterface(classDeclaration));
         classInfo.hasPrivateConstructor = hasPrivateConstructor(classDeclaration);
         classInfo.isAbstract = classDeclaration.isAbstract();
@@ -71,7 +71,10 @@ export class DeclarationInfoService {
         }
     }
 
-
+    /**
+     * Adds interfaceInfo to GLOBAL declarationInfos array
+     * @param interfaceDeclaration  // The declaration corresponding to the interfaceInfo to add
+     */
     static addInterfaceInfo(interfaceDeclaration: InterfaceDeclaration): void {
         const interfaceInfo = new InterfaceInfo(interfaceDeclaration.getName(), sourceFilePath(interfaceDeclaration), getPropertiesFromClassOrInterface(interfaceDeclaration));
         interfaceInfo.indexableType = getIndexableType(interfaceDeclaration);
@@ -89,7 +92,10 @@ export class DeclarationInfoService {
         }
     }
 
-
+    /**
+     * Adds enumInfo to GLOBAL declarationInfos array
+     * @param enumDeclaration  // The declaration corresponding to the enumInfo to add
+     */
     static addEnumInfo(enumDeclaration: EnumDeclaration): void {
         const enumInfo = new EnumInfo(enumDeclaration.getName(), sourceFilePath(enumDeclaration));
         enumInfo.initializers = enumDeclaration.getStructure().members.map(m => removeQuotes(m.initializer as string));
@@ -107,7 +113,10 @@ export class DeclarationInfoService {
         }
     }
 
-
+    /**
+     * Adds typeInfo to GLOBAL declarationInfos array
+     * @param typeAliasDeclaration  // The declaration corresponding to the typeInfo to add
+     */
     static addTypeInfo(typeAliasDeclaration: TypeAliasDeclaration): void {
         const typeInfo = new TypeInfo(typeAliasDeclaration.getName(), sourceFilePath(typeAliasDeclaration), genericParameters(typeAliasDeclaration));
         if (hasTypeLiteral(typeAliasDeclaration)) {
