@@ -1,10 +1,10 @@
 import { GLOBAL } from '../../const/global.const';
-import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { InstanceGenerator } from '../../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
+import { throwWarning } from '@genese/core';
 
 export class MapClassService<T> {
 

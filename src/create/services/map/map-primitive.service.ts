@@ -1,8 +1,6 @@
 import { Primitive, PrimitiveType } from '../../types/trivial-types/primitives.type';
-import { isString } from '../../../shared/core/utils/primitives/strings.util';
-import { isNumber } from '../../../shared/core/utils/primitives/numbers.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { castStringAndNumbers } from '../../../shared/core/utils/functions/cast.util';
+import { castStringAndNumbers, isNumber, isString } from '@genese/core';
 
 export class MapPrimitiveService {
 

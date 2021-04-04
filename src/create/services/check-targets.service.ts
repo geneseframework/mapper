@@ -1,18 +1,16 @@
-import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { isPrimitiveType } from '../types/trivial-types/primitives.type';
-import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { isQuoted } from '../../shared/types/quoted.type';
 import { hasSeparators } from '../types/separators/has-separators.type';
 import { TargetService } from './target.service';
 import { isStringAsTrivialType } from '../types/trivial-types/null-or-literal.type';
 import { getElements, trimSeparators } from '../utils/target.util';
 import { hasDeclaration } from '../utils/global.util';
-import { removeBorders } from '../../shared/core/utils/primitives/strings.util';
 import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
 import { isContainerized } from '../types/containers/containerized.type';
 import { isIndexableKey } from '../types/properties/indexable-key.type';
 import { isArrayType, typeOfArray } from '../types/non-trivial-types/array-type.type';
 import { isGeneric, typeOfGeneric } from '../types/non-trivial-types/generics.type';
+import { isString, removeBorders, throwWarning } from '@genese/core';
 
 /**
  * Service checking if a given stringified target has correct format

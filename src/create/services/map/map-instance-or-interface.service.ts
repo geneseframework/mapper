@@ -3,10 +3,10 @@ import { isQuoted } from '../../../shared/types/quoted.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { Property } from '../../../shared/types/target/property.type';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
-import * as chalk from 'chalk';
+import { removeBorders } from '@genese/core';
+
 
 export class MapInstanceOrInterfaceService {
 

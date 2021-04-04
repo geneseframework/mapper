@@ -1,11 +1,8 @@
 import { Primitive } from '../types/trivial-types/primitives.type';
-import { isFunction } from '../../shared/core/utils/primitives/functions.util';
-import { isBoolean } from '../../shared/core/utils/primitives/booleans.util';
-import { isNumber } from '../../shared/core/utils/primitives/numbers.util';
 import { trimSeparators } from '../utils/target.util';
 import { isNull } from '../types/trivial-types/null-or-literal.type';
-import { isArray } from '../../shared/core/utils/primitives/arrays.util';
 import { Target } from '../types/others/target.type';
+import { isArray, isBoolean, isFunction, isNumber } from '@genese/core';
 
 /**
  * Service used to stringify the parameter 'target' of the create() method

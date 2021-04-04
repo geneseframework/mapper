@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import { isBoolean } from '../../shared/core/utils/primitives/booleans.util';
-import { clone } from '../../shared/core/utils/functions/clone.util';
 import { GLOBAL } from '../const/global.const';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
+import { clone, isBoolean } from '@genese/core';
 
 /**
  * Initializes the specific configuration of a call to the create() method

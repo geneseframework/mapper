@@ -1,6 +1,5 @@
 import { TConstructor } from './types/others/t-constructor.type';
 import { ArrayOfPrimitiveElements, Primitive } from './types/trivial-types/primitives.type';
-import { throwWarning } from '../shared/core/utils/functions/errors.util';
 import { DateConstructorParameters } from './types/trivial-types/date-constructor-parameters.type';
 import {
     NotArray,
@@ -17,6 +16,7 @@ import { MapperBehavior } from '../shared/models/config-behavior.model';
 import { ConstructorArray } from './types/non-trivial-types/constructor-array.type';
 import { Combination } from './types/non-trivial-types/combination.type';
 import { Target } from './types/others/target.type';
+import { throwWarning } from '@genese/core';
 
 /**
  * The create() method

@@ -7,8 +7,8 @@ import { isTypeLiteralProperty } from '../models/type-literal-property.model';
 import { TypeLiteralNode } from 'ts-morph';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { INIT } from '../const/init.const';
-import { capitalize } from '../../shared/core/utils/primitives/strings.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { capitalize } from '@genese/core';
 
 /**
  * Returns the array of Property of a given ClassDeclaration or InterfaceDeclaration

@@ -1,6 +1,6 @@
 import { hasSeparators } from '../separators/has-separators.type';
 import { getLastContainer, HasRightBorder } from '../containers/borders.type';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
+import { removeBorders } from '@genese/core';
 
 /**
  * Texts ending by <...> (used to define generic types, ie: without separators)

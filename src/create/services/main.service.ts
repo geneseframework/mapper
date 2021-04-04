@@ -12,11 +12,8 @@ import { MapQuotedService } from './map/map-quoted.service';
 import { CheckTargetsService } from './check-targets.service';
 import { isStringAsNumericOrStringifiedNullOrBoolean } from '../types/trivial-types/null-or-literal.type';
 import { MapNullOrLiteralService } from './map/map-null-or-literal.service';
-import { isDateTypeName } from '../../shared/core/utils/primitives/dates.util';
 import { MapDateService } from './map/map-date.service';
-import { isObjectType } from '../../shared/core/utils/primitives/objects.util';
 import { GLOBAL } from '../const/global.const';
-import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
 import { MapperBehavior } from '../../shared/models/config-behavior.model';
@@ -26,6 +23,7 @@ import { Target } from '../types/others/target.type';
 import { isWildCard } from '../types/non-trivial-types/wildcard.type';
 import { isArrayType } from '../types/non-trivial-types/array-type.type';
 import { isComplexType } from '../types/non-trivial-types/complex-type.type';
+import { isDateTypeName, isObjectType, throwWarning } from '@genese/core';
 
 export class MainService {
 

@@ -5,14 +5,13 @@ import {
     isStringAsNumericOrStringifiedNullOrBoolean,
     NumericOrStringifiedNullOrBoolean
 } from '../../types/trivial-types/null-or-literal.type';
-import { isString } from '../../../shared/core/utils/primitives/strings.util';
-import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { MapGenericService } from './map-generic.service';
 import { ComplexType } from '../../types/non-trivial-types/complex-type.type';
 import { hasUnion } from '../../types/non-trivial-types/union.type';
 import { hasIntersection } from '../../types/non-trivial-types/intersection.type';
 import { isGeneric } from '../../types/non-trivial-types/generics.type';
+import { isString, throwWarning } from '@genese/core';
 
 /**
  * Service used in case of non-trivial stringified types

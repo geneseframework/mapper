@@ -1,4 +1,4 @@
-import { isObject } from '../../../shared/core/utils/primitives/objects.util';
+import { isObject } from '@genese/core';
 
 export class MapObjectTypeService {
 

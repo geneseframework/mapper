@@ -1,6 +1,5 @@
-import { isArray } from '../../../shared/core/utils/primitives/arrays.util';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
 import { getElements } from '../../utils/target.util';
+import { isArray, removeBorders } from '@genese/core';
 
 /**
  * Texts surrounded by brackets

@@ -1,15 +1,14 @@
 import { isBracketedOrParenthesized } from '../types/containers/bracketed-or-penthesized.type';
-import { isString } from '../../shared/core/utils/primitives/strings.util';
 import { hasCommas } from '../types/separators/commas.type';
 import { ElementAndSeparator } from '../types/separators/element-and-separator.type';
 import { Separator } from '../types/separators/separator.type';
 import { HasSeparators, hasSeparators, splitSeparator } from '../types/separators/has-separators.type';
-import { throwWarning } from '../../shared/core/utils/functions/errors.util';
 import { hasSemiColumn } from '../types/separators/semi-column.type';
 import { hasExtends } from '../types/separators/extends.type';
 import { hasUnion } from '../types/non-trivial-types/union.type';
 import { hasIntersection } from '../types/non-trivial-types/intersection.type';
 import { hasInterrogation } from '../types/non-trivial-types/interrogation.type';
+import { isString, throwWarning } from '@genese/core';
 
 
 /**

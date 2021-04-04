@@ -2,8 +2,8 @@ import { Bracketed, isBracketed } from './bracketed.type';
 import { isParenthesized, Parenthesized } from './parenthesis.type';
 import { CurvedBracketed, isCurvedBracketed } from './curve-bracketed.type';
 import { isQuoted, Quoted } from '../../../shared/types/quoted.type';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
 import { isTagged, Tagged } from './tagged.type';
+import { removeBorders } from '@genese/core';
 
 /**
  * Texts surrounded by {}, (), <> or []
