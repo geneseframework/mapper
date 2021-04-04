@@ -5,13 +5,12 @@ import {
     isStringAsNumericOrStringifiedNullOrBoolean,
     NumericOrStringifiedNullOrBoolean
 } from '../../types/trivial-types/null-or-literal.type';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { MapGenericService } from './map-generic.service';
 import { ComplexType } from '../../types/non-trivial-types/complex-type.type';
 import { hasUnion } from '../../types/non-trivial-types/union.type';
 import { hasIntersection } from '../../types/non-trivial-types/intersection.type';
 import { isGeneric } from '../../types/non-trivial-types/generics.type';
-import { isString, throwWarning } from '@genese/core';
+import { isString, MapperConfigBehavior, throwWarning } from '@genese/core';
 
 /**
  * Service used in case of non-trivial stringified types
@@ -24,7 +23,7 @@ export class MapComplexService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: ComplexType, data: any, options: MapperBehavior): any {
+    static create(target: ComplexType, data: any, options: MapperConfigBehavior): any {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
@@ -49,7 +48,7 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapUnionType(data: any, options: MapperBehavior, first: string, others: string): any {
+    private static mapUnionType(data: any, options: MapperConfigBehavior, first: string, others: string): any {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
@@ -65,7 +64,7 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapNumericOrStringifiedNullOrBoolean(data: any, options: MapperBehavior, first: NumericOrStringifiedNullOrBoolean, others: string): any {
+    private static mapNumericOrStringifiedNullOrBoolean(data: any, options: MapperConfigBehavior, first: NumericOrStringifiedNullOrBoolean, others: string): any {
         if (first === data?.toString()) {
             return !options.castStringsAndNumbers && isString(data) ? undefined : data;
         } else if (isStringAsNumericOrStringifiedNullOrBoolean(others)) {
@@ -83,7 +82,7 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapIntersectionType(data: any, options: MapperBehavior, first: string, others: string): any {
+    private static mapIntersectionType(data: any, options: MapperConfigBehavior, first: string, others: string): any {
         const left: any = MainService.mapStringTarget(first, data, options);
         const right: any = MainService.mapStringTarget(others, data, options);
         return left && right ? data : undefined;

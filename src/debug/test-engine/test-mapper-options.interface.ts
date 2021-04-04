@@ -1,7 +1,7 @@
-import { MapperBehavior } from '../../shared/models/config-behavior.model';
+import { MapperConfigBehavior } from '@genese/core';
 
 export interface TestMapperOptions {
-    behavior?: MapperBehavior;
+    behavior?: MapperConfigBehavior;
     expectedValue?: any;
     isolate?: boolean;
     log?: boolean;

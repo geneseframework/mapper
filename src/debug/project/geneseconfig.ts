@@ -1,4 +1,4 @@
-import { GeneseConfig } from '../../create/models/genese-config.model';
+import { GeneseConfig } from '@genese/core';
 
 export const geneseConfig: GeneseConfig = {
     mapper: {

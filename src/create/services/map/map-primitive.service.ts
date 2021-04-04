@@ -1,6 +1,5 @@
 import { Primitive, PrimitiveType } from '../../types/trivial-types/primitives.type';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
-import { castStringAndNumbers, isNumber, isString } from '@genese/core';
+import { castStringAndNumbers, isNumber, isString, MapperConfigBehavior } from '@genese/core';
 
 export class MapPrimitiveService {
 
@@ -11,7 +10,7 @@ export class MapPrimitiveService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: PrimitiveType, data: any, options: MapperBehavior): Primitive {
+    static create(target: PrimitiveType, data: any, options: MapperConfigBehavior): Primitive {
         return this.haveSameTypeOrAreAssimilated(target, data, options) ? castStringAndNumbers(target, data) : undefined;
     }
 
@@ -23,7 +22,7 @@ export class MapPrimitiveService {
      * @param options   // The create() options
      * @private
      */
-    private static haveSameTypeOrAreAssimilated(target: PrimitiveType, data: any, options: MapperBehavior): boolean {
+    private static haveSameTypeOrAreAssimilated(target: PrimitiveType, data: any, options: MapperConfigBehavior): boolean {
         return typeof data === target?.toLowerCase()
             || (isString(data) && target?.toLowerCase() === 'number' && options.castStringsAndNumbers === true)
             || (isNumber(data) && target?.toLowerCase() === 'string' && options.castStringsAndNumbers === true);

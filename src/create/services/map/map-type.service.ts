@@ -1,7 +1,7 @@
 import { MainService } from '../main.service';
 import { GLOBAL } from '../../const/global.const';
 import { TypeInfo } from '../../../shared/models/declarations/type-info.model';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { MapperConfigBehavior } from '@genese/core';
 
 export class MapTypeService {
 
@@ -11,7 +11,7 @@ export class MapTypeService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: string, data: any, options: MapperBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): any {
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
         return MainService.mapStringTarget(typeInfo.stringifiedType, data, options);
     }

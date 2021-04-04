@@ -1,9 +1,8 @@
 import { INIT } from '../const/init.const';
-import { MapperConfig } from '../../shared/models/config.model';
 import { ArrayLiteralExpression, ObjectLiteralExpression, SourceFile, SyntaxKind } from 'ts-morph';
 import * as fs from 'fs-extra';
 import { getInitializer } from '../utils/ast/ast-property.util';
-import { isArray, removeBorders, tab, tabs } from '@genese/core';
+import { isArray, MapperConfig, removeBorders, tab, tabs } from '@genese/core';
 
 const path = require('path');
 

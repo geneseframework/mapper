@@ -1,8 +1,8 @@
 import { create } from '../../main';
 import { Bracketed, isArrayOfSameLength } from '../../types/containers/bracketed.type';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 import { getContainerizedElements } from '../../types/containers/bracketed-or-penthesized.type';
+import { MapperConfigBehavior } from '@genese/core';
 
 export class MapTupleService<T> {
 
@@ -12,7 +12,7 @@ export class MapTupleService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: Bracketed, data: any, options: MapperBehavior): any[] {
+    static create(target: Bracketed, data: any, options: MapperConfigBehavior): any[] {
         return isArrayOfSameLength(target, data) ? this.mapTuple(target, data, options) : undefined;
     }
 
@@ -22,7 +22,7 @@ export class MapTupleService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    private static mapTuple(target: Bracketed, data: any, options: MapperBehavior) {
+    private static mapTuple(target: Bracketed, data: any, options: MapperConfigBehavior) {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (isNullOrUndefined(data[i])) {

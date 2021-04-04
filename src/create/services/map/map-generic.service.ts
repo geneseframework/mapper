@@ -1,6 +1,6 @@
 import { MainService } from '../main.service';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { Generic, typeOfGeneric } from '../../types/non-trivial-types/generics.type';
+import { MapperConfigBehavior } from '@genese/core';
 
 /**
  * Service used in case of stringified types corresponding to a generic type
@@ -13,7 +13,7 @@ export class MapGenericService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: Generic, data: any, options: MapperBehavior): any {
+    static create(target: Generic, data: any, options: MapperConfigBehavior): any {
         return MainService.mapStringTarget(typeOfGeneric(target), data, options);
     }
 

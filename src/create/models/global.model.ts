@@ -1,4 +1,3 @@
-import { MapperConfig } from '../../shared/models/config.model';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
@@ -6,7 +5,7 @@ import { isClassInfo, isEnumInfo, isInterfaceInfo, isTypeInfo } from '../../shar
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
-import * as chalk from 'chalk';
+import { MapperConfig } from '@genese/core';
 
 
 /**

@@ -1,9 +1,8 @@
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/trivial-types/not-some-type.type';
-import { includes } from '@genese/core';
+import { includes, MapperConfigBehavior } from '@genese/core';
 
 export class MapInterfaceService {
 
@@ -13,7 +12,7 @@ export class MapInterfaceService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: string, data: any, options: MapperBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): any {
         return !isObjectWhichIsNotArray(data) ? undefined : this.createInterface(target, data, options);
     }
 
@@ -24,7 +23,7 @@ export class MapInterfaceService {
      * @param data      // The object to map (which is not an array)
      * @param options   // The create() options
      */
-    static createInterface(target: string, data: ObjectNotArray, options: MapperBehavior): any {
+    static createInterface(target: string, data: ObjectNotArray, options: MapperConfigBehavior): any {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
         MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);

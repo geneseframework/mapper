@@ -2,9 +2,8 @@ import { GLOBAL } from '../../const/global.const';
 import { MapInstanceOrInterfaceService } from './map-instance-or-interface.service';
 import { InstanceGenerator } from '../../../shared/models/instance-generator.model';
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
-import { throwWarning } from '@genese/core';
+import { MapperConfigBehavior, throwWarning } from '@genese/core';
 
 export class MapClassService<T> {
 
@@ -14,7 +13,7 @@ export class MapClassService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: string, data: any, options: MapperBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): any {
         return !isObjectWhichIsNotArray(data) ? undefined : this.createInstance(target, data, options);
     }
 
@@ -25,7 +24,7 @@ export class MapClassService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static createInstance(target: string, data: any, options: MapperBehavior): any {
+    static createInstance(target: string, data: any, options: MapperConfigBehavior): any {
         const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
         if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);

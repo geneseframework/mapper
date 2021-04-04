@@ -16,14 +16,13 @@ import { MapDateService } from './map/map-date.service';
 import { GLOBAL } from '../const/global.const';
 import { hasDeclaration } from '../utils/global.util';
 import { GlobalInitService } from './global-init.service';
-import { MapperBehavior } from '../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../types/trivial-types/null-or-undefined.type';
 import { MapObjectTypeService } from './map/map-object-type.service';
 import { Target } from '../types/others/target.type';
 import { isWildCard } from '../types/non-trivial-types/wildcard.type';
 import { isArrayType } from '../types/non-trivial-types/array-type.type';
 import { isComplexType } from '../types/non-trivial-types/complex-type.type';
-import { isDateTypeName, isObjectType, throwWarning } from '@genese/core';
+import { isDateTypeName, isObjectType, MapperConfigBehavior, throwWarning } from '@genese/core';
 
 export class MainService {
 
@@ -34,7 +33,7 @@ export class MainService {
      * @param data      // Data to map
      * @param options   // Behavior options for this call to the create() method
      */
-    static map<T>(target: Target<T>, data: any, options?: MapperBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
+    static map<T>(target: Target<T>, data: any, options?: MapperConfigBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
         GlobalInitService.start();
         options = OptionsService.initialize(options);
@@ -48,7 +47,7 @@ export class MainService {
      * @param data
      * @param options
      */
-    static mapStringTarget(target: string, data: any, options?: MapperBehavior): any {
+    static mapStringTarget(target: string, data: any, options?: MapperConfigBehavior): any {
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;

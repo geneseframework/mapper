@@ -7,9 +7,9 @@ import { Project, SourceFile } from 'ts-morph';
 import { generateInstance } from '../../dist/instance-generator';
 import { declarationInfos } from '../../dist/declaration-infos';
 import { DeclarationInfo } from '../../shared/models/declarations/declaration-info.model';
-import { MapperConfig } from '../../shared/models/config.model';
 import { ConfigService } from '../../init/services/config.service';
 import { initPaths, initProject } from '../tests-init.debug';
+import { MapperConfig } from '@genese/core';
 
 INIT.debug = true;
 
