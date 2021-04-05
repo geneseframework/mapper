@@ -182,7 +182,7 @@ export class DeclarationInfoGeneratorService {
     private static getSpecificPropertyCode(property: Property): string {
         return `${tabs(3)}{\n` +
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
-            `${tabs(4)}isRequired: ${property.hasQuestionToken},\n` +
+            `${tabs(4)}hasQuestionToken: ${property.hasQuestionToken},\n` +
             `${tabs(4)}name: ${addQuotes(property.name)},\n` +
             `${tabs(4)}stringifiedType: ${addQuotes(property.stringifiedType)}\n` +
             `${tabs(3)}}`;
