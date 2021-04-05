@@ -29,9 +29,9 @@ export class MapInterfaceService {
     static createInterface(target: string, data: ObjectNotArray, options: MapperConfigBehavior): MapResponse {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
-        return MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
+        // return MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
         // MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
-        // return this.hasRequiredProperties(tInterface, interfaceInfo) ? new MapResponse(tInterface) : INVALID_RESPONSE;
+        return this.hasRequiredProperties(tInterface, interfaceInfo) ? new MapResponse(tInterface) : INVALID_RESPONSE;
     }
 
 

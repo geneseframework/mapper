@@ -22,24 +22,36 @@ export class MapInstanceOrInterfaceService {
      * @param declaration   // The declaration corresponding to the class or interface
      */
     static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
-        // for (const property of declaration.properties) {
-        if (!hasRequiredProperties(data, declaration)) {
-            console.log(chalk.blueBright('REUIQREDDDDD'), data);
-            console.log(chalk.cyanBright('REUIQREDDDDD'), declaration);
-            return INVALID_RESPONSE;
-        }
+        const errors: string[] = [];
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
-                    this.mapDataKeyIfValid(data[key], options, key, instance, declaration);
+                    this.setKeyOrReturnInvalid(data[key], options, key, instance, declaration, errors);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options).response;
+                const mapResponse: MapResponse = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
+                if (!mapResponse.isValid) {
+                    return MapResponse.invalid(`Incorrect property value for key = ${key} : ${data[key]}`);
+                } else {
+                    instance[key] = mapResponse.response;
+                }
             }
         }
-        return new MapResponse(instance);
+        const isValid: boolean = errors.length === 0;
+        const response: any = isValid ? instance : undefined;
+        return new MapResponse(response, isValid, errors);
+    }
+
+
+    private static setKeyOrReturnInvalid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo, errors: string[]): void {
+        const mapResponse: MapResponse = this.mapDataKeyIfValid(dataKey, options, key, instance, declaration);
+        instance[key] = mapResponse.response;
+        if (!mapResponse.isValid) {
+            const error = `Incorrect property value for key '${key}' : ${dataKey}`;
+            errors.push(error);
+        }
     }
 
 
@@ -66,17 +78,29 @@ export class MapInstanceOrInterfaceService {
      * @param instance      // Instance object if maps a class, object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): any {
+    private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {
-            instance[key] = undefined;
+            return new MapResponse(undefined);
         } else if (isQuoted(targetKeyType)) {
-            instance[key] = removeBorders(targetKeyType);
+            return new MapResponse(removeBorders(targetKeyType));
         } else {
-            instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options).response;
+            return MainService.mapStringTarget(targetKeyType, dataKey, options);
         }
     }
+
+    // private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): any {
+    //     const property: Property = declaration.properties.find(p => p.name === key);
+    //     const targetKeyType: string = property.stringifiedType;
+    //     if (targetKeyType === 'undefined') {
+    //         instance[key] = undefined;
+    //     } else if (isQuoted(targetKeyType)) {
+    //         instance[key] = removeBorders(targetKeyType);
+    //     } else {
+    //         instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options).response;
+    //     }
+    // }
 
 
     /**

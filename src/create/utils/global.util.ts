@@ -14,13 +14,13 @@ export function hasDeclaration(typeName: string): boolean {
  * @param typeName      // The text to check
  */
 function declarationKind(typeName: string): TypeDeclarationKind {
-    if (isClassDeclaration(typeName)) {
+    if (isProjectClass(typeName)) {
         return 'Class';
-    } else if (isEnumDeclaration(typeName)) {
+    } else if (isProjectEnum(typeName)) {
         return 'Enum';
-    } else if (isInterfaceDeclaration(typeName)) {
+    } else if (isProjectInterface(typeName)) {
         return 'Interface';
-    } else if (isTypeAliasDeclaration(typeName)) {
+    } else if (isProjectTypeAlias(typeName)) {
         return 'TypeAlias';
     } else {
         return undefined;
@@ -31,7 +31,7 @@ function declarationKind(typeName: string): TypeDeclarationKind {
  * Checks if some text is the name of a class in GLOBAL.declarationInfos
  * @param typeName      // The text to check
  */
-export function isClassDeclaration(typeName: string): boolean {
+export function isProjectClass(typeName: string): boolean {
     return GLOBAL.classNames.includes(typeName);
 }
 
@@ -39,7 +39,7 @@ export function isClassDeclaration(typeName: string): boolean {
  * Checks if some text is the name of an enum in GLOBAL.declarationInfos
  * @param typeName      // The text to check
  */
-export function isEnumDeclaration(typeName: string): boolean {
+export function isProjectEnum(typeName: string): boolean {
     return GLOBAL.enumNames.includes(typeName);
 }
 
@@ -47,7 +47,7 @@ export function isEnumDeclaration(typeName: string): boolean {
  * Checks if some text is the name of an interface in GLOBAL.declarationInfos
  * @param typeName      // The text to check
  */
-export function isInterfaceDeclaration(typeName: string): boolean {
+export function isProjectInterface(typeName: string): boolean {
     return GLOBAL.interfaceNames.includes(typeName);
 }
 
@@ -55,6 +55,6 @@ export function isInterfaceDeclaration(typeName: string): boolean {
  * Checks if some text is the name of a type alias in GLOBAL.declarationInfos
  * @param typeName      // The text to check
  */
-export function isTypeAliasDeclaration(typeName: string): boolean {
+export function isProjectTypeAlias(typeName: string): boolean {
     return GLOBAL.typeNames.includes(typeName);
 }

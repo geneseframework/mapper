@@ -92,7 +92,7 @@ const generateInstance = function(instanceGenerator) {
                 break;
             case 'ValuesOnConstructor_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ValuesOnConstructor = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ValuesOnConstructor;
-                instance = new ValuesOnConstructor(undefined, undefined, undefined, undefined);
+                instance = new ValuesOnConstructor(undefined);
                 break;
             case 'CatSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const CatSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').CatSpec;

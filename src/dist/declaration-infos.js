@@ -609,30 +609,12 @@ const declarationInfos = [
         ],
         hasPrivateConstructor: false,
         isAbstract: false,
-        numberOfConstructorArguments: 4,
+        numberOfConstructorArguments: 1,
         properties: [
             {
                 initializer: undefined,
                 hasQuestionToken: false,
                 name: `a`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                hasQuestionToken: false,
-                name: `b`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                hasQuestionToken: false,
-                name: `c`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                hasQuestionToken: false,
-                name: `d`,
                 stringifiedType: undefined
             },
         ],

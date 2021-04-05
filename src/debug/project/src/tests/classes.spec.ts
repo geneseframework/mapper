@@ -16,7 +16,7 @@ export class OnePrimitiveClassSpec {
     prop: string;
 }
 
-testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: false}));
+testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: true}));
 testMappers.push(new TestMapper(`{} / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, {}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
 
@@ -110,26 +110,19 @@ testMappers.push(new TestMapper(`{} / ValuesByDefault / {a: 'z', b: 2, c: false,
 testMappers.push(new TestMapper(`{} / ValuesByDefault / {a: 'z', b: 2, c: false, d: true}`, ValuesByDefault, undefined));
 
 
-
 // --------------------------------------------   Constructor with default initializers   ---------------------------------------
 
 
 export class ValuesOnConstructor {
     a;
-    b;
-    c;
-    d;
 
-    constructor(a = 'aaa', b = 2, c = false, d = true) {
+    constructor(a = 'aaa') {
         this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;}
+    }
 }
 
-testMappers.push(new TestMapper(`{} / ValuesOnConstructor / {a: 'aaa', b: 2, c: false, d: true}`, ValuesOnConstructor, {}, {expectedValue: {a: 'aaa', b: 2, c: false, d: true}}));
-testMappers.push(new TestMapper(`{a: 'z'} / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, {a: 'z'}, {expectedValue: {a: 'z', b: 2, c: false, d: true}}));
-testMappers.push(new TestMapper(` undefined / ValuesOnConstructor / {a: 'z', b: 2, c: false, d: true}`, ValuesOnConstructor, undefined));
+testMappers.push(new TestMapper(`{a: 'z'} / ValuesOnConstructor / {a: 'z'}`, ValuesOnConstructor, {a: 'z'}, {expectedValue: {a: 'z'}, isolate: false}));
+testMappers.push(new TestMapper(`{} / ValuesOnConstructor / undefined`, ValuesOnConstructor, {}, {expectedValue: undefined, isolate: false}));
 
 
 // ------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +148,8 @@ testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / Pers
 testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'a' / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
-testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa'} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}));
+testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa', age: 20} / PersonCatSpec`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa', age: 20}, {isolate: false}));
+testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa'} / PersonCatSpec / undefined`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[new CatSpec()] / PersonCatSpec / [new CatSpec()]`, PersonCatSpec, [new CatSpec()], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[new PersonCatSpec()] / PersonCatSpec / [new PersonCatSpec()]`, PersonCatSpec, [new PersonCatSpec()], {expectedValue: undefined}));
 

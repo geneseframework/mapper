@@ -10,6 +10,7 @@ export class Property {
     initializer?: any; // TODO: Initializer with new()
     name?: string;
     stringifiedType?: string;
+    zzz = 'zzz'
 
     constructor(name?: string, stringifiedType?: string, initializer?: any, hasQuestionToken?: boolean) {
         this.name = name;
