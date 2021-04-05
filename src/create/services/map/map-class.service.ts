@@ -4,6 +4,7 @@ import { InstanceGenerator } from '../../../shared/models/instance-generator.mod
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
 import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
 import { MapperConfigBehavior, throwWarning } from '@genese/core';
+import * as chalk from 'chalk';
 
 export class MapClassService<T> {
 
@@ -32,7 +33,8 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
         const instance: object = GLOBAL.generateInstance(instanceGenerator) as object;
-        MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
-        return instance;
+        const isValid: boolean = MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
+        console.log(chalk.redBright('INSTANCEEEEE'), isValid);
+        return isValid ? instance : undefined;
     }
 }

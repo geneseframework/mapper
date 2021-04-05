@@ -428,6 +428,24 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
+        name: `OnePrimitiveOptionalClassSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                isRequired: false,
+                name: `prop`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
         name: `ClassWithPrimitivesSpec`,
         typeParameters: [
         ],

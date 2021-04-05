@@ -66,6 +66,10 @@ const generateInstance = function(instanceGenerator) {
                 const OnePrimitiveClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').OnePrimitiveClassSpec;
                 instance = new OnePrimitiveClassSpec();
                 break;
+            case 'OnePrimitiveOptionalClassSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
+                const OnePrimitiveOptionalClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').OnePrimitiveOptionalClassSpec;
+                instance = new OnePrimitiveOptionalClassSpec();
+                break;
             case 'ClassWithPrimitivesSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ClassWithPrimitivesSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ClassWithPrimitivesSpec;
                 instance = new ClassWithPrimitivesSpec();

@@ -17,7 +17,21 @@ export class OnePrimitiveClassSpec {
 }
 
 testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: false}));
-testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{} / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, {}, {expectedValue: undefined, isolate: true}));
+testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
+
+
+
+// --------------------------------------------   One primitive optional property   ------------------------------------------------
+
+
+export class OnePrimitiveOptionalClassSpec {
+    prop?: string;
+}
+
+testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveOptionalClassSpec`, OnePrimitiveOptionalClassSpec, {prop: 'a'}, {isolate: false}));
+testMappers.push(new TestMapper(`{} / OnePrimitiveOptionalClassSpec / {}`, OnePrimitiveOptionalClassSpec, {}, {expectedValue: {}, isolate: false}));
+testMappers.push(new TestMapper(`'a' / OnePrimitiveOptionalClassSpec / undefined`, OnePrimitiveOptionalClassSpec, 'a', {expectedValue: undefined, isolate: false}));
 
 
 
