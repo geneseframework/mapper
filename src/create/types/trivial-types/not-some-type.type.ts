@@ -1,6 +1,5 @@
 import { Primitive } from './primitives.type';
-import { isObject } from '../../../shared/core/utils/primitives/objects.util';
-import { isArray } from '../../../shared/core/utils/primitives/arrays.util';
+import { isArray, isObject } from '@genese/core';
 
 /**
  * Types defined by their opposite

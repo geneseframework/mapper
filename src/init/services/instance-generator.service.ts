@@ -2,8 +2,7 @@ import { ClassDeclaration } from 'ts-morph';
 import { hasPrivateConstructor, numberOfConstructorArgs } from '../utils/ast/ast-class.util';
 import { INIT } from '../const/init.const';
 import { InstanceGenerator } from '../../shared/models/instance-generator.model';
-import { tab, tabs } from '../../shared/core/utils/primitives/strings.util';
-import { throwWarning } from '../../shared/core/utils/functions/errors.util';
+import { tab, tabs, throwWarning } from '@genese/core';
 
 /**
  * Generates the instance-generator.js file which ill be used by the create() method to instantiate new objects
@@ -124,7 +123,7 @@ export class InstanceGeneratorService {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tabs(3)}default:\n` +
-            `${tabs(4)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
+            `${tabs(4)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator.id);\n` +
             `${tabs(4)}instance = undefined;\n` +
             `${tabs(2)}}\n`;
         return switchCode;

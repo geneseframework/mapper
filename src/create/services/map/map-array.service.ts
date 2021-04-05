@@ -1,9 +1,8 @@
 import { create } from '../../main';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
-import { isArray } from '../../../shared/core/utils/primitives/arrays.util';
 import { ArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
 import { isWildCard } from '../../types/non-trivial-types/wildcard.type';
+import { isArray, MapperConfigBehavior } from '@genese/core';
 
 export class MapArrayService<T> {
 
@@ -14,7 +13,7 @@ export class MapArrayService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: ArrayType, data: any, options: MapperBehavior): any[] {
+    static create(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {
         if (!isArray(data)) {
             return undefined;
         } else if (isWildCard(typeOfArray(target))) {
@@ -31,7 +30,7 @@ export class MapArrayService<T> {
      * @param data      // The array to map
      * @param options   // The create() options
      */
-    private static mapArray(target: ArrayType, data: any, options: MapperBehavior): any[] {
+    private static mapArray(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {
         const arr: any[] = [];
         for (const element of data) {
             arr.push(isNullOrUndefined(element) ? element : create(typeOfArray(target), element, options));

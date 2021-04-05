@@ -3,10 +3,9 @@ import { isQuoted } from '../../../shared/types/quoted.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { Property } from '../../../shared/types/target/property.type';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
-import * as chalk from 'chalk';
+import { MapperConfigBehavior, removeBorders } from '@genese/core';
+
 
 export class MapInstanceOrInterfaceService {
 
@@ -18,7 +17,7 @@ export class MapInstanceOrInterfaceService {
      * @param instance      // New instance if maps a class, empty object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    static map(data: any, options: MapperBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
+    static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
@@ -52,7 +51,7 @@ export class MapInstanceOrInterfaceService {
      * @param instance      // Instance object if maps a class, object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    private static mapDataKey(dataKey: any, options: MapperBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
+    private static mapDataKey(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {

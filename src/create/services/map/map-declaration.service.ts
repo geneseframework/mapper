@@ -1,13 +1,12 @@
 import { MapEnumService } from './map-enum.service';
-import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
 import { MapClassService } from './map-class.service';
 import { MapTypeService } from './map-type.service';
 import { MapInterfaceService } from './map-interface.service';
 import { GLOBAL } from '../../const/global.const';
 import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind.type';
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
 import { isArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
+import { MapperConfigBehavior, throwWarning } from '@genese/core';
 
 export class MapDeclarationService {
 
@@ -19,7 +18,7 @@ export class MapDeclarationService {
      * @param options   // The create() options
      * @private
      */
-    static create(target: string, data: any, options: MapperBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): any {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
         switch (typeDeclarationKind) {

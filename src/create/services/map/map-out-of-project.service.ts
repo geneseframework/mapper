@@ -1,5 +1,5 @@
 import { MainService } from '../main.service';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { MapperConfigBehavior } from '@genese/core';
 
 // TODO
 export class MapOutOfProjectService {
@@ -10,7 +10,7 @@ export class MapOutOfProjectService {
      * @param data
      * @param options
      */
-    static create(target: string, data: any, options: MapperBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): any {
         return MainService.mapStringTarget(target, data, options);
     }
 

@@ -11,10 +11,10 @@ import { InterfaceInfo } from '../../shared/models/declarations/interface-info.m
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
 import { removeQuotes } from '../../shared/types/quoted.type';
-import { flat } from '../../shared/core/utils/primitives/arrays.util';
 import { hasTypeLiteral } from '../utils/ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from './hierarchic-type-literal.service';
 import { getPropertiesFromClassOrInterface } from '../utils/declaration-info-get-properties.util';
+import { flat } from '@genese/core';
 
 /**
  * Generates the declaration-infos.js file from the user's project

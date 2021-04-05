@@ -3,8 +3,8 @@ import {
     getPropertiesFromCurvedBracketed
 } from '../../create/types/containers/curve-bracketed.type';
 import { Property } from '../../shared/types/target/property.type';
-import { haveSameLength } from '../../shared/core/utils/primitives/arrays.util';
 import { BlockInfo } from '../../create/types/containers/block.type';
+import { haveSameLength } from '@genese/core';
 
 /**
  * Returns some text by replacing its curved bracketed blocks by their name (ie: the name of the InterfaceInfo corresponding to these blocks)

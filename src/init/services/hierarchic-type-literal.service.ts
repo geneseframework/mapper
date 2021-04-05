@@ -15,10 +15,9 @@ import {
 } from '../../create/types/containers/curve-bracketed.type';
 import { sourceFilePath } from '../utils/ast/ast-sourcefile.util';
 import { BlockInfo } from '../../create/types/containers/block.type';
-import { throwWarning } from '../../shared/core/utils/functions/errors.util';
-import { removeBorders } from '../../shared/core/utils/primitives/strings.util';
 import { replaceBlocksByNames, textCorrespondsToProperties } from '../utils/property.util';
 import { ClassOrInterfaceDeclaration } from '../types/class-or-interface-declaration.type';
+import { removeBorders, throwWarning } from '@genese/core';
 
 /**
  * Creates the Hierarchic Type Literals (HTL) which will be used to generate the InterfaceInfos corresponding to the blocks surrounded by curved brackets in the stringified type of a TypeAliasDeclaration

@@ -1,5 +1,5 @@
 import { IndexableType } from '../../../shared/types/indexable-type.type';
-import { throwWarning } from '../../../shared/core/utils/functions/errors.util';
+import { throwWarning } from '@genese/core';
 
 /**
  * Texts corresponding to an indexable property (ie like [key: string]: number)

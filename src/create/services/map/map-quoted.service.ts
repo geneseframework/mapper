@@ -1,8 +1,5 @@
 import { Quoted } from '../../../shared/types/quoted.type';
-import { isString } from '../../../shared/core/utils/primitives/strings.util';
-import { isNumber } from '../../../shared/core/utils/primitives/numbers.util';
-import { removeBorders } from '../../../shared/core/utils/primitives/strings.util';
-import { MapperBehavior } from '../../../shared/models/config-behavior.model';
+import { isNumber, isString, MapperConfigBehavior, removeBorders } from '@genese/core';
 
 export class MapQuotedService {
 
@@ -12,7 +9,7 @@ export class MapQuotedService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create<T>(target: Quoted, data: any, options: MapperBehavior): any {
+    static create<T>(target: Quoted, data: any, options: MapperConfigBehavior): any {
         if (isString(data) || (isNumber(data) && options?.castStringsAndNumbers === false)) {
             return removeBorders(target) === data.toString() ? data.toString() : undefined;
         }

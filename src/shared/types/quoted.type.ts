@@ -1,8 +1,8 @@
-import { removeBorders } from '../core/utils/primitives/strings.util';
-
 /**
  * Strings surrounded by simple-quotes, double-quotes or anti-quotes
  */
+import { removeBorders } from '@genese/core';
+
 export type Quoted = `'${string}'` | `"${string}"` | `\`${string}\``;
 
 /**

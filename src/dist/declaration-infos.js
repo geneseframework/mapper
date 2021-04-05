@@ -1,6 +1,6 @@
 const declarationInfos = [
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/oop-in-local-tsconfig.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/out-of-project/files/oop-in-local-tsconfig.model.ts`,
         kind: `Class`,
         name: `OopInLocalTsconfig`,
         typeParameters: [
@@ -18,7 +18,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/oop.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/out-of-project/files/oop.model.ts`,
         kind: `Class`,
         name: `Oop`,
         typeParameters: [
@@ -36,7 +36,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/files/out-of-project.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/out-of-project/files/out-of-project.model.ts`,
         kind: `Class`,
         name: `OutOfProject`,
         typeParameters: [
@@ -54,7 +54,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/out-of-project/dir/dir-oop.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/out-of-project/dir/dir-oop.model.ts`,
         kind: `Class`,
         name: `DirOop`,
         typeParameters: [
@@ -72,7 +72,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/address.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/address.model.ts`,
         kind: `Class`,
         name: `Address`,
         typeParameters: [
@@ -102,7 +102,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/animal.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/animal.model.ts`,
         kind: `Class`,
         name: `Animal`,
         typeParameters: [
@@ -138,7 +138,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/cat.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/cat.model.ts`,
         kind: `Class`,
         name: `Cat`,
         typeParameters: [
@@ -198,7 +198,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/company.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/company.model.ts`,
         kind: `Class`,
         name: `Company`,
         typeParameters: [
@@ -222,7 +222,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/main-app-process.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/main-app-process.ts`,
         kind: `Class`,
         name: `MainAppProcess`,
         typeParameters: [
@@ -234,7 +234,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/ngo.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/ngo.model.ts`,
         kind: `Class`,
         name: `Ngo`,
         typeParameters: [
@@ -258,7 +258,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/organism.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/organism.model.ts`,
         kind: `Class`,
         name: `Organism`,
         typeParameters: [
@@ -276,7 +276,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/models/person.model.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/models/person.model.ts`,
         kind: `Class`,
         name: `Person`,
         typeParameters: [
@@ -336,7 +336,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-targets.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/check-targets.spec.ts`,
         kind: `Class`,
         name: `CheckClassSpec`,
         typeParameters: [
@@ -354,7 +354,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-targets.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/check-targets.spec.ts`,
         kind: `Class`,
         name: `NotExportedCheckClassSpec`,
         typeParameters: [
@@ -372,7 +372,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-typing.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/check-typing.ts`,
         kind: `Class`,
         name: `FooClass`,
         typeParameters: [
@@ -390,7 +390,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-typing.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/check-typing.ts`,
         kind: `Class`,
         name: `BarClass`,
         typeParameters: [
@@ -408,7 +408,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `OnePrimitiveClassSpec`,
         typeParameters: [
@@ -426,7 +426,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ClassWithPrimitivesSpec`,
         typeParameters: [
@@ -474,7 +474,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ClassWithAnySpec`,
         typeParameters: [
@@ -504,7 +504,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `IndexableSpec`,
         typeParameters: [
@@ -526,7 +526,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `IndexableNumberSpec`,
         typeParameters: [
@@ -548,7 +548,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ValuesByDefault`,
         typeParameters: [
@@ -584,7 +584,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ValuesOnConstructor`,
         typeParameters: [
@@ -620,7 +620,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `CatSpec`,
         typeParameters: [
@@ -638,7 +638,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `PersonCatSpec`,
         typeParameters: [
@@ -668,7 +668,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ParentClassSpec`,
         typeParameters: [
@@ -686,7 +686,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ChildClassSpec`,
         typeParameters: [
@@ -704,7 +704,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `AbstractParentClassSpec`,
         typeParameters: [
@@ -722,7 +722,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ChildAbstractClassSpec`,
         typeParameters: [
@@ -740,7 +740,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `CDefaultsSpec`,
         typeParameters: [
@@ -760,7 +760,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `StringOrNumberClassSpec`,
         typeParameters: [
@@ -778,7 +778,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `NullSpec`,
         typeParameters: [
@@ -796,7 +796,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `UndefinedSpec`,
         typeParameters: [
@@ -814,7 +814,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `UnknownSpec`,
         typeParameters: [
@@ -832,7 +832,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `NumberLiteralSpec`,
         typeParameters: [
@@ -850,7 +850,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `StringLiteralSpec`,
         typeParameters: [
@@ -868,7 +868,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `BooleanLiteralSpec`,
         typeParameters: [
@@ -886,7 +886,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `PropertyObjectSpec`,
         typeParameters: [
@@ -904,7 +904,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `PaintStringsOrStringSpec`,
         typeParameters: [
@@ -922,7 +922,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `PaintStringOrStringsSpec`,
         typeParameters: [
@@ -940,7 +940,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `AgeNumbersOrNumberSpec`,
         typeParameters: [
@@ -958,7 +958,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `AgeNumberOrNumbersSpec`,
         typeParameters: [
@@ -976,7 +976,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `LevelClassSpec`,
         typeParameters: [
@@ -994,7 +994,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `NameSpec`,
         typeParameters: [
@@ -1012,7 +1012,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ClassWithUnionTypeSpec`,
         typeParameters: [
@@ -1030,7 +1030,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `NgoSpec`,
         typeParameters: [
@@ -1054,7 +1054,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `CompanySpec`,
         typeParameters: [
@@ -1078,7 +1078,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `PersonSpec`,
         typeParameters: [
@@ -1096,7 +1096,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteralStringSpecInterface`,
         typeParameters: [
@@ -1111,7 +1111,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteralStringSpec`,
         typeParameters: [
@@ -1129,7 +1129,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteralWrongCharsSpecInterface_0`,
         typeParameters: [
@@ -1144,7 +1144,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteralWrongCharsSpecInterface`,
         typeParameters: [
@@ -1165,7 +1165,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteralWrongCharsSpec`,
         typeParameters: [
@@ -1183,7 +1183,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteraIndexableSpecInterface`,
         typeParameters: [
@@ -1196,7 +1196,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteraIndexableSpec`,
         typeParameters: [
@@ -1218,7 +1218,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteralStringNumberSpecInterface`,
         typeParameters: [
@@ -1239,7 +1239,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteralStringNumberSpec`,
         typeParameters: [
@@ -1257,7 +1257,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `ObjectLiteralStringArraySpecInterface`,
         typeParameters: [
@@ -1272,7 +1272,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteralStringArraySpec`,
         typeParameters: [
@@ -1290,7 +1290,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
         name: `ObjectLiteraIndexableTLLSpec`,
         typeParameters: [
@@ -1306,7 +1306,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/dates.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/dates.spec.ts`,
         kind: `Class`,
         name: `DateSpec`,
         typeParameters: [
@@ -1324,7 +1324,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/enums.spec.ts`,
         kind: `Class`,
         name: `ColorClassSpec`,
         typeParameters: [
@@ -1342,7 +1342,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/enums.spec.ts`,
         kind: `Class`,
         name: `ColorsClassSpec`,
         typeParameters: [
@@ -1360,7 +1360,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/generics.spec.ts`,
         kind: `Class`,
         name: `TClass`,
         typeParameters: [
@@ -1378,7 +1378,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/generics.spec.ts`,
         kind: `Class`,
         name: `TInterface`,
         typeParameters: [
@@ -1396,7 +1396,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/interfaces.spec.ts`,
         kind: `Class`,
         name: `AnimalOwner`,
         typeParameters: [
@@ -1414,7 +1414,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/objects.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/objects.spec.ts`,
         kind: `Class`,
         name: `SimpleClassSpec`,
         typeParameters: [
@@ -1432,7 +1432,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Class`,
         name: `TupleClassSpec`,
         typeParameters: [
@@ -1450,7 +1450,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Class`,
         name: `CatTupleSpec`,
         typeParameters: [
@@ -1468,7 +1468,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Class`,
         name: `PersonCatTupleSpec`,
         typeParameters: [
@@ -1498,7 +1498,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
         name: `CompanyAloneClassSpec`,
         typeParameters: [
@@ -1522,7 +1522,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
         name: `ClassStringSpec`,
         typeParameters: [
@@ -1540,7 +1540,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
         name: `NgoClassSpec`,
         typeParameters: [
@@ -1564,7 +1564,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
         name: `CompanyClassSpec`,
         typeParameters: [
@@ -1588,7 +1588,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Class`,
         name: `PersonSpec`,
         typeParameters: [
@@ -1606,7 +1606,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/warnings.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/warnings.spec.ts`,
         kind: `Class`,
         name: `WarningSpec`,
         typeParameters: [
@@ -1624,7 +1624,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/enums/colors.enum.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/enums/colors.enum.ts`,
         kind: `Enum`,
         name: `Color`,
         typeParameters: [
@@ -1636,7 +1636,7 @@ const declarationInfos = [
         ]
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/enums/mood.enum.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/enums/mood.enum.ts`,
         kind: `Enum`,
         name: `Mood`,
         typeParameters: [
@@ -1648,7 +1648,7 @@ const declarationInfos = [
         ]
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/enums.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/enums.spec.ts`,
         kind: `Enum`,
         name: `ColorSpec`,
         typeParameters: [
@@ -1660,7 +1660,7 @@ const declarationInfos = [
         ]
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/interfaces/prey.interface.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/interfaces/prey.interface.ts`,
         kind: `Interface`,
         name: `Prey`,
         typeParameters: [
@@ -1675,7 +1675,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Interface`,
         name: `IDefaultsSpec`,
         typeParameters: [
@@ -1690,7 +1690,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/interfaces.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/interfaces.spec.ts`,
         kind: `Interface`,
         name: `AnimalSpec`,
         typeParameters: [
@@ -1711,7 +1711,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `Interface`,
         name: `TupleInterfaceSpec`,
         typeParameters: [
@@ -1726,7 +1726,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/check-targets.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/check-targets.spec.ts`,
         kind: `TypeAlias`,
         name: `CheckTypeSpec`,
         typeParameters: [
@@ -1734,7 +1734,7 @@ const declarationInfos = [
         stringifiedType: `string | number`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `StringsOrStringSpec`,
         typeParameters: [
@@ -1742,7 +1742,7 @@ const declarationInfos = [
         stringifiedType: `string[] | string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `StringOrStringsSpec`,
         typeParameters: [
@@ -1750,7 +1750,7 @@ const declarationInfos = [
         stringifiedType: `string | string[]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `NumbersOrNumberSpec`,
         typeParameters: [
@@ -1758,7 +1758,7 @@ const declarationInfos = [
         stringifiedType: `number[] | number`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `NumberOrNumbersSpec`,
         typeParameters: [
@@ -1766,7 +1766,7 @@ const declarationInfos = [
         stringifiedType: `number | number[]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `LevelSpec`,
         typeParameters: [
@@ -1774,7 +1774,7 @@ const declarationInfos = [
         stringifiedType: `1 | 2 | 3`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `UnionTypeClassAndStringSpec`,
         typeParameters: [
@@ -1782,7 +1782,7 @@ const declarationInfos = [
         stringifiedType: `CatSpec | string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/classes.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `TypeAlias`,
         name: `EmployerSpec`,
         typeParameters: [
@@ -1790,7 +1790,7 @@ const declarationInfos = [
         stringifiedType: `NgoSpec | NgoSpec[] | CompanySpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/generics.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/generics.spec.ts`,
         kind: `TypeAlias`,
         name: `TExtends`,
         typeParameters: [
@@ -1799,7 +1799,7 @@ const declarationInfos = [
         stringifiedType: `T extends string ? string : boolean`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `TypeAlias`,
         name: `TupleTypeSpec`,
         typeParameters: [
@@ -1807,7 +1807,7 @@ const declarationInfos = [
         stringifiedType: `TupleClassSpec | TupleInterfaceSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `TypeAlias`,
         name: `TupleStringTupleStringStringSpec`,
         typeParameters: [
@@ -1815,7 +1815,7 @@ const declarationInfos = [
         stringifiedType: `['string', ['string', 'string']]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/tuple.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/tuple.spec.ts`,
         kind: `TypeAlias`,
         name: `TupleStringTupleStringNumberSpec`,
         typeParameters: [
@@ -1823,7 +1823,7 @@ const declarationInfos = [
         stringifiedType: `['string', ['string', 'number']]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `BlueType`,
         typeParameters: [
@@ -1831,7 +1831,7 @@ const declarationInfos = [
         stringifiedType: `'Blue'`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `StringAloneSpec`,
         typeParameters: [
@@ -1839,7 +1839,7 @@ const declarationInfos = [
         stringifiedType: `string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ParentTypeSpec`,
         typeParameters: [
@@ -1847,7 +1847,7 @@ const declarationInfos = [
         stringifiedType: `string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ChildTypeSpec`,
         typeParameters: [
@@ -1855,7 +1855,7 @@ const declarationInfos = [
         stringifiedType: `ParentTypeSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `CompanyAloneSpec`,
         typeParameters: [
@@ -1863,7 +1863,7 @@ const declarationInfos = [
         stringifiedType: `CompanyAloneClassSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralSpecInterface`,
         typeParameters: [
@@ -1878,7 +1878,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralSpec`,
         typeParameters: [
@@ -1886,7 +1886,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralTwoKeysSpecInterface`,
         typeParameters: [
@@ -1907,7 +1907,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralTwoKeysSpec`,
         typeParameters: [
@@ -1915,7 +1915,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralTwoKeysSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralArraySpecInterface`,
         typeParameters: [
@@ -1930,7 +1930,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralArraySpec`,
         typeParameters: [
@@ -1938,7 +1938,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralArraySpecInterface[]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralArrayOfArraySpecInterface`,
         typeParameters: [
@@ -1959,7 +1959,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralArrayOfArraySpec`,
         typeParameters: [
@@ -1967,7 +1967,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralArrayOfArraySpecInterface[][]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralWithoutTypesSpecInterface`,
         typeParameters: [
@@ -1988,7 +1988,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralWithoutTypesSpec`,
         typeParameters: [
@@ -1996,7 +1996,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralWithoutTypesSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralNestedSpecInterface_0`,
         typeParameters: [
@@ -2011,7 +2011,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralNestedSpecInterface`,
         typeParameters: [
@@ -2032,7 +2032,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralNestedSpec`,
         typeParameters: [
@@ -2040,7 +2040,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralNestedSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralNestedOptionalSpecInterface_0`,
         typeParameters: [
@@ -2061,7 +2061,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `TypeLiteralNestedOptionalSpecInterface`,
         typeParameters: [
@@ -2082,7 +2082,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `TypeLiteralNestedOptionalSpec`,
         typeParameters: [
@@ -2090,7 +2090,7 @@ const declarationInfos = [
         stringifiedType: `TypeLiteralNestedOptionalSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ColorsTypeSpec`,
         typeParameters: [
@@ -2098,7 +2098,7 @@ const declarationInfos = [
         stringifiedType: `'Blue' | 'White'`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `Parent1TypeSpec`,
         typeParameters: [
@@ -2106,7 +2106,7 @@ const declarationInfos = [
         stringifiedType: `string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `Parent2TypeSpec`,
         typeParameters: [
@@ -2114,7 +2114,7 @@ const declarationInfos = [
         stringifiedType: `number`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ChildParentsTypeSpec`,
         typeParameters: [
@@ -2122,7 +2122,7 @@ const declarationInfos = [
         stringifiedType: `Parent1TypeSpec | Parent2TypeSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ParentNumberOrBooleanSpec`,
         typeParameters: [
@@ -2130,7 +2130,7 @@ const declarationInfos = [
         stringifiedType: `number | boolean`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `ChildParentNumberOrBooleanAndStringSpec`,
         typeParameters: [
@@ -2138,7 +2138,7 @@ const declarationInfos = [
         stringifiedType: `ParentNumberOrBooleanSpec | string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `UnionTypeNumberLiteralSpec`,
         typeParameters: [
@@ -2146,7 +2146,7 @@ const declarationInfos = [
         stringifiedType: `0 | 1 | 2`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `UnionTypeSpec`,
         typeParameters: [
@@ -2154,7 +2154,7 @@ const declarationInfos = [
         stringifiedType: `string | number`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `UnionTypeStringOrStringsSpec`,
         typeParameters: [
@@ -2162,7 +2162,7 @@ const declarationInfos = [
         stringifiedType: `string | string[]`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `UnionClassStringOrNumberSpec`,
         typeParameters: [
@@ -2170,7 +2170,7 @@ const declarationInfos = [
         stringifiedType: `ClassStringSpec | number`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `EmployerTypeSpec`,
         typeParameters: [
@@ -2178,7 +2178,7 @@ const declarationInfos = [
         stringifiedType: `NgoClassSpec | NgoClassSpec[] | CompanyClassSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `IntersectionMandatoryLeftTypeSpecInterface`,
         typeParameters: [
@@ -2193,7 +2193,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionMandatoryLeftTypeSpec`,
         typeParameters: [
@@ -2201,7 +2201,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionMandatoryLeftTypeSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `IntersectionMandatoryRightTypeSpecInterface`,
         typeParameters: [
@@ -2216,7 +2216,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionMandatoryRightTypeSpec`,
         typeParameters: [
@@ -2224,7 +2224,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionMandatoryRightTypeSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionMandatoryTypeSpec`,
         typeParameters: [
@@ -2232,7 +2232,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionMandatoryLeftTypeSpec & IntersectionMandatoryRightTypeSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `IntersectionOptionalLeftTypeSpecInterface`,
         typeParameters: [
@@ -2247,7 +2247,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionOptionalLeftTypeSpec`,
         typeParameters: [
@@ -2255,7 +2255,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionOptionalLeftTypeSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `Interface`,
         name: `IntersectionOptionalRightTypeSpecInterface`,
         typeParameters: [
@@ -2276,7 +2276,7 @@ const declarationInfos = [
         ],
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionOptionalRightTypeSpec`,
         typeParameters: [
@@ -2284,7 +2284,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionOptionalRightTypeSpecInterface`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `IntersectionOptionalTypeSpec`,
         typeParameters: [
@@ -2292,7 +2292,7 @@ const declarationInfos = [
         stringifiedType: `IntersectionOptionalLeftTypeSpec & IntersectionOptionalRightTypeSpec`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/types.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/types.spec.ts`,
         kind: `TypeAlias`,
         name: `FunctionTypeSpec`,
         typeParameters: [
@@ -2300,7 +2300,7 @@ const declarationInfos = [
         stringifiedType: `() => string`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/warnings.spec.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/warnings.spec.ts`,
         kind: `TypeAlias`,
         name: `NonReadableType`,
         typeParameters: [
@@ -2309,7 +2309,7 @@ const declarationInfos = [
         stringifiedType: `T extends string ? number : boolean`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/employer.type.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/types/employer.type.ts`,
         kind: `TypeAlias`,
         name: `Employer`,
         typeParameters: [
@@ -2317,7 +2317,7 @@ const declarationInfos = [
         stringifiedType: `Ngo | Ngo[] | Company`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/order.type.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/types/order.type.ts`,
         kind: `TypeAlias`,
         name: `Order`,
         typeParameters: [
@@ -2325,7 +2325,7 @@ const declarationInfos = [
         stringifiedType: `'vertebrate' | 'invertebrate'`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/race.type.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/types/race.type.ts`,
         kind: `TypeAlias`,
         name: `Race`,
         typeParameters: [
@@ -2333,7 +2333,7 @@ const declarationInfos = [
         stringifiedType: `'European' | 'Siamese' | 'British short hair'`,
     },
     {
-        filePath: `/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/types/string-or-strings.type.ts`,
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/types/string-or-strings.type.ts`,
         kind: `TypeAlias`,
         name: `StringOrStrings`,
         typeParameters: [

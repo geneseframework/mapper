@@ -1,8 +1,8 @@
 import { create } from '../../create/main';
 import * as chalk from 'chalk';
 import { TESTS } from './tests.const';
-import { isSameObject } from '../../shared/core/utils/functions/is-same-object.util';
 import { isTestIt, TestType } from './test-type.type';
+import { isSameObject } from '@genese/core';
 
 const MAX_DURATION = 50;
 

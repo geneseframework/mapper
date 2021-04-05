@@ -1,7 +1,7 @@
 import { INIT } from '../init/const/init.const';
 import { Project } from 'ts-morph';
 import { ConfigService } from '../init/services/config.service';
-import { MapperConfig } from '../shared/models/config.model';
+import { MapperConfig } from '@genese/core';
 
 
 /**
