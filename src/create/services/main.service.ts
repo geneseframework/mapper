@@ -39,7 +39,7 @@ export class MainService {
         GLOBAL.start = Date.now();
         GlobalInitService.start();
         options = OptionsService.initialize(options);
-        return this.mapStringTarget(TargetService.stringify(target), data, options).response;
+        return this.mapStringTarget(TargetService.stringify(target), data, options)?.response;
     }
 
 

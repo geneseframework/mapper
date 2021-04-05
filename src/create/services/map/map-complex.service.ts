@@ -13,7 +13,6 @@ import { isGeneric } from '../../types/non-trivial-types/generics.type';
 import { isString, MapperConfigBehavior, throwWarning } from '@genese/core';
 import { MapResponse } from '../../models/map-response.model';
 import { INVALID_RESPONSE } from '../../const/invalid-response.const';
-import * as chalk from 'chalk';
 
 /**
  * Service used in case of non-trivial stringified types
@@ -30,7 +29,6 @@ export class MapComplexService {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
-        console.log(chalk.yellowBright('MAP CPXXXXXX'), target, data);
         if (isParenthesized(target)) {
             // TODO
         } else if (hasUnion(target)) {
@@ -53,12 +51,10 @@ export class MapComplexService {
      * @private
      */
     private static mapUnionType(data: any, options: MapperConfigBehavior, first: string, others: string): MapResponse {
-        console.log(chalk.blueBright('MAP UNIONNNN'), data, first, others);
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
         const mapped: MapResponse = MainService.mapStringTarget(first, data, options);
-        console.log(chalk.blueBright('MAP UNIONNNN MAPPPED'), mapped);
         return mapped?.isValid ? mapped : MainService.mapStringTarget(others, data, options);
     }
 
@@ -89,8 +85,8 @@ export class MapComplexService {
      * @private
      */
     private static mapIntersectionType(data: any, options: MapperConfigBehavior, first: string, others: string): MapResponse {
-        const left: any = MainService.mapStringTarget(first, data, options).response;
-        const right: any = MainService.mapStringTarget(others, data, options).response;
+        const left: any = MainService.mapStringTarget(first, data, options)?.response;
+        const right: any = MainService.mapStringTarget(others, data, options)?.response;
         return left && right ? new MapResponse(data) : INVALID_RESPONSE;
     }
 

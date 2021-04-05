@@ -34,9 +34,6 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
         const instance: object = GLOBAL.generateInstance(instanceGenerator) as object;
-        const mapped: any = MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
-        console.log(chalk.redBright('INSTANCEEEEE is valid'), mapped);
-        return mapped;
-        // return isValid ? instance : undefined;
+        return MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
     }
 }

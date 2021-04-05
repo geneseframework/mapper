@@ -15,7 +15,6 @@ export class MapTypeService {
      */
     static create(target: string, data: any, options: MapperConfigBehavior): MapResponse {
         const typeInfo: TypeInfo = GLOBAL.getTypeInfo(target);
-        console.log(chalk.blueBright('TYPINFOOOOOO'), typeInfo);
         return MainService.mapStringTarget(typeInfo.stringifiedType, data, options);
     }
 

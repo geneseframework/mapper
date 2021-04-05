@@ -5,9 +5,6 @@ import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-i
 import { Property } from '../../../shared/models/property.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 import { MapperConfigBehavior, removeBorders } from '@genese/core';
-import * as chalk from 'chalk';
-import { hasRequiredProperties } from '../../utils/validation.util';
-import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 import { MapResponse } from '../../models/map-response.model';
 import { requiredProperties } from '../../../init/utils/property.util';
 
@@ -57,8 +54,8 @@ export class MapInstanceOrInterfaceService {
 
     private static setKeyOrReturnInvalid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo, errors: string[]): void {
         const mapResponse: MapResponse = this.mapDataKeyIfValid(dataKey, options, key, instance, declaration);
-        instance[key] = mapResponse.response;
-        if (!mapResponse.isValid) {
+        instance[key] = mapResponse?.response;
+        if (!mapResponse?.isValid) {
             errors.push(this.incorrectPropertyMessage(key, dataKey));
         }
     }
@@ -67,21 +64,6 @@ export class MapInstanceOrInterfaceService {
     private static incorrectPropertyMessage(key: string, dataKey: any): string {
         return `Incorrect property value for key '${key}' : ${JSON.stringify(dataKey)}`;
     }
-
-
-    // static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
-    //     for (const key of Object.keys(data)) {
-    //         if (this.isProperty(key, declaration)) {
-    //             if (isNullOrUndefined(data[key])) {
-    //                 instance[key] = data[key];
-    //             } else {
-    //                 this.mapDataKeyIfValid(data[key], options, key, instance, declaration);
-    //             }
-    //         } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-    //             instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
-    //         }
-    //     }
-    // }
 
 
     /**
@@ -93,7 +75,7 @@ export class MapInstanceOrInterfaceService {
      * @param declaration   // The declaration corresponding to the class or interface
      */
     private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
-        console.log(chalk.magentaBright('MAP DATA KKKKKKK'), dataKey, key, instance);
+        // console.log(chalk.magentaBright('MAP DATA KKKKKKK'), dataKey, key, instance);
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {
@@ -101,24 +83,9 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             return new MapResponse(removeBorders(targetKeyType));
         } else {
-            console.log(chalk.magentaBright('MAP DATA KKKKKKK TKTTTTT'), targetKeyType);
-            const zzz = MainService.mapStringTarget(targetKeyType, dataKey, options);
-            console.log(chalk.magentaBright('MAP DATA KKKKKKK RESPPPP'), zzz);
-            return zzz;
+            return MainService.mapStringTarget(targetKeyType, dataKey, options);
         }
     }
-
-    // private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): any {
-    //     const property: Property = declaration.properties.find(p => p.name === key);
-    //     const targetKeyType: string = property.stringifiedType;
-    //     if (targetKeyType === 'undefined') {
-    //         instance[key] = undefined;
-    //     } else if (isQuoted(targetKeyType)) {
-    //         instance[key] = removeBorders(targetKeyType);
-    //     } else {
-    //         instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options).response;
-    //     }
-    // }
 
 
     /**

@@ -12,7 +12,6 @@ export class MapNullOrLiteralService {
      * @param target    // The stringified target
      */
     static create(target: NumericOrStringifiedNullOrBoolean): MapResponse {
-        console.log(chalk.blueBright('TGTTTTT'), target);
         const mapResponse = new MapResponse();
         if (target === 'null') {
             mapResponse.response = null;
@@ -23,7 +22,6 @@ export class MapNullOrLiteralService {
         } else {
             mapResponse.response = Number(target);
         }
-        console.log(chalk.blueBright('TGTTTTT MAPRESSS'), mapResponse);
         return mapResponse;
     }
 }

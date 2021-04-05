@@ -14,10 +14,7 @@ export class MapPrimitiveService {
      * @param options   // The create() options
      */
     static create(target: PrimitiveType, data: any, options: MapperConfigBehavior): MapResponse {
-        console.log(chalk.yellowBright('CREATE PRIMMMM'), target, data, this.haveSameTypeOrAreAssimilated(target, data, options));
-        const zzz = this.haveSameTypeOrAreAssimilated(target, data, options) ? new MapResponse(castStringAndNumbers(target, data)) : INVALID_RESPONSE;
-        console.log(chalk.yellowBright('CREATE PRIMMMM zzz'), zzz);
-        return zzz
+        return this.haveSameTypeOrAreAssimilated(target, data, options) ? new MapResponse(castStringAndNumbers(target, data)) : INVALID_RESPONSE;
     }
 
 
