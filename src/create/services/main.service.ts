@@ -24,6 +24,7 @@ import { isArrayType } from '../types/non-trivial-types/array-type.type';
 import { isComplexType } from '../types/non-trivial-types/complex-type.type';
 import { isDateTypeName, isObjectType, MapperConfigBehavior, throwWarning } from '@genese/core';
 import { MapResponse } from '../models/map-response.model';
+import * as chalk from 'chalk';
 
 export class MainService {
 
@@ -50,19 +51,24 @@ export class MainService {
      */
     static mapStringTarget(target: string, data: any, options?: MapperConfigBehavior): MapResponse | any {
         CheckTargetsService.start(target);
+        console.log(chalk.greenBright('MAP STRRTTTTT'), target, data);
         if (isNullOrUndefined(data) || isWildCard(target)) {
-            return data;
+            return new MapResponse(data);
         } else if (isDateTypeName(target)) {
             return MapDateService.create(data);
         } else if (isStringAsNumericOrStringifiedNullOrBoolean(target)) {
+            console.log(chalk.yellowBright('MAP STRRTTTTT'), target, data);
             return MapNullOrLiteralService.create(target);
         } else if (isBracketed(target)) {
+            console.log(chalk.magentaBright('MAP STRRTTTTT'), target, data);
             return MapTupleService.create(target, data, options)
         } else if (isArrayType(target)) {
             return MapArrayService.create(target, data, options);
         } else if (isPrimitiveType(target)) {
+            console.log(chalk.redBright('MAP STRRTTTTT'), target, data);
             return MapPrimitiveService.create(target, data, options);
         } else if (isQuoted(target)) {
+            console.log(chalk.cyanBright('MAP STRRTTTTT'), target, data);
             return MapQuotedService.create(target, data, options);
         } else if (isObjectType(target)) {
             return MapObjectTypeService.create(data);

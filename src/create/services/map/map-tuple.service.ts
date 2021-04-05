@@ -3,6 +3,7 @@ import { Bracketed, isArrayOfSameLength } from '../../types/containers/bracketed
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 import { getContainerizedElements } from '../../types/containers/bracketed-or-penthesized.type';
 import { MapperConfigBehavior } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
 
 export class MapTupleService<T> {
 
@@ -12,7 +13,7 @@ export class MapTupleService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: Bracketed, data: any, options: MapperConfigBehavior): any[] {
+    static create(target: Bracketed, data: any, options: MapperConfigBehavior): MapResponse {
         return isArrayOfSameLength(target, data) ? this.mapTuple(target, data, options) : undefined;
     }
 
@@ -22,7 +23,7 @@ export class MapTupleService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    private static mapTuple(target: Bracketed, data: any, options: MapperConfigBehavior) {
+    private static mapTuple(target: Bracketed, data: any, options: MapperConfigBehavior): MapResponse {
         const tuple: any[] = [];
         for (let i = 0; i < data.length; i++) {
             if (isNullOrUndefined(data[i])) {
@@ -31,7 +32,7 @@ export class MapTupleService<T> {
                 tuple.push(create(getContainerizedElements(target)[i], data[i], options));
             }
         }
-        return tuple;
+        return new MapResponse(tuple);
     }
 
 }

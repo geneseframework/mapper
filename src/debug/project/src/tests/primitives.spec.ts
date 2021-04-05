@@ -25,7 +25,7 @@ testMappers.push(new TestMapper(`'blue' / string`, String,'blue'));
 // --------------------------------------------------   Numbers   ---------------------------------------------------------
 
 
-testMappers.push(new TestMapper(`2 / number`, 'number',2));
+testMappers.push(new TestMapper(`2 / number`, 'number',2, {isolate: false}));
 testMappers.push(new TestMapper(`'2' / number / undefined`, 'number','2', {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'2' / number & !differentiate / 2`, 'number','2', {expectedValue: 2, behavior: {castStringsAndNumbers: true}}));
 testMappers.push(new TestMapper(`'a' / number & !differentiate / NaN`, 'number','a', {expectedValue: NaN, behavior: {castStringsAndNumbers: true}}));

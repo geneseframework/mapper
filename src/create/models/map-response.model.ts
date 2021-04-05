@@ -4,7 +4,7 @@ export class MapResponse {
     log: () => any = undefined;
     response: any = undefined;
 
-    constructor(isValid: boolean, response: any) {
+    constructor(response: any = undefined, isValid = true) {
         this.isValid = isValid;
         this.response = response;
     }

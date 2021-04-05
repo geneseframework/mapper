@@ -4,11 +4,10 @@ import { hasIndexableTypeAndKeyOfSameType } from '../../utils/indexable-type.uti
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
 import { Property } from '../../../shared/types/target/property.type';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
-import { isObject, MapperConfigBehavior, removeBorders } from '@genese/core';
+import { MapperConfigBehavior, removeBorders } from '@genese/core';
 import * as chalk from 'chalk';
-import { requiredProperties } from '../../../init/utils/property.util';
 import { hasRequiredProperties } from '../../utils/validation.util';
-import { INVALID_DATA, INVALID_RESPONSE } from '../../const/invalid-data.const';
+import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 import { MapResponse } from '../../models/map-response.model';
 
 
@@ -40,7 +39,7 @@ export class MapInstanceOrInterfaceService {
                 instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
             }
         }
-        return new MapResponse(true, instance);
+        return new MapResponse(instance);
     }
 
 
