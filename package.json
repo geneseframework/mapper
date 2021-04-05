@@ -12,6 +12,7 @@
         "build_and_test": "tsc && ts-node src/debug/test-engine/start-tests.ts",
         "clear": "ts-node -P src/debug/tsconfig.debug.json ./src/debug/project/clear-debug.ts",
         "init_files": "ts-node -P src/debug/tsconfig.debug.json src/debug/start-init.debug.ts",
+        "reinstall-genese-core": "npm uninstall @genese/core && npm i @genese/core",
         "start": "npm run build && node dist/index.js",
         "publish_package": "npm run build && npm publish",
         "republish_init": "cd ./src/init && tsc && cd ../.. && npm unpublish -f && npm publish",
