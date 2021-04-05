@@ -36,7 +36,7 @@ export class MapInstanceOrInterfaceService {
                     this.mapDataKeyIfValid(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
-                instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
+                instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options).response;
             }
         }
         return new MapResponse(instance);

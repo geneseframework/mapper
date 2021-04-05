@@ -48,10 +48,10 @@ export class ClassWithPrimitivesSpec {
 }
 
 testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 1 / ClassWithPrimitivesSpec`, ClassWithPrimitivesSpec, {str: 'str', num: 2, bool: true, strs: ['str1', 'str2'], nums: [1, 2], bools: [true, false]}));
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 2 / ClassWithPrimitivesSpec / {bool: null}`, ClassWithPrimitivesSpec, {str: 3, num: 'num', bool: null}, {expectedValue: {str: undefined, num: undefined, bool: null}}));
-testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 3 / ClassWithPrimitivesSpec / {strs:[null], nums: [undefined], bools: [undefined]}`, ClassWithPrimitivesSpec, {strs: [1, null], nums: ['2', undefined], bools: ['a', undefined]}, {expectedValue: {strs:[undefined, null], nums: [undefined, undefined], bools: [undefined, undefined]}}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 2 / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec, {str: 3, num: 'num', bool: null}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`valid ClassWithPrimitivesSpec 3 / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec, {strs: [1, null], nums: ['2', undefined], bools: ['a', undefined]}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'a' / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec,  'a', {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`{otherProp: 2} / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec,  {otherProp: 2}, {expectedValue: {}, isolate: false}));
+testMappers.push(new TestMapper(`{otherProp: 2} / ClassWithPrimitivesSpec / undefined`, ClassWithPrimitivesSpec,  {otherProp: 2}, {expectedValue: undefined, isolate: false}));
 
 
 // -----------------------------------------------------   any   ----------------------------------------------------------
@@ -64,9 +64,10 @@ export class ClassWithAnySpec {
 }
 
 testMappers.push(new TestMapper(`{a: 2, b: ['b'], c: 'c'} / ClassWithAnySpec`, ClassWithAnySpec, {a: 2, b: ['b'], c: 'c'}, {isolate: false}));
-testMappers.push(new TestMapper(`{a: undefined, b: 'b'} / ClassWithAnySpec / {a: undefined, b: undefined}`, ClassWithAnySpec, {a: undefined}, {expectedValue: {a: undefined}}));
-testMappers.push(new TestMapper(`{a: [2], b: [null]} / ClassWithAnySpec`, ClassWithAnySpec, {a: [2], b: [null]}));
-testMappers.push(new TestMapper(`{d: 3} / ClassWithAnySpec`, ClassWithAnySpec, {d: 3}, {expectedValue: {}}));
+testMappers.push(new TestMapper(`{a: undefined, b: 'b'} / ClassWithAnySpec / {a: undefined, b: undefined}`, ClassWithAnySpec, {a: undefined}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{a: [2], b: [null], c: 2} / ClassWithAnySpec`, ClassWithAnySpec, {a: [2], b: [null], c: 2}));
+testMappers.push(new TestMapper(`{a: [2], b: [null]} / ClassWithAnySpec`, ClassWithAnySpec, {a: [2], b: [null]}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{d: 3} / ClassWithAnySpec`, ClassWithAnySpec, {d: 3}, {expectedValue: undefined}));
 
 
 // ------------------------------------------------   Indexable string   --------------------------------------------------
@@ -148,10 +149,11 @@ export class PersonCatSpec {
 }
 
 testMappers.push(new TestMapper(`{name: 'Cibi'} / CatSpec`, CatSpec, {name: 'Cibi'}));
-testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: {name: 'Cibi'}, firstName: 'Léa'}));
-testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / PersonCatSpec / {cat: {name: 'Cibi'}, firstName: 'Léa'}`, PersonCatSpec, {cat: {name: 'Cibi', otherProperty: 'a'}, firstName: 'Léa'}, {expectedValue: {cat: {name: 'Cibi'}, firstName: 'Léa'}}));
-testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}));
-testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: new PersonCatSpec()}));
+testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa', age: 20} / PersonCatSpec`, PersonCatSpec, {cat: {name: 'Cibi'}, firstName: 'Léa', age: 20}, {isolate: false}));
+testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: {name: 'Cibi'}, firstName: 'Léa'}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / PersonCatSpec / {cat: {name: 'Cibi'}, firstName: 'Léa'}`, PersonCatSpec, {cat: {name: 'Cibi', otherProperty: 'a'}, firstName: 'Léa', age: 20}, {expectedValue: {cat: {name: 'Cibi'}, firstName: 'Léa', age: 20}}));
+testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'a' / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa'} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}));
 testMappers.push(new TestMapper(`[new CatSpec()] / PersonCatSpec / [new CatSpec()]`, PersonCatSpec, [new CatSpec()], {expectedValue: undefined}));
