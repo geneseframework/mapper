@@ -10,7 +10,7 @@ export class MapGenericService {
     /**
      * Return mapped data when target corresponds to a generic type
      * @param target    // The stringified target
-     * @param data      // The data to map
+     * @param data      // The data to mapIfValid
      * @param options   // The create() options
      */
     static create(target: Generic, data: any, options: MapperConfigBehavior): any {

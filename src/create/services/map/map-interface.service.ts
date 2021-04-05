@@ -9,7 +9,7 @@ export class MapInterfaceService {
     /**
      * When target corresponds to an exported interface, returns object respecting interface with mapped data if data is an object respecting the interface, undefined if not
      * @param target    // The target corresponding to an exported class
-     * @param data      // The data to map
+     * @param data      // The data to mapIfValid
      * @param options   // The create() options
      */
     static create(target: string, data: any, options: MapperConfigBehavior): any {
@@ -20,13 +20,13 @@ export class MapInterfaceService {
     /**
      * When target corresponds to an exported interface, returns object respecting interface with mapped data if data has required properties, undefined if not
      * @param target    // The target corresponding to an exported class
-     * @param data      // The object to map (which is not an array)
+     * @param data      // The object to mapIfValid (which is not an array)
      * @param options   // The create() options
      */
     static createInterface(target: string, data: ObjectNotArray, options: MapperConfigBehavior): any {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
-        MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
+        MapInstanceOrInterfaceService.mapIfValid(data, options, tInterface, interfaceInfo);
         return this.hasRequiredProperties(tInterface, interfaceInfo) ? tInterface : undefined;
     }
 

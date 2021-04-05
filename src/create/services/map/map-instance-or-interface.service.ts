@@ -6,6 +6,7 @@ import { Property } from '../../../shared/types/target/property.type';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 import { isObject, MapperConfigBehavior, removeBorders } from '@genese/core';
 import * as chalk from 'chalk';
+import { requiredProperties } from '../../../init/utils/property.util';
 
 
 export class MapInstanceOrInterfaceService {
@@ -13,12 +14,12 @@ export class MapInstanceOrInterfaceService {
 
     /**
      * Returns instance or interface with mapped data
-     * @param data          // The data to map
+     * @param data          // The data to mapIfValid
      * @param options       // The create() options
      * @param instance      // New instance if maps a class, empty object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): boolean {
+    static mapIfValid(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): boolean {
         // for (const property of declaration.properties) {
         if (!this.hasRequiredProperties(data, declaration)) {
             console.log(chalk.blueBright('REUIQREDDDDD'), data);
@@ -37,14 +38,15 @@ export class MapInstanceOrInterfaceService {
                 instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
             }
         }
+        return true;
     }
 
 
     private static hasRequiredProperties(data: any, declaration: ClassOrInterfaceInfo): boolean {
-        return isObject(data) && declaration.properties.every(p => Object.keys(data).includes(p.name));
+        return isObject(data) && requiredProperties(declaration.properties).every(p => Object.keys(data).includes(p.name));
     }
 
-    // static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
+    // static mapIfValid(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
     //     for (const key of Object.keys(data)) {
     //         if (this.isProperty(key, declaration)) {
     //             if (isNullOrUndefined(data[key])) {

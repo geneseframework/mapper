@@ -11,7 +11,7 @@ export class MapClassService<T> {
     /**
      * When target corresponds to an exported class, returns instance with mapped data if data is an object, undefined if not
      * @param target    // The stringified target
-     * @param data      // The data to map
+     * @param data      // The data to mapIfValid
      * @param options   // The create() options
      */
     static create(target: string, data: any, options: MapperConfigBehavior): any {
@@ -22,7 +22,7 @@ export class MapClassService<T> {
     /**
      * Returns instance with mapped data
      * @param target    // The target corresponding to an exported class
-     * @param data      // The data to map
+     * @param data      // The data to mapIfValid
      * @param options   // The create() options
      */
     static createInstance(target: string, data: any, options: MapperConfigBehavior): any {
@@ -33,8 +33,8 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
         const instance: object = GLOBAL.generateInstance(instanceGenerator) as object;
-        const isValid: boolean = MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
-        console.log(chalk.redBright('INSTANCEEEEE'), isValid);
+        const isValid: boolean = MapInstanceOrInterfaceService.mapIfValid(data, options, instance, classInfo);
+        console.log(chalk.redBright('INSTANCEEEEE is valid'), isValid);
         return isValid ? instance : undefined;
     }
 }

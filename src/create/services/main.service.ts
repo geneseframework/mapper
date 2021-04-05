@@ -30,7 +30,7 @@ export class MainService {
      * - If not already done, initializes the global configuration.
      * - Returns the data formatted with the type required by the user
      * @param target    // The type required by the user.
-     * @param data      // Data to map
+     * @param data      // Data to mapIfValid
      * @param options   // Behavior options for this call to the create() method
      */
     static map<T>(target: Target<T>, data: any, options?: MapperConfigBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {

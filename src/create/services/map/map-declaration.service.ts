@@ -14,7 +14,7 @@ export class MapDeclarationService {
     /**
      * Returns mapped data when target is a Declaration typeLiteralNode (Class, Interface, Enum, Type).
      * @param target    // The target which corresponds to a class, interface, enum or type
-     * @param data      // The data to map
+     * @param data      // The data to mapIfValid
      * @param options   // The create() options
      * @private
      */

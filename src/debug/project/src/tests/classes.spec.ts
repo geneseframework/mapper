@@ -30,7 +30,7 @@ export class OnePrimitiveOptionalClassSpec {
 }
 
 testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveOptionalClassSpec`, OnePrimitiveOptionalClassSpec, {prop: 'a'}, {isolate: false}));
-testMappers.push(new TestMapper(`{} / OnePrimitiveOptionalClassSpec / {}`, OnePrimitiveOptionalClassSpec, {}, {expectedValue: {}, isolate: false}));
+testMappers.push(new TestMapper(`{} / OnePrimitiveOptionalClassSpec / {}`, OnePrimitiveOptionalClassSpec, {}, {expectedValue: {}, isolate: true}));
 testMappers.push(new TestMapper(`'a' / OnePrimitiveOptionalClassSpec / undefined`, OnePrimitiveOptionalClassSpec, 'a', {expectedValue: undefined, isolate: false}));
 
 

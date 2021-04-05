@@ -6,6 +6,11 @@ import { Property } from '../../shared/types/target/property.type';
 import { BlockInfo } from '../../create/types/containers/block.type';
 import { haveSameLength } from '@genese/core';
 
+
+export function requiredProperties(properties: Property[]): Property[] {
+    return properties.filter(p => p.isRequired);
+}
+
 /**
  * Returns some text by replacing its curved bracketed blocks by their name (ie: the name of the InterfaceInfo corresponding to these blocks)
  * @param text          // The text to update
