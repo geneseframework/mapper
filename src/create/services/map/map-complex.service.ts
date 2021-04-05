@@ -11,6 +11,8 @@ import { hasUnion } from '../../types/non-trivial-types/union.type';
 import { hasIntersection } from '../../types/non-trivial-types/intersection.type';
 import { isGeneric } from '../../types/non-trivial-types/generics.type';
 import { isString, MapperConfigBehavior, throwWarning } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
+import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 
 /**
  * Service used in case of non-trivial stringified types
@@ -23,7 +25,7 @@ export class MapComplexService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: ComplexType, data: any, options: MapperConfigBehavior): any {
+    static create(target: ComplexType, data: any, options: MapperConfigBehavior): MapResponse {
         const elements: string[] = getElements(target);
         const first: string = elements[0].trim();
         const others: string = trimSeparators(target.slice(first.length));
@@ -48,12 +50,12 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapUnionType(data: any, options: MapperConfigBehavior, first: string, others: string): any {
+    private static mapUnionType(data: any, options: MapperConfigBehavior, first: string, others: string): MapResponse {
         if (isStringAsNumericOrStringifiedNullOrBoolean(first)) {
             return this.mapNumericOrStringifiedNullOrBoolean(data, options, first, others);
         }
-        const mapped: any = MainService.mapStringTarget(first, data, options);
-        return mapped || MainService.mapStringTarget(others, data, options);
+        const mapped: MapResponse = MainService.mapStringTarget(first, data, options);
+        return mapped?.isValid ? mapped : MainService.mapStringTarget(others, data, options);
     }
 
     /**
@@ -64,11 +66,11 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapNumericOrStringifiedNullOrBoolean(data: any, options: MapperConfigBehavior, first: NumericOrStringifiedNullOrBoolean, others: string): any {
+    private static mapNumericOrStringifiedNullOrBoolean(data: any, options: MapperConfigBehavior, first: NumericOrStringifiedNullOrBoolean, others: string): MapResponse {
         if (first === data?.toString()) {
-            return !options.castStringsAndNumbers && isString(data) ? undefined : data;
+            return !options.castStringsAndNumbers && isString(data) ? INVALID_RESPONSE : new MapResponse(data);
         } else if (isStringAsNumericOrStringifiedNullOrBoolean(others)) {
-            return !options.castStringsAndNumbers && isString(data) ? undefined : data;
+            return !options.castStringsAndNumbers && isString(data) ? INVALID_RESPONSE : new MapResponse(data);
         } else {
             return MainService.mapStringTarget(others, data, options);
         }
@@ -82,10 +84,10 @@ export class MapComplexService {
      * @param others    // The other elements of the union
      * @private
      */
-    private static mapIntersectionType(data: any, options: MapperConfigBehavior, first: string, others: string): any {
-        const left: any = MainService.mapStringTarget(first, data, options);
-        const right: any = MainService.mapStringTarget(others, data, options);
-        return left && right ? data : undefined;
+    private static mapIntersectionType(data: any, options: MapperConfigBehavior, first: string, others: string): MapResponse {
+        const left: any = MainService.mapStringTarget(first, data, options)?.response;
+        const right: any = MainService.mapStringTarget(others, data, options)?.response;
+        return left && right ? new MapResponse(data) : INVALID_RESPONSE;
     }
 
 }

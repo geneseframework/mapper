@@ -1,7 +1,7 @@
 import { INIT } from '../const/init.const';
 import { EnumInfo } from '../../shared/models/declarations/enum-info.model';
 import { TypeInfo } from '../../shared/models/declarations/type-info.model';
-import { Property } from '../../shared/types/target/property.type';
+import { Property } from '../../shared/models/property.model';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
 import { ClassInfo } from '../../shared/models/declarations/class-info.model';
 import { ClassOrInterfaceInfo } from '../../shared/types/class-or-interface-info.type';
@@ -182,7 +182,7 @@ export class DeclarationInfoGeneratorService {
     private static getSpecificPropertyCode(property: Property): string {
         return `${tabs(3)}{\n` +
             `${tabs(4)}initializer: ${addQuotes(property.initializer)},\n` +
-            `${tabs(4)}isRequired: ${property.isRequired},\n` +
+            `${tabs(4)}hasQuestionToken: ${property.hasQuestionToken},\n` +
             `${tabs(4)}name: ${addQuotes(property.name)},\n` +
             `${tabs(4)}stringifiedType: ${addQuotes(property.stringifiedType)}\n` +
             `${tabs(3)}}`;

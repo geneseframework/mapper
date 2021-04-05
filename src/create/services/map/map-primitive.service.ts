@@ -1,5 +1,8 @@
-import { Primitive, PrimitiveType } from '../../types/trivial-types/primitives.type';
+import { PrimitiveType } from '../../types/trivial-types/primitives.type';
 import { castStringAndNumbers, isNumber, isString, MapperConfigBehavior } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
+import { INVALID_RESPONSE } from '../../const/invalid-response.const';
+import * as chalk from 'chalk';
 
 export class MapPrimitiveService {
 
@@ -10,8 +13,8 @@ export class MapPrimitiveService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: PrimitiveType, data: any, options: MapperConfigBehavior): Primitive {
-        return this.haveSameTypeOrAreAssimilated(target, data, options) ? castStringAndNumbers(target, data) : undefined;
+    static create(target: PrimitiveType, data: any, options: MapperConfigBehavior): MapResponse {
+        return this.haveSameTypeOrAreAssimilated(target, data, options) ? new MapResponse(castStringAndNumbers(target, data)) : INVALID_RESPONSE;
     }
 
 

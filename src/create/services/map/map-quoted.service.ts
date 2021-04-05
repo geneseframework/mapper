@@ -1,5 +1,7 @@
 import { Quoted } from '../../../shared/types/quoted.type';
 import { isNumber, isString, MapperConfigBehavior, removeBorders } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
+import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 
 export class MapQuotedService {
 
@@ -9,11 +11,11 @@ export class MapQuotedService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create<T>(target: Quoted, data: any, options: MapperConfigBehavior): any {
+    static create<T>(target: Quoted, data: any, options: MapperConfigBehavior): MapResponse {
         if (isString(data) || (isNumber(data) && options?.castStringsAndNumbers === false)) {
-            return removeBorders(target) === data.toString() ? data.toString() : undefined;
+            return removeBorders(target) === data.toString() ? new MapResponse(data.toString()) : INVALID_RESPONSE;
         }
-        return undefined;
+        return INVALID_RESPONSE;
     }
 
 }

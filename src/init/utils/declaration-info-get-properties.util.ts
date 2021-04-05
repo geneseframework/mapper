@@ -1,4 +1,4 @@
-import { Property } from '../../shared/types/target/property.type';
+import { Property } from '../../shared/models/property.model';
 import { PropertyDeclarationOrSignature } from '../types/property-declaration-or-signature.type';
 import { hasTypeLiteral } from './ast/ast-type-literal.util';
 import { HierarchicTypeLiteralService } from '../services/hierarchic-type-literal.service';
@@ -30,10 +30,10 @@ export function getPropertiesFromClassOrInterface(declaration: ClassOrInterfaceD
  */
 function getPropertyFromDeclarationOrSignature(propDecOrSign: PropertyDeclarationOrSignature): Property {
     if (hasTypeLiteral(propDecOrSign)) {
-        return {name: propDecOrSign.getName(), stringifiedType: HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType};
+        return new Property(propDecOrSign.getName(), HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType);
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return {name: propertyStructure.name, stringifiedType: declarationType(propDecOrSign), initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        return new Property(propertyStructure.name, declarationType(propDecOrSign), propertyStructure.initializer, propertyStructure.hasQuestionToken);
     }
 }
 
@@ -64,10 +64,10 @@ function getPropertyFromPropertySignature(parentName: string, propDecOrSign: Pro
     if (isTypeLiteralProperty(propDecOrSign)) {
         const typeLiteralNode: TypeLiteralNode = propDecOrSign.getTypeNode();
         const newInterfaceInfo: InterfaceInfo = createInterfaceInfoFromTypeLiteralNode(getInterfaceInfoName(parentName, propDecOrSign.getName()), typeLiteralNode);
-        return {name: propDecOrSign.getName(), stringifiedType: newInterfaceInfo.name};
+        return new Property(propDecOrSign.getName(), newInterfaceInfo.name);
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return {name: propertyStructure.name, stringifiedType: propertyStructure.type, initializer: propertyStructure.initializer, isRequired: !propertyStructure.hasQuestionToken} as Property;
+        return new Property(propertyStructure.name, propertyStructure.type as string, propertyStructure.initializer, propertyStructure.hasQuestionToken);
     }
 }
 

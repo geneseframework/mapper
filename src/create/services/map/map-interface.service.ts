@@ -2,7 +2,8 @@ import { MapInstanceOrInterfaceService } from './map-instance-or-interface.servi
 import { GLOBAL } from '../../const/global.const';
 import { InterfaceInfo } from '../../../shared/models/declarations/interface-info.model';
 import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/trivial-types/not-some-type.type';
-import { includes, MapperConfigBehavior } from '@genese/core';
+import { MapperConfigBehavior } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
 
 export class MapInterfaceService {
 
@@ -12,7 +13,7 @@ export class MapInterfaceService {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: string, data: any, options: MapperConfigBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): MapResponse {
         return !isObjectWhichIsNotArray(data) ? undefined : this.createInterface(target, data, options);
     }
 
@@ -23,23 +24,10 @@ export class MapInterfaceService {
      * @param data      // The object to map (which is not an array)
      * @param options   // The create() options
      */
-    static createInterface(target: string, data: ObjectNotArray, options: MapperConfigBehavior): any {
+    static createInterface(target: string, data: ObjectNotArray, options: MapperConfigBehavior): MapResponse {
         const interfaceInfo: InterfaceInfo = GLOBAL.getInterfaceInfo(target);
         const tInterface = {};
-        MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
-        return this.hasRequiredProperties(tInterface, interfaceInfo) ? tInterface : undefined;
-    }
-
-
-    /**
-     * Checks if data has required properties of the interface
-     * @param data              // The data to check
-     * @param interfaceInfo     // The interface info
-     * @private
-     */
-    private static hasRequiredProperties(data: ObjectNotArray, interfaceInfo: InterfaceInfo): boolean {
-        const requiredProperties: string[] = interfaceInfo.properties.filter(p => p.isRequired).map(p => p.name);
-        return includes(Object.keys(data), requiredProperties);
+        return MapInstanceOrInterfaceService.map(data, options, tInterface, interfaceInfo);
     }
 
 }

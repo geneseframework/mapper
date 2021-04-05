@@ -66,6 +66,10 @@ const generateInstance = function(instanceGenerator) {
                 const OnePrimitiveClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').OnePrimitiveClassSpec;
                 instance = new OnePrimitiveClassSpec();
                 break;
+            case 'OnePrimitiveOptionalClassSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
+                const OnePrimitiveOptionalClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').OnePrimitiveOptionalClassSpec;
+                instance = new OnePrimitiveOptionalClassSpec();
+                break;
             case 'ClassWithPrimitivesSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ClassWithPrimitivesSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ClassWithPrimitivesSpec;
                 instance = new ClassWithPrimitivesSpec();
@@ -88,7 +92,7 @@ const generateInstance = function(instanceGenerator) {
                 break;
             case 'ValuesOnConstructor_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ValuesOnConstructor = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ValuesOnConstructor;
-                instance = new ValuesOnConstructor(undefined, undefined, undefined, undefined);
+                instance = new ValuesOnConstructor(undefined);
                 break;
             case 'CatSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const CatSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').CatSpec;
@@ -97,6 +101,10 @@ const generateInstance = function(instanceGenerator) {
             case 'PersonCatSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const PersonCatSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').PersonCatSpec;
                 instance = new PersonCatSpec();
+                break;
+            case 'CastSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
+                const CastSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').CastSpec;
+                instance = new CastSpec();
                 break;
             case 'ParentClassSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ParentClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ParentClassSpec;

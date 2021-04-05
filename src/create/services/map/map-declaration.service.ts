@@ -7,6 +7,7 @@ import { TypeDeclarationKind } from '../../../shared/types/type-declaration-kind
 import { DeclarationInfo } from '../../../shared/models/declarations/declaration-info.model';
 import { isArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
 import { MapperConfigBehavior, throwWarning } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
 
 export class MapDeclarationService {
 
@@ -18,7 +19,7 @@ export class MapDeclarationService {
      * @param options   // The create() options
      * @private
      */
-    static create(target: string, data: any, options: MapperConfigBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): MapResponse {
         const typeName: string = isArrayType(target) ? typeOfArray(target) : target;
         const typeDeclarationKind: TypeDeclarationKind = this.getTypeDeclarationKind(typeName);
         switch (typeDeclarationKind) {

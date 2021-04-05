@@ -11,7 +11,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `'oop'`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `string`
             },
@@ -29,7 +29,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `'a'`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `string`
             },
@@ -47,7 +47,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `'oop'`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -65,7 +65,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `number`
             },
@@ -83,19 +83,19 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `street`,
                 stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `streetNumber`,
                 stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `town`,
                 stringifiedType: `string`
             },
@@ -113,25 +113,25 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `kind`,
                 stringifiedType: `string`
             },
             {
                 initializer: `true`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `live`,
                 stringifiedType: undefined
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `order`,
                 stringifiedType: `Order`
             },
@@ -149,49 +149,49 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `[]`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `colors`,
                 stringifiedType: `Color[]`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `favouritePrey`,
                 stringifiedType: `Prey`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `friend`,
                 stringifiedType: `Person`
             },
             {
                 initializer: `false`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `hungry`,
                 stringifiedType: undefined
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `mood`,
                 stringifiedType: `Mood`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `race`,
                 stringifiedType: `Race`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `tattoo`,
                 stringifiedType: `[string, number, Color, Person]`
             },
@@ -209,13 +209,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employees`,
                 stringifiedType: `number`
             },
@@ -245,13 +245,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `volunteers`,
                 stringifiedType: `number`
             },
@@ -269,7 +269,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `live`,
                 stringifiedType: `boolean`
             },
@@ -287,49 +287,49 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `address`,
                 stringifiedType: `Address`
             },
             {
                 initializer: `[]`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `cats`,
                 stringifiedType: `Cat[]`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employer`,
                 stringifiedType: `Employer`
             },
             {
                 initializer: `[]`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `family`,
                 stringifiedType: `Person[]`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `firstName`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `isHappy`,
                 stringifiedType: `boolean`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `lastName`,
                 stringifiedType: `string`
             },
             {
                 initializer: `undefined`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `nickNames`,
                 stringifiedType: `StringOrStrings`
             },
@@ -347,7 +347,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -365,7 +365,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -383,7 +383,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `foo`,
                 stringifiedType: `string`
             },
@@ -401,7 +401,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `bar`,
                 stringifiedType: `string`
             },
@@ -419,7 +419,25 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
+                name: `prop`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `OnePrimitiveOptionalClassSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                hasQuestionToken: true,
                 name: `prop`,
                 stringifiedType: `string`
             },
@@ -437,37 +455,37 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `str`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `num`,
                 stringifiedType: `number`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `bool`,
                 stringifiedType: `boolean`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `strs`,
                 stringifiedType: `string[]`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `nums`,
                 stringifiedType: `number[]`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `bools`,
                 stringifiedType: `boolean[]`
             },
@@ -485,19 +503,19 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `a`,
                 stringifiedType: `any`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `b`,
                 stringifiedType: `any[]`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `c`,
                 stringifiedType: undefined
             },
@@ -519,7 +537,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `a`,
                 stringifiedType: `string`
             },
@@ -541,7 +559,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `a`,
                 stringifiedType: `string`
             },
@@ -559,25 +577,25 @@ const declarationInfos = [
         properties: [
             {
                 initializer: `'aaa'`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `a`,
                 stringifiedType: undefined
             },
             {
                 initializer: `2`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `b`,
                 stringifiedType: undefined
             },
             {
                 initializer: `false`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `c`,
                 stringifiedType: undefined
             },
             {
                 initializer: `true`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `d`,
                 stringifiedType: undefined
             },
@@ -591,30 +609,12 @@ const declarationInfos = [
         ],
         hasPrivateConstructor: false,
         isAbstract: false,
-        numberOfConstructorArguments: 4,
+        numberOfConstructorArguments: 1,
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `a`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `b`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `c`,
-                stringifiedType: undefined
-            },
-            {
-                initializer: undefined,
-                isRequired: true,
-                name: `d`,
                 stringifiedType: undefined
             },
         ],
@@ -631,7 +631,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -649,19 +649,43 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `cat`,
                 stringifiedType: `CatSpec`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
+                name: `firstName`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
+        name: `CastSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                hasQuestionToken: false,
+                name: `age`,
+                stringifiedType: `number`
+            },
+            {
+                initializer: undefined,
+                hasQuestionToken: false,
                 name: `firstName`,
                 stringifiedType: `string`
             },
@@ -679,7 +703,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -697,7 +721,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `color`,
                 stringifiedType: `string`
             },
@@ -715,7 +739,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -733,7 +757,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `color`,
                 stringifiedType: `string`
             },
@@ -753,7 +777,7 @@ const declarationInfos = [
                 initializer: `{
         name: 'Léa'
     }`,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `person`,
                 stringifiedType: `IDefaultsSpec`
             },
@@ -771,7 +795,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `string | number`
             },
@@ -789,7 +813,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `null`
             },
@@ -807,7 +831,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `undefined`
             },
@@ -825,7 +849,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `unknown`
             },
@@ -843,7 +867,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `4`
             },
@@ -861,7 +885,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `'a'`
             },
@@ -879,7 +903,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `false`
             },
@@ -897,7 +921,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `prop`,
                 stringifiedType: `object`
             },
@@ -915,7 +939,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `colors`,
                 stringifiedType: `StringsOrStringSpec`
             },
@@ -933,7 +957,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `colors`,
                 stringifiedType: `StringOrStringsSpec`
             },
@@ -951,7 +975,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `ages`,
                 stringifiedType: `NumbersOrNumberSpec`
             },
@@ -969,7 +993,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `ages`,
                 stringifiedType: `NumberOrNumbersSpec`
             },
@@ -987,7 +1011,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `level`,
                 stringifiedType: `LevelSpec`
             },
@@ -1005,7 +1029,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1023,7 +1047,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `union`,
                 stringifiedType: `UnionTypeClassAndStringSpec`
             },
@@ -1041,13 +1065,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `volunteers`,
                 stringifiedType: `number`
             },
@@ -1065,13 +1089,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employees`,
                 stringifiedType: `number`
             },
@@ -1089,7 +1113,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employer`,
                 stringifiedType: `EmployerSpec`
             },
@@ -1104,7 +1128,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `str`,
                 stringifiedType: `string`
             },
@@ -1122,7 +1146,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: undefined,
+                hasQuestionToken: undefined,
                 name: `obj`,
                 stringifiedType: `ObjectLiteralStringSpecInterface`
             },
@@ -1137,7 +1161,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `city`,
                 stringifiedType: `string`
             },
@@ -1152,13 +1176,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `place`,
                 stringifiedType: `ObjectLiteralWrongCharsSpecInterface_0`
             },
@@ -1176,7 +1200,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: undefined,
+                hasQuestionToken: undefined,
                 name: `obj`,
                 stringifiedType: `ObjectLiteralWrongCharsSpecInterface`
             },
@@ -1211,7 +1235,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: undefined,
+                hasQuestionToken: undefined,
                 name: `obj`,
                 stringifiedType: `ObjectLiteraIndexableSpecInterface`
             },
@@ -1226,13 +1250,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `str`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `nb`,
                 stringifiedType: `number`
             },
@@ -1250,7 +1274,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: undefined,
+                hasQuestionToken: undefined,
                 name: `prop`,
                 stringifiedType: `ObjectLiteralStringNumberSpecInterface`
             },
@@ -1265,7 +1289,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `str`,
                 stringifiedType: `string`
             },
@@ -1283,7 +1307,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: undefined,
+                hasQuestionToken: undefined,
                 name: `prop`,
                 stringifiedType: `ObjectLiteralStringArraySpecInterface[]`
             },
@@ -1317,7 +1341,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `date`,
                 stringifiedType: `Date`
             },
@@ -1335,7 +1359,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `color`,
                 stringifiedType: `ColorSpec`
             },
@@ -1353,7 +1377,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `colors`,
                 stringifiedType: `ColorSpec[]`
             },
@@ -1371,7 +1395,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1389,7 +1413,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1407,7 +1431,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `animal`,
                 stringifiedType: `AnimalSpec`
             },
@@ -1425,7 +1449,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `simpleName`,
                 stringifiedType: `string`
             },
@@ -1443,7 +1467,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1461,7 +1485,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1479,19 +1503,19 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `cat`,
                 stringifiedType: `CatTupleSpec`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `firstName`,
                 stringifiedType: `string`
             },
@@ -1509,13 +1533,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employees`,
                 stringifiedType: `number`
             },
@@ -1533,7 +1557,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `str`,
                 stringifiedType: `string`
             },
@@ -1551,13 +1575,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `volunteers`,
                 stringifiedType: `number`
             },
@@ -1575,13 +1599,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employees`,
                 stringifiedType: `number`
             },
@@ -1599,7 +1623,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `employer`,
                 stringifiedType: `EmployerTypeSpec`
             },
@@ -1617,7 +1641,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `NonReadableType<any>`
             },
@@ -1668,7 +1692,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `animal`,
                 stringifiedType: `Animal`
             },
@@ -1683,7 +1707,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1698,13 +1722,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `otherName`,
                 stringifiedType: `string`
             },
@@ -1719,7 +1743,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1871,7 +1895,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1894,13 +1918,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
@@ -1923,7 +1947,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1946,13 +1970,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -1975,13 +1999,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: undefined
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: undefined
             },
@@ -2004,7 +2028,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `country`,
                 stringifiedType: `string`
             },
@@ -2019,13 +2043,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `address`,
                 stringifiedType: `TypeLiteralNestedSpecInterface_0`
             },
@@ -2048,13 +2072,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `country`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `city`,
                 stringifiedType: `string`
             },
@@ -2069,13 +2093,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `address`,
                 stringifiedType: `TypeLiteralNestedOptionalSpecInterface_0`
             },
@@ -2186,7 +2210,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -2209,7 +2233,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
@@ -2240,7 +2264,7 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `name`,
                 stringifiedType: `string`
             },
@@ -2263,13 +2287,13 @@ const declarationInfos = [
         properties: [
             {
                 initializer: undefined,
-                isRequired: true,
+                hasQuestionToken: false,
                 name: `age`,
                 stringifiedType: `number`
             },
             {
                 initializer: undefined,
-                isRequired: false,
+                hasQuestionToken: true,
                 name: `city`,
                 stringifiedType: `string`
             },

@@ -1,4 +1,4 @@
-import { Property } from './target/property.type';
+import { Property } from '../models/property.model';
 import { IndexableType } from './indexable-type.type';
 
 /**

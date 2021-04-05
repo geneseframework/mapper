@@ -1,5 +1,5 @@
 import { getBlockInfos, isInsideBlocks } from './block.type';
-import { Property } from '../../../shared/types/target/property.type';
+import { Property } from '../../../shared/models/property.model';
 import { isComma } from '../separators/commas.type';
 import { getIndexableTypeFromIndexableKey, startsWithIndexableKey } from '../properties/indexable-key.type';
 import { getFirstBracketed } from './bracketed.type';
@@ -89,7 +89,7 @@ function getPropertiesTexts(text: string): string[] {
  */
 function getProperty(propertyText: string): Property {
     let rest: string = propertyText;
-    const property: Property = {};
+    const property: Property = new Property();
     rest = setNameAndReturnRest(rest, property);
     rest = setIsRequiredAndReturnRest(rest, property);
     rest = setTypeAndReturnRest(rest, property);
@@ -108,13 +108,13 @@ function setNameAndReturnRest(rest: string, property: Property): string {
 }
 
 /**
- * Sets the isRequired value of a Property object from a text representing a property without its name and returns this text without the question mark
+ * Sets the hasQuestionToken value of a Property object from a text representing a property without its name and returns this text without the question mark
  * @param rest          // The text representing a property without its name
  * @param property      // The Property to update
  */
 function setIsRequiredAndReturnRest(rest: string, property: Property): string {
-    property.isRequired = rest.charAt(0) !== '?';
-    return property.isRequired ? rest: rest.slice(1);
+    property.hasQuestionToken = rest.charAt(0) === '?';
+    return property.hasQuestionToken ? rest.slice(1): rest;
 }
 
 /**

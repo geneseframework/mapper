@@ -4,6 +4,8 @@ import { InstanceGenerator } from '../../../shared/models/instance-generator.mod
 import { ClassInfo } from '../../../shared/models/declarations/class-info.model';
 import { isObjectWhichIsNotArray } from '../../types/trivial-types/not-some-type.type';
 import { MapperConfigBehavior, throwWarning } from '@genese/core';
+import * as chalk from 'chalk';
+import { MapResponse } from '../../models/map-response.model';
 
 export class MapClassService<T> {
 
@@ -13,7 +15,7 @@ export class MapClassService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: string, data: any, options: MapperConfigBehavior): any {
+    static create(target: string, data: any, options: MapperConfigBehavior): MapResponse {
         return !isObjectWhichIsNotArray(data) ? undefined : this.createInstance(target, data, options);
     }
 
@@ -24,7 +26,7 @@ export class MapClassService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static createInstance(target: string, data: any, options: MapperConfigBehavior): any {
+    static createInstance(target: string, data: any, options: MapperConfigBehavior): MapResponse {
         const classInfo: ClassInfo = GLOBAL.getClassInfo(target);
         if (classInfo.isAbstract) {
             throwWarning(`"${target}" is abstract and can't be instantiated.`);
@@ -32,7 +34,6 @@ export class MapClassService<T> {
         }
         const instanceGenerator = new InstanceGenerator(target, classInfo.filePath, classInfo.numberOfConstructorArguments);
         const instance: object = GLOBAL.generateInstance(instanceGenerator) as object;
-        MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
-        return instance;
+        return MapInstanceOrInterfaceService.map(data, options, instance, classInfo);
     }
 }
