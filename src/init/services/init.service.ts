@@ -4,7 +4,7 @@ import { DeclarationInfoService } from './declaration-info.service';
 import { INIT } from '../const/init.const';
 import { RefactoGlobalInitService } from './refacto-global-init.service';
 import { ConfigService } from './config.service';
-import { MapperConfig } from '../../shared/models/config.model';
+import { MapperConfig } from '@genese/core';
 
 const appRoot = require('app-root-path');
 

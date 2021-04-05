@@ -20,7 +20,7 @@ export async function startTests(): Promise<void> {
     await init();
     GLOBAL.declarationInfos = declarationInfos as DeclarationInfo[];
     GLOBAL.generateInstance = generateInstance;
-    const specFiles: string[] = INIT.project.addSourceFilesAtPaths('/Users/utilisateur/Documents/projets/genese/genesemapper/src/debug/project/src/tests/*.spec.ts').map(s => s.getFilePath());
+    const specFiles: string[] = INIT.project.addSourceFilesAtPaths('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/*.spec.ts').map(s => s.getFilePath());
     await getTests(specFiles);
     expect(TESTS.testMappers.concat(TESTS.its));
     logFailedTests();

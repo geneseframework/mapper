@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { GLOBAL } from '../const/global.const';
 import { clone, isBoolean, MapperConfigBehavior } from '@genese/core';
 

@@ -123,7 +123,7 @@ export class InstanceGeneratorService {
             switchCode = `${switchCode}${tab}${this.switchClause(instanceGenerator)}`;
         }
         switchCode = `${switchCode}${tabs(3)}default:\n` +
-            `${tabs(4)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator?.id);\n` +
+            `${tabs(4)}console.log('WARNING: No instance found for instanceGenerator id = ', instanceGenerator.id);\n` +
             `${tabs(4)}instance = undefined;\n` +
             `${tabs(2)}}\n`;
         return switchCode;
