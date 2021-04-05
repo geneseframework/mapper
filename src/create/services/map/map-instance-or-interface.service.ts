@@ -2,7 +2,7 @@ import { MainService } from '../main.service';
 import { isQuoted } from '../../../shared/types/quoted.type';
 import { hasIndexableTypeAndKeyOfSameType } from '../../utils/indexable-type.util';
 import { ClassOrInterfaceInfo } from '../../../shared/types/class-or-interface-info.type';
-import { Property } from '../../../shared/types/target/property.type';
+import { Property } from '../../../shared/models/property.model';
 import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.type';
 import { MapperConfigBehavior, removeBorders } from '@genese/core';
 import * as chalk from 'chalk';

@@ -41,7 +41,7 @@ export class MapInterfaceService {
      * @private
      */
     private static hasRequiredProperties(data: ObjectNotArray, interfaceInfo: InterfaceInfo): boolean {
-        const requiredProperties: string[] = interfaceInfo.properties.filter(p => p.isRequired).map(p => p.name);
+        const requiredProperties: string[] = interfaceInfo.properties.filter(p => p.hasQuestionToken).map(p => p.name);
         return includes(Object.keys(data), requiredProperties);
     }
 

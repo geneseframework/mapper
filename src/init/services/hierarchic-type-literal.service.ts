@@ -2,7 +2,7 @@ import { HierarchicTypeLiteral } from '../models/hierarchic-type-literal.model';
 import { Node, SyntaxKind, TypeAliasDeclaration, TypeLiteralNode } from 'ts-morph';
 import { getFirstTypeLiteralAncestor } from '../utils/ast/ast-type-literal.util';
 import { TypeOrPropertyDeclarationOrSignature } from '../types/type-declaration.type';
-import { Property } from '../../shared/types/target/property.type';
+import { Property } from '../../shared/models/property.model';
 import { declarationType } from '../utils/ast/ast-declaration.util';
 import { INIT } from '../const/init.const';
 import { InterfaceInfo } from '../../shared/models/declarations/interface-info.model';
@@ -184,12 +184,12 @@ export class HierarchicTypeLiteralService {
     static getTypeLiteralClassicProperties(typeLiteral: TypeLiteralNode): Property[] {
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
-            const property: Property = {
-                initializer:  prop.getInitializer(),
-                isRequired: !prop.hasQuestionToken(),
-                name: prop.getName(),
-                stringifiedType: declarationType(prop)
-            }
+            const property: Property = new Property(prop.getName(), declarationType(prop), prop.getInitializer(), !prop.hasQuestionToken());
+                // initializer:  prop.getInitializer(),
+                // hasQuestionToken: !prop.hasQuestionToken(),
+                // name: prop.getName(),
+                // stringifiedType: declarationType(prop)
+            // }
             properties.push(property);
         }
         return properties;

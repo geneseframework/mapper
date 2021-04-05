@@ -2,13 +2,13 @@ import {
     CurvedBracketed,
     getPropertiesFromCurvedBracketed
 } from '../../create/types/containers/curve-bracketed.type';
-import { Property } from '../../shared/types/target/property.type';
+import { Property } from '../../shared/models/property.model';
 import { BlockInfo } from '../../create/types/containers/block.type';
 import { haveSameLength } from '@genese/core';
 
 
 export function requiredProperties(properties: Property[]): Property[] {
-    return properties.filter(p => p.isRequired);
+    return properties.filter(p => p.hasQuestionToken);
 }
 
 /**
@@ -59,6 +59,6 @@ function textPropertyIsIncludedInThisProperties(textProperty: Property, properti
     } else {
         return textProperty.initializer === property.initializer
             && (textProperty.stringifiedType === property.stringifiedType || 'apparentType')
-            && textProperty.isRequired === property.isRequired;
+            && textProperty.hasQuestionToken === property.hasQuestionToken;
     }
 }
