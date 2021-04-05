@@ -3,6 +3,8 @@ import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.t
 import { ArrayType, typeOfArray } from '../../types/non-trivial-types/array-type.type';
 import { isWildCard } from '../../types/non-trivial-types/wildcard.type';
 import { isArray, MapperConfigBehavior } from '@genese/core';
+import { MapResponse } from '../../models/map-response.model';
+import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 
 export class MapArrayService<T> {
 
@@ -13,11 +15,11 @@ export class MapArrayService<T> {
      * @param data      // The data to map
      * @param options   // The create() options
      */
-    static create(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {
+    static create(target: ArrayType, data: any, options: MapperConfigBehavior): MapResponse {
         if (!isArray(data)) {
-            return undefined;
+            return INVALID_RESPONSE;
         } else if (isWildCard(typeOfArray(target))) {
-            return data;
+            return new MapResponse(data);
         } else {
             return this.mapArray(target, data, options);
         }
@@ -30,11 +32,11 @@ export class MapArrayService<T> {
      * @param data      // The array to map
      * @param options   // The create() options
      */
-    private static mapArray(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {
+    private static mapArray(target: ArrayType, data: any, options: MapperConfigBehavior): MapResponse {
         const arr: any[] = [];
         for (const element of data) {
             arr.push(isNullOrUndefined(element) ? element : create(typeOfArray(target), element, options));
         }
-        return arr;
+        return new MapResponse(arr);
     }
 }

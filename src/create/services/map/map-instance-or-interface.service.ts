@@ -74,7 +74,7 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             instance[key] = removeBorders(targetKeyType);
         } else {
-            instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options);
+            instance[key] = MainService.mapStringTarget(targetKeyType, dataKey, options).response;
         }
     }
 
