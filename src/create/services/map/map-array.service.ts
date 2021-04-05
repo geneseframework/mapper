@@ -36,12 +36,9 @@ export class MapArrayService<T> {
      */
     private static mapArray(target: ArrayType, data: any, options: MapperConfigBehavior): MapResponse {
         const arr: any[] = [];
-        console.log(chalk.cyanBright('ARRRAYYYYY'), target, data);
         for (const element of data) {
             arr.push(isNullOrUndefined(element) ? element : MainService.mapStringTarget(typeOfArray(target), element, options).response);
-            // arr.push(isNullOrUndefined(element) ? element : create(typeOfArray(target), element, options));
         }
-        console.log(chalk.cyanBright('ARRRAYYYYY RSPPPP'), arr);
         return new MapResponse(arr);
     }
 }

@@ -449,7 +449,7 @@ export class ObjectLiteraIndexableSpec {
     }
 }
 testMappers.push(new TestMapper(`{obj: {name: 'a'}} / ObjectLiteraIndexableSpec`, ObjectLiteraIndexableSpec, {obj: {name: 'a'}}, {isolate: false}));
-testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec / {obj: undefined}`, ObjectLiteraIndexableSpec, {obj: 'a'}, {expectedValue: {obj: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{obj: 'a'} / ObjectLiteraIndexableSpec / undefined`, ObjectLiteraIndexableSpec, {obj: 'a'}, {expectedValue: undefined, isolate: false}));
 
 
 // ---------------------------------------   Property with Type Literal string number   -----------------------------------
@@ -468,7 +468,7 @@ export class ObjectLiteralStringArraySpec {
     prop: {str: string}[];
 }
 testMappers.push(new TestMapper(`{prop: [{str: 'a'}, {str: 'b'}] / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: [{str: 'a'}, {str: 'b'}]}, {isolate: false}));
-testMappers.push(new TestMapper(`{prop: {str: 'a'} / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: {str: 'a'}}, {expectedValue: {prop: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{prop: {str: 'a'} / ObjectLiteralStringArraySpec`, ObjectLiteralStringArraySpec, {prop: {str: 'a'}}, {expectedValue: undefined, isolate: false}));
 
 
 // ------------------------------------   Property with Type Literal in Indexable type   --------------------------------

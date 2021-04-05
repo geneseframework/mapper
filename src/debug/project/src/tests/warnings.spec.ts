@@ -6,7 +6,7 @@ export const testMappers: TestMapper[] = [];
 // ----------------------------------------------   Warnings   ----------------------------------------------------
 
 
-testMappers.push(new TestMapper(`'blue' / ThrowWarning`,`throw warning`, 'blue', {expectedValue: 'blue', isolate: false}));
+testMappers.push(new TestMapper(`'blue' / ThrowWarning`,`throw warning`, 'blue', {expectedValue: undefined, isolate: false}));
 
 export type NonReadableType<T> = T extends string ? number : boolean;
 

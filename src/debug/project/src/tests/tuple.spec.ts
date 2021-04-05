@@ -79,8 +79,8 @@ export class PersonCatTupleSpec {
     firstName: string;
 }
 
+testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa', age: 20}] / [PersonCatTupleSpec]`, [PersonCatTupleSpec], [{cat: null, firstName: 'Léa', age: 20}], {isolate: false}));
 testMappers.push(new TestMapper(`{cat: null, firstName: 'Léa'} / [PersonCatTupleSpec] / undefined`, [PersonCatTupleSpec], {cat: null, firstName: 'Léa'}, {expectedValue: undefined}));
-testMappers.push(new TestMapper(`[{cat: null, firstName: 'Léa'}] / [PersonCatTupleSpec]`, [PersonCatTupleSpec], [{cat: null, firstName: 'Léa'}]));
 testMappers.push(new TestMapper(`['a'] / [PersonCatTupleSpec] / []`, [PersonCatTupleSpec], ['a'], {expectedValue: [undefined]}));
 testMappers.push(new TestMapper(`[] / [PersonCatTupleSpec]`, [PersonCatTupleSpec], [], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`new PersonCatTupleSpec() / [PersonCatTupleSpec]`, [PersonCatTupleSpec], new PersonCatTupleSpec(), {expectedValue: undefined}));

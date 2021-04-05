@@ -61,9 +61,9 @@ testMappers.push(new TestMapper(`3 / CompanyAloneSpec / {}`, 'CompanyAloneSpec',
 export type TypeLiteralSpec = {name: string};
 
 testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteralSpec', {name: 'Léa'}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteralSpec', {name: 2}, {expectedValue: {name: undefined}, isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteralSpec', {}, {expectedValue: undefined, isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{name: 2} / TypeLiteralSpec`, 'TypeLiteralSpec', {name: 2}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{} / TypeLiteralSpec`, 'TypeLiteralSpec', {}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`'a' / TypeLiteralSpec`, 'TypeLiteralSpec', 'a', {expectedValue: undefined, isolate: false}));
 
 
 
@@ -73,7 +73,7 @@ testMappers.push(new TestMapper(`{name: 'Léa'} / TypeLiteralSpec`, 'TypeLiteral
 export type TypeLiteralTwoKeysSpec = {name: string, age: number};
 
 testMappers.push(new TestMapper(`{name: 'Léa', age: 20} / TypeLiteralTwoKeysSpec`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: 20}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralTwoKeysSpec / {name: 'Léa', age: undefined}`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: {name: 'Léa', age: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', age: '20'} / TypeLiteralTwoKeysSpec / undefined`, 'TypeLiteralTwoKeysSpec', {name: 'Léa', age: '20'}, {expectedValue: undefined, isolate: false}));
 
 
 // ---------------------------------------------   Array of literal types   -----------------------------------------------
@@ -111,7 +111,7 @@ export type TypeLiteralNestedSpec = {name: string, address: {country: string}};
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {country: 'France'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {address: {country: 'France'}}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {country: 'France'}}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa', address: {city: 'Montpellier'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {city: 'Montpellier'}}, {expectedValue: { name: 'Léa', address: undefined }, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', address: {city: 'Montpellier'} / TypeLiteralNestedSpec`, 'TypeLiteralNestedSpec', {name: 'Léa', address: {city: 'Montpellier'}}, {expectedValue: undefined, isolate: false}));
 
 
 // ----------------------------------------   Nested literal type with optional   -----------------------------------------
@@ -122,7 +122,7 @@ export type TypeLiteralNestedOptionalSpec = {name: string, address: {country: st
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France', city: 'Montpellier'} / TypeLiteralNestedOptionalSpec`, 'TypeLiteralNestedOptionalSpec', {name: 'Léa', address: {country: 'France', city: 'Montpellier'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{address: {country: 'France', city: 'Montpellier'} / TypeLiteralNestedOptionalSpec`, 'TypeLiteralNestedOptionalSpec', {address: {country: 'France', city: 'Montpellier'}}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{name: 'Léa', address: {country: 'France'} / TypeLiteralNestedOptionalSpec`, 'TypeLiteralNestedOptionalSpec', {name: 'Léa', address: {country: 'France'}}, {isolate: false}));
-testMappers.push(new TestMapper(`{name: 'Léa', address: {city: 'Montpellier'} / TypeLiteralNestedOptionalSpec`, 'TypeLiteralNestedOptionalSpec', {name: 'Léa', address: {city: 'Montpellier'}}, {expectedValue: { name: 'Léa', address: undefined }, isolate: false}));
+testMappers.push(new TestMapper(`{name: 'Léa', address: {city: 'Montpellier'} / TypeLiteralNestedOptionalSpec`, 'TypeLiteralNestedOptionalSpec', {name: 'Léa', address: {city: 'Montpellier'}}, {expectedValue: undefined, isolate: false}));
 
 
 
@@ -225,7 +225,7 @@ export type UnionClassStringOrNumberSpec = ClassStringSpec | number;
 testMappers.push(new TestMapper(`'a' / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', 'a', {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`2 / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', 2, {isolate: false}));
 testMappers.push(new TestMapper(`{str: 'a'} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 'a'}, {isolate: false}));
-testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: {str: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{str: 2} / UnionClassStringOrNumberSpec`, 'UnionClassStringOrNumberSpec', {str: 2}, {expectedValue: undefined, isolate: false}));
 
 
 
