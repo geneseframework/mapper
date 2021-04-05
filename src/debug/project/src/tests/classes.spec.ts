@@ -16,7 +16,7 @@ export class OnePrimitiveClassSpec {
     prop: string;
 }
 
-testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: true}));
+testMappers.push(new TestMapper(`{prop: 'a'} / OnePrimitiveClassSpec`, OnePrimitiveClassSpec, {prop: 'a'}, {isolate: false}));
 testMappers.push(new TestMapper(`{} / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, {}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`'a' / OnePrimitiveClassSpec / undefined`, OnePrimitiveClassSpec, 'a', {expectedValue: undefined, isolate: false}));
 
@@ -79,7 +79,7 @@ export class IndexableSpec {
 }
 
 testMappers.push(new TestMapper(`{a: 'c', b: 'd'} / IndexableSpec`, IndexableSpec, {a: 'c', b: 'd'}, {isolate: false}));
-testMappers.push(new TestMapper(`{a: 'c', b: 3} / IndexableSpec / {a: 'c', b: undefined}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: {a: 'c', b: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{a: 'c', b: 3} / IndexableSpec / {a: 'c', b: undefined}`, IndexableSpec, {a: 'c', b: 3}, {expectedValue: undefined, isolate: false}));
 
 
 // ------------------------------------------------   Indexable number   --------------------------------------------------
@@ -92,7 +92,7 @@ export class IndexableNumberSpec {
 
 testMappers.push(new TestMapper(`{a: 'a', 2: 'b'} / IndexableNumberSpec`, IndexableNumberSpec, {a: 'a', 2: 'b'}, {isolate: false}));
 testMappers.push(new TestMapper(`{a: 'a', b: 3} / IndexableNumberSpec / {a: 'a'}`, IndexableNumberSpec, {a: 'a', b: 3}, {expectedValue: {a: 'a'}, isolate: false}));
-testMappers.push(new TestMapper(`{a: 'a', 0: 3, 1: 'b'} / IndexableNumberSpec / {a: 'a', 0: undefined, 1: 'b'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: {a: 'a', 0: undefined, 1: 'b'}, isolate: false}));
+testMappers.push(new TestMapper(`{a: 'a', 0: 3, 1: 'b'} / IndexableNumberSpec / {a: 'a', 0: undefined, 1: 'b'}`, IndexableNumberSpec, {a: 'a', 0: 3, 1: 'b'}, {expectedValue: undefined, isolate: false}));
 
 
 // --------------------------------------------------   Default initializers   --------------------------------------------------
@@ -148,28 +148,23 @@ testMappers.push(new TestMapper(`{cat: {name: 'Cibi'}, firstName: 'Léa'} / Pers
 testMappers.push(new TestMapper(`{cat: undefined, firstName: 'Léa'} / PersonCatSpec`, PersonCatSpec, {cat: undefined, firstName: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{} / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, {}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`'a' / PersonCatSpec / new PersonCatSpec()`, PersonCatSpec, 'a', {expectedValue: undefined}));
-testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa', age: 20} / PersonCatSpec`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa', age: 20}, {isolate: false}));
-testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa'} / PersonCatSpec / undefined`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa'}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{cat: new CatSpec(), firstName: 'Léa', age: 20} / PersonCatSpec`, PersonCatSpec, {cat: new CatSpec(), firstName: 'Léa', age: 20}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`[new CatSpec()] / PersonCatSpec / [new CatSpec()]`, PersonCatSpec, [new CatSpec()], {expectedValue: undefined}));
 testMappers.push(new TestMapper(`[new PersonCatSpec()] / PersonCatSpec / [new PersonCatSpec()]`, PersonCatSpec, [new PersonCatSpec()], {expectedValue: undefined}));
 
 
 // --------------------------------------------   Cast string and numbers   -----------------------------------------------
 
-
-const personWithCorrectTypes = new PersonCatSpec();
+export class CastSpec {
+    age: number;
+    firstName: string;
+}
+const personWithCorrectTypes = new CastSpec();
 personWithCorrectTypes.age = 49;
 personWithCorrectTypes.firstName = 'Léo';
 
-testMappers.push(new TestMapper(`personWithCorrectTypes / PersonCatSpec`, PersonCatSpec, personWithCorrectTypes, {isolate: false}));
-testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / PersonCatSpec`, PersonCatSpec, {age: 49, firstName: 'Léo'}));
-
-const age: string | number = '49';
-const personWithWrongTypes = new PersonCatSpec();
-personWithWrongTypes.age = age as unknown as number;
-personWithWrongTypes.firstName = 2 as unknown as string;
-
-testMappers.push(new TestMapper(`{age: '49', firstName: 2} / PersonCatSpec / personWithWrongTypes`, PersonCatSpec, {age: '49', firstName: 2}, {expectedValue: personWithWrongTypes, behavior: {castStringsAndNumbers: true}}));
+testMappers.push(new TestMapper(`personWithCorrectTypes / CastSpec`, CastSpec, personWithCorrectTypes, {isolate: false}));
+testMappers.push(new TestMapper(`{age: 49, firstName: 'Léo'} / CastSpec`, CastSpec, {age: 49, firstName: 'Léo'}));
 
 
 // --------------------------------------------------   External Module   -------------------------------------------------
@@ -192,8 +187,11 @@ export class ChildClassSpec extends ParentClassSpec {
         super(name);
         this.color = color;}
 }
-testMappers.push(new TestMapper(`{color: 'White'} / ChildClassSpec / {color: 'White', name: 'unknown'}`, ChildClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}}));
-testMappers.push(new TestMapper(`{} / ChildClassSpec / {color: undefined, name: 'unknown'}`, ChildClassSpec, {}, {expectedValue: {color: undefined, name: 'unknown'}}));
+
+// TODO: heritage
+// testMappers.push(new TestMapper(`{color: 'Blue', name: 'Léa'} / ChildClassSpec`, ChildClassSpec, {color: 'Blue', name: 'Léa'}, {isolate: true}));
+testMappers.push(new TestMapper(`{color: 'White'} / ChildClassSpec / {color: 'White', name: 'unknown'}`, ChildClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}, isolate: false}));
+testMappers.push(new TestMapper(`{} / ChildClassSpec / {color: undefined, name: 'unknown'}`, ChildClassSpec, {}, {expectedValue: undefined, isolate: false}));
 
 
 // --------------------------------------------------   Abstract   --------------------------------------------------------
@@ -211,7 +209,8 @@ export class ChildAbstractClassSpec extends AbstractParentClassSpec {
         this.color = color;}
 }
 testMappers.push(new TestMapper(`{color: 'White'} / ChildAbstractClassSpec / {color: 'White', name: 'unknown'}`, ChildAbstractClassSpec, {color: 'White'}, {expectedValue: {color: 'White', name: 'unknown'}}));
-testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / {color: undefined, name: 'unknown'}`, ChildAbstractClassSpec, {}, {expectedValue: {color: undefined, name: 'unknown'}}));
+testMappers.push(new TestMapper(`{} / ChildAbstractClassSpec / undefined`, ChildAbstractClassSpec, {}, {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{name: 'Léa'} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {name: 'Léa'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{} / AbstractParentClassSpec / undefined`, 'AbstractParentClassSpec', {}, {expectedValue: undefined}));
 
 
@@ -244,7 +243,7 @@ export class StringOrNumberClassSpec {
 
 testMappers.push(new TestMapper(`{age: 2} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: 2}, {isolate: false}));
 testMappers.push(new TestMapper(`{age: '2'} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: '2'}, {isolate: false}));
-testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: [2]}, {expectedValue: {age: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{age: [2]} / StringOrNumberClassSpec`, StringOrNumberClassSpec, {age: [2]}, {expectedValue: undefined, isolate: false}));
 
 
 // ----------------------------------------------   Null or Literal   ------------------------------------------------------
@@ -294,7 +293,7 @@ export class PropertyObjectSpec {
 }
 testMappers.push(new TestMapper(`{prop: {name: 'a'}} / PropertyObjectSpec`, PropertyObjectSpec, {prop: {name: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{prop: ['a']} / PropertyObjectSpec`, PropertyObjectSpec, {prop: ['a']}, {isolate: false}));
-testMappers.push(new TestMapper(`{prop: 'a'} / PropertyObjectSpec / {prop: undefined}`, PropertyObjectSpec, {prop: 'a'}, {expectedValue: {prop: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{prop: 'a'} / PropertyObjectSpec / {prop: undefined}`, PropertyObjectSpec, {prop: 'a'}, {expectedValue: undefined, isolate: false}));
 
 
 
@@ -307,7 +306,8 @@ export class PaintStringsOrStringSpec {
 }
 
 testMappers.push(new TestMapper(`{colors: 'Blue'} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, {colors: 'Blue'}));
-testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / PaintStringsOrStringSpec / {}`, PaintStringsOrStringSpec, {unknownProperty: 'Blue'}, {expectedValue: {}, isolate: false}));
+testMappers.push(new TestMapper(`{colors: 'Blue', unknownProperty: 'Blue'} / PaintStringsOrStringSpec / {}`, PaintStringsOrStringSpec, {colors: 'Blue', unknownProperty: 'Blue'}, {expectedValue: {colors: 'Blue'}, isolate: false}));
+testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / PaintStringsOrStringSpec / undefined`, PaintStringsOrStringSpec, {unknownProperty: 'Blue'}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{colors: ['Blue', 'White']} / PaintStringsOrStringSpec`, PaintStringsOrStringSpec, {colors: ['Blue', 'White']}));
 
 
@@ -320,7 +320,7 @@ export class PaintStringOrStringsSpec {
 }
 
 // testMappers.push(new TestMapper(`{colors: 'Blue'} / PaintStringOrStringsSpec`, PaintStringOrStringsSpec, {colors: 'Blue'}, {isolate: true})); // TODO
-testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / PaintStringOrStringsSpec / {}`, PaintStringOrStringsSpec, {unknownProperty: 'Blue'}, {expectedValue: {}}));
+testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / PaintStringOrStringsSpec / {}`, PaintStringOrStringsSpec, {unknownProperty: 'Blue'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{colors: ['Blue', 'White']} / PaintStringOrStringsSpec`, PaintStringOrStringsSpec, {colors: ['Blue', 'White']}));
 
 
@@ -333,7 +333,7 @@ export class AgeNumbersOrNumberSpec {
 }
 
 testMappers.push(new TestMapper(`{ages: 2} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, {ages: 2}));
-testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / AgeNumbersOrNumberSpec / {}`, AgeNumbersOrNumberSpec, {unknownProperty: 'Blue'}, {expectedValue: {}}));
+testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / AgeNumbersOrNumberSpec / {}`, AgeNumbersOrNumberSpec, {unknownProperty: 'Blue'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{ages: [4, 6]} / AgeNumbersOrNumberSpec`, AgeNumbersOrNumberSpec, {ages: [4, 6]}));
 
 
@@ -346,7 +346,7 @@ export class AgeNumberOrNumbersSpec {
 }
 
 testMappers.push(new TestMapper(`{ages: 2} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, {ages: 2}, {isolate: false}));
-testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / AgeNumberOrNumbersSpec / {}`, AgeNumberOrNumbersSpec, {unknownProperty: 'Blue'}, {expectedValue: {}}));
+testMappers.push(new TestMapper(`{unknownProperty: 'Blue'} / AgeNumberOrNumbersSpec / {}`, AgeNumberOrNumbersSpec, {unknownProperty: 'Blue'}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{ages: [4, 6]} / AgeNumberOrNumbersSpec`, AgeNumberOrNumbersSpec, {ages: [4, 6]}));
 testMappers.push(new TestMapper(`{ages: ['a', 6]} / AgeNumberOrNumbersSpec / {ages: [undefined, 6]}`, AgeNumberOrNumbersSpec, {ages: ['a', 6]}, {expectedValue: {ages: [undefined, 6]}}));
 
@@ -379,8 +379,8 @@ export class ClassWithUnionTypeSpec {
 
 testMappers.push(new TestMapper(`{union: undefined} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: undefined}));
 testMappers.push(new TestMapper(`{union: 'a'} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: 'a'}));
-testMappers.push(new TestMapper(`new ClassWithUnionTypeSpec() / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec()));
-testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new NameSpec()}));
+testMappers.push(new TestMapper(`new ClassWithUnionTypeSpec() / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, new ClassWithUnionTypeSpec(), {expectedValue: undefined}));
+testMappers.push(new TestMapper(`{union: new NameSpec()} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: new NameSpec()}, {expectedValue: undefined}));
 testMappers.push(new TestMapper(`{union: nameSpec} / ClassWithUnionTypeSpec`, ClassWithUnionTypeSpec, {union: nameSpec}));
 
 
@@ -418,11 +418,11 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 export class ObjectLiteralStringSpec {
     obj: {str: string};
 }
-testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: false}));
-testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: {obj: undefined}, isolate: false}));
-testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / {obj: undefined}`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: {obj: undefined}, isolate: false}));
-testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: {obj: {str: undefined}}, isolate: false}));
-testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / {obj: 4}`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: {obj: undefined}, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: true}));
+testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: undefined, isolate: false}));
+testMappers.push(new TestMapper(`{obj: {irrelevant: 'a'}} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: {irrelevant: 'a'}}, {expectedValue: undefined, isolate: false}));
 
 
 // --------------------------------------   Property with Type Literal with wrong chars   ---------------------------------

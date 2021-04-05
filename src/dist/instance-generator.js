@@ -102,6 +102,10 @@ const generateInstance = function(instanceGenerator) {
                 const PersonCatSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').PersonCatSpec;
                 instance = new PersonCatSpec();
                 break;
+            case 'CastSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
+                const CastSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').CastSpec;
+                instance = new CastSpec();
+                break;
             case 'ParentClassSpec_/users/utilisateur/documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts':
                 const ParentClassSpec = require('/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts').ParentClassSpec;
                 instance = new ParentClassSpec(undefined);

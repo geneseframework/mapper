@@ -9,6 +9,7 @@ import * as chalk from 'chalk';
 import { hasRequiredProperties } from '../../utils/validation.util';
 import { INVALID_RESPONSE } from '../../const/invalid-response.const';
 import { MapResponse } from '../../models/map-response.model';
+import { requiredProperties } from '../../../init/utils/property.util';
 
 
 export class MapInstanceOrInterfaceService {
@@ -23,6 +24,7 @@ export class MapInstanceOrInterfaceService {
      */
     static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
         const errors: string[] = [];
+        this.checkRequiredProperties(data, declaration, errors);
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
@@ -33,10 +35,9 @@ export class MapInstanceOrInterfaceService {
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
                 const mapResponse: MapResponse = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
                 if (!mapResponse.isValid) {
-                    return MapResponse.invalid(`Incorrect property value for key = ${key} : ${data[key]}`);
-                } else {
-                    instance[key] = mapResponse.response;
+                    errors.push(this.incorrectPropertyMessage(key, data[key]));
                 }
+                instance[key] = mapResponse.response;
             }
         }
         const isValid: boolean = errors.length === 0;
@@ -45,13 +46,26 @@ export class MapInstanceOrInterfaceService {
     }
 
 
+    private static checkRequiredProperties(data: any, declaration: ClassOrInterfaceInfo, errors: string[]): void {
+        for (const property of requiredProperties(declaration.properties)) {
+            if (!Object.keys(data).includes(property.name)) {
+                errors.push(`Required property '${property.name}' is missing.`)
+            }
+        }
+    }
+
+
     private static setKeyOrReturnInvalid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo, errors: string[]): void {
         const mapResponse: MapResponse = this.mapDataKeyIfValid(dataKey, options, key, instance, declaration);
         instance[key] = mapResponse.response;
         if (!mapResponse.isValid) {
-            const error = `Incorrect property value for key '${key}' : ${dataKey}`;
-            errors.push(error);
+            errors.push(this.incorrectPropertyMessage(key, dataKey));
         }
+    }
+
+
+    private static incorrectPropertyMessage(key: string, dataKey: any): string {
+        return `Incorrect property value for key '${key}' : ${JSON.stringify(dataKey)}`;
     }
 
 
@@ -86,7 +100,9 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             return new MapResponse(removeBorders(targetKeyType));
         } else {
-            return MainService.mapStringTarget(targetKeyType, dataKey, options);
+            const zzz = MainService.mapStringTarget(targetKeyType, dataKey, options);
+            console.log(chalk.magentaBright('MAP DATA KKKKKKK'), zzz);
+            return zzz;
         }
     }
 

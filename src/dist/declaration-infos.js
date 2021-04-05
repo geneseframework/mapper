@@ -670,6 +670,30 @@ const declarationInfos = [
     {
         filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
         kind: `Class`,
+        name: `CastSpec`,
+        typeParameters: [
+        ],
+        hasPrivateConstructor: false,
+        isAbstract: false,
+        numberOfConstructorArguments: 0,
+        properties: [
+            {
+                initializer: undefined,
+                hasQuestionToken: false,
+                name: `age`,
+                stringifiedType: `number`
+            },
+            {
+                initializer: undefined,
+                hasQuestionToken: false,
+                name: `firstName`,
+                stringifiedType: `string`
+            },
+        ],
+    },
+    {
+        filePath: `/Users/utilisateur/Documents/projets/genese/mapper/src/debug/project/src/tests/classes.spec.ts`,
+        kind: `Class`,
         name: `ParentClassSpec`,
         typeParameters: [
         ],
