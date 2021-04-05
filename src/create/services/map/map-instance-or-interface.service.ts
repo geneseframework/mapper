@@ -7,6 +7,9 @@ import { isNullOrUndefined } from '../../types/trivial-types/null-or-undefined.t
 import { isObject, MapperConfigBehavior, removeBorders } from '@genese/core';
 import * as chalk from 'chalk';
 import { requiredProperties } from '../../../init/utils/property.util';
+import { hasRequiredProperties } from '../../utils/validation.util';
+import { INVALID_DATA, INVALID_RESPONSE } from '../../const/invalid-data.const';
+import { MapResponse } from '../../models/map-response.model';
 
 
 export class MapInstanceOrInterfaceService {
@@ -14,45 +17,40 @@ export class MapInstanceOrInterfaceService {
 
     /**
      * Returns instance or interface with mapped data
-     * @param data          // The data to mapIfValid
+     * @param data          // The data to map
      * @param options       // The create() options
      * @param instance      // New instance if maps a class, empty object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    static mapIfValid(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): boolean {
+    static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
         // for (const property of declaration.properties) {
-        if (!this.hasRequiredProperties(data, declaration)) {
+        if (!hasRequiredProperties(data, declaration)) {
             console.log(chalk.blueBright('REUIQREDDDDD'), data);
             console.log(chalk.cyanBright('REUIQREDDDDD'), declaration);
-            return false;
+            return INVALID_RESPONSE;
         }
-        console.log(chalk.cyanBright('REUIQREDDDDD ??????'), declaration);
         for (const key of Object.keys(data)) {
             if (this.isProperty(key, declaration)) {
                 if (isNullOrUndefined(data[key])) {
                     instance[key] = data[key];
                 } else {
-                    this.mapDataKey(data[key], options, key, instance, declaration);
+                    this.mapDataKeyIfValid(data[key], options, key, instance, declaration);
                 }
             } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
                 instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
             }
         }
-        return true;
+        return new MapResponse(true, instance);
     }
 
 
-    private static hasRequiredProperties(data: any, declaration: ClassOrInterfaceInfo): boolean {
-        return isObject(data) && requiredProperties(declaration.properties).every(p => Object.keys(data).includes(p.name));
-    }
-
-    // static mapIfValid(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
+    // static map(data: any, options: MapperConfigBehavior, instance: object, declaration: ClassOrInterfaceInfo): void {
     //     for (const key of Object.keys(data)) {
     //         if (this.isProperty(key, declaration)) {
     //             if (isNullOrUndefined(data[key])) {
     //                 instance[key] = data[key];
     //             } else {
-    //                 this.mapDataKey(data[key], options, key, instance, declaration);
+    //                 this.mapDataKeyIfValid(data[key], options, key, instance, declaration);
     //             }
     //         } else if (hasIndexableTypeAndKeyOfSameType(declaration, key)) {
     //             instance[key] = MainService.mapStringTarget(declaration.indexableType.returnType, data[key], options);
@@ -69,7 +67,7 @@ export class MapInstanceOrInterfaceService {
      * @param instance      // Instance object if maps a class, object if maps an interface
      * @param declaration   // The declaration corresponding to the class or interface
      */
-    private static mapDataKey(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): void {
+    private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): any {
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {

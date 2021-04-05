@@ -276,7 +276,7 @@ const generateInstance = function(instanceGenerator) {
         }
         return instance;
     } catch(err) {
-        console.log('Impossible to mapIfValid this instance. Did you exported it ?', err);
+        console.log('Impossible to map this instance. Did you exported it ?', err);
     }
 }
 exports.generateInstance = generateInstance;

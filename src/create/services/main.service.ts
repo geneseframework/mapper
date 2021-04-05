@@ -23,6 +23,7 @@ import { isWildCard } from '../types/non-trivial-types/wildcard.type';
 import { isArrayType } from '../types/non-trivial-types/array-type.type';
 import { isComplexType } from '../types/non-trivial-types/complex-type.type';
 import { isDateTypeName, isObjectType, MapperConfigBehavior, throwWarning } from '@genese/core';
+import { MapResponse } from '../models/map-response.model';
 
 export class MainService {
 
@@ -30,14 +31,14 @@ export class MainService {
      * - If not already done, initializes the global configuration.
      * - Returns the data formatted with the type required by the user
      * @param target    // The type required by the user.
-     * @param data      // Data to mapIfValid
+     * @param data      // Data to map
      * @param options   // Behavior options for this call to the create() method
      */
     static map<T>(target: Target<T>, data: any, options?: MapperConfigBehavior): T | T[] | Primitive | ArrayOfPrimitiveElements | Date | Date[] | object | object[] {
         GLOBAL.start = Date.now();
         GlobalInitService.start();
         options = OptionsService.initialize(options);
-        return this.mapStringTarget(TargetService.stringify(target), data, options);
+        return this.mapStringTarget(TargetService.stringify(target), data, options).response;
     }
 
 
@@ -47,7 +48,7 @@ export class MainService {
      * @param data
      * @param options
      */
-    static mapStringTarget(target: string, data: any, options?: MapperConfigBehavior): any {
+    static mapStringTarget(target: string, data: any, options?: MapperConfigBehavior): MapResponse | any {
         CheckTargetsService.start(target);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return data;

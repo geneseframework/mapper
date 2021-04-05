@@ -8,7 +8,7 @@ export class MapEnumService {
     /**
      * Return mapped data when target corresponds to an exported enum or an array of enums
      * @param target    // The target corresponding to an exported enum
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      */
     static create(target: string, data: any): any {
         const enumInfo: EnumInfo = GLOBAL.getEnumInfo(target);
@@ -23,7 +23,7 @@ export class MapEnumService {
 
     /**
      * Return mapped data when target corresponds to an array of enums
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param enumInfo  // Some enumInfo found in global declarationInfos array
      */
     private static createEnumsArray(data: any[], enumInfo: EnumInfo): any[] {
@@ -37,7 +37,7 @@ export class MapEnumService {
 
     /**
      * Return mapped data when target corresponds to an enum
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param enumInfo  // Some enumInfo found in global declarationInfos array
      */
     static map(data: any, enumInfo: EnumInfo): any {

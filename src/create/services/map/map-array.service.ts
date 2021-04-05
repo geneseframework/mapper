@@ -10,7 +10,7 @@ export class MapArrayService<T> {
     /**
      * Returns undefined if data is not an array, data if target is a wildcard and mapped array if not
      * @param target    // The target with array format
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      */
     static create(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {
@@ -27,7 +27,7 @@ export class MapArrayService<T> {
     /**
      * Returns mapped array
      * @param target    // The target with array format
-     * @param data      // The array to mapIfValid
+     * @param data      // The array to map
      * @param options   // The create() options
      */
     private static mapArray(target: ArrayType, data: any, options: MapperConfigBehavior): any[] {

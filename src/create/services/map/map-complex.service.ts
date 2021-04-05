@@ -20,7 +20,7 @@ export class MapComplexService {
     /**
      *
      * @param target    // The target with a complex format (generics, unions, intersections, etc.)
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      */
     static create(target: ComplexType, data: any, options: MapperConfigBehavior): any {
@@ -42,7 +42,7 @@ export class MapComplexService {
 
     /**
      * Returns mapped value in case of Union types
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      * @param first     // The first element of the union
      * @param others    // The other elements of the union
@@ -58,7 +58,7 @@ export class MapComplexService {
 
     /**
      * Returns mapped value in case of Union types which have the first element of the union which is numeric string, 'null' or 'boolean' maps
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      * @param first     // The first element of the union
      * @param others    // The other elements of the union
@@ -76,7 +76,7 @@ export class MapComplexService {
 
     /**
      * Returns mapped value in case of Intersection types
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      * @param first     // The first element of the union
      * @param others    // The other elements of the union

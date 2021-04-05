@@ -9,7 +9,7 @@ export class MapTupleService<T> {
     /**
      * Returns mapped tuple if data is correct, undefined if not
      * @param target    // The target with tuple format
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      */
     static create(target: Bracketed, data: any, options: MapperConfigBehavior): any[] {
@@ -19,7 +19,7 @@ export class MapTupleService<T> {
     /**
      * Returns mapped tuple
      * @param target    // The target with tuple format
-     * @param data      // The data to mapIfValid
+     * @param data      // The data to map
      * @param options   // The create() options
      */
     private static mapTuple(target: Bracketed, data: any, options: MapperConfigBehavior) {
