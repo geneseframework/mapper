@@ -93,6 +93,7 @@ export class MapInstanceOrInterfaceService {
      * @param declaration   // The declaration corresponding to the class or interface
      */
     private static mapDataKeyIfValid(dataKey: any, options: MapperConfigBehavior, key: string, instance: object, declaration: ClassOrInterfaceInfo): MapResponse {
+        console.log(chalk.magentaBright('MAP DATA KKKKKKK'), dataKey, key, instance);
         const property: Property = declaration.properties.find(p => p.name === key);
         const targetKeyType: string = property.stringifiedType;
         if (targetKeyType === 'undefined') {
@@ -100,8 +101,9 @@ export class MapInstanceOrInterfaceService {
         } else if (isQuoted(targetKeyType)) {
             return new MapResponse(removeBorders(targetKeyType));
         } else {
+            console.log(chalk.magentaBright('MAP DATA KKKKKKK TKTTTTT'), targetKeyType);
             const zzz = MainService.mapStringTarget(targetKeyType, dataKey, options);
-            console.log(chalk.magentaBright('MAP DATA KKKKKKK'), zzz);
+            console.log(chalk.magentaBright('MAP DATA KKKKKKK RESPPPP'), zzz);
             return zzz;
         }
     }

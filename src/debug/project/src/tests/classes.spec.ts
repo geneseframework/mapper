@@ -418,7 +418,7 @@ testMappers.push(new TestMapper(`{employer: { name: 'Greenpeace', volunteers: 30
 export class ObjectLiteralStringSpec {
     obj: {str: string};
 }
-testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: true}));
+testMappers.push(new TestMapper(`{obj: {str: 'a'}} / ObjectLiteralStringSpec`, ObjectLiteralStringSpec, {obj: {str: 'a'}}, {isolate: false}));
 testMappers.push(new TestMapper(`{obj: 2} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: 2}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {}} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: {}}, {expectedValue: undefined, isolate: false}));
 testMappers.push(new TestMapper(`{obj: {str: 2}} / ObjectLiteralStringSpec / undefined`, ObjectLiteralStringSpec, {obj: {str: 2}}, {expectedValue: undefined, isolate: false}));
