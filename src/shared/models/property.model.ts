@@ -2,6 +2,8 @@
  * Info about a given property of a class, interface or type which will be used to generate the declaration-infos.js file
  * and which will be used later by the create() method
  */
+import * as chalk from 'chalk';
+
 export class Property {
 
     hasQuestionToken?: boolean;
@@ -16,8 +18,4 @@ export class Property {
         this.hasQuestionToken = hasQuestionToken;
     }
 
-
-    get isRequired(): boolean {
-        return !this.hasQuestionToken && !this.initializer;
-    }
 }

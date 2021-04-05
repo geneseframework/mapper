@@ -184,7 +184,7 @@ export class HierarchicTypeLiteralService {
     static getTypeLiteralClassicProperties(typeLiteral: TypeLiteralNode): Property[] {
         const properties: Property[] = [];
         for (const prop of typeLiteral.getProperties()) {
-            const property: Property = new Property(prop.getName(), declarationType(prop), prop.getInitializer(), !prop.hasQuestionToken());
+            const property: Property = new Property(prop.getName(), declarationType(prop), prop.getInitializer(), prop.hasQuestionToken());
                 // initializer:  prop.getInitializer(),
                 // hasQuestionToken: !prop.hasQuestionToken(),
                 // name: prop.getName(),

@@ -5,10 +5,20 @@ import {
 import { Property } from '../../shared/models/property.model';
 import { BlockInfo } from '../../create/types/containers/block.type';
 import { haveSameLength } from '@genese/core';
+import * as chalk from 'chalk';
 
 
 export function requiredProperties(properties: Property[]): Property[] {
-    return properties.filter(p => p.hasQuestionToken);
+    // for (const z of properties) {
+    //     console.log(chalk.cyanBright('is req ????'), z);
+    //     console.log(chalk.cyanBright('is req ????'), isRequired(z));
+    // }
+    return properties.filter(p => isRequired(p));
+}
+
+
+export function isRequired(property: Property): boolean {
+    return !property.hasQuestionToken && !property.initializer;
 }
 
 /**

@@ -5,6 +5,7 @@ import { isObjectWhichIsNotArray, ObjectNotArray } from '../../types/trivial-typ
 import { includes, MapperConfigBehavior } from '@genese/core';
 import { MapResponse } from '../../models/map-response.model';
 import { INVALID_RESPONSE } from '../../const/invalid-response.const';
+import { isRequired } from '../../../init/utils/property.util';
 
 export class MapInterfaceService {
 
@@ -41,7 +42,7 @@ export class MapInterfaceService {
      * @private
      */
     private static hasRequiredProperties(data: ObjectNotArray, interfaceInfo: InterfaceInfo): boolean {
-        const requiredProperties: string[] = interfaceInfo.properties.filter(p => p.hasQuestionToken).map(p => p.name);
+        const requiredProperties: string[] = interfaceInfo.properties.filter(p => isRequired(p)).map(p => p.name);
         return includes(Object.keys(data), requiredProperties);
     }
 

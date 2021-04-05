@@ -113,8 +113,8 @@ function setNameAndReturnRest(rest: string, property: Property): string {
  * @param property      // The Property to update
  */
 function setIsRequiredAndReturnRest(rest: string, property: Property): string {
-    property.hasQuestionToken = rest.charAt(0) !== '?';
-    return property.hasQuestionToken ? rest: rest.slice(1);
+    property.hasQuestionToken = rest.charAt(0) === '?';
+    return property.hasQuestionToken ? rest.slice(1): rest;
 }
 
 /**

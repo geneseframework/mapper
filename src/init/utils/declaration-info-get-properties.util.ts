@@ -33,7 +33,7 @@ function getPropertyFromDeclarationOrSignature(propDecOrSign: PropertyDeclaratio
         return new Property(propDecOrSign.getName(), HierarchicTypeLiteralService.create(propDecOrSign).stringifiedType);
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return new Property(propertyStructure.name, declarationType(propDecOrSign), propertyStructure.initializer, !propertyStructure.hasQuestionToken);
+        return new Property(propertyStructure.name, declarationType(propDecOrSign), propertyStructure.initializer, propertyStructure.hasQuestionToken);
     }
 }
 
@@ -67,7 +67,7 @@ function getPropertyFromPropertySignature(parentName: string, propDecOrSign: Pro
         return new Property(propDecOrSign.getName(), newInterfaceInfo.name);
     } else {
         const propertyStructure = propDecOrSign.getStructure();
-        return new Property(propertyStructure.name, propertyStructure.type as string, propertyStructure.initializer, !propertyStructure.hasQuestionToken);
+        return new Property(propertyStructure.name, propertyStructure.type as string, propertyStructure.initializer, propertyStructure.hasQuestionToken);
     }
 }
 
