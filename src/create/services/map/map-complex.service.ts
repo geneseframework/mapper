@@ -89,8 +89,8 @@ export class MapComplexService {
      * @private
      */
     private static mapIntersectionType(data: any, options: MapperConfigBehavior, first: string, others: string): MapResponse {
-        const left: any = MainService.mapStringTarget(first, data, options);
-        const right: any = MainService.mapStringTarget(others, data, options);
+        const left: any = MainService.mapStringTarget(first, data, options).response;
+        const right: any = MainService.mapStringTarget(others, data, options).response;
         return left && right ? new MapResponse(data) : INVALID_RESPONSE;
     }
 

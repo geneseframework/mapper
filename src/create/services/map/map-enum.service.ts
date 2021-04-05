@@ -17,7 +17,7 @@ export class MapEnumService {
         if (isArray(data) && isBracketed(target)) {
             return this.createEnumsArray(data, enumInfo);
         } else if (!isArray(data) && !isBracketed(target)) {
-            return this.map(data, enumInfo);
+            return new MapResponse(this.map(data, enumInfo));
         } else {
             return INVALID_RESPONSE;
         }
