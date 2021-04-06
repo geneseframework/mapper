@@ -45,7 +45,6 @@ function getType(varName: string): string {
 }
 
 const resolvedType: string = getType('fooVar'); // ---> = 'string'
-console.log(chalk.greenBright('RESOLVEDDDDD'), resolvedType);
 
 
 
@@ -55,5 +54,4 @@ let barVar: BarType<string>;
 
 
 const resolvedBarType: string = getType('barVar'); // ---> TODO
-console.log(chalk.greenBright('RESOLVEDDDDD'), resolvedBarType);
 
