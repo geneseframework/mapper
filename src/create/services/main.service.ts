@@ -51,7 +51,6 @@ export class MainService {
      */
     static mapStringTarget(target: string, data: any, options?: MapperConfigBehavior): MapResponse {
         CheckTargetsService.start(target);
-        // console.log(chalk.greenBright('MAP STRRTTTTT'), target, data);
         if (isNullOrUndefined(data) || isWildCard(target)) {
             return new MapResponse(data);
         } else if (isDateTypeName(target)) {

@@ -1,6 +1,5 @@
 import { NumericOrStringifiedNullOrBoolean } from '../../types/trivial-types/null-or-literal.type';
 import { MapResponse } from '../../models/map-response.model';
-import * as chalk from 'chalk';
 
 /**
  * Service used in case of stringified target corresponding numeric strings, 'null', 'true' or 'false'
